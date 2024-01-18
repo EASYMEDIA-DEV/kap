@@ -3,12 +3,12 @@
   <c:when test="${ not empty rtnData.ptcptList}">
     <c:forEach var="ptcptList" items="${rtnData.ptcptList}" varStatus="status">
       <tr  data-total-count="${rtnData.totalCount}" >
-        <td class="text-center">
-          <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}"/>
-            <span class="ion-checkmark-round"></span>
-          </label>
-        </td>
+<%--        <td class="text-center">--%>
+<%--          <label class="checkbox-inline c-checkbox">--%>
+<%--            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}"/>--%>
+<%--            <span class="ion-checkmark-round"></span>--%>
+<%--          </label>--%>
+<%--        </td>--%>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">${ptcptList.id}</td>
         <td class="text-center">${ptcptList.name}</td>

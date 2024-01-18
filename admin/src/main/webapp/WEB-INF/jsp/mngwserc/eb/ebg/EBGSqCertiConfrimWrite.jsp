@@ -19,7 +19,7 @@
                 <jsp:param name="cmpnTitle" value="부품사" />
                 <jsp:param name="memSeq" value="${ rtnDto.memSeq }" />
             </jsp:include>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>필수과목 수료내역</h7>
+            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>선수과목 수료내역</h7>
             <hr />
             <fieldset class="mb-lg">
                 <!--VUE 영역 시작 -->
@@ -27,6 +27,7 @@
                     <table class="table table-hover table-striped text-sm ">
                         <thead>
                         <tr>
+                            <th class="text-center">부품사명</th>
                             <th class="text-center">과정분류</th>
                             <th class="text-center">과정명</th>
                             <th class="text-center">학습방식</th>
@@ -45,13 +46,14 @@
                                 <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
                                     <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
                                         <tr>
+                                            <td class="text-center" >${ list.cmpnNm }</td>
                                             <td class="text-center" >${ list.ctgryCdNm }</td>
                                             <td class="text-center" >${ list.nm }</td>
                                             <td class="text-center" >${ list.stduyMthdCdNm }</td>
                                             <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
                                             <td class="text-center" >${ list.episdYear }</td>
                                             <td class="text-center" >${ list.episdOrd }</td>
-                                            <td class="text-center" >${ list.cbsnCdNm }</td>
+                                            <td class="text-center" >${ kl:nvl(list.cbsnCdNm, '-') }</td>
                                             <td class="text-center" >
                                                     ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                             </td>
@@ -102,14 +104,14 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td class="text-center" >${ rtnDataSqReqData.ctgryCdNm }</td>
+                                <td class="text-center" >${ rtnDataSqReqData.cmpnNm }</td>
                                 <td class="text-center" >${ rtnDataSqReqData.ctgryCdNm }</td>
                                 <td class="text-center" >${ rtnDataSqReqData.nm }</td>
                                 <td class="text-center" >${ rtnDataSqReqData.stduyMthdCdNm }</td>
                                 <td class="text-center" >${ rtnDataSqReqData.stduyDdCdNm }일/${rtnDataSqReqData.stduyTimeCdNm}시간</td>
                                 <td class="text-center" >${ rtnDataSqReqData.episdYear }</td>
                                 <td class="text-center" >${ rtnDataSqReqData.episdOrd }</td>
-                                <td class="text-center" >${ rtnDataSqReqData.cbsnCdNm }</td>
+                                <td class="text-center" >${ kl:nvl(rtnDataSqReqData.cbsnCdNm, '-')}</td>
                                 <td class="text-center" >
                                     ${ kl:convertDate(rtnDataSqReqData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(rtnDataSqReqData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                 </td>
@@ -136,6 +138,7 @@
                     <table class="table table-hover table-striped text-sm ">
                         <thead>
                             <tr>
+                                <th class="text-center">부품사명</th>
                                 <th class="text-center">과정분류</th>
                                 <th class="text-center">과정명</th>
                                 <th class="text-center">학습방식</th>
@@ -155,13 +158,14 @@
                                 <c:forEach var="list" items="${rtnRepairPrcsList.educationRepairList}" varStatus="status">
                                     <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
                                         <tr>
+                                            <td class="text-center" >${ list.cmpnNm }</td>
                                             <td class="text-center" >${ list.ctgryCdNm }</td>
                                             <td class="text-center" >${ list.nm }</td>
                                             <td class="text-center" >${ list.stduyMthdCdNm }</td>
                                             <td class="text-center" >${ list.stduyDdCdNm }일/${list.stduyTimeCdNm}시간</td>
                                             <td class="text-center" >${ list.episdYear }</td>
                                             <td class="text-center" >${ list.episdOrd }</td>
-                                            <td class="text-center" >${ list.cbsnCdNm }</td>
+                                            <td class="text-center" >${ kl:nvl(list.cbsnCdNm, '-') }</td>
                                             <td class="text-center" >
                                                     ${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                             </td>

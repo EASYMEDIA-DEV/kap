@@ -52,6 +52,8 @@
                         </div>
                     </div>
                 </fieldset>--%>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
+
                 <div id="appctnPdfArea1">
                     <fieldset>
                         <div class="form-group text-sm">
@@ -111,7 +113,7 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-4" style="margin-left: -15px">
-                                    <input type="text" class="form-control notRequired" id="pstnNm" name="pstnNm"
+                                    <input type="text" class="form-control notRequired" style="display:none;" id="pstnNm" name="pstnNm"
                                            value="${rtnInfo.pstnNm}" title="직급 상세" maxlength="50"/>
                                 </div>
                             </div>
@@ -128,7 +130,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" title="전화번호"/>
+                                <input type="text" class="form-control telNumber notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                             </div>
                         </div>
                     </fieldset>
@@ -218,7 +220,7 @@
                             <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
-                                    <input type="text" class="form-control phoneChk notRequired" id="compTel" name="compTel" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11" title="전화번호" placeholder="전화번호 입력"/>
+                                    <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="${rtnInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
 
                                 </div>
                             </div>
@@ -584,8 +586,7 @@
                                             <input type="hidden" class="notRequired" name="fileCd"
                                                    value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
                                             <div class="col-sm-10 col-md-11">
-                                                <input type="hidden" class="notRequired" name="fileSeq"
-                                                       value="${rtnInfo.appctnSeq}">
+                                                <input type="hidden" class="notRequired" name="fileSeq" value="${rtnInfo.appctnSeq}">
                                                 <spring:eval var="fileExtns"
                                                              expression="@environment.getProperty('app.file.fileExtns')"/>
                                                 <spring:eval var="atchUploadMaxSize"

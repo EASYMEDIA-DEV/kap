@@ -1206,6 +1206,33 @@
 	</select>
 
 	<!--
+         쿼리명 : EBCVisitEduMapper.selectApplicantInfo
+         설  명 : [사용자] 방문교육 신청자 정보를 조회한다.
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.17   구은희       최초생성
+    -->
+	<select id="selectApplicantInfo" parameterType="EBCVisitEduDTO">
+		SELECT /*EBCVisitEduMapper.selectApplicantInfo*/
+			 mem_cd
+		     , id
+			 , name
+			 , hp_no
+			 , email
+			 , tel_no
+			 , dept_cd
+			 , (select cd_nm from co_code_mst where cd = A.dept_cd) as dept_cd_nm
+			 , dept_dtl_nm
+			 , pstn_cd
+			 , (select cd_nm from co_code_mst where cd = A.pstn_cd) as pstn_cd_nm
+			 , pstn_nm
+		FROM co_mem_mst A
+		where 1=1
+		 and mem_cd = 'CP'
+		 and mem_seq = #{memSeq}
+	</select>
+
+	<!--
 		쿼리명 : selectVisitEduListwhereSql
 		설  명 : 방문교육 관리 where Sql
 		  수정일      수정자       수정내용

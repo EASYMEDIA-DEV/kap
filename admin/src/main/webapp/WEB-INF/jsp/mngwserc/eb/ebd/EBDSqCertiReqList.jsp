@@ -20,25 +20,6 @@
 				</jsp:include>
 				<fieldset>
 					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">부품사 구분</label>
-						<div class="col-sm-5">
-							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxAll" />
-								<span class="ion-checkmark-round"></span> 전체
-							</label>
-							<c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-								<c:if test="${ cdList.cd eq 'COMPANY01001' or cdList.cd eq 'COMPANY01002' }">
-									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if> />
-										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
-									</label>
-								</c:if>
-							</c:forEach>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">발급상태</label>
 						<div class="col-sm-5">
 							<label class="checkbox-inline c-checkbox">
@@ -51,6 +32,30 @@
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">양성과정 참여</label>
+						<div class="col-sm-11 form-inline">
+							<div class="form-group mr-sm">
+								<select class="form-control input-sm wd-sm notRequired" data-name="episdYear" id="episdYear" title="년도" style="min-width: 100px;">
+									<option value="">선택</option>
+									<c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+										<option value="${cdList.cd}" <c:if test="${rtnData.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+									</c:forEach>
+								</select>
+								<select class="form-control input-sm wd-sm notRequired" data-name="episdOrd" id="episdOrd" title="회차" style="min-width: 100px;">
+									<option value="">선택</option>
+									<c:forEach var="cdList" items="${cdDtlList.ROUND_CD}" varStatus="status">
+										<option value="${cdList.cd}" <c:if test="${rtnData.episdOrd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<div class="form-group mr-sm">
+
+							</div>
 						</div>
 					</div>
 				</fieldset>

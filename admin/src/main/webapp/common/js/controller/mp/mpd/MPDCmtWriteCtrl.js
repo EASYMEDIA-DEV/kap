@@ -671,13 +671,15 @@ var exports = {
                 use : true,
                 func : function (){
                     var actionUrl = "/mngwserc/mp/mpd/insert";
+                    if(confirm(msgCtrl.getMsg("confirm.ins"))) {
                     cmmCtrl.fileFrmAjax(function(data){
-                        //콜백함수. 페이지 이동
-                        if(data.respCnt > 0){
-                            alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
-                            location.replace("./list");
-                        }
+                                //콜백함수. 페이지 이동
+                                if (data.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("fail.mp.mpd.al_004"));
+                                    location.replace("./list");
+                                }
                     }, actionUrl, $formObj, "json");
+                    }
 
                 },
                 error: function(e){

@@ -246,7 +246,7 @@
 			</div>
 			<div class="modal-footer row">
 				<div class="text-center">
-					<button type="button" class="btn btn-primary down mt">다운로드</button>
+					<button type="button" class="btn btn-primary down mt">저장</button>
 				</div>
 			</div>
 		</div>

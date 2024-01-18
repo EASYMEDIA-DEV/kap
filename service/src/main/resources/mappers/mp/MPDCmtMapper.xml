@@ -253,8 +253,8 @@
         on appctn_mst.appctn_bsnm_no =  cmpn_mst.bsnm_no
          where init_vst_rslt_cd ='BF_JDGMT_RSLT01'
           and rsume_mst.cmssr_seq =#{detailsKey}
-          and ( rsume_mst.guide_pscnd_cd  not in('GUIDE_PSCND04') or
-                rsume_mst.cnstg_pscnd_cd not in('CNSTG_PSCND03') )
+           and ( nullif(rsume_mst.guide_pscnd_cd, '') is  null or
+                 nullif(rsume_mst.cnstg_pscnd_cd, '') is null )
           order by appctn_mst.cnstg_seq
     </select>
 

@@ -12,7 +12,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
@@ -218,8 +217,41 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
+                    }
+                }
+            },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
                     }
                 }
             },
@@ -241,9 +273,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
+                    }
                     if($(".dropzone .dz-preview").length < 1) {
                         alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = !isValid;
+                        isValid = false;
+                        return false;
                     }
 
                     return isValid;

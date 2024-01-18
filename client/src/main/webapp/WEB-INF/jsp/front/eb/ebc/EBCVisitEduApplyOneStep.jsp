@@ -83,15 +83,42 @@
                                             </tr>
                                             <tr>
                                                 <th>휴대폰번호</th>
-                                                <td>${kl:emptyHypen(applicantInfo.hpNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.hpNo}">
+                                                            ${applicantInfo.hpNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>이메일</th>
-                                                <td>${kl:emptyHypen(applicantInfo.email)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.email}">
+                                                            ${applicantInfo.email}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <td>${kl:emptyHypen(applicantInfo.telNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty applicantInfo.telNo}">
+                                                            ${applicantInfo.telNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>부서</th>
@@ -99,7 +126,12 @@
                                             </tr>
                                             <tr>
                                                 <th>직급</th>
-                                                <td>${applicantInfo.pstnNm}</td>
+                                                <td>
+                                                    ${applicantInfo.pstnCdNm}
+                                                    <c:if test="${applicantInfo.pstnCd eq 'MEM_CD01007'}" >
+                                                        (${applicantInfo.pstnNm})
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -152,7 +184,16 @@
                                             </tr>
                                             <tr>
                                                 <th>회사 전화번호</th>
-                                                <td>${kl:emptyHypen(rtnInfo.telNo)}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnInfo.telNo}">
+                                                            ${rtnInfo.telNo}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
 
                                             <tr>
@@ -228,7 +269,7 @@
                             <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" href="/education/visit/apply/two-step"><span>다음</span></a>
+                            <a class="btn-solid small black-bg" href="/education/visit/apply/step2"><span>다음</span></a>
                         </div>
                     </div>
                 </div>

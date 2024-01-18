@@ -80,7 +80,7 @@
                                         <p class="txt f-head">자동차부품산업대상 관련 궁금한 점을 상시 질문할 수 있도록 Q&A게시판을 운영하고 있습니다. <br />게시판에 질문을 남겨주시면 관리자에게 전달되며 답변을 얻을 수 있습니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ07&inqSec=자동차부품산업대상"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                                 <p class="noti-txt f-caption2">* 다만 문의 사항이 많아 답변이 다소 늦어질 수 있으니 양해 바랍니다.</p>

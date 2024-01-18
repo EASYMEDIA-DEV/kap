@@ -54,8 +54,7 @@
 									$(document).ready(function() {
 										// 이메일무단수집거부 팝업 열기
 										$("#showEmailCollectPopup").click(function() {
-											$(".emailCollectPopup").fadeIn();
-											$(".dimd").show();
+											openPopup('emailCollectPopup', this);
 										});
 									});
 								</script>
@@ -94,7 +93,7 @@
 				</div>
 			</div>
 			<!-- 이메일무단수집거부 팝업 -->
-			<div class="layer-popup first-show emailCollectPopup" style="display: none;">
+			<div class="layer-popup emailCollectPopup" style="display: none;">
 				<div class="for-center">
 					<div class="pop-wrap">
 						<div class="pop-con-area">

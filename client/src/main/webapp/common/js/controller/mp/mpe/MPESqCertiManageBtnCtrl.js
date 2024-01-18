@@ -28,6 +28,9 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function() {
                         openPopup('paymentInfoViewPopupFrm');
+                        if($.trim( $(".paymentInfoViewPopupFrm").find(".idntfnPhotoFileSeqImage").data("src")) != ""){
+                            $(".paymentInfoViewPopupFrm").find(".idntfnPhotoFileSeqImage").attr("src",  $(".paymentInfoViewPopupFrm").find(".idntfnPhotoFileSeqImage").data("src"));
+                        }
                         $(".paymentInfoViewPopupFrm").on("onModalOpenComplete", function(){
                             flowTxtImgFn();
                         })

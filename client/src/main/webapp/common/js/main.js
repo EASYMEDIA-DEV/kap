@@ -116,6 +116,7 @@ var mainScript = (function(){
               }else{
                 slideNum = 0;
               }
+              $(".slide-control-area .pagination-w .cur-page").html(slideNum + 1);
               slideMoveFn();
             }
             
@@ -232,6 +233,8 @@ var mainScript = (function(){
         }
       });
 
+      /* 2024-01-17 기획팀 요청으로 호버 시 첫번째 목록 열리지 않고 호버했던 마지막 항목 열려있게로 수정
+      
       $(".hover-accordion .acco-list").on("mouseleave", function(){
         if(!($(this).parents(".coexisting-swiper-w").size() > 0 && $(this).index() == 0)){
           $(this).removeClass("active");
@@ -255,7 +258,7 @@ var mainScript = (function(){
             $(lastTarget).find(".acco-list:first-child").addClass("active").siblings().removeClass("active");
           }
         }
-      })
+      })*/
 
 
       // 페이지 첫 진입 시 스크롤 내려가 있으면 quick 디자인 흰색으로

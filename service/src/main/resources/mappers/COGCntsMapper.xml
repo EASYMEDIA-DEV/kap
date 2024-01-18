@@ -76,7 +76,7 @@
 	-->
 	<insert id="insertCnts" parameterType="COGCntsDTO">
 		<selectKey keyProperty="ver" resultType="Integer" order="BEFORE">
-			SELECT IFNULL(MAX(ver)+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+			SELECT IFNULL(MAX(CAST(VER AS SIGNED))+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
 		</selectKey>
 		INSERT /* COGCntsMapper.insertCnts */ INTO CO_CNTS_MST
 			( SEQ
@@ -234,7 +234,7 @@
     -->
 	<insert id="insertCntsCopy" parameterType="COGCntsDTO">
 		<selectKey keyProperty="ver" resultType="Integer" order="BEFORE">
-			SELECT IFNULL(MAX(VER)+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+			SELECT IFNULL(MAX(CAST(VER AS SIGNED))+1,1) FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
 		</selectKey>
 		INSERT /* COGCntsMapper.insertCntsCopy */ INTO CO_CNTS_MST
 		( SEQ
@@ -261,7 +261,7 @@
 	</insert>
 
 	<select id="selectNewVer" resultType="Integer" parameterType="COGCntsDTO" >
-		SELECT IFNULL(MAX(VER)+1,1) VER FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
+		SELECT /* COGCntsMapper.selectNewVer */ IFNULL(MAX(CAST(VER AS SIGNED))+1,1) VER FROM CO_CNTS_MST WHERE MENU_SEQ = #{menuSeq}
 	</select>
 
 	<!--

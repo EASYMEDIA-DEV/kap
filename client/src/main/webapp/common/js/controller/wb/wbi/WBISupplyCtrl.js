@@ -12,6 +12,66 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var addCount = 3;
     var imageText = "";
 
+    $(".file-list").hide();
+    // 파일 체크
+    var extnCheck = function(obj, extns, maxSize, maxLengh)
+    {
+        var fileObj = jQuery(obj).val(), isFile = true;
+        var fileId = obj.id;
+        var fileLengh = document.querySelectorAll('p.file-name').length;;
+
+        if (!fileObj)
+        {
+            isFile = false;
+        }
+        else
+        {
+            var file;
+            file = obj.files[0];
+
+            var fileExtn = file.name.split(".").pop();
+            var fileName = file.name.split(".")[0];
+            if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
+                //파일확장자 체크
+                $('#'+fileId).val("");
+                $('#'+fileId).closest(".form-group").find('.file-list').empty();
+                alert('첨부 가능한 파일 확장자가 아닙니다.');
+
+                isFile = false;
+            } else {
+                //파일용량 체크 파일갯수 체크
+                if (typeof obj.files != "undefined")
+                {
+                    var fileSize = file.size;
+                    var maxFileSize = maxSize * 1024 * 1024;
+                    if (fileSize > maxFileSize)
+                    {
+                        $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find('.file-list').empty();
+                        alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
+                        isFile = false;
+                    }
+
+                    if(fileLengh == maxLengh){
+                        alert("첨부파일은 최대 " + maxLengh + " 개만 등록 가능합니다.");
+                        isFile = false;
+                    }
+                }
+
+            }
+            if (isFile) {
+                $(".file-list").show();
+                var fileHtml = '<p class="file-name"><span class="name">' + fileName + '</span>';
+                fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>';
+
+                $('#'+fileId).closest(".form-group").find('.file-list').append(fileHtml);
+                // 파일 추가되면 class 추가
+                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass('attached');
+            }
+        }
+    };
+
     // set model
     ctrl.model = {
         id : {
@@ -66,9 +126,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 }
                             } else if (data.resultCode == 100) {
                                 alert('해당 사업은 부품사 회원만 신청 가능합니다.');
+                            } else if (data.resultCode == 150) {
+                               alert('위원회원은 해당 서비스를 이용할 수 없습니다.');
+                            } else if (data.resultCode == 190) {
+                               alert('1,2차 부품사만 신청가능합니다.');
                             } else if (data.resultCode == 300) {
                                 if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                    location.href = "/my-page/main";
+                                    location.href = "/my-page/coexistence/list";
                                 }
                             } else if (data.resultCode == 200) {
                                location.href = "./step1?episdSeq="+episdSeq;
@@ -81,34 +145,52 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
 
-                        /*TO-DO
-                        * 첨부파일 여부 체크 필요
-                        * */
+                        var $formObj = $('#frmData');
+                        var file = $formObj.find('input[type=file]');
+                        var valid = true;
 
+                        file.each(function(i) {
+                            if (!$(this).val()) {
+                                alert('신청서류를 모두 등록해주세요.');
+                                valid = false;
+                                return false;
+                            }
+                        });
 
-                        //이용약관 체크여부
-                        if ($('#agreeChk').is(':checked')) {
+                        if (valid) {
+                            //이용약관 체크여부
+                            if ($('#agreeChk').is(':checked')) {
+                                if(confirm("매출액 등이 최신 정보여야 합니다. 현재 정보로 신청하시겠습니까?\n")){
+                                    cmmCtrl.fileFrmAjax(function (data) {
+                                        console.log(JSON.stringify(data));
+                                        var appctnSeq = data.WBIBSupplyDTO.appctnSeq;
 
-                            cmmCtrl.fileFrmAjax(function(data){
-                                console.log(JSON.stringify(data));
-                                var appctnSeq = data.WBIBSupplyDTO.appctnSeq;
-
-                                //콜백함수. 페이지 이동
-                                location.href = "./complete";
-                            }, "./insert", $formObj, "json");
-                        } else {
-                            alert('약관에 동의해주세요.')
+                                        //콜백함수. 페이지 이동
+                                        location.href = "./complete";
+                                    }, "./insert", $formObj, "json");
+                                }
+                            } else {
+                                alert('약관에 동의해주세요.')
+                            }
                         }
                     }
                 }
             },
-            /*searchFile : {
+            searchFile : {
                 event : {
-                    click : function() {
-                        imageText = $(this).attr("id");
+                    change : function() {
+                        extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50, 1);
                     }
                 }
-            }*/
+            },
+            fileDelete : {
+                event : {
+                    click : function() {
+                        $(this).closest(".form-group").find("input[type=file]").val("");
+                        $(this).closest(".form-group").find('.file-list').empty();
+                    }
+                }
+            }
         },
         immediately : function(){
             $formObj.find("input[type=file]").fileUpload({

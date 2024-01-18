@@ -49,7 +49,7 @@
                             <div class="sec-con-area">
                                 <div class="time-card-area">
                                     <div class="title-area">
-                                        <p class="f-title2"> ${now_dt.date[0]}  ${now_dt.date[1]} 출근부</p>
+                                        <p class="f-title2"> ${now_dt.date[0]}년  ${now_dt.date[1]}월 출근부</p>
                                     </div>
                                     <div class="time-card-box-w">
                                         <div class="time-card">

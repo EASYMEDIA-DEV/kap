@@ -17,8 +17,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 40MB
-      max-request-size: 42MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
+      max-file-size: 100MB
+      max-request-size: 104MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
   #OBJECTMAPPER CAMELCASE
   jackson:
     property-naming-strategy: LOWER_CAMEL_CASE
@@ -29,6 +29,16 @@ spring:
 nice :
   return-url-adm : http://mng.kap.easymedia.kr
   return-url-user : http://kap.easymedia.kr
+
+api :
+  gpc:
+    end-point: https://gpc.hyundai.co.kr
+    key: A5Z0A4B9B5T4
+    secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
+  kap:
+    end-point: https://127.0.0.1:9012
+    key: N5Z0A4B9A5T4
+    secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC
 
 #강제 로그인 여부
 app:
@@ -97,3 +107,26 @@ spring :
 
 app:
   is-login: false
+
+api:
+  gpc:
+    end-point: https://gpc.hyundai.co.kr
+    key: A5Z0A4B9B5T4
+    secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
+  kap:
+    end-point: http://kap.easymedia.kr
+    key: N5Z0A4B9A5T4
+    secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC
+
+---
+spring.config.activate.on-profile: stg
+
+api:
+  gpc:
+    end-point: https://gpc.hyundai.co.kr
+    key: A5Z0A4B9B5T4
+    secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
+  kap:
+    end-point: https://www.kapkorea.org
+    key: N5Z0A4B9A5T4
+    secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC

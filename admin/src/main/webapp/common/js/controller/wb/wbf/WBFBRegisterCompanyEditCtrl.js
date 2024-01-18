@@ -12,7 +12,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("#frmData").eq(0);
 
@@ -286,6 +285,17 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
     }
 
+    let rtrnRsnCntnShow = function(mngSttsCd) {
+        if(mngSttsCd =='PRO_TYPE02001_02_002'){
+            $(".rtrnRsnCntn").show().attr('disabled',false);
+        }else if(mngSttsCd =='PRO_TYPE02001_02_004'){
+            $(".rtrnRsnCntn").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn").hide().attr('disabled',true);
+        }
+    }
+
+
     // set model
     ctrl.model = {
         id : {
@@ -361,38 +371,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            telNo : {
-                event : {
-                    input : function (event) {
-                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
-                        const phoneLen = phoneNumber.length;
-
-                        if (phoneNumber.startsWith('02')) {
-                            if (phoneLen >= 3 && phoneLen <= 6) {
-                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 6) {
-                                if (phoneLen == 9) {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
-
-                                }
-                            }
-                        } else {
-                            if (phoneLen > 3 && phoneLen <= 7) {
-                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
-                            } else if (phoneLen > 7) {
-                                if (phoneLen == 10) {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
-                                } else {
-                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
-                                }
-                            }
-                        }
-                        event.target.value = phoneNumber;
-                    }
-                }
-            },
         },
         classname : {
             priceVal : {
@@ -412,6 +390,13 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 },
             },
+            mngSttsCd : {
+                event : {
+                    change : function() {
+                        rtrnRsnCntnShow($(this).val());
+                    }
+                }
+            },
             // 회원검색 모달
             btnPartUserModal: {
                 event: {
@@ -423,7 +408,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     cmmCtrl.frmAjax(function(respObj) {
                                         /* return data input */
                                         setInputValue(respObj);
-                                        fnpstnNmShow();
+                                        fnpstnNmShow($('#pstnCd').val());
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");
@@ -469,6 +454,38 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
         },
         immediately : function() {
             //폼 데이터 처리
@@ -482,23 +499,34 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             fieldShowFn($('#ctgryCd').val());
             /* 직급 값에 따른 show/hide */
             fnpstnNmShow($('#pstnCd').val());
+            /* 반려사유 show/hide */
+            rtrnRsnCntnShow($('#mngCd').val());
 
             $formObj.validation({
                 after : function() {
                     var isValid = true;
+
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
+                    }
 
                     let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
                     let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
                     if(dropzoneTask.length > 0) {
                         dropzoneTask.each(function(idx, el) {
                             if($(el).find('.dz-preview').length < 1) {
+                                alert(msgCtrl.getMsg("fail.notFileRequired"));
                                 isValid = false;
+                                return false;
                             }
                         });
-                    }
-
-                    if(!isValid) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
                     }
 
                     return isValid;

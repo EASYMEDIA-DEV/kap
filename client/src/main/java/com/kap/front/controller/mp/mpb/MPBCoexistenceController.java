@@ -3,9 +3,15 @@ package com.kap.front.controller.mp.mpb;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnMstDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
+import com.kap.core.dto.wb.WBSpprtDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
@@ -15,14 +21,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -56,6 +61,8 @@ public class MPBCoexistenceController {
     public final WBHACalibrationService wbhaCalibrationService;
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final WBJBAcomListService wBJBAcomListService;
+    public final WBCBSecurityService wBCBSecurityService;
+    public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
 
 
     /**
@@ -118,8 +125,17 @@ public class MPBCoexistenceController {
 
                 } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //스마트공장
-                    WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
-                    wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    /* 스마트 상태 코드 값 */
+                    ArrayList<String> cdDtlList = new ArrayList<String>();
+                    cdDtlList.add("BGN_REG_INF");
+                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                    /* 진행 단계 별 신청 정보*/
+                    WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+                    wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
+                    modelMap.addAttribute("rtnDto", mpbBsnSearchDTO);
+                    modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
+                    modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
                     
                 } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //검교정
@@ -141,6 +157,11 @@ public class MPBCoexistenceController {
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                     modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
+                } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
                 }
             }
 
@@ -201,9 +222,11 @@ public class MPBCoexistenceController {
                 } else {
                     if ("코드".equals(mpbBsnSearchDTO.getBsnCd())) {
 
+                    } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        respCnt = wBFBRegisterCompanyService.updInfoUser(mpbBsnMstDTO.getWBFBRegisterDTO(), multiRequest, request);
                     } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //검교정
-                    } else if ("BNS09".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //공급망
                         WBIBSupplyDTO wBIBSupplyDTO = new WBIBSupplyDTO();
                         wBIBSupplyDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
@@ -213,11 +236,14 @@ public class MPBCoexistenceController {
                         wBIBSupplyDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
 
                         respCnt = wBIBSupplyCompanyService.updateInfo(wBIBSupplyDTO, multiRequest, request);
+                    } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
+
+                        respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
                     }
                 }
             }
-
-
             modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)
@@ -226,9 +252,37 @@ public class MPBCoexistenceController {
             {
                 log.debug(e.getMessage());
             }
+            e.printStackTrace();
             throw new Exception(e.getMessage());
 
         }
         return "jsonView";
     }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/getBsnmNoCheck")
+    @ResponseBody
+    public WBFBRegisterSearchDTO getBsnmNoCheck(@Valid @RequestBody MPBBsnSearchDTO mPBBsnSearchDTO, HttpServletRequest request) throws Exception
+    {
+        WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+        try {
+            if(mPBBsnSearchDTO.getOfferBsnmNo() != null) {
+                wBFBRegisterSearchDTO.setBsnCd("BSN06"); /* 스마트 공장 */
+                wBFBRegisterSearchDTO.setOfferBsnmNo(mPBBsnSearchDTO.getOfferBsnmNo());
+                wBFBRegisterSearchDTO = wBFBRegisterCompanyService.getBsnmNoCheck(wBFBRegisterSearchDTO);
+            }
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBFBRegisterSearchDTO;
+    }
+
 }

@@ -701,25 +701,48 @@ var commonScript = (function(){
 
             // 유틸 - 전체메뉴, (mobile) 공지사항 알림 rolling
         function noticeRollingText(){
-          // prev 삭제
-          $(".notice-rolling .prev").removeClass("prev");
+          if($(".notice-rolling li").length >= 3) {
+            $(".notice-rolling li:nth-child(1)").addClass("current");
+            $(".notice-rolling li:nth-child(2)").addClass("next");
+            $(".notice-rolling li:nth-child(3)").addClass("prev");
 
-          // current -> prev
-          let current = $(".notice-rolling .current");
-          current.removeClass("current");
-          current.addClass("prev");
+            rollingInterval = window.setInterval(() => {
+              $(".notice-rolling .prev").removeClass("prev");
 
-          // next -> current
-          let next = $(".notice-rolling .next");
-          //다음 목록 요소가 있을 때, 없을 때
-          if (next.next().length === 0) {
-            $(".notice-rolling ul li:first-child").addClass("next");
-          }else{
-            //목록 처음 요소를 다음 요소로 선택
-            next.next().addClass("next");
+              let current = $(".notice-rolling .current");
+              current.removeClass("current");
+              current.addClass("prev");
+
+              let next = $(".notice-rolling .next");
+              if (next.next().length === 0) {
+                $(".notice-rolling ul li:first-child").addClass("next");
+              }else{
+                next.next().addClass("next");
+              }
+              next.removeClass("next");
+              next.addClass("current");
+            }, 3000);
+          } else if($(".notice-rolling li").length == 2) {
+            $(".notice-rolling li:nth-child(1)").addClass("current");
+            $(".notice-rolling li:nth-child(2)").addClass("next");
+            
+            rollingInterval = window.setInterval(() => {
+
+              let current = $(".notice-rolling .current");
+              current.removeClass("current");
+              current.addClass("prev");
+              
+              let next = $(".notice-rolling .next");
+              next.removeClass("next");
+              next.addClass("current");
+
+              setTimeout(() => {
+                let prev = $(".notice-rolling .prev");
+                prev.removeClass("prev");
+                prev.addClass("next");
+              }, 1000); 
+            }, 3000);
           }
-          next.removeClass("next");
-          next.addClass("current");
         }
         
         $("#header .util-area .menu-btn").off().on("click", function(){
@@ -727,6 +750,7 @@ var commonScript = (function(){
           if(!$("#header").hasClass("menu-open")) {
             $("#header .all-menu").show(0, function() {
               $("#header").addClass("menu-open");
+
               $("#header .all-menu").addClass("scroll");
               $("body").addClass("stop-scroll");
               $("#header .util-area .menu-btn").addClass("active");
@@ -740,12 +764,16 @@ var commonScript = (function(){
               }
 
               // 롤링 텍스트 시작
-              rollingInterval = window.setInterval(noticeRollingText, 3000);
-
+              noticeRollingText();
             });
           } else {
             $("#header .all-menu").fadeOut(200, function() {
               $("#header").removeClass("menu-open");
+
+              // 롤링 텍스트 정지
+              clearInterval(rollingInterval);
+              // 롤링 텍스트 정지 시, 초기화
+              $(".notice-rolling li").removeClass("current next prev");
             });
             
             $("#header .util-area .menu-btn").removeClass("active");
@@ -766,14 +794,6 @@ var commonScript = (function(){
                 $("body").removeClass("stop-scroll");
               }
             }
-
-            // 롤링 텍스트 정지
-            clearInterval(rollingInterval);
-            // 롤링 텍스트 정지 시, 초기화
-            $(".notice-rolling li").removeClass("prev current next");
-            $(".notice-rolling li:first-child").addClass("current");
-            $(".notice-rolling li:nth-child(2)").addClass("next");
-            $(".notice-rolling li:last-child").addClass("prev");
           }
         });
         $("#header .all-menu .gnb .two-pack > li").off().on("mouseenter focusin", function() {
@@ -1373,19 +1393,16 @@ function scrollMotionTrigger(){
 }
 
 function progressCounterNum(progressValue, numValue) {
-  $({countNum: 0}).animate(
-    {countNum: numValue}, {
-      deley: 800,
-      duration: 1000,
-      easing: "easeOutQuad",
-      step: function () {
-        $(progressValue).find(".progress-info .progress-num .num").text(Math.floor(this.countNum));
-      },
-      complete: function () {
-        $(preogressEle).find(".progress-info .progress-num .num").text(this.countNum);
-      }
+  let counter = { number: 0 };
+  const conuterCont =  $(progressValue).find(".progress-info .progress-num .num");
+
+  gsap.to(counter, {
+    duration: 1,
+    number: numValue,
+    onUpdate() {
+      $(conuterCont).html(counter.number.toFixed(0));
     }
-  );
+  });
 }
 
 function quickRePosition(){

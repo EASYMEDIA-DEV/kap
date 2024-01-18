@@ -350,7 +350,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-input form-display" style="display:none;">
-                                                                <input type="text" placeholder="기타 직급 입력"  class="pstnNm notRequired pstnNmOld" value="${rtnDtl.pstnNm}" >
+                                                                <input type="text" placeholder="기타 직급 입력"  class="pstnNm notRequired pstnNmOld pstnNmOld2" value="${rtnDtl.pstnNm}" >
                                                             </div>
 
                                                         </div>
@@ -406,11 +406,11 @@
                                                 <p class="tit">주소</p>
                                                 <p class="txt addrNm">${rtnDtl.cmpnBscAddr}  ${rtnDtl.cmpnDtlAddr}</p>
                                             </div>
-                                            <div class="list-txt">
+                                            <div class="list-txt" id="buseoHide">
                                                 <p class="tit">부서</p>
                                                 <p class="txt  buseo"></p>
                                             </div>
-                                            <div class="list-txt">
+                                            <div class="list-txt" id="gikHide">
                                                 <p class="tit">직급</p>
                                                 <p class="txt  gikgub"></p>
                                             </div>

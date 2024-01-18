@@ -219,6 +219,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $(".memberDetailsPopup #cmssrCbsnCdNm span").text(rtnData.cmssrCbsnCdNm);
                                     $(".memberDetailsPopup #cmssrMjrCarerCntn").text(rtnData.cmssrMjrCarerCntn);
                                     $(".memberDetailsPopup #cmssrCnstgFldCntn").text(rtnData.cmssrCnstgFldCntn);
+                                    // $(".memberDetailsPopup #goQa span").text("/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
+                                    $(".memberDetailsPopup #goQa").attr("href", "/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
 
                                     $(".memberDetailsPopup").css("display", "block");
                                     $(".dimd").css("display", "block");

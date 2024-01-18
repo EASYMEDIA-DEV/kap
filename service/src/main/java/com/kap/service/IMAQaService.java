@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.core.dto.im.ima.IMAQaPicDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 /**
  * 1:1 문의 service
@@ -32,9 +33,9 @@ public interface IMAQaService {
     public IMAQaDTO selectQaDtl(IMAQaDTO pIMAQaDTO) throws Exception;
 
     /**
-     * 1:1 문의 등록
+     * 1:1 문의 답변 등록
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception;
+    public int insertQaRply(IMAQaDTO pIMAQaDTO) throws Exception;
 
     /**
      * 1:1 문의 담당자 목록 조회
@@ -65,5 +66,13 @@ public interface IMAQaService {
      * 1:1 문의 담당자 상세 조회
      */
     public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
+
+
+
+
+    /**
+     * 1:1 문의 등록 (사용자)
+     */
+    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
 }

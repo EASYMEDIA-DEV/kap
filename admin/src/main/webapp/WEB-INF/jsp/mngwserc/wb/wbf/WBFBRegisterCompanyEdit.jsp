@@ -100,7 +100,7 @@
                                 </div>
                             </div>
 
-                            <label class="col-sm-1 control-label">직급</label>
+                            <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-5" style="margin-left: -15px">
                                     <select class="form-control input-sm" id="pstnCd" name="pstnCd" title="직급">
@@ -132,7 +132,7 @@
                             </div>
                             <label class="col-sm-1 control-label">일반 전화번호</label>
                             <div class="col-sm-2">
-                                <input type="text" class="form-control phoneChk notRequired" id="telNo" name="telNo" value="${registerDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
+                                <input type="text" class="form-control notRequired telNumber" id="telNo" name="telNo" value="${registerDtl.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="일반 전화번호" placeholder="전화번호 입력"/>
                             </div>
                         </div>
                     </fieldset>
@@ -216,10 +216,10 @@
 
                     <fieldset>
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                            <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
-                                    <input type="text" class="form-control phoneChk input-sm" id="compTel" name="compTel" value="${registerDtl.compTel}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="전화번호 입력"/>
+                                    <input type="text" class="form-control input-sm telNumber" id="compTel" name="compTel" value="${registerDtl.compTel}" title="회사 전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" placeholder="전화번호 입력"/>
                                 </div>
                             </div>
 
@@ -1237,7 +1237,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1246,7 +1246,7 @@
                                                         </c:if>
                                                     </c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>

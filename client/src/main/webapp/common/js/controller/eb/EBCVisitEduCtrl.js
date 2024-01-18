@@ -91,7 +91,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                 $("#techBox").css('display', 'none');
             }
             $(".checkBoxArea").validation({});
-        }, './two-step/changeAppctnFldCd', actForm, "text");
+        }, './step2/changeAppctnFldCd', actForm, "text");
     }
 
 
@@ -172,7 +172,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     click : function () {
                         var url = "./index";
                         if($("#memCd").val() == "CP") {
-                            location.href = "./apply/one-step";
+                            location.href = "./apply/step1";
                         } else if($("#memCd").val() != "" && $("#memCd").val() != "CP") {
                             alert("방문교육 신청은 부품사 회원만 신청 가능합니다.");
                             location.href = url;
@@ -284,6 +284,8 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
                 $("input[name=edctnPlaceAddr]").val(edctnPlaceAddr);
             });
+
+            cmmCtrl.setCalendar();
         }
     };
 

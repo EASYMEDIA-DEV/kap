@@ -220,7 +220,7 @@
                         <button type="button" class="btn btn-inverse btn-sm gpcIdSearch">
                             인증
                         </button>
-                        <span>인증되었습니다.</span>
+                        <span id="gpcIdText"></span>
 
                         <input type="hidden" class="form-control input-sm notRequired" id="memSeq" name="memSeq" value="" title="회원번호"/>
                         <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>

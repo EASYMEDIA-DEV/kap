@@ -27,11 +27,11 @@
                 <!-- 레이어 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />
                 <div class="modal-body">
-                    <!--기간 검색 시작-->
-                    <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
-                        <jsp:param name="srchText" value="등록/수정기간" />
-                        <jsp:param name="srchOption" value="등록일,수정일" />
-                    </jsp:include>
+<%--                    <!--기간 검색 시작-->--%>
+<%--                    <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">--%>
+<%--                        <jsp:param name="srchText" value="등록/수정기간" />--%>
+<%--                        <jsp:param name="srchOption" value="등록일,수정일" />--%>
+<%--                    </jsp:include>--%>
 
                     <!-- 과정정보 -->
                     <fieldset>
@@ -106,14 +106,14 @@
                             <label class="col-sm-1 control-label">접수기간<span class="star"> *</span></label>
                             <div class="col-sm-5" style="margin-left: -15px">
 
-                                <p class="form-control-static">${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}  ~ ${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
+                                <p class="form-control-static">${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}  ~ ${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</p>
                             </div>
 
                             <label class="col-sm-1 control-label">교육기간<span class="star"> *</span></label>
                             <div class="col-sm-5" style="margin-left: -15px">
                                 <input type="hidden" name="edctnStrtDtm" id="edctnStrtDtm" value="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                 <input type="hidden" name="edctnEndDtm" id="edctnEndDtm" value="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
-                                <p class="form-control-static">${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}  ~ ${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
+                                <p class="form-control-static">${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}  ~ ${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</p>
                             </div>
                         </div>
                     </fieldset>
@@ -166,7 +166,7 @@
 
                     <div class="clearfix">
                         <h6 class="pull-left mt0">
-                            <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="ptcptListLayerContainerTotCnt">0</span> 건)
+                            <em class="ion-play mr-sm"></em>참여자 목록 (총 <span id="ptcptListLayerContainerTotCnt">0</span> 건)
                         </h6>
                         <div class="pull-right ml-sm">
                             <select class="form-control input-sm listRowSizeContainer" >
@@ -186,12 +186,12 @@
                         <table class="table table-hover table-striped" data-atndcSize="${fn:length(tableAtndcList) * 3}">
                             <thead>
                             <tr>
-                                <th class="text-center" style="vertical-align:middle;" rowspan="3">
-                                    <label class="checkbox-inline c-checkbox">
-                                        <input type="checkbox" class="checkboxAll notRequired" title="전체선택" name="ptcptChk"/>
-                                        <span class="ion-checkmark-round"></span>
-                                    </label>
-                                </th>
+<%--                                <th class="text-center" style="vertical-align:middle;" rowspan="3">--%>
+<%--                                    <label class="checkbox-inline c-checkbox">--%>
+<%--                                        <input type="checkbox" class="checkboxAll notRequired" title="전체선택" name="ptcptChk"/>--%>
+<%--                                        <span class="ion-checkmark-round"></span>--%>
+<%--                                    </label>--%>
+<%--                                </th>--%>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">번호</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">아이디</th>
                                 <th class="text-center" style="vertical-align:middle;" rowspan="3">이름</th>

@@ -172,21 +172,27 @@ public class MPFCmssrAttendController {
         int atchFileCnt = 0;
         if (!files.isEmpty())
         {
-            result = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 10485760);
+            result = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 104857600);
             if (result.size() > 0)
             {
-                if(!imgUploadFileExtns.contains(result.get(0).getFileExtn())) {
+                if(result.get(0).getFileExtn() == null) {
                     JSONObject errObj = new JSONObject();
                     errObj.put("message", "파일 업로드에 실패하였습니다. \n관리자에게 문의해주세요.");
                     modelMap.addAttribute("error", errObj);
-                }
+                } else {
+                    if (!imgUploadFileExtns.contains(result.get(0).getFileExtn())) {
+                        JSONObject errObj = new JSONObject();
+                        errObj.put("message", "파일 업로드에 실패하였습니다. \n관리자에게 문의해주세요.");
+                        modelMap.addAttribute("error", errObj);
+                    }
 
-                if(coFileDTO!=null) {
-                    result.get(0).setFileSeq(coFileDTO.getFileSeq());
-                    result.get(0).setFileOrd(coFileDTO.getFileOrd());
-                }
+                    if (coFileDTO != null) {
+                        result.get(0).setFileSeq(coFileDTO.getFileSeq());
+                        result.get(0).setFileOrd(coFileDTO.getFileOrd());
+                    }
 
-                result.get(0).setStatus("success");
+                    result.get(0).setStatus("success");
+                }
             }
         }
         modelMap.addAttribute("fileName", result);

@@ -771,10 +771,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function(){
 						cmmCtrl.getLecturerLayerPop(function(data){
 
-							//두번호출 방지
-							if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+							if(data.choiceCnt  == -1){
 								return false;
 							}
+							// //두번호출 방지
+							// if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+							// 	return false;
+							// }
 
 							if(data.choiceCnt  == 0){
 								alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
@@ -890,7 +893,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
 					//파라미터를 물고 가야함.
-					location.href = "./excel-down2?" + frmDataObj.serialize();
+					// location.href = "./excel-down2?" + frmDataObj.serialize();
+
+					$.fileDownload("./excel-down2?" + frmDataObj.serialize() , {
+						prepareCallback : function(url){
+							jQuery(".loadingbar").stop().fadeIn(200);
+						},
+						successCallback : function(url){
+							jQuery(".loadingbar").stop().fadeOut(200);
+							$excelObj.find("button.close").trigger('click');
+						},
+						failCallback : function(html,url){
+							jQuery(".loadingbar").stop().fadeOut(200);
+						}
+					});
 
 				} else {
 					alert(msgCtrl.getMsg("fail.reason"));

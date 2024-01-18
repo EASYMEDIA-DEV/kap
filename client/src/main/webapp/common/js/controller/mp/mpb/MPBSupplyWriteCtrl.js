@@ -77,7 +77,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             modify : {
                 event : {
                     click : function() {
-                        var id = $(this).data("seq");
                         var $formObj = $('#frmData');
                         var file = $formObj.find('input[type=file]');
                         var valid = true;

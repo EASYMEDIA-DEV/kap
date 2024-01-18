@@ -15,7 +15,7 @@
                 </td>
                 <td class="t-align-center">${ list.episdYear }년/<br class="only-pc"/>${ list.episdOrd }회차</td>
                 <c:if test="${ searchType eq 'complete' }">
-                <td class="t-align-center">${ list.cbsnCdNm }</td>
+                <td class="t-align-center">${ kl:nvl(list.cbsnCdNm, '-') }</td>
                 </c:if>
                 <td class="t-align-center">${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') } ~ <br class="only"/>${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>
                 <td class="t-align-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>

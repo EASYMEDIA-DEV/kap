@@ -102,6 +102,11 @@ public interface WBFBRegisterCompanyService {
     public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
 
     /**
+     *  신청 정보 조회 - 사용자
+     */
+    public int updInfoUser(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
      *  엑셀 Download
      */
     public void excelDownload(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, HttpServletResponse response) throws Exception;

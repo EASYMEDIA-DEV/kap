@@ -654,6 +654,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
+        response.setHeader("Set-Cookie", "fileDownload=true; path=/");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_부품사_관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output

@@ -1,6 +1,8 @@
 package com.kap.front.controller;
 
 import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.COWebUtil;
+import com.kap.common.utility.seed.COBrowserUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMenuDTO;
@@ -9,6 +11,7 @@ import com.kap.core.dto.co.COCNiceMyResDto;
 import com.kap.core.dto.co.COCNiceReqEncDto;
 import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.*;
@@ -21,14 +24,23 @@ import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
+import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.awt.image.BufferedImage;
+import java.io.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -52,7 +64,21 @@ public class COCOmmController {
     private final COCommService cOCommService;
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
-
+    /**
+     * 교육 차수 QR 이미지 다운로드
+     */
+    @Operation(summary = "교육 차수 QR 이미지 다운로드.", tags = "", description = "")
+    @GetMapping(value="/episd/qr-image-check")
+    public void getQrImageDownload(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
+    {
+        //QR 이미지 링크
+        if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
+            //QR 이미지 타고 들어옴
+            //로직 처리
+        }
+        RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
+        response.sendRedirect("/my-page/edu-apply/detail?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd());
+    }
 
 
     /**

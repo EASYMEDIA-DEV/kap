@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -73,6 +74,11 @@ public interface WBCBSecurityService {
      * 사용자 신청 등록
      */
     public int carbonUserInsert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사용자 신청 수정
+     */
+    public int carbonUserUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 
     /**
      * 사업자번호 매핑 여부 확인

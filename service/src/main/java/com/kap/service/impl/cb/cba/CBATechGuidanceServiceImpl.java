@@ -770,6 +770,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
+        response.setHeader("Set-Cookie", "fileDownload=true; path=/");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("기술지도_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output

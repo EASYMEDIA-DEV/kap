@@ -2,6 +2,8 @@ package com.kap.core.dto.mp.mpb;
 
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -50,4 +52,10 @@ public class MPBBsnMstDTO extends BaseDTO {
     
     @Schema(title = "공급망", example = "")
     private WBIBSupplyMstDTO wBIBSupplyMstDTO;
+
+    @Schema(title = "보안환경구축", example = "")
+    private WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO;
+
+    @Schema(title = "스마트공장", example = "")
+    private WBFBRegisterDTO wBFBRegisterDTO;
 }

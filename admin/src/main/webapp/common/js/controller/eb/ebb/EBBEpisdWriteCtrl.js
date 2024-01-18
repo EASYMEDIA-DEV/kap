@@ -287,6 +287,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#isttrContainer").find(".notIsttr").find("td").css("display", "");
 		}
 
+
+
 	}
 	var filedSet = function(data){
 
@@ -636,7 +638,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			},
 
-
+			//QR다운로드
+			btnQrDownload :{
+				event:{
+					click:function(){
+						var detailsKey = ctrl.obj.find("input[name=detailsKey]").val();
+						var episdYear = ctrl.obj.find("select[name=episdYear]").val();
+						var episdOrd = ctrl.obj.find("select[name=episdOrd]").val();
+						window.open("./qr-image-download?detailsKey=" + detailsKey + "&episdYear=" + episdYear + "&episdOrd=" + episdOrd);
+					}
+				}
+			},
 
 		},
 		classname : {
@@ -649,6 +661,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							$("#bdget").css({"display" : "flex", "flex-wrap" : "wrap"});
 						}else{
 							$("#bdget").css({"display" : "", "flex-wrap" : ""});
+						}
+
+						if ($(e.target).attr("href") == "#svResult"){
+							$(".btn-success").hide();
+						}else{
+							$(".btn-success").show();
 						}
 					}
 				}
@@ -883,10 +901,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							cmmCtrl.getLecturerLayerPop(function(data){
 
-								//두번호출 방지
-								if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+								if(data.choiceCnt  == -1){
 									return false;
 								}
+
+								//두번호출 방지
+								// if(data.choiceCnt == 1 && $("#isttrContainer").find("tr").find("input:hidden").length > 1){
+								// 	return false;
+								// }
 
 								if(data.choiceCnt  == 0){
 									alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
@@ -934,13 +956,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										spclCntn = data.spclCntn//약력(특이사항)
 										seq = data.seq//삭제(시퀀스값)
 
-										debugger
+
 										var passYn = false;//이 값이 true가 되면 이미 강사 목록에 있으므로 현재 동작을 취소한다.
-										$("#isttrContainer").find("tr").find("input:hidden").each(function(){
-											if($(this).val() == seq) {
-												alert("이미 추가된 강사입니다.");
-												passYn = true;
-											}
+
+										$("#isttrContainer").find("tr").find("input:hidden").each(function(index){
+											 if($(this).val() == seq) {
+											 	alert("이미 추가된 강사입니다.");
+											 	passYn = true;
+											 }
+
 										});
 										if(!passYn){
 											exIsttr.find("td").eq(1).text(name);
@@ -1503,12 +1527,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#examStrtDtm").attr("disabled") === undefined && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("시험시작일시를 선택해주세요");
 							return false;
 						}
 
-						if($("#examEndDtm").attr("disabled") === undefined && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("시험종료일시를 선택해주세요");
 							return false;
 						}
@@ -1536,12 +1560,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
 						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
-						//시험안하면 날짜 안넣어줌 에러남
-						if($("#examStrtDtm").attr("class").indexOf("notRequired") < 0){
-							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
-						}
-						
+						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
 
 
 

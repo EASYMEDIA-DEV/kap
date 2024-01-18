@@ -81,11 +81,37 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#fileKickNm").text(e.target.files[0].name);
                             $("#kickOffFile").addClass("attached");
 
+                            var _fileLen = e.target.files[0].length;
+                            let _lastDot = e.target.files[0].name.lastIndexOf(".")+1;
+                            var _fileExt = e.target.files[0].name.substring(_lastDot,_fileLen);
+
+                            if(e.target.files[0].size > $("#atchUploadMaxSize").val())  {
+                                $(".delKick").remove();
+                                $("#emptykickFile").show();
+                                $("#showKickFile").hide();
+                                $("#fileKickNm").text("");
+                                $("#kickOffFile").removeClass("attached");
+                                chgkickImage = 0;
+                                alert("첨부파일 용량은 최대 100MB까지만 등록 가능합니다.");
+                                return false;
+                            }
+                            if(!$("#imgExtns").val().includes(_fileExt)) {
+                                $(".delKick").remove();
+                                $("#emptykickFile").show();
+                                $("#showKickFile").hide();
+                                $("#fileKickNm").text("");
+                                $("#kickOffFile").removeClass("attached");
+                                chgkickImage = 0;
+                                alert("첨부 가능한 파일 확장자가 아닙니다.");
+                                return false;
+                            }
+
                             var form = new FormData();
                             form.append( "files", e.target.files[0] );
                             form.append( "fileSeq",  $("#fileKickSeq").val() );
                             form.append( "fileOrd", $("#fileKickOrd").val() );
-                            form.append( "__csrf", $("#csrfKeyAttend").val() );
+                            form.append( "_csrf", $("#csrfKeyAttend").val() );
+                            $(".loading-area").stop().fadeIn(200);
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"
@@ -101,7 +127,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                                 ,error: function (jqXHR)
                                 {
-                                    alert(jqXHR.responseText);
+                                    if(jqXHR.statusText =='parsererror' || jqXHR.statusText =='error') {
+                                        alert("등록가능한 파일이 아닙니다.");
+                                        $(".delKick").remove();
+                                        $("#emptykickFile").show();
+                                        $("#showKickFile").hide();
+                                        $("#fileKickNm").text("");
+                                        $("#kickOffFile").removeClass("attached");
+                                        chgkickImage = 0;
+                                        return false;
+                                    }
+                                } ,complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
                         }
@@ -122,11 +159,38 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#fileLvlNm").text(e.target.files[0].name);
                             $("#LvlFile").addClass("attached");
 
+                            var _fileLen = e.target.files[0].length;
+                            let _lastDot = e.target.files[0].name.lastIndexOf(".")+1;
+                            var _fileExt = e.target.files[0].name.substring(_lastDot,_fileLen);
+
+                            if(e.target.files[0].size > $("#atchUploadMaxSize").val())  {
+                                $(".delLvl").remove();
+                                $("#emptyLvlFile").show();
+                                $("#showLvlFile").hide();
+                                $("#fileLvlNm").text("");
+                                $("#LvlFile").removeClass("attached");
+                                chglvlImage = 0;
+                                alert("첨부파일 용량은 최대 100MB까지만 등록 가능합니다.");
+                                return false;
+                            }
+                            if(!$("#imgExtns").val().includes(_fileExt)) {
+                                $(".delLvl").remove();
+                                $("#emptyLvlFile").show();
+                                $("#showLvlFile").hide();
+                                $("#fileLvlNm").text("");
+                                $("#LvlFile").removeClass("attached");
+                                chglvlImage = 0;
+                                alert("첨부 가능한 파일 확장자가 아닙니다.");
+                                return false;
+                            }
+
                             var form = new FormData();
                             form.append( "files", e.target.files[0] );
+
                             form.append( "fileSeq",  $("#fileLvlSeq").val() );
                             form.append( "fileOrd", $("#fileLvlOrd").val() );
-                            form.append( "__csrf", $("#csrfKeyAttend").val() );
+                            form.append( "_csrf", $("#csrfKeyAttend").val() );
+                            $(".loading-area").stop().fadeIn(200);
                             jQuery.ajax({
                                 url : "./insert-fileUpload"
                                 , type : "POST"
@@ -134,6 +198,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 , contentType : false
                                 , data : form
                                 , success:function(response) {
+                                    $(".loading-area").stop().fadeOut(200);
                                     let data = response.fileName[0];
                                     for(let i in data) {
                                         let html = '<input type="hidden" class="delLvl" name=lvlFile[0].'+i+'  value='+data[i]+'>'
@@ -144,7 +209,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                                 ,error: function (jqXHR)
                                 {
-                                    alert(jqXHR.responseText);
+                                    if(jqXHR.statusText =='parsererror' || jqXHR.statusText =='error') {
+                                        alert("등록가능한 파일이 아닙니다.");
+                                        $(".delLvl").remove();
+                                        $("#emptyLvlFile").show();
+                                        $("#showLvlFile").hide();
+                                        $("#fileLvlNm").text("");
+                                        $("#LvlFile").removeClass("attached");
+                                        chglvlImage = 0;
+
+                                        return false;
+                                    }
+                                } ,complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
                         }
@@ -186,6 +263,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event :{
                     change:function () {
                         if($(this).val()!=""){
+                            $(".loading-area").stop().fadeIn(200);
                             jQuery.ajax({
                                 url : "./select-file",
                                 type : "POST",
@@ -194,7 +272,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     "cnstgSeq" : $(this).val()
                                 },
                                 dataType : "json",
-                                async: false,
                                 cache : false,
                                 success : function(data, status, xhr){
                                     $("#cnstgSeq").val(data.MPFFileDto.cnstgSeq);
@@ -216,6 +293,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     } else {
                                         $("#prevLvlFile").empty();
                                     }
+                                } ,complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
                         } else {
@@ -241,6 +320,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
                         if(confirm(msgCtrl.getMsg("confirm.sve"))) {
                             if(chgkickImage == 1) {
+                                console.log(chgkickImage);
                                 let html2 = '<input type="hidden" name=kickFile[1].status value="delfile">' +
                                     '<input type="hidden" name=kickFile[1].fileSeq value=' + $("#fileKickSeq").val() + '>' +
                                     '<input type="hidden" name=kickFile[1].fileOrd value=' + $("#fileKickOrd").val() + '>';
@@ -257,9 +337,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $(".paymentInfoManagPopup").css('display', 'none');
                                 $(".dimd").css('display', 'none');
                                 $("body").removeClass("stop-scroll");
+                                $(".dimd").css('z-index','');
                                 alert(msgCtrl.getMsg("success.sve"));
                                 location.reload();
-                            }, "./update-consult", $formObj5, "POST", "json", '', false);
+                            }, "./update-consult", $formObj5, "POST", "json");
 
                         }
 
@@ -294,12 +375,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     use : true,
 
                     func : function (){
-                            cmmCtrl.frmAjax(function(respObj) {
+                        if(confirm(msgCtrl.getMsg("confirm.sve"))) {
+                            cmmCtrl.frmAjax(function (respObj) {
+
                                 alert(msgCtrl.getMsg("success.sve"));
                                 location.reload();
-                            //     document.getElementById("formWthdrwSuccess").submit();
-                            }, "./insert-attend", $formObj, "POST", "json",'',false);
-
+                                //     document.getElementById("formWthdrwSuccess").submit();
+                            }, "./insert-attend", $formObj, "POST", "json", '', );
+                        }
 
                     }
                 }

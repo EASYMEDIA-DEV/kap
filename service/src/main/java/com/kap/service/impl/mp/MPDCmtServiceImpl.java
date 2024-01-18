@@ -163,8 +163,12 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
         int year = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[0]);
         int month = Integer.parseInt(mpdKenDto.getMonthpicker().split("-")[1]);
+        String monthString = String.valueOf(month);
+        if(month <10) {
+            monthString = "0"+monthString;
+        }
         mpdKenDto.setYear(String.valueOf(year));
-        mpdKenDto.setMnth(String.valueOf(month));
+        mpdKenDto.setMnth(monthString);
 
         YearMonth yearMonth = YearMonth.of(year, month);
         int lastDayOfMonth = yearMonth.lengthOfMonth();

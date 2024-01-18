@@ -29,10 +29,10 @@ public class COApiValidInterceptor implements HandlerInterceptor{
     //강제로그인여부
     @Value("${app.is-login}")
     private Boolean appLogin;
-    /** GPC KEY **/
+    /** KAP KEY **/
     @Value("${api.kap.key}")
     private String gpcApiKey;
-    /** GPC SECRET **/
+    /** KAP SECRET **/
     @Value("${api.kap.secret}")
     private String gpcApiSecret;
     @Override

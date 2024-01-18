@@ -44,37 +44,37 @@
                                 <div class="flex">
                                     <p class="f-title1">${rtnBsnData.year} ${rtnBsnData.episd}차 ${rtnBsnData.bsnNm}</p>
                                     <div class="group">
-                                        <div class="status-info-w">
-                                            <c:choose>
-                                                <c:when test="${rtnBsnData.mrtsCd eq null}">
-                                                    <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
+                                        <c:choose>
+                                            <c:when test="${rtnBsnData.mrtsCd eq null}">
+                                                <p class="index-num f-head">${rtnBsnData.rsumeSttsCdNm}</p>
+                                                <div class="status-info-w">
                                                     <p class="box-label bigger ${classType}"><span>${rtnBsnData.appctnSttsCdNm}</span></p>
-                                                </c:when>
-                                                <c:otherwise>
-                                                    <c:choose>
-                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS01'}">
-                                                            <p class="box-label bigger complete"><span>장관상</span></p>
-                                                        </c:when>
-                                                        <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS02'}">
-                                                            <p class="box-label bigger complete"><span>이사장</span></p>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            <p class="box-label bigger complete"><span>회장상</span></p>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:otherwise>
-                                            </c:choose>
-                                        </div>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:choose>
+                                                    <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS01'}">
+                                                        <p class="box-label bigger complete"><span>장관상</span></p>
+                                                    </c:when>
+                                                    <c:when test="${rtnBsnData.mrtsCd eq 'MNGCNSLT_DIS02'}">
+                                                        <p class="box-label bigger complete"><span>이사장</span></p>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <p class="box-label bigger complete"><span>회장상</span></p>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                                 <div class="def-list-w">
                                     <div class="def-list">
                                         <p class="tit f-head">신청일자</p>
-                                        <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</p>
+                                        <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                                     </div>
                                     <div class="def-list">
                                         <p class="tit f-head">사업기간</p>
-                                        <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(rtnBsnData.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</p>
+                                        <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnBsnData.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                                         </div>
                                     </div>
                                     <div class="btn-wrap">

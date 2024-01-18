@@ -6,7 +6,7 @@
     <hr >
     <fieldset class="mt0">
         <div class="form-group text-sm ">
-            <label class="col-sm-1 control-label text-bold">성명(아이디)</label>
+            <label class="col-sm-1 control-label text-bold">신청자(아이디)</label>
             <div class="col-sm-5 memName">
             </div>
             <label class="col-sm-1 control-label text-bold">이메일<span class="star"> *</span></label>
@@ -28,9 +28,12 @@
             </div>
             <label class="col-sm-1 control-label text-bold">직급<span class="star"> *</span></label>
             <div class="col-sm-2">
-                <select class="form-control input-sm" name="memPstnCd" title="신청자 직급">
+                <select class="form-control input-sm memPstnCd" name="memPstnCd" title="신청자 직급">
 
                 </select>
+            </div>
+            <div class="col-sm-2 memPstnCdEtc" style="display:none;">
+                <input type="text" class="form-control input-sm notRequired" name="memPstnNm" value="" maxlength="100" title="기타" placeholder=""  />
             </div>
         </div>
     </fieldset>
@@ -93,7 +96,7 @@
         <div class="form-group text-sm">
             <label class="col-sm-1 control-label text-bold">전화번호<span class="star"> *</span></label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm phoneChk" name="cmpnTelNo" value="" maxlength="13" title="부품사 전화번호" placeholder=""  />
+                <input type="text" class="form-control input-sm phoneChk" name="cmpnTelNo" value="" maxlength="11" title="부품사 전화번호" placeholder=""  />
             </div>
             <label class="col-sm-1 control-label text-bold">사업자등록번호<span class="star"> *</span></label>
             <div class="col-sm-5 cmpnBsnmNo">

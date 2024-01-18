@@ -19,7 +19,7 @@
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
       <div class="apply-step-w">
         <div class="for-move">
-          <div class="step-list"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+          <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
             <p class="step-num">1</p>
             <p class="step-con">기본정보</p>
           </div>
@@ -398,10 +398,12 @@
                         <div class="form-group">
                           <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                             <p class="empty-txt">선택된 파일 없음</p>
+                            <div class="file-list">
+                            </div>
                           </div>
                           <div class="file-btn-area">
                             <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
-                            <input type="file" id="searchFile" name="appctnFileSeq" data-file-field-nm="appctnFileSeq" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
+                            <input type="file" class="searchFile" id="searchFile" name="appctnFileSeq" data-file-field-nm="appctnFileSeq" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                           </div>
                           <div class="btn-wrap btn-down-wrap">

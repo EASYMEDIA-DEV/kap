@@ -41,6 +41,9 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "회원순번", example = "숫자")
     private Integer memSeq;
 
+    @Schema(title = "회원코드", example = "")
+    private String memCd;
+
     @Schema(title = "신청사업자번호", example = "숫자")
     private String appctnBsnmNo;
 
@@ -139,7 +142,17 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "신청회원 직급코드", example = "")
     private String pstnCd;
 
-    @Schema(title = "신청회원 직급상세명", example = "")
+    @Schema(title = "신청회원 직급코드명", example = "")
+    private String pstnCdNm;
+
+    // 직급코드가 기타인 경우 값 있음
+    @Schema(title = "신청회원 직급명", example = "")
+    private String pstnNm;
+
+    @Schema(title = "신청회원 부서상세명", example = "")
+    private String deptNm;
+
+    @Schema(title = "신청회원 부서코드명", example = "")
     private String deptCdNm;
 
     // 방문교육을 신청한 회사 정보

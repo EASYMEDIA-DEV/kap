@@ -42,10 +42,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				location.replace(data.rdctUrl);
 			}
 		}
-		// 계정차단
+		// 탈퇴 계정
 		else if (code == "1090")
 		{
-			alert(msgCtrl.getMsg("fail.co.login.block"));
+			alert(msgCtrl.getMsg("fail.co.login.wthdrwUser"));
 		}
 		// 로그인 오류
 		else if (code == "1190")
@@ -57,8 +57,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		{
 			alert(msgCtrl.getMsg("fail.co.login.countExcess"));
 		}
-		// 1210:임시 비밀번호, 1310: 오픈 후 첫 로그인, 1410:비밀번호 변경주기(3개월) 초과
-		else if (code == "1210" || code == "1310" || code == "1410" || code == "1510")
+		// 1210:임시 비밀번호, 1310: 오픈 후 첫 로그인, 1400:비밀번호 변경주기(3개월) 초과
+		else if (code == "1210" || code == "1310" || code == "1400" )
 		{
 			if (code == "1210")
 			{
@@ -69,7 +69,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			{
 				location.replace("/info-upd");
 			}
-			else if (code == "1410" || code == "1510")
+			else if (code == "1400")
 			{
 				alert(msgCtrl.getMsg("fail.co.login.password.changeCycle"));
 				location.replace("/change-password");
@@ -165,8 +165,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					event : {
 						click : function() {
 							if(confirm(msgCtrl.getMsg("confirm.pwdNextUpd"))) {
-								var $formObj2 = $("#frmPwdChng");
-								cmmCtrl.frmAjax(callbackAjaxPwdNextChng, "/change-password-next", $formObj2);
+								location.replace("/");
+
+								// var $formObj2 = $("#frmPwdChng");
+								// cmmCtrl.frmAjax(callbackAjaxPwdNextChng, "/change-password-next", $formObj2);
 							}
 						}
 					}

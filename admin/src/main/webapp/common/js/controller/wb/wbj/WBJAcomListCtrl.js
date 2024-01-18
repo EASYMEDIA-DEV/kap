@@ -70,8 +70,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnExcelDown : {
                 event : {
                     click: function () {
-                        //사유입력 레이어팝업 활성화
-                        location.href = "./excelDown?" + $formObj.serialize();
+                        $.fileDownload("./excelDown?" + frmDataObj.serialize() , {
+                            prepareCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeIn(200);
+                            },
+                            successCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                                $excelObj.find("button.close").trigger('click');
+                            },
+                            failCallback : function(html,url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                            }
+                        });
                     }
                 }
             },

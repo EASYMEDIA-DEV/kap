@@ -183,6 +183,24 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./changeList.ajax", $formObj, "POST", "html");
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
+
+    let fnNewPstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#newPstnNm").css("display", "block");
+        }else{
+            $("#newPstnNm").val("");
+            $("#newPstnNm").css("display", "none");
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -283,7 +301,82 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            telNo : {
+            pstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnpstnNmShow(pstnCd);
+                    }
+                }
+            },
+            newPstnCd : {
+                event : {
+                    change : function() {
+                        var pstnCd = $(this).val();
+                        fnNewPstnNmShow(pstnCd);
+                    }
+                }
+            },
+        },
+        classname : {
+            // 회원검색 모달
+            btnPartUserModal: {
+                event: {
+                    click: function () {
+                        $("#srchDivide").val("Y");
+                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                                fnpstnNmShow();
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                        });
+                    }
+                }
+            },
+            appctnPdfDownload : {
+                event : {
+                    click : function(){
+                        var cmpnNm = $("#cmpnNm").val()
+                        var fileName = "자동차부품산업진흥재단 사업 현황" + cmpnNm + ".pdf";
+                        cmmCtrl.getAppctnPdfDownload(fileName);
+                    }
+                }
+            },
+            same : {
+                event : {
+                    keyup : function() {
+                        document.getElementById("same").checked = false;
+                    }
+                }
+            },
+            //부품사 찾기
+            bsnmNoBtn : {
+                event : {
+                    click : function() {
+                        cmmCtrl.getPartsCompanyLayerPop(function(data){
+                            $("#newBsnmNo").val(data.seq);
+                            $("#bsnmNoNm").val(data.titl);
+                            $("#ctgryNm").val(data.ctgryNm);
+                            fnNewPstnNmShow();
+                        });
+                    }
+                }
+            },
+            //페이징 처리
+            pageSet : {
+                event : {
+                    click : function() {
+                        //페이징 이동
+                        if ($(this).closest('#changePaging').length > 0) {
+                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
+                            trnsfSearch($(this).attr("value"));
+                        }
+                    }
+                }
+            },
+            telNumber : {
                 event : {
                     input : function (event) {
                         let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
@@ -316,63 +409,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 }
             },
         },
-        classname : {
-            // 회원검색 모달
-            btnPartUserModal: {
-                event: {
-                    click: function () {
-                        $("#srchDivide").val("Y");
-                        cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            $formObj.find('#memSeq').val(data.memSeq);
-                            cmmCtrl.frmAjax(function(respObj) {
-                                /* return data input */
-                                setInputValue(respObj);
-                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                        });
-                    }
-                }
-            },
-            appctnPdfDownload : {
-                event : {
-                    click : function(){
-                        var cmpnNm = $("#cmpnNm").val()
-                        var fileName = "자동차부품산업진흥재단 사업 현황" + cmpnNm + ".pdf";
-                        cmmCtrl.getAppctnPdfDownload(fileName);
-                    }
-                }
-            },
-            same : {
-                event : {
-                    keyup : function() {
-                        document.getElementById("same").checked = false;
-                    }
-                }
-            },
-            //부품사 찾기
-            bsnmNoBtn : {
-                event : {
-                    click : function() {
-                        cmmCtrl.getPartsCompanyLayerPop(function(data){
-                            $("#newBsnmNo").val(data.seq);
-                            $("#bsnmNoNm").val(data.titl);
-                            $("#ctgryNm").val(data.ctgryNm);
-                        });
-                    }
-                }
-            },
-            //페이징 처리
-            pageSet : {
-                event : {
-                    click : function() {
-                        //페이징 이동
-                        if ($(this).closest('#changePaging').length > 0) {
-                            $formObj.find("input[name=pageIndex]").val($(this).attr("value"));
-                            trnsfSearch($(this).attr("value"));
-                        }
-                    }
-                }
-            },
-        },
         immediately : function() {
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
@@ -399,11 +435,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    if($(".dropzone .dz-preview").length < 1) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = !isValid;
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
                     }
 
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert(msgCtrl.getMsg("fail.notFileRequired"));
+                        isValid = false;
+                        return false;
+                    }
                     return isValid;
                 },
                 async : {

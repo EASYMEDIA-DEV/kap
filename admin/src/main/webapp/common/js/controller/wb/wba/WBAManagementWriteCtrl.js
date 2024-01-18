@@ -80,6 +80,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
         },
         immediately : function() {
 
+            $(".stepList").each(function(){
+                var fileCk = $(this).find("input[name=fileYn]").is(":checked");
+                if(fileCk){
+                    $(this).find('.dropzone').css("pointer-events","none").css("background-color","#eee");
+                }
+            });
+
+
             $("#btn_delete").click(function () {
                 if (confirm(msgCtrl.getMsg("confirm.del"))) {
                     cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);

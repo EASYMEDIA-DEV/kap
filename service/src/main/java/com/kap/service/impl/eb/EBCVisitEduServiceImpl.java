@@ -739,6 +739,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
+        response.setHeader("Set-Cookie", "fileDownload=true; path=/");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_방문교육_관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
@@ -830,5 +831,12 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
      */
     public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
         return ebcVisitEduMapper.selectVisitEduApplyRegDtm(ebcVisitEduDTO);
+    }
+
+    /**
+     * 사용자 방문교육 신청자정보를 조회
+     */
+    public EBCVisitEduDTO selectApplicantInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+        return ebcVisitEduMapper.selectApplicantInfo(ebcVisitEduDTO);
     }
 }

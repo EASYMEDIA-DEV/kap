@@ -98,9 +98,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             trgtContainer.append(stepOptnContainerHtml);
                             $(this).closest(".stepList").find('.fileListDepth').find("input[name=optnNm]").prop('readonly',true);
 
-                        } else {
-                            $(this).closest(".stepList").find('.fileListDepth').find("input[name=optnNm]").prop('readonly',false);
+                            var stepList = $(this).closest(".stepList");
+                            stepList.find('.dropzone').css("pointer-events","none").css("background-color","#eee");
 
+                        } else {
+
+                            var stepList = $(this).closest(".stepList");
+                            stepList.find('.dropzone').css("pointer-events","auto").css("background-color","");
+
+                            $(this).closest(".stepList").find('.fileListDepth').find("input[name=optnNm]").prop('readonly',false);
                             var trgtObj = $(this).closest(".stepList").find(".fileListDepth").find(".dropzone");
 
                             cmmCtrl.setDropzone(trgtObj, {
@@ -135,10 +141,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnDeleteOptn :{
                 event :{
                     click: function(){
-                        if($(this).closest(".stepList").find(".fileListDepth").size() == 1){
-                            alert( msgCtrl.getMsg("fail.wb.deleteFileName") );
-                        }else{
-                            $(this).closest(".fileListDepth").remove();
+                        var fileCk =  $(this).closest(".stepList").find("input[name=fileYn]").is(":checked");
+                        if(!fileCk) {
+                            if ($(this).closest(".stepList").find(".fileListDepth").size() == 1) {
+                                alert(msgCtrl.getMsg("fail.wb.deleteFileName"));
+                            } else {
+                                $(this).closest(".fileListDepth").remove();
+                            }
                         }
                     }
                 }

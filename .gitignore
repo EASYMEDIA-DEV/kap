@@ -27,3 +27,14 @@
 /client/build/
 /client/out/
 /client/build/
+/kapkorea-Bastion.pem
+/kapkorea-Bastion.ppk
+/kapkorea-dev-backend.pem
+/kapkorea-dev-frontend.pem
+/kapkorea-prod-backend.pem
+/kapkorea-prod-backend.ppk
+/kapkorea-prod-frontend.pem
+/kapkorea-prod-frontend2.ppk
+/kapkorea-prod-frontend3.ppk
+/kapkorea-prod-frontend4.ppk
+/kapkorea-prod-frontend5.ppk

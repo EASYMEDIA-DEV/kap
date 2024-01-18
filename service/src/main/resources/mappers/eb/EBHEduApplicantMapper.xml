@@ -206,6 +206,8 @@
 					</otherwise>
 				</choose>
 			</if>
+
+			AND C.RCRMT_MTHD_CD = 'RCRMT_MTHD02'
 		</where>
 	</sql>
 

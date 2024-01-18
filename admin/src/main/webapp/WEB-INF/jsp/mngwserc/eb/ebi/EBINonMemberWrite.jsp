@@ -358,7 +358,7 @@
                                     <div class="row" style="margin-bottom: 20px;">
                                         <c:forEach var="targetList" items="${list.edList}">
                                             <c:choose>
-                                                <c:when test="${targetList.dpth eq '2'}">
+                                                <c:when test="${targetList.dpth eq '2' && targetList.cdNm ne '기타' && targetList.cd ne 'ED_TARGET05001'}">
                                                     <label class="col-sm-1 control-label">${targetList.cdNm}<span class="star"> *</span></label>
                                                     <c:set var="prtName" value="${targetList.cdNm}" />
                                                 </c:when>
@@ -381,8 +381,9 @@
                                                         </label>
                                                     </c:if>
                                                     <c:if test="${targetList.cdNm eq '기타' && targetList.cd eq 'ED_TARGET05001'}">
-                                                        <div class="col-sm-5">
-                                                            <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${rtnTrgtData[rtnTrgtData.size()-1].etcNm}" title="기타" maxlength="200" placeholder="미입력 시 사용자 사이트에 하이픈(-)으로 표시"/>
+                                                        <label class="col-sm-1 control-label">${targetList.cdNm}&nbsp;&nbsp;</label>
+                                                        <div class="col-sm-5 ml0 pl0">
+                                                            <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${rtnTrgtData[rtnTrgtData.size()-1].etcNm}" title="기타" maxlength="50" placeholder="미입력 시 사용자 사이트에 하이픈(-)으로 표시"/>
                                                         </div>
                                                     </c:if>
                                                 </c:otherwise>
@@ -861,7 +862,7 @@
                 </div>
                 <div class="modal-footer row">
                     <div class="text-center">
-                        <button type="button" class="btn btn-primary down mt">다운로드</button>
+                        <button type="button" class="btn btn-primary down mt">저장</button>
                     </div>
                 </div>
             </div>

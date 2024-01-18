@@ -10,6 +10,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPEPartsCompanyService;
+import com.kap.service.dao.COLgnMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +24,8 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -49,6 +52,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.11.09		양현우				   최초 생성
+ *    2024.01.17		양현우				   a -> b -> a 이직 시 오류 수정
  * </pre>
  */
 
@@ -58,6 +62,8 @@ import java.util.List;
 public class MPAUserServiceImpl implements MPAUserService {
 
     private final MPAUserMapper mpaUserMapper;
+
+    private final COLgnMapper coLgnMapper;
 
     private final COSystemLogService cOSystemLogService;
 
@@ -313,10 +319,31 @@ public class MPAUserServiceImpl implements MPAUserService {
 
         if(mpaUserDto.getMemCd().equals("CP")) {
             if(mpJoinDto.getPartTypeChg().equals("new")) {
-                mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+                /**
+                 * 24-01-17 추가
+                 * 회사 관계 카운팅 없으면 ins 있으면 upd
+                 */
+                if(mpaUserMapper.selectCmpnRelCount(mpaUserDto) >= 1) {
+                    mpaUserMapper.updateCmpnRel(mpaUserDto);
+                } else {
+                    mpaUserMapper.insertUserCmpnRel(mpaUserDto);
+
+                }
             }
             if(mpJoinDto.getBsnmChk().equals("false") && dupCmpnCnt == 0) {
                 mpePartsCompanyService.insertPartsCompany(mpePartsCompanyDTO);
+            }
+            Object loginMap = RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            if (loginMap != null && loginMap instanceof COUserDetailsDTO) {
+                // 기존 속성이 COUserDetailsDTO 타입이면서 null이 아닌 경우
+                COUserDetailsDTO tmpCOUserDetailsDTO = (COUserDetailsDTO) loginMap;
+
+                // 업데이트할 로직 수행
+                tmpCOUserDetailsDTO.setAuthCd(mpaUserDto.getMemCd());
+                tmpCOUserDetailsDTO.setBsnmNo(mpaUserDto.getWorkBsnmNo());
+
+                // 업데이트된 속성을 세션에 다시 저장
+                RequestContextHolder.getRequestAttributes().setAttribute("loginMap", tmpCOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
             }
         }
     }

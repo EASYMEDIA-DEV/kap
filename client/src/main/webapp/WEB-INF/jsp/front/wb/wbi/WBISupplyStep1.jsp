@@ -72,18 +72,18 @@
                                             <td>${rtnUser.telNo}</td>
                                         </tr>
                                         <tr>
-                                            <th>부서</th>
+                                            <th>부서(부서상세)</th>
                                             <td>${rtnUser.deptNm}</td>
                                         </tr>
                                         <tr>
-                                            <th>직급</th>
+                                            <th>직급(기타직급)</th>
                                             <td>${rtnUser.pstnCdNm}</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -219,7 +219,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>

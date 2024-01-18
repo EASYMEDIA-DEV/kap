@@ -27,6 +27,9 @@
                     </select>
                 </div>
                 <div class="pull-right mr-sm">
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="delete">선택삭제</button>
+                    <button type="button" class="btn btn-default btn-sm mb-sm" id="btn_copy">복사</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                     <button type="button" class="btn btn-inverse btn-sm" id="btnSearch" style="display:none">검색</button>
                 </div>
             </div>
@@ -62,14 +65,6 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
-
-            <div class="pull-left mr-sm">
-                <button type="button" class="btn btn-danger btn-sm mb-sm" id="delete">선택삭제</button>
-                <button type="button" class="btn btn-default btn-sm mb-sm" id="btn_copy">복사</button>
-            </div>
-            <div class="pull-right mr-sm">
-                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-            </div>
         </form>
     </div>
 </div>

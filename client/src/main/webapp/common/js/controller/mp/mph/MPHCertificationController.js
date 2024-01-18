@@ -41,6 +41,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         } else {
             alert(msgCtrl.getMsg("fail.mp.mph.al_002"));
+            $("#password").val("");
+            $("#password").focus();
             return false;
         }
     }
@@ -279,8 +281,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnParts : {
                 event : {
                     click : function() {
-                        $(".f-title1").text("부품사정보 변경")
                         if($("#bsnmNosOld").val()!= "") {
+                            $(".loading-area").stop().fadeIn(200);
+
+                            $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
                                 url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
@@ -295,7 +299,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $("#bsnmNo").val(cmpn.bsnmNo);
                                     $("#bsnmNo").prop('readonly', true);
                                     $("#bsnmNo").attr('disabled', true);
-                                    // $(".btnCmpnChk").hide();
                                     $(".cmpn_nm_new").val(cmpn.cmpnNm);
                                     $(".rprsnt_nm").val(cmpn.rprsntNm);
                                     $("#ctgryCd").val(cmpn.ctgryCd);
@@ -345,9 +348,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 {
                                     cmmCtrl.errorAjax(xhr);
                                     jQuery.jstree.rollback(data.rlbk);
+                                },complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
                         } else {
+                            $(".btnChks").text("부품사회원 전환");
+                            $("#btnCmpnChk").remove("#btnCmpnChk");
+                            $("#btnCmpnChk").attr("#btnCmpnTwo");
                             $("#partTypeChg").val("new");
                         }
                         openPopup('switchingMemberPopup',this);
@@ -367,6 +375,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }
 
                         });
+                        jQuery(".loading-area").stop().fadeIn(200);
                         //confirm-comp
                         jQuery.ajax({
                             url : "/my-page/member/intrduction/confirm-comp",
@@ -374,14 +383,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             timeout: 30000,
                             data : ajaxData,
                             dataType : "json",
-                            async: false,
                             cache : false,
                             success : function(data, status, xhr){
                                 if(data.data.chk) {
                                     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
                                     return false;
                                 } else {
-                                    $(".f-title1").text("소속부품사(이직) 변경 정보")
+                                    $(".btnChks").text("소속부품사(이직) 변경 정보")
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
@@ -393,6 +401,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 return false;
                             },
                             complete : function(){
+                                $(".loading-area").stop().fadeOut(200);
                             }
                         });
 
@@ -421,6 +430,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             pstnCdOld : {
                 event : {
                     change : function() {
+
                         $(".pstnNmOld").val("");
                         $(".pstnCd").val($(this).val());
                         if($(this).val() == 'MEM_CD01007') {
@@ -435,7 +445,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             pstnNmOld : {
                 event : {
                     input : function() {
-                        $(".pstnNm").val($(this).val());
+                        $(".pstnNmOld").val($(this).val());
                     }
                 }
             }
@@ -512,7 +522,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             alert(msgCtrl.getMsg("fail.mp.join.al_034"));
                             return false;
                         }
-                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNm").val() =='') {
+                        if($(".pstnCdOld").val() =='MEM_CD01007' && $(".pstnNmOld2").val() =='') {
                             alert(msgCtrl.getMsg("fail.mp.join.al_035"));
                             return false;
                         }
@@ -538,7 +548,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //TODO 페이지 이동
                                 alert(msgCtrl.getMsg("success.upd2"));
                                 location.reload();
-                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",'',false);
+                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",true);
                         }
                     }
                 }

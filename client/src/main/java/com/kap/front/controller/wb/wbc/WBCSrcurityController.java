@@ -128,7 +128,6 @@ public class WBCSrcurityController {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            e.printStackTrace();
             throw new Exception(e.getMessage());
         }
 

@@ -135,13 +135,13 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 							String pwdChngDtm = CODateUtil.convertDate(rtnCOUserDto.getPwdChngDtm(), "yyyy-MM-dd HH:mm:ss", "yyyyMMdd", "");
 							if (CODateUtil.getDaysDiff(CODateUtil.addYearMonthDay(pwdChngDtm, 0, 0, 90), today) > 0)
 							{
-								if(rtnCOUserDto.getChngXtnsnCnt() >=3) {
-									//비밀번호 90일 변경 3회 연장 시
-									cOLoginDTO.setRespCd("1510");
-								} else {
+//								if(rtnCOUserDto.getChngXtnsnCnt() >=3) {
+//									//비밀번호 90일 변경 3회 연장 시
+//									cOLoginDTO.setRespCd("1510");
+//								} else {
 									//비밀번호 90일 변경
-									cOLoginDTO.setRespCd("1410");
-								}
+									cOLoginDTO.setRespCd("1400");
+//								}
 
 							}
 							// 접근가능 메뉴 확인
@@ -173,8 +173,16 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 			if (rtnCode.endsWith("00") || rtnCode.endsWith("10"))
 			{
 				cOUserDetailsDTO = cOUserLgnMapper.actionLogin(rtnCOUserDto);
+				//QR이미지 다운로드 처리
+				String episdCheck = "";
+				if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
+					episdCheck = "Y";
+				}
 				// 보안 처리 (로그인 세션 변경)
 				request.getSession().invalidate();
+				if("Y".equals(episdCheck)){
+					RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
+				}
         		/// 로그인 세션을 생성한다.
         		if (rtnCode.endsWith("00"))
         		{
@@ -188,6 +196,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 						cOUserLgnMapper.updateLastLgnDtm(cOUserDetailsDTO);
 					}
 					cOUserDetailsDTO.setRdctUrl( cOLoginDTO.getRdctUrl() );
+					cOUserDetailsDTO.setRespCd( cOLoginDTO.getRespCd() );
         			RequestContextHolder.getRequestAttributes().setAttribute("tmpLgnMap", cOUserDetailsDTO, RequestAttributes.SCOPE_SESSION);
         		}
         		// 임시 로그인 세션을 생성한다.

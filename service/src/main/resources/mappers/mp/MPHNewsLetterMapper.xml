@@ -91,15 +91,15 @@
         insert /* mphNewsLetterMapper.insertNewsletter */ into co_nwslt_mst
         (
           email,
-         reg_ip,
-         reg_dtm
+          , reg_ip
+          , reg_dtm
         )
         values
-            (
-                #{email}
-                , #{regIp}
-                , now()
-            )
+        (
+            #{email}
+            , #{regIp}
+            , now()
+        )
     </insert>
 
 </mapper>

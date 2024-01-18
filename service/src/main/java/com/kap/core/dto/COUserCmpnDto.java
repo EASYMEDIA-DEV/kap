@@ -57,6 +57,9 @@ public class COUserCmpnDto {
     @Schema(title = "회원 직급 코드")
     @CheckOriginData
     private String memPstnCd;
+    @Schema(title = "회원 직급 코드 명(기타)")
+    @CheckOriginData
+    private String memPstnNm;
     @Schema(title = "회원 휴대 전화 번호")
     private String memHpNo;
     @Schema(title = "회원 전화 번호")

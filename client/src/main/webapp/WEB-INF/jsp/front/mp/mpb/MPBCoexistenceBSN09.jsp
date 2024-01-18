@@ -15,7 +15,19 @@
                                 <div class="txt-box">
                                     <p class="tit f-head">신청</p>
                                 </div>
-                                <p class="box-label bigger arr">
+                                <c:choose>
+                                    <c:when test="${rtnBsnData.appctnSttsCdNm eq '부적합' || rtnBsnData.appctnSttsCdNm eq '미선정' || rtnBsnData.appctnSttsCdNm eq '사용자취소'
+                                     || rtnBsnData.appctnSttsCdNm eq '보완요청' || rtnBsnData.appctnSttsCdNm eq '탈락'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                    <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전'}">
+                                        <c:set var="classType"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="classType" value="accepting" />
+                                    </c:otherwise>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}">
                                     <span>
                                     <input type="hidden" id="appctnSttsCd" name="appctnSttsCd" value="">
                                         <c:choose>
