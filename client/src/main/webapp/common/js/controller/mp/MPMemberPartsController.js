@@ -389,7 +389,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 bsnmChk = false;
                                 return ;
                             }
-                            $(".f-title1").text("부품사 정보 변경");
+                            $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
                                 url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),

@@ -91,7 +91,7 @@ public class RestTemplateClientHttpRequestInterceptor implements ClientHttpReque
         {
             log.error("e : {}", e.getCause());
         }
-        request.getHeaders().setContentType(MediaType.APPLICATION_JSON);
+        request.getHeaders().setContentType(MediaType.APPLICATION_FORM_URLENCODED);
         if("local, dev".contains(profile)) {
             disableSslVerification();
         }

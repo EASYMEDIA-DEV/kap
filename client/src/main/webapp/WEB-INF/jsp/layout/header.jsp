@@ -169,7 +169,12 @@
 					<c:choose>
 						<c:when test="${ not empty loginMap}">
 							<div class="btn-wrap">
-								<a class="btn-text-icon black-arrow" href="/my-page/main" title="링크 이동"><span>마이페이지</span></a>
+								<c:if test="${ loginMap.authCd ne 'CS'}">
+									<a class="btn-text-icon black-arrow" href="/my-page/main" title="링크 이동"><span>마이페이지</span></a>
+								</c:if>
+								<c:if test="${ loginMap.authCd eq 'CS'}">
+									<a class="btn-text-icon black-arrow" href="/my-page/member/attend/attend-page" title="링크 이동"><span>마이페이지</span></a>
+								</c:if>
 							</div>
 							<div class="btn-wrap">
 								<a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
@@ -207,7 +212,9 @@
                                 <c:when test="${ not empty loginMap}">
                                     <p class="user-tit f-title1"><span>${loginMap.name}</span>님 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
                                     <div class="pc btn-wrap">
+										<c:if test="${loginMap.authCd ne 'CS'}">
                                         <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
+										</c:if>
                                         <a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
                                     </div>
                                 </c:when>

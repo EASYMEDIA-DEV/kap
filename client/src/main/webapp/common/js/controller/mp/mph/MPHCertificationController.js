@@ -282,7 +282,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         if($("#bsnmNosOld").val()!= "") {
-                            $(".f-title1").text("부품사 정보 변경");
+                            $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
                                 url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
@@ -349,7 +349,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 }
                             });
                         } else {
-                            $(".f-title1").text("부품사회원 전환");
+                            $(".btnChks").text("부품사회원 전환");
                             $("#btnCmpnChk").remove("#btnCmpnChk");
                             $("#btnCmpnChk").attr("#btnCmpnTwo");
                             $("#partTypeChg").val("new");
@@ -385,7 +385,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     alert("참여 중인 사업이 "+data.data.count+" 건 있습니다. 소속부품사 변경이 불가합니다.\n")
                                     return false;
                                 } else {
-                                    $(".f-title1").text("소속부품사(이직) 변경 정보")
+                                    $(".btnChks").text("소속부품사(이직) 변경 정보")
                                     $("#partTypeChg").val("turnOver");
                                     $("#bsnmNo").prop('readonly', false);
                                     $("#bsnmNo").attr('disabled', false);
