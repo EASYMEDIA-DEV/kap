@@ -26,7 +26,9 @@
                         C.*,
                         (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
                         (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
-                        (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
+                        (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd,
+                        B.appctn_bsnm_no as bsnm_no,
+                        (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
                     FROM
                         (
                             SELECT * FROM cx_episd_mst
@@ -34,7 +36,7 @@
                         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                         INNER JOIN
                         (
-                            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
+                            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.ctgry_cd, b.size_cd, b.rprsnt_nm
                             ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
                             FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
                         ) C /* 회원-회사 JOIN 테이블 */
@@ -68,7 +70,9 @@
                             C.*,
                             (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
                             (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
-                            (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
+                            (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd,
+                            B.appctn_bsnm_no as bsnm_no,
+                            (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
                         FROM
                             (
                             SELECT * FROM cx_episd_mst
@@ -76,7 +80,7 @@
                             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
                             INNER JOIN
                             (
-                            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+                            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.ctgry_cd, b.size_cd
                             FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
                             ) C /* 회원-회사 JOIN 테이블 */
                             ON C.mem_seq = B.mem_seq
@@ -424,14 +428,14 @@
     </sql>
 
     <!--
-         쿼리명 : WBFBSupplyCompanyMapper.selectSupplyDtl
+         쿼리명 : WBIBSupplyCompanyMapper.selectSupplyDtl
          설  명 : 상세 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.12.04  오병호     최초 생성
     -->
     <select id="selectSupplyDtl" parameterType="wBIBSupplySearchDTO" resultType="wBIBSupplyDTO">
-        SELECT /* WBFBSupplyCompanyMapper.selectSupplyDtl */
+        SELECT /* WBIBSupplyCompanyMapper.selectSupplyDtl */
             C.ID, C.NAME, C.EMAIL,
             C.DEPT_CD,
             C.DEPT_DTL_NM,
@@ -444,7 +448,36 @@
             D.EPISD,
             A.ADM_MEMO,
             A.MEM_SEQ,
-            B.*,
+            B.CMPN_NM,
+            B.RPRSNT_NM,
+            B.CMPN_NFRML_NM,
+            B.CMPN_CD,
+            B.CTGRY_CD,
+            B.SIZE_CD,
+            B.STBSM_DT,
+            B.TEL_NO AS COMP_TEL,
+            B.ZIPCODE,
+            B.BSC_ADDR,
+            B.DTL_ADDR,
+            B.SLS_PMT,
+            B.SLS_YEAR,
+            B.MPLE_CNT,
+            B.MJR_PRDCT_1,
+            B.MJR_PRDCT_2,
+            B.MJR_PRDCT_3,
+            B.QLTY_5_STAR_CD,
+            B.QLTY_5_STAR_YEAR,
+            B.PAY_5_STAR_CD,
+            B.PAY_5_STAR_YEAR,
+            B.TCHLG_5_STAR_CD,
+            B.TCHLG_5_STAR_YEAR,
+            B.ADM_MEMO,
+            B.REG_ID,
+            B.REG_IP,
+            B.REG_DTM,
+            B.MOD_ID,
+            B.MOD_IP,
+            B.MOD_DTM,
             (SELECT APPCTN_STTS_CD FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS APPCTN_STTS_CD,
             (SELECT APPCTN_STTS_CHNG_DTM FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS APPCTN_STTS_CHNG_DTM,
             (SELECT MNG_STTS_CD FROM CX_APPCTN_RSUME_DTL WHERE APPCTN_SEQ = A.APPCTN_SEQ) AS MNG_STTS_CD,

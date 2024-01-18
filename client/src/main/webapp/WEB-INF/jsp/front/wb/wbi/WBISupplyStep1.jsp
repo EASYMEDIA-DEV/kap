@@ -72,11 +72,11 @@
                                             <td>${rtnUser.telNo}</td>
                                         </tr>
                                         <tr>
-                                            <th>부서</th>
+                                            <th>부서(부서상세)</th>
                                             <td>${rtnUser.deptNm}</td>
                                         </tr>
                                         <tr>
-                                            <th>직급</th>
+                                            <th>직급(기타직급)</th>
                                             <td>${rtnUser.pstnCdNm}</td>
                                         </tr>
                                         </tbody>
