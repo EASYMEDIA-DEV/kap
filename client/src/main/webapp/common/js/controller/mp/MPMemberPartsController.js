@@ -288,7 +288,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             } else {
                                 //old
-
                                 let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNmOld").val() +")";
                                 $(".buseo").text($("#deptCdOld option:selected").text() +" " + buseonDtl);
                                 let gikgubDtl = $("#pstnCdOld option:selected").text() == '기타' ? "(" + $(".pstnNmOld").val() +")" : '';
@@ -300,6 +299,10 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".addrNm").text($(".addr").text());
                                 $(".cmpnNm").val($(".cmpn_nm").text());
                                 $(".rprsntNm").val($(".rsNm").text());
+                                $("#formDeptCd").val($("#deptCdOld").val());
+                                $("#formDeptDtlNm").val($("#deptDtlNmOld").val());
+                                $("#formpstnNm").val($(".pstnNmOld").val());
+                                $("#formPstnCd").val($("#pstnCdOld").val());
                                 // $(".deptCd").val($("#deptCdOld").val());
                                 // $(".deptCdPar").val($("#deptCdOld").val());
                                 // $(".deptDtlNm").val($(".deptDtlNm").val());
