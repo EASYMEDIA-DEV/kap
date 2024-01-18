@@ -220,9 +220,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="btn-wrap align-right">
-                                    <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
-                                </div>
+                                <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                    <div class="btn-wrap align-right">
+                                        <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
+                                    </div>
+                                </c:if>
                             </form>
                         </div>
                     </div>
@@ -308,9 +310,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="btn-wrap align-right">
-                                    <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
-                                </div>
+                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
+                                    <div class="btn-wrap align-right">
+                                        <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
+                                    </div>
+                                </c:if>
                             </form>
                         </div>
                     </div>
@@ -399,14 +403,14 @@
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}">
-                                            <a class="swiper-slide txt-tab-btn spprt-tab-btn active" data-give-type="${spprtDtl[0].giveType}" href="javascript:">
+                                            <a class="swiper-slide txt-tab-btn btnSpprtTab active" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].appctnSttsCd}" href="javascript:">
                                                 <p class="txt"><span class="menu-name">선급금</span></p>
                                             </a>
                                         </c:if>
-                                        <a class="swiper-slide txt-tab-btn spprt-tab-btn" data-give-type="${spprtDtl[1].giveType}" href="javascript:">
+                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[1].giveType}" data-stts-cd="${spprtDtl[1].appctnSttsCd}" href="javascript:">
                                             <p class="txt"><span class="menu-name">지원금</span></p>
                                         </a>
-                                        <a class="swiper-slide txt-tab-btn spprt-tab-btn" data-give-type="${spprtDtl[2].giveType}" href="javascript:">
+                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[2].giveType}" data-stts-cd="${spprtDtl[2].appctnSttsCd}" href="javascript:">
                                             <p class="txt"><span class="menu-name">기술임치</span></p>
                                         </a>
                                     </div>
@@ -424,8 +428,6 @@
                                                     <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[0].appctnSpprtSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[0].appctnSeq}"/>
-                                                    <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[0].giveType}"/>
-
                                                     <div class="tab-con-area">
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
@@ -443,7 +445,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input calendar">
-                                                                                            <input class="datetimepicker_input" type="text" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[0].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택" readonly="">
+                                                                                            <input class="datetimepicker_input accsDt" type="text" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[0].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택" readonly="">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -463,7 +465,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" class="priceVal comma" name="wBFBRegisterDTO.spprtDtlList[0].gvmntSpprtPmt" value="<fmt:formatNumber value='${spprtDtl[0].gvmntSpprtPmt}' pattern='#,###'/>" placeholder="정부지원금 입력" >
+                                                                                            <input type="text" class="priceVal comma gvmntSpprtPmt" name="wBFBRegisterDTO.spprtDtlList[0].gvmntSpprtPmt" value="<fmt:formatNumber value='${spprtDtl[0].gvmntSpprtPmt}' pattern='#,###'/>" placeholder="정부지원금 입력" >
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -483,7 +485,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" class="priceVal comma" name="wBFBRegisterDTO.spprtDtlList[0].mjcmnAprncPmt" value="<fmt:formatNumber value='${spprtDtl[0].mjcmnAprncPmt}' pattern='#,###'/>"  placeholder="대기업출연금 입력">
+                                                                                            <input type="text" class="priceVal comma mjcmnAprncPmt" name="wBFBRegisterDTO.spprtDtlList[0].mjcmnAprncPmt" value="<fmt:formatNumber value='${spprtDtl[0].mjcmnAprncPmt}' pattern='#,###'/>"  placeholder="대기업출연금 입력">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -519,7 +521,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" name="wBFBRegisterDTO.spprtDtlList[0].bankNm" value="${spprtDtl[0].bankNm}" placeholder="은행 입력" title="은행명">
+                                                                                            <input type="text" class="bankNm" name="wBFBRegisterDTO.spprtDtlList[0].bankNm" value="${spprtDtl[0].bankNm}" placeholder="은행 입력" title="은행명">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -535,7 +537,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" class="numberChk" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" value="${spprtDtl[0].acntNo}" placeholder="계좌번호 입력">
+                                                                                            <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" value="${spprtDtl[0].acntNo}" placeholder="계좌번호 입력">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -551,7 +553,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" value="${spprtDtl[0].dpsitNm}" placeholder="예금주 입력">
+                                                                                            <input type="text" class="dpsitNm" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" value="${spprtDtl[0].dpsitNm}" placeholder="예금주 입력">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -575,7 +577,7 @@
                                                                             <div class="data-line-w">
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
-                                                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                             <p class="empty-txt">선택된 파일 없음</p>
                                                                                             <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                         </div>
@@ -600,7 +602,7 @@
                                                                             <div class="data-line-w">
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
-                                                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                             <p class="empty-txt">선택된 파일 없음</p>
                                                                                             <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                         </div>
@@ -654,7 +656,6 @@
                                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[1].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[1].appctnSeq}"/>
-                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[1].giveType}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -672,7 +673,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input calendar">
-                                                                                        <input type="text" class="datetimepicker_input" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[0].accsDt}" readonly="" placeholder="날짜 선택">
+                                                                                        <input type="text" class="datetimepicker_input accsDt" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[0].accsDt}" readonly="" placeholder="날짜 선택">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -692,7 +693,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="priceVal comma" name="wBFBRegisterDTO.spprtDtlList[0].gvmntSpprtPmt" placeholder="정부지원금 입력" value="<fmt:formatNumber value='${spprtDtl[1].gvmntSpprtPmt}' pattern='#,###'/>">
+                                                                                        <input type="text" class="priceVal comma gvmntSpprtPmt" name="wBFBRegisterDTO.spprtDtlList[0].gvmntSpprtPmt" placeholder="정부지원금 입력" value="<fmt:formatNumber value='${spprtDtl[1].gvmntSpprtPmt}' pattern='#,###'/>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -712,7 +713,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="priceVal comma" name="wBFBRegisterDTO.spprtDtlList[0].mjcmnAprncPmt" placeholder="대기업출연금 입력" value="<fmt:formatNumber value='${spprtDtl[1].mjcmnAprncPmt}' pattern='#,###'/>">
+                                                                                        <input type="text" class="priceVal comma mjcmnAprncPmt" name="wBFBRegisterDTO.spprtDtlList[0].mjcmnAprncPmt" placeholder="대기업출연금 입력" value="<fmt:formatNumber value='${spprtDtl[1].mjcmnAprncPmt}' pattern='#,###'/>">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -732,7 +733,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="ttlPmt comma" name="wBFBRegisterDTO.spprtDtlList[0].ttlPmt" placeholder="총금액 입력" value="<fmt:formatNumber value='${spprtDtl[1].ttlPmt}' pattern='#,###'/>" readonly>
+                                                                                        <input type="text" class="ttlPmt comma ttlPmt" name="wBFBRegisterDTO.spprtDtlList[0].ttlPmt" placeholder="총금액 입력" value="<fmt:formatNumber value='${spprtDtl[1].ttlPmt}' pattern='#,###'/>" readonly>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -748,7 +749,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" name="wBFBRegisterDTO.spprtDtlList[0].bankNm" placeholder="은행 입력" value="${spprtDtl[1].bankNm}">
+                                                                                        <input type="text" class="bankNm" name="wBFBRegisterDTO.spprtDtlList[0].bankNm" placeholder="은행 입력" value="${spprtDtl[1].bankNm}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -764,7 +765,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="numberChk" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" placeholder="계좌번호 입력" value="${spprtDtl[1].acntNo}">
+                                                                                        <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" placeholder="계좌번호 입력" value="${spprtDtl[1].acntNo}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -780,7 +781,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="comma" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" placeholder="예금주 입력" value="${spprtDtl[1].dpsitNm}">
+                                                                                        <input type="text" class="comma dpsitNm" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" placeholder="예금주 입력" value="${spprtDtl[1].dpsitNm}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -804,7 +805,7 @@
                                                                         <div class="data-line-w">
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
-                                                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                         <p class="empty-txt">선택된 파일 없음</p>
                                                                                         <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                     </div>
@@ -829,7 +830,7 @@
                                                                         <div class="data-line-w">
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
-                                                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                         <p class="empty-txt">선택된 파일 없음</p>
                                                                                         <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                     </div>
@@ -882,7 +883,6 @@
                                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[2].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[2].appctnSeq}"/>
-                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[2].giveType}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -940,7 +940,7 @@
                                                                         <div class="data-line-w">
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
-                                                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                         <p class="empty-txt">선택된 파일 없음</p>
                                                                                         <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                     </div>
@@ -965,7 +965,7 @@
                                                                         <div class="data-line-w">
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
-                                                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                         <p class="empty-txt">선택된 파일 없음</p>
                                                                                         <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                     </div>
@@ -1020,7 +1020,9 @@
                         </div>
                         <div class="bot-fix-btn-area">
                             <div class="btn-wrap align-right">
-                                <button class="btn-solid small black-bg btn-role-close btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
+                                <c:if test="${spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003'}">
+                                    <button class="btn-solid small black-bg btn-role-close btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
+                                </c:if>
                             </div>
                         </div>
                         <div class="user-opt-area">

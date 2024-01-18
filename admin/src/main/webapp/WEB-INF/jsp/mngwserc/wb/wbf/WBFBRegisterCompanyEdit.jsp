@@ -1237,7 +1237,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                <select class="form-control input-sm notRequired mngSttsCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1246,7 +1246,7 @@
                                                         </c:if>
                                                     </c:forEach>
                                                 </select>
-                                                <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>

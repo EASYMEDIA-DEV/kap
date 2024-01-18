@@ -704,6 +704,24 @@
     <update id="updSpprtDtl" parameterType="WBSpprtDtlDTO">
         UPDATE cx_appctn_spprt_dtl /*WBFBRegisterCompanyMapper.updSpprtDtl*/
         SET
+        <if test='siteGubun == "front"'>
+            accs_dt = #{accsDt}
+            ,appctn_stts_cd = #{appctnSttsCd}
+            ,appctn_stts_chng_dtm = now()
+            ,gvmnt_spprt_pmt = #{gvmntSpprtPmt}
+            ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
+            ,ttl_pmt = #{ttlPmt}
+            ,bank_nm = #{bankNm}
+            ,acnt_no = #{acntNo}
+            ,dpsit_nm = #{dpsitNm}
+            ,spprt_appctn_file_seq = #{spprtAppctnFileSeq}
+            ,acnt_file_seq = #{acntFileSeq}
+            ,bnkbk_file_seq = #{bnkbkFileSeq}
+            ,tchlg_lse_file_seq =#{tchlgLseFileSeq}
+            ,lse_pay_file_seq = #{lsePayFileSeq}
+            ,cmssn_pmt = #{cmssnPmt}
+        </if>
+        <if test='siteGubun == "admin"'>
             accs_dt = #{accsDt}
             ,gvmnt_spprt_pmt = #{gvmntSpprtPmt}
             ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
@@ -712,17 +730,17 @@
             ,acnt_no = #{acntNo}
             ,dpsit_nm = #{dpsitNm}
             ,appctn_stts_cd = #{appctnSttsCd}
-            <if test='siteGubun == "front"'>,appctn_stts_chng_dtm = now()</if>
             ,give_dt = #{giveDt}
             ,give_seq = #{giveSeq}
             ,mng_stts_cd = #{mngSttsCd}
-            <if test='siteGubun == "admin"'>,mng_stts_chng_dtm = now()</if>
+            ,mng_stts_chng_dtm = now()
             ,spprt_appctn_file_seq = #{spprtAppctnFileSeq}
             ,acnt_file_seq = #{acntFileSeq}
             ,bnkbk_file_seq = #{bnkbkFileSeq}
             ,tchlg_lse_file_seq =#{tchlgLseFileSeq}
             ,lse_pay_file_seq = #{lsePayFileSeq}
             ,cmssn_pmt = #{cmssnPmt}
+        </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()

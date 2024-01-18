@@ -93,14 +93,14 @@
     </select>
 
     <!--
-    쿼리명 : IMAQaMapper.insertQa
+    쿼리명 : IMAQaMapper.insertQaRply
     설  명 : 1:1문의 답변 등록
       수정일      수정자       수정내용
     ==========   ========   ==============
     2023.11.01    장두석       최초생성
     -->
-    <insert id="insertQa" parameterType="IMAQaDTO">
-        INSERT /* IMAQaMapper.insertQa */ INTO BD_QA_RPLY_DTL
+    <insert id="insertQaRply" parameterType="IMAQaDTO">
+        INSERT /* IMAQaMapper.insertQaRply */ INTO BD_QA_RPLY_DTL
         (
             QA_RPLY_SEQ
             , QA_SEQ

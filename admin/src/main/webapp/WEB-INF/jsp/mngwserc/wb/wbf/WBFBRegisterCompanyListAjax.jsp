@@ -18,16 +18,49 @@
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
-                <td class="text-center">${list.name}(${kl:idMasking(list.id)})</td>
-                <td class="text-center">${list.hpNo}</td>
-                <td class="text-center">${list.email}</td>
-                <td class="text-center">${not empty list.mngSttsChngDtm ? list.mngSttsChngDtm : "-"}</td>
-                <td class="text-center">${not empty list.appctnSttsChngDtm ? list.appctnSttsChngDtm : "-"}</td>
+                <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
+                <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
+                <td class="text-center">${kl:emailMasking(list.email)}</td>
                 <td class="text-center">
-                    <c:if test="${empty modId}">-</c:if>
-                    <c:if test="${not empty modId}">${list.modNm}(${kl:idMasking(list.modId)})</c:if>
+                    <c:choose>
+                        <c:when test="${not empty list.regDtm}">
+                            ${ kl:convertDate( list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
                 </td>
-                <td class="text-center">${not empty list.modDtm ? list.modDtm : "-"}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${not empty list.appctnSttsChngDtm}">
+                            ${ kl:convertDate( list.appctnSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${not empty list.modId}">
+                            ${kl:nameMasking(list.modNm)}<br>(${kl:idMasking(list.modId)})
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${not empty list.modDtm}">
+                            ${ kl:convertDate( list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
             </tr>
         </c:forEach>
     </c:when>

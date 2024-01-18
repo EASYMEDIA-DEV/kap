@@ -19,7 +19,9 @@
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 끝-->
-        <form class="form-horizontal" id="frmData" enctype="multipart/form-data">
+        <form id="frmData" name="frmData" enctype="multipart/form-data">
+            <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
             <div class="right-con-area">
                 <div class="cont-sec-w">
                     <div class="cont-sec scroll-motion">
@@ -116,18 +118,19 @@
                                                         <div class="form-select">
                                                             <select class="form-control input-sm" data-name="ctgryCd" id="ctgryCd" name="ctgryCd">
                                                                 <option value="">선택</option>
+                                                                <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
                                                                 <c:choose>
-                                                                    <c:when test="${ not empty rtnData.inqSec }">
-                                                                        <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
-                                                                            <option class="ctgryCd" <%--<c:if test="${ not fn:contains(cdList.cdNm, rtnData.inqSec) }">style="display: none;"</c:if>--%> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
-                                                                        </c:forEach>
+                                                                    <c:when test="${ not empty rtnData.inqSec and empty rtnData.inqFir }">
+                                                                        <option class="ctgryCd" <c:if test="${ not fn:contains(cdList.cd, 'INQ02') }">style="display: none;"</c:if> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
+                                                                    </c:when>
+                                                                    <c:when test="${ not empty rtnData.inqSec and not empty rtnData.inqFir }">
+                                                                        <option class="ctgryCd" <c:if test="${ not fn:contains(cdList.cd, 'INQ07') }">style="display: none;"</c:if> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
-                                                                            <option class="ctgryCd" style="display: none;" value="${cdList.cd}" <c:if test="${rtnData.ctgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
-                                                                        </c:forEach>
+                                                                        <option class="ctgryCd" style="display: none;" value="${cdList.cd}" <c:if test="${rtnData.ctgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
                                                                     </c:otherwise>
                                                                 </c:choose>
+                                                                </c:forEach>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -197,8 +200,8 @@
                                                                 </div>--%>
                                                             </div>
                                                             <div class="file-btn-area">
-                                                                <input type="file" id="fileList" name="atchFile" accept="pdf,ppt,pptx,doc,docx,xls,xlsx,zip" class="fileInput notRequired" multiple />
-                                                                <label class="btn-solid gray-bg" for="fileList">파일 찾기</label>
+                                                                <input type="file" id="searchFile" name="atchFile" accept="pdf,ppt,pptx,doc,docx,xls,xlsx,zip" class="fileInput notRequired" multiple />
+                                                                <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
                                                         </div>
                                                     </div>

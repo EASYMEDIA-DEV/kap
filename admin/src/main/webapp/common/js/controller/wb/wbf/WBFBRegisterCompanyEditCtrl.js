@@ -286,6 +286,17 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }
     }
 
+    let rtrnRsnCntnShow = function(mngSttsCd) {
+        if(mngSttsCd =='PRO_TYPE02001_02_002'){
+            $(".rtrnRsnCntn").show().attr('disabled',false);
+        }else if(mngSttsCd =='PRO_TYPE02001_02_004'){
+            $(".rtrnRsnCntn").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn").hide().attr('disabled',true);
+        }
+    }
+
+
     // set model
     ctrl.model = {
         id : {
@@ -379,6 +390,13 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         pmndvPmtViewShowFn();
                     }
                 },
+            },
+            mngSttsCd : {
+                event : {
+                    change : function() {
+                        rtrnRsnCntnShow($(this).val());
+                    }
+                }
             },
             // 회원검색 모달
             btnPartUserModal: {
@@ -482,6 +500,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             fieldShowFn($('#ctgryCd').val());
             /* 직급 값에 따른 show/hide */
             fnpstnNmShow($('#pstnCd').val());
+            /* 반려사유 show/hide */
+            rtrnRsnCntnShow($('#mngCd').val());
 
             $formObj.validation({
                 after : function() {

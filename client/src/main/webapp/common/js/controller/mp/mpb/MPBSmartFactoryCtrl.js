@@ -94,6 +94,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         }
     }
 
+    let btnSpprtUpdateShow = function(sttsCd){
+        let passCd = ['PRO_TYPE03001_01_003', 'PRO_TYPE03002_01_003', 'PRO_TYPE03003_01_003']
+
+        if(passCd.includes(sttsCd)) {
+            $('.paymentInfoManagPopup').find('.btnSpprtUpdate').show();
+        } else {
+            $('.paymentInfoManagPopup').find('.btnSpprtUpdate').hide();
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -153,13 +163,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var file = $formObj.find('input[type=file]');
                         var valid = true;
 
-                        /*file.each(function(i) {
+                        file.each(function(i) {
                             if (!$(this).val()) {
                                 alert('신청서류를 모두 등록해주세요.');
                                 valid = false;
                                 return false;
                             }
-                        });*/
+                        });
 
                         if(!$formObj.find("#taskCd").val()) {
                             alert('과제명을 입력해주세요.');
@@ -199,12 +209,19 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            btnSpprtTab : {
+              event : {
+                  click : function() {
+                      btnSpprtUpdateShow($(this).data('sttsCd'));
+                  }
+              }
+            },
             btnSpprtUpdate : {
                 event : {
                     click : function() {
 
                         var formGiveType;
-                        $('.spprt-tab-btn').each(function(idx, el) {
+                        $('.btnSpprtTab').each(function(idx, el) {
                             if($(el).hasClass('active')){
                                 formGiveType = $(el).data('giveType');
                             }
@@ -212,25 +229,51 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         var $formObj = $('.paymentInfoManagPopup').find(`form[data-give-type=${formGiveType}]`);
 
+                        if(formGiveType == 'PRO_TYPE03001' || formGiveType == 'PRO_TYPE03001') {
+                            if(!$formObj.find('.accsDt').val()) {
+                                alert()
+                                valid = false;
+                                return false;
+                            }
+                            if(!$formObj.find('.gvmntSpprtPmt').val()) {
+
+                            }
+                            if(!$formObj.find('.mjcmnAprncPmt').val()) {
+
+                            }
+                            if(!$formObj.find('.ttlPmt').val()) {
+
+                            }
+                            if(!$formObj.find('.bankNm').val()) {
+
+                            }
+                            if(!$formObj.find('.acntNo').val()) {
+
+                            }
+                            if(!$formObj.find('.dpsitNm').val()) {
+
+                            }
+                        }
+
                         /* 금액 ',' 제거 */
                         removeComma($formObj);
 
                         var file = $formObj.find('input[type=file]');
                         var valid = true;
 
-                        /*file.each(function(i) {
+                        file.each(function(i) {
                             if (!$(this).val()) {
                                 alert('신청서류를 모두 등록해주세요.');
                                 valid = false;
                                 return false;
                             }
-                        });*/
+                        });
 
-
-
-                        cmmCtrl.fileFrm(function(data){
-                            //location.reload();
-                        }, "./update", $formObj, "json");
+                        if (valid) {
+                            cmmCtrl.fileFrm(function(data){
+                                location.reload();
+                            }, "./update", $formObj, "json");
+                        }
 
                     }
                 }
