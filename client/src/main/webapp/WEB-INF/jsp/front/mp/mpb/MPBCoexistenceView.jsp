@@ -77,9 +77,15 @@
                                         <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnBsnData.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                                         </div>
                                     </div>
-                                    <div class="btn-wrap">
-                                        <a class="btn-solid small black-bg" href="javascript:"><span>신청취소</span></a>
-                                    </div>
+                                    <c:if test="${rtnBsnData.cancelYn eq 'Y' && rtnBsnData.rsumeOrd == 1 && rtnBsnData.appctnSttsCdNm ne '사용자취소'}">
+                                        <form name="cancelFrm" id="cancelFrm">
+                                            <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnBsnData.bsnCd}" />
+                                            <div class="btn-wrap">
+                                                <a class="btn-solid small black-bg cancel" href="javascript:"><span>신청취소</span></a>
+                                            </div>
+                                        </form>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

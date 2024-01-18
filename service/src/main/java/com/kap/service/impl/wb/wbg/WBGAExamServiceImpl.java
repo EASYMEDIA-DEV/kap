@@ -1222,4 +1222,144 @@ public class WBGAExamServiceImpl implements WBGAExamService {
 
         return wbgaExamSearchDTO;
     }
+
+    /**
+     * 사용자페이지 - 신청자를 수정한다.
+     */
+    @Transactional
+    public int updateInfo(WBGAApplyDtlDTO wbgaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+            //마스터 생성
+            String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+            String modIp = CONetworkUtil.getMyIPaddress(request);
+
+            //상생신청진행 상태 업데이트
+            wbgaApplyDtlDTO.setRegId(modId);
+            wbgaApplyDtlDTO.setRegIp(modIp);
+            wbgaApplyDtlDTO.setModId(modId);
+            wbgaApplyDtlDTO.setModIp(modIp);
+
+
+            if (wbgaApplyDtlDTO.getRsumeOrd() == 1 || wbgaApplyDtlDTO.getRsumeOrd() == 3) {
+                wBGAExamMapper.deleteFileInfo(wbgaApplyDtlDTO);
+
+                //신청파일 넣기
+                List<COFileDTO> rtnList = null;
+                Map<String, MultipartFile> files = multiRequest.getFileMap();
+                Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                MultipartFile file;
+                int atchFileCnt = 0;
+
+                while (itr.hasNext()) {
+                    Map.Entry<String, MultipartFile> entry = itr.next();
+                    file = entry.getValue();
+
+                    if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                        atchFileCnt++;
+                    }
+                }
+
+                if (!files.isEmpty()) {
+                    rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                    for (int i = 0; i < rtnList.size() ; i++) {
+
+                        List<COFileDTO> fileList = new ArrayList();
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                        wbgaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                        wbgaApplyDtlDTO.setFileCd(wbgaApplyDtlDTO.getFileCdList().get(i));
+
+                        wBGAExamMapper.insertFileInfo(wbgaApplyDtlDTO);
+                    }
+                }
+            }
+
+            rtnCnt = stepUpdateUserProcess(wbgaApplyDtlDTO);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return rtnCnt;
+    }
+
+    public int stepUpdateUserProcess(WBGAApplyDtlDTO wbgaApplyDtlDTO) throws Exception {
+        int rsultCnt = 0;
+        if (wbgaApplyDtlDTO.getRsumeOrd() == 1) {
+
+            //신청대상장비 생성시작
+            wBGAExamMapper.deleteEuipment(wbgaApplyDtlDTO);
+
+            for(int j=0; j<wbgaApplyDtlDTO.getEuipmentList().size(); j++) {
+                WBGAEuipmentDTO wbgaEuipmentDTO = new WBGAEuipmentDTO();
+                int tchlgSeq = cxAppctnTchlgSeqIdgen.getNextIntegerId();
+                wbgaEuipmentDTO.setAppctnSeq(wbgaApplyDtlDTO.getAppctnSeq());
+                wbgaEuipmentDTO.setTchlgSeq(tchlgSeq);
+                wbgaEuipmentDTO.setTchlgOrd(j+1);
+                wbgaEuipmentDTO.setTchlgNm(wbgaApplyDtlDTO.getEuipmentList().get(j).getTchlgNm());
+                wbgaEuipmentDTO.setTchlgCnt(wbgaApplyDtlDTO.getEuipmentList().get(j).getTchlgCnt());
+                wbgaEuipmentDTO.setRegId(wbgaApplyDtlDTO.getModId());
+                wbgaEuipmentDTO.setRegIp(wbgaApplyDtlDTO.getModIp());
+
+                wBGAExamMapper.insertEuipment(wbgaEuipmentDTO);
+            }
+
+            if ("PRO_TYPE07001_01_002".equals(wbgaApplyDtlDTO.getAppctnSttsCd())) {
+                //보안요청 사용자 -> 보완완료 관리자-> 미확인
+                wbgaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_01_003");
+                wbgaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_02_001");
+
+                rsultCnt = wBGAExamMapper.updateApplyStatus(wbgaApplyDtlDTO);
+            }
+
+        } else if (wbgaApplyDtlDTO.getRsumeOrd() == 2) {
+            WBGAMsEuipmentDTO wbgaMsEuipmentDTO = new WBGAMsEuipmentDTO();
+            wbgaMsEuipmentDTO.setRsumeSeq(wbgaApplyDtlDTO.getRsumeSeq());
+            wbgaMsEuipmentDTO.setRsumeOrd(wbgaApplyDtlDTO.getRsumeOrd());
+            wbgaMsEuipmentDTO.setNvstmPmt(wbgaApplyDtlDTO.getWbgaMsEuipmentDTO().getNvstmPmt());
+            wbgaMsEuipmentDTO.setRegId(wbgaApplyDtlDTO.getModId());
+            wbgaMsEuipmentDTO.setRegIp(wbgaApplyDtlDTO.getModIp());
+            wbgaMsEuipmentDTO.setModId(wbgaApplyDtlDTO.getModId());
+            wbgaMsEuipmentDTO.setModIp(wbgaApplyDtlDTO.getModIp());
+
+
+            if ("PRO_TYPE07001_03_001".equals(wbgaApplyDtlDTO.getAppctnSttsCd())) {
+                //접수전 사용자 -> 접수완료 관리자-> 미확인
+                wbgaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_03_002");
+                wbgaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_04_002");
+
+                wBGAExamMapper.insertMsEuipment(wbgaMsEuipmentDTO);
+                rsultCnt = wBGAExamMapper.updateApplyStatus(wbgaApplyDtlDTO);
+            } else if ("PRO_TYPE07001_03_003".equals(wbgaApplyDtlDTO.getAppctnSttsCd())) {
+                //보완요청 사용자 -> 보완완료 관리자-> 미확인
+                wbgaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_03_004");
+                wbgaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_04_002");
+
+                wBGAExamMapper.updateMsEuipment(wbgaMsEuipmentDTO);
+                rsultCnt = wBGAExamMapper.updateApplyStatus(wbgaApplyDtlDTO);
+            }
+        } else if (wbgaApplyDtlDTO.getRsumeOrd() == 3) {
+            if ("PRO_TYPE07001_05_001".equals(wbgaApplyDtlDTO.getAppctnSttsCd())) {
+                //접수전 사용자 -> 접수완료 관리자-> 미확인
+                wbgaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_05_002");
+                wbgaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_06_002");
+
+                rsultCnt = wBGAExamMapper.updateApplyStatus(wbgaApplyDtlDTO);
+            } else if ("PRO_TYPE07001_05_003".equals(wbgaApplyDtlDTO.getAppctnSttsCd())) {
+                //보완요청 사용자 -> 보완완료 관리자-> 미확인
+                wbgaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_05_004");
+                wbgaApplyDtlDTO.setMngSttsCd("PRO_TYPE07001_06_002");
+
+                rsultCnt = wBGAExamMapper.updateApplyStatus(wbgaApplyDtlDTO);
+            }
+        }
+
+        return rsultCnt;
+    }
 }

@@ -12,6 +12,9 @@ import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
+import com.kap.core.dto.wb.wbg.WBGAApplyDtlDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
+import com.kap.core.dto.wb.wbh.WBHAApplyDtlDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
@@ -21,6 +24,10 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -58,6 +65,7 @@ public class MPBCoexistenceController {
     private final COCodeService cOCodeService;
     public final MPBCoexistenceService mpbCoexistenceService;
     public final WBBBCompanyService wbbbCompanyService;
+    public final WBGAExamService wbgaExamService;
     public final WBHACalibrationService wbhaCalibrationService;
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final WBJBAcomListService wBJBAcomListService;
@@ -71,9 +79,26 @@ public class MPBCoexistenceController {
     @GetMapping(value = "/list")
     public String getCoexistenceList(MPBBsnSearchDTO mpbBsnSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
 
+        mpbBsnSearchDTO.setOrdFlag(1);
         modelMap.addAttribute("rtnData", mpbCoexistenceService.selectApplyList(mpbBsnSearchDTO,"init"));
 
         return "front/mp/mpb/MPBCoexistenceList.front";
+    }
+
+    /**
+     * 마이페이지 상생 사업 필터
+     */
+    @RequestMapping(value = "/listAjax")
+    public String listAjax(MPBBsnSearchDTO mpbBsnSearchDTO, ModelMap modelMap) throws Exception {
+        try {
+            modelMap.addAttribute("rtnData", mpbCoexistenceService.selectApplyList(mpbBsnSearchDTO,"init"));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/mp/mpb/MPBCoexistenceListAjax";
     }
 
     /**
@@ -137,6 +162,11 @@ public class MPBCoexistenceController {
                     modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
                     modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
                     
+                } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //시험계측장비
+                    WBGAExamSearchDTO wbgaExamSearchDTO = new WBGAExamSearchDTO();
+                    wbgaExamSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyDtl(wbgaExamSearchDTO));
                 } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //검교정
                     WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
@@ -177,6 +207,37 @@ public class MPBCoexistenceController {
         }
 
         return vwUrl;
+    }
+
+    /**
+     * 마이페이지 상생 사업 취소
+     */
+    @PostMapping(value = "/cancel")
+    @ResponseBody
+    public int cancel(MPBBsnSearchDTO mpbBsnSearchDTO, ModelMap modelMap) throws Exception {
+        int respCnt = 0;
+
+        try {
+            //신청자 순번 세션체크 없으면 취소불가
+            if (RequestContextHolder.getRequestAttributes().getAttribute("appctnSeq", RequestAttributes.SCOPE_SESSION) == null){
+                respCnt = 100;
+            }else{
+                String appctnSeq = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("appctnSeq", RequestAttributes.SCOPE_SESSION));
+                mpbBsnSearchDTO.setAppctnSeq(Integer.valueOf(appctnSeq));
+
+                //공통사업 여부
+                String businessYn = mpbCoexistenceService.getBusinessYn(mpbBsnSearchDTO);
+
+                respCnt = mpbCoexistenceService.updateUserCancel(mpbBsnSearchDTO,businessYn);
+            }
+            RequestContextHolder.getRequestAttributes().removeAttribute("appctnSeq", RequestAttributes.SCOPE_SESSION);
+        } catch (Exception e) {
+           if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return respCnt;
     }
 
     /**
@@ -224,8 +285,32 @@ public class MPBCoexistenceController {
 
                     } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                         respCnt = wBFBRegisterCompanyService.updInfoUser(mpbBsnMstDTO.getWBFBRegisterDTO(), multiRequest, request);
+                    } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        WBGAApplyDtlDTO wbgaApplyDtlDTO = new WBGAApplyDtlDTO();
+                        wbgaApplyDtlDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
+                        wbgaApplyDtlDTO.setRsumeSeq(mpbBsnSearchDTO.getRsumeSeq());
+                        wbgaApplyDtlDTO.setRsumeOrd(mpbBsnSearchDTO.getRsumeOrd());
+                        wbgaApplyDtlDTO.setAppctnSttsCd(mpbBsnSearchDTO.getAppctnSttsCd());
+                        wbgaApplyDtlDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
+                        wbgaApplyDtlDTO.setEuipmentList(mpbBsnMstDTO.getExam().getEuipmentList());
+                        wbgaApplyDtlDTO.setFileCdList(mpbBsnMstDTO.getExam().getFileCdList());
+                        wbgaApplyDtlDTO.setWbgaMsEuipmentDTO(mpbBsnMstDTO.getExam().getWbgaMsEuipmentDTO());
+
+                        respCnt = wbgaExamService.updateInfo(wbgaApplyDtlDTO,multiRequest, request);
+
                     } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //검교정
+                        WBHAApplyDtlDTO wbhaApplyDtlDTO = new WBHAApplyDtlDTO();
+                        wbhaApplyDtlDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
+                        wbhaApplyDtlDTO.setRsumeSeq(mpbBsnSearchDTO.getRsumeSeq());
+                        wbhaApplyDtlDTO.setRsumeOrd(mpbBsnSearchDTO.getRsumeOrd());
+                        wbhaApplyDtlDTO.setAppctnSttsCd(mpbBsnSearchDTO.getAppctnSttsCd());
+                        wbhaApplyDtlDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
+                        wbhaApplyDtlDTO.setEuipmentList(mpbBsnMstDTO.getEquiment().getEuipmentList());
+                        wbhaApplyDtlDTO.setFileCdList(mpbBsnMstDTO.getEquiment().getFileCdList());
+                        wbhaApplyDtlDTO.setWbhaMsEuipmentDTO(mpbBsnMstDTO.getEquiment().getWbhaMsEuipmentDTO());
+
+                        respCnt = wbhaCalibrationService.updateInfo(wbhaApplyDtlDTO, multiRequest, request);
                     } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //공급망
                         WBIBSupplyDTO wBIBSupplyDTO = new WBIBSupplyDTO();

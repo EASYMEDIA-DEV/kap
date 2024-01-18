@@ -107,4 +107,45 @@ public class MPBCoexistenceServiceImpl implements MPBCoexistenceService {
 
         return mpbCompanyDTO;
     }
+
+    /**
+     *   마이페이지 상생 사업 사용자 신청취소
+     */
+    public int updateUserCancel(MPBBsnSearchDTO mpbBnsSearchDTO, String businessYn) throws Exception
+    {
+        int respCnt = 0;
+        if ("Y".equals(businessYn)) {
+            //공통사업
+            mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE04_2_5");
+            mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE04_1_4");
+        } else {
+            if("BSN03".equals(mpbBnsSearchDTO.getBsnCd()) || "BSN04".equals(mpbBnsSearchDTO.getBsnCd()) || "BSN05".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //보안환경구축, 안전설비구축, 탄소배출저감
+                mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE01001_01_006");
+                mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE01001_02_006");
+            } else if ("BSN06".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //스마트공장구축
+                mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE02001_01_004");
+                mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE02001_02_003");
+            } else if ("BSN07".equals(mpbBnsSearchDTO.getBsnCd()) || "BSN08".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //시험계측장비
+                mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE07001_01_004");
+                mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE07001_02_004");
+            } else if ("BSN09".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //공급망안정화기금
+                mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE06001_01_004");
+                mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE06001_02_005");
+            } else if ("BSN10".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //자동차부품산업대상
+                mpbBnsSearchDTO.setAppctnSttsCd("PRO_TYPE05001_01_004");
+                mpbBnsSearchDTO.setMngSttsCd("PRO_TYPE05001_02_004");
+            } else if ("BSN11".equals(mpbBnsSearchDTO.getBsnCd())) {
+                //미래차공모전전
+                mpbBnsSearchDTO.setAppctnSttsCd("WBKB_REG_FRT004");
+                mpbBnsSearchDTO.setMngSttsCd("WBKB_REG_LRT004");
+            }
+       }
+        respCnt = mpbCoexistenceMapper.updateUserCancel(mpbBnsSearchDTO);
+        return respCnt;
+    }
 }

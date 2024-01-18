@@ -270,10 +270,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    /*if($(".dropzone .dz-preview").length < 1) {
+                    if($(".dropzone .dz-preview").length < 1) {
                         alert(msgCtrl.getMsg("fail.notFileRequired"));
                         isValid = !isValid;
-                    }*/
+                    }
 
                     jQuery.ajax({
                         url : "./getBsnmNoCnt",
@@ -291,9 +291,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         }
                     });
                     
-                    isValid = false;
-
-
                     return isValid;
                 },
                 async : {

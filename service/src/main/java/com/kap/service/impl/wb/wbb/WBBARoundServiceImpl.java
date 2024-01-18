@@ -201,6 +201,7 @@ public class WBBARoundServiceImpl implements WBBARoundService {
                     } else {
                         //신청가능 코드 200
                         rtnCode = 200;
+
                     }
                 } else {
                     //부품사가 1차 2차가 아닐떄,

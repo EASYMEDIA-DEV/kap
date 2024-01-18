@@ -83,11 +83,9 @@
                                                                     <div class="inner-line">
                                                                         <p class="data-title f-body1">${itemOptn.optnNm}<span class="essential-mark color-sky">*</span></p>
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                                                 <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" id="searchFile${status1.index}">

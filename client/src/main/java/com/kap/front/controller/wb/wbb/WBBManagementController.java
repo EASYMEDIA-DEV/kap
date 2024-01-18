@@ -184,6 +184,7 @@ public class WBBManagementController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wbbaCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
             modelMap.addAttribute("rtnData", wbbbCompanyService.getApplyDtl(wbbaCompanySearchDTO));
             modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));

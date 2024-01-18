@@ -76,9 +76,21 @@ public class WBHAApplyDtlDTO extends BaseDTO {
     @Schema(title = "파일코드")
     private String fileCd;
 
+    @Schema(title = "파일이름")
+    private String fileNm;
+
+    @Schema(title = "파일코드")
+    private List<String> fileCdList;
+
     @Schema(title = "신청파일 리스트")
     private List<WBHAApplyDtlDTO> fileInfoList;
 
+    @Schema(title = "대상 장비 리스트")
+    private List<WBHAEuipmentDTO> euipmentList;
+
     @Schema(title = "계측장비 리스트")
     private List<WBHAMsEuipmentDTO> msEquipmentList;
+
+    @Schema(title = "계측장비상세")
+    private WBHAMsEuipmentDTO wbhaMsEuipmentDTO;
 }

@@ -10,6 +10,19 @@
     -->
     <select id="selectApplyList" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
         SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
+        FROM (
+            SELECT  INFO.*,
+               (CASE WHEN appctn_stts_chng_dtm >= mng_stts_chng_dtm THEN appctn_stts_chng_dtm
+                     WHEN mng_stts_chng_dtm >= appctn_stts_chng_dtm THEN mng_stts_chng_dtm
+                     WHEN appctn_stts_chng_dtm IS NULL THEN mng_stts_chng_dtm
+                     WHEN mng_stts_chng_dtm IS NULL THEN appctn_stts_chng_dtm
+                ELSE NULL END ) AS chngDtm,
+                (CASE
+                    WHEN bsn_end_dtm > NOW() THEN 1
+                    WHEN appctn_stts_cd = '사용자취소' THEN 2
+                    WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 3
+                    WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 4
+                ELSE 5 END ) bsnStatus
             FROM ( SELECT
                     TMP.* ,
                     ( SELECT
@@ -18,12 +31,13 @@
                             THEN rsume_stts_cd
                             ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END )
                         FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_Cd_Nm,
-                    (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsnNm,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
                     ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
                     ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
                     ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd,
                     ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
                     ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
+                    ( SELECT rtrn_rsn_cntn FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rtrn_rsn_cntn,
                     ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = bsn_Cd )) title
         FROM (
                 SELECT YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd,
@@ -47,9 +61,16 @@
                 ) C /* 회원-회사 JOIN 테이블 */
                 ON C.mem_seq = B.mem_seq
             ) TMP
-        ) COMPANY_INFO
+        ) INFO) COMPANY_INFO
         <include refid="selectCompanyListwhereSql" />
-        ORDER BY appctn_stts_chng_dtm DESC, mng_stts_chng_dtm DESC
+        <choose>
+            <when test="ordFlag == 1">
+                ORDER BY chngDtm DESC
+            </when>
+            <when test="ordFlag == 2">
+                ORDER BY reg_dtm DESC
+            </when>
+        </choose>
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
@@ -61,24 +82,42 @@
         2024.01.08  김태훈     최초 생성
     -->
     <select id="selectApplyCount" parameterType="mpbBsnSearchDTO" resultType="java.lang.Integer">
-        SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
-        FROM (  SELECT
-                    YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd, B.adm_memo,
-                    B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
-                    C.*
-                FROM
-                (
-                    SELECT * FROM cx_episd_mst
-                    WHERE EXPS_YN = 'Y'
-                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
-                    INNER JOIN
-                (
-                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
-                    ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
-                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
-                ) C /* 회원-회사 JOIN 테이블 */
-                ON C.mem_seq = B.mem_seq
-            ) TMP
+        SELECT /*WBBBCompanyMapper.selectApplyCount*/ count(*)
+        FROM (
+                SELECT  INFO.*,
+                     ( CASE
+                        WHEN bsn_end_dtm > NOW() THEN 1
+                        WHEN appctn_stts_cd = '사용자취소' THEN 2
+                        WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 3
+                        WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 4
+                        ELSE 5 END
+                    ) bsnStatus
+                FROM (
+                        SELECT
+                            TMP.* ,
+                            (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
+                            (SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
+                            (SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd
+                        FROM (
+                                SELECT
+                                    YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd,
+                                    B.appctn_seq, B.sbrdn_bsnm_no, B.adm_memo, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
+                                    C.*,
+                                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
+                                FROM
+                                (
+                                    SELECT * FROM cx_episd_mst WHERE EXPS_YN = 'Y'
+                                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
+                                INNER JOIN
+                                (
+                                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
+                                    ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
+                                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+                                ) C /* 회원-회사 JOIN 테이블 */
+                                ON C.mem_seq = B.mem_seq
+                        ) TMP
+            ) INFO
+        ) COMPANY_INFO
         <include refid="selectCompanyListwhereSql" />
     </select>
 
@@ -124,6 +163,7 @@
                      EPISD,
                      BSN_STRT_DTM,
                      BSN_END_DTM,
+                     ( CASE WHEN NOW() > ACCS_END_DTM THEN 'N' ELSE 'Y' END ) CANCEL_YN,
                      ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = B.bsn_Cd )) title,
                      ( SELECT MAX(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD,
                      ( SELECT MIN(RSUME_ORD) FROM cx_appctn_rsume_dtl WHERE appctn_seq = A.appctn_seq ) RSUME_ORD_MIN,
@@ -203,6 +243,23 @@
         FROM CP_CMPN_CBSN_DTL
         WHERE BSNM_NO = #{bsnmNo}
     </select>
+
+    <!--
+         쿼리명 : MPBCoexistenceMapper.updateUserCancel
+         설  명 : 상생사업 사용자 취소
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.08  김태훈     최초 생성
+    -->
+    <update id="updateUserCancel" parameterType="mpbBsnSearchDTO">
+        UPDATE /* MPBCoexistenceMapper.updateUserCancel */ CX_APPCTN_RSUME_DTL
+        SET
+            APPCTN_STTS_CD = #{appctnSttsCd},
+            APPCTN_STTS_CHNG_DTM = NOW(),
+            MNG_STTS_CD = #{mngSttsCd}
+        WHERE APPCTN_SEQ = #{appctnSeq} AND RSUME_ORD = 1
+    </update>
+
     <!--
 		쿼리명 : selectCompanyListwhereSql
 		설  명 : 게시판 관리 where Sql
@@ -212,50 +269,39 @@
     -->
     <sql id="selectCompanyListwhereSql">
         <where>
-            <if test="carbonDate != null and carbonDate != ''.toString() ">
+            <if test="dateType != null and dateType != ''.toString() ">
                 <choose>
-                    <when test="carbonDate == 1">
+                    <when test="dateType == 1">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                            AND
+                            (
+                                BSN_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND STR_TO_DATE(#{endDt}, '%Y.%m.%d')
+                                OR
+                                BSN_END_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND STR_TO_DATE(#{endDt}, '%Y.%m.%d')
+                                OR
+                                STR_TO_DATE(#{strtDt}, '%Y.%m.%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                                OR
+                                STR_TO_DATE(#{endDt}, '%Y.%m.%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
+                            )
                         </if>
                     </when>
-                    <when test="carbonDate == 2">
+                    <when test="dateType == 2">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d', INTERVAL 1 DAY)
-                        </if>
-                    </when>
-                    <when test="carbonDate == 3">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                            AND REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y.%m.%d', INTERVAL 1 DAY)
                         </if>
                     </when>
                 </choose>
             </if>
-
-            <if test="ctgryCdList != null and ctgryCdList.size() > 0">
-                AND RSUME_STTS_CD IN
-                <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="(" close=")" separator=",">
-                    #{ctgryCdList}
-                </foreach>
-            </if>
-            <if test="year != null and year != ''.toString()">
-                AND YEAR = #{year}
-            </if>
-            <if test="episd != null and episd != ''.toString()">
-                AND EPISD = #{episd}
-            </if>
             <if test="q != null and q != ''.toString() ">
                 AND (
-                CMPN_NM LIKE CONCAT('%', #{q}, '%')
-                OR
-                HP_NO LIKE CONCAT('%', #{q}, '%')
-                OR
-                BSNM_NO LIKE CONCAT('%', #{q}, '%')
-                OR
-                NAME LIKE CONCAT('%', #{q}, '%')
-                OR
-                REG_ID LIKE CONCAT('%', #{q}, '%')
+                    bsn_Nm LIKE CONCAT('%', #{q}, '%')
                 )
+            </if>
+            <if test="statusChk != null and statusChk.size() > 0">
+                bsnStatus IN
+                <foreach collection="statusChk" item="statusChk" index="index" separator=", " open="(" close=")">
+                    #{statusChk}
+                </foreach>
             </if>
         </where>
     </sql>

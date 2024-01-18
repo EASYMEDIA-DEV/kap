@@ -78,8 +78,8 @@ public class MPBBsnSearchDTO extends BaseDTO {
     private String appctnSttsChngDtm;
     @Schema(title = "관리상태변경일시", example = "yyyy-MM-dd")
     private String mngSttsChngDtm;
-    @Schema(title = "관리자메모", example = "")
-    private String admMemo;
+    @Schema(title = "반려사유", example = "")
+    private String rtrnRsnCntn;
     @Schema(title = "수정ID", example = "")
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")
@@ -107,4 +107,16 @@ public class MPBBsnSearchDTO extends BaseDTO {
 
     @Schema(title = "자동차 훈격 코드", example = "")
     private String mrtsCd;
+
+    @Schema(title = "취소여부", example = "")
+    private String cancelYn;
+
+    @Schema(title = "정렬플래그", example = "")
+    private Integer ordFlag;
+
+    @Schema(title = "기간검색 유형", example = "")
+    private String dateType;
+
+    @Schema(title = "사업상태", example = "")
+    private List<String> statusChk;
 }

@@ -241,12 +241,12 @@ public interface WBHACalibrationMapper {
     public int deleteEuipment(WBHAApplyDtlDTO wbhaApplyDtlDTO) throws Exception;
 
     /**
-     * 계측장비정보 업데이트
+     * 계측장비정보 삭제
      */
     public int deleteMsEuipment(WBHAMsEuipmentDTO wbhaMsEuipmentDTO) throws Exception;
 
     /**
-     * 계측장비정보 업데이트
+     * 계측장비정보 등록
      */
     public int insertMsEuipment(WBHAMsEuipmentDTO wbhaMsEuipmentDTO) throws Exception;
 
@@ -285,4 +285,8 @@ public interface WBHACalibrationMapper {
      */
     public WBHACalibrationSearchDTO getApplyDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
+    /**
+     * 계측장비정보 신청여부 조회
+     */
+    public int updateMsEuipment(WBHAMsEuipmentDTO wbhaMsEuipmentDTO) throws Exception;
 }

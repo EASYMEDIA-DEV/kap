@@ -153,6 +153,7 @@ public class WBGAEaxmController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wbgaExamSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
             modelMap.addAttribute("rtnData", wbgaExamService.getApplyDtl(wbgaExamSearchDTO));
         } catch (Exception e) {

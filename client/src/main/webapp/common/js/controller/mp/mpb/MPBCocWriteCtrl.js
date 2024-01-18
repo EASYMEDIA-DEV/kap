@@ -30,6 +30,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
                 //파일확장자 체크
                 $('#'+fileId).val("");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
                 $('#'+fileId).closest(".form-group").find('.file-list').empty();
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
 
@@ -44,6 +45,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     if (fileSize > maxFileSize)
                     {
                         $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
                         $('#'+fileId).closest(".form-group").find('.file-list').empty();
                         alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
                         isFile = false;
@@ -52,9 +54,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
-                var fileHtml = '<p class="file-name"><span class="name">' + fileName + '</span>';
+                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
                 fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
-                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
                 $('#'+fileId).closest(".form-group").find('.file-list').append(fileHtml);
             }
         }
@@ -83,12 +86,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         });
 
                         if (valid) {
-                            cmmCtrl.fileFrm(function(data){
-                                if (data.respCnt == 100) {
-                                    alert("잘못된 접근입니다. 다시 시도바랍니다.");
-                                }
-                                location.href = "./list";
-                            }, "./update", $formObj, "json");
+                            if(confirm("저장 후 내용을 수정할 수 없습니다.\n저장하시겠습니까?")) {
+                                cmmCtrl.fileFrm(function(data){
+                                    if (data.respCnt == 100) {
+                                        alert("잘못된 접근입니다. 다시 시도바랍니다.");
+                                    }
+                                    location.href = "./list";
+                                }, "./update", $formObj, "json");
+                            }
                         }
                     }
                 }

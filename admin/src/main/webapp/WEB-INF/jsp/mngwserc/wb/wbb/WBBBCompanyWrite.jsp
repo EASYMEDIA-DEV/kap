@@ -14,7 +14,7 @@
                 <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}" />
             </c:if>
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${userInfo.memSeq}" />
-            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${userInfo.bsnmNo}" />
+            <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
 
             <c:if test="${empty rtnInfo.appctnSeq}">
@@ -492,7 +492,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 <c:choose>
-                                                    <c:when test="${not empty item.applyDtl.rtrnRsnCntn}">
+                                                    <c:when test="${not empty item.applyDtl.rtrnRsnCntn && item.applyDtl.mngSttsCd ne 'PRO_TYPE04_1_4' }">
                                                         <input type="text" class="form-control notRequired" id="rtrnRsnCntn" name="rtrnRsnCntn" value="${item.applyDtl.rtrnRsnCntn}" title="사유입력" placeholder="사유입력" maxlength="50" style="width: 800px;">
                                                     </c:when>
                                                     <c:otherwise>

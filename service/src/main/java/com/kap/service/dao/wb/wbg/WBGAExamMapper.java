@@ -281,4 +281,9 @@ public interface WBGAExamMapper {
      */
     public WBGAExamSearchDTO getApplyDtl(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
 
+    /**
+     * 계측장비정보 신청여부 조회
+     */
+    public int updateMsEuipment(WBGAMsEuipmentDTO wbgaMsEuipmentDTO) throws Exception;
+
 }

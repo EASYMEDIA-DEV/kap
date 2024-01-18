@@ -122,4 +122,10 @@ public interface WBHACalibrationService {
      *   신청자 정보 조회
      */
     public WBHACalibrationSearchDTO getApplyDtl(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 신청자를 수정한다.
+     * @return
+     */
+    public int updateInfo(WBHAApplyDtlDTO wbhaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 }

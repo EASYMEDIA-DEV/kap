@@ -157,6 +157,7 @@ public class WBHACalibrationController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
             modelMap.addAttribute("rtnData", wbhaCalibrationService.getApplyDtl(wbhaCalibrationSearchDTO));
         } catch (Exception e) {

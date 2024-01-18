@@ -10,10 +10,24 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 10;
+    var search = function(obj)
+    {
+        cmmCtrl.listFrmAjax(function(respObj) {
+            $('.trainings-list-w').empty();
+            $('.trainings-list-w').append(respObj);
+        }, "./listAjax", $formObj, "POST", "html");
+    };
 
     // set model
     ctrl.model = {
         id : {
+            ordFlag : {
+                event : {
+                    change : function() {
+                        search($(this));
+                    }
+                }
+            },
         },
         classname : {
             addMore : {
@@ -45,6 +59,27 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var bsnCd = $(this).data("bsnCd");
                         var appctnSeq = $(this).data("appctnSeq");
                         location.href = "./view?bsnCd="+bsnCd+"&appctnSeq="+appctnSeq;
+                    }
+                }
+            },
+            cancel : {
+                event : {
+                    click : function() {
+                        if(confirm("신청을 취소하시겠습니까?")) {
+                            cmmCtrl.frmAjax(function(data){
+                                if (data.respCnt == 100) {
+                                    alert("잘못된 접근입니다. 다시 시도바랍니다.");
+                                }
+                                location.href = "./list";
+                            }, "./cancel", $('#cancelFrm'), "post","json");
+                        }
+                    }
+                }
+            },
+            searchBtn : {
+                event : {
+                    click : function() {
+                        search($(this));
                     }
                 }
             }

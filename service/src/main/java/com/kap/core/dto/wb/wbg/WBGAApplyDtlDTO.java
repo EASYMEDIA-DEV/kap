@@ -73,12 +73,24 @@ public class WBGAApplyDtlDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일이름")
+    private String fileNm;
+
     @Schema(title = "파일코드")
     private String fileCd;
+
+    @Schema(title = "파일코드 리스트")
+    private List<String> fileCdList;
 
     @Schema(title = "신청파일 리스트")
     private List<WBGAApplyDtlDTO> fileInfoList;
 
+    @Schema(title = "대상 장비 리스트")
+    private List<WBGAEuipmentDTO> euipmentList;
+
     @Schema(title = "계측장비 리스트")
     private List<WBGAMsEuipmentDTO> msEquipmentList;
+
+    @Schema(title = "계측장비상세")
+    private WBGAMsEuipmentDTO wbgaMsEuipmentDTO;
 }

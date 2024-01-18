@@ -59,4 +59,9 @@ public interface MPBCoexistenceMapper {
      * 부품사 SQ 정보를 조회한다.
      */
     public List<MPBCompanyDTO> selectSqList(MPBBsnSearchDTO mpbBnsSearchDTO);
+
+    /**
+     *  마이페이지 상생 사업 사용자 취소
+     */
+    public int updateUserCancel(MPBBsnSearchDTO mpbBnsSearchDTO);
 }

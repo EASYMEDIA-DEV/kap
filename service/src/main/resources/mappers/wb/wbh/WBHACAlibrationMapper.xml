@@ -573,13 +573,14 @@
             , RSUME_ORD
             , FILE_CD
             , FILE_SEQ
+            , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
             , REG_ID
             , REG_IP
             , REG_DTM
             , MOD_ID
             , MOD_IP
             , MOD_DTM
-        FROM CX_APPCTN_RSUME_FILE_DTL
+        FROM CX_APPCTN_RSUME_FILE_DTL A
         WHERE RSUME_SEQ = #{rsumeSeq} AND RSUME_ORD = #{rsumeOrd}
         ORDER BY RSUME_ORD ASC
     </select>
@@ -1125,18 +1126,18 @@
     <update id="updateApplyStatus" parameterType="wbbaApplyDtlDTO">
         UPDATE /* WBHACalibrationMapper.updateApplyStatus */ CX_APPCTN_RSUME_DTL
         SET
-            APPCTN_STTS_CD = #{appctnSttsCd},
+            <if test='siteGubun != "front"'>
+                MNG_STTS_CHNG_DTM = NOW(),
+                RTRN_RSN_CNTN = #{rtrnRsnCntn},
+                MOD_ID = #{modId},
+                MOD_IP = #{modIp},
+                MOD_DTM = NOW(),
+            </if>
             <if test='siteGubun != "admin"'>
                 APPCTN_STTS_CHNG_DTM= NOW(),
             </if>
-            MNG_STTS_CD = #{mngSttsCd},
-            <if test='siteGubun != "front"'>
-                MNG_STTS_CHNG_DTM = NOW(),
-            </if>
-            RTRN_RSN_CNTN = #{rtrnRsnCntn},
-            MOD_ID = #{modId},
-            MOD_IP = #{modIp},
-            MOD_DTM = NOW()
+            APPCTN_STTS_CD = #{appctnSttsCd},
+            MNG_STTS_CD = #{mngSttsCd}
         WHERE APPCTN_SEQ = #{appctnSeq}
           AND RSUME_SEQ = #{rsumeSeq}
           AND RSUME_ORD = #{rsumeOrd}
@@ -1220,7 +1221,12 @@
         ) VALUES (
             #{rsumeSeq},
             #{rsumeOrd},
-            #{accsDt},
+            <if test='siteGubun == "admin"'>
+                #{accsDt},
+            </if>
+            <if test='siteGubun == "front"'>
+                NOW(),
+            </if>
             #{clbtnExpnsPmt},
             #{realGiveDt},
             #{fndnSpprtPmt},
@@ -1230,6 +1236,19 @@
             NOW()
         )
     </insert>
+
+    <!--
+     쿼리명 : WBHACalibrationMapper.updateMsEuipment
+     설  명 : 신청업체관리 계측장비정보 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.12.22  김태훈     최초 생성
+    -->
+    <update id="updateMsEuipment" parameterType="wbhaMsEuipmentDTO">
+        UPDATE /* WBHACalibrationMapper.updateMsEuipment */ CX_APPCTN_RSUME_TCHLG_DTL
+        SET CLBTN_EXPNS_PMT = #{clbtnExpnsPmt}
+        WHERE RSUME_SEQ = #{rsumeSeq} AND RSUME_ORD = #{rsumeOrd}
+    </update>
 
     <!--
          쿼리명 : WBHACalibrationMapper.getTrnsfList

@@ -45,7 +45,7 @@ public class MPBBsnMstDTO extends BaseDTO {
     private WBBAApplyMstDTO wbbaApplyMstDTO;
 
     @Schema(title = "시험계측장비", example = "")
-    private WBGAApplyMstDTO wbgaApplyMstDTO;
+    private WBGAApplyMstDTO exam;
 
     @Schema(title = "검교정", example = "")
     private WBHAApplyMstDTO equiment;

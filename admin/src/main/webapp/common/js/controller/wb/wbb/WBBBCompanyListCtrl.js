@@ -59,13 +59,13 @@ define(["ezCtrl"], function(ezCtrl) {
                         {
                             var delAct = frmDataObj.find("input:checkbox[name='delValueList']:checked");
                             var deleteFlag = true;
-                            delAct.each(function(data,i) {
+                            /*delAct.each(function(data,i) {
                                 if ($(this).data("deleteYn") == "N") {
                                     deleteFlag = false;
                                     alert('접수 이후의 신청 건은 삭제가 불가합니다.');
                                     return false;
                                 }
-                            });
+                            });*/
 
                             if (deleteFlag) {
                                 if(confirm("삭제 처리하겠습니끼?"))
