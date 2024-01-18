@@ -17,8 +17,8 @@ spring:
   servlet:
     multipart:
       enabled: true
-      max-file-size: 40MB
-      max-request-size: 42MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
+      max-file-size: 100MB
+      max-request-size: 104MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
   #OBJECTMAPPER CAMELCASE
   jackson:
     property-naming-strategy: LOWER_CAMEL_CASE
