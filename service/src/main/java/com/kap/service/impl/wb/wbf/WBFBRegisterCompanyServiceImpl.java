@@ -1262,6 +1262,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
+        response.setHeader("Set-Cookie", "fileDownload=true; path=/");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_신청부품사관리_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output
@@ -1348,7 +1349,6 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 if (!files.isEmpty()) {
                     rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-                    System.err.println(rtnList);
                     for (int i = 0; i < rtnList.size() ; i++) {
 
                         List<COFileDTO> fileList = new ArrayList();
@@ -1524,9 +1524,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         rtnList.get(i).setFieldNm("fileSeq");
                         fileList.add(rtnList.get(i));
                         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                        WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
 
-                        if(spprtDtl.getGiveType() == "PRO_TYPE03001") {
+                        if(spprtDtl.getGiveType().equals("PRO_TYPE03001")) {
                             /* 선급금 */
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
@@ -1535,7 +1534,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             } else if (i == 2) {
                                 spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
                             }
-                        } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE03002") {
+                        } else if(wBFBRegisterDTO.getGiveType().equals("PRO_TYPE03002")) {
                             /* 지원금 */
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
@@ -1544,7 +1543,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             } else if (i == 2) {
                                 spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
                             }
-                        } else if(wBFBRegisterDTO.getAppctnSttsCd() == "PRO_TYPE03003") {
+                        } else if(wBFBRegisterDTO.getGiveType().equals("PRO_TYPE03003")) {
                             /* 기울임치 */
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
