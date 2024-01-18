@@ -219,7 +219,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             $(".for-status-chk").removeClass("satisfy");
                             $(".switchingMemberPopup").css('display','none');
                             $(".dimd").css('display','none');
-                            $(".dimd").removeClass("dimd");
+                            $(".dimd").css('z-index','');
                             $("body").removeClass("stop-scroll");
                         }
                     }
@@ -347,7 +347,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                         alert(msgCtrl.getMsg("success.upd2"));
 
                                         // location.reload();
-                                    }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json",'',false);
+                                    }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json");
                                 } else {
                                     popChk = false;
                                 }
@@ -361,13 +361,18 @@ define(["ezCtrl"], function(ezCtrl) {
                                 }
 
                             } else {
-                                //신규 등록 시
-                                $(".partDtl").show()
+                                if (confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    //신규 등록 시
+                                    $(".partDtl").show()
+                                } else {
+                                    popChk = false;
+                                }
                             }
 
                             if(popChk) {
                                 $(".switchingMemberPopup").css('display', 'none');
                                 $(".dimd").css('display', 'none');
+                                $(".dimd").css('z-index','');
                                 $("body").removeClass("stop-scroll");
                                 $(".for-status-chk").removeClass("satisfy");
                             }
@@ -391,6 +396,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             }
                             $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
+                            $(".loading-area").stop().fadeIn(200);
                             jQuery.ajax({
                                 url : "/my-page/member/intrduction/"+$("#bsnmNosOld").val(),
                                 type : "get",
@@ -454,6 +460,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                 {
                                     cmmCtrl.errorAjax(xhr);
                                     jQuery.jstree.rollback(data.rlbk);
+                                },complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
 
@@ -464,6 +472,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 bsnmChk = false;
                                 return ;
                             }
+                            $(".loading-area").stop().fadeIn(200);
                             jQuery.ajax({
                                 url : "/member/bsnm-select/"+$("#bsnmNo").val(),
                                 type : "get",
@@ -485,11 +494,13 @@ define(["ezCtrl"], function(ezCtrl) {
                                         }
                                         bsnmChk = true;
                                         bsnmOldNewChk = true;
+                                        $(".loading-area").stop().fadeOut(200);
                                     } else {
                                         bsnmOldNewChk = false;
                                         //3. 없다면 나이스 api 호출을 한다.
                                         $(".old").hide();
                                         $(".new").show();
+                                        $(".loading-area").stop().fadeIn(200);
                                         jQuery.ajax({
                                             url : "/nice/comp-chk",
                                             type : "post",
@@ -534,6 +545,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                             {
                                                 cmmCtrl.errorAjax(xhr);
                                                 jQuery.jstree.rollback(data.rlbk);
+                                            },complete : function(){
+                                                $(".loading-area").stop().fadeOut(200);
                                             }
                                         });
 

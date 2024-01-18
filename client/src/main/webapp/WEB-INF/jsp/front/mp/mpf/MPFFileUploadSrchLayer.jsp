@@ -1,6 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <div id="wrap">
+    <spring:eval var="imgExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+    <spring:eval var="atchUploadMaxSize" expression="104857600" />
+    <input type="hidden" id="imgExtns" value="${imgExtns}"/>
+    <input type="hidden" id="atchUploadMaxSize" value="${atchUploadMaxSize}"/>
     <!-- 자료 업로드 팝업 -->
     <div class="layer-popup paymentInfoManagPopup" ><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
         <div class="for-center">

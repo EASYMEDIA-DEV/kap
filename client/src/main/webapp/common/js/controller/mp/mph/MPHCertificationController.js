@@ -282,6 +282,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         if($("#bsnmNosOld").val()!= "") {
+                            $(".loading-area").stop().fadeIn(200);
+
                             $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
                             jQuery.ajax({
@@ -346,6 +348,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 {
                                     cmmCtrl.errorAjax(xhr);
                                     jQuery.jstree.rollback(data.rlbk);
+                                },complete : function(){
+                                    $(".loading-area").stop().fadeOut(200);
                                 }
                             });
                         } else {
@@ -371,6 +375,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }
 
                         });
+                        jQuery(".loading-area").stop().fadeIn(200);
                         //confirm-comp
                         jQuery.ajax({
                             url : "/my-page/member/intrduction/confirm-comp",
@@ -378,7 +383,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             timeout: 30000,
                             data : ajaxData,
                             dataType : "json",
-                            async: false,
                             cache : false,
                             success : function(data, status, xhr){
                                 if(data.data.chk) {
@@ -397,6 +401,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 return false;
                             },
                             complete : function(){
+                                $(".loading-area").stop().fadeOut(200);
                             }
                         });
 
@@ -543,7 +548,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //TODO 페이지 이동
                                 alert(msgCtrl.getMsg("success.upd2"));
                                 location.reload();
-                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",'',false);
+                            }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",true);
                         }
                     }
                 }

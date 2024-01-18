@@ -172,7 +172,7 @@ public class MPFCmssrAttendController {
         int atchFileCnt = 0;
         if (!files.isEmpty())
         {
-            result = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 10485760);
+            result = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 104857600);
             if (result.size() > 0)
             {
                 if(result.get(0).getFileExtn() == null) {

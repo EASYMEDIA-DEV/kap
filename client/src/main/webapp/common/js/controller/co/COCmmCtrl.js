@@ -34,7 +34,7 @@ var cmmCtrl = (function(){
 			cache : false,
 			beforeSend : function(){
 				if (loading) {
-					jQuery("loading-area").stop().fadeIn(200);
+					jQuery(".loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr){
@@ -54,7 +54,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function(){
 				if (loading) {
-					jQuery("loading-area").stop().fadeOut(200);
+					jQuery(".loading-area").stop().fadeOut(200);
 				}
 			}
 		});
@@ -66,6 +66,9 @@ var cmmCtrl = (function(){
 		//폼 전송 타입
 		if (typeof formActionType == "undefined") {
 			formActionType = "POST";
+		}
+		if(typeof loading == "undefined" || loading =="") {
+			loading = true;
 		}
 		//비동기 여부
 		if (typeof sync == "undefined") {
@@ -88,7 +91,7 @@ var cmmCtrl = (function(){
 				beforeSend : function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
-						jQuery("loading-area").stop().fadeIn(200);
+						jQuery(".loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr){
@@ -113,7 +116,7 @@ var cmmCtrl = (function(){
 				},
 				complete : function(){
 					if (loading) {
-						jQuery("loading-area").stop().fadeOut(200);
+						jQuery(".loading-area").stop().fadeOut(200);
 					}
 				}
 			});
@@ -189,7 +192,7 @@ var cmmCtrl = (function(){
 				beforeSend : function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
-						jQuery("loading-area").stop().fadeIn(200);
+						jQuery(".loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr){
@@ -214,7 +217,7 @@ var cmmCtrl = (function(){
 				},
 				complete : function(){
 					if (loading) {
-						jQuery("loading-area").stop().fadeOut(200);
+						jQuery(".loading-area").stop().fadeOut(200);
 					}
 				}
 			});
@@ -245,7 +248,7 @@ var cmmCtrl = (function(){
 			cache : false,
 			beforeSend : function() {
 				if (loading) {
-					jQuery("loading-area").stop().fadeIn(200);
+					jQuery(".loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr) {
@@ -265,7 +268,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function() {
 				if (loading) {
-					jQuery("loading-area").stop().fadeOut(200);
+					jQuery(".loading-area").stop().fadeOut(200);
 				}
 			}
 		});
@@ -296,7 +299,7 @@ var cmmCtrl = (function(){
 			contentType: "application/json; charset=utf-8",
 			beforeSend : function() {
 				if (loading) {
-					jQuery("loading-area").stop().fadeIn(200);
+					jQuery(".loading-area").stop().fadeIn(200);
 				}
 			},
 			success : function(data, status, xhr) {
@@ -315,7 +318,7 @@ var cmmCtrl = (function(){
 			},
 			complete : function() {
 				if (loading) {
-					jQuery("loading-area").stop().fadeOut(200);
+					jQuery(".loading-area").stop().fadeOut(200);
 				}
 			}
 		});
