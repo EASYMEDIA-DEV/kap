@@ -12,7 +12,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
@@ -218,7 +217,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                fnpstnNmShow();
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -274,17 +273,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    if($(".dropzone .dz-preview").length < 1) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = false;
-                    }
                     if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
                         isValid = false;
+                        return false;
                     }
                     if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
                         isValid = false;
+                        return false;
+                    }
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert(msgCtrl.getMsg("fail.notFileRequired"));
+                        isValid = false;
+                        return false;
                     }
 
                     return isValid;

@@ -80,9 +80,9 @@
 				empty : {
 					text : " 입력해주세요.",
 					password : " 입력해주세요.",
-					radio : " 선택하세요.",
-					checkbox : " 선택하세요.",
-					select : " 선택하세요.",
+					radio : " 선택해주세요.",
+					checkbox : " 선택해주세요.",
+					select : " 선택해주세요.",
 					textarea : " 입력해주세요.",
 					names : {
 

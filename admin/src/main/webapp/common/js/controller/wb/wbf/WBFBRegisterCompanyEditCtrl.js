@@ -12,7 +12,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("#frmData").eq(0);
 
@@ -409,7 +408,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     cmmCtrl.frmAjax(function(respObj) {
                                         /* return data input */
                                         setInputValue(respObj);
-                                        fnpstnNmShow();
+                                        fnpstnNmShow($('#pstnCd').val());
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");
@@ -507,17 +506,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                 after : function() {
                     var isValid = true;
 
-                    let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
-                    let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
-                    if(dropzoneTask.length > 0) {
-                        dropzoneTask.each(function(idx, el) {
-                            if($(el).find('.dz-preview').length < 1) {
-                                alert(msgCtrl.getMsg("fail.notFileRequired"));
-                                isValid = false;
-                            }
-                        });
-                    }
-
                     if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
                         isValid = false;
@@ -527,6 +515,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
                         isValid = false;
                         return false;
+                    }
+
+                    let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
+                    let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
+                    if(dropzoneTask.length > 0) {
+                        dropzoneTask.each(function(idx, el) {
+                            if($(el).find('.dz-preview').length < 1) {
+                                alert(msgCtrl.getMsg("fail.notFileRequired"));
+                                isValid = false;
+                                return false;
+                            }
+                        });
                     }
 
                     return isValid;
