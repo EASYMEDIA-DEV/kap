@@ -2,7 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.core.dto.im.ima.IMAQaPicDTO;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 1:1 문의 service
@@ -73,6 +73,6 @@ public interface IMAQaService {
     /**
      * 1:1 문의 등록 (사용자)
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartHttpServletRequest multiRequest) throws Exception;
+    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartFile[] atchFile) throws Exception;
 
 }

@@ -1,4 +1,4 @@
-package com.kap.front.controller.mp.mpd;
+package com.kap.front.controller.bd;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.COCodeService;
@@ -37,7 +37,7 @@ import java.util.List;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value="/foundation/intro/organization")
-public class MPDOrganizationController {
+public class BDFOrganizationController {
 
     /** Service **/
     private final MPAUserService mpaUserService;
@@ -89,7 +89,7 @@ public class MPDOrganizationController {
         modelMap.addAttribute("rtnProData", rtnProData);
         modelMap.addAttribute("rtnAdvData", rtnAdvData);
 
-        return "/front/mp/mpd/MPDOrganizationList.front";
+        return "/front/bd/bdf/BDFOrganizationList.front";
     }
 
     /**

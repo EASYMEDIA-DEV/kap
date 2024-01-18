@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div class="cont-wrap" data-controller="controller/mp/mpd/MPDOrganizationListCtrl">
+<div class="cont-wrap" data-controller="controller/bd/bdf/BDFOrganizationListCtrl">
 
     <div class="sub-top-vis-area basic-page">
         <div class="page-tit-area">
@@ -23,7 +23,7 @@
         <div class="right-con-area">
             <div class="cont-sec-w">
 
-                <jsp:include page="/WEB-INF/jsp/front/mp/mpd/MPDOrganizationMemberInclude.jsp" />
+                <jsp:include page="/WEB-INF/jsp/front/bd/bdf/BDFOrganizationMemberInclude.jsp" />
 
                 <div class="cont-sec no-border scroll-motion"><!-- @ s-margin : margin이 기본보다 작은 값일 때 추가 -->
                     <div class="tab-con-w">
@@ -174,6 +174,6 @@
 
     </div>
 
-    <jsp:include page="/WEB-INF/jsp/front/mp/mpd/MPDOrganizationPop.jsp" />
+    <jsp:include page="/WEB-INF/jsp/front/bd/bdf/BDFOrganizationPop.jsp" />
 
 </div>

@@ -67,6 +67,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
                                 isFile = false;
                             }
+                            else if(fileSize == 0) {
+                                $('#'+fileId).val("");
+                                $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+                                $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                                alert("빈 파일은 업로드가 불가능 합니다");
+                                isFile = false;
+                            }
                         }
                     }
 
@@ -116,6 +123,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             // $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
                             $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
                             alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
+                            isFile = false;
+                        }
+                        else if(fileSize == 0) {
+                            $('#'+fileId).val("");
+                            $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+                            $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                            alert("빈 파일은 업로드가 불가능 합니다");
                             isFile = false;
                         }
                     }
@@ -204,10 +218,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }
 
+                        $("#parntCtgryNm").val($("#parntCtgryCd option:selected").text());
+                        $("#ctgryNm").val($("#ctgryCd option:selected").text());
+
                         cmmCtrl.fileFrm(function(data){
-                            //콜백함수, 나의 1:1문의 > 해당 문의내역 상세페이지(FO-PC-MYP-07-003)로 링크(_Self)
-                            // location.href = "./";
                             console.log(data.respCnt);
+                            if(data.respCnt > 0) {
+                                alert(msgCtrl.getMsg("fail.im.ima.al_001"));
+                                //콜백함수, 나의 1:1문의 > 해당 문의내역 상세페이지(FO-PC-MYP-07-003)로 링크(_Self)
+                                location.href = "/my-page/member/qa/list";
+                            }
+                            else {
+                                alert("문제가 발생하였습니다.");
+                                location.reload();
+                            }
                         }, "./insert", $formObj, "json");
                     }
                 }

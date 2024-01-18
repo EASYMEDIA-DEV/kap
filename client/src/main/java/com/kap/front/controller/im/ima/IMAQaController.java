@@ -14,12 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * <pre>
@@ -98,43 +94,20 @@ public class IMAQaController {
          * 1:1 문의 등록
          */
         @PostMapping(value="/insert")
-        public IMAQaDTO qaInsertPage(IMAQaDTO pIMAQaDTO, MultipartHttpServletRequest multiRequest) throws Exception
+        public IMAQaDTO qaInsertPage(IMAQaDTO pIMAQaDTO, MultipartFile[] atchFile) throws Exception
         {
             try
             {
                 COUserDetailsDTO lgnData = COUserDetailsHelperService.getAuthenticatedUser();
 
                 if(lgnData != null) {
+                    pIMAQaDTO.setMemSeq(lgnData.getSeq());
                     pIMAQaDTO.setRegId(lgnData.getId());
+                    pIMAQaDTO.setRegName(lgnData.getName());
                     pIMAQaDTO.setRegIp(lgnData.getLoginIp());
-                    System.out.println("인서트 파라미터 ==================================================================== ");
-                    System.out.println(pIMAQaDTO.toString());
+                    pIMAQaDTO.setEmail(lgnData.getEmail());
 
-                    Map<String, MultipartFile> files = multiRequest.getFileMap();
-                    Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-                    while(itr.hasNext()) {
-//                        System.out.println("파일 데이터 =========================== " + itr.next());
-                        Map.Entry<String, MultipartFile> entry = itr.next();
-                        String fileName = entry.getKey();
-                        MultipartFile file = entry.getValue();
-
-                        System.out.println("파일 이름: " + fileName);
-                        System.out.println("파일 데이터: " + file);
-                        System.out.println("파일 데이터 toString: " + file.toString());
-
-                        // 파일 데이터를 읽을 수도 있습니다.
-                        if (file != null && !file.isEmpty()) {
-                            try {
-                                byte[] fileData = file.getBytes();
-                                System.out.println("파일 데이터: " + fileData.toString());
-                                // 여기에서 파일 데이터를 사용하거나 저장할 수 있습니다.
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                            }
-                        }
-                    }
-
-//                    pIMAQaDTO.setRespCnt(iMAQaService.insertQa(pIMAQaDTO, multiRequest));
+                    pIMAQaDTO.setRespCnt(iMAQaService.insertQa(pIMAQaDTO, atchFile));
                 }
             }
             catch (Exception e)
