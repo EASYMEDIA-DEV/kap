@@ -339,7 +339,7 @@ body.stop-scroll {overflow: hidden; height: 100%; min-height: 100%; touch-action
 #header .pop-wrap .pop-box::after {content: ""; position: absolute; left: 50%; top: -10rem; transform: translateX(-50%); width: 18rem; height: 10rem; background: url("/common/images/icon-round-triangle.svg") no-repeat center center / 100%;}
 #header .pop-wrap .pop-box::before {content: ""; position: absolute; left: 50%; bottom: calc(100% + 1px); transform: translateX(-50%); width: 30rem; height: 10rem;}
 #header .pop-wrap .noti-btn ~ .pop-box {width: 404rem; padding-bottom: 16rem;}
-#header .pop-wrap .log-btn ~ .pop-box {width: 156rem;}
+#header .pop-wrap .log-btn ~ .pop-box {min-width: 156rem;}
 #header .pop-wrap .pop-box .list {margin-top: 16rem;}
 #header .pop-wrap .pop-box .list a {display: block; padding: 16rem 0;}
 #header .pop-wrap .pop-box .list a ~ a {border-top: 1px solid #ECEEEF;}
@@ -374,9 +374,9 @@ body.stop-scroll {overflow: hidden; height: 100%; min-height: 100%; touch-action
 #header .all-menu .gnb > li {display: -webkit-box; display: -ms-flexbox; display: flex; padding: 24rem 0 48rem; border-top: 1px solid #ECEEEF;}
 #header .all-menu .gnb > li:last-child {padding-bottom: 0;}
 #header .all-menu .gnb > li .one-depth {font-family: "Pretendard_Bold", sans-serif; font-size: max(24rem, 18px); line-height: 150%; letter-spacing: -.02em;}
-#header .all-menu .gnb > li .two-pack {display: -webkit-box; display: -ms-flexbox; display: flex;}
+#header .all-menu .gnb > li .two-pack {display: -webkit-box; display: -ms-flexbox; display: flex; flex-wrap:wrap; column-gap: 10rem; row-gap:24rem; width:calc(100% - 274rem);}
 #header .all-menu .gnb > li .two-pack > li {width: 200rem;}
-#header .all-menu .gnb > li .two-pack > li ~ li {margin-left: 10rem;}
+/* #header .all-menu .gnb > li .two-pack > li ~ li {margin-left: 10rem;} */
 #header .all-menu .gnb > li .two-pack .two-depth {font-family: "Pretendard_SemiBold", sans-serif; font-size: max(18rem, 16px); line-height: 150%; letter-spacing: -.02em; transition: color .2s ease;}
 #header .all-menu .gnb > li .two-pack > li.on .two-depth {color: #74C0E2;}
 #header .all-menu .gnb > li .three-pack {margin-top: 16rem;}
@@ -432,8 +432,10 @@ body.stop-scroll {overflow: hidden; height: 100%; min-height: 100%; touch-action
   #header .all-menu .gnb > li {display: block; padding: 0; border: none;}
   #header .all-menu .gnb .one-pack {width: 100%; height: 48rem; margin-right: 0;}
   #header .all-menu .gnb > li .one-depth {position: relative; display: flex; align-items: flex-end; width: 100%; height: 100%;}
-  #header .all-menu .gnb > li .two-pack {display: none; padding-bottom: 10rem; padding-left: 12rem;}
-  #header .all-menu .gnb > li .two-pack > li {width: 100%; margin-top: 24rem;}
+  #header .all-menu .gnb > li .two-pack {display: none; padding-bottom: 10rem; padding-left: 12rem; width:100%;}
+  #header .all-menu .gnb > li .two-pack > li {width: 100%; margin-top: 10rem;}
+  #header .all-menu .gnb > li .two-pack > li:first-child{margin-top: 24rem;}
+  #header .all-menu .gnb > li .two-pack > li:has(.three-pack) {margin-top: 24rem;}
   #header .all-menu .gnb > li .two-pack > li .for-move {width: 100%;}
   #header .all-menu .gnb > li .two-pack > li ~ li {margin-left: 0;}
   #header .all-menu .gnb > li .three-pack {margin: 16rem 0 0 16rem;}
@@ -905,18 +907,20 @@ footer .copy-area span:last-child:after {display: none;}
 .form-radio input:disabled + label {color: #B2B8BD; background: url("/common/images/icon-radio-disabled.svg") left top/max(22rem, 19px) no-repeat;}
 .form-radio.bigger input + label {font-family: "Pretendard_SemiBold", sans-serif; padding-left: max(37rem, 27px); font-family: "Pretendard_SemiBold", sans-serif; font-size: max(18rem, 16px);}
 
-.file-btn-area {position:relative; width: 114rem; height: 50rem;} /* form - file */
+.file-btn-area {align-self: flex-start; position:relative; width: 114rem; height: 50rem;} /* form - file */
 .file-btn-area input[type="file"] {position:relative; width:100%; height:100%; opacity:0;}
 .file-btn-area input[type="file"]:disabled + label.btn-solid.gray-bg {color: #fff; background-color: #C6CCD1;}
 .file-btn-area label {position: absolute; left: 0; top:0; width:100%; height: 100%; cursor:pointer;}
 .file-btn-area input:focus-visible + label {outline: 2px solid #000; border-radius: 2px;}
-.file-list-area {display: flex; align-items: center; width: 370rem; height: 39rem; border-bottom: 1px solid #D9DDE0;}
+.file-list-area {position: relative; display: flex; align-items: flex-start; flex-wrap: wrap; row-gap: 8rem; padding-top: 16rem; width: 370rem; min-height: 50rem;}
+.file-list-area::before {content: ''; display: block; position: absolute; left: 0; top: 49rem; width: 100%; height: 1px; background-color: #D9DDE0;}
 .file-list-area .empty-txt {color: #B2B8BD; font-size: max(16rem, 14px); line-height: 160%; letter-spacing: -0.32rem;}
 .file-list-area .file-list {position: relative; display: flex; align-items: center; max-width: 100%; width: 100%;}
+.file-list-area .file-list:nth-of-type(2) {margin-top: 24rem;}
 .file-list-area .file-list .file-name {display: flex; max-width: calc(100% - 32rem); color: #06161E;}
 .file-list-area .file-list .file-name .name {display: inline-block; white-space: nowrap; max-width: 100%; overflow: hidden; text-overflow: ellipsis;}
 .file-list-area .file-list .btn-delete {/* margin-left: 8rem; */ position: absolute; right: 0; top: 0; width: 24rem; height: 24rem; background: url("/common/images/icon-delete-circle-pc.svg") center / 24rem no-repeat;}
-.file-list-area.attached {border-bottom: 1px solid #06161E;}
+.file-list-area.attached::before {background-color: #06161E;}
 .file-list-area.attached .empty-txt {display: none;}
 .file-prev-area {width: 100%; margin-top: -4rem;}
 .file-prev-area a {display: block; font-size: max(14rem, 13px); font-family: "Pretendard_Medium", sans-serif; color: #1E6B8E; line-height: 170%; letter-spacing: -.02em; text-decoration: underline;}
@@ -972,8 +976,10 @@ footer .copy-area span:last-child:after {display: none;}
   .form-address .form-group:first-child .form-input:nth-child(2) {width: 100%; margin-right: 0;}
   .form-address .form-group:last-child .form-input {width: 100%;}
 
-  .file-list-area {flex-grow: 1; width: auto; max-width: 100%; width: 100rem;}
+  .file-list-area {flex-grow: 1; padding-top: 10rem; width: auto; max-width: 100%; width: 100rem; min-height: 40rem;}
+  .file-list-area::before {top: 39rem;}
   .file-list-area .empty-txt {max-width: 100%; font-size: 13rem;}
+  .file-list-area .file-list:nth-of-type(2) {margin-top: 18rem;}
   .file-list-area .file-list .file-name {font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
   .file-list-area .file-list .btn-delete {margin-left: 0; padding-left: 8rem; background-position: center; background-size: 16rem;}
   .file-btn-area label {height: 40rem; font-family: "Pretendard_Medium", sans-serif; font-size: 16rem;}
@@ -999,7 +1005,8 @@ footer .copy-area span:last-child:after {display: none;}
   .form-address .form-input:nth-child(2) {order: 2; margin-left: 0;}
   .form-address .btn-wrap {order: 1; margin-top: 0; margin-left: 10rem;}
 
-  .file-list-area {flex-grow: unset; width: 280rem;}
+  .file-list-area {flex-grow: unset; row-gap: 6rem; width: 280rem;}
+  .file-list-area .file-list:nth-of-type(2) {margin-top: 12rem;}
   .file-list-area .file-list .btn-delete {margin-left: 8rem; padding-left: 0;}
   .file-list-area .file-list .btn-delete {width: 20rem; height: 20rem; background: url("/common/images/icon-delete-circle.svg") center / 20rem no-repeat;}
 }
@@ -1725,12 +1732,13 @@ footer .copy-area span:last-child:after {display: none;}
   .total-edu-area{margin-top:48rem;}
   .total-edu-area .edu-info-div{padding:0 20rem;}
   .total-edu-area .edu-plan-area{padding-left:0; margin-top:12rem;}
-  .total-edu-area .edu-plan-area .period-area{top:85rem; background:transparent}
+  .total-edu-area .edu-plan-area .period-area{top:84rem; background:transparent}
   .total-edu-area .edu-plan-area .period-area .period-div{justify-content: flex-end; padding:0 20rem 0 0; position:absolute; right:auto; left:0; top:-73rem; width:100vw; border-right:0;}
   .total-edu-area .edu-plan-area .period-area .round-period-div{display:none;}
-  .total-edu-area .edu-plan-area .period-area .round-list .round-div{display:block; padding:4rem 6rem; margin:16rem 0; width:23rem; height:auto; border-top:0; border-right:0; background:#697278; border-radius:0 2px 2px 0;}
+  .total-edu-area .edu-plan-area .period-area .round-list .round-div{display:block; padding:4rem 6rem; /* margin:16rem 0; */ width:28rem; height:50rem; border-top:0; border-right:0; background:#697278; border-radius:0 2px 2px 0;}
   .total-edu-area .edu-plan-area .period-area .round-list .round-div:first-child{margin-top:8rem;}
-  .total-edu-area .edu-plan-area .period-area .round-list .round-div:last-child{margin-bottom:8rem;}
+  /* .total-edu-area .edu-plan-area .period-area .round-list .round-div:last-child{margin-bottom:8rem;} */
+  .total-edu-area .edu-plan-area .period-area .round-list .round-div + .round-div{margin-top:17rem;}
   .total-edu-area .edu-plan-area .period-area .round-list .round-div .f-body2{margin-right:0; word-break: break-all; color:#fff; text-align: center; line-height:108%;}
   .total-edu-area .edu-plan-area .round-div{width:auto;}
   .total-edu-area .edu-plan-area .round-div .round-period{display:none;}
@@ -2988,12 +2996,15 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .sort-label-area .label span {font-size: max(14rem, 13px);}
 .training-confirm .sort-label-area .label + .label:before {top: max(10rem, 9px);}
 .training-confirm .training-view-page .training-list .img-area {flex-shrink: 0; width: 184rem; margin-right: 24rem;}
-.training-confirm .training-view-page .training-list .txt-area {flex-direction: row; width: 100%;}
+.training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; width: 100%;}
 .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 10rem;}
-.training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem;}
+.training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem; border-right: 1px solid #ECEEEF;}
 .training-confirm .training-view-page .training-list .txt-area .training-name {font-size: max(24rem, 18px); line-height: 150%;}
+.training-confirm .training-view-page .training-list .txt-area .training-name a {position: relative;}
+.training-confirm .training-view-page .training-list .txt-area .training-name a::after {content: ""; vertical-align: middle; position: relative; top: -2rem; display: inline-block; margin-left: 4rem;  width: 32rem; height: 32rem; background: url("/common/images/icon-arrow-right.svg") no-repeat center center / 100% auto; transition: .3s transform;}
+.training-confirm .training-view-page .training-list .txt-area .training-name a:hover::after {transform: translateX(6rem);}
 .training-confirm .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 20rem;}
-.training-confirm .training-view-page .training-list .class-property-w {display: grid; grid-template-columns: repeat(1, 1fr); width: calc(25% + 66rem); gap: 16rem; padding: 4rem 0 4rem 24rem; border-left: 1px solid #ECEEEF;}
+.training-confirm .training-view-page .training-list .class-property-w {display: grid; grid-template-columns: repeat(1, 1fr); width: calc(25% + 66rem); gap: 16rem; padding: 4rem 0 4rem 24rem;}
 .training-confirm .training-view-page .training-list .class-property-w .property-list {display: block; margin-right: 0; padding-right: 0;}
 .training-confirm .training-view-page .training-list .class-property-w .property-list:after {display: none;}
 .training-confirm .training-view-page .training-list .class-property-w .property-list .txt span {padding-left: 32rem; line-height: 24rem; background-size: 24rem;}
@@ -3037,11 +3048,12 @@ footer .copy-area span:last-child:after {display: none;}
   .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 3rem;}
   .training-confirm .training-view-page .training-list .txt-area .group {margin-top: 4rem;}
   .training-confirm .training-view-page .training-list .txt-area .group .status-info-w {margin-top: 0;}
-  .training-confirm .training-view-page .training-list .txt-area .top-line {width: 100%; padding-right: 100rem;}
+  .training-confirm .training-view-page .training-list .txt-area .top-line {width: 100%; padding-right: 100rem; border-right: 0;}
   .training-confirm .training-view-page .training-list .txt-area .status-info-w {margin-top: 12rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-name {line-height: 160%; font-size: 17rem;}
+  .training-confirm .training-view-page .training-list .txt-area .training-name a::after {top: -2rem; margin-left: 2rem; width: 24rem; height: 24rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 4rem; font-size: 12rem;}
-  .training-confirm .training-view-page .training-list .class-property-w {grid-template-columns: repeat(2, 1fr); gap: 12rem; width: 100%; border-left: 0; margin-top: 12rem; padding: 0; padding-right: 78rem;}
+  .training-confirm .training-view-page .training-list .class-property-w {grid-template-columns: repeat(2, 1fr); gap: 12rem; width: 100%; margin-top: 12rem; padding: 0; padding-right: 78rem;}
   .training-confirm .training-view-page .training-list .class-property-w .property-list {width: 100%; padding: 0;}
   .training-confirm .training-view-page .training-list .class-property-w .property-list .txt span {padding-left: 28rem;}
           /* 아이템이 4개이상일 때 */
@@ -3271,7 +3283,7 @@ footer .copy-area span:last-child:after {display: none;}
         /* 텍스트 + 배경 카드 리스트형  */
 .article-list-w.txt-card-list:has(.bg) .list-item {position: relative; height: 386rem;}
 .article-list-w.txt-card-list:has(.bg) .list-item .bg {position: absolute; top: 0; left: 0; bottom: 0; right: 0; width: 100%; height: 100%; pointer-events: none;}
-.article-list-w.txt-card-list:has(.bg) .list-item .bg img {width: 100%; transition: transform .4s ease;}
+.article-list-w.txt-card-list:has(.bg) .list-item .bg img {width: 100%; height: 100%; object-fit: cover; transition: transform .4s ease;}
 .article-list-w.txt-card-list:has(.bg) .list-item:hover .bg img {transform: scale(102%);}
 .article-list-w.txt-card-list:has(.bg) .list-item:hover .btn-text-icon[class*='-circle'] span:after {transform: translateX(6rem);}
 .article-list-w.txt-card-list:has(.bg) .list-item .txt-box {position: relative;}
