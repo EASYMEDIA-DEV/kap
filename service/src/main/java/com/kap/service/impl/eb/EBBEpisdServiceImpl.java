@@ -88,34 +88,29 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	private final COSystemLogService cOSystemLogService;
 
 
-
-
-
 	/**
-	 *  교육차수 목록을 조회한다.
+	 * 교육차수 목록을 조회한다.
 	 */
-	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
-	{
+	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 
 
+		if (eBBEpisdDTO.getSiteGubun().equals("front")) {
 
-		if(eBBEpisdDTO.getSiteGubun().equals("front")){
-
-			eBBEpisdDTO.setTotalCount( eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO) );
+			eBBEpisdDTO.setTotalCount(eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO));
 			// 2024-01-09 메인에서 호출시 리스트 갯수를 24개로 처리
-			if(eBBEpisdDTO.getMainYn().equals("Y")){
+			if (eBBEpisdDTO.getMainYn().equals("Y")) {
 				eBBEpisdDTO.setPageRowSize(24);
-			}else {
+			} else {
 				eBBEpisdDTO.setPageRowSize(9);
 			}
-			int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
+			int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
 
 			eBBEpisdDTO.setFirstIndex(0);
-			eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
+			eBBEpisdDTO.setRecordCountPerPage(recordCountPerPage);
 
-			eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO) );
+			eBBEpisdDTO.setList(eBBFrontEpisdMapper.selectFrontCouseList(eBBEpisdDTO));
 
-		}else{
+		} else {
 
 			COPaginationUtil page = new COPaginationUtil();
 
@@ -125,12 +120,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			page.setPageSize(eBBEpisdDTO.getPageRowSize());
 
-			eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
-			eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+			eBBEpisdDTO.setFirstIndex(page.getFirstRecordIndex());
+			eBBEpisdDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
 
-			eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
-			eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
+			eBBEpisdDTO.setList(eBBEpisdMapper.selectEpisdList(eBBEpisdDTO));
+			eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
 		}
 
 
@@ -138,28 +133,26 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
-	 *  교육과정에 속한 차수목록을 호출한다.
+	 * 교육과정에 속한 차수목록을 호출한다.
 	 */
-	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception
-	{
+	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 
-		eBBEpisdDTO.setTotalCount( eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO) );
+		eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
 
 		int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
 
 		eBBEpisdDTO.setFirstIndex(0);
 		eBBEpisdDTO.setRecordCountPerPage(recordCountPerPage);
 
-		eBBEpisdDTO.setList( eBBEpisdMapper.selectEpisdList(eBBEpisdDTO) );
+		eBBEpisdDTO.setList(eBBEpisdMapper.selectEpisdList(eBBEpisdDTO));
 
 		return eBBEpisdDTO;
 	}
 
 	/**
-	 *  교육차수 목록을 조회한다.(엑셀용)
+	 * 교육차수 목록을 조회한다.(엑셀용)
 	 */
-	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception
-	{
+	public EBBEpisdExcelDTO selectEpisdExcelList(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 
 		EBBEpisdExcelDTO excelListDto = new EBBEpisdExcelDTO();
 
@@ -170,12 +163,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		page.setPageSize(eBBEpisdDTO.getPageRowSize());
 
-		excelListDto.setFirstIndex( page.getFirstRecordIndex() );
-		excelListDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+		excelListDto.setFirstIndex(page.getFirstRecordIndex());
+		excelListDto.setRecordCountPerPage(page.getRecordCountPerPage());
 
-		excelListDto.setList( eBBEpisdMapper.selectEpisdExcelList(eBBEpisdDTO) );
-		excelListDto.setTotalCount( eBBEpisdMapper.selectEpisdExcelListCnt(eBBEpisdDTO) );
-
+		excelListDto.setList(eBBEpisdMapper.selectEpisdExcelList(eBBEpisdDTO));
+		excelListDto.setTotalCount(eBBEpisdMapper.selectEpisdExcelListCnt(eBBEpisdDTO));
 
 
 		return excelListDto;
@@ -184,27 +176,26 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/**
 	 * 교육차수 상세를 조회한다.
 	 */
-	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception
-	{
+	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 		HashMap<String, Object> map = new HashMap();
 
 		EBBEpisdDTO ebbDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
 		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 
-		if(ebbDto !=null && ebbDto.getPlaceSeq() !=null){
+		if (ebbDto != null && ebbDto.getPlaceSeq() != null) {
 			roomDto.setDetailsKey(String.valueOf(ebbDto.getPlaceSeq()));
 			roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
 		}
 
-		if(eBBEpisdDTO.getSiteGubun().equals("admin")){
+		if (eBBEpisdDTO.getSiteGubun().equals("admin")) {
 			//차수관리 - 강사관계 호출
 			List<EBBisttrDTO> isttrList = eBBEpisdMapper.selectIsttrList(ebbDto);
 
 			//온라인 교육강의 상세 호출
 			List<EBBLctrDTO> lctrDtoList = new ArrayList();
 			EBBLctrDTO lctrDto = new EBBLctrDTO();
-			if(ebbDto !=null) {
+			if (ebbDto != null) {
 				lctrDto.setEdctnSeq(ebbDto.getEdctnSeq());
 				lctrDto.setEpisdOrd(ebbDto.getEpisdOrd());
 				lctrDto.setEpisdYear(ebbDto.getEpisdYear());
@@ -215,13 +206,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			List<EBBBdgetDTO> bdgetList = new ArrayList();
 			EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
-			if(ebbDto !=null) {
+			if (ebbDto != null) {
 				bdgetDto.setEdctnSeq(ebbDto.getEdctnSeq());
 				bdgetDto.setEpisdOrd(ebbDto.getEpisdOrd());
 				bdgetDto.setEpisdYear(ebbDto.getEpisdYear());
 				bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
 			}
-
 
 
 			EBBSrvRstDTO srvScoreDtl = eBBEpisdMapper.selectEpisdSrvScoreDtl(ebbDto);
@@ -242,8 +232,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		map.put("rtnData", ebbDto);//교육차수 상세
 
 
-
-
 		return map;
 	}
 
@@ -255,17 +243,37 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		COPaginationUtil page = new COPaginationUtil();
 
 
-		eBBLctrDTO.setTotalCount( eBBEpisdMapper.selectLctrDtlListCnt(eBBLctrDTO) );
+		eBBLctrDTO.setTotalCount(eBBEpisdMapper.selectLctrDtlListCnt(eBBLctrDTO));
 
 		int recordCountPerPage = (eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize() >= eBBLctrDTO.getTotalCount()) ? eBBLctrDTO.getTotalCount() : eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize();
 
 		eBBLctrDTO.setFirstIndex(0);
 		eBBLctrDTO.setRecordCountPerPage(recordCountPerPage);
 
-		eBBLctrDTO.setList( eBBEpisdMapper.selectLctrDtlList(eBBLctrDTO) );
+		eBBLctrDTO.setList(eBBEpisdMapper.selectLctrDtlList(eBBLctrDTO));
 
 
 		return eBBLctrDTO;
+	}
+
+	/**
+	 * 마이페이지 - 온라인 교육강의 참여자 정보 입력
+	 */
+	public EBBPtcptDTO setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception {
+
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
+		eBBPtcptDTO.setRegName( cOUserDetailsDTO.getName() );
+		eBBPtcptDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+		eBBPtcptDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+		eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+		eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+		eBBEpisdMapper.setOnlinePtcptInfo(eBBPtcptDTO);
+
+		return eBBPtcptDTO;
+
 	}
 
 	/**
@@ -668,6 +676,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
 			eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 
+			//선착순 마감 - 신청자 상태가 신청(선발)으로 입력
+			if(eBBPtcptDTO.getRcrmtMthdCd().equals("RCRMT_MTHD01")){
+				eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
+			//모집후 선발 - 신청자 상태가 대기(미선발)으로 입력
+			}else{
+				eBBPtcptDTO.setSttsCd("EDU_STTS_CD04");
+			}
+
 			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
 
 			if(!eBBPtcptDTO.getStduyMthdCd().equals("STDUY_MTHD02")){
@@ -781,8 +797,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		String getEdctnStrtDtm= eBBPtcptDTO.getEdctnStrtDtm();
 		String getEdctnEndDtm= eBBPtcptDTO.getEdctnEndDtm();
-		System.out.println("@ getEdctnStrtDtm = " + getEdctnStrtDtm);
-		System.out.println("@ getEdctnEndDtm = " + getEdctnEndDtm);
+
 		// 시작 날짜와 종료 날짜 설정
 		String startDateString = getEdctnStrtDtm.substring(0, 10);
 		String endDateString = getEdctnEndDtm.substring(0, 10);
@@ -1411,6 +1426,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//컨텐츠 타입 및 파일명 지정
 		response.setContentType("ms-vnd/excel");
+		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
 		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_교육차수관리 참여자 목록_", "UTF-8") + timeStamp +".xlsx");
 
 		// Excel File Output
@@ -1619,6 +1635,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//컨텐츠 타입 및 파일명 지정
 		response.setContentType("ms-vnd/excel");
+		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
 		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_교육차수관리 참여자 출석부 목록_", "UTF-8") + timeStamp +".xlsx");
 
 		// Excel File Output
@@ -1645,5 +1662,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		return eBBEpisdMapper.selectEpisdDtlCheck(eBBEpisdDTO);
 	}
+
+	/**
+	 * 교육차수 상세를 조회한다.(설문유효성)
+	 */
+	public void updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception {
+
+		eBBEpisdMapper.updateApplyCancel(eBBPtcptDTO);
+
+	}
+
+
 
 }

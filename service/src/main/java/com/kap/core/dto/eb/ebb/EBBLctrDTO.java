@@ -48,6 +48,10 @@ public class EBBLctrDTO extends BaseDTO {
     @NotNull
     private Integer lctrSeq;
 
+    @Schema(title = "현재강의순번", example = "숫자")
+    @NotNull
+    private Integer nowLctrSeq;
+
     @Schema(title = "강의명", example = "텍스트")
     private String nm;
 
@@ -62,6 +66,14 @@ public class EBBLctrDTO extends BaseDTO {
 
     @Schema(title = "썸네일파일 경로", example = "텍스트")
     private String webPath;
+
+    @Schema(title = "교육 수강일", example = "YYYY")
+    private String lctrDtm;
+
+    @Schema(title = "마이페이지에서만 사용하는 조건절", example = "Y/N")
+    @Builder.Default
+    private String mypageYn = "N";
+
 
     private List<EBBLctrDTO> list;
 

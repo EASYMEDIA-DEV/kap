@@ -44,7 +44,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 				//debugger
 
-				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+
+				if(rtnPage == totCnt){
+					$(".btn-wrap.add-load.align-center").remove();
+				}else{
+					$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+				}
+
+
 
 			}
 

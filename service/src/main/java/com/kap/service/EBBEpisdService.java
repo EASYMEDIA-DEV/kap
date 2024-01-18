@@ -160,5 +160,16 @@ public interface EBBEpisdService {
 	public EBBEpisdSurveyDTO selectEpisdDtlCheck(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
+	/**
+	 * 마이페이지 - 온라인 교육강의 참여자 정보 입력
+	 */
+	public EBBPtcptDTO setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 마이페이지 - 교육신청을 취소한다.
+	 */
+	public void updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
 }
 

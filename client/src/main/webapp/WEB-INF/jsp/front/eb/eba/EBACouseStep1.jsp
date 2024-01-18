@@ -16,6 +16,8 @@
 
         <input type="hidden" id="stduyMthdCd" name="stduyMthdCd" value="${episdDto.stduyMthdCd}" />
         <input type="hidden" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${loginMap.bsnmNo}" />
+        <input type="hidden" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${episdDto.rcrmtMthdCd}" />
+
 
 
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
@@ -226,46 +228,6 @@
                                                     <col style="width: 820rem;">
                                                 </colgroup>
                                                 <tbody>
-
-
-                                                <tbody>
-                                                <tr>
-                                                    <th>신청자</th>
-                                                    <td>${applicantInfo.name}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>이메일</th>
-                                                    <td>${applicantInfo.email}</td>
-                                                </tr>
-
-                                                <tr>
-                                                    <th>부서</th>
-                                                    <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>직급</th>
-                                                    <td>${applicantInfo.pstnNm}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>휴대폰번호</th>
-                                                    <td>${applicantInfo.hpNo}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>전화번호</th>
-                                                    <td>${applicantInfo.telNo}</td>
-                                                </tr>
-                                                </tbody>
-
-
-
-
-
-
-
-
-
-
-
                                                 <tr>
                                                     <th>신청자</th>
                                                     <td>${applicantInfo.name}</td>
@@ -411,6 +373,7 @@
                                                 </tr>
                                                 </c:when>
                                                 </c:choose>
+                                                </tbody>
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">

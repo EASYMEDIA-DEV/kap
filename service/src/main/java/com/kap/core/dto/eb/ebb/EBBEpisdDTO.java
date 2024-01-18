@@ -212,6 +212,11 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육과정 명", example = "텍스트")
     private String nm;
 
+    @Schema(title = "교육과정 요약명", example = "텍스트")
+    private String smmryNm;
+
+
+
     @Schema(title = "학습방식 코드", example = "")
     private String stduyMthdCd;
 
@@ -346,7 +351,8 @@ public class EBBEpisdDTO extends BaseDTO {
     private String ptcptDtm;
 
 
-
+    @Schema(title = "교육참여자 번호", example = "숫자")
+    private Integer ptcptSeq;
 
     //오프라인여부
 

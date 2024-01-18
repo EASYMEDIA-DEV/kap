@@ -55,6 +55,10 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "학습방식", example = "텍스트")
     private String stduyMthdCd;
 
+    @Schema(title = "모집방법코드", example = "텍스트")
+    private String rcrmtMthdCd;
+
+
     @Schema(title = "아이디", example = "텍스트")
     private String id;
 
@@ -158,6 +162,10 @@ public class EBBPtcptDTO extends BaseDTO {
 
     @Schema(title = "직급명", example = "")
     private String pstnNm;
+
+    @Schema(title = "강의번호", example = "숫자")
+    private Integer lctrSeq;
+
 
 
     private List<EBBPtcptDTO> list;

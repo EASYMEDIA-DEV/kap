@@ -539,10 +539,10 @@
  	-->
 	<select id="selectLctrDtlList" parameterType="EBBLctrDTO" resultType="EBBLctrDTO">
 		select /* EBBEpisdMapper.selectLctrDtlList */
-			edctn_seq
-			, episd_ord
-			, lctr_seq
-			, episd_year
+			a.edctn_seq
+			, a.episd_ord
+			, a.lctr_seq
+			, a.episd_year
 			, nm
 			, url
 			, time
@@ -550,14 +550,33 @@
 			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
 			, reg_id
 			, reg_ip
-			, reg_dtm
+			, a.reg_dtm
 			, mod_id
 			, mod_ip
 			, mod_dtm
-		from ed_edctn_lctr_dtl a where 1=1
-		and edctn_seq = #{edctnSeq}
-		and episd_ord = #{episdOrd}
-		and episd_year = #{episdYear}
+			<if test='mypageYn == "Y".toString() '>
+			, b.reg_dtm AS lctr_dtm
+			</if>
+		from ed_edctn_lctr_dtl a
+		<if test='mypageYn == "Y".toString() '>
+			LEFT JOIN (select
+				ptcpt_seq
+				, lctr_seq
+				, edctn_seq
+				, episd_ord
+				, episd_year
+				, reg_dtm
+			from ep_edctn_lctr_dtl) b ON b.ptcpt_seq = #{ptcptSeq}
+			AND b.lctr_seq = a.lctr_seq
+			AND b.edctn_seq = a.edctn_seq
+			AND b.episd_ord = a.episd_ord
+			AND b.episd_year = a.episd_year
+		 </if>
+
+		where 1=1
+		and a.edctn_seq = #{edctnSeq}
+		and a.episd_ord = #{episdOrd}
+		and a.episd_year = #{episdYear}
 
 		order by lctr_seq asc
 
@@ -604,6 +623,7 @@
 		     , cbsn_cd
 			 , (select cd_nm from co_code_mst WHERE cd = aa.cbsn_cd) AS cbsn_cd_nm
 			 , nm
+		     , smmry_nm
 			 , stduy_mthd_cd
 			 , stduy_mthd_cd_nm
 			 , stduy_dd_cd
@@ -658,6 +678,10 @@
 		     , cprtn_instt_seq
 		     , cprtn_instt_nm
 			 , place_nm
+			 , bsc_addr
+			 , dtl_addr
+			 , zipcode
+			 , rprsnt_tel_no
 			 , reg_id
 			 , reg_name
 			 , reg_dtm
@@ -684,6 +708,7 @@
 				END AS stts_cd_nm
 				, cmptn_yn
 				, cmptn_dtm
+				, ptcpt_seq
 				, mem_seq
 				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 				case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
@@ -709,6 +734,7 @@
 				   , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
 		           , b.jdgmt_yn
 				   , b.nm
+				   , b.smmry_nm
 				   , b.stduy_mthd_cd
 				   , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
 				   , b.stduy_dd_cd
@@ -734,6 +760,11 @@
 				   , a.pic_email
 				   , a.pic_tel_no
 				   , a.place_seq
+					, c.nm as place_nm
+					, c.bsc_addr
+					, c.dtl_addr
+					, c.zipcode
+					, c.rprsnt_tel_no
 				   , a.srv_seq
 		           , (select type_cd from sv_mst where srv_seq = a.srv_seq) as type_cd
 				   , a.srv_strt_dtm
@@ -748,7 +779,6 @@
 				   , (SELECT titl FROM ex_exam_mst WHERE exam_seq = A.exam_seq) as exam_nm
 		           , cprtn_instt_seq
 				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.cprtn_instt_seq) as cprtn_instt_nm
-				   , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = A.place_seq) as place_nm
 				   , a.reg_id
 				   , (select name from co_adm_mst where id = a.reg_id) as reg_name
 				   , a.reg_dtm
@@ -763,6 +793,7 @@
 				   , a.exps_yn
 				   , a.edctn_cmpltn_yn
 					<if test=' mypageYn == "Y".toString() '>
+		           		, ptcpt_seq
 						, stts_cd
 						, (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
 						, cmptn_yn
@@ -772,17 +803,19 @@
 						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
 					</if>
 			  FROM ed_edctn_episd_mst a
-					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-						<if test=' mypageYn == "Y".toString() '>
-							LEFT JOIN (SELECT
-							episd_seq
-							, mem_seq
-							, stts_cd
-							, cmptn_yn
-							, cmptn_dtm
-							, reg_dtm as ptcpt_dtm
-							FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
-						</if>
+			   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+				LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+				<if test=' mypageYn == "Y".toString() '>
+					LEFT JOIN (SELECT
+					episd_seq
+					, mem_seq
+					, ptcpt_seq
+					, stts_cd
+					, cmptn_yn
+					, cmptn_dtm
+					, reg_dtm as ptcpt_dtm
+					FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+				</if>
 			  ) AA
 
 		where
@@ -1546,7 +1579,6 @@
 		<foreach collection="ptcptList" item="ptcptList" index="index" separator=", " open="(" close=")">
 			#{ptcptList.ptcptSeq}
 		</foreach>
-
 	</select>
 
 	<!--
@@ -1662,8 +1694,7 @@
      2023.12.08   김학규       최초생성
  	-->
 	<select id="selectMemAtndcDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
-		SELECT
-
+		SELECT /*EBBEpisdMapper.selectMemAtndcDtl*/
 			a.ptcpt_seq
 			 , a.mem_seq
 			 , (SELECT id FROM co_mem_mst WHERE mem_seq = a.mem_seq ) AS id
@@ -1675,6 +1706,10 @@
 		FROM ep_edctn_ptcpt_mst a, ep_edctn_atndc_dtl b
 		WHERE a.ptcpt_seq = #{ptcptSeq}
 		  AND a.ptcpt_seq = b.ptcpt_seq
+
+		<if test="siteGubun == 'front'.toString() ">
+			order by edctn_dt desc
+		</if>
 	</select>
 
 	<!--
@@ -1711,7 +1746,7 @@
 				, #{episdOrd}
 				, #{memSeq}
 				, #{ptcptBsnmNo}
-				, 'EDU_STTS_CD01'
+				, #{sttsCd}
 				, #{gpcId}
 				, 'N'
 				, null
@@ -1874,6 +1909,7 @@
 		SELECT
 		episd_seq
 		, prnt_cd_nm /* 과정분류1 */
+		, ctgry_cd
 		, ctgry_cd_nm /* 과정분류2 */
 		, nm /* 과정명 */
 		, stduy_mthd_cd_nm /* 학습방식 */
@@ -1912,7 +1948,11 @@
 		, SUM(CNT05) AS A5 /* 직급별 인원 - 사원/대리 */
 		, SUM(CNT06) AS A6 /* 직급별 인원 - 조장/반창(계장) */
 		, SUM(CNT07) AS A7 /* 직급별 인원 - 기타 */
-		, A11 /*출석률*/
+		, atndc_cnt
+		, ptcpt_cnt
+		, edu_day
+		, ifnull(ROUND(   (atndc_cnt / (edu_day*ptcpt_cnt)   )*100,1), 0) AS A11/*출석률*/
+		<!--, A11--> /*출석률*/
 		, AVG_score /*평가점수(점)*/
 		, ifnull(A_12, 0.0) AS A_12/* 종합 평균 */
 		, ifnull(A_13, 0.0) AS A_13/* 전체(공통) */
@@ -1962,6 +2002,7 @@
 		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
 		a.episd_seq
 		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
+	    , b.ctgry_cd
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) AS ctgry_cd_nm /* 과정분류2 */
 		, b.nm /* 과정명 */
 		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm/* 학습방식 */
@@ -2008,8 +2049,13 @@
 		, CASE WHEN PSTN_CD = 'MEM_CD01006' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT06 /* 직급별 인원 - 조장/반창(계장) */
 		, CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT07 /* 직급별 인원 - 기타 */
 
-
-		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11/*출석률*/
+		, case TIMESTAMPDIFF(DAY, edctn_strt_dtm, edctn_end_dtm) when 0 then 1
+		ELSE TIMESTAMPDIFF(DAY, edctn_strt_dtm, edctn_end_dtm)
+		END AS edu_day
+		, m.atndc_cnt
+		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst  WHERE episd_seq = a.episd_seq ) AS ptcpt_cnt
+		, '' AS A11
+		<!-- , ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11 -->/*출석률*/
 		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
 		, vrll_avrg AS A_12 /* 종합 평균 */
 		, ttl_co_score AS A_13 /* 전체(공통) */
@@ -2121,6 +2167,16 @@
 			FROM ed_edctn_srv_rslt_dtl
 		) k ON k.episd_seq = a.episd_seq
 
+		LEFT JOIN(
+
+		SELECT
+		episd_seq
+		, SUM((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq)) AS atndc_cnt
+		from ep_edctn_ptcpt_mst a
+		GROUP BY a.episd_seq
+
+		) m ON m.episd_seq = a.episd_seq
+
 		GROUP BY a.EPISD_ORD
 		) AA
 		<include refid="selectEpisdListwhereSql" />
@@ -2141,6 +2197,7 @@
 		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
 		a.episd_seq
 		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
+		, b.ctgry_cd
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) AS ctgry_cd_nm /* 과정분류2 */
 		, b.nm /* 과정명 */
 		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm/* 학습방식 */
@@ -2187,8 +2244,13 @@
 		, CASE WHEN PSTN_CD = 'MEM_CD01006' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT06 /* 직급별 인원 - 조장/반창(계장) */
 		, CASE WHEN PSTN_CD = 'MEM_CD01007' THEN COUNT(e.PSTN_CD) ELSE 0 END AS CNT07 /* 직급별 인원 - 기타 */
 
-
-		, ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 2) AS A11/*출석률*/
+		, case TIMESTAMPDIFF(DAY, edctn_strt_dtm, edctn_end_dtm) when 0 then 1
+		ELSE TIMESTAMPDIFF(DAY, edctn_strt_dtm, edctn_end_dtm)
+		END AS edu_day
+		, m.atndc_cnt
+		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst  WHERE episd_seq = a.episd_seq ) AS ptcpt_cnt
+		, '' AS A11
+		<!-- , ifnull(round((COUNT(i.atndc_dtm) / COUNT(i.edctn_dt))*100,1), 0) AS A11 -->/*출석률*/
 		, ROUND(avg(exam_score), 2) AS AVG_score /*평가 점수*/
 		, vrll_avrg AS A_12 /* 종합 평균 */
 		, ttl_co_score AS A_13 /* 전체(공통) */
@@ -2233,7 +2295,6 @@
 		, a.reg_dtm
 		, a.reg_ip
 		, a.reg_id
-
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
 		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
@@ -2274,7 +2335,7 @@
 		GROUP BY isttr_tb.episd_seq) g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
 		LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
 		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq
-		LEFT JOIN (
+		LEFT JOIN(
 		SELECT
 		ctgry_cd
 		, COUNT(ctgry_cd) AS ct_cnt
@@ -2284,22 +2345,32 @@
 		inner JOIN ed_edctn_episd_mst episdmst ON episdmst.episd_seq = ptcpt.episd_seq
 		GROUP BY episd_seq, ctgry_cd
 		) j ON j.episd_seq = a.episd_seq
-		LEFT JOIN (
-			SELECT
-				rslt_seq
-				, edctn_seq
-				, episd_year
-				, episd_ord
-				, episd_seq
-				, vrll_avrg
-				, ttl_co_score
-				, edctn_envrnmt_score
-				, edctn_spprt_score
-				, edctn_cntn_score
-				, isttr_score
-				, ttl_ptcpt_cnt
-			FROM ed_edctn_srv_rslt_dtl
+		LEFT JOIN(
+		SELECT
+		rslt_seq
+		, edctn_seq
+		, episd_year
+		, episd_ord
+		, episd_seq
+		, vrll_avrg
+		, ttl_co_score
+		, edctn_envrnmt_score
+		, edctn_spprt_score
+		, edctn_cntn_score
+		, isttr_score
+		, ttl_ptcpt_cnt
+		FROM ed_edctn_srv_rslt_dtl
 		) k ON k.episd_seq = a.episd_seq
+
+		LEFT JOIN(
+
+		SELECT
+		episd_seq
+		, SUM((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq)) AS atndc_cnt
+		from ep_edctn_ptcpt_mst a
+		GROUP BY a.episd_seq
+
+		) m ON m.episd_seq = a.episd_seq
 
 		GROUP BY a.EPISD_ORD
 		) AA
@@ -2337,6 +2408,66 @@
 			AND A.EPISD_YEAR = #{episdYear}
 			AND A.EPISD_ORD = #{episdOrd}
 	</select>
+
+
+	<!--
+	  쿼리명 : EBBEpisdMapper.setOnlinePtcptInfo
+	  설  명 : 교육차수 상세를 조회한다.
+	   수정일     수정자       수정내용
+	 ==========   ======    ==============
+	 2024.01.15   박준희       최초생성
+	 -->
+	<insert id="setOnlinePtcptInfo" parameterType="EBBPtcptDTO">
+		INSERT INTO ep_edctn_lctr_dtl ( /* EBBEpisdMapper.setOnlinePtcptInfo */
+			ptcpt_seq,
+			lctr_seq,
+			edctn_seq,
+			episd_ord,
+			episd_year,
+			episd_seq,
+			reg_id,
+			reg_ip,
+			reg_dtm,
+			mod_id,
+			mod_ip,
+			mod_dtm
+		) VALUES (
+			 #{ptcptSeq}
+			 , #{lctrSeq}
+			 , #{edctnSeq}
+			 , #{episdOrd}
+			 , #{episdYear}
+			 , #{episdSeq}
+			 , #{regId}
+			 , #{regIp}
+			 , NOW()
+			 , #{modId}
+			 , #{modIp}
+			 , NOW()
+				 ) ON DUPLICATE KEY UPDATE
+			mod_id = VALUES(mod_id)
+			, mod_ip = VALUES(mod_ip)
+			, mod_dtm = now();
+	</insert>
+
+
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updateApplyCancel
+      설  명 : 마이페이지 - 교육신청을 취소한다
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.17   김학규       최초생성
+ 	-->
+	<update id="updateApplyCancel" parameterType="EBBEpisdDTO" >
+		UPDATE ep_edctn_ptcpt_mst SET /* EBBEpisdMapper.updateApplyCancel */
+			stts_cd = 'EDU_STTS_CD02'
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		WHERE 1=1
+		  and ptcpt_seq = #{ptcptSeq}
+	</update>
 </mapper>
 
 
