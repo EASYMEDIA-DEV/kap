@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +55,8 @@ public class IMAQaServiceImpl implements IMAQaService {
     private final EgovIdGnrService rplyIdgen;
     /* 문의 담당자 시퀀스 */
     private final EgovIdGnrService qaPicIdgen;
+    /* 문의 시퀀스 */
+    private final EgovIdGnrService qstnIdgen;
 
 
     /**
@@ -92,7 +95,7 @@ public class IMAQaServiceImpl implements IMAQaService {
     /**
      * 1:1 문의 답변 등록
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception {
+    public int insertQaRply(IMAQaDTO pIMAQaDTO) throws Exception {
         if(pIMAQaDTO.getRsumeCd().equals("SYNACK")) {
             //등록자
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -148,7 +151,7 @@ public class IMAQaServiceImpl implements IMAQaService {
             //답변 등록
             pIMAQaDTO.setQaRplySeq(rplyIdgen.getNextIntegerId());
 
-            return iMAQaMapper.insertQa(pIMAQaDTO);
+            return iMAQaMapper.insertQaRply(pIMAQaDTO);
         } else {
             return 0;
         }
@@ -223,6 +226,64 @@ public class IMAQaServiceImpl implements IMAQaService {
      */
     public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception{
         return iMAQaMapper.selectQaPicDtl(pIMAQaPicDTO);
+    }
+
+
+
+    /**
+     * 1:1 문의 등록 (사용자)
+     */
+    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+        //첨부파일 처리
+        List<COFileDTO> uploadFiles = new ArrayList<>();
+        if (pIMAQaDTO.getFileList() != null && pIMAQaDTO.getFileList().size() > 0) {
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pIMAQaDTO.getFileList());
+            pIMAQaDTO.setFileSeq(fileSeqMap.get("FileSeq"));
+            uploadFiles = cOFileService.getFileInfs(fileSeqMap.get("rplyFileSeq"));
+        }
+
+        //메일 발송
+        COMailDTO mailForm = new COMailDTO();
+        mailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의에 대한 답변 드립니다");
+        //첨부파일 처리
+        if (uploadFiles != null && uploadFiles.size() > 0) {
+            String fileUrl = "";
+            String fileName = "";
+            for(COFileDTO cOFileDTO : uploadFiles){
+                fileUrl  +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getWebPath();
+                fileName +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getOrgnFileNm();
+            }
+            mailForm.setFile_url(fileUrl);
+            mailForm.setFile_name(fileName);
+        }
+        //수신자 정보
+        COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+        //이메일
+        receiverDto.setEmail(pIMAQaDTO.getEmail());
+        //이름
+        receiverDto.setName(pIMAQaDTO.getRegName());
+        //치환문자1
+        receiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+        //치환문자2
+        receiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+        //치환문자3
+        receiverDto.setNote3(pIMAQaDTO.getTitl());
+        //치환문자4
+        receiverDto.setNote4(pIMAQaDTO.getCntn());
+        //치환문자5
+        receiverDto.setNote5(pIMAQaDTO.getRplyCntn());
+        //수신자 정보 등록
+        mailForm.getReceiver().add(receiverDto);
+        cOMessageService.sendMail(mailForm, "IMAQaRply.html");
+
+        //진행상태
+        pIMAQaDTO.setRsumeCd("SYN");
+        iMAQaMapper.updateQaRsume(pIMAQaDTO);
+
+        //문의 등록
+        pIMAQaDTO.setQaRplySeq(qstnIdgen.getNextIntegerId());
+
+        return iMAQaMapper.insertQaRply(pIMAQaDTO);
     }
 
 }

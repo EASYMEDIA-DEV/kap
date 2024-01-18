@@ -83,4 +83,7 @@ public class IMAQaDTO extends BaseDTO {
 
     //조회 리스트
     private List<IMAQaDTO> list;
+
+    //마이페이지 여부
+    private String mypageYn;
 }

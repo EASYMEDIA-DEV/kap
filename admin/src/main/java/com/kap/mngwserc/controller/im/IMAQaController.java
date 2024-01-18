@@ -186,7 +186,7 @@ public class IMAQaController {
         {
             try
             {
-                iMAQaDTO.setRespCnt(iMAQaService.insertQa(iMAQaDTO));
+                iMAQaDTO.setRespCnt(iMAQaService.insertQaRply(iMAQaDTO));
             }
             catch (Exception e)
             {

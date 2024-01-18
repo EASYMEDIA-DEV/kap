@@ -45,7 +45,7 @@ public interface IMAQaMapper {
     /**
      * 1:1 문의 등록
      */
-    public int insertQa(IMAQaDTO iMAQaDTO) throws Exception;
+    public int insertQaRply(IMAQaDTO iMAQaDTO) throws Exception;
     /**
      * 1:1 문의 진행상태 수정
      */
