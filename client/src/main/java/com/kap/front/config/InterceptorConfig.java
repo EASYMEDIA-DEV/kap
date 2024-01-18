@@ -53,7 +53,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/**/**/*.*")
                 .excludePathPatterns("/my-page/sq-license/complete/insert")
                 .excludePathPatterns("/file/upload")
-                .excludePathPatterns("/error");
+                .excludePathPatterns("/error")
+                .excludePathPatterns("/gpc/**");
 
         //뒤로가기 쿠키 삭제
         registry.addInterceptor(cOBackCookieDeleteInterceptor())
