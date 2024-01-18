@@ -154,7 +154,7 @@
                                             <div class="td">
                                                 <div class="data-line-w">
                                                     <div class="data-line">
-                                                        <div class="form-group form-calendar">
+                                                        <div class="form-group">
                                                             <div class="form-input calendar">
                                                                 <input type="text" class="datetimepicker_endDt" id="hopeDt" name="hopeDt" onclick="cmmCtrl.initCalendar(this);"  placeholder="2023.01.01">
                                                             </div>

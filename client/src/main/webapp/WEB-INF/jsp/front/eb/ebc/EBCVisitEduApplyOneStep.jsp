@@ -230,8 +230,42 @@
                                                     <tr>
                                                         <th>SQ정보</th>
                                                         <td>
-                                                            <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
-                                                                <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
+                                                            <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                <p>
+                                                                   ${status.count}.
+                                                                   <c:choose>
+                                                                       <c:when test="${not empty list.nm}">
+                                                                           ${list.nm}
+                                                                       </c:when>
+                                                                       <c:otherwise>
+                                                                           -
+                                                                       </c:otherwise> /
+                                                                   </c:choose>
+                                                                   <c:choose>
+                                                                       <c:when test="${not empty list.score}">
+                                                                           ${list.score}
+                                                                       </c:when>
+                                                                       <c:otherwise>
+                                                                           -
+                                                                       </c:otherwise> /
+                                                                   </c:choose>
+                                                                   <c:choose>
+                                                                       <c:when test="${not empty list.year}">
+                                                                           ${list.year}
+                                                                       </c:when>
+                                                                       <c:otherwise>
+                                                                           -
+                                                                       </c:otherwise>
+                                                                   </c:choose> 년 /
+                                                                   <c:choose>
+                                                                       <c:when test="${not empty list.crtfnCmpnNm}">
+                                                                           ${list.crtfnCmpnNm}
+                                                                       </c:when>
+                                                                       <c:otherwise>
+                                                                           -
+                                                                       </c:otherwise>
+                                                                   </c:choose>
+                                                                </p>
                                                             </c:forEach>
                                                         </td>
                                                     </tr>
