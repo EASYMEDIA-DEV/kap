@@ -1,11 +1,13 @@
 package com.kap.service.impl.cb.cbb;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
@@ -20,15 +22,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * 경영컨설팅 서비스 구현 클래스
@@ -49,6 +50,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
     /** 공통 서비스 **/
     private final COCommService cOCommService;
+    private final COFileUtil cOFileUtil;
 
     /* 파일 서비스 */
     private final COFileService cOFileService;
@@ -61,6 +63,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     private final EgovIdGnrService cosultSeqIdgen;
     private final EgovIdGnrService dpndnSeqIdgen;
     private final EgovIdGnrService dlvrySeqIdgen;
+    private final EgovIdGnrService mpePartsCompanySqInfoDtlIdgen;
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
     private final EgovIdGnrService consTrnsfSeqIdgen;
     private final EgovIdGnrService picSeqIdgen;
@@ -202,7 +205,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     /**
      * 경영 컨설팅 등록
      */
-    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
 
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pCBBManageConsultInsertDTO.getFileList());
         pCBBManageConsultInsertDTO.setItrdcFileSeq(fileSeqMap.get("itrdcFileSeq"));
@@ -222,6 +225,62 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
         // 담당임원상세
         updateConsultingPicInfo(pCBBManageConsultInsertDTO);
+
+        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.insertManageConsult(pCBBManageConsultInsertDTO));
+        pCBBManageConsultInsertDTO.getRespCnt();
+
+        return  pCBBManageConsultInsertDTO.getRespCnt();
+
+    }
+    /**
+     * 경영 컨설팅 등록 사용자
+     */
+    public int insertUserManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+
+        pCBBManageConsultInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
+        pCBBManageConsultInsertDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replaceAll("-", ""));
+
+        // 컨설팅 서브 정보 수정
+        updateSubMngConInfo(pCBBManageConsultInsertDTO);
+
+        // 담당임원상세
+        updateConsultingPicInfo(pCBBManageConsultInsertDTO);
+
+        //신청파일 넣기
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
+                atchFileCnt++;
+            }
+        }
+
+        if (!files.isEmpty()) {
+            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+            System.err.println(rtnList);
+            for (int i = 0; i < rtnList.size(); i++) {
+
+                List<COFileDTO> fileList = new ArrayList();
+                rtnList.get(i).setStatus("success");
+                rtnList.get(i).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(i));
+
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                if(i==0){
+                    pCBBManageConsultInsertDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
+                }else{
+                    pCBBManageConsultInsertDTO.setImpvmFileSeq(fileSeqMap.get("fileSeq"));
+                }
+            }
+        }
 
         pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.insertManageConsult(pCBBManageConsultInsertDTO));
         pCBBManageConsultInsertDTO.getRespCnt();
@@ -259,24 +318,12 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     void updateTechCompanyInfo(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
 
         MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
+        CBBManageConsultSearchDTO cBBManageConsultSearchDTO = new CBBManageConsultSearchDTO();
         mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
-
-        String[] cbsnSeq = {};
-        String[] nm = {};
-        String[] score = {};
-        String[] year = {};
-        String[] crtfnCmpnNm = {};
-
+        cBBManageConsultSearchDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
         String ctgryCd = pCBBManageConsultInsertDTO.getCtgryCd();
-        // 회사 업종 상세 등록
-        if(ctgryCd.equals("COMPANY01002")){
-            cbsnSeq =  pCBBManageConsultInsertDTO.getCbsnSeq().split(",");
-            nm =  pCBBManageConsultInsertDTO.getNm().split(",");
-            score = pCBBManageConsultInsertDTO.getScore().split(",");
-            year = pCBBManageConsultInsertDTO.getYear().split(",");
-            crtfnCmpnNm = pCBBManageConsultInsertDTO.getCrtfnCmpnNm().split(",");
-        }
+
         MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
 
         // 1차사 - 5스타
@@ -288,29 +335,31 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             mPEPartsCompanyDTO.setTchlg5StarCd(pCBBManageConsultInsertDTO.getTchlg5StarCd());
             mPEPartsCompanyDTO.setTchlg5StarCd(pCBBManageConsultInsertDTO.getTchlg5StarCd());
         } else if(ctgryCd.equals("COMPANY01002")){ // 2차사 - SQ 정보
-
-            HashMap cbsnCdMap = new HashMap();
-
-            for(int i=0; i < cbsnCdMap.size(); i++) {
-                mpePartsCompanyDTO.setNm(nm[i]);
-                mpePartsCompanyDTO.setCbsnSeq(Integer.valueOf(cbsnSeq[i]));
-                mpePartsCompanyDTO.setScore(Integer.valueOf(score[i]));
-                mpePartsCompanyDTO.setYear(Integer.valueOf(year[i]));
-                mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmpnNm[i]);
-                mpePartsCompanyDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
-
-                int cnt = cBBManageConsultMapper.selectCmpnCbsnInfoCnt(Integer.valueOf(cbsnSeq[i]));
-
-                if(cnt >= 1){
-                    mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
-                    mpePartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegIp());
-                    mpePartsCompanyMapper.updatePartsComSQInfo(mpePartsCompanyDTO);
-                }else if(cnt == 0){
-                    mpePartsCompanyDtlIdgen.getNextIntegerId();
-                    mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
-                    mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
-                    mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+            mpePartsCompanyMapper.deletePartsComSQInfo(mPEPartsCompanyDTO);
+            for(int i=1; i < 4; i++) {
+                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
+                mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
+                if(i==1){
+                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm1());
+                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore1());
+                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear1());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm1());
+                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
+                }else if(i==2){
+                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm2());
+                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore2());
+                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear2());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm2());
+                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
+                }else{
+                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm3());
+                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore3());
+                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear3());
+                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm3());
+                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
                 }
+                mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
             }
         }
         mPEPartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());

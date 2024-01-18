@@ -51,9 +51,14 @@ public interface CBBManageConsultService {
     public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
-     * 경영 컨설팅 관리 등록
+     * 경영 컨설팅 관리 등록 (사용자)
      */
-    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
+    public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
+
+    /**
+     * 경영 컨설팅 관리 등록 (관리자)
+     */
+    public int insertUserManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 경영 컨설팅 관리 수정

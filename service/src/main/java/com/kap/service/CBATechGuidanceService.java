@@ -37,9 +37,14 @@ public interface CBATechGuidanceService {
     public CBATechGuidanceInsertDTO selectTechGuidanceDtl(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
-     * 컨설팅 기술 지도 관리 등록
+     * 컨설팅 기술 지도 관리 등록(관리자)
      */
-    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
+    public int insertTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 기술 지도 관리 등록(사용자)
+     */
+    public int insertUserTechGuidance(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 컨설팅 기술 지도 관리 삭제
