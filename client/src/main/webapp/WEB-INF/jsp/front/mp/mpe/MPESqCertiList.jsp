@@ -68,16 +68,16 @@
                                     <c:when test="${ educationCompleteListCnt > 0}">
                                         <div class="table-sec">
                                             <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                                <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
+                                                <table class="basic-table "><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
                                                     <caption>회원목록</caption>
                                                     <colgroup>
-                                                        <col style="width: 8%;">
-                                                        <col style="width: 26%;">
-                                                        <col style="width: 11%;">
-                                                        <col style="width: 11%;">
-                                                        <col style="width: 22%;">
-                                                        <col style="width: 11%;">
-                                                        <col style="width: 11%;">
+                                                        <col style="width: 80rem;">
+                                                        <col style="width: 293rem;">
+                                                        <col style="width: 120rem;">
+                                                        <col style="width: 120rem;">
+                                                        <col style="width: 240rem;">
+                                                        <col style="width: 120rem;">
+                                                        <col style="width: 120rem;">
                                                     </colgroup>
                                                     <thead>
                                                     <tr>
@@ -132,12 +132,12 @@
                                                 <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
                                                     <caption>회원목록</caption>
                                                     <colgroup>
-                                                        <col style="width: 8%;">
-                                                        <col style="width: 29%;">
-                                                        <col style="width: 13%;">
-                                                        <col style="width: 24%;">
-                                                        <col style="width: 13%;">
-                                                        <col style="width: 13%;">
+                                                        <col style="width: 80rem;">
+                                                        <col style="width: 317rem;">
+                                                        <col style="width: 144rem;">
+                                                        <col style="width: 264rem;">
+                                                        <col style="width: 144rem;">
+                                                        <col style="width: 144rem;">
                                                     </colgroup>
                                                     <thead>
                                                     <tr>

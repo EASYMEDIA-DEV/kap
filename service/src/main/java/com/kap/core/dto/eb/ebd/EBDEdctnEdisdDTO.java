@@ -108,6 +108,9 @@ public class EBDEdctnEdisdDTO {
     @Schema(title = "최종수정일시")
     private String modDtm;
 
+    @Schema(title = "회사명", example = "KAP")
+    private String cmpnNm;
+
     @Schema(title = "회원 순번")
     private Integer memSeq;
     @Schema(title = "취득 일시")

@@ -20,6 +20,23 @@
 				</jsp:include>
 				<fieldset>
 					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">발급상태</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+							<c:forEach var="cdList" items="${cdDtlList.EBD_SQ}" varStatus="status">
+								<label class="checkbox-inline c-checkbox">
+									<input type="checkbox" class="checkboxSingle" data-name="issueCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.issueCdList, cdList.cd)}">checked</c:if> />
+									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
+								</label>
+							</c:forEach>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">양성과정 참여</label>
 						<div class="col-sm-11 form-inline">
 							<div class="form-group mr-sm">
@@ -39,23 +56,6 @@
 							<div class="form-group mr-sm">
 
 							</div>
-						</div>
-					</div>
-				</fieldset>
-				<fieldset>
-					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">발급상태</label>
-						<div class="col-sm-5">
-							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxAll" />
-								<span class="ion-checkmark-round"></span> 전체
-							</label>
-							<c:forEach var="cdList" items="${cdDtlList.EBD_SQ}" varStatus="status">
-								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" data-name="issueCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.issueCdList, cdList.cd)}">checked</c:if> />
-									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
-								</label>
-							</c:forEach>
 						</div>
 					</div>
 				</fieldset>

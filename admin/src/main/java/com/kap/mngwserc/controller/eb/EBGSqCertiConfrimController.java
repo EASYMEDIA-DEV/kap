@@ -66,6 +66,8 @@ public class EBGSqCertiConfrimController {
             cdDtlList.add("EBD_SQ");
             cdDtlList.add("EBD_SQ_TP");
             cdDtlList.add("COMPANY_TYPE");
+            cdDtlList.add("CO_YEAR_CD");
+            cdDtlList.add("ROUND_CD");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("rtnData", eBDSqCertiSearchDTO);
         }

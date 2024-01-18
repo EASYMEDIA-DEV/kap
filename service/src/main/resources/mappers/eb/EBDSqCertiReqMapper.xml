@@ -215,6 +215,7 @@
 			, ptcpt_mst.cmptn_yn
 			, ptcpt_mst.cmptn_dtm
 			, appctn_mst.jdgmt_no
+			, (select cmpn_nm from cp_cmpn_mst  where bsnm_no = ptcpt_mst.ptcpt_bsnm_no ) cmpn_nm
 
 
 			, appctn_mst.idntfn_photo_file_seq
@@ -406,6 +407,7 @@
 		, ptcpt_mst.cmptn_dtm
 		, ptcpt_mst.cmptn_yn
 		, prcs_mst.lcns_cnnct_cd
+		, (select cmpn_nm from cp_cmpn_mst  where bsnm_no = ptcpt_mst.ptcpt_bsnm_no ) cmpn_nm
 		<include refid="selectEducationCompleteListWhereSql" />
 		ORDER BY episd_mst.edctn_strt_dtm desc
 		limit #{firstIndex}, #{recordCountPerPage}

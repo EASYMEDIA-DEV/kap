@@ -55,6 +55,8 @@ public class EBBEpisdSqCertDTO extends BaseDTO {
     private String cmptnDtm;
     @Schema(title = "자격증연계코드", example = "LCNS_CNNCT02")
     private String lcnsCnnctCd;
+    @Schema(title = "회사명", example = "KAP")
+    private String cmpnNm;
 
     @Schema(title = "참여순번", example = "숫자")
     private Integer ptcptSeq;
