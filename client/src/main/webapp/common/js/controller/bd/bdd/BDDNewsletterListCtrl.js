@@ -13,6 +13,30 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    var newsletterSubmit = function(){
+        // 뉴스레터 수신 동의 체크
+        if($("#consentChk").is(":checked") == false){
+            alert(msgCtrl.getMsg("fail.newsletter.agree"));
+            $("#consentChk").focus();
+            return false;
+        }
+        // 뉴스 레터 등록
+        if($("#consentChk").is(":checked") == true ){
+            if(confirm(msgCtrl.getMsg("confirm.newsletterBtn"))){
+                var newsletterForm = {};
+                newsletterForm.email = $("input[name=email]").val();
+
+                cmmCtrl.jsonAjax(function(respObj) {
+                    if(JSON.parse(respObj).respCnt == "1") {
+                        alert(msgCtrl.getMsg("success.newsletterSuc"));
+                        $("input[name=email]").val('');
+                        $("#consentChk").prop("checked", false);
+                    }
+                }, "/foundation/board/newsletter/insert",  newsletterForm, "text");
+            }
+        }
+    }
+
     //목록 조회
     var search = function(page){
         if(page != undefined){
@@ -40,6 +64,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $("input:checkbox[name='consentChk']").prop("checked", false);
+                        $("#subscribe").removeClass("subscribeBtn");
+                    }
+                }
+            },
+            agreeBtn : {
+                event : {
+                    click : function() {
+                        $("input:checkbox[name='consentChk']").prop("checked", true);
+                        $("#subscribe").addClass("subscribeBtn");
                     }
                 }
             }
@@ -77,11 +110,49 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         search(1);
                     }
                 }
+            },
+            subscribeBtn : {
+                event : {
+                    click : function() {
+
+                        var emailChkYn = 'N';
+                        if($("input[name=email]").val() == ""){
+                            alert(msgCtrl.getMsg("fail.newsletter.notEmail"));
+                            $("input[name=email]").focus();
+                            return false;
+                        }else{
+                            var emailRegex, patten, emailChk;
+                            emailRegex = "^[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.[a-zA-Z]+$"
+                            patten = eval("/" + emailRegex + "/g");
+                            emailChk = $("input[name=email]").val();
+                            if(!patten.test(emailChk)) {
+                                alert(msgCtrl.getMsg("fail.newsletter.emailCheck"));
+                                $("input[name=email]").focus();
+                                return false;
+                            }else{
+                                var newsletterForm = {};
+                                newsletterForm.email = $("input[name=email]").val();
+
+                                cmmCtrl.jsonAjax(function(respObj) {
+                                    if(JSON.parse(respObj).respCnt == "1") {
+                                        alert(msgCtrl.getMsg("fail.newsletter.registeredEmail"));
+                                        $("input[name=email]").focus();
+                                        emailChkYn = "N";
+                                        return false;
+                                    }else{
+                                        newsletterSubmit();
+                                    }
+                                }, "/foundation/board/newsletter/dup-email", newsletterForm, "text", false, true);
+                            }
+                        }
+                    }
+                }
             }
         },
         immediately : function() {
             //리스트 조회
             search();
+
         }
     };
 
