@@ -9,7 +9,7 @@
 
         <div class="srch-wrap scroll-motion">
             <div class="form-input srch-input for-motion">
-                <input type="text" placeholder="검색어를 입력해 주세요." value="자동차">
+                <input type="text" placeholder="검색어를 입력해 주세요." value="">
                 <div class="input-btn-wrap">
                     <button class="delete-btn" title="지우기" type="button"></button>
                     <button class="srch-btn" title="검색"></button>
