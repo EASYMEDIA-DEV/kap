@@ -165,6 +165,12 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+
+	/**
+	 * 마이페이지 출석체크 진행
+	 */
+	public void updateAtndcInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
 	/**
 	 * 마이페이지 - 교육신청을 취소한다.
 	 */
