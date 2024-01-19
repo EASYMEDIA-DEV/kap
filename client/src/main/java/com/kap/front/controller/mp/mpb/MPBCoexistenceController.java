@@ -136,6 +136,10 @@ public class MPBCoexistenceController {
             //공통사업 여부
             String businessYn = mpbCoexistenceService.getBusinessYn(mpbBsnSearchDTO);
 
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("MEM_CD"); // 신청 진행상태
+
             if("Y".equals(businessYn)) {
                 /*TO-DO 공통사업 진행*/
                 WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
@@ -151,10 +155,7 @@ public class MPBCoexistenceController {
                 } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //스마트공장
                     /* 스마트 상태 코드 값 */
-                    ArrayList<String> cdDtlList = new ArrayList<String>();
                     cdDtlList.add("BGN_REG_INF");
-                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
                     /* 진행 단계 별 신청 정보*/
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
                     wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
@@ -179,10 +180,7 @@ public class MPBCoexistenceController {
                     modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
                 } else if ("BSN10".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //자동차부품
-                    ArrayList<String> cdDtlList = new ArrayList<String>();
-                    cdDtlList.add("MEM_CD");
                     WBJAcomSearchDTO wBJAcomSearchDTO = new WBJAcomSearchDTO();
-                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
                     wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
@@ -195,6 +193,7 @@ public class MPBCoexistenceController {
                 }
             }
 
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("businessYn", businessYn);
             modelMap.addAttribute("rtnBsnData", mpbCoexistenceService.getBsnDetail(mpbBsnSearchDTO));
             modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));

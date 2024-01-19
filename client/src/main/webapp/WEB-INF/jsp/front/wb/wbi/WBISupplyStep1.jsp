@@ -73,11 +73,33 @@
                                         </tr>
                                         <tr>
                                             <th>부서(부서상세)</th>
-                                            <td>${rtnUser.deptNm}</td>
+                                            <td>
+                                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                    <c:if test="${cdList.cd eq rtnUser.deptCd}">
+                                                        <c:choose>
+                                                            <c:when test="${empty(rtnUser.deptNm)}">
+                                                                ${cdList.cdNm}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${cdList.cdNm}(${rtnUser.deptNm})
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td>
                                         </tr>
                                         <tr>
                                             <th>직급(기타직급)</th>
-                                            <td>${rtnUser.pstnCdNm}</td>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${empty(rtnUser.pstnNm)}">
+                                                        ${rtnUser.pstnCdNm}
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
                                         </tr>
                                         </tbody>
                                     </table>
