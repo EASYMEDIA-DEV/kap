@@ -4,9 +4,6 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.wb.WBRoundMstDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbc.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -239,9 +236,11 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             if(i==0){
                 wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBCBSecuritySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBCBSecuritySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBCBSecuritySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBCBSecuritySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBCBSecuritySpprtDTO.setRegId(coaAdmDTO.getId());
@@ -396,7 +395,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecuritySpprtDTO.setModId(coaAdmDTO.getId());
             wBCBSecuritySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBCBSecuritySpprtDTO.getAccsDt() != "" ){
+            if(wBCBSecuritySpprtDTO.getGiveDt() != "" ){
                 wBCBSecurityMapper.updateAppctnSpprt(wBCBSecuritySpprtDTO);
             }
         }
@@ -411,7 +410,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
             wBCBSecurityDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
             wBCBSecurityDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
-            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01002_02_001");
+            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01002_02_006");
             wBCBSecurityDtlDTO.setRegId(coaAdmDTO.getId());
             wBCBSecurityDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -455,7 +454,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
             wBCBSecurityDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
             wBCBSecurityDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
-            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01004_02_001");
+            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01004_02_006");
             wBCBSecurityDtlDTO.setRegId(coaAdmDTO.getId());
             wBCBSecurityDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -1005,9 +1004,11 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             if(i==0){
                 wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBCBSecuritySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBCBSecuritySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBCBSecuritySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBCBSecuritySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBCBSecuritySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBCBSecuritySpprtDTO.setRegId(cOUserDetailsDTO.getId());
@@ -1026,85 +1027,139 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
     public int carbonUserUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
 
         int respCnt = 0;
-
-        int maxRsumeOrd = wBCBSecurityMstInsertDTO.getMaxRsumeOrd();
-        int rsumeOrd = maxRsumeOrd - 1;
-
         COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
         wBCBSecurityMstInsertDTO.setModId(coaAdmDTO.getId());
         wBCBSecurityMstInsertDTO.setModIp(coaAdmDTO.getLoginIp());
 
-        //신청 MST ○
-        respCnt = wBCBSecurityMapper.updateAppctnMst(wBCBSecurityMstInsertDTO);
+        //선급금 여부
+        if(wBCBSecurityMstInsertDTO.getSpprtList() != null){
+            WBCBSecuritySpprtDTO wBCBSecuritySpprtDTO = wBCBSecurityMstInsertDTO.getSpprtList().get(0);
+            wBCBSecuritySpprtDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
+            //신청파일 넣기
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
 
-        //신청 DTL ○
-        WBCBSecurityDtlDTO wBCBSecurityDtlDTO = new WBCBSecurityDtlDTO();
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
 
-        wBCBSecurityDtlDTO = wBCBSecurityMstInsertDTO.getRsumeDtlList().get(0);
-
-        wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
-        wBCBSecurityDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
-        wBCBSecurityDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBCBSecurityDtlDTO.setModId(coaAdmDTO.getId());
-        wBCBSecurityDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-
-        wBCBSecurityMapper.updateAppctnDtl(wBCBSecurityDtlDTO);
-
-        WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO = new WBCBSecurityPbsnDtlDTO();
-        //Pbsn ○
-        wBCBSecurityPbsnDtlDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(0);
-
-        if(wBCBSecurityPbsnDtlDTO.getBsnPmt() == null || wBCBSecurityPbsnDtlDTO.getBsnPmt().equals("")){
-            wBCBSecurityPbsnDtlDTO.setBsnPmt(null);
-        }
-        if(wBCBSecurityPbsnDtlDTO.getBsnPlanDt() == null || wBCBSecurityPbsnDtlDTO.getBsnPlanDt().equals("")){
-            wBCBSecurityPbsnDtlDTO.setBsnPlanDt(null);
-        }
-        if(wBCBSecurityPbsnDtlDTO.getSpprtPmt() == null || wBCBSecurityPbsnDtlDTO.getSpprtPmt().equals("")){
-            wBCBSecurityPbsnDtlDTO.setSpprtPmt(null);
-        }
-        if(wBCBSecurityPbsnDtlDTO.getPhswPmt() == null || wBCBSecurityPbsnDtlDTO.getPhswPmt().equals("")){
-            wBCBSecurityPbsnDtlDTO.setPhswPmt(null);
-        }
-        if(wBCBSecurityPbsnDtlDTO.getTtlPmt() == null || wBCBSecurityPbsnDtlDTO.getTtlPmt().equals("")){
-            wBCBSecurityPbsnDtlDTO.setTtlPmt(null);
-        }
-
-        wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
-        wBCBSecurityPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBCBSecurityPbsnDtlDTO.setModId(coaAdmDTO.getId());
-        wBCBSecurityPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBCBSecurityMapper.updateAppctnPbsnDtl(wBCBSecurityPbsnDtlDTO);
-
-        //상생 신청 파일 상세
-        List<COFileDTO> rtnList = null;
-        Map<String, MultipartFile> files = multiRequest.getFileMap();
-        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-        MultipartFile file;
-        int atchFileCnt = 0;
-
-        while (itr.hasNext()) {
-            Map.Entry<String, MultipartFile> entry = itr.next();
-            file = entry.getValue();
-
-            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
-                atchFileCnt++;
+                if (file.getName().indexOf("FileSeq") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
             }
-        }
 
-        if (!files.isEmpty()) {
-            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-            System.out.println("rtnList  " + rtnList);
+                for (int i = 0; i < rtnList.size() ; i++) {
 
-            for (int i = 0; i < rtnList.size() ; i++) {
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    //선급금 지급
+                    if(wBCBSecuritySpprtDTO.getGiveType().equals("PRO_TYPE03001")){
+                        //지원금신청서
+                        if(i == 0)wBCBSecuritySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        //협약서
+                        if(i == 1)wBCBSecuritySpprtDTO.setAgrmtFileSeq(fileSeqMap.get("fileSeq"));
+                        //보증보험증
+                        if(i == 2)wBCBSecuritySpprtDTO.setGrnteInsrncFileSeq(fileSeqMap.get("fileSeq"));
+                    }
+                    else if(wBCBSecuritySpprtDTO.getGiveType().equals("PRO_TYPE03002")){
+                        //지원금신청서
+                        if(i == 0)wBCBSecuritySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        //거래명세서
+                        if(i == 1)wBCBSecuritySpprtDTO.setBlingFileSeq(fileSeqMap.get("fileSeq"));
+                        //매출전표
+                        if(i == 2)wBCBSecuritySpprtDTO.setSlsFileSeq(fileSeqMap.get("fileSeq"));
+                        //검수확인서
+                        if(i == 3)wBCBSecuritySpprtDTO.setInsptChkFileSeq(fileSeqMap.get("fileSeq"));
+                    }
+                }
+            }
+            wBCBSecuritySpprtDTO.setModId(coaAdmDTO.getId());
+            wBCBSecuritySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
+
+            if(wBCBSecuritySpprtDTO.getGiveDt() != "" ){
+                wBCBSecurityMapper.updateAppctnSpprt(wBCBSecuritySpprtDTO);
+            }
+
+        }else{
+            int maxRsumeOrd = wBCBSecurityMstInsertDTO.getMaxRsumeOrd();
+            int rsumeOrd = maxRsumeOrd - 1;
+
+            //신청 MST ○
+            respCnt = wBCBSecurityMapper.updateAppctnMst(wBCBSecurityMstInsertDTO);
+
+            //신청 DTL ○
+            WBCBSecurityDtlDTO wBCBSecurityDtlDTO = new WBCBSecurityDtlDTO();
+
+            wBCBSecurityDtlDTO = wBCBSecurityMstInsertDTO.getRsumeDtlList().get(0);
+
+            wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
+            wBCBSecurityDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
+            wBCBSecurityDtlDTO.setRsumeOrd(maxRsumeOrd);
+            wBCBSecurityDtlDTO.setModId(coaAdmDTO.getId());
+            wBCBSecurityDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+            wBCBSecurityMapper.updateAppctnDtl(wBCBSecurityDtlDTO);
+
+            WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO = new WBCBSecurityPbsnDtlDTO();
+            //Pbsn ○
+            wBCBSecurityPbsnDtlDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(0);
+
+            if(wBCBSecurityPbsnDtlDTO.getBsnPmt() == null || wBCBSecurityPbsnDtlDTO.getBsnPmt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setBsnPmt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getBsnPlanDt() == null || wBCBSecurityPbsnDtlDTO.getBsnPlanDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setBsnPlanDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getSpprtPmt() == null || wBCBSecurityPbsnDtlDTO.getSpprtPmt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setSpprtPmt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getPhswPmt() == null || wBCBSecurityPbsnDtlDTO.getPhswPmt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setPhswPmt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getTtlPmt() == null || wBCBSecurityPbsnDtlDTO.getTtlPmt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setTtlPmt(null);
+            }
+
+            wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
+            wBCBSecurityPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
+            wBCBSecurityPbsnDtlDTO.setModId(coaAdmDTO.getId());
+            wBCBSecurityPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+            wBCBSecurityMapper.updateAppctnPbsnDtl(wBCBSecurityPbsnDtlDTO);
+
+            //상생 신청 파일 상세
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
                 List<COFileDTO> fileList = new ArrayList();
                 rtnList.get(0).setStatus("success");
                 rtnList.get(0).setFieldNm("fileSeq");
                 fileList.add(rtnList.get(0));
                 HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
 
-                WBCBSecurityFileDtlDTO wBCBSecurityFileDtlDTO = new WBCBSecurityFileDtlDTO();
+                WBCBSecurityFileDtlDTO wBCBSecurityFileDtlDTO = wBCBSecurityMstInsertDTO.getFileDtlList().get(0);
 
                 wBCBSecurityFileDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
                 wBCBSecurityFileDtlDTO.setRsumeOrd(maxRsumeOrd);

@@ -80,6 +80,15 @@ public class COCOmmController {
         response.sendRedirect("/my-page/edu-apply/detail?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd());
     }
 
+    /**
+     * 통합 검색
+     */
+    @Operation(summary = "통합 검색", tags = "", description = "")
+    @GetMapping(value="/search")
+    public String getTotalSearc(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
+    {
+        return "/front/co/COSearch.front";
+    }
 
     /**
      * @ClassName		: EXGExamRestController.java

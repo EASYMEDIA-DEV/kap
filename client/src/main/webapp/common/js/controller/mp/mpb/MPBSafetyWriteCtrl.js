@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
     // set controller name
     var exports = {
-        controller : "controller/mp/mpb/MPBSecurityWriteCtrl"
+        controller : "controller/mp/mpb/MPBSafetyWriteCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);

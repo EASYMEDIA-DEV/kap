@@ -216,8 +216,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             addMore : {
                 event : {
                     click : function() {
-                        $('#firstIndex').val(0);
-                        $('#recordCountPerPage').val(parseInt(addCount+10));
                         cmmCtrl.listFrmAjax(function(respObj) {
                             //CALLBACK 처리
                             $('.divide').empty();
@@ -228,6 +226,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             if (addCount >= totalCnt) {
                                 $('.add-load').hide();
                             } else {
+                                $('#firstIndex').val(addCount);
                                 $('.item-count').text("("+ addCount + "/" + totalCnt +")");
                             }
                             //페이징 처리

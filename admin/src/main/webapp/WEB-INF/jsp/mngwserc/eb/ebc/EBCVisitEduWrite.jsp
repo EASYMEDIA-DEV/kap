@@ -176,7 +176,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star text-danger"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo" value="${rtnInfo.cmpnTelNo}" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 200px;"/>
+                            <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo" value="${rtnInfo.cmpnTelNo}" title="회사 전화번호" maxlength="11" placeholder="회사 전화번호 입력" style="width: 200px;"/>
                         </div>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star text-danger"> *</span></label>

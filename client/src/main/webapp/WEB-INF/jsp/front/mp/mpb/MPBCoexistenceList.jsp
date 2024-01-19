@@ -147,7 +147,7 @@
                                                     <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span><!--ㅠ-->
                                                     </button></div>
                                                 <div class="btn-set">
-                                                    <button type="button" class="btn-solid small gray-bg"><span>필터 초기화</span></button>
+                                                    <button type="button" class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
                                                     <button type="button" class="btn-solid small black-bg searchBtn"><span>적용</span></button>
                                                 </div>
                                             </div>

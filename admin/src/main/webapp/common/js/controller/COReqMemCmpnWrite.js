@@ -11,7 +11,46 @@ define(["ezCtrl"], function(ezCtrl) {
     // set model
     ctrl.model = {
         id : {
+            memTelNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
 
+                        if (phoneLen >= 3 && phoneLen <= 6) {
+                            phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                        } else if (phoneLen > 6) {
+                            if (phoneLen == 9) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                            } else {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
+            cmpnTelNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneLen >= 3 && phoneLen <= 6) {
+                            phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                        } else if (phoneLen > 6) {
+                            if (phoneLen == 9) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                            } else {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            }
         },
         classname : {
             cmpnZipcodeSrchBtn:{

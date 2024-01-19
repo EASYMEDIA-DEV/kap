@@ -73,8 +73,8 @@
                                             <tr>
                                                 <th>일반 전화번호</th>
                                                 <c:choose>
-                                                    <c:when test="${rtnUser.telNo ne null}">
-                                                        <td>${rtnUser.telNo}</td>
+                                                    <c:when test="${rtnUser.memTelNo ne null}">
+                                                        <td>${rtnUser.memTelNo}</td>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <td> - </td>

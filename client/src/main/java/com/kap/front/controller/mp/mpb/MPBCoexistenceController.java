@@ -9,6 +9,10 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
+import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
@@ -70,6 +74,8 @@ public class MPBCoexistenceController {
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final WBJBAcomListService wBJBAcomListService;
     public final WBCBSecurityService wBCBSecurityService;
+    public final WBDBSafetyService wBDBSafetyService;
+    public final WBEBCarbonCompanyService wBEBCarbonCompanyService;
     public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
 
 
@@ -136,6 +142,10 @@ public class MPBCoexistenceController {
             //공통사업 여부
             String businessYn = mpbCoexistenceService.getBusinessYn(mpbBsnSearchDTO);
 
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("MEM_CD"); // 신청 진행상태
+
             if("Y".equals(businessYn)) {
                 /*TO-DO 공통사업 진행*/
                 WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
@@ -151,10 +161,7 @@ public class MPBCoexistenceController {
                 } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //스마트공장
                     /* 스마트 상태 코드 값 */
-                    ArrayList<String> cdDtlList = new ArrayList<String>();
                     cdDtlList.add("BGN_REG_INF");
-                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
                     /* 진행 단계 별 신청 정보*/
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
                     wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
@@ -179,10 +186,7 @@ public class MPBCoexistenceController {
                     modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
                 } else if ("BSN10".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //자동차부품
-                    ArrayList<String> cdDtlList = new ArrayList<String>();
-                    cdDtlList.add("MEM_CD");
                     WBJAcomSearchDTO wBJAcomSearchDTO = new WBJAcomSearchDTO();
-                    modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
                     wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
@@ -192,9 +196,20 @@ public class MPBCoexistenceController {
                     WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
                     wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
                     modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
+                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
+                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
                 }
             }
 
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("businessYn", businessYn);
             modelMap.addAttribute("rtnBsnData", mpbCoexistenceService.getBsnDetail(mpbBsnSearchDTO));
             modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
@@ -326,6 +341,16 @@ public class MPBCoexistenceController {
                         WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
 
                         respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
+                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //안전설비구축
+                        WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = mpbBsnMstDTO.getWBDBSafetyMstInsertDTO();
+
+                        respCnt = wBDBSafetyService.carbonUserUpdate(wBDBSafetyMstInsertDTO, multiRequest, request);
+                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //탄소배출저감
+                        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = mpbBsnMstDTO.getWBEBCarbonCompanyMstInsertDTO();
+
+                        respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
                     }
                 }
             }
@@ -345,7 +370,7 @@ public class MPBCoexistenceController {
     }
 
     /**
-     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     * 사업자등록번호 인증
      */
     @PostMapping(value = "/getBsnmNoCheck")
     @ResponseBody

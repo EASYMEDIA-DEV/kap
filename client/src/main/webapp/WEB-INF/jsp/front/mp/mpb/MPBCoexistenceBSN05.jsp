@@ -17,7 +17,7 @@
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm:ss" /></c:set>
 <c:set var="todayYear"><fmt:formatDate value="${date}" pattern="yyyy" /></c:set>
 
-<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBSecurityWriteCtrl">
+<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBCarbonWriteCtrl">
     <div class="for-motion">
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>

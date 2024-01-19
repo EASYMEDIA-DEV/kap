@@ -238,7 +238,12 @@ public interface EBBEpisdMapper {
 	public EBBEpisdSurveyDTO selectEpisdDtlCheck(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
-	 * 교육차수 상세를 조회한다.(설문유효성)
+	 * 마이페이지 출석체크 진행
+	 */
+	public int updateAtndcInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 마이페이지 - 교육신청을 취소한다.
 	 */
 	public int updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 

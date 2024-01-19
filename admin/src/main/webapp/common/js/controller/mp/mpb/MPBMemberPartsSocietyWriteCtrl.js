@@ -450,15 +450,13 @@ var exports = {
                 var activeTab = $('#myTabs li.active a').attr('href').substring(1);
                 //리스트 갯수 변경
                 $formObj.find("input[name=listRowSize]").val($(this).val());
-
-                if($(this).parents("div")[2].id == 'pagingContainerSan') {
-                    activeTab = $(this).parents("div")[2].id;
+                if(activeTab == 'san') {
+                    if($(this).parents("div")[2].id == 'san') {
+                        activeTab = "pagingContainerSan";
+                    } else {
+                        activeTab = "pagingContainerFuc";
+                    }
                 }
-                if($(this).parents("div")[2].id == 'pagingContainerFuc') {
-                    activeTab = $(this).parents("div")[2].id;
-
-                }
-
                 tabReload(activeTab,1);
             }
         }
@@ -505,7 +503,6 @@ var exports = {
                     }, actionUrl, $formObj, "post", "json")
                 },
                 error: function(e){
-                    console.log(e);
                 }
             }
         });

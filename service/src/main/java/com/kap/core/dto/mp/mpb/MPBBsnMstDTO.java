@@ -3,6 +3,8 @@ package com.kap.core.dto.mp.mpb;
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
@@ -55,6 +57,12 @@ public class MPBBsnMstDTO extends BaseDTO {
 
     @Schema(title = "보안환경구축", example = "")
     private WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO;
+
+    @Schema(title = "안전설비구축", example = "")
+    private WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO;
+    
+    @Schema(title = "탄소배출저감", example = "")
+    private WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO;
 
     @Schema(title = "스마트공장", example = "")
     private WBFBRegisterDTO wBFBRegisterDTO;

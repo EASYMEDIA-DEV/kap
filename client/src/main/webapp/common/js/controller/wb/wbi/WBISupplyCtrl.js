@@ -89,12 +89,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             addMore : {
                 event : {
                     click : function() {
-                        $('#firstIndex').val($('#recordCountPerPage').val());
-                        $('#recordCountPerPage').val(parseInt(addCount+3));
-
                         cmmCtrl.listFrmAjax(function(respObj) {
                             //CALLBACK 처리
-                            console.log(respObj)
                             $('.divide').append(respObj);
                             addCount = 3+addCount;
                             //전체 갯수
@@ -103,6 +99,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             if (addCount >= totalCnt) {
                                 $('.add-load').hide();
                             } else {
+                                $('#firstIndex').val(addCount);
                                 $('.item-count').text("("+ addCount + "/" + totalCnt +")");
                             }
                             //페이징 처리

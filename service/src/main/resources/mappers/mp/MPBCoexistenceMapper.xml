@@ -18,7 +18,7 @@
                      WHEN mng_stts_chng_dtm IS NULL THEN appctn_stts_chng_dtm
                 ELSE NULL END ) AS chngDtm,
                 (CASE
-                    WHEN bsn_end_dtm > NOW() THEN 1
+                    WHEN bsn_end_dtm > NOW() AND bsn_cd NOT IN ('BSN07','BSN08','BSN09')THEN 1
                     WHEN appctn_stts_cd = '사용자취소' THEN 5
                     WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
                     WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
@@ -86,7 +86,7 @@
         FROM (
                 SELECT  INFO.*,
                      ( CASE
-                        WHEN bsn_end_dtm > NOW() THEN 1
+                        WHEN bsn_end_dtm > NOW() AND bsn_cd NOT IN ('BSN07','BSN08','BSN09') THEN 1
                         WHEN appctn_stts_cd = '사용자취소' THEN 5
                         WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
                         WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2

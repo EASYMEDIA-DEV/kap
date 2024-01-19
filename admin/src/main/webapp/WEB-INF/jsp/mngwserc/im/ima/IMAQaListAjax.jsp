@@ -18,7 +18,7 @@
                             접수대기
                         </c:when>
                         <c:when test="${ list.rsumeCd eq 'SYNACK' }">
-                            답변대기
+                            접수완료
                         </c:when>
                         <c:when test="${ list.rsumeCd eq 'ACK' }">
                             답변완료

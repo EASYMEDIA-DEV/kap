@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -201,7 +203,7 @@ public class WBBARoundServiceImpl implements WBBARoundService {
                     } else {
                         //신청가능 코드 200
                         rtnCode = 200;
-
+                        RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
                     }
                 } else {
                     //부품사가 1차 2차가 아닐떄,

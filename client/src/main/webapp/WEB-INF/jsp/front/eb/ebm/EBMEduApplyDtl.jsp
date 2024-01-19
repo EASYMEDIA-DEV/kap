@@ -244,13 +244,6 @@
                                                 </c:if>
                                                 <button class="btn-solid small gray-bg icon checkout" type="button"><span>퇴실하기</span></button>
 
-                                                <c:if test="${episdCheck eq 'Y'}">
-                                                    <button class="btn-solid small gray-bg icon attendance" type="button"><span>출석하기</span></button>
-                                                </c:if>
-
-
-                                                <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
-
                                                 <%
                                                     // 현재 날짜와 시간 가져오기
                                                     Date currentDate = new Date();
@@ -258,6 +251,7 @@
                                                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                                                     // 형식에 맞게 날짜를 문자열로 변환
                                                     String formattedDate = dateFormat.format(currentDate);
+
                                                     Date parsedDate = dateFormat.parse(formattedDate);
 
                                                     EBBEpisdDTO  eBBEpisdDTO= (EBBEpisdDTO)request.getAttribute("rtnData");
@@ -276,9 +270,40 @@
                                                     Date eduStrtDtm = cal.getTime();
 
                                                     // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
+                                                    Date now = new Date();
+                                                    pageContext.setAttribute("now", now);
+
                                                     pageContext.setAttribute("currentDate", parsedDate);//현재 시간
-                                                    pageContext.setAttribute("edctnStrtDtm", eduStrtDtm);//교육 시작시간-30분
+                                                    pageContext.setAttribute("edctnStrtDtm", eduStrtDtm);//교육 시작시간 -1일
+
+                                                    /*출석하기 버튼의 출력조건 nowAtndcYn값이 F가 아니어야 한다 F는 온라인교육임을 뜻함,
+                                                    nowAtndcYn : F 온라인교육
+                                                    nowAtndcYn : N 금일출석 안함
+                                                    nowAtndcYn : Y 금일 출석 함
+                                                    episdCheck : Y 모바일 QR코드를 통해 들어옴
+                                                    episdCheck : N QR코드 이외의 접근
+                                                    추가로 교육 시작일~교육 종료일안에 현재일이 위치해 있어야 출력함*/
                                                 %>
+
+                                                <c:choose>
+                                                    <c:when test="${nowAtndcYn ne 'F'}">
+                                                        <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate" />
+
+                                                        <c:set var="edctnStrtDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                        <c:set var="edctnEndDt" value="${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+
+                                                        <c:if test="${edctnStrtDt le nowDate && nowDate le edctnEndDt}">
+                                                            <c:if test="${episdCheck eq 'Y' && nowAtndcYn eq 'N'}">
+                                                                <button class="btn-solid small gray-bg icon attendance episdCheck" type="button"><span>출석하기</span></button>
+                                                            </c:if>
+
+                                                        </c:if>
+
+                                                    </c:when>
+
+                                                </c:choose>
+
+                                                <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
 
                                                 <c:choose>
                                                     <c:when test="${currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm}">
@@ -612,106 +637,6 @@
                                                     </div>
                                                 </li>
                                             </c:forEach>
-
-                                            <%--<li class="list-item">
-                                                <div class="txt-area">
-                                                    <p class="day f-head">4일차</p>
-                                                    <p class="date f-caption2">2023.02.01</p>
-                                                </div>
-                                                <div class="status-area">
-                                                    <dl class="status to">
-                                                        <dt class="dt f-caption1">출석</dt>
-                                                        <dd class="dd f-body1">-</dd>
-                                                    </dl>
-                                                    <dl class="status off">
-                                                        <dt class="dt f-caption1">퇴실</dt>
-                                                        <dd class="dd f-body1">-</dd>
-                                                    </dl>
-                                                </div>
-                                            </li>
-                                            <li class="list-item">
-                                                <div class="txt-area">
-                                                    <p class="day f-head">3일차</p>
-                                                    <p class="date f-caption2">2023.02.01</p>
-                                                </div>
-                                                <div class="status-area">
-                                                    <dl class="status to">
-                                                        <dt class="dt f-caption1">출석</dt>
-                                                        <dd class="dd f-body1">08:30</dd>
-                                                    </dl>
-                                                    <dl class="status off">
-                                                        <dt class="dt f-caption1">퇴실</dt>
-                                                        <dd class="dd f-body1">-</dd>
-                                                    </dl>
-                                                </div>
-                                            </li>
-                                            <li class="list-item">
-                                                <div class="txt-area">
-                                                    <p class="day f-head">2일차</p>
-                                                    <p class="date f-caption2">2023.02.01</p>
-                                                </div>
-                                                <div class="status-area">
-                                                    <dl class="status to">
-                                                        <dt class="dt f-caption1">출석</dt>
-                                                        <dd class="dd f-body1">08:30</dd>
-                                                    </dl>
-                                                    <dl class="status off">
-                                                        <dt class="dt f-caption1">퇴실</dt>
-                                                        <dd class="dd f-body1">15:30</dd>
-                                                    </dl>
-                                                </div>
-                                            </li>
-                                            <li class="list-item">
-                                                <div class="txt-area">
-                                                    <p class="day f-head">1일차</p>
-                                                    <p class="date f-caption2">2023.02.01</p>
-                                                </div>
-                                                <div class="status-area">
-                                                    <dl class="status to">
-                                                        <dt class="dt f-caption1">출석</dt>
-                                                        <dd class="dd f-body1">08:30</dd>
-                                                    </dl>
-                                                    <dl class="status off">
-                                                        <dt class="dt f-caption1">퇴실</dt>
-                                                        <dd class="dd f-body1">
-                                                            13:30
-                                                            <div class="tooltip-wrap">
-                                                                <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
-                                                                <div class="tooltip-box">
-                                                                    <p class="txt f-caption2">두통으로 인한 조기 퇴실</p>
-                                                                    <button class="btn-close" title="툴팁 닫기" type="button"></button>
-                                                                </div>
-                                                            </div>
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </li>--%>
-
-                                            <%--<li class="list-item">
-                                                <div class="txt-area">
-                                                    <p class="day f-head">1일차</p>
-                                                    <p class="date f-caption2">2023.02.01</p>
-                                                </div>
-                                                <div class="status-area">
-                                                    <dl class="status to">
-                                                        <dt class="dt f-caption1">출석</dt>
-                                                        <dd class="dd f-body1">08:30</dd>
-                                                    </dl>
-                                                    <dl class="status off">
-                                                        <dt class="dt f-caption1">퇴실</dt>
-                                                        <dd class="dd f-body1">
-                                                            13:30
-                                                            <div class="tooltip-wrap">
-                                                                <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
-                                                                <div class="tooltip-box">
-                                                                    <p class="txt f-caption2">두통으로 인한 조기 퇴실</p>
-                                                                    <button class="btn-close" title="툴팁 닫기" type="button"></button>
-                                                                </div>
-                                                            </div>
-                                                        </dd>
-                                                    </dl>
-                                                </div>
-                                            </li>--%>
 
                                         </ul>
                                     </div>

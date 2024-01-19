@@ -89,6 +89,8 @@ public class WBEBCarbonCompanySpprtDTO extends BaseDTO {
 
     @Schema(title = "지원신청파일순번", example = "")
     private Integer spprtAppctnFileSeq;
+    @Schema(title = "지원신청파일명", example = "")
+    private String spprtAppctnFileNm;
 
     @Schema(title = "계좌파일순번", example = "숫자")
     private Integer acntFileSeq;
@@ -104,16 +106,26 @@ public class WBEBCarbonCompanySpprtDTO extends BaseDTO {
 
     @Schema(title = "협약파일순번", example = "숫자")
     private Integer agrmtFileSeq;
+    @Schema(title = "협약파일명", example = "")
+    private String agrmtFileNm;
 
     @Schema(title = "보증보험파일순번", example = "숫자")
     private Integer grnteInsrncFileSeq;
+    @Schema(title = "보증보험파일명", example = "")
+    private String grnteInsrncFileNm;
 
     @Schema(title = "거래파일순번", example = "숫자")
     private Integer blingFileSeq;
+    @Schema(title = "거래파일명", example = "")
+    private String blingFileNm;
 
     @Schema(title = "매출파일순번", example = "숫자")
     private Integer slsFileSeq;
+    @Schema(title = "매출파일명", example = "")
+    private String slsFileNm;
 
     @Schema(title = "검수확인파일순번", example = "숫자")
     private Integer insptChkFileSeq;
+    @Schema(title = "검수확인파일명", example = "")
+    private String insptChkFileNm;
 }

@@ -19,6 +19,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
@@ -113,13 +115,21 @@ public class WBJAutoMotiveController {
     public String getStep1Page(WBBACompanySearchDTO wbbCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbj/WBJAutoMotiveStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
 
-            modelMap.addAttribute("episd", wbbCompanySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbCompanySearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbCompanySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            }else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episd", wbbCompanySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbCompanySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbbCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -138,30 +148,41 @@ public class WBJAutoMotiveController {
                                MPEPartsCompanyDTO mpePartsCompanyDTO, WBJAcomSearchDTO wBJAcomSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbj/WBJAutoMotiveStep2.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBRoundMstSearchDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                wBRoundMstSearchDTO.setStageOrd(1);
 
-            cdDtlList.add("MEM_CD");
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            COPaginationUtil page = new COPaginationUtil();
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
 
-            page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
-            page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+                cdDtlList.add("MEM_CD");
 
-            page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+                COPaginationUtil page = new COPaginationUtil();
 
-            mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
-            mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-            modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("optPrizeList", wBJBAcomListService.getPrizeList(wBJAcomSearchDTO));
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("rtnRoundDtl", wBJARoundListService.getRoundDtl(wBRoundMstSearchDTO));
-            wBRoundMstSearchDTO.setStageOrd(1);
+                page.setCurrentPageNo(mpePartsCompanyDTO.getPageIndex());
+                page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
+
+                page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
+
+                mpePartsCompanyDTO.setFirstIndex(page.getFirstRecordIndex());
+                mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+                modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("optPrizeList", wBJBAcomListService.getPrizeList(wBJAcomSearchDTO));
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                modelMap.addAttribute("rtnRoundDtl", wBJARoundListService.getRoundDtl(wBRoundMstSearchDTO));
+
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -178,26 +199,34 @@ public class WBJAutoMotiveController {
     @RequestMapping(value = "/insert")
     public String insert(WBJAcomDTO wBJAcomDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
-            wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차부품산업대상 코드 */
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBJAcomDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차부품산업대상 코드 */
 
-            COCodeDTO cOCodeDTO = new COCodeDTO();
-            /* 자동차부품산업대상 구축 - 신청 코드 값*/
-            cOCodeDTO.setCd("PRO_TYPE05");
-            String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
-            wBJAcomDTO.setRsumeSttsCd(rsumeSttsCd);
+                COCodeDTO cOCodeDTO = new COCodeDTO();
+                /* 자동차부품산업대상 구축 - 신청 코드 값*/
+                cOCodeDTO.setCd("PRO_TYPE05");
+                String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
+                wBJAcomDTO.setRsumeSttsCd(rsumeSttsCd);
 
-            /* 자동차부품산업대상 신청자 최초 상태값 - 접수완료 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_01");
-            List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBJAcomDTO.setAppctnSttsCd(getCode.get(0).getCd());
+                /* 자동차부품산업대상 신청자 최초 상태값 - 접수완료 */
+                cOCodeDTO.setCd(rsumeSttsCd + "_01");
+                List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
+                wBJAcomDTO.setAppctnSttsCd(getCode.get(0).getCd());
 
-            /* 자동차부품산업대상 신청 관리자 최초 상태값 - 미확인 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_02");
-            getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBJAcomDTO.setMngSttsCd(getCode.get(0).getCd());
+                /* 자동차부품산업대상 신청 관리자 최초 상태값 - 미확인 */
+                cOCodeDTO.setCd(rsumeSttsCd + "_02");
+                getCode = cOCodeService.getCdIdList(cOCodeDTO);
+                wBJAcomDTO.setMngSttsCd(getCode.get(0).getCd());
 
-            modelMap.addAttribute("actCnt", wBJBAcomListService.insertApply(wBJAcomDTO, request));
+                modelMap.addAttribute("actCnt", wBJBAcomListService.insertApply(wBJAcomDTO, request));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -216,12 +245,17 @@ public class WBJAutoMotiveController {
     public String getCompletePage(WBBACompanySearchDTO wbbCompanySearchDTO, WBJAcomSearchDTO wBJAcomSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbj/WBJAutoMotiveComplete.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBJBAcomListService.selectRecent(wBJAcomSearchDTO));
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBJBAcomListService.selectRecent(wBJAcomSearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

@@ -198,7 +198,7 @@
 							OR E.NAME LIKE CONCAT('%', #{q}, '%')
 							OR E.HP_NO LIKE CONCAT('%', #{q}, '%')
 							OR E.EMAIL LIKE CONCAT('%', #{q}, '%')
-							OR D.CMPN LIKE CONCAT('%', #{q}, '%')
+							OR D.CMPN_NM LIKE CONCAT('%', #{q}, '%')
 							OR A.PTCPT_BSNM_NO LIKE CONCAT('%', #{q}, '%')
 							OR A.MOD_ID LIKE CONCAT('%', #{q}, '%')
 							OR DATE_FORMAT(A.MOD_DTM, '%Y%n%d') LIKE CONCAT('%', #{q}, '%')

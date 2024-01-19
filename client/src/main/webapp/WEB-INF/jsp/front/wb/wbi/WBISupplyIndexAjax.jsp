@@ -3,7 +3,7 @@
     <c:choose>
         <c:when test="${item.dateOrd eq 1}">
             <c:set var="classTag" value="accepting"/>
-            <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' href='javascript:'><span>신청하기</span></a>"/>
+            <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' data-episd='${item.episdSeq}' href='javascript:'><span>신청하기</span></a>"/>
         </c:when>
         <c:when test="${item.dateOrd eq 2}">
             <c:set var="classTag" value="waiting"/>
@@ -36,7 +36,12 @@
                 <div class="info-list-w">
                     <div class="info-list">
                         <p class="tit f-caption2">접수기간</p>
-                        <p class="txt f-body2">${item.accsStrtDtm} ~ <br class="only-pc"/>${item.accsEndDtm}</p>
+                        <p class="txt f-body2">
+                                ${kl:convertDate(item.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                                    ~
+                                    <br class="only-pc"/>
+                                ${kl:convertDate(item.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                        </p>
                     </div>
                 </div>
                 <div class="btn-wrap">

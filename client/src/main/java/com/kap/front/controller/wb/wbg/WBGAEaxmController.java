@@ -14,6 +14,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -58,6 +60,7 @@ public class WBGAEaxmController {
         try {
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "721", "N"));
             modelMap.addAttribute("rtnRoundDtl", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -77,11 +80,10 @@ public class WBGAEaxmController {
             modelMap.addAttribute("resultCode", wbgaExamService.getApplyChecked(wbgaExamSearchDTO));
 
         } catch (Exception e) {
-            /*if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());*/
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
         return "jsonView";
     }
@@ -93,12 +95,19 @@ public class WBGAEaxmController {
     public String getStep1Page(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbg/WBGAEaxmStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbgaExamSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyUserDtl(wbgaExamSearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null) {
+                vwUrl = "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbgaExamSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyUserDtl(wbgaExamSearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -116,7 +125,14 @@ public class WBGAEaxmController {
     public String getStep2Page(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbg/WBGAEaxmStep2.front";
         try {
-            modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -133,7 +149,14 @@ public class WBGAEaxmController {
     @PostMapping(value = "/insert")
     public String insert(WBGAApplyMstDTO wbgaApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-            modelMap.addAttribute("actCnt", wbgaExamService.insertApply(wbgaApplyMstDTO,multiRequest,request));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                modelMap.addAttribute("actCnt", wbgaExamService.insertApply(wbgaApplyMstDTO,multiRequest,request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -151,11 +174,17 @@ public class WBGAEaxmController {
     public String complete(WBGAExamSearchDTO wbgaExamSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbg/WBGAExamComplete.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbgaExamSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbgaExamService.getApplyDtl(wbgaExamSearchDTO));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbgaExamSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbgaExamService.getApplyDtl(wbgaExamSearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

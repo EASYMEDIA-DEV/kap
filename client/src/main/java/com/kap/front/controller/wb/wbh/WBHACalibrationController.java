@@ -18,6 +18,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -62,12 +64,12 @@ public class WBHACalibrationController {
         try {
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "722", "N"));
             modelMap.addAttribute("rtnRoundDtl", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
         } catch (Exception e) {
-            /*if (log.isDebugEnabled()) {
+            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());*/
-            e.printStackTrace();
+            throw new Exception(e.getMessage());
         }
 
         return vwUrl;
@@ -97,12 +99,19 @@ public class WBHACalibrationController {
     public String getStep1Page(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbh/WBHACalibrationStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbhaCalibrationSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyUserDtl(wbhaCalibrationSearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null) {
+                vwUrl = "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbhaCalibrationSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyUserDtl(wbhaCalibrationSearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -120,7 +129,14 @@ public class WBHACalibrationController {
     public String getStep2Page(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbh/WBHACalibrationStep2.front";
         try {
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                modelMap.addAttribute("rtnData", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
+                RequestContextHolder.getRequestAttributes().setAttribute("step12uth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -137,7 +153,14 @@ public class WBHACalibrationController {
     @PostMapping(value = "/insert")
     public String insert(WBHAApplyMstDTO wbhaApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-            modelMap.addAttribute("actCnt", wbhaCalibrationService.insertApply(wbhaApplyMstDTO,multiRequest,request));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                modelMap.addAttribute("actCnt", wbhaCalibrationService.insertApply(wbhaApplyMstDTO,multiRequest,request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -155,11 +178,16 @@ public class WBHACalibrationController {
     public String complete(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbh/WBHACalibrationComplete.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbhaCalibrationService.getApplyDtl(wbhaCalibrationSearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbhaCalibrationSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbhaCalibrationService.getApplyDtl(wbhaCalibrationSearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

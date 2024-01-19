@@ -25,6 +25,8 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -1032,10 +1034,11 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                             int rtnCnt = wbhaCalibrationMapper.getApplyCompanyCnt(wbhaCalibrationSearchDTO);
 
                             if (rtnCnt > 0) {
-                                //컨설팅 내역없음 코드 450
-                                rtnCode = 200;
-                            } else {
                                 //신청가능 코드 200
+                                rtnCode = 200;
+                                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
+                            } else {
+                                //컨설팅 내역없음 코드 450
                                 rtnCode = 450;
                             }
                         }

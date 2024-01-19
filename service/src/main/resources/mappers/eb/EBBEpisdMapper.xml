@@ -2451,6 +2451,25 @@
 	</insert>
 
 
+	<!--
+      쿼리명 : EBBEpisdMapper.updateAtndcInfo
+      설  명 : 마이페이지 - 교육신청을 취소한다
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.17   김학규       최초생성
+ 	-->
+	<update id="updateAtndcInfo" parameterType="EBBEpisdDTO" >
+
+		UPDATE ep_edctn_atndc_dtl /* EBBEpisdMapper.updateAtndcInfo */
+			SET atndc_dtm = NOW()
+				  , mod_id = #{modId}
+				  , mod_ip = #{modIp}
+				  , mod_dtm = now()
+
+			WHERE ptcpt_seq = #{ptcptSeq}
+			  AND edctn_dt =  DATE_FORMAT(NOW(), '%Y-%m-%d')
+
+	</update>
 
 	<!--
       쿼리명 : EBBEpisdMapper.updateApplyCancel

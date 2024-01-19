@@ -469,6 +469,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             });
 
                         } else {
+
                             //1. db를 조회 한다.
                             if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
                                 alert(msgCtrl.getMsg("fail.mp.join.al_018"));
@@ -487,6 +488,8 @@ define(["ezCtrl"], function(ezCtrl) {
                                         let datas = data.rtnData.list[0];
                                         $(".old").show();
                                         $(".new").hide();
+                                        $(".old").css('display','');
+
                                         $(".cmpn_nm").text(datas.cmpnNm);
                                         $(".rprsnt_nm").text(datas.rprsntNm);
                                         $(".gubun").text(datas.ctgryNm);

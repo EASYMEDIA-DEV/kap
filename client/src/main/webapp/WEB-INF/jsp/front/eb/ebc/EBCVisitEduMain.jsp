@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
+<div id="wrap" data-controller="controller/eb/ebc/EBCVisitEduCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
         <input type="hidden" class="notRequired" id="memCd" name="memCd" value="${rtnInfo.memCd}" />
 
@@ -30,7 +30,7 @@
                             <a class="btn-two-depth single-menu" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
                         </div>
                         <div class="lnb-list">
-                            <a class="btn-two-depth single-menu active" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
+                            <a class="btn-two-depth single-menu active" href="/education/visit/index"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
                         </div>
                     </div>
                 </div>

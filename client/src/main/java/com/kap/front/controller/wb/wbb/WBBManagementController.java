@@ -17,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -70,6 +72,9 @@ public class WBBManagementController {
             modelMap.addAttribute("rtnData", wbbaRoundService.selectRoundList(wBRoundMstSearchDTO));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wbbaRoundService.getRoundDtl(wBRoundMstSearchDTO));
+
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -120,14 +125,23 @@ public class WBBManagementController {
     public String getStep1Page(WBBACompanySearchDTO wbbaCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbb/WBBManagementStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbaCompanySearchDTO));
-            modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbaCompanySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbaCompanySearchDTO));
+                modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbbaCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -145,8 +159,17 @@ public class WBBManagementController {
     public String getStep2Page(WBRoundMstSearchDTO wbRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbb/WBBManagementStep2.front";
         try {
-            wbRoundMstSearchDTO.setStageOrd(1);
-            modelMap.addAttribute("rtnData", wbbaRoundService.getRoundDtl(wbRoundMstSearchDTO));
+
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbRoundMstSearchDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                wbRoundMstSearchDTO.setStageOrd(1);
+                modelMap.addAttribute("rtnData", wbbaRoundService.getRoundDtl(wbRoundMstSearchDTO));
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -164,7 +187,15 @@ public class WBBManagementController {
     public String insert(WBBAApplyMstDTO wbbApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
 
-            modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,multiRequest,request));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbApplyMstDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,multiRequest,request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -182,12 +213,18 @@ public class WBBManagementController {
     public String complete(WBBACompanySearchDTO wbbaCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbb/WBBManagementComplete.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbaCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbbbCompanyService.getApplyDtl(wbbaCompanySearchDTO));
-            modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbaCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbbbCompanyService.getApplyDtl(wbbaCompanySearchDTO));
+                modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

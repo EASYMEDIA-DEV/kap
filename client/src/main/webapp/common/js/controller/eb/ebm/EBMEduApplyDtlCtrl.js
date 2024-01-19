@@ -120,7 +120,31 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
+			episdCheck : {
+				event: {
+					click: function () {
+						//QR코드로 접근시 출석체크를 진행한다
 
+						var seqObj = {};
+						var ptcptSeq = $("#ptcptSeq").val();
+
+						seqObj.ptcptSeq = ptcptSeq;
+
+						if(confirm("출석 처리 하시겠습니까?")){
+							cmmCtrl.jsonAjax(function(data){
+
+								if(data == "Y"){
+									alert("출석 처리되었습니다.");
+									location.reload();
+								}
+
+							}, "/my-page/edu-apply/updateAtndcInfo", seqObj, "text")
+						}
+
+
+					}
+				}
+			},
 
 			srvStart : {
 				event : {
@@ -216,7 +240,7 @@ define(["ezCtrl"], function(ezCtrl) {
 									location.reload();
 								}
 
-							}, "/education/apply/applyCancel", seqObj, "text")
+							}, "/my-page/edu-apply/applyCancel", seqObj, "text")
 
 
 
@@ -296,6 +320,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		},
 		immediately : function() {
+
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);

@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
     // set controller name
     var exports = {
-        controller : "controller/eb/EBCVisitEduCtrl"
+        controller : "controller/eb/ebc/EBCVisitEduCtrl"
     };
 
     // get controller object
@@ -62,18 +62,19 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
         }
     };
 
-    var textCntCheck = function (id) {
-        var content = $(this).val();
-        if(content.length == 0 || content == '') {
-            id.text('0자')
-        } else {
-            id.text(content.length + '자')
-        }
+    var textCntCheck = function (id, cntId) {
+        var content = $("#"+id).val();
+        var cntElement = $("#"+cntId);
 
+        if(content.length == 0 || content == '') {
+            cntElement.text('0자')
+        } else {
+            cntElement.text(content.length + '자')
+        }
         if (content.length > 500) {
             alert('500자까지 입력 가능합니다.');
             $(this).val($(this).val().substring(0, 500));
-            id.text('500자');
+            cntElement.text('500자');
         }
     }
 
@@ -102,54 +103,21 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             appctnRsn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#appctnRsnTextCnt').text('0자')
-                        } else {
-                            $('#appctnRsnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#appctnRsnTextCnt').text('500자');
-                        }
+                        textCntCheck('appctnRsn', 'appctnRsnTextCnt');
                     }
                 }
             },
             appctnThemeCntn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#appctnThemeCntnTextCnt').text('0자')
-                        } else {
-                            $('#appctnThemeCntnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#appctnThemeCntnTextCnt').text('500자');
-                        }
+                        textCntCheck('appctnThemeCntn', 'appctnThemeCntnTextCnt');
                     }
                 }
             },
             ptcptTrgtCntn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#ptcptTrgtCntnTextCnt').text('0자')
-                        } else {
-                            $('#ptcptTrgtCntnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#ptcptTrgtCntnTextCnt').text('500자');
-                        }
+                        textCntCheck('ptcptTrgtCntn', 'ptcptTrgtCntnTextCnt');
                     }
                 }
             },
@@ -173,12 +141,15 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                         var url = "./index";
                         if($("#memCd").val() == "CP") {
                             location.href = "./apply/step1";
+                        } else if($("#memCd").val() == "CS") {
+                            alert("위원회원은 해당 서비스를 이용할 수 없습니다.");
+                            location.href = url;
                         } else if($("#memCd").val() != "" && $("#memCd").val() != "CP") {
                             alert("방문교육 신청은 부품사 회원만 신청 가능합니다.");
                             location.href = url;
                         } else if($("#memCd").val() == "") {
                             if (confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
-                                location.href = "/login";
+                                location.href = "/login?rtnUrl=%2Feducation%2Fvisit%2Fapply%2Fstep1";
                             }
                         }
                     }
@@ -197,48 +168,49 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     click : function () {
                         if ($("#appctnRsn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_003"));
+                            $("#appctnRsn").focus();
                             return false;
                         }
 
                         if($("#appctnFldCd").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_004"));
+                            $("#appctnFldCd").focus();
                             return false;
                         }
 
-                        /*var checkedValues = [];
-
-                        $('input[name="appctnTypeCdList"]:checked').each(function() {
-                            checkedValues.push($(this).val());
-                        });
-                        $('#appctnTypeCdList').val(checkedValues);*/
-                        // alert(checkedValues);
                         if($("#appctnThemeCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_005"));
+                            $("#appctnThemeCntn").focus();
                             return false;
                         }
 
                         if($("#hopeDt").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_006"));
+                            $("#hopeDt").focus();
                             return false;
                         }
 
                         if($("#placeZipcode").val() == '' || $("#placeBscAddr").val() == '' || $("#placeDtlAddr").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_007"));
+                            $("#placeDtlAddr").focus();
                             return false;
                         }
 
                         if($("#ptcptTrgtCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_008"));
+                            $("#ptcptTrgtCntn").focus();
                             return false;
                         }
 
                         if($("#ptcptCnt").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_009"));
+                            $("#ptcptCnt").focus();
                             return false;
                         }
 
                         if($("#ptcptHh").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_010"));
+                            $("#ptcptHh").focus();
                             return false;
                         }
                         // controller에 json으로 넘길 form값
