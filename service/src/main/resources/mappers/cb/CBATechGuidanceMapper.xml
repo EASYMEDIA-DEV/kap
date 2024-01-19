@@ -60,8 +60,18 @@
                 CP_MST.CNSTG_SEQ
                 , CP_MST.CNSTG_CD
                 , CP_MST.BSN_YEAR
-                , CP_MST.RSUME_STTS_CD
-                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                    AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                    AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                    ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                    AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                    AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                    ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
                 , CMPN_MST.CMPN_NM
                 , CMPN_MST.CTGRY_CD
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
@@ -178,8 +188,18 @@
                 CP_MST.CNSTG_SEQ
                  , CP_MST.CNSTG_CD
                  , CP_MST.BSN_YEAR
-                 , CP_MST.RSUME_STTS_CD
-                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                 , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                   AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                   AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                   WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                   AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                   ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                   AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                   AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                   WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                   AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                   ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
                  , CMPN_MST.CMPN_NM
                  , CMPN_MST.CTGRY_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
