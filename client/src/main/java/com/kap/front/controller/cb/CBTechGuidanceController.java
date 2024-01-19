@@ -129,7 +129,6 @@ public class CBTechGuidanceController {
 
         try {
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
-            System.err.println("pCBATechGuidanceInsertDTO:::"+cOLoginUserDTO);
 
             if(cOLoginUserDTO != null){
 
@@ -144,6 +143,7 @@ public class CBTechGuidanceController {
                 cdDtlList.add("APPCTN_RSN_CD"); // 신청사유 코드
                 cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
                 cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
+                cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             }else{

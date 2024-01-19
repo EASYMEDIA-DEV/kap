@@ -64,6 +64,7 @@ public class CBATechGuidanceController {
             cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
             cdDtlList.add("MNGTECH_STATUS"); // 기술지도 진행 상태값
             cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
+            cdDtlList.add("MNGCNSLT_APP_AREA"); // 신청 분야 코드
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceList(cBATechGuidanceInsertDTO));

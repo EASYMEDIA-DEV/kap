@@ -250,7 +250,7 @@
                 </div>
             </fieldset>
 
-            <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002'}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
+            <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002' || empty rtnDto}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
                 <fieldset>
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">품질5스타</label>
@@ -416,7 +416,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control input-sm cmssrHpNo telRex" name="cmssrHpNo" title="휴대폰번호" value="${picInfoLIst.cmssrHpNo}"  placeholder="휴대폰번호 입력"/>
+                            <input type="text" class="form-control input-sm cmssrHpNo telRex" name="cmssrHpNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" title="휴대폰번호" value="${picInfoLIst.cmssrHpNo}"  placeholder="휴대폰번호 입력"/>
                         </div>
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
@@ -828,7 +828,9 @@
                                             <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT03'}">
+                                                        <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm} </option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>
