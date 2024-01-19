@@ -26,6 +26,11 @@ public interface BDANoticeService {
     public BDANoticeDTO selectNoticeList(BDANoticeDTO pBDANoticeDTO) throws Exception;
 
     /**
+     * 공지사항 조회 갯수(통합검색용)
+     */
+    public int selectNoticeListCnt(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+    /**
      * 공지사항 상세
      */
     public BDANoticeDTO selectNoticeDtl(BDANoticeDTO pBDANoticeDTO) throws Exception;

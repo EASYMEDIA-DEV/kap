@@ -78,6 +78,13 @@ public class BDANoticeServiceImpl implements BDANoticeService {
     }
 
     /**
+     * 공지사항 조회 갯수(통합검색)
+     */
+    public int selectNoticeListCnt(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        return bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO);
+    }
+
+    /**
      * 공지사항 상세
      */
     public BDANoticeDTO selectNoticeDtl(BDANoticeDTO pBDANoticeDTO) throws Exception{

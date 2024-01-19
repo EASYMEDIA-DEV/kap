@@ -66,6 +66,13 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     }
 
     /**
+     * 뉴스레터 조회 갯수
+     */
+    public int selectNewsletterListCnt(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        return bDDNewsletterMapper.getNewsletterListTotCnt(pBDDNewsletterDTO);
+    }
+
+    /**
      * 뉴스레터 상세
      */
     public BDDNewsletterDTO selectNewsletterDtl(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception{
