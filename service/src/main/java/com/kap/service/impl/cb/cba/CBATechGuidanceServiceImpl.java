@@ -833,5 +833,17 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         return pCBATechGuidanceInsertDTO;
     }
+
+    /**
+     * 최근 1년 간 신청한 컨설팅 카운트(마이페이지)
+     */
+    public int countConsultingApplication(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+
+        int actCnt = 0;
+        if (!"".equals(pCBATechGuidanceInsertDTO.getMemSeq())) {
+            actCnt = cBATechGuidanceMapper.selectYearConsultingCount(pCBATechGuidanceInsertDTO);
+        }
+        return actCnt;
+    }
 }
 

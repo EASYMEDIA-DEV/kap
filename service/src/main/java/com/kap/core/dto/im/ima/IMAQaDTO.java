@@ -33,6 +33,9 @@ public class IMAQaDTO extends BaseDTO {
     //QA순번
     private Integer qaSeq;
 
+    //회원(작성자) 순번
+    private Integer memSeq;
+
     //QA답변 순번
     private int qaRplySeq;
 

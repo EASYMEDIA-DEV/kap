@@ -233,12 +233,11 @@ var mainScript = (function(){
         }
       });
 
-      /* 2024-01-17 기획팀 요청으로 호버 시 첫번째 목록 열리지 않고 호버했던 마지막 항목 열려있게로 수정
-      
+      /* 2024-01-17 기획팀 요청으로 호버 시 첫번째 목록 열리지 않고 호버했던 마지막 항목 열려있게로 수정*/      
       $(".hover-accordion .acco-list").on("mouseleave", function(){
         if(!($(this).parents(".coexisting-swiper-w").size() > 0 && $(this).index() == 0)){
-          $(this).removeClass("active");
           if($(this).parents(".biz-line-sec").size() > 0){
+            $(this).removeClass("active");
             gsap.to($(this).parents(".hover-accordion").find(".acco-list:nth-child(n+2) .title-area"), .5, {opacity:0.5, ease:Power3.easeOut});
           }
         }
@@ -246,7 +245,7 @@ var mainScript = (function(){
         lastTarget = $(this).parents(".hover-accordion");
       });
 
-      $(".hover-accordion").on("mouseleave", function(){
+      /*$(".hover-accordion").on("mouseleave", function(){
         if($(this).parents(".coexisting-swiper-w").size() > 0){
           $(this).find(".acco-list:first-child").addClass("active");
         }

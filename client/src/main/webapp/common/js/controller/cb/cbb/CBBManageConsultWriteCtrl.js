@@ -66,6 +66,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
                     }
                 }
+            },
+            infoSameChk : {
+                event : {
+                    click : function(){
+                        var cmpnMst = {};
+                        cmpnMst.bsnmNo = $(".bsnmNo").val().replaceAll("-", "");
+                        cmmCtrl.jsonAjax(function (data) {
+                            var info = JSON.parse(data)
+                            $("#hqZipcode").val(info.list[0].zipcode);
+                            $("#hqBscAddr").val(info.list[0].bscAddr);
+                            $("#hqDtlAddr").val(info.list[0].dtlAddr);
+                        }, './selectDtlInfo', cmpnMst, "text");
+                    }
+                }
             }
         },
         classname : {

@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
+<div id="wrap" data-controller="controller/eb/ebc/EBCVisitEduCtrl">
     <div class="cont-wrap">
         <div class="sub-top-vis-area apply-page consult-biz">
             <div class="page-tit-area">
@@ -233,39 +233,11 @@
                                                             <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
                                                                 <p>
                                                                    ${status.count}.
-                                                                   <c:choose>
-                                                                       <c:when test="${not empty list.nm}">
-                                                                           ${list.nm}
-                                                                       </c:when>
-                                                                       <c:otherwise>
-                                                                           -
-                                                                       </c:otherwise> /
-                                                                   </c:choose>
-                                                                   <c:choose>
-                                                                       <c:when test="${not empty list.score}">
-                                                                           ${list.score}
-                                                                       </c:when>
-                                                                       <c:otherwise>
-                                                                           -
-                                                                       </c:otherwise> /
-                                                                   </c:choose>
-                                                                   <c:choose>
-                                                                       <c:when test="${not empty list.year}">
-                                                                           ${list.year}
-                                                                       </c:when>
-                                                                       <c:otherwise>
-                                                                           -
-                                                                       </c:otherwise>
-                                                                   </c:choose> 년 /
-                                                                   <c:choose>
-                                                                       <c:when test="${not empty list.crtfnCmpnNm}">
-                                                                           ${list.crtfnCmpnNm}
-                                                                       </c:when>
-                                                                       <c:otherwise>
-                                                                           -
-                                                                       </c:otherwise>
-                                                                   </c:choose>
-                                                                </p>
+                                                                       ${list.nm}/
+                                                                       ${list.score}/
+                                                                       ${list.year} 년/
+                                                                       ${list.crtfnCmpnNm}
+                                                                 </p>
                                                             </c:forEach>
                                                         </td>
                                                     </tr>

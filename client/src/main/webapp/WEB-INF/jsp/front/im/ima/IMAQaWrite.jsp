@@ -21,6 +21,8 @@
         <!--LNB 끝-->
         <form id="frmData" name="frmData" enctype="multipart/form-data">
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" id="parntCtgryNm" name="parntCtgryNm" value="" />
+            <input type="hidden" id="ctgryNm" name="ctgryNm" value="" />
 
             <div class="right-con-area">
                 <div class="cont-sec-w">
@@ -63,7 +65,7 @@
                                             </p>
                                         </div>
                                         <div class="btn-wrap">
-                                            <a class="btn-text-icon black-circle" href="javascript:"><span>나의 1:1 문의</span></a>
+                                            <a class="btn-text-icon black-circle" href="/my-page/member/qa/list"><span>나의 1:1 문의</span></a>
                                         </div>
                                     </div>
                                 </div>

@@ -7,6 +7,7 @@ import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.core.dto.im.ima.IMAQaPicDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
@@ -16,11 +17,15 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 1:1 문의 serviceImpl
@@ -48,6 +53,7 @@ public class IMAQaServiceImpl implements IMAQaService {
 
     /** Service **/
     private final COFileService cOFileService;
+    private final COFileUtil cOFileUtil;
     private final COMessageService cOMessageService;
 
     /** Sequence **/
@@ -103,18 +109,18 @@ public class IMAQaServiceImpl implements IMAQaService {
             pIMAQaDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 
             //파일
-            List<COFileDTO> uploadFiles = new ArrayList<>();
+//            List<COFileDTO> uploadFiles = new ArrayList<>();
             if (pIMAQaDTO.getFileList() != null && pIMAQaDTO.getFileList().size() > 0) {
                 HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pIMAQaDTO.getFileList());
                 pIMAQaDTO.setRplyFileSeq(fileSeqMap.get("rplyFileSeq"));
-                uploadFiles = cOFileService.getFileInfs(fileSeqMap.get("rplyFileSeq"));
+//                uploadFiles = cOFileService.getFileInfs(fileSeqMap.get("rplyFileSeq"));
             }
 
             //메일 발송
             COMailDTO mailForm = new COMailDTO();
             mailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의에 대한 답변 드립니다");
-            //첨부파일 처리
-            if (uploadFiles != null && uploadFiles.size() > 0) {
+            //첨부파일 처리 (안내 메일이라 제외)
+            /*if (uploadFiles != null && uploadFiles.size() > 0) {
                 String fileUrl = "";
                 String fileName = "";
                 for(COFileDTO cOFileDTO : uploadFiles){
@@ -123,7 +129,7 @@ public class IMAQaServiceImpl implements IMAQaService {
                 }
                 mailForm.setFile_url(fileUrl);
                 mailForm.setFile_name(fileName);
-            }
+            }*/
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
             //이메일
@@ -131,15 +137,15 @@ public class IMAQaServiceImpl implements IMAQaService {
             //이름
             receiverDto.setName(pIMAQaDTO.getRegName());
             //치환문자1
-            receiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+            receiverDto.setNote1(pIMAQaDTO.getRegName());
             //치환문자2
-            receiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+            receiverDto.setNote2(pIMAQaDTO.getParntCtgryNm());
             //치환문자3
-            receiverDto.setNote3(pIMAQaDTO.getTitl());
+            receiverDto.setNote3(pIMAQaDTO.getCtgryNm());
             //치환문자4
-            receiverDto.setNote4(pIMAQaDTO.getCntn());
+            receiverDto.setNote4(pIMAQaDTO.getTitl());
             //치환문자5
-            receiverDto.setNote5(pIMAQaDTO.getRplyCntn());
+            receiverDto.setNote5(pIMAQaDTO.getRegDtm());
             //수신자 정보 등록
             mailForm.getReceiver().add(receiverDto);
             cOMessageService.sendMail(mailForm, "IMAQaRply.html");
@@ -233,57 +239,98 @@ public class IMAQaServiceImpl implements IMAQaService {
     /**
      * 1:1 문의 등록 (사용자)
      */
-    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartHttpServletRequest multiRequest) throws Exception {
-        //첨부파일 처리
-        List<COFileDTO> uploadFiles = new ArrayList<>();
-        if (pIMAQaDTO.getFileList() != null && pIMAQaDTO.getFileList().size() > 0) {
-            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(pIMAQaDTO.getFileList());
-            pIMAQaDTO.setFileSeq(fileSeqMap.get("FileSeq"));
-            uploadFiles = cOFileService.getFileInfs(fileSeqMap.get("rplyFileSeq"));
-        }
-
-        //메일 발송
-        COMailDTO mailForm = new COMailDTO();
-        mailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의에 대한 답변 드립니다");
-        //첨부파일 처리
-        if (uploadFiles != null && uploadFiles.size() > 0) {
-            String fileUrl = "";
-            String fileName = "";
-            for(COFileDTO cOFileDTO : uploadFiles){
-                fileUrl  +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getWebPath();
-                fileName +=  ( "".equals(fileUrl) ? "" : "|") + cOFileDTO.getOrgnFileNm();
+    @Transactional
+    public int insertQa(IMAQaDTO pIMAQaDTO, MultipartFile[] atchFile) throws Exception {
+        /* 첨부파일 처리 */
+        int fileCnt = atchFile.length;
+        if(fileCnt > 0) {
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = new HashMap<>();
+            for(int i = 0; i < fileCnt; i++) {
+                files.put("file" + i, atchFile[i]);
             }
-            mailForm.setFile_url(fileUrl);
-            mailForm.setFile_name(fileName);
+
+            rtnList = cOFileUtil.parseFileInf(files, "", 1, "", "file", 0);
+
+            List<COFileDTO> fileList = new ArrayList();
+            for(int j = 0; j < fileCnt; j++) {
+                rtnList.get(j).setStatus("success");
+                rtnList.get(j).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(j));
+            }
+
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+            pIMAQaDTO.setFileSeq(fileSeqMap.get("fileSeq"));
         }
+
+
+        /* 메일에 표기될 문의 접수일 날짜 셋팅 */
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+        System.out.println("현재 날짜: " + formattedDate);
+
+
+        /* 문의 작성자에게 보내는 메일 처리 */
+        COMailDTO toUserMailForm = new COMailDTO();
+        toUserMailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의가 접수 되었습니다");
         //수신자 정보
-        COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+        COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
         //이메일
-        receiverDto.setEmail(pIMAQaDTO.getEmail());
+        userReceiverDto.setEmail(pIMAQaDTO.getEmail());
         //이름
-        receiverDto.setName(pIMAQaDTO.getRegName());
+        userReceiverDto.setName(pIMAQaDTO.getRegName());
         //치환문자1
-        receiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+        userReceiverDto.setNote1(pIMAQaDTO.getRegName());
         //치환문자2
-        receiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+        userReceiverDto.setNote2(pIMAQaDTO.getParntCtgryNm());
         //치환문자3
-        receiverDto.setNote3(pIMAQaDTO.getTitl());
+        userReceiverDto.setNote3(pIMAQaDTO.getCtgryNm());
         //치환문자4
-        receiverDto.setNote4(pIMAQaDTO.getCntn());
+        userReceiverDto.setNote4(pIMAQaDTO.getTitl());
         //치환문자5
-        receiverDto.setNote5(pIMAQaDTO.getRplyCntn());
+        userReceiverDto.setNote5(formattedDate);
         //수신자 정보 등록
-        mailForm.getReceiver().add(receiverDto);
-        cOMessageService.sendMail(mailForm, "IMAQaRply.html");
+        toUserMailForm.getReceiver().add(userReceiverDto);
+        //메일 발송
+        cOMessageService.sendMail(toUserMailForm, "IMAQaToUser.html");
 
-        //진행상태
-        pIMAQaDTO.setRsumeCd("SYN");
-        iMAQaMapper.updateQaRsume(pIMAQaDTO);
 
-        //문의 등록
-        pIMAQaDTO.setQaRplySeq(qstnIdgen.getNextIntegerId());
+        /* 문의 담당자에게 보내는 메일 처리 */
+        List<IMAQaPicDTO> mailToList = iMAQaMapper.selectQaPicCtgryList(pIMAQaDTO);
 
-        return iMAQaMapper.insertQaRply(pIMAQaDTO);
+        if(mailToList.size() > 0) {
+            COMailDTO toMngMailForm = new COMailDTO();
+            toMngMailForm.setSubject("[ " + pIMAQaDTO.getRegName() + " ] 님의 [ " + pIMAQaDTO.getParntCtgryNm() + " > " + pIMAQaDTO.getCtgryNm() + " ] 문의가 접수 되었습니다");
+            //수신자 정보
+            for(IMAQaPicDTO pic : mailToList) {
+                COMessageReceiverDTO mngReceiverDto = new COMessageReceiverDTO();
+                //이메일
+                mngReceiverDto.setEmail(pic.getPiceMail());
+                //이름
+                mngReceiverDto.setName(pic.getPicNm());
+                //치환문자1
+                mngReceiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+                //치환문자2
+                mngReceiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+                //치환문자3
+                mngReceiverDto.setNote3(pIMAQaDTO.getTitl());
+                //치환문자4
+                mngReceiverDto.setNote4(pIMAQaDTO.getRegName());
+                //치환문자5
+                mngReceiverDto.setNote5(formattedDate);
+                //수신자 정보 등록
+                toMngMailForm.getReceiver().add(mngReceiverDto);
+            }
+            //메일 발송
+            cOMessageService.sendMail(toMngMailForm, "IMAQaToMng.html");
+        }
+
+        pIMAQaDTO.setQaSeq(qstnIdgen.getNextIntegerId());
+
+        iMAQaMapper.insertQaCtgry(pIMAQaDTO);
+
+        return iMAQaMapper.insertQa(pIMAQaDTO);
     }
 
 }

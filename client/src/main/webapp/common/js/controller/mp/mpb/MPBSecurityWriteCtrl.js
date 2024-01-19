@@ -101,7 +101,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                     }
                 }
+            },
+            popOpen : {
+                event : {
+                    click : function() {
+                        openPopup('paymentInfoManagPopup');
+                    }
+                }
             }
+
         },
         classname : {
             modify : {
@@ -112,7 +120,29 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var file = $formObj.find('input[type=file]');
                         var valid = true;
 
-                        console.log($formObj);
+                        //신청
+                        if($formObj.find("#appctnSttsCd"+id).val() == 'PRO_TYPE01001_01_002'){
+                            $formObj.find("#appctnSttsCd"+id).val('PRO_TYPE01001_01_003');
+                            $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01001_02_001');
+                        }
+
+                        if(id == 1){
+                            if($formObj.find("#zipCode").val() == "" ||
+                                $formObj.find("#dtlAddr").val() == ""){
+                                alert("신청내용을 모두 입력해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if(id == 2){
+                            if($formObj.find("#spprtPmt").val() == "" ||
+                                $formObj.find("#phswPmt").val() == ""){
+                                alert("신청내용을 모두 입력해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
 
                         file.each(function(i) {
                             if (!$(this).val()) {
@@ -122,11 +152,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             }
                         });
 
-                        //신청
-                        if($formObj.find("#appctnSttsCd"+id).val() == 'PRO_TYPE01001_01_002'){
-                            $formObj.find("#appctnSttsCd"+id).val('PRO_TYPE01001_01_003');
-                            $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01001_02_001');
-                        }
 
                         //사업계획
                         if($formObj.find("#appctnSttsCd"+id).val() == 'PRO_TYPE01002_01_001'){
@@ -147,12 +172,83 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if (valid) {
-                            cmmCtrl.fileFrm(function(data){
-                                if (data.respCnt == 100) {
-                                    alert("잘못된 접근입니다. 다시 시도바랍니다.");
-                                }
-                                location.href = "./list";
-                            }, "./update", $formObj, "json");
+                            if (confirm("저장 후 내용을 수정할 수 없습니다.\n" + "저장하시겠습니까?")) {
+                                cmmCtrl.fileFrm(function (data) {
+                                    if (data.respCnt == 100) {
+                                        alert("잘못된 접근입니다. 다시 시도바랍니다.");
+                                    }
+                                    location.href = "./list";
+                                }, "./update", $formObj, "json");
+                            }
+                        }
+                    }
+                }
+            },
+            spprtModify : {
+                event : {
+                    click : function() {
+                        var $formObj;
+                        if($("#spprt1").css("display") == 'block'){
+                            $formObj = $('#spprtform1');
+
+                            if($formObj.find("#accsDt1").val() == "" ||
+                                $formObj.find("#bankNm1").val() == ""  ||
+                                $formObj.find("#acntNo1").val() == "" ||
+                                $formObj.find("#dpsitNm1").val() == ""){
+                                alert("신청내용을 모두 입력해주세요.");
+                                return;
+                            }
+                        }else if($("#spprt2").css("display") == 'block'){
+                            $formObj = $('#spprtform2');
+
+                            if($formObj.find("#accsDt2").val() == "" ||
+                                $formObj.find("#bankNm2").val()== "" ||
+                                $formObj.find("#acntNo2").val()== "" ||
+                                $formObj.find("#dpsitNm2").val()== "" ){
+                                alert("신청내용을 모두 입력해주세요.");
+                                return;
+                            }
+                        }
+
+                        var file = $formObj.find('input[type=file]');
+                        var valid = true;
+
+                        //선급금
+                        if($formObj.find("#spprtAppctnSttsCd1").val() == 'PRO_TYPE03001_01_001'){
+                            $formObj.find("#spprtAppctnSttsCd1").val('PRO_TYPE03001_01_002');
+                            $formObj.find("#spprtMngSttsCd1").val('PRO_TYPE03001_02_002');
+                        }else if($formObj.find("#appctnSttsCd1").val() == 'PRO_TYPE03001_01_003'){
+                            $formObj.find("#spprtAppctnSttsCd1").val('PRO_TYPE03001_01_004');
+                            $formObj.find("#spprtMngSttsCd1").val('PRO_TYPE03001_02_002');
+                        }
+
+                        //지원금
+                        if($formObj.find("#spprtAppctnSttsCd2").val() == 'PRO_TYPE03002_01_001'){
+                            $formObj.find("#spprtAppctnSttsCd2").val('PRO_TYPE03002_01_002');
+                            $formObj.find("#spprtMngSttsCd2").val('PRO_TYPE03002_02_002');
+                        }else if($formObj.find("#spprtAppctnSttsCd2").val() == 'PRO_TYPE03002_01_003'){
+                            $formObj.find("#spprtAppctnSttsCd2").val('PRO_TYPE03002_01_004');
+                            $formObj.find("#spprtMngSttsCd2").val('PRO_TYPE03002_02_002');
+                        }
+
+
+                        file.each(function(i) {
+                            if (!$(this).val()) {
+                                alert('신청서류를 모두 등록해주세요.');
+                                valid = false;
+                                return false;
+                            }
+                        });
+
+                        if (valid) {
+                            if(confirm("저장하시겠습니까?")) {
+                                cmmCtrl.fileFrm(function (data) {
+                                    if (data.respCnt == 100) {
+                                        alert("잘못된 접근입니다. 다시 시도바랍니다.");
+                                    }
+                                    $(".btn-role-close").click();
+                                }, "./update", $formObj, "json");
+                            }
                         }
                     }
                 }
@@ -174,7 +270,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
-
+            cmmCtrl.setCalendar();
         }
     };
 

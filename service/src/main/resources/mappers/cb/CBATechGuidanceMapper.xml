@@ -1486,5 +1486,4 @@
             APPCTN_MEM_SEQ = (SELECT MEM_SEQ FROM CO_MEM_MST ID=#{memSeq})
             AND PTCPT_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
     </select>
-
 </mapper>

@@ -835,7 +835,7 @@ var exports = {
                 use : true,
                 func : function (){
                     var actionUrl = "/mngwserc/mp/mpa/update";
-                    if(confirm(msgCtrl.getMsg("confirm.ins"))) {
+                    if(confirm(msgCtrl.getMsg("confirm.sve"))) {
                         cmmCtrl.fileFrmAjax(function (data) {
                             //콜백함수. 페이지 이동
                             if (data.respCnt > 0) {

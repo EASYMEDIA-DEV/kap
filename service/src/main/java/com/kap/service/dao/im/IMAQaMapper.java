@@ -75,4 +75,20 @@ public interface IMAQaMapper {
      */
     public IMAQaPicDTO selectQaPicDtl(IMAQaPicDTO pIMAQaPicDTO) throws Exception;
 
+
+    /**
+     * 사용자 1:1 문의 선택 항목 담당자 목록 조회
+     */
+    public List<IMAQaPicDTO> selectQaPicCtgryList(IMAQaDTO pIMAQaDTO) throws Exception;
+
+    /**
+     * 1:1 문의 등록
+     */
+    public int insertQa(IMAQaDTO pIMAQaDTO) throws Exception;
+
+    /**
+     * 1:1 문의 유형 등록
+     */
+    public int insertQaCtgry(IMAQaDTO pIMAQaDTO) throws Exception;
+
 }

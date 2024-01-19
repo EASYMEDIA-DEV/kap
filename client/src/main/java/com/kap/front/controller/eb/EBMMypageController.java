@@ -4,29 +4,23 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdSurveyDTO;
-import com.kap.core.dto.eb.ebb.EBBLctrDTO;
-import com.kap.core.dto.eb.ebb.EBBisttrDTO;
+import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBBEpisdService;
-import com.kap.service.SVASurveyService;
+import com.kap.service.*;
+import com.kap.service.mp.mpa.MPAUserService;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
@@ -63,6 +57,11 @@ public class EBMMypageController
     public final EBBEpisdService eBBEpisdService;
 
     private final SVASurveyService sVSurveyService;
+
+    public final MPEPartsCompanyService mpePartsCompanyService;
+
+    /** 부품사 회원정보 서비스 **/
+    private final MPAUserService mpaUserService;
 
     /**
      * 교육/세미나 사업 신청내역 목록/my-page/edu-apply/list
@@ -147,8 +146,16 @@ public class EBMMypageController
      * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
      */
     @GetMapping("/my-page/edu-apply/detail")
-    public String getApplyDetail(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getApplyDetail(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
+
+        if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
+            //QR 이미지 타고 들어옴
+            //로직 처리
+            modelMap.addAttribute("episdCheck ", "Y");
+        }else{
+            modelMap.addAttribute("episdCheck ", "N");
+        }
 
         eBBEpisdDTO.setMypageYn("Y");
         eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
@@ -160,16 +167,253 @@ public class EBMMypageController
         List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
 
 
+        //사용자 출석정보 호출
+        EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
+
+        eBBPtcptDTO.setPtcptSeq(rtnDto.getPtcptSeq());
+
+        List<EBBPtcptDTO> ptcptList = eBBEpisdService.selectMemAtndcList(eBBPtcptDTO);
+
+
+        //회원 기본정보 호출
+        mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+        MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+        if(applicantDto.getMemCd().equals("CP")) {
+            mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("applicantInfo", applicantDto);
+            modelMap.addAttribute("sqInfoList", originList);
+        }
+
+
+        // 공통코드 배열 셋팅
+        ArrayList<String> cdDtlList = new ArrayList<String>();
+        // 코드 set
+        cdDtlList.add("MEM_CD");
+        modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+
 
 
         modelMap.addAttribute("rtnData", rtnDto);
         modelMap.addAttribute("roomDto", roomDto);
         modelMap.addAttribute("lctrDtoList", lctrDtoList);
         modelMap.addAttribute("isttrList", isttrList);
+        modelMap.addAttribute("ptcptList", ptcptList);
+
 
 
         return "front/eb/ebm/EBMEduApplyDtl.front";
     }
+
+
+    /**
+     * 교육/세미나 온라인 교육 step1
+     */
+    @GetMapping("/my-page/edu-apply/onlineStep1")
+    public String getOnlineStep1(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+
+        String vwUrl = "";
+
+        COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        //신청한 교육 과정
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        if(rtnMap !=null){
+
+            EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+            if(cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()){
+                EBBLctrDTO eBBLctrDTO = new EBBLctrDTO();
+
+                eBBLctrDTO.setEdctnSeq(rtnDto.getEdctnSeq());
+                eBBLctrDTO.setEpisdOrd(rtnDto.getEpisdOrd());
+                eBBLctrDTO.setEpisdYear(rtnDto.getEpisdYear());
+
+                //신청한 교육과정의 온라인 목록
+                modelMap.addAttribute("lctrList", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
+
+                modelMap.addAttribute("rtnData", rtnDto);
+
+                vwUrl = "front/eb/ebm/EBMEduApplyOnlineStep1.front";
+
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+
+        }else{
+            modelMap.addAttribute("msg", "잘못된 접근입니다.");
+            modelMap.addAttribute("url", "/");
+            vwUrl = "front/COBlank.error";
+        }
+
+        return vwUrl;
+    }
+
+    /**
+     * 교육참여자 목록을 호출한다.
+     */
+    @RequestMapping(value = "/my-page/edu-apply/onlineStep1Select")
+    public String getOnlineStep1Ajax(EBBLctrDTO eBBLctrDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/eb/ebm/EBMEduApplyOnlineStep1Ajax";
+    }
+
+    /**
+     * 교육/세미나 온라인 교육 step2
+     */
+    @GetMapping("/my-page/edu-apply/onlineStep2")
+    public String getOnlineStep2(EBBEpisdDTO eBBEpisdDTO, EBBLctrDTO eBBLctrDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+
+        String vwUrl = "";
+
+        COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+
+        eBBEpisdDTO.setDetailsKey(String.valueOf(eBBEpisdDTO.getEdctnSeq()));
+
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        if(rtnMap !=null) {
+
+
+
+            EBBEpisdDTO rtnDto = (EBBEpisdDTO) rtnMap.get("rtnData");
+
+            if (cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()) {
+
+                modelMap.addAttribute("rtnData", rtnDto);
+                modelMap.addAttribute("lctrList", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
+                modelMap.addAttribute("nowLctrSeq", eBBLctrDTO.getLctrSeq());
+
+
+                vwUrl = "front/eb/ebm/EBMEduApplyOnlineStep2.front";
+
+            } else {
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+        }
+
+        return vwUrl;
+
+    }
+
+    /**
+     * 교육/세미나 온라인 교육 step2
+     */
+    @RequestMapping(value = "/my-page/edu-apply/onlineStep2Select")
+    public String getLcptListPageAjax(EBBPtcptDTO ebbPtcptDTO, EBBLctrDTO eBBLctrDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+
+            EBBLctrDTO ttt = eBBEpisdService.selectLctrDtlList(eBBLctrDTO);
+
+            EBBPtcptDTO setDto = new EBBPtcptDTO();
+
+            setDto.setPtcptSeq(ebbPtcptDTO.getPtcptSeq());
+            setDto.setLctrSeq(eBBLctrDTO.getNowLctrSeq());
+
+            setDto.setEdctnSeq(ebbPtcptDTO.getPtcptSeq());
+            setDto.setEpisdOrd(ebbPtcptDTO.getEpisdOrd());
+            setDto.setEpisdYear(ebbPtcptDTO.getEpisdYear());
+            setDto.setEpisdSeq(ebbPtcptDTO.getEpisdSeq());
+
+
+
+            System.out.println("@@@ setDto = " + setDto);
+            eBBEpisdService.setOnlinePtcptInfo(setDto);
+
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
+            modelMap.addAttribute("nowLctrSeq", eBBLctrDTO.getNowLctrSeq());
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/eb/ebm/EBMEduApplyOnlineStep2Ajax";
+    }
+
+
+
+    /**
+     * 교육/세미나 온라인 교육 step3
+     */
+    @GetMapping("/my-page/edu-apply/onlineStep3")
+    public String getOnlineStep3(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "";
+
+        COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        if(rtnMap != null){
+
+            EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+            if (cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()) {
+
+                modelMap.addAttribute("rtnData", rtnDto);
+
+                vwUrl = "front/eb/ebm/EBMEduApplyOnlineStep3.front";
+
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+
+
+        }else{
+            modelMap.addAttribute("msg", "잘못된 접근입니다.");
+            modelMap.addAttribute("url", "/");
+            vwUrl = "front/COBlank.error";
+        }
+
+
+        return vwUrl;
+    }
+
+
+
+
 
     /**
      * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
@@ -312,5 +556,46 @@ public class EBMMypageController
         }
 
         return vwUrl;
+    }
+
+
+
+
+
+
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/education")
+    public class EBACouseRestController {
+
+        private final EBBEpisdService eBBEpisdService;
+        /**
+         * 교육신청 취소
+         */
+        @PostMapping(value = "/apply/applyCancel")
+        public String applyCancel(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+
+                System.out.println("@@@ aaa = "  +eBBPtcptDTO.getPtcptSeq());
+                eBBEpisdService.updateApplyCancel(eBBPtcptDTO);
+
+                rtnStr = "Y";
+
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
+
+
     }
 }

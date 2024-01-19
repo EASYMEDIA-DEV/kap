@@ -28,7 +28,7 @@
                         <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
                         <p class="card-text"><strong>접수중</strong><span style="float:right;"><strong>${rtnData.eduAccepting}</strong>건</span></p>
-                        <p class="card-text"><strong>접수대기</strong><span style="float:right;"><strong>${rtnData.eduAcceptWaiting}</strong>건</span></p>
+                        <p class="card-text"><strong>교육대기</strong><span style="float:right;"><strong>${rtnData.eduAcceptWaiting}</strong>건</span></p>
                         <p class="card-text"><strong>교육중</strong><span style="float:right;"><strong>${rtnData.eduAcceptTraining}</strong>건</span></p>
                     </div>
                 </div>

@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
+<div id="wrap" data-controller="controller/eb/ebc/EBCVisitEduCtrl">
     <form id="frmData" name="frmData" enctype="multipart/form-data">
         <!-- CSRF KEY -->
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />

@@ -194,8 +194,8 @@
                     INSTR(#{q}, ZIPCODE) <![CDATA[>]]> 0 OR
                     INSTR(#{q}, BSC_ADDR) <![CDATA[>]]> 0 OR
                     INSTR(#{q}, DTL_ADDR) <![CDATA[>]]> 0 OR
-                    INSTR(#{q}, REG_NAME) <![CDATA[>]]> 0 OR
-                    INSTR(#{q}, MOD_NAME) <![CDATA[>]]> 0 OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
                     )
                 </otherwise>
             </choose>

@@ -281,8 +281,9 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						if(jQuery(e.target).data("mapchk") == "Y") {
 
-							//교육장명
-							//대표 전화번호
+							var placeNm = $(e.target).data("nm");//교육장명
+							var rprsntTelNo =  $(e.target).data("rprsnttelno");//대표 전화번호
+							var zipcode = $(e.target).data("zipcode");//우편번호
 							var bscAddr = $(e.target).data("bscaddr");//기본주소
 							var dtlAddr = $(e.target).data("dtladdr");//상세주소
 
@@ -326,6 +327,10 @@ define(["ezCtrl"], function(ezCtrl) {
 							//주소세팅 종료
 							map.relayout();
 							jQuery(e.target).data("mapchk", "N")
+
+							$(".educCenterInfoPopup").find("table.basic-table").find("tr").eq(0).find("td").text(placeNm);//교육장명
+							$(".educCenterInfoPopup").find("table.basic-table").find("tr").eq(1).find("td").text("["+zipcode+"] "+addr);//주소
+							$(".educCenterInfoPopup").find("table.basic-table").find("tr").eq(2).find("td").text(rprsntTelNo);//대표전화
 						}
 
 					}

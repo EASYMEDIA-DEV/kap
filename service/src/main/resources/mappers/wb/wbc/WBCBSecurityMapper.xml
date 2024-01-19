@@ -646,11 +646,11 @@
             ,MOD_ID = #{modId}
             ,MOD_IP = #{modIp}
             ,MOD_DTM = NOW()
+            ,RTRN_RSN_CNTN = #{rtrnRsnCntn}
             </if>
             <if test='siteGubun != "admin"'>
             ,APPCTN_STTS_CHNG_DTM = NOW()
             </if>
-            ,RTRN_RSN_CNTN = #{rtrnRsnCntn}
             <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
             ,APPCTN_STTS_CD = #{appctnSttsCd}
             </if>
@@ -674,7 +674,12 @@
           ,PBSN_DTL_ADDR = #{pbsnDtlAddr}
           ,CHK_CMSSR_SEQ = #{chkCmssrSeq}
           ,BSN_PMT = #{bsnPmt}
+        <if test='siteGubun != "front"'>
           ,BSN_PLAN_DT = #{bsnPlanDt}
+        </if>
+        <if test='siteGubun != "admin"'>
+            ,BSN_PLAN_DT = NOW()
+        </if>
           ,SPPRT_PMT = #{spprtPmt}
           ,PHSW_PMT = #{phswPmt}
           ,TTL_PMT = #{ttlPmt}
@@ -730,6 +735,12 @@
              ,BLING_FILE_SEQ
              ,SLS_FILE_SEQ
              ,INSPT_CHK_FILE_SEQ
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SPPRT_APPCTN_FILE_SEQ) AS SPPRT_APPCTN_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = AGRMT_FILE_SEQ) AS AGRMT_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = GRNTE_INSRNC_FILE_SEQ) AS GRNTE_INSRNC_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = BLING_FILE_SEQ) AS BLING_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SLS_FILE_SEQ) AS SLS_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = INSPT_CHK_FILE_SEQ) AS INSPT_CHK_FILE_NM
         FROM CX_APPCTN_SPPRT_DTL
         WHERE APPCTN_SEQ = #{detailsKey}
         ORDER BY APPCTN_SPPRT_SEQ ASC
@@ -745,21 +756,37 @@
     <insert id="insertAppctnSpprt" parameterType="wBCBSecuritySpprtDTO">
         INSERT INTO CX_APPCTN_SPPRT_DTL
         (
-            APPCTN_SPPRT_SEQ
-            ,APPCTN_SEQ
-            ,GIVE_TYPE
-            ,REG_ID
-            ,REG_IP
-            ,REG_DTM
+        APPCTN_SPPRT_SEQ
+        ,APPCTN_SEQ
+        ,GIVE_TYPE
+        ,APPCTN_STTS_CD
+        ,MNG_STTS_CD
+        <if test='siteGubun != "admin"'>
+            ,APPCTN_STTS_CHNG_DTM
+        </if>
+        <if test='siteGubun != "front"'>
+            ,MNG_STTS_CHNG_DTM
+        </if>
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
         )
         VALUES
         (
-            #{appctnSpprtSeq}
-            ,#{appctnSeq}
-            ,#{giveType}
-            ,#{regId}
-            ,#{regIp}
+        #{appctnSpprtSeq}
+        ,#{appctnSeq}
+        ,#{giveType}
+        ,#{appctnSttsCd}
+        ,#{mngSttsCd}
+        <if test='siteGubun != "admin"'>
             ,NOW()
+        </if>
+        <if test='siteGubun != "front"'>
+            ,NOW()
+        </if>
+        ,#{regId}
+        ,#{regIp}
+        ,NOW()
         )
     </insert>
 
@@ -783,10 +810,15 @@
             <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
              ,APPCTN_STTS_CD = #{appctnSttsCd}
             </if>
+            <if test='siteGubun != "admin"'>
+                ,APPCTN_STTS_CHNG_DTM = NOW()
+            </if>
              ,GIVE_DT = #{giveDt}
              ,GIVE_SEQ = #{giveSeq}
              ,MNG_STTS_CD = #{mngSttsCd}
+            <if test='siteGubun != "front"'>
              ,MNG_STTS_CHNG_DTM = NOW()
+            </if>
              ,SPPRT_APPCTN_FILE_SEQ = #{spprtAppctnFileSeq}
              ,AGRMT_FILE_SEQ = #{agrmtFileSeq}
              ,GRNTE_INSRNC_FILE_SEQ = #{grnteInsrncFileSeq}

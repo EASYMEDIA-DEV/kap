@@ -51,6 +51,7 @@
 			 , a.hp_no
 			 , a.chng_xtnsn_cnt
 			 , a.pstn_cd
+		     , a.tel_no as mem_tel_no
 			 , (select cd_nm from co_code_mst where  cd = a.pstn_cd ) as pstn_cd_nm
 			 , a.pstn_nm
 			 , b.cmpn_nm

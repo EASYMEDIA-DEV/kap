@@ -21,6 +21,9 @@
     <div class="for-motion">
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
+            <div class="btn-wrap">
+                <a class="btn-text-icon black-arrow" id="popOpen" href="javascript:" title="팝업 열기"><span>지급정보관리</span></a>
+            </div>
         </div>
         <div class="sec-con-area">
             <div class="article-sec">
@@ -40,12 +43,12 @@
                             <input type="hidden" id="mngSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
 
-                        <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <p class="box-label bigger arr"><span>
+                            <p class="box-label bigger"><span>
                             <c:choose>
                                 <c:when test="${empty rtnDtl[0]}">
                                     접수전
@@ -57,7 +60,9 @@
                             </span></p>
                         </a>
                         <div class="acco-hide-area">
-                            <%-- 관리자 메모 <p class="exclamation-txt f-body1">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>--%>
+                            <c:if test="${not empty rtnDtl[0].rtrnRsnCntn }">
+                                <p class="exclamation-txt f-body1">${rtnDtl[0].rtrnRsnCntn}</p>
+                            </c:if>
                             <div class="data-enter-form">
                                 <div class="row">
                                     <div class="th">
@@ -68,10 +73,10 @@
                                     <div class="td">
                                         <div class="data-line-w">
                                             <div class="data-line">
-                                                <p class="data-title f-body1"><span>종된사업장번호</span><span class="essential-mark color-sky">*</span></p>
+                                                <p class="data-title f-body1"><span>종된사업장번호</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4">
+                                                        <input type="text" id="sbrdnBsnmNo" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4">
                                                     </div>
                                                 </div>
                                                 <div class="noti-txt-w">
@@ -119,13 +124,13 @@
                                                 <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                        <p class="empty-txt">선택된 파일 없음</p>
                                                         <div class="file-list">
                                                         </div>
                                                     </div>
                                                     <div class="file-btn-area">
                                                         <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
                                                         <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
+                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                     </div>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>
@@ -157,8 +162,13 @@
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
 
+                            <input type="hidden" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
+
                             <input type="hidden" id="mngSttsCd2" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd2" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[1].appctnSttsCd}">
+
+                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
@@ -175,7 +185,9 @@
                             </span></p>
                         </a>
                         <div class="acco-hide-area">
-                            <%--<p class="exclamation-txt f-body1">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>--%> <%-- 관리자 메모 ㅕ--%>
+                            <c:if test="${not empty rtnDtl[1].rtrnRsnCntn }">
+                                <p class="exclamation-txt f-body1">${rtnDtl[1].rtrnRsnCntn}</p>
+                            </c:if>
                             <div class="data-enter-form">
                                 <div class="row">
                                     <div class="th">
@@ -229,13 +241,13 @@
                                                 <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                        <p class="empty-txt">선택된 파일 없음</p>
                                                         <div class="file-list">
                                                         </div>
                                                     </div>
                                                     <div class="file-btn-area">
                                                         <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
                                                         <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
+                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                     </div>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
@@ -290,6 +302,8 @@
                             <input type="hidden" id="mngSttsCd4" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd4" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[3].appctnSttsCd}">
 
+                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                                 <p class="tit f-head">완료보고</p>
@@ -306,7 +320,9 @@
                             </span></p>
                         </a>
                         <div class="acco-hide-area">
-                            <%--<p class="exclamation-txt f-body1">사업신청서에 전년도 매출액 누락되어 보완 바랍니다.</p>--%> <%-- 관리자 메모 ㅕ--%>
+                            <c:if test="${not empty rtnDtl[3].rtrnRsnCntn }">
+                                <p class="exclamation-txt f-body1">${rtnDtl[3].rtrnRsnCntn}</p>
+                            </c:if>
                             <div class="data-enter-form">
                                 <div class="row">
                                     <div class="th">
@@ -330,6 +346,7 @@
                                                     <div class="file-btn-area">
                                                         <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
                                                         <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
+                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                     </div>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>
@@ -384,7 +401,426 @@
                             </span></p>
                         </a>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 지급정보관리 팝업 -->
+    <div class="layer-popup paymentInfoManagPopup">
+        <div class="for-center">
+            <div class="pop-wrap">
+                <div class="pop-con-area">
+                    <div class="tit-area">
+                        <p class="f-title1">지급정보관리</p>
+                    </div>
+                    <div class="tab-btn-area">
+                        <div class="txt-tab-swiper func-tab">
+                            <div class="swiper-container">
+                                <div class="swiper-wrapper">
+                                    <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">
+                                    <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">active</c:if>" href="javascript:">
+                                        <p class="txt"><span class="menu-name">선급금</span></p>
+                                    </a>
+                                    </c:if>
+                                    <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.pmndvPmtYn eq 'N'}">active</c:if>" href="javascript:">
+                                        <p class="txt"><span class="menu-name">지원금</span></p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="con-area">
+                        <div class="scroll-area">
+                            <div class="tab-con-w">
+                                <div class="tab-con-box">
+                                    <!-- 선급금 탭 -->
+                                    <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">
+                                    <div id="spprt1" class="tab-con">
+                                        <form name="spprtform1" id="spprtform1">
+                                        <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                                        <input type="hidden" class="notRequired" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[0].appctnSpprtSeq}" />
+                                        <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[0].giveType}" />
 
+                                        <input type="hidden" id="spprtAppctnSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[0].appctnSttsCd}" />
+                                        <input type="hidden" id="spprtMngSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}" />
+
+                                        <div class="tab-con-area">
+                                            <div class="p-cont-sec">
+                                                <div class="sec-tit-area">
+                                                    <p class="f-head">지급정보를 입력해주세요</p>
+                                                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                                                </div>
+                                                <div class="sec-con-area">
+                                                    <div class="data-enter-form">
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">접수일<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input calendar">
+                                                                                <input type="text" id="accsDt1" class="datetimepicker_input" name="wBCBSecurityMstInsertDTO.spprtList[0].accsDt" value="${kl:convertDate(rtnSpprt[0].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"  placeholder="날짜 선택">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">은행명<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="bankNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[0].bankNm}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">계좌번호<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="acntNo1" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[0].acntNo}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">예금주<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="dpsitNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[0].dpsitNm}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-cont-sec">
+                                                <div class="sec-tit-area">
+                                                    <p class="f-head">파일을 첨부해주세요</p>
+                                                </div>
+                                                <div class="sec-con-area">
+                                                    <div class="data-enter-form">
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="spprtAppctnFileSeq" id="spprtAppctnFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="spprtAppctnFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].spprtAppctnFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].spprtAppctnFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">협약서<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="agrmtFileSeq" id="agrmtFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="agrmtFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].agrmtFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].agrmtFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">보증보험증<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="grnteInsrncFileSeq" id="grnteInsrncFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="grnteInsrncFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].grnteInsrncFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].grnteInsrncFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                    </c:if>
+
+                                    <!-- 지원금 탭 -->
+                                    <div id="spprt2" class="tab-con">
+                                        <form name="spprtform2" id="spprtform2">
+                                        <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                                        <input type="hidden" class="notRequired" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[1].appctnSpprtSeq}" />
+                                        <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[1].giveType}" />
+
+                                        <input type="hidden" id="spprtAppctnSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[1].appctnSttsCd}" />
+                                        <input type="hidden" id="spprtMngSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}" />
+
+                                        <div class="tab-con-area">
+                                            <div class="p-cont-sec">
+                                                <div class="sec-tit-area">
+                                                    <p class="f-head">지급정보를 입력해주세요</p>
+                                                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                                                </div>
+                                                <div class="sec-con-area">
+                                                    <div class="data-enter-form">
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">접수일<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input calendar">
+                                                                                <input type="text" id="accsDt2" class="datetimepicker_input" name="wBCBSecurityMstInsertDTO.spprtList[0].accsDt"  value="${kl:convertDate(rtnSpprt[1].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" placeholder="날짜 선택">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">은행명<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="bankNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[1].bankNm}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">계좌번호<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="acntNo2" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[1].acntNo}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">예금주<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="form-input">
+                                                                                <input type="text" id="dpsitNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[1].dpsitNm}">
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-cont-sec">
+                                                <div class="sec-tit-area">
+                                                    <p class="f-head">파일을 첨부해주세요</p>
+                                                </div>
+                                                <div class="sec-con-area">
+                                                    <div class="data-enter-form">
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="spprtAppctnFileSeq" id="spprtAppctnFileSeq1" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="spprtAppctnFileSeq1">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].spprtAppctnFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">거래명세서<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="blingFileSeq" id="blingFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="blingFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].blingFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].blingFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">매출전표<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="slsFileSeq" id="slsFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="slsFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].slsFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].slsFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="th">
+                                                                <p class="title f-body1">검수확인서<span class="essential-mark color-sky">*</span></p>
+                                                            </div>
+                                                            <div class="td">
+                                                                <div class="data-line-w">
+                                                                    <div class="data-line">
+                                                                        <div class="form-group">
+                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                <div class="file-list">
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="file-btn-area">
+                                                                                <input type="file" name="insptChkFileSeq" id="insptChkFileSeq" class="searchFile">
+                                                                                <label class="btn-solid gray-bg" for="insptChkFileSeq">파일 찾기</label>
+                                                                            </div>
+                                                                            <div class="file-prev-area">
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].insptChkFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].insptChkFileNm}</a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bot-fix-btn-area">
+                        <div class="btn-wrap align-right">
+                            <button class="btn-solid small black-bg btn-agree spprtModify" type="button"><span>저장</span></button>
+                        </div>
+                    </div>
+                    <div class="user-opt-area">
+                        <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+                    </div>
                 </div>
             </div>
         </div>

@@ -88,7 +88,6 @@ public class CBTechGuidanceController {
     }
     @GetMapping("/application")
     public String getConsultApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
-
         String url = "";
         if(type.equals("tech")){
             url = "front/cb/cba/CBATechGuidanceApplication.front";

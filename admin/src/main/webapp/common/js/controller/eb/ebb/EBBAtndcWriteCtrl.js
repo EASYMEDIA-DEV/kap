@@ -166,7 +166,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
 					//파라미터를 물고 가야함.
-					location.href = "./excel-down3?" + frmDataObj.serialize();
+					//location.href = "./excel-down3?" + frmDataObj.serialize();
+					$.fileDownload("./excel-down3?" + frmDataObj.serialize() , {
+						prepareCallback : function(url){
+							jQuery(".loadingbar").stop().fadeIn(200);
+						},
+						successCallback : function(url){
+							jQuery(".loadingbar").stop().fadeOut(200);
+							$excelObj.find("button.close").trigger('click');
+						},
+						failCallback : function(html,url){
+							jQuery(".loadingbar").stop().fadeOut(200);
+						}
+					});
 
 				} else {
 					alert(msgCtrl.getMsg("fail.reason"));

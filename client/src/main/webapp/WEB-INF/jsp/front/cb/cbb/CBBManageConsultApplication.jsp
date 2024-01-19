@@ -73,11 +73,11 @@
                                         <tbody>
                                         <tr>
                                             <th>신청자</th>
-                                            <td>${loginMap.name}</td>
+                                            <td class="appName">${loginMap.name}</td>
                                         </tr>
                                         <tr>
                                             <th>휴대폰번호</th>
-                                            <td>${loginMap.telNo}</td>
+                                            <td class="appTelNo">${loginMap.telNo}</td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>

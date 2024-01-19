@@ -42,6 +42,8 @@ public class COUserDetailsDTO extends  BaseDTO{
     private String email;
     @Schema(title="로그인 객체 휴대전화 번호")
     private String hpNo;
+    @Schema(title="로그인 객체 일반전화 번호")
+    private String memTelNo;
     @Schema(title="로그인 객체 마지막 로그인 일시")
     private String lastLgnDtm;
     @Schema(title="로그인 객체 로그인 IP")

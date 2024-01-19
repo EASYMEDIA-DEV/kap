@@ -69,7 +69,7 @@
                                         </tr>
                                         <tr>
                                             <th>일반 전화번호</th>
-                                            <td>${rtnUser.telNo}</td>
+                                            <td>${rtnUser.memTelNo}</td>
                                         </tr>
                                         <tr>
                                             <th>부서</th>
@@ -106,7 +106,7 @@
                                         <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td>${rtnData.bsnmNo}</td>
+                                            <td>${kl:bsnmNoConvert(rtnData.bsnmNo)}</td>
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>
