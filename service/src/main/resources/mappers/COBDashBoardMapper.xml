@@ -116,7 +116,7 @@
 						 JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
 						 JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
 				 WHERE
-					 DATE(A.REG_DTM) = CURDATE()
+					 DATE(A.REG_DTM) <![CDATA[<=]]> CURDATE()
 		) AA;
 
 	</select>

@@ -153,7 +153,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function() {
                         //상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
-                        var trgtArr = $(this).closest("div").find(".checkboxSingle");
+                        var trgtArr = $(this).closest("div").find(".placeCheckboxSingle");
                         if (trgtArr.length > 0)
                         {
                             var isChecked = false;

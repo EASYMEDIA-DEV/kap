@@ -56,10 +56,10 @@
 	<sql id="selectAdmListwhereSql">
 		<where>
 			<if test="strtDt != null and strtDt != ''.toString() ">
-				and last_lgn_dtm <![CDATA[ > ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
+				and last_lgn_dtm <![CDATA[ >= ]]> str_to_date(#{strtDt}, '%Y-%m-%d')
 			</if>
 			<if test="endDt != null and endDt != ''.toString() ">
-				and last_lgn_dtm <![CDATA[ < ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+				and last_lgn_dtm <![CDATA[ <= ]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
 			</if>
 			<if test="authCdList != null and authCdList.size() > 0">
 				and (
