@@ -162,6 +162,10 @@
     <sql id="selectNewsletterListwhereSql">
         <if test='siteGubun == "front"'>
             AND exps_yn = 'Y'
+            <if test="srchVal != null and srchVal != ''">
+                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+            </if>
         </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
