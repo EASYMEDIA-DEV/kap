@@ -67,10 +67,10 @@
     -->
 	<select id="getConCnt"  resultType="COBDashBoardDTO">
 		SELECT 	/* COBDashBoardMapper.getConCnt */
-			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_01' ,'MNGTECH_STATUS_02' ,'MNGTECH_STATUS_03' ,'MNGTECH_STATUS_04' ,'MNGTECH_STATUS_05' ,'MNGTECH_STATUS_06' ,'MNGTECH_STATUS_07') THEN 1 END) AS con_tech_application,
-			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_08' ,'MNGTECH_STATUS_09' ,'MNGTECH_STATUS_10' ,'MNGTECH_STATUS_11' ,'MNGTECH_STATUS_12' ,'MNGTECH_STATUS_13') THEN 1 END) AS con_tech_training,
-			Count( CASE WHEN a.rsume_stts_cd in ( 'MNGCNSLT_STATUS01' ,'MNGCNSLT_STATUS02', 'MNGCNSLT_STATUS03' ,'MNGCNSLT_STATUS04','MNGCNSLT_STATUS05', 'MNGCNSLT_STATUS06', 'MNGCNSLT_STATUS07', 'MNGCNSLT_STATUS08') THEN 1 END) AS con_mng_application,
-			Count( CASE WHEN a.rsume_stts_cd  in ('MNGCNSLT_STATUS09' ,'MNGCNSLT_STATUS10' ,'MNGCNSLT_STATUS11' ,'MNGCNSLT_STATUS12') THEN 1 END) AS con_mng_training
+			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_01' ,'MNGTECH_STATUS_03' ,'MNGTECH_STATUS_05','MNGTECH_STATUS_06') THEN 1 END) AS con_tech_application,
+			Count(CASE WHEN a.rsume_stts_cd in ( 'MNGTECH_STATUS_08' ,'MNGTECH_STATUS_09' ,'MNGTECH_STATUS_10','MNGTECH_STATUS_13') THEN 1 END) AS con_tech_training,
+			Count( CASE WHEN a.rsume_stts_cd in ( 'MNGCNSLT_STATUS01', 'MNGCNSLT_STATUS03','MNGCNSLT_STATUS05', 'MNGCNSLT_STATUS06', 'MNGCNSLT_STATUS07') THEN 1 END) AS con_mng_application,
+			Count( CASE WHEN a.rsume_stts_cd  in ('MNGCNSLT_STATUS09','MNGCNSLT_STATUS12') THEN 1 END) AS con_mng_training
 		FROM   cp_cnstg_appctn_mst a
 	</select>
 
