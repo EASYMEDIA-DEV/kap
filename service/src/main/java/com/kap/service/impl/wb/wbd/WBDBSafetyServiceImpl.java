@@ -1,10 +1,11 @@
 package com.kap.service.impl.wb.wbd;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.wb.wbc.*;
 import com.kap.core.dto.wb.wbd.*;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBDBSafetyService;
@@ -16,15 +17,15 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -49,8 +50,9 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
     /* 참여이관로그 시퀀스 */
     private final EgovIdGnrService cxAppctnTrnsfDtlIdgen;
-    
+
     //파일 서비스
+    private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
 
     /**
@@ -1016,6 +1018,162 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         }
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 사용자 신청 수정
+     */
+    public int carbonUserUpdate(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int respCnt = 0;
+        COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        wBDBSafetyMstInsertDTO.setModId(coaAdmDTO.getId());
+        wBDBSafetyMstInsertDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        //선급금 여부
+        if(wBDBSafetyMstInsertDTO.getSpprtList() != null){
+            WBDBSafetySpprtDTO wBDBSafetySpprtDTO = wBDBSafetyMstInsertDTO.getSpprtList().get(0);
+            wBDBSafetySpprtDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            //신청파일 넣기
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("FileSeq") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                for (int i = 0; i < rtnList.size() ; i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    //선급금 지급
+                    if(wBDBSafetySpprtDTO.getGiveType().equals("PRO_TYPE03001")){
+                        //지원금신청서
+                        if(i == 0)wBDBSafetySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        //협약서
+                        if(i == 1)wBDBSafetySpprtDTO.setAgrmtFileSeq(fileSeqMap.get("fileSeq"));
+                        //보증보험증
+                        if(i == 2)wBDBSafetySpprtDTO.setGrnteInsrncFileSeq(fileSeqMap.get("fileSeq"));
+                    }
+                    else if(wBDBSafetySpprtDTO.getGiveType().equals("PRO_TYPE03002")){
+                        //지원금신청서
+                        if(i == 0)wBDBSafetySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        //거래명세서
+                        if(i == 1)wBDBSafetySpprtDTO.setBlingFileSeq(fileSeqMap.get("fileSeq"));
+                        //매출전표
+                        if(i == 2)wBDBSafetySpprtDTO.setSlsFileSeq(fileSeqMap.get("fileSeq"));
+                        //검수확인서
+                        if(i == 3)wBDBSafetySpprtDTO.setInsptChkFileSeq(fileSeqMap.get("fileSeq"));
+                    }
+                }
+            }
+            wBDBSafetySpprtDTO.setModId(coaAdmDTO.getId());
+            wBDBSafetySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
+
+            if(wBDBSafetySpprtDTO.getGiveDt() != "" ){
+                wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
+            }
+
+        }else{
+            int maxRsumeOrd = wBDBSafetyMstInsertDTO.getMaxRsumeOrd();
+            int rsumeOrd = maxRsumeOrd - 1;
+
+            //신청 MST ○
+            respCnt = wBDBSafetyMapper.updateAppctnMst(wBDBSafetyMstInsertDTO);
+
+            //신청 DTL ○
+            WBDBSafetyDtlDTO wBDBSafetyDtlDTO = new WBDBSafetyDtlDTO();
+
+            wBDBSafetyDtlDTO = wBDBSafetyMstInsertDTO.getRsumeDtlList().get(0);
+
+            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+            wBDBSafetyDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd);
+            wBDBSafetyDtlDTO.setModId(coaAdmDTO.getId());
+            wBDBSafetyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+            wBDBSafetyMapper.updateAppctnDtl(wBDBSafetyDtlDTO);
+
+            WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+            //Pbsn ○
+            wBDBSafetyPbsnDtlDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(0);
+
+            if(wBDBSafetyPbsnDtlDTO.getBsnPmt() == null || wBDBSafetyPbsnDtlDTO.getBsnPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setBsnPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getBsnPlanDt() == null || wBDBSafetyPbsnDtlDTO.getBsnPlanDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setBsnPlanDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
+            }
+
+            wBDBSafetyPbsnDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
+            wBDBSafetyPbsnDtlDTO.setModId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+
+            //상생 신청 파일 상세
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+                List<COFileDTO> fileList = new ArrayList();
+                rtnList.get(0).setStatus("success");
+                rtnList.get(0).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(0));
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = wBDBSafetyMstInsertDTO.getFileDtlList().get(0);
+
+                wBDBSafetyFileDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+                wBDBSafetyFileDtlDTO.setRsumeOrd(maxRsumeOrd);
+                wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                wBDBSafetyFileDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
+            }
+        }
+
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
 
         return respCnt;
     }

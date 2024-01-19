@@ -615,16 +615,18 @@
     <update id="updateAppctnMst" parameterType="wBEBCarbonCompanyMstInsertDTO">
         UPDATE /* WBEBCarbonCompanyMapper.updateAppctnMst */ CX_APPCTN_MST
         SET
-            EPISD_SEQ =  #{episdSeq}
+        EPISD_SEQ =  #{episdSeq}
+        <if test='siteGubun != "front"'>
             ,MEM_SEQ =  #{memSeq}
             ,APPCTN_BSNM_NO = #{appctnBsnmNo}
             ,PIC_CMSSR_SEQ = #{picCmssrSeq}
-            ,SBRDN_BSNM_NO = #{sbrdnBsnmNo}
             ,PMNDV_PMT_YN =  #{pmndvPmtYn}
             ,ADM_MEMO =  #{admMemo}
-            ,MOD_ID = #{modId}
-            ,MOD_IP = #{modId}
-            ,MOD_DTM = NOW()
+        </if>
+        ,SBRDN_BSNM_NO = #{sbrdnBsnmNo}
+        ,MOD_ID = #{modId}
+        ,MOD_IP = #{modId}
+        ,MOD_DTM = NOW()
         WHERE APPCTN_SEQ = #{appctnSeq}
     </update>
 
@@ -638,18 +640,23 @@
     <update id="updateAppctnDtl" parameterType="wBEBCarbonCompanyDtlDTO">
         UPDATE /* WBEBCarbonCompanyMapper.updateAppctnDtl */ CX_APPCTN_RSUME_DTL
         SET
-            MNG_STTS_CD = #{mngSttsCd}
+        MNG_STTS_CD = #{mngSttsCd}
+        <if test='siteGubun != "front"'>
             ,MNG_STTS_CHNG_DTM = NOW()
-            ,RTRN_RSN_CNTN = #{rtrnRsnCntn}
-            <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
-            ,APPCTN_STTS_CD = #{appctnSttsCd}
-            </if>
             ,MOD_ID = #{modId}
             ,MOD_IP = #{modIp}
             ,MOD_DTM = NOW()
+            ,RTRN_RSN_CNTN = #{rtrnRsnCntn}
+        </if>
+        <if test='siteGubun != "admin"'>
+            ,APPCTN_STTS_CHNG_DTM = NOW()
+        </if>
+        <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
+            ,APPCTN_STTS_CD = #{appctnSttsCd}
+        </if>
         WHERE RSUME_SEQ = #{rsumeSeq}
-          AND RSUME_ORD = #{rsumeOrd}
-          AND APPCTN_SEQ = #{appctnSeq}
+        AND RSUME_ORD = #{rsumeOrd}
+        AND APPCTN_SEQ = #{appctnSeq}
     </update>
 
     <!--
@@ -662,31 +669,36 @@
     <update id="updateAppctnPbsnDtl" parameterType="wBEBCarbonCompanyPbsnDtlDTO">
         UPDATE /* WBEBCarbonCompanyMapper.updateAppctnPbsnDtl */ CX_APPCTN_RSUME_PBSN_DTL
         SET
-          PBSN_ZIPCODE = #{pbsnZipcode}
-          ,PBSN_BSC_ADDR = #{pbsnBscAddr}
-          ,PBSN_DTL_ADDR = #{pbsnDtlAddr}
-          ,CHK_CMSSR_SEQ = #{chkCmssrSeq}
-          ,BSN_PMT = #{bsnPmt}
-          ,BSN_PLAN_DT = #{bsnPlanDt}
-          ,SPPRT_PMT = #{spprtPmt}
-          ,PHSW_PMT = #{phswPmt}
-          ,TTL_PMT = #{ttlPmt}
-          ,CHK_DT = #{chkDt}
-          ,EXAM_SCORE = #{examScore}
-          ,PAY_DT = #{payDt}
-          ,NSLLT_SCHDL_DT = #{nslltSchdlDt}
-          ,ACCS_DT = #{accsDt}
-          ,BANK_NM = #{bankNm}
-          ,ACNT_NO = #{acntNo}
-          ,DPSIT_NM = #{dpsitNm}
-          ,GIVE_SEQ = #{giveSeq}
-          ,CMPLTN_BRFNG_DT = #{cmpltnBrfngDt}
-          ,LAST_CHK_DT = #{lastChkDt}
-          ,MOD_ID = #{modId}
-          ,MOD_IP = #{modIp}
-          ,MOD_DTM = NOW()
+            PBSN_ZIPCODE = #{pbsnZipcode}
+            ,PBSN_BSC_ADDR = #{pbsnBscAddr}
+            ,PBSN_DTL_ADDR = #{pbsnDtlAddr}
+            ,CHK_CMSSR_SEQ = #{chkCmssrSeq}
+            ,BSN_PMT = #{bsnPmt}
+            <if test='siteGubun != "front"'>
+                ,BSN_PLAN_DT = #{bsnPlanDt}
+            </if>
+            <if test='siteGubun != "admin"'>
+                ,BSN_PLAN_DT = NOW()
+            </if>
+            ,SPPRT_PMT = #{spprtPmt}
+            ,PHSW_PMT = #{phswPmt}
+            ,TTL_PMT = #{ttlPmt}
+            ,CHK_DT = #{chkDt}
+            ,EXAM_SCORE = #{examScore}
+            ,PAY_DT = #{payDt}
+            ,NSLLT_SCHDL_DT = #{nslltSchdlDt}
+            ,ACCS_DT = #{accsDt}
+            ,BANK_NM = #{bankNm}
+            ,ACNT_NO = #{acntNo}
+            ,DPSIT_NM = #{dpsitNm}
+            ,GIVE_SEQ = #{giveSeq}
+            ,CMPLTN_BRFNG_DT = #{cmpltnBrfngDt}
+            ,LAST_CHK_DT = #{lastChkDt}
+            ,MOD_ID = #{modId}
+            ,MOD_IP = #{modIp}
+            ,MOD_DTM = NOW()
         WHERE RSUME_SEQ = #{rsumeSeq}
-          AND RSUME_ORD = #{rsumeOrd}
+        AND RSUME_ORD = #{rsumeOrd}
     </update>
 
     <!--
@@ -723,6 +735,12 @@
              ,BLING_FILE_SEQ
              ,SLS_FILE_SEQ
              ,INSPT_CHK_FILE_SEQ
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SPPRT_APPCTN_FILE_SEQ) AS SPPRT_APPCTN_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = AGRMT_FILE_SEQ) AS AGRMT_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = GRNTE_INSRNC_FILE_SEQ) AS GRNTE_INSRNC_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = BLING_FILE_SEQ) AS BLING_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SLS_FILE_SEQ) AS SLS_FILE_NM
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = INSPT_CHK_FILE_SEQ) AS INSPT_CHK_FILE_NM
         FROM CX_APPCTN_SPPRT_DTL
         WHERE APPCTN_SEQ = #{detailsKey}
         ORDER BY APPCTN_SPPRT_SEQ ASC
@@ -781,30 +799,35 @@
     -->
     <update id="updateAppctnSpprt" parameterType="wBEBCarbonCompanySpprtDTO">
         UPDATE CX_APPCTN_SPPRT_DTL SET /* WBEBCarbonCompanyMapper.updateAppctnSpprt */
-              ACCS_DT = #{accsDt}
-             ,GVMNT_SPPRT_PMT = #{gvmntSpprtPmt}
-             ,MJCMN_APRNC_PMT = #{mjcmnAprncPmt}
-             ,TTL_PMT = #{ttlPmt}
-             ,BANK_NM = #{bankNm}
-             ,ACNT_NO = #{acntNo}
-             ,DPSIT_NM = #{dpsitNm}
-             ,CMSSN_PMT = #{cmssnPmt}
+            ACCS_DT = #{accsDt}
+            ,GVMNT_SPPRT_PMT = #{gvmntSpprtPmt}
+            ,MJCMN_APRNC_PMT = #{mjcmnAprncPmt}
+            ,TTL_PMT = #{ttlPmt}
+            ,BANK_NM = #{bankNm}
+            ,ACNT_NO = #{acntNo}
+            ,DPSIT_NM = #{dpsitNm}
+            ,CMSSN_PMT = #{cmssnPmt}
             <if test="appctnSttsCd != null and appctnSttsCd != ''.toString() ">
-             ,APPCTN_STTS_CD = #{appctnSttsCd}
+                ,APPCTN_STTS_CD = #{appctnSttsCd}
             </if>
-             ,GIVE_DT = #{giveDt}
-             ,GIVE_SEQ = #{giveSeq}
-             ,MNG_STTS_CD = #{mngSttsCd}
-             ,MNG_STTS_CHNG_DTM = NOW()
-             ,SPPRT_APPCTN_FILE_SEQ = #{spprtAppctnFileSeq}
-             ,AGRMT_FILE_SEQ = #{agrmtFileSeq}
-             ,GRNTE_INSRNC_FILE_SEQ = #{grnteInsrncFileSeq}
-             ,BLING_FILE_SEQ = #{blingFileSeq}
-             ,SLS_FILE_SEQ = #{slsFileSeq}
-             ,INSPT_CHK_FILE_SEQ = #{insptChkFileSeq}
-             ,MOD_ID = #{modId}
-             ,MOD_IP = #{modIp}
-             ,MOD_DTM = NOW()
+            <if test='siteGubun != "admin"'>
+                ,APPCTN_STTS_CHNG_DTM = NOW()
+            </if>
+            ,GIVE_DT = #{giveDt}
+            ,GIVE_SEQ = #{giveSeq}
+            ,MNG_STTS_CD = #{mngSttsCd}
+            <if test='siteGubun != "front"'>
+                ,MNG_STTS_CHNG_DTM = NOW()
+            </if>
+            ,SPPRT_APPCTN_FILE_SEQ = #{spprtAppctnFileSeq}
+            ,AGRMT_FILE_SEQ = #{agrmtFileSeq}
+            ,GRNTE_INSRNC_FILE_SEQ = #{grnteInsrncFileSeq}
+            ,BLING_FILE_SEQ = #{blingFileSeq}
+            ,SLS_FILE_SEQ = #{slsFileSeq}
+            ,INSPT_CHK_FILE_SEQ = #{insptChkFileSeq}
+            ,MOD_ID = #{modId}
+            ,MOD_IP = #{modIp}
+            ,MOD_DTM = NOW()
         WHERE APPCTN_SPPRT_SEQ = #{appctnSpprtSeq}
     </update>
 
@@ -1098,8 +1121,9 @@
              ,A.RSUME_ORD
              ,A.FILE_CD
              ,A.FILE_SEQ
+             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
         FROM CX_APPCTN_RSUME_FILE_DTL A
-         JOIN CX_APPCTN_RSUME_DTL B ON A.RSUME_SEQ = B.RSUME_SEQ AND A.RSUME_ORD = B.RSUME_ORD
+                 JOIN CX_APPCTN_RSUME_DTL B ON A.RSUME_SEQ = B.RSUME_SEQ AND A.RSUME_ORD = B.RSUME_ORD
         WHERE B.APPCTN_SEQ = #{detailsKey}
     </select>
 

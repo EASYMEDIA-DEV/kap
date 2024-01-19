@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -67,6 +69,9 @@ public class WBCSrcurityController {
 
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBCASecurityListService.getRoundDtl(wBRoundMstSearchDTO));
+
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -117,13 +122,22 @@ public class WBCSrcurityController {
     public String getStep1Page(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbc/WBCSrcurityStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBCBSecuritySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            }else{
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBCBSecuritySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -141,18 +155,28 @@ public class WBCSrcurityController {
     public String getStep2Page(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbc/WBCSrcurityStep2.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
-            //사업접수 하단플로팅 영역용
-            WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("BSN03");
-            modelMap.addAttribute("rtnRoundDtl", wBCASecurityListService.getRoundDtl(wBRoundMstSearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBCBSecuritySearchDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            }else{
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+
+                //사업접수 하단플로팅 영역용
+                WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
+                wBRoundMstSearchDTO.setBsnCd("BSN03");
+                modelMap.addAttribute("rtnRoundDtl", wBCASecurityListService.getRoundDtl(wBRoundMstSearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBCBSecuritySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
 
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -170,7 +194,16 @@ public class WBCSrcurityController {
     @RequestMapping(value = "/insert")
     public String insert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-           modelMap.addAttribute("actCnt", wBCBSecurityService.carbonUserInsert(wBCBSecurityMstInsertDTO,request));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBCBSecurityMstInsertDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            }else{
+                modelMap.addAttribute("actCnt", wBCBSecurityService.carbonUserInsert(wBCBSecurityMstInsertDTO,request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -188,13 +221,21 @@ public class WBCSrcurityController {
     public String getCompletPage(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbc/WBCSrcurityComplet.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            }else{
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+            }
+
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
