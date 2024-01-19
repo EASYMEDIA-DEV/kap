@@ -6,8 +6,6 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.*;
-import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
@@ -1426,7 +1424,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                     int Overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
 
                     if(Overlap > 0){
-                        respCnt = 999;
+                        respCnt = 300;
                     } else {
                         /* 신청 */
                         WBFBRegisterDTO registerDTO = WBFBRegisterDTO.builder()
