@@ -123,11 +123,11 @@
                                 <div class="btn-wrap add-load align-center">
                                     <a class="btn-solid small black-line addMore" href="javascript:"><span>더보기</span>
                                         <c:choose>
-                                            <c:when test="${rtnData.totalCount > 10}">
-                                                <c:set var="curruntCnt" value="10" />
+                                            <c:when test="${rtnData.totalCount > 3}">
+                                                <c:set var="curruntCnt" value="3" />
                                             </c:when>
                                             <c:otherwise>
-                                                <c:set var="curruntCnt" value="${rtnData.totalCount % 10}" />
+                                                <c:set var="curruntCnt" value="${rtnData.totalCount % 3}" />
                                             </c:otherwise>
                                         </c:choose>
                                         <span class="item-count">

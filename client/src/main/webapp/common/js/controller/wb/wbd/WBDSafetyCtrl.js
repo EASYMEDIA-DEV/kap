@@ -133,6 +133,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 //해당 input file 객체에 data(tempFileData) 응답 값이 저장
                 $('.empty-txt').text(data[0].orgnFileNm);
             });
+            $('#firstIndex').val(addCount);
         }
     };
 

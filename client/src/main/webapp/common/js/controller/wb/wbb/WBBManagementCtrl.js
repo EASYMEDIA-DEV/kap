@@ -176,7 +176,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
-
+            $('#firstIndex').val(addCount);
         }
     };
 
