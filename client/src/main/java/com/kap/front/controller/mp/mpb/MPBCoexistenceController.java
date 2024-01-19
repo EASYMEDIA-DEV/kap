@@ -344,7 +344,7 @@ public class MPBCoexistenceController {
     }
 
     /**
-     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     * 사업자등록번호 인증
      */
     @PostMapping(value = "/getBsnmNoCheck")
     @ResponseBody
