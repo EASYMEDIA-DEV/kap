@@ -65,6 +65,9 @@ public class BDDNewsletterDTO extends BaseDTO {
     @Schema(title = "썸네일 이미지 경로")
     private String webPath;
 
+    @Schema(title = "사용자 검색값")
+    private String srchVal;
+
     @Schema(title = "노출여부 리스트")
     @Hidden
     private List<String> expsYnList;
