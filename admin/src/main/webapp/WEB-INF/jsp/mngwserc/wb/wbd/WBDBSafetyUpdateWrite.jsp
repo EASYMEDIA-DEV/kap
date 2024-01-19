@@ -674,7 +674,6 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <select class="form-control input-sm spprtMngSttsCd notRequired" id="spprtMngSttsCd1" name="spprtList[0].mngSttsCd" <c:if test="${empty rtnSpprt[0]}">disabled</c:if>>
-                                                        <option value="">선택</option>
                                                         <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                             <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE03001_02')}">
                                                                 <option value="${cdList.cd}" <c:if test="${rtnSpprt[0].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -896,7 +895,6 @@
                                                 </c:when>
                                                 <c:otherwise>
                                                     <select class="form-control input-sm spprtMngSttsCd notRequired" id="spprtMngSttsCd2" name="spprtList[1].mngSttsCd" <c:if test="${empty rtnSpprt[1]}">disabled</c:if>>
-                                                        <option value="">선택</option>
                                                         <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                             <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE03002_02')}">
                                                                 <option value="${cdList.cd}" <c:if test="${rtnSpprt[1].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>

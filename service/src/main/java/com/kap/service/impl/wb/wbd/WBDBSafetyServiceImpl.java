@@ -234,9 +234,11 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             if(i==0){
                 wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBDBSafetySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBDBSafetySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBDBSafetySpprtDTO.setRegId(coaAdmDTO.getId());
@@ -391,7 +393,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetySpprtDTO.setModId(coaAdmDTO.getId());
             wBDBSafetySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBDBSafetySpprtDTO.getAccsDt() != "" ){
+            if(wBDBSafetySpprtDTO.getGiveDt() != "" ){
                 wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
             }
         }
@@ -406,7 +408,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
             wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
             wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_006");
             wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
             wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -450,7 +452,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
             wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
             wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_006");
             wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
             wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -1001,9 +1003,11 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             if(i==0){
                 wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBDBSafetySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBDBSafetySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBDBSafetySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBDBSafetySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBDBSafetySpprtDTO.setRegId(cOUserDetailsDTO.getId());

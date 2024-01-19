@@ -235,9 +235,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             if(i==0){
                 wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBEBCarbonCompanySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBEBCarbonCompanySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBEBCarbonCompanySpprtDTO.setRegId(coaAdmDTO.getId());
@@ -392,7 +394,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanySpprtDTO.setModId(coaAdmDTO.getId());
             wBEBCarbonCompanySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBEBCarbonCompanySpprtDTO.getAccsDt() != "" ){
+            if(wBEBCarbonCompanySpprtDTO.getGiveDt() != "" ){
                 wBEBCarbonCompanyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
             }
         }
@@ -407,7 +409,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
             wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
             wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_001");
+            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_006");
             wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -451,7 +453,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
             wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
             wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_001");
+            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_006");
             wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
@@ -1001,9 +1003,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             if(i==0){
                 wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03001");
                 wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03001_01_001");
+                wBEBCarbonCompanySpprtDTO.setMngSttsCd("PRO_TYPE03001_02_001");
             }else{
-                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03003");
+                wBEBCarbonCompanySpprtDTO.setGiveType("PRO_TYPE03002");
                 wBEBCarbonCompanySpprtDTO.setAppctnSttsCd("PRO_TYPE03002_01_001");
+                wBEBCarbonCompanySpprtDTO.setMngSttsCd("PRO_TYPE03002_02_001");
             }
 
             wBEBCarbonCompanySpprtDTO.setRegId(cOUserDetailsDTO.getId());

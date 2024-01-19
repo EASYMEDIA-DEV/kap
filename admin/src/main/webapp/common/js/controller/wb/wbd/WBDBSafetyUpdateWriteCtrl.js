@@ -395,16 +395,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $(".rtrnRsnCntn").css("display", "none");
             }
 
-            var pmndvPmtYn = $("input[name='pmndvPmtYn']:checked").val();
-
-            if(pmndvPmtYn == 'Y'){
-                $("#ab1").css('height' , '100%');
-                $("#ab1").addClass('in');
-            }else{
-                $("#ab1").css('height' , '0px');
-                $("#ab1").removeClass('in');
-            }
-
             // 유효성 검사
             $formObj.validation({
                 after : function() {
@@ -494,16 +484,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         $(".spprtMngSttsCd").each(function (){
                             if($(this).val() == "PRO_TYPE03001_02_003"){
                                 $(this).next().val("PRO_TYPE03001_01_003");
-                            }else if($(this).val() == "PRO_TYPE03001_02_005"){
+                            }else if($(this).val() == "PRO_TYPE03001_02_004"){
                                 $(this).next().val("PRO_TYPE03001_01_005");
                             }
 
                             else if($(this).val() == "PRO_TYPE03002_02_003"){
                                 $(this).next().val("PRO_TYPE03002_01_003");
-                            }else if($(this).val() == "PRO_TYPE03002_02_005"){
+                            }else if($(this).val() == "PRO_TYPE03002_02_004"){
                                 $(this).next().val("PRO_TYPE03002_01_005");
                             }
-
                         });
 
 

@@ -738,21 +738,37 @@
     <insert id="insertAppctnSpprt" parameterType="wBEBCarbonCompanySpprtDTO">
         INSERT INTO CX_APPCTN_SPPRT_DTL
         (
-            APPCTN_SPPRT_SEQ
-            ,APPCTN_SEQ
-            ,GIVE_TYPE
-            ,REG_ID
-            ,REG_IP
-            ,REG_DTM
+        APPCTN_SPPRT_SEQ
+        ,APPCTN_SEQ
+        ,GIVE_TYPE
+        ,APPCTN_STTS_CD
+        ,MNG_STTS_CD
+        <if test='siteGubun != "admin"'>
+            ,APPCTN_STTS_CHNG_DTM
+        </if>
+        <if test='siteGubun != "front"'>
+            ,MNG_STTS_CHNG_DTM
+        </if>
+        ,REG_ID
+        ,REG_IP
+        ,REG_DTM
         )
         VALUES
         (
-            #{appctnSpprtSeq}
-            ,#{appctnSeq}
-            ,#{giveType}
-            ,#{regId}
-            ,#{regIp}
+        #{appctnSpprtSeq}
+        ,#{appctnSeq}
+        ,#{giveType}
+        ,#{appctnSttsCd}
+        ,#{mngSttsCd}
+        <if test='siteGubun != "admin"'>
             ,NOW()
+        </if>
+        <if test='siteGubun != "front"'>
+            ,NOW()
+        </if>
+        ,#{regId}
+        ,#{regIp}
+        ,NOW()
         )
     </insert>
 
