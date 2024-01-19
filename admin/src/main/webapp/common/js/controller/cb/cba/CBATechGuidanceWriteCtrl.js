@@ -62,7 +62,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
 
         // 킥오프일이 없거나, 킥오프일 전까지
-        if(bfGbDt>=0){
+        if(bfGbDt<=0){
             if(!guideKickfDt || today-kickDt < 0 ){
                 $(".rsumeSttsNm").text("지도착수");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
@@ -84,7 +84,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("지도 완료");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
             }
-        }else if(bfGbDt<0 || guideBgnDt == ''){
+        }else if(bfGbDt>0 || guideBgnDt == ''){
             if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
                 $(".rsumeSttsNm").text("사용자취소");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
