@@ -55,52 +55,52 @@
                                             <col style="width: 820rem;">
                                         </colgroup>
                                         <tbody>
-                                        <tr>
-                                            <th>신청자</th>
-                                            <td>${rtnUser.name}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>휴대폰번호</th>
-                                            <td>${rtnUser.hpNo}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>이메일</th>
-                                            <td>${rtnUser.email}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>일반 전화번호</th>
-                                            <td>${rtnUser.telNo}</td>
-                                        </tr>
-                                        <tr>
-                                            <th>부서(부서상세)</th>
-                                            <td>
-                                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                                    <c:if test="${cdList.cd eq rtnUser.deptCd}">
-                                                        <c:choose>
-                                                            <c:when test="${empty(rtnUser.deptNm)}">
-                                                                ${cdList.cdNm}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${cdList.cdNm}(${rtnUser.deptNm})
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </c:if>
-                                                </c:forEach>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>직급(기타직급)</th>
-                                            <td>
-                                                <c:choose>
-                                                    <c:when test="${empty(rtnUser.pstnNm)}">
-                                                        ${rtnUser.pstnCdNm}
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <th>신청자</th>
+                                                <td>${rtnUser.name}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>휴대폰번호</th>
+                                                <td>${rtnUser.hpNo}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>이메일</th>
+                                                <td>${rtnUser.email}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>일반 전화번호</th>
+                                                <td>${rtnUser.memTelNo}</td>
+                                            </tr>
+                                            <tr>
+                                                <th>부서(부서상세)</th>
+                                                <td>
+                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                        <c:if test="${cdList.cd eq rtnUser.deptCd}">
+                                                            <c:choose>
+                                                                <c:when test="${empty(rtnUser.deptNm)}">
+                                                                    ${cdList.cdNm}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    ${cdList.cdNm}(${rtnUser.deptNm})
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>직급(기타직급)</th>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${empty(rtnUser.pstnNm)}">
+                                                            ${rtnUser.pstnCdNm}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
+                                            </tr>
                                         </tbody>
                                     </table>
                                 </div>
