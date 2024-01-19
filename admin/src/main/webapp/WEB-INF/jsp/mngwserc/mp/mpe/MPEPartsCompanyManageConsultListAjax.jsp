@@ -13,7 +13,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.initVstFileSeq}">파일</a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.initVstFileSeq}"><img src="/common/images/fileicon.png"></a></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -23,7 +23,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}">파일</a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}"><img src="/common/images/fileicon.png"></a></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -33,7 +33,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.lvlupFileSeq}">파일</a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.lvlupFileSeq}"><img src="/common/images/fileicon.png"></a></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -43,7 +43,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.itrdcFileSeq}">파일</a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.itrdcFileSeq}"><img src="/common/images/fileicon.png"></a></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -53,7 +53,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.impvmFileSeq}">파일</a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.impvmFileSeq}"><img src="/common/images/fileicon.png"></a></a>
                         </c:otherwise>
                     </c:choose>
                 </td>

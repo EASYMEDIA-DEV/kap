@@ -58,7 +58,7 @@
             , #{tmncsCntn}
             , #{psnifCntn}
             , #{offerCntn}
-            , #{offerCntn}
+            , #{mktRcvAgmntCntn}
             , #{regId}
             , #{regIp}
             , NOW()
@@ -78,6 +78,7 @@
             TMNCS_CNTN = #{tmncsCntn}
           , PSNIF_CNTN = #{psnifCntn}
           , OFFER_CNTN = #{offerCntn}
+          , MKT_RCV_AGMNT_CNTN = #{mktRcvAgmntCntn}
           , MOD_ID = #{modId}
           , MOD_IP = #{modIp}
           , MOD_DTM = NOW()

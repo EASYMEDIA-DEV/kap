@@ -141,6 +141,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                         var url = "./index";
                         if($("#memCd").val() == "CP") {
                             location.href = "./apply/step1";
+                        } else if($("#memCd").val() == "CS") {
+                            alert("위원회원은 해당 서비스를 이용할 수 없습니다.");
+                            location.href = url;
                         } else if($("#memCd").val() != "" && $("#memCd").val() != "CP") {
                             alert("방문교육 신청은 부품사 회원만 신청 가능합니다.");
                             location.href = url;
@@ -165,48 +168,49 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     click : function () {
                         if ($("#appctnRsn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_003"));
+                            $("#appctnRsn").focus();
                             return false;
                         }
 
                         if($("#appctnFldCd").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_004"));
+                            $("#appctnFldCd").focus();
                             return false;
                         }
 
-                        /*var checkedValues = [];
-
-                        $('input[name="appctnTypeCdList"]:checked').each(function() {
-                            checkedValues.push($(this).val());
-                        });
-                        $('#appctnTypeCdList').val(checkedValues);*/
-                        // alert(checkedValues);
                         if($("#appctnThemeCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_005"));
+                            $("#appctnThemeCntn").focus();
                             return false;
                         }
 
                         if($("#hopeDt").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_006"));
+                            $("#hopeDt").focus();
                             return false;
                         }
 
                         if($("#placeZipcode").val() == '' || $("#placeBscAddr").val() == '' || $("#placeDtlAddr").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_007"));
+                            $("#placeDtlAddr").focus();
                             return false;
                         }
 
                         if($("#ptcptTrgtCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_008"));
+                            $("#ptcptTrgtCntn").focus();
                             return false;
                         }
 
                         if($("#ptcptCnt").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_009"));
+                            $("#ptcptCnt").focus();
                             return false;
                         }
 
                         if($("#ptcptHh").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_010"));
+                            $("#ptcptHh").focus();
                             return false;
                         }
                         // controller에 json으로 넘길 form값

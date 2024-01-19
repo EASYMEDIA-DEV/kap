@@ -245,7 +245,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="50" placeholder="회사 전화번호 입력" style="width: 130px;" />
+                        <input type="text" class="form-control input-sm" value="${rtnDto.cmpnTelNo}" id="cmpnTelNo" name="cmpnTelNo" title="회사 전화번호" maxlength="11" placeholder="회사 전화번호 입력" style="width: 130px;" />
                     </div>
                     <label class="col-sm-1 control-label">설립일자<span class="star"> *</span></label>
                     <div class="col-sm-3">
