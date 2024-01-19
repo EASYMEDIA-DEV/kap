@@ -119,7 +119,7 @@
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <td>${rtnUser.telNo}</td>
+                                                <td>${rtnUser.memTelNo}</td>
                                             </tr>
                                             <tr>
                                                 <th>부서(부서상세)</th>
