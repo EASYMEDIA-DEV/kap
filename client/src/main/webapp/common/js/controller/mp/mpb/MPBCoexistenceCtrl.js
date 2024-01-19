@@ -82,6 +82,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         search($(this));
                     }
                 }
+            },
+            filterInit : {
+                event : {
+                    click : function () {
+                        $('input[name=statusChk]').prop("checked",false);
+                        $('input[name=q]').val('');
+                        $('input[name=strtDt]').val('');
+                        $('input[name=endDt]').val('');
+                    }
+                }
             }
         },
         immediately : function(){
