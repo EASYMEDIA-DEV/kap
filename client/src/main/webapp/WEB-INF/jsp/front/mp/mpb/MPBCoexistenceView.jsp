@@ -175,7 +175,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
-                                                <td>${rtnCompany.bsnmNo}</td>
+                                                <td>${kl:bsnmNoConvert(rtnCompany.bsnmNo)}</td>
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>
