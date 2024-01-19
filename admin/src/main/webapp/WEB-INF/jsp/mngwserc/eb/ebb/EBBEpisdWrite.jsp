@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<%@ page import="java.util.Date" %>
 <script>
     window.onpageshow = function(event) {
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
@@ -11,6 +12,43 @@
     }
 </script>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
+
+<c:set var="modifyYn" value="Y" />
+
+<%
+    Date now = new Date();
+    pageContext.setAttribute("now", now);
+%>
+
+<fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate"/>
+<c:set var="edctnStrtDt" value="${ kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }"/>
+<c:set var="edctnEndDt" value="${ kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }"/>
+
+
+
+
+
+<!-- 신청자 발생시  modifyYn : N으로 변경되고 N일경우 온라인교육 수정이 불가하다 -->
+<!-- 추가로 이 경우에는 강사, 만족도조사, 평가, 노출여부만 수정 가능하다. -->
+<!--교육이 시작했을경우 노출여부만 수정 가능하다.-->
+
+<c:choose>
+    <c:when test="${not empty rtnDto && rtnDto.accsCnt ne 0}">
+        <c:set var="modifyYn" value="N" />
+    </c:when>
+    <c:otherwise>
+        <c:set var="modifyYn" value="Y" />
+    </c:otherwise>
+</c:choose>
+
+<!--교육중이면 modifyYn도 N으로 강제변경한다 이 상태는 가장 제약이 심한 상태값임-->
+<c:set var="eduIng" value="N" />
+<c:if test="${edctnStrtDt le nowDate && nowDate le edctnEndDt}">
+    <c:set var="eduIng" value="Y" />
+    <c:set var="modifyYn" value="N" />
+</c:if>
+
+
 <c:set var="actionType" value=""/>
 <!-- actionType은 기본적으로 수정일경우 update이지만 복사버튼을 통해서 들어온경우 write로 변경해줌  -->
 
@@ -20,6 +58,9 @@
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 등록</h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
+            <input type="hidden" class="notRequired" id="modifyYn" name="modifyYn" value="${modifyYn}" />
+            <input type="hidden" class="notRequired" id="eduIng" name="eduIng" value="${eduIng}" />
 
             <c:choose>
                 <c:when test="${not empty rtnDto}">
@@ -61,7 +102,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <div class="col-sm-11">
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em>과정정보</h6>
+                        <h6 class="mt0"><em class="ion-play mr-sm"></em>과정정보${modifyYn}</h6>
                     </div>
                     <!-- 수정시에는 미출력 -->
                     <c:if test="${empty rtnDto}">

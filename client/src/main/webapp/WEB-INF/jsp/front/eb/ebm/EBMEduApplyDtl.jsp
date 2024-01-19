@@ -242,7 +242,7 @@
 
 
                                                 </c:if>
-                                                <button class="btn-solid small gray-bg icon checkout" type="button"><span>퇴실하기</span></button>
+
 
                                                 <%
                                                     // 현재 날짜와 시간 가져오기
@@ -294,7 +294,11 @@
 
                                                         <c:if test="${edctnStrtDt le nowDate && nowDate le edctnEndDt}">
                                                             <c:if test="${episdCheck eq 'Y' && nowAtndcYn eq 'N'}">
-                                                                <button class="btn-solid small gray-bg icon attendance episdCheck" type="button"><span>출석하기</span></button>
+                                                                <button class="btn-solid small gray-bg icon attendance atndcCheck" type="button"><span>출석하기</span></button>
+                                                            </c:if>
+
+                                                            <c:if test="${nowAtndcYn eq 'Y' && nowLvgrmYn eq 'N'}">
+                                                                <button class="btn-solid small gray-bg icon checkout lvgrmCheck" type="button"><span>퇴실하기</span></button>
                                                             </c:if>
 
                                                         </c:if>
@@ -302,6 +306,8 @@
                                                     </c:when>
 
                                                 </c:choose>
+
+
 
                                                 <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
 

@@ -37,6 +37,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -219,10 +220,17 @@ public class EBBEpisdController {
                 List<EBBPtcptDTO> tableAtndcList = new ArrayList();
 
                 while (!startDate.isAfter(endDate)) {
-                    EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
 
-                    tableAtndcDto.setEdctnDt(String.valueOf(startDate));
-                    tableAtndcList.add(tableAtndcDto);
+                    if (startDate.getDayOfWeek() == DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+
+                    } else {
+                        EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
+
+                        tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+                        tableAtndcList.add(tableAtndcDto);
+                    }
+
+
 
                     startDate = startDate.plusDays(1); // 다음 날짜로 이동
                 }
@@ -360,10 +368,20 @@ public class EBBEpisdController {
             List<EBBPtcptDTO> tableAtndcList = new ArrayList();
 
             while (!startDate.isAfter(endDate)) {
-                EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
 
-                tableAtndcDto.setEdctnDt(String.valueOf(startDate));
-                tableAtndcList.add(tableAtndcDto);
+
+                // 주말인지 판단하여 출력
+                if (startDate.getDayOfWeek() == DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+
+                } else {
+                    EBBPtcptDTO tableAtndcDto = new EBBPtcptDTO();
+
+                    tableAtndcDto.setEdctnDt(String.valueOf(startDate));
+                    tableAtndcList.add(tableAtndcDto);
+                }
+
+
+
 
                 startDate = startDate.plusDays(1); // 다음 날짜로 이동
             }
@@ -870,11 +888,11 @@ public class EBBEpisdController {
 
             int rtnCnt = 0;
 
-            //try {
+            try {
 
                 rtnCnt = eBBEpisdService.updateAtndcList(eBBEpisdDTO);
 
-            /*}
+            }
             catch (Exception e)
             {
                 if (log.isDebugEnabled())
@@ -882,7 +900,7 @@ public class EBBEpisdController {
                     log.debug(e.getMessage());
                 }
                 throw new Exception(e.getMessage());
-            }*/
+            }
 
             return rtnCnt;
         }

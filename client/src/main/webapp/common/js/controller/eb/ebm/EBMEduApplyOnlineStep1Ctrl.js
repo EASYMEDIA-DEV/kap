@@ -13,6 +13,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
 
+	var setUrlTime = function(arg){
+
+		var youtubeXhr2 = new XMLHttpRequest();
+		youtubeXhr2.open('GET', 'https://www.youtube.com/watch?v=' + arg, 0);
+		youtubeXhr2.send();
+		var youtubeTime = youtubeXhr2.responseText.split('"lengthSeconds":"')[1].split('"')[0];
+
+		return youtubeTime;
+	}
+
 	var setUrlName = function(arg){
 
 		var youtubeXhr = new XMLHttpRequest();
@@ -23,6 +33,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		var youtubeHqImage = youtubeXhr.responseText.split('"thumbnail_url":"')[1].split('"')[0];
 		var youtubeMqImage = youtubeHqImage.replace('hq', 'mq');
 		var youtubeSdImage = youtubeHqImage.replace('hq', 'sd');
+
+
+
 
 		return youtubeTitle;
 	}
@@ -48,6 +61,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$(this).find(".urlName").text(tempName);
 				};
+
+				if($(this).find(".urlTime").find("span").text().trim() == ""){
+					var urlKey = $(this).find(".urlKey").data("urlkey");
+					var tempTime = setUrlTime(urlKey);
+
+					var q = Math.floor( tempTime / 60);
+					q = (q == 0) ? 1 : q;
+
+					$(this).find(".urlTime").find("span").text(q);
+				};
+
 
 			});
 

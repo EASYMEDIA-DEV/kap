@@ -1497,13 +1497,13 @@
      ==========   ======    ==============
      2024.01.11   임서화      최초 생성
  -->
-    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
-        SELECT
-            COUNT()
+    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO"  resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectYearConsultingCount */
+            COUNT(*)
         FROM
             CP_CNSTG_APPCTN_MST A
         WHERE
-            APPCTN_MEM_SEQ = (SELECT MEM_SEQ FROM CO_MEM_MST ID=#{memSeq})
-            AND PTCPT_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
+          APPCTN_MEM_SEQ = #{memSeq}
+          AND REG_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
     </select>
 </mapper>

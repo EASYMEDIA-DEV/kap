@@ -243,6 +243,13 @@ public interface EBBEpisdMapper {
 	public int updateAtndcInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
+	 * 마이페이지 퇴실체크 진행
+	 */
+	public int updateLvgrmInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+
+	/**
 	 * 마이페이지 - 교육신청을 취소한다.
 	 */
 	public int updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception;

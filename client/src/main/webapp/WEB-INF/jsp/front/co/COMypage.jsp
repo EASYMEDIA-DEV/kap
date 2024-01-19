@@ -55,11 +55,11 @@
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">컨설팅사업</span>
-                                                        <a class="f-title1" href="javascript:">${CoeYearCnt}</a>
+                                                        <a class="f-title1" href="javascript:">${coeYearCnt}</a>
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">상생사업</span>
-                                                        <a class="f-title1" href="javascript:">0</a>
+                                                        <a class="f-title1" href="javascript:">${consultingYearCnt}</a>
                                                     </li>
                                                 </ul>
                                                 <div class="pc btn-wrap">
