@@ -90,7 +90,7 @@
     <insert id="insertNewsletter" parameterType="MPHNewsLetterDTO">
         insert /* mphNewsLetterMapper.insertNewsletter */ into co_nwslt_mst
         (
-          email,
+          email
           , reg_ip
           , reg_dtm
         )

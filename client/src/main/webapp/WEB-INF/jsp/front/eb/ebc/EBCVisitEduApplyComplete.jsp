@@ -1,21 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div id="wrap" data-controller="controller/eb/EBCVisitEduCtrl">
+<div id="wrap" data-controller="controller/eb/ebc/EBCVisitEduCtrl">
     <div class="cont-wrap">
-        <!--
-          신청 페이지: apply-page 클래스 추가
-          그 외 페이지: basic-page 클래스 추가
-        -->
-        <!--
-          교육 사업: edu-biz
-          컨실팅 사업: consult-biz
-          상생 사업: coexisting-biz
-        -->
         <div class="sub-top-vis-area apply-page consult-biz">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">방문교육신청</span></p>
                 <div class="apply-step-w">
                     <div class="for-move">
-                        <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
+                        <div class="step-list completed">
                             <p class="step-num">1</p>
                             <p class="step-con">기본정보</p>
                         </div>

@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
     // set controller name
     var exports = {
-        controller : "controller/eb/EBCVisitEduCtrl"
+        controller : "controller/eb/ebc/EBCVisitEduCtrl"
     };
 
     // get controller object
@@ -62,18 +62,19 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
         }
     };
 
-    var textCntCheck = function (id) {
-        var content = $(this).val();
-        if(content.length == 0 || content == '') {
-            id.text('0자')
-        } else {
-            id.text(content.length + '자')
-        }
+    var textCntCheck = function (id, cntId) {
+        var content = $("#"+id).val();
+        var cntElement = $("#"+cntId);
 
+        if(content.length == 0 || content == '') {
+            cntElement.text('0자')
+        } else {
+            cntElement.text(content.length + '자')
+        }
         if (content.length > 500) {
             alert('500자까지 입력 가능합니다.');
             $(this).val($(this).val().substring(0, 500));
-            id.text('500자');
+            cntElement.text('500자');
         }
     }
 
@@ -102,54 +103,21 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             appctnRsn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#appctnRsnTextCnt').text('0자')
-                        } else {
-                            $('#appctnRsnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#appctnRsnTextCnt').text('500자');
-                        }
+                        textCntCheck('appctnRsn', 'appctnRsnTextCnt');
                     }
                 }
             },
             appctnThemeCntn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#appctnThemeCntnTextCnt').text('0자')
-                        } else {
-                            $('#appctnThemeCntnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#appctnThemeCntnTextCnt').text('500자');
-                        }
+                        textCntCheck('appctnThemeCntn', 'appctnThemeCntnTextCnt');
                     }
                 }
             },
             ptcptTrgtCntn : {
                 event: {
                     keyup : function() {
-                        var content = $(this).val();
-                        if(content.length == 0 || content == '') {
-                            $('#ptcptTrgtCntnTextCnt').text('0자')
-                        } else {
-                            $('#ptcptTrgtCntnTextCnt').text(content.length + '자')
-                        }
-
-                        if (content.length > 500) {
-                            alert('500자까지 입력 가능합니다.');
-                            $(this).val($(this).val().substring(0, 500));
-                            $('#ptcptTrgtCntnTextCnt').text('500자');
-                        }
+                        textCntCheck('ptcptTrgtCntn', 'ptcptTrgtCntnTextCnt');
                     }
                 }
             },
@@ -178,7 +146,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             location.href = url;
                         } else if($("#memCd").val() == "") {
                             if (confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
-                                location.href = "/login";
+                                location.href = "/login?rtnUrl=%2Feducation%2Fvisit%2Fapply%2Fstep1";
                             }
                         }
                     }
