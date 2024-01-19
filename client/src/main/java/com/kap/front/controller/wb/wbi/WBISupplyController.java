@@ -16,6 +16,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -122,19 +124,27 @@ public class WBISupplyController {
     public String getStep1Page(WBBACompanySearchDTO wbbCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbi/WBISupplyStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
 
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            // 코드 set
-            cdDtlList.add("MEM_CD"); // 신청 진행상태
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbCompanySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            }else{
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("episd", wbbCompanySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbCompanySearchDTO));
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                // 코드 set
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                modelMap.addAttribute("episd", wbbCompanySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbCompanySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbbCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -152,8 +162,16 @@ public class WBISupplyController {
     public String getStep2Page(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbi/WBISupplyStep2.front";
         try {
-            modelMap.addAttribute("rtnRoundDtl", wBIASupplyListService.getRoundDtl(wBRoundMstSearchDTO));
-            wBRoundMstSearchDTO.setStageOrd(1);
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBRoundMstSearchDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                wBRoundMstSearchDTO.setStageOrd(1);
+                modelMap.addAttribute("rtnRoundDtl", wBIASupplyListService.getRoundDtl(wBRoundMstSearchDTO));
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -170,26 +188,34 @@ public class WBISupplyController {
     @RequestMapping(value = "/insert")
     public String insert(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, ModelMap modelMap) throws Exception {
         try {
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
-            wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBIBSupplyMstDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
 
-            COCodeDTO cOCodeDTO = new COCodeDTO();
-            /* 스마트 공장 구축 - 신청 코드 값*/
-            cOCodeDTO.setCd("PRO_TYPE06");
-            String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
-            wBIBSupplyDTO.setRsumeSttsCd(rsumeSttsCd);
+                COCodeDTO cOCodeDTO = new COCodeDTO();
+                /* 스마트 공장 구축 - 신청 코드 값*/
+                cOCodeDTO.setCd("PRO_TYPE06");
+                String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
+                wBIBSupplyDTO.setRsumeSttsCd(rsumeSttsCd);
 
-            /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_01");
-            List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBIBSupplyDTO.setAppctnSttsCd(getCode.get(0).getCd());
+                /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
+                cOCodeDTO.setCd(rsumeSttsCd + "_01");
+                List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
+                wBIBSupplyDTO.setAppctnSttsCd(getCode.get(0).getCd());
 
-            /* 스마트 신청 관리자 최초 상태값 - 미확인 */
-            cOCodeDTO.setCd(rsumeSttsCd + "_02");
-            getCode = cOCodeService.getCdIdList(cOCodeDTO);
-            wBIBSupplyDTO.setMngSttsCd(getCode.get(0).getCd());
+                /* 스마트 신청 관리자 최초 상태값 - 미확인 */
+                cOCodeDTO.setCd(rsumeSttsCd + "_02");
+                getCode = cOCodeService.getCdIdList(cOCodeDTO);
+                wBIBSupplyDTO.setMngSttsCd(getCode.get(0).getCd());
 
-            modelMap.addAttribute("actCnt", wBIBSupplyCompanyService.insertApply(wBIBSupplyDTO, wBIBSupplyMstDTO, request));
+                modelMap.addAttribute("actCnt", wBIBSupplyCompanyService.insertApply(wBIBSupplyDTO, wBIBSupplyMstDTO, request));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -208,12 +234,17 @@ public class WBISupplyController {
     public String getCompletePage(WBBACompanySearchDTO wbbCompanySearchDTO, WBIBSupplySearchDTO wBIBSupplySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbi/WBISupplyComplete.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wbbCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectRecent(wBIBSupplySearchDTO));
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectRecent(wBIBSupplySearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
