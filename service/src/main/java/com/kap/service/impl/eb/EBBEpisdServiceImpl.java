@@ -101,7 +101,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			if (eBBEpisdDTO.getMainYn().equals("Y")) {
 				eBBEpisdDTO.setPageRowSize(24);
 			} else {
-				eBBEpisdDTO.setPageRowSize(9);
+				if(eBBEpisdDTO.getPageRowSize() != null){
+					eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
+				}else{
+					eBBEpisdDTO.setPageRowSize(9);
+				}
 			}
 			int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
 
@@ -130,6 +134,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 
 		return eBBEpisdDTO;
+	}
+
+	/**
+	 * 교육차수 목록 갯수(통합검색)
+	 */
+	public int selectEpisdListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+		return eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO);
 	}
 
 	/**

@@ -1,12 +1,13 @@
 package com.kap.front.controller;
 
 import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.common.utility.seed.COBrowserUtil;
-import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.COMailDTO;
-import com.kap.core.dto.COMenuDTO;
-import com.kap.core.dto.COUserCmpnDto;
+import com.kap.core.dto.*;
+import com.kap.core.dto.bd.bda.BDANoticeDTO;
+import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
+import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
 import com.kap.core.dto.co.COCNiceMyResDto;
 import com.kap.core.dto.co.COCNiceReqEncDto;
 import com.kap.core.dto.co.COCNiceServiceDto;
@@ -64,6 +65,14 @@ public class COCOmmController {
     private final COCommService cOCommService;
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
+    /** 교육 서비스 **/
+    private final EBBEpisdService eBBEpisdService;
+    /** 공지사항 서비스 **/
+    private final BDANoticeService bDANoticeService;
+    /** 재단소식 서비스 **/
+    private final BDBCompanyNewsService bDBCompanyNewsService;
+    /** 뉴스레터 서비스 **/
+    private final BDDNewsletterService bDDNewsletterService;
     /**
      * 교육 차수 QR 이미지 다운로드
      */
@@ -85,8 +94,50 @@ public class COCOmmController {
      */
     @Operation(summary = "통합 검색", tags = "", description = "")
     @GetMapping(value="/search")
-    public String getTotalSearc(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
+    public String getTotalSearc(@Valid COSearchDTO cOSearchDTO, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request) throws Exception
     {
+        //메뉴는 인터셉터 조회
+        String[] titleList = new String[3];
+        List<COMenuDTO> qMenuList = new ArrayList<COMenuDTO>();
+        List<COMenuDTO> menuList = (List)RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
+        for (int i = 0, size = menuList.size(); i < size; i++)
+        {
+            if(menuList.get(i).getDpth()-3 == 0){
+                titleList = new String[3];
+            }
+            titleList[menuList.get(i).getDpth()-3] = menuList.get(i).getMenuNm();
+            if(menuList.get(i).getMenuNm().indexOf(cOSearchDTO.getQ()) > -1
+                    && !"".equals(COStringUtil.nullConvert(menuList.get(i).getUserUrl()))){
+                COMenuDTO  cOMenuDTO = new COMenuDTO();
+                cOMenuDTO.setUserUrl( menuList.get(i).getUserUrl() );
+                cOMenuDTO.setMenuNm( String.join("__", titleList) );
+                qMenuList.add( cOMenuDTO );
+            }
+        }
+        modelMap.put("menuCnt", qMenuList.size());
+        modelMap.put("qMenuList", qMenuList);
+        //교육
+        EBBEpisdDTO eBBEpisdDTO = new EBBEpisdDTO();
+        eBBEpisdDTO.setQ( cOSearchDTO.getQ() );
+        int episdCnt = eBBEpisdService.selectEpisdListCnt( eBBEpisdDTO );
+        modelMap.put("episdCnt", episdCnt);
+        //공지사항
+        BDANoticeDTO pBDANoticeDTO = new BDANoticeDTO();
+        pBDANoticeDTO.setQ( cOSearchDTO.getQ() );
+        int noticeCnt = bDANoticeService.selectNoticeListCnt(pBDANoticeDTO);
+        modelMap.put("noticeCnt", noticeCnt);
+        //재단소식
+        BDBCompanyNewsDTO pBDBCompanyNewsDTO = new BDBCompanyNewsDTO();
+        pBDBCompanyNewsDTO.setQ( cOSearchDTO.getQ() );
+        int newsCnt = bDBCompanyNewsService.selectCompanyNewsListCnt(pBDBCompanyNewsDTO);
+        modelMap.put("newsCnt", newsCnt);
+        //뉴스레터
+        BDDNewsletterDTO pBDDNewsletterDTO = new BDDNewsletterDTO();
+        pBDDNewsletterDTO.setQ( cOSearchDTO.getQ() );
+        int letterCnt = bDDNewsletterService.selectNewsletterListCnt(pBDDNewsletterDTO);
+        modelMap.put("letterCnt", letterCnt);
+
+        modelMap.put("q", cOSearchDTO.getQ());
         return "/front/co/COSearch.front";
     }
 

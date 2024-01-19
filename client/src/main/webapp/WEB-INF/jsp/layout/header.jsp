@@ -336,7 +336,7 @@
 
 		<section class="all-srch">
 			<div class="srch-wrap" data-controller="controller/co/COHeaderTotalSearch">
-				<form method="get">
+				<form method="get" id="headerSrchFrm">
 					<div class="form-input srch-input">
 						<input type="text" placeholder="검색어를 입력해 주세요." title="검색어" name="q" maxlength="50" />
 						<div class="input-btn-wrap">
