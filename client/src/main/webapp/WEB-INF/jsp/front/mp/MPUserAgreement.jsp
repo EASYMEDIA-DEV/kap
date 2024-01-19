@@ -102,6 +102,7 @@
                                 <div class="terms-con">
                                     ${rtnInfo.tmncsCntn}
                                 </div>
+                            </div>
                         </div>
                         <div class="list-item">
                             <a class="acco-click-area" href="javascript:">
