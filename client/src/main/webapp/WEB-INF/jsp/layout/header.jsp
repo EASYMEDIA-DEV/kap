@@ -210,7 +210,7 @@
 						<div class="log-menu">
                             <c:choose>
                                 <c:when test="${ not empty loginMap}">
-                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
+                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님<br class="only-mobile"> 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
                                     <div class="pc btn-wrap">
 										<c:if test="${loginMap.authCd ne 'CS'}">
                                         <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>

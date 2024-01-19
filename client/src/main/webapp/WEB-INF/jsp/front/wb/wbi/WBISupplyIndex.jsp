@@ -83,7 +83,12 @@
                                                             <div class="info-list-w">
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">접수기간</p>
-                                                                    <p class="txt f-body2">${item.accsStrtDtm} ~ <br class="only-pc"/>${item.accsEndDtm}</p>
+                                                                    <p class="txt f-body2">
+                                                                        ${kl:convertDate(item.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                                                                        ~
+                                                                        <br class="only-pc"/>
+                                                                        ${kl:convertDate(item.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                                                                    </p>
                                                                 </div>
                                                             </div>
                                                             <div class="btn-wrap">
@@ -158,7 +163,11 @@
                                         <div class="info-line-list-w">
                                             <div class="list">
                                                 <p class="tit">접수기간</p>
-                                                <p class="txt">${rtnRoundDtl.accsStrtDtm} ~ ${rtnRoundDtl.accsEndDtm}</p>
+                                                <p class="txt">
+                                                    ${kl:convertDate(rtnRoundDtl.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                                                    ~
+                                                    ${kl:convertDate(rtnRoundDtl.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
