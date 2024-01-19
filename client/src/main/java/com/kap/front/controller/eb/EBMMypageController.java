@@ -3,7 +3,6 @@ package com.kap.front.controller.eb;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -12,7 +11,6 @@ import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
-import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -23,9 +21,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-
+import java.util.Date;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -149,61 +148,117 @@ public class EBMMypageController
     public String getApplyDetail(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
 
+        String vwUrl = "";
+        System.out.println(" ");
         if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
             //QR 이미지 타고 들어옴
             //로직 처리
-            modelMap.addAttribute("episdCheck ", "Y");
+            modelMap.addAttribute("episdCheck", "Y");
         }else{
-            modelMap.addAttribute("episdCheck ", "N");
+            modelMap.addAttribute("episdCheck", "N");
         }
+
 
         eBBEpisdDTO.setMypageYn("Y");
         eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
         HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
-        EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
-        List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
-        List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
 
 
         //사용자 출석정보 호출
-        EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
-
-        eBBPtcptDTO.setPtcptSeq(rtnDto.getPtcptSeq());
-
-        List<EBBPtcptDTO> ptcptList = eBBEpisdService.selectMemAtndcList(eBBPtcptDTO);
 
 
-        //회원 기본정보 호출
-        mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
-        MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+        System.out.println("@@@ rtnDto= " + rtnDto);
 
-        if(applicantDto.getMemCd().equals("CP")) {
-            mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
-            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-            if (originList.getList().size() != 0) {
-                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+        if(rtnDto != null){
+
+            EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
+
+            EBFEduRoomDetailDTO roomDto = (EBFEduRoomDetailDTO)rtnMap.get("roomDto");//교육장 정보
+            List<EBBLctrDTO> lctrDtoList = (List<EBBLctrDTO>) rtnMap.get("lctrDtoList");//온라인교육상세 목록
+            List<EBBisttrDTO> isttrList = (List<EBBisttrDTO>) rtnMap.get("isttrList");//온라인교육상세 목록
+
+
+            eBBPtcptDTO.setPtcptSeq(rtnDto.getPtcptSeq());
+
+            List<EBBPtcptDTO> ptcptList = eBBEpisdService.selectMemAtndcList(eBBPtcptDTO);
+
+
+            //회원 기본정보 호출
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+            if(applicantDto.getMemCd().equals("CP")) {
+                mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                if (originList.getList().size() != 0) {
+                    modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                }
+                modelMap.addAttribute("applicantInfo", applicantDto);
+                modelMap.addAttribute("sqInfoList", originList);
             }
-            modelMap.addAttribute("applicantInfo", applicantDto);
-            modelMap.addAttribute("sqInfoList", originList);
+
+
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_CD");
+            modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+
+
+
+
+            //온라인 교육이 아닌경우 출석 유무 로직을 실행한다.
+            if(!rtnDto.getStduyMthdCd().equals("STDUY_MTHD02")) {
+                //오늘 날짜 호출
+                Date currentDate = new Date();
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(currentDate);
+                System.out.println("@@ formattedDate = " + formattedDate);
+
+                //금일 출석 유무 확인로직
+                for(EBBPtcptDTO  ptcptDto : ptcptList){
+
+
+                    if(formattedDate.equals(ptcptDto.getEdctnDt())){
+
+                        System.out.println("@@ formattedDate = " + formattedDate + " @@ ptcptDto.getEdctnDt() = " + ptcptDto.getEdctnDt() + "  @@  ptcptDto.getAtndcDtm()  = " +  ptcptDto.getAtndcDtm()  );
+
+                        if("".equals(ptcptDto.getAtndcDtm()) || ptcptDto.getAtndcDtm() == null){
+                            modelMap.addAttribute("nowAtndcYn", "N");
+                        }else{
+                            modelMap.addAttribute("nowAtndcYn", "Y");
+                        }
+
+                        break;
+                    }
+
+                }
+            }else{
+                modelMap.addAttribute("nowAtndcYn", "F");//온라인교육인 경우는 F로 들어간다
+            }
+
+
+
+
+
+            modelMap.addAttribute("rtnData", rtnDto);
+            modelMap.addAttribute("roomDto", roomDto);
+            modelMap.addAttribute("lctrDtoList", lctrDtoList);
+            modelMap.addAttribute("isttrList", isttrList);
+            modelMap.addAttribute("ptcptList", ptcptList);
+
+
+            vwUrl = "front/eb/ebm/EBMEduApplyDtl.front";
+        }else{
+            modelMap.addAttribute("msg", "잘못된 접근입니다.");
+            modelMap.addAttribute("url", "/");
+            vwUrl = "front/COBlank.error";
         }
 
-
-        // 공통코드 배열 셋팅
-        ArrayList<String> cdDtlList = new ArrayList<String>();
-        // 코드 set
-        cdDtlList.add("MEM_CD");
-        modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
-
-
-
-        modelMap.addAttribute("rtnData", rtnDto);
-        modelMap.addAttribute("roomDto", roomDto);
-        modelMap.addAttribute("lctrDtoList", lctrDtoList);
-        modelMap.addAttribute("isttrList", isttrList);
-        modelMap.addAttribute("ptcptList", ptcptList);
 
 
 
@@ -566,10 +621,38 @@ public class EBMMypageController
 
     @RestController
     @RequiredArgsConstructor
-    @RequestMapping(value="/education")
+    @RequestMapping(value="/my-page")
     public class EBACouseRestController {
 
         private final EBBEpisdService eBBEpisdService;
+
+        /**
+         * 마이페이지 출석체크 진행
+         */
+        @PostMapping(value = "/edu-apply/updateAtndcInfo")
+        public String updateAtndcInfo(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+                if(eBBPtcptDTO.getPtcptSeq() != null){
+                    eBBEpisdService.updateAtndcInfo(eBBPtcptDTO);
+                    rtnStr = "Y";
+                }else{
+                    rtnStr = "N";
+                }
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
+
+
         /**
          * 교육신청 취소
          */
@@ -578,12 +661,9 @@ public class EBMMypageController
             String rtnStr = "";
             try
             {
-
-                System.out.println("@@@ aaa = "  +eBBPtcptDTO.getPtcptSeq());
                 eBBEpisdService.updateApplyCancel(eBBPtcptDTO);
 
                 rtnStr = "Y";
-
 
             }
             catch (Exception e)

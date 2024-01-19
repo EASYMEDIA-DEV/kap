@@ -100,9 +100,7 @@ public class WBHACalibrationController {
         String vwUrl = "front/wb/wbh/WBHACalibrationStep1.front";
         try {
 
-            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
-
-            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbhaCalibrationSearchDTO.getEpisdSeq()))) {
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null) {
                 vwUrl = "redirect:./content";
             } else {
                 COUserDetailsDTO cOUserDetailsDTO = null;
@@ -131,9 +129,8 @@ public class WBHACalibrationController {
     public String getStep2Page(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbh/WBHACalibrationStep2.front";
         try {
-            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
-            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbhaCalibrationSearchDTO.getEpisdSeq()))) {
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 vwUrl = "redirect:./content";
             } else {
@@ -157,9 +154,7 @@ public class WBHACalibrationController {
     public String insert(WBHAApplyMstDTO wbhaApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
 
-            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
-
-            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbhaApplyMstDTO.getEpisdSeq()))) {
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 return "redirect:./content";
             } else {

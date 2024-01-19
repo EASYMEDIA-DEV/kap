@@ -4,6 +4,7 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpa.MPJoinDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.sm.smd.SMDCMemTrmsDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -62,7 +63,7 @@ public class MPUserController {
     //코드 서비스
     private final COCodeService cOCodeService;
 
-
+    private final SMDCMemTrmsService smdcMemTrmsService;
     /**
      * 회원가입 체크 페이지
      * @return
@@ -99,7 +100,7 @@ public class MPUserController {
      * @throws Exception
      */
     @RequestMapping( "/agreement")
-    public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto , HttpSession session , HttpServletResponse response) throws Exception {
+    public String getAgreement(ModelMap modelMap, COIdFindDto coIdFindDto , SMDCMemTrmsDTO smdcMemTrmsDTO, HttpSession session , HttpServletResponse response) throws Exception {
         if(session.getAttribute("niceSession")== null) {
             authNotAllowed(response);
         } else {
@@ -109,7 +110,7 @@ public class MPUserController {
             modelMap.addAttribute("data", mpaUserService.selectCiCnt(mpaUserDto));
             modelMap.addAttribute("verificationData", coIdFindDto);
 
-
+            modelMap.addAttribute("rtnInfo", smdcMemTrmsService.selectMemTrmsDtl(smdcMemTrmsDTO));
         }
         return "/front/mp/MPUserAgreement.front";
     }

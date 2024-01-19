@@ -1051,7 +1051,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                             if (rtnCnt > 0) {
                                 //신청가능 코드 450
                                 rtnCode = 200;
-                                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
                             } else {
                                 //컨설팅 내역없음 코드 200
                                 rtnCode = 450;

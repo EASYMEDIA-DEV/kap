@@ -45,6 +45,9 @@ public class WBEBCarbonCompanyMstInsertDTO extends BaseDTO {
     @Schema(title = "회차", example = "")
     private String episd;
 
+    @Schema(title = "사업코드", example = "")
+    private String bsnCd;
+
     @Schema(title = "지급 차수", example = "")
     private List giveOrdList;
 

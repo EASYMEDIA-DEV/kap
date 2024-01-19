@@ -164,8 +164,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $('input[name=slsPmt]').val(cmpnSlsPmt);
             $('input[name=cmpnSlsYear]').val(cmpnSlsYear);
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
-            var afCmpnTelNo = cmpnTelNo.replace('-', '');
-            $('input[name=cmpnTelNo]').val(afCmpnTelNo);
+            $('input[name=cmpnTelNo]').val(cmpnTelNo);
 
             $('input[name=cmpnNfrmlNm]').val(cmpnNfrmlNm);
             $('input[name=cmpnCd]').val(cmpnCd);
@@ -207,22 +206,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var vstDtFormat = (vstDtFormat - today)/(24*60*60*1000);
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
 
-        if(bfGbDt == 0 || bfGbDt < 0) {
+        if(bfGbDt <= 0) {
             $(".rsumeSttsNm").text("지도중");
             $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
 
-            if (guidePscndCd == 'GUIDE_PSCND01') {
-                $(".rsumeSttsNm").text("지도연기");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS10");
-            } else if (guidePscndCd == 'CNSTG_PSCND01') {
+            if (guidePscndCd == 'CNSTG_PSCND01') {
                 $(".rsumeSttsNm").text("재단취소");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS11");
+                $(".rsumeSttsCd").val("MNGCNSLT_STATUS10");
             } else if (guidePscndCd == 'CNSTG_PSCND02') {
                 $(".rsumeSttsNm").text("부품사취소");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS12");
+                $(".rsumeSttsCd").val("MNGCNSLT_STATUS11");
             } else if (guidePscndCd == 'CNSTG_PSCND03') {
                 $(".rsumeSttsNm").text("지도 완료");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS13");
+                $(".rsumeSttsCd").val("MNGCNSLT_STATUS12");
             }
         }
         else{

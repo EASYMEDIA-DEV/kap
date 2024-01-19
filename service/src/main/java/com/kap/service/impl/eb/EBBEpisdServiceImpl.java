@@ -1664,7 +1664,22 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	}
 
 	/**
-	 * 교육차수 상세를 조회한다.(설문유효성)
+	 * 마이페이지 출석체크 진행
+	 */
+	public void updateAtndcInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception {
+
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+
+		eBBEpisdMapper.updateAtndcInfo(eBBPtcptDTO);
+
+	}
+
+
+	/**
+	 * 마이페이지 - 교육신청을 취소한다.
 	 */
 	public void updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception {
 

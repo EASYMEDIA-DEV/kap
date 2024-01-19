@@ -77,23 +77,23 @@
                                         </tr>
                                         <tr>
                                             <th>휴대폰번호</th>
-                                            <td class="appTelNo">${loginMap.telNo}</td>
+                                            <td class="appHpNo">${loginMap.telNo}</td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
-                                            <td>${loginMap.email}</td>
+                                            <td class="appEmail">${loginMap.email}</td>
                                         </tr>
                                         <tr>
                                             <th>일반 전화번호</th>
-                                            <td>${empty loginMap.hpNo ? '-': loginMap.hpNo }</td>
+                                            <td class="appTelNo">${empty loginMap.hpNo ? '-': loginMap.hpNo }</td>
                                         </tr>
                                         <tr>
                                             <th>부서</th>
-                                            <td>${loginMap.deptNm}</td>
+                                            <td class="appDeptNm">${loginMap.deptNm}</td>
                                         </tr>
                                         <tr>
                                             <th>직급</th>
-                                            <td>${loginMap.pstnCdNm}</td>
+                                            <td class="appPstnCdNm">${loginMap.pstnCdNm}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -206,7 +206,7 @@
                                         <label for="infoSameChk">담당자 정보와 동일</label>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">이름<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -215,14 +215,14 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" placeholder="이름 입력" required="">
+                                                        <input type="text" class="picName" name="picName"  placeholder="이름 입력" title="이름">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">휴대폰번호<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -231,14 +231,14 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" placeholder="휴대폰번호 입력" required="">
+                                                        <input type="text" class="cmssrHpNo" name="cmssrHpNo" placeholder="휴대폰번호 입력" title="휴대폰 번호">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">이메일<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -246,18 +246,21 @@
                                         <div class="data-line-w">
                                             <div class="data-line">
                                                 <div class="form-group form-email">
+                                                    <input type="hidden" class="picEmail" name="picEmail" value=""/>
                                                     <div class="form-input">
-                                                        <input type="text" placeholder="이메일 입력">
+                                                        <input type="text" class="id" name="id" placeholder="이메일 입력" title="이메일">
                                                     </div>
+                                                    @
                                                     <div class="form-input">
-                                                        <input type="text" placeholder="직접입력">
+                                                        <input type="text" name="address" class="address" placeholder="직접입력" title="이메일">
                                                     </div>
                                                     <div class="form-select">
-                                                        <select id="" title="메일 선택">
-                                                            <option value="" selected="">직접입력</option>
-                                                            <option value="">option1</option>
-                                                            <option value="">option2</option>
-                                                            <option value="">option3</option>
+                                                        <select id="addressSelect" title="메일 선택">
+                                                            <option value="" selected>직접입력</option>
+                                                            <option value="naver.com">naver.com</option>
+                                                            <option value="gmail.com">gmail.com</option>
+                                                            <option value="nate.com">nate.com</option>
+                                                            <option value="daum.net">daum.net</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -265,7 +268,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">회사 전화번호<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -274,14 +277,14 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" placeholder="회사 전화번호 입력" required="">
+                                                        <input type="text" class="cmssrCmpnTelNo" name="cmssrCmpnTelNo" placeholder="회사 전화번호 입력" required="" title="회사 전화번호">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -290,14 +293,14 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" placeholder="부서 입력" required="">
+                                                        <input type="text" class="picDeptNm" name="picDeptNm" placeholder="부서 입력" title="부서">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="row">
+                                <div class="row cmssrInfo">
                                     <div class="th">
                                         <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
                                     </div>
@@ -306,7 +309,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" placeholder="직급 입력" required="">
+                                                        <input type="text" class="picPstnNm" name="picPstnNm" placeholder="직급 입력" title="직급">
                                                     </div>
                                                 </div>
                                             </div>

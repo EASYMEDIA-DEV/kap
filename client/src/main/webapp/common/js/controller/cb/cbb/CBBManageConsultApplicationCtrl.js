@@ -10,6 +10,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
+    // form Object
+    var $formObj = jQuery("#frmData");
+
     var bsnmNoSearch = function(data){
         var info = {}
         info.bsnmNo = data;
@@ -78,8 +81,37 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             infoSameChk : {
                 event : {
                     click : function(){
-                        document.getElementById("infoSameChk").checked;
+                        var checked = $("#infoSameChk").is(':checked');
+                        var appName = $(".appName").text();
+                        var appHpNo = $(".appHpNo").text();
+                        var appTelNo = $(".appTelNo").text();
+                        var appEmail = $(".appEmail").text();
+                        var appDeptNm = $(".appDeptNm").text();
+                        var appPstnCdNm = $(".appPstnCdNm").text();
 
+                        if(checked){
+                            $(".picName").val(appName);
+                            $(".cmssrHpNo").val(appHpNo);
+                            $(".cmssrCmpnTelNo").val(appTelNo);
+                            var splitMail = appEmail.split("@");
+                            $(".id").val(splitMail[0]);
+                            $(".address").val(splitMail[1]);
+                            $(".picDeptNm").val(appDeptNm);
+                            $(".picPstnNm").val(appPstnCdNm);
+                        }
+                    }
+                }
+            },
+            addressSelect : {
+                event : {
+                    click : function(){
+                        var select = $("#addressSelect option").index($("#addressSelect option:selected"));
+                        if(!select == '0'){
+                            $(".address").val($(this).val());
+                            $(".address").attr("readonly", true);
+                        }else{
+                            $(".address").attr("readonly", false);
+                        }
                     }
                 }
             }
@@ -88,13 +120,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             consInfoAppl : {
                 event : {
                     click : function(){
+                        var picName = $(".picName").val();
+                        var cmssrHpNo = $(".cmssrHpNo").val();
+                        var id = $(".id").val();
+                        var address = $(".address").val();
+                        var cmssrCmpnTelNo = $(".cmssrCmpnTelNo").val();
+                        var picDeptNm = $(".picDeptNm").val();
+                        var picPstnNm = $(".picPstnNm").val();
+
                         location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val();
+                    }
+                }
+            },
+            cmssrInfo : {
+                event : {
+                    change : function(){
+                        $("#infoSameChk").attr("checked", false);
                     }
                 }
             }
         },
         immediately : function() {
-            bsnmNoSearch($("#bsnmNo").val())
+            bsnmNoSearch($("#bsnmNo").val());
         }
     };
 

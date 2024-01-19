@@ -250,7 +250,7 @@
                 </div>
             </fieldset>
 
-            <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002'}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
+            <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002' || empty rtnDto}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
                 <fieldset>
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">품질5스타</label>
@@ -325,7 +325,25 @@
                     </div>
                 </fieldset>
             </fieldset>
-            <c:forEach var="i" begin="2" end="3">
+            <fieldset class="sqInfo" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01001' || empty rtnDto}">style="display: none"</c:if>><%--구분이 2차일 때--%>
+                <div class="form-group text-sm form-inline">
+                    <label class="col-sm-1 control-label">SQ정보</label>
+                    <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
+                        <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq1" id="cbsnSeq" value="${sqInfoList[4]}"/>
+                        <input type="text" class="form-control input-sm notRequired"  name="nm1" id="nm" value="${sqInfoList[0]}" placeholder="SQ업종" maxlength="50"/>
+                        <input type="number" class="form-control input-sm notRequired"  name="score1" id="score" value="${sqInfoList[1]}" placeholder="SQ점수" maxlength="50"/>
+                        <select class="form-control input-sm notRequired" name="year1" id="yearSelect">
+                            <option value="">선택</option>
+                            <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                    <option value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
+                                    </label>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                        <input type="text" class="form-control input-sm notRequired" name="crtfnCmpnNm1" id="crtfnCmpnNm" value="${sqInfoList[3]}" maxlength="50" placeholder="SQ인증주관사"/>
+                    </div>
+                <c:forEach var="i" begin="2" end="3">
                 <c:choose>
                     <c:when test="${i eq 2}">
                         <label class="col-sm-1 control-label"></label>
@@ -365,6 +383,7 @@
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
+            </fieldset>
             <fieldset><h6 class="mt0"><em class="ion-play mr-sm"></em>담당임원 정보</h6></fieldset>
             <fieldset>
                 <c:choose>
@@ -397,7 +416,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
-                            <input type="number" class="form-control input-sm cmssrHpNo telRex" name="cmssrHpNo" title="휴대폰번호" value="${picInfoLIst.cmssrHpNo}"  placeholder="휴대폰번호 입력"/>
+                            <input type="text" class="form-control input-sm cmssrHpNo telRex" name="cmssrHpNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" title="휴대폰번호" value="${picInfoLIst.cmssrHpNo}"  placeholder="휴대폰번호 입력"/>
                         </div>
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
@@ -809,7 +828,9 @@
                                             <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT03'}">
+                                                        <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm} </option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>

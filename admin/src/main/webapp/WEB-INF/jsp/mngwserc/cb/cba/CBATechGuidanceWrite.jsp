@@ -93,7 +93,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4 pstnCdInput" <c:if test="${rtnDto.pstnCd ne 'MEM_CD01007'}">style="display: none; margin-left: -15px;"</c:if>>
-                                <input type="text" class="form-control input-sm notRequired" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
+                                <input type="text" class="form-control input-sm notRequired" class="pstnNm" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
                             </div>
                         </div>
                     </div>
@@ -247,7 +247,7 @@
                     </div>
                 </fieldset>
 
-                <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002'}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
+                <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002' || empty rtnDto}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
                 <fieldset>
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">품질5스타</label>
@@ -752,7 +752,9 @@
                                         <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
                                             <option value="">선택</option>
                                             <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm}</option>
+                                                <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
+                                                    <option value="${bfJdgmtRsltList.cd}">${bfJdgmtRsltList.cdNm}</option>
+                                                </c:if>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -1051,7 +1053,9 @@
                                             <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.bfreJdgmtRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
+                                                        <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.bfreJdgmtRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>

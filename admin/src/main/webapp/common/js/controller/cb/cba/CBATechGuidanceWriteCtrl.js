@@ -54,12 +54,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var initVstRsltCd = $("#initVstRsltCd").val();
         var guidePscndCd = $("#guidePscndCd").val();
         var guideBgnDt = $('input[name="guideBgnDt"]').val();
+        var guideKickfDt = $('input[name="guideKickfDt"]').val();
         var today = new Date();
         var gbDt = new Date(guideBgnDt);
+        var kickDt = new Date(guideKickfDt);
         var bfGbDt = (gbDt-today)/(24*60*60*1000);
 
-        if(bfGbDt == 0 || bfGbDt < 0){
-            if(guidePscndCd){
+
+        // 킥오프일이 없거나, 킥오프일 전까지
+        if(bfGbDt>=0){
+            if(!guideKickfDt || today-kickDt < 0 ){
+                $(".rsumeSttsNm").text("지도착수");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
+                // 킥오프일 이후면서 지도 완료가 아닐 때
+            }else if(today-kickDt >=0 && guidePscndCd != "GUIDE_PSCND04"){
                 $(".rsumeSttsNm").text("지도중");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_09");
                 if(guidePscndCd == 'GUIDE_PSCND01'){
@@ -71,15 +79,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 }else if(guidePscndCd == 'GUIDE_PSCND03'){
                     $(".rsumeSttsNm").text("부품사취소");
                     $(".rsumeSttsCd").val("MNGTECH_STATUS_12");
-                }else if(guidePscndCd == 'GUIDE_PSCND04'){
-                    $(".rsumeSttsNm").text("지도 완료");
-                    $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
                 }
-            }else{
-                $(".rsumeSttsNm").text("지도착수");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
+            }else if(guidePscndCd == 'GUIDE_PSCND04'){
+                $(".rsumeSttsNm").text("지도 완료");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
             }
-        }else{
+        }else if(bfGbDt<0 || guideBgnDt == ''){
             if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
                 $(".rsumeSttsNm").text("사용자취소");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
@@ -223,8 +228,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
             $('input[name=slsPmt]').val(cmpnSlsPmt);
             $('input[name=mpleCnt]').val(cmpnMpleCnt);
-            var afCmpnTelNo = cmpnTelNo.replace('-', '');
-            $('input[name=cmpnTelNo]').val(afCmpnTelNo);
+            $('input[name=cmpnTelNo]').val(cmpnTelNo);
 
             $('input[name=cmpnNfrmlNm]').val(cmpnNfrmlNm);
             $('input[name=cmpnCd]').val(cmpnCd);
@@ -725,6 +729,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
+                            cmpnMst.memSeq = data.memSeq;
+
                             cmmCtrl.jsonAjax(function (data) {
                                 callbackAjaxBsnmNo(data);
                             }, './bsnmNoSearch', cmpnMst, "text");
