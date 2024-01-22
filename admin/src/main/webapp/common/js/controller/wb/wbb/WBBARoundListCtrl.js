@@ -68,7 +68,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var pageRowSize = $formObj.find("#pageRowSize").val();
                         var csrfKey 	= $formObj.find("#csrfKey").val();
                         var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
-                        var bsnNo       = $formObj.find("#bsnNo").val();
+                        var bsnCd       = $formObj.find("#bsnCd").val();
 
                         $formObj.clearForm();
                         //FORM 전송 필수 데이터 삽입
@@ -78,7 +78,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         $formObj.find("#pageRowSize").val( pageRowSize );
                         $formObj.find("#csrfKey").val( csrfKey );
                         $formObj.find("input[name=srchLayer]").val( srchLayer );
-                        $formObj.find("#bsnNo").val( bsnNo );
+                        $formObj.find("#bsnCd").val( bsnCd );
 
                         //캘린더 초기화
                         cmmCtrl.setPeriod(this, "", "", false);
