@@ -1066,88 +1066,86 @@
             2023.11.09    양현우       최초생성
     -->
     <select id="selectMPHPartList" parameterType="MPAUserDto" resultType="MPAPartDto">
-        select cd_nm as rsume_stts_cd
-        , mem_seq
-        , bsn_end_dtm
-        from ( SELECT  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
-        , ep_mst.bsn_end_dtm
-        , mst.mem_seq
-        FROM cx_appctn_mst mst
-        inner join cx_episd_mst ep_mst
-        on mst.episd_seq = ep_mst.episd_seq
-        inner join ( SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
-        FROM cx_appctn_rsume_dtl
-        GROUP BY appctn_seq ) max_rsume
-        on mst.appctn_seq = max_rsume.appctn_seq
-        inner join cx_appctn_rsume_dtl dtl
-        on mst.appctn_seq = dtl.appctn_seq AND max_rsume.max_rsume_ord = dtl.rsume_ord
-        inner join cx_appctn_rsume_prize_part_dtl part_dtl
-        on dtl.rsume_seq = part_dtl.rsume_seq
-        and dtl.rsume_ord = part_dtl.rsume_ord) as rsu
-        <include refid="selectMPHPartListWhereSql" />
+        select cd_nm as rsume_stts_cd  /* MPAUserMapper.selectMPHPartList */
+             , mem_seq
+             , bsn_end_dtm
+           from ( select (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
+                        , ep_mst.bsn_end_dtm
+                        , mst.mem_seq
+                     from cx_appctn_mst mst
+                      inner join cx_episd_mst ep_mst
+                       on mst.episd_seq = ep_mst.episd_seq
+                      inner join ( select appctn_seq
+                                        , MAX(rsume_ord) AS max_rsume_ord
+                                     from cx_appctn_rsume_dtl
+                                      group by appctn_seq ) max_rsume
+                       on mst.appctn_seq = max_rsume.appctn_seq
+                      inner join cx_appctn_rsume_dtl dtl
+                       on mst.appctn_seq = dtl.appctn_seq and max_rsume.max_rsume_ord = dtl.rsume_ord
+                      inner join cx_appctn_rsume_prize_part_dtl part_dtl
+                       on dtl.rsume_seq = part_dtl.rsume_seq
+                        and dtl.rsume_ord = part_dtl.rsume_ord) as rsu
+                         <include refid="selectMPHPartListWhereSql" />
         union
         select cd_nm as rsume_stts_cd
-        , mem_seq
-        , bsn_end_dtm
-        from ( SELECT  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
-        , ep_mst.bsn_end_dtm
-        , mst.mem_seq
-        FROM cx_appctn_mst mst
-        inner join cx_episd_mst ep_mst
-        on mst.episd_seq = ep_mst.episd_seq
-        inner join ( SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
-        FROM cx_appctn_rsume_dtl
-        GROUP BY appctn_seq ) max_rsume
-        on mst.appctn_seq = max_rsume.appctn_seq
-        inner join cx_appctn_rsume_dtl dtl
-        on mst.appctn_seq = dtl.appctn_seq AND max_rsume.max_rsume_ord = dtl.rsume_ord
-        inner join cx_appctn_rsume_task_dtl task_dtl
-        on dtl.rsume_seq = task_dtl.rsume_seq
-        and dtl.rsume_ord = task_dtl.rsume_ord) as rsu
-
+             , mem_seq
+             , bsn_end_dtm
+          from ( select  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
+                               , ep_mst.bsn_end_dtm
+                               , mst.mem_seq
+                             from cx_appctn_mst mst
+                              inner join cx_episd_mst ep_mst
+                               on mst.episd_seq = ep_mst.episd_seq
+                              inner join ( select appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                               from cx_appctn_rsume_dtl
+                                group by appctn_seq ) max_rsume
+                               on mst.appctn_seq = max_rsume.appctn_seq
+                              inner join cx_appctn_rsume_dtl dtl
+                               on mst.appctn_seq = dtl.appctn_seq and max_rsume.max_rsume_ord = dtl.rsume_ord
+                              inner join cx_appctn_rsume_task_dtl task_dtl
+                               on dtl.rsume_seq = task_dtl.rsume_seq
+                                and dtl.rsume_ord = task_dtl.rsume_ord) as rsu
             <include refid="selectMPHPartListWhereSql" />
         union
         select cd_nm as rsume_stts_cd
              , mem_seq
              , bsn_end_dtm
-          from ( SELECT  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
+          from ( select  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
                         , ep_mst.bsn_end_dtm
                         , mst.mem_seq
-                     FROM cx_appctn_mst mst
+                     from cx_appctn_mst mst
                       inner join cx_episd_mst ep_mst
                        on mst.episd_seq = ep_mst.episd_seq
-                      inner join ( SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
-                                     FROM cx_appctn_rsume_dtl
-                                      GROUP BY appctn_seq ) max_rsume
+                      inner join ( select appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                                     from cx_appctn_rsume_dtl
+                                      group by appctn_seq ) max_rsume
                        on mst.appctn_seq = max_rsume.appctn_seq
                       inner join cx_appctn_rsume_dtl dtl
-                       on mst.appctn_seq = dtl.appctn_seq AND max_rsume.max_rsume_ord = dtl.rsume_ord
+                       on mst.appctn_seq = dtl.appctn_seq and max_rsume.max_rsume_ord = dtl.rsume_ord
                       inner join cx_appctn_rsume_pbsn_dtl pbsn_dtl
                        on dtl.rsume_seq = pbsn_dtl.rsume_seq
                         and dtl.rsume_ord = pbsn_dtl.rsume_ord ) as rsu
         <include refid="selectMPHPartListWhereSql" />
         union
         select cd_nm as rsume_stts_cd
-        , mem_seq
-        , bsn_end_dtm
-        from ( SELECT  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
-        , ep_mst.bsn_end_dtm
-        , mst.mem_seq
-        FROM cx_appctn_mst mst
-        inner join cx_episd_mst ep_mst
-        on mst.episd_seq = ep_mst.episd_seq
-        inner join ( SELECT appctn_seq, MAX(rsume_ord) AS max_rsume_ord
-        FROM cx_appctn_rsume_dtl
-        GROUP BY appctn_seq ) max_rsume
-        on mst.appctn_seq = max_rsume.appctn_seq
-        inner join cx_appctn_rsume_dtl dtl
-        on mst.appctn_seq = dtl.appctn_seq AND max_rsume.max_rsume_ord = dtl.rsume_ord
-        inner join cx_appctn_rsume_tchlg_dtl tchlg_dtl
-        on dtl.rsume_seq = tchlg_dtl.rsume_seq
-        and dtl.rsume_ord = tchlg_dtl.rsume_ord) as rsu
+             , mem_seq
+             , bsn_end_dtm
+         from ( select  (select cd_nm from co_code_mst where cd = appctn_stts_cd) as cd_nm
+                              , ep_mst.bsn_end_dtm
+                              , mst.mem_seq
+                           from cx_appctn_mst mst
+                            inner join cx_episd_mst ep_mst
+                             on mst.episd_seq = ep_mst.episd_seq
+                           inner join ( select appctn_seq, MAX(rsume_ord) AS max_rsume_ord
+                                           from cx_appctn_rsume_dtl
+                                            group by appctn_seq ) max_rsume
+                            on mst.appctn_seq = max_rsume.appctn_seq
+                           inner join cx_appctn_rsume_dtl dtl
+                            on mst.appctn_seq = dtl.appctn_seq and max_rsume.max_rsume_ord = dtl.rsume_ord
+                           inner join cx_appctn_rsume_tchlg_dtl tchlg_dtl
+                            on dtl.rsume_seq = tchlg_dtl.rsume_seq
+                             and dtl.rsume_ord = tchlg_dtl.rsume_ord) as rsu
         <include refid="selectMPHPartListWhereSql" />
-
-
     </select>
 
     <!--
