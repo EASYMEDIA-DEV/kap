@@ -262,9 +262,6 @@ public class COLgnController {
 		@Value("${spring.config.activate.on-profile}")
 		private String serverProfile;
 
-		@Value("${server-status}")
-		private String serverStatus;
-
 
 		/**
 		 * 로그인을 처리한다.

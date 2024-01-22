@@ -717,4 +717,18 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         }
         return rtnCnt;
     }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBIBSupplyMstDTO wBIBSupplyMstDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBIBSupplyCompanyMapper.getBsnmNoCnt(wBIBSupplyMstDTO);
+
+        wBIBSupplyMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
 }
