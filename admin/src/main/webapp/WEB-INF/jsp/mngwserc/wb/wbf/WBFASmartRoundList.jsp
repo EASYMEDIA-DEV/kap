@@ -95,6 +95,10 @@
                         </jsp:include>
                     </select>
                 </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">선택삭제</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+                </div>
             </div>
             <!--VUE 영역 시작 -->
             <div class="table-responsive col-sm-12 p0 m0" id="vueList">
@@ -123,12 +127,6 @@
                     <!-- 리스트 목록 결과 -->
                     <tbody id="listContainer"/>
                 </table>
-                <div class="pull-left mr-sm">
-                    <button type="button" class="btn btn-sm btn-danger" id="btn_delete">선택삭제</button>
-                </div>
-                <div class="pull-right mr-sm">
-                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-                </div>
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>
             </div>

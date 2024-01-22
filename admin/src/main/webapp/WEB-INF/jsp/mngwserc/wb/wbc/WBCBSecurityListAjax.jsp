@@ -18,14 +18,14 @@
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.mngSttsNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm }</a></td>
-                <td class="text-center">${list.bsnmNo }</td>
-                <td class="text-center">${list.sbrdnBsnmNo}</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.sbrdnBsnmNo)}</td>
                 <td class="text-center">${list.ctgryNm}</td>
                 <td class="text-center">${list.sizeNm}</td>
                 <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>
-                <td class="text-center">
+                <%--<td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.regDtm}">
                             ${ kl:convertDate(list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
@@ -34,7 +34,7 @@
                             -
                         </c:otherwise>
                     </c:choose>
-                </td>
+                </td>--%>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.appctnSttsChngDtm}">

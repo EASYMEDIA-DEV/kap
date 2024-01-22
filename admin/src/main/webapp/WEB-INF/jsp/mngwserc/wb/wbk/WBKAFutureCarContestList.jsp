@@ -84,12 +84,16 @@
                 <h6 class="pull-left mt0">
                     <em class="ion-play mr-sm"></em>${pageTitle} 목록(총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
-                <div class="pull-right">
+                <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >
                         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
                             <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
                         </jsp:include>
                     </select>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">삭제</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
             </div>
             <!--리스트 시작 -->
@@ -120,12 +124,6 @@
                     <!-- 리스트 목록 결과 -->
                     <tbody id="listContainer"/>
                 </table>
-                <div class="pull-left mr-sm">
-                    <button type="button" class="btn btn-info btn-sm btn-danger" id="btn_delete">삭제</button>
-                </div>
-                <div class="pull-right mr-sm">
-                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-                </div>
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>
             </div>
