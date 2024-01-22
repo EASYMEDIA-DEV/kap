@@ -100,7 +100,7 @@
         <div class="col-sm-5">
             <div class="input-group" style="display: table;">
                 <input type="text" class="form-control input-sm" id="zipcode" title="우편번호" name="zipcode" readonly  value="${rtnDtl.zipcode}"/>
-                <span class="input-group-btn" ><button type="button" style="margin-left: 1rem ; margin-top:-0.8rem;" class="btn btn-default btn-sm" id="searchPostCode" >우편번호 검색</button></span>
+                <span class="input-group-btn" ><button type="button" style="margin-left: 1rem ; margin-top:-0.8rem;" class="btn btn-gray btn-sm" id="searchPostCode" >우편번호 검색</button></span>
                 <br>
             </div>
             <div class="input-group">

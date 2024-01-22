@@ -239,7 +239,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-gray" id="searchPostCode" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnDto.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
@@ -415,7 +415,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구축사업장<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm" id="searchPostCode2" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-gray" id="searchPostCode2" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" class="form-control input-sm" id="zipcode2" name="pbsnZipcode" value="" readonly placeholder="우편번호" style="width: 95px;" title="주소">

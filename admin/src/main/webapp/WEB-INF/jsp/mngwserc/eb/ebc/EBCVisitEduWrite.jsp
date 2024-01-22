@@ -189,7 +189,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-gray" id="searchPostCode" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" maxlength="50" style="width: 95px;"/>
@@ -473,7 +473,7 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">교육장소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm btn-primary" id="searchEduPlacePostCode" value="우편번호 찾기">
+                        <input type="button" class="btn btn-sm btn-gray" id="searchEduPlacePostCode" value="우편번호 찾기">
                         <label class="checkbox-inline c-checkbox">
                             <input type="checkbox" class="checkboxSingle notRequired" id="samePlaceBtn" name="samePlace" />
                             <span class="ion-checkmark-round"></span> 본사와 동일
