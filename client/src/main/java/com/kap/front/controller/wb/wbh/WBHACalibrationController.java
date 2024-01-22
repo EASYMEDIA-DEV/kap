@@ -23,6 +23,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -109,6 +110,11 @@ public class WBHACalibrationController {
 
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyUserDtl(wbhaCalibrationSearchDTO));
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
                 RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }

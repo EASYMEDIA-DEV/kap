@@ -155,6 +155,11 @@ public class WBFSmartFactoryController {
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getCompanyUserDtl(wBFBRegisterSearchDTO));
 
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
                 RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBFBRegisterSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {

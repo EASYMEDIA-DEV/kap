@@ -316,6 +316,31 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         if(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
             wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
         }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getChkDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getChkDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setChkDt(null);
+        }
+
+        if(wBEBCarbonCompanyPbsnDtlDTO.getExamScore() == null || wBEBCarbonCompanyPbsnDtlDTO.getExamScore().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setExamScore(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getPayDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getPayDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setPayDt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setNslltSchdlDt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getAccsDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getAccsDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setAccsDt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getGiveSeq() == null || wBEBCarbonCompanyPbsnDtlDTO.getGiveSeq().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setGiveSeq(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setCmpltnBrfngDt(null);
+        }
+        if(wBEBCarbonCompanyPbsnDtlDTO.getLastChkDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getLastChkDt().equals("")){
+            wBEBCarbonCompanyPbsnDtlDTO.setLastChkDt(null);
+        }
 
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
         wBEBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
@@ -1127,6 +1152,31 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             }
             if(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
                 wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getChkDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getChkDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setChkDt(null);
+            }
+
+            if(wBEBCarbonCompanyPbsnDtlDTO.getExamScore() == null || wBEBCarbonCompanyPbsnDtlDTO.getExamScore().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setExamScore(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getPayDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getPayDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setPayDt(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setNslltSchdlDt(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getAccsDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getAccsDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setAccsDt(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getGiveSeq() == null || wBEBCarbonCompanyPbsnDtlDTO.getGiveSeq().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setGiveSeq(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setCmpltnBrfngDt(null);
+            }
+            if(wBEBCarbonCompanyPbsnDtlDTO.getLastChkDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getLastChkDt().equals("")){
+                wBEBCarbonCompanyPbsnDtlDTO.setLastChkDt(null);
             }
 
             wBEBCarbonCompanyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());

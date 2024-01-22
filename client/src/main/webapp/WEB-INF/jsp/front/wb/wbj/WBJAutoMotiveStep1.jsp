@@ -176,7 +176,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.qlty5starCd}">
-                                                            ${qlty5starCd.qlty5starNm} / ${rtnData.qlty5starYear}
+                                                            ${rtnData.qlty5starNm} / ${rtnData.qlty5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -187,7 +187,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.pay5starCd}">
-                                                            ${qlty5starCd.pay5starNm} / ${rtnData.pay5starYear}
+                                                            ${rtnData.pay5starNm} / ${rtnData.pay5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -198,7 +198,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.tchlg5starCd}">
-                                                            ${qlty5starCd.tchlg5starNm} / ${rtnData.tchlg5starYear}
+                                                            ${rtnData.tchlg5starNm} / ${rtnData.tchlg5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>

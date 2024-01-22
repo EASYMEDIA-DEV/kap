@@ -85,12 +85,34 @@
                                                 <td>${rtnUser.memTelNo}</td>
                                             </tr>
                                             <tr>
-                                                <th>부서</th>
-                                                <td>${rtnUser.deptNm}</td>
+                                                <th>부서(부서상세)</th>
+                                                <td>
+                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                        <c:if test="${cdList.cd eq rtnUser.deptCd}">
+                                                            <c:choose>
+                                                                <c:when test="${empty(rtnUser.deptNm)}">
+                                                                    ${cdList.cdNm}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    ${cdList.cdNm}(${rtnUser.deptNm})
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </td>
                                             </tr>
                                             <tr>
-                                                <th>직급</th>
-                                                <td>${rtnUser.pstnCdNm}</td>
+                                                <th>직급(기타직급)</th>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${empty(rtnUser.pstnNm)}">
+                                                            ${rtnUser.pstnCdNm}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -119,7 +141,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
-                                                <td>${rtnData.bsnmNo}</td>
+                                                <td>${fn:substring(rtnData.bsnmNo,0,3) } - ${fn:substring(rtnData.bsnmNo,3,5) } - ${fn:substring(rtnData.bsnmNo,5, 10) }</td>
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>
@@ -189,7 +211,7 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${not empty rtnData.qlty5starCd}">
-                                                                ${qlty5starCd.qlty5starNm} / ${rtnData.qlty5starYear}
+                                                                ${rtnData.qlty5starNm} / ${rtnData.qlty5starYear}
                                                             </c:when>
                                                             <c:otherwise>-</c:otherwise>
                                                         </c:choose>
@@ -200,7 +222,7 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${not empty rtnData.pay5starCd}">
-                                                                ${qlty5starCd.pay5starNm} / ${rtnData.pay5starYear}
+                                                                ${rtnData.pay5starNm} / ${rtnData.pay5starYear}
                                                             </c:when>
                                                             <c:otherwise>-</c:otherwise>
                                                         </c:choose>
@@ -211,7 +233,7 @@
                                                     <td>
                                                         <c:choose>
                                                             <c:when test="${not empty rtnData.tchlg5starCd}">
-                                                                ${qlty5starCd.tchlg5starNm} / ${rtnData.tchlg5starYear}
+                                                                ${rtnData.tchlg5starNm} / ${rtnData.tchlg5starYear}
                                                             </c:when>
                                                             <c:otherwise>-</c:otherwise>
                                                         </c:choose>

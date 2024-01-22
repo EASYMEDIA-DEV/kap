@@ -175,14 +175,14 @@
                 <div class="accepting-fixed-area">
                     <div class="for-position">
                         <button class="open-click-area" type="button">
-                            <p class="tit"><span>${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차 다각화 사업 접수중</span></p>
+                            <p class="tit"><span>${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</span></p>
                             <div class="btn-text-icon plus"><span>더보기</span></div>
                         </button>
 
                         <div class="hide-area">
                             <div class="inner-con">
                                 <div class="tit-area">
-                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차 다각화 사업 접수중</p>
+                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</p>
                                 </div>
                                 <div class="con-area">
                                     <div class="scroll-area">
