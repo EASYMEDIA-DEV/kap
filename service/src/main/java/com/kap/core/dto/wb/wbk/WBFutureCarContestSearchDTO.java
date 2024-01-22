@@ -55,8 +55,9 @@ public class WBFutureCarContestSearchDTO extends BaseDTO {
     @Schema(title = "장소순번", example = "숫자")
     private int placeSeq;
 
-    @Schema(title = "검색조건", example = "yyyy-MM-dd hh:mm:ss")
-    private String futureCarContestDate;
+    /* 검색 관련 코드 */
+    @Schema(title = "공통", example = "yyyy-MM-dd hh:mm:ss")
+    private String carbonDate;
 
     @Schema(title = "진행상태 코드 리스트")
     private List carbonCdList;

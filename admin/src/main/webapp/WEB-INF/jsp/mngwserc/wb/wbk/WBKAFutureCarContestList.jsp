@@ -15,7 +15,8 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
-                <jsp:param name="srchType" value="wbka" />
+                <jsp:param name="srchType" value="wba" />
+                <jsp:param name="srchOption" value="신청일,사업기간,최초등록일시,최종수정일시" />
             </jsp:include>
             <fieldset>
                 <div class="form-group text-sm">

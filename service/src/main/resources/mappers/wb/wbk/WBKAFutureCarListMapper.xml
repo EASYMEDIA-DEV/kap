@@ -249,9 +249,9 @@
     <sql id="selectFutureCarContestListwhereSql">
         <where>
             AND BSN_CD = 'BNS11'
-            <if test="futureCarContestDate != null and futureCarContestDate != ''.toString() ">
+            <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
-                    <when test="futureCarContestDate == 1">
+                    <when test="carbonDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
@@ -265,7 +265,7 @@
                             )
                         </if>
                     </when>
-                    <when test="futureCarContestDate == 2">
+                    <when test="carbonDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
