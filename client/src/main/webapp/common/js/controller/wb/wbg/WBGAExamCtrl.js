@@ -87,7 +87,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             } else if (data.resultCode == 400) {
                                 alert('사업 지원대상 기준을 확인해주세요.\n(지원대상 기준 : 전년도 매출액 ' + $('#pmt').val() +'억 미만)');
                             } else if (data.resultCode == 450) {
-                                alert('사업 지원대상 기준을 확인해주세요.\n(지원대상 기준:당해년도 정규기술지도/생산,생산기술,\n품질 분야 경영컨설팅 참여중 또는 완료 부품사)');
+                                alert('사업 지원대상 기준을 확인해주세요. (컨설팅 내역)');
                             }
                         },"./applyChecked",null, "json", false, false, "get");
                     }

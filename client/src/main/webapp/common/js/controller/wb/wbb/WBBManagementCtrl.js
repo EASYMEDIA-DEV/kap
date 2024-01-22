@@ -58,6 +58,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         }
     };
 
+    var fnSleep  = function(delay)
+    {
+        var start = new Date().getTime();
+        while (start + delay > new Date().getTime());
+    };
+
     // set model
     ctrl.model = {
         id : {
@@ -171,6 +177,17 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     change : function() {
                         extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
+                    }
+                }
+            },
+            downloadAll : {
+                event : {
+                    click : function() {
+                        $('.optnFile').each(function() {
+                           location.href = "/file/download?fileSeq="+$(this).val()+"&fileOrd=0";
+                           fnSleep(3000); //각 파일별 시간 텀을 준다
+
+                        });
                     }
                 }
             }

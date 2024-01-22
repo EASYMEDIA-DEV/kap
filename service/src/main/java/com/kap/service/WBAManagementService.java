@@ -43,6 +43,11 @@ public interface WBAManagementService {
     public int selectManagementCnt(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
 
     /**
+     * 상생사업 신청자수를 조회한다.
+     */
+    public int selecApplyCnt(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
+
+    /**
      * 상생사업 상세 목록을 조회한다.
      */
     public WBAManageInsertDTO selectManagementDtl(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
@@ -71,5 +76,10 @@ public interface WBAManagementService {
      * 첨부파일 업데이트
      */
     public List<WBAManagementOptnDTO> selectOptnList(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
+
+    /**
+     * 첨부파일 업데이트
+     */
+    public WBAManageInsertDTO selectManagementMst(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
 
 }

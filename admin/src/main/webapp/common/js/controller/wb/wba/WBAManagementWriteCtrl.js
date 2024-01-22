@@ -80,19 +80,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
         },
         immediately : function() {
 
-            $(".stepList").each(function(){
+            /*$(".stepList").each(function(){
                 var fileCk = $(this).find("input[name=fileYn]").is(":checked");
                 if(fileCk){
                     $(this).find('.dropzone').css("pointer-events","none").css("background-color","#eee");
                 }
-            });
+            });*/
 
+            /*$("#btn_update").click(function () {
+                $formObj.submit();
+                //신청자가 있는지 확인
+                /!*cmmCtrl.frmAjax(function(result) {
+                    if (result > 0) {
+                        alert('신청정보가 존재하여 수정할 수 없습니다.');
+                    } else {
+                        $formObj.submit();
+                    }
+                },"./applyCount",$formObj);*!/
+
+            });*/
 
             $("#btn_delete").click(function () {
-                if (confirm(msgCtrl.getMsg("confirm.del"))) {
-                    cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
-                }
-
+                //신청자가 있는지 확인
+                cmmCtrl.frmAjax(function(result) {
+                    if (result > 0) {
+                        alert('신청정보가 존재하여 삭제할 수 없습니다.');
+                    } else {
+                        if (confirm(msgCtrl.getMsg("confirm.del"))) {
+                            cmmCtrl.frmAjax(callbackAjaxDelete, "./delete", $formObj);
+                        }
+                    }
+                },"./applyCount",$formObj);
             });
 
             // 유효성 검사
@@ -148,6 +166,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
                                         isValid = false;
                                         flag = false;
                                         return false;
+                                    } else {
+                                        $(this).find(".dropzone").each(function() {
+                                            if($(this).find('.dz-preview').length < 1) {
+                                                alert('단계 ' + (i + 1) + '의 양식 파일을 등록해주세요');
+                                                isValid = false;
+                                                flag = false;
+                                                return false;
+                                            }
+                                        });
                                     }
                                     if (!flag) {
                                         return false;
@@ -177,6 +204,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
                         wbaManageInsertDTO.userMenuSeq = ctrl.obj.find("#userMenuSeq").val();
                         wbaManageInsertDTO.admEpisdMenuSeq = ctrl.obj.find("#admEpisdMenuSeq").val();
                         wbaManageInsertDTO.admAppctnMenuSeq = ctrl.obj.find("#admAppctnMenuSeq").val();
+                        wbaManageInsertDTO.qaCtgryCd = ctrl.obj.find("#qaCtgryCd").val();
                         wbaManageInsertDTO.managementDtlList = new Array();
                         wbaManageInsertDTO.detailsKey = ctrl.obj.find("#detailsKey").val();
 
