@@ -7,6 +7,7 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
+import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomDTO;
@@ -187,4 +188,9 @@ public interface WBIBSupplyCompanyMapper {
      * 회차 전체 갯수
      */
     public int selectPartsCompanyCnt(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBIBSupplyMstDTO wBIBSupplyMstDTO) throws Exception;
 }

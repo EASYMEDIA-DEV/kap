@@ -3,6 +3,7 @@ package com.kap.mngwserc.controller.wb.wbi;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -379,6 +380,27 @@ public class WBIBSupplyCompanyController {
             throw new Exception(e.getMessage());
         }
 
+        return "jsonView";
+    }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getBsnmNoCnt")
+    public String getBsnmNoCnt(WBIBSupplyMstDTO wBIBSupplyMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBIBSupplyCompanyService.getBsnmNoCnt(wBIBSupplyMstDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
         return "jsonView";
     }
 }

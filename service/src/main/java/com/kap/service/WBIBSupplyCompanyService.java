@@ -106,4 +106,9 @@ public interface WBIBSupplyCompanyService {
      *   신청자 업데이트
      */
     public int updateInfo(WBIBSupplyDTO wBIBSupplyDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBIBSupplyMstDTO wBIBSupplyMstDTO) throws Exception;
 }
