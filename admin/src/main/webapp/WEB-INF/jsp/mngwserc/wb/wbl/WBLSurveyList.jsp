@@ -153,10 +153,10 @@
                         <th class="text-center">평균점수</th>
                         <th class="text-center">HKMC평균점수</th>
                         <th class="text-center">참여일</th>
-                        <th class="text-center">최초등록자</th>
-                        <th class="text-center">최초등록일시</th>
-                        <th class="text-center">최종수정자</th>
-                        <th class="text-center">최종수정일시</th>
+                        <th class="text-center">최초 등록자</th>
+                        <th class="text-center">최초 등록일시</th>
+                        <th class="text-center">최종 수정자</th>
+                        <th class="text-center">최종 수정일시</th>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->
