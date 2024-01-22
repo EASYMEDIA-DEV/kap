@@ -25,6 +25,8 @@
 					<jsp:param name="srchText" value="등록/수정기간" />
 					<jsp:param name="srchOption" value="교육기간,접수기간, 등록일,수정일" />
 					<jsp:param name="srchType" value="episd" />
+					<jsp:param name="endDtVal" value="${rtnData.endDt}" />
+					<jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
 				</jsp:include>
 
 

@@ -217,7 +217,6 @@ public class EBMMypageController
                 Date currentDate = new Date();
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String formattedDate = dateFormat.format(currentDate);
-                System.out.println("@@ formattedDate = " + formattedDate);
 
                 //금일 출석 유무 확인로직
                 for(EBBPtcptDTO  ptcptDto : ptcptList){
@@ -225,12 +224,16 @@ public class EBMMypageController
 
                     if(formattedDate.equals(ptcptDto.getEdctnDt())){
 
-                        System.out.println("@@ formattedDate = " + formattedDate + " @@ ptcptDto.getEdctnDt() = " + ptcptDto.getEdctnDt() + "  @@  ptcptDto.getAtndcDtm()  = " +  ptcptDto.getAtndcDtm()  );
-
                         if("".equals(ptcptDto.getAtndcDtm()) || ptcptDto.getAtndcDtm() == null){
-                            modelMap.addAttribute("nowAtndcYn", "N");
+                            modelMap.addAttribute("nowAtndcYn", "N");//오늘 출석 안함
                         }else{
-                            modelMap.addAttribute("nowAtndcYn", "Y");
+                            modelMap.addAttribute("nowAtndcYn", "Y");//오늘 출석 함
+                        }
+
+                        if(!"".equals(ptcptDto.getLvgrmDtm()) && ptcptDto.getLvgrmDtm() != null){
+                            modelMap.addAttribute("nowLvgrmYn", "Y");//오늘 퇴실 함
+                        }else{
+                            modelMap.addAttribute("nowLvgrmYn", "N");//오늘 퇴실 안함
                         }
 
                         break;
@@ -240,10 +243,6 @@ public class EBMMypageController
             }else{
                 modelMap.addAttribute("nowAtndcYn", "F");//온라인교육인 경우는 F로 들어간다
             }
-
-
-
-
 
             modelMap.addAttribute("rtnData", rtnDto);
             modelMap.addAttribute("roomDto", roomDto);
@@ -651,6 +650,34 @@ public class EBMMypageController
             }
             return rtnStr;
         }
+
+        /**
+         * 마이페이지 퇴실체크 진행
+         */
+        @PostMapping(value = "/edu-apply/updateLvgrmInfo")
+        public String updateLvgrmInfo(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+                if(eBBPtcptDTO.getPtcptSeq() != null){
+                    eBBEpisdService.updateLvgrmInfo(eBBPtcptDTO);
+                    rtnStr = "Y";
+                }else{
+                    rtnStr = "N";
+                }
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
+
+
+
 
 
         /**

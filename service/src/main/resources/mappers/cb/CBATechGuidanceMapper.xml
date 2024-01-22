@@ -60,8 +60,18 @@
                 CP_MST.CNSTG_SEQ
                 , CP_MST.CNSTG_CD
                 , CP_MST.BSN_YEAR
-                , CP_MST.RSUME_STTS_CD
-                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                    AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                    AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                    ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                    AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                    AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                    ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
                 , CMPN_MST.CMPN_NM
                 , CMPN_MST.CTGRY_CD
                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
@@ -178,8 +188,18 @@
                 CP_MST.CNSTG_SEQ
                  , CP_MST.CNSTG_CD
                  , CP_MST.BSN_YEAR
-                 , CP_MST.RSUME_STTS_CD
-                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.RSUME_STTS_CD AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                 , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                   AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                   AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                   WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                   AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                   ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                   AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                   AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                   WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                   AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                   ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
                  , CMPN_MST.CMPN_NM
                  , CMPN_MST.CTGRY_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
@@ -980,18 +1000,21 @@
                         AND APPCTN_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 2">
-                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND BSN_YEAR <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y')
                     </when>
                     <when test="srchDate == 3">
-                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 4">
-                        AND GUIDE_PSCND_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 5">
-                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND GUIDE_PSCND_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 6">
+                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 7">
                         AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                 </choose>
@@ -1002,18 +1025,21 @@
                         AND APPCTN_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 2">
-                        AND VST_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND BSN_YEAR <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y')
                     </when>
                     <when test="srchDate == 3">
-                        AND CNSTG_KICKF_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND VST_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 4">
-                        AND GUIDE_PSCND_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND CNSTG_KICKF_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 5">
-                        AND REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND GUIDE_PSCND_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 6">
+                        AND REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 7">
                         AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                 </choose>
@@ -1477,13 +1503,13 @@
      ==========   ======    ==============
      2024.01.11   임서화      최초 생성
  -->
-    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
-        SELECT
-            COUNT()
+    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO"  resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectYearConsultingCount */
+            COUNT(*)
         FROM
             CP_CNSTG_APPCTN_MST A
         WHERE
-            APPCTN_MEM_SEQ = (SELECT MEM_SEQ FROM CO_MEM_MST ID=#{memSeq})
-            AND PTCPT_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
+          APPCTN_MEM_SEQ = #{memSeq}
+          AND REG_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
     </select>
 </mapper>

@@ -16,6 +16,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -43,6 +44,7 @@ public class WBCSrcurityController {
     /**
      * 서비스
      **/
+    private final COCodeService cOCodeService;
     public final WBCASecurityListService wBCASecurityListService;
     public final WBCBSecurityService wBCBSecurityService;
     public final COGCntsService pCOGCntsService;
@@ -131,6 +133,11 @@ public class WBCSrcurityController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
                 modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);

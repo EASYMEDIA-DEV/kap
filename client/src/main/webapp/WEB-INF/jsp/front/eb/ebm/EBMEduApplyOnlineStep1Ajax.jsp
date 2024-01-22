@@ -17,7 +17,7 @@
                         </div>
                         <div class="dl">
                             <div class="dt f-body2">강의시간</div>
-                            <div class="dd f-body2"><span>${list.time}</span>분</div>
+                            <div class="dd f-body2 urlTime"><span>${list.time}</span>분</div>
                         </div>
                     </div>
                 </div>

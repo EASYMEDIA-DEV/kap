@@ -736,11 +736,17 @@
              ,SLS_FILE_SEQ
              ,INSPT_CHK_FILE_SEQ
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SPPRT_APPCTN_FILE_SEQ) AS SPPRT_APPCTN_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = SPPRT_APPCTN_FILE_SEQ) as SPPRT_APPCTN_FILE_ORD
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = AGRMT_FILE_SEQ) AS AGRMT_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = AGRMT_FILE_SEQ) as AGRMT_FILE_ORD
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = GRNTE_INSRNC_FILE_SEQ) AS GRNTE_INSRNC_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = GRNTE_INSRNC_FILE_SEQ) as GRNTE_INSRNC_FILE_ORD
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = BLING_FILE_SEQ) AS BLING_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = BLING_FILE_SEQ) as BLING_FILE_ORD
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = SLS_FILE_SEQ) AS SLS_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = SLS_FILE_SEQ) as SLS_FILE_ORD
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = INSPT_CHK_FILE_SEQ) AS INSPT_CHK_FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = INSPT_CHK_FILE_SEQ) as INSPT_CHK_FILE_ORD
         FROM CX_APPCTN_SPPRT_DTL
         WHERE APPCTN_SEQ = #{detailsKey}
         ORDER BY APPCTN_SPPRT_SEQ ASC
@@ -1122,6 +1128,7 @@
              ,A.FILE_CD
              ,A.FILE_SEQ
              , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
+             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) as FILE_ORD
         FROM CX_APPCTN_RSUME_FILE_DTL A
          JOIN CX_APPCTN_RSUME_DTL B ON A.RSUME_SEQ = B.RSUME_SEQ AND A.RSUME_ORD = B.RSUME_ORD
         WHERE B.APPCTN_SEQ = #{detailsKey}
@@ -1327,6 +1334,21 @@
         SELECT /* WBCBSecurityMapper.getBsnmNoCnt*/ COUNT(*)
         FROM CX_APPCTN_MST
         WHERE EPISD_SEQ = #{episdSeq}
+        AND APPCTN_BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBCBSecurityMapper.getSbrdnBsnmNoCnt
+         설  명 : 종된 사업자번호 매핑 여부 확인
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getSbrdnBsnmNoCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
+        SELECT /* WBCBSecurityMapper.getBsnmNoCnt*/ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq}
+        AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
         AND APPCTN_BSNM_NO = #{bsnmNo}
     </select>
 

@@ -1,7 +1,9 @@
 package com.kap.front.controller.co;
 
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
+import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBBEpisdService;
 import com.kap.service.MPBCoexistenceService;
@@ -39,6 +41,9 @@ public class COMypageController
 
     public final MPBCoexistenceService mpbCoexistenceService;
 
+    public final CBATechGuidanceService cBATechGuidanceService;
+
+
     @GetMapping("/my-page/main")
     public String getMainPage(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
@@ -62,9 +67,16 @@ public class COMypageController
             MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
             mpbBnsSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
-            modelMap.addAttribute("CoeYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
+            modelMap.addAttribute("coeYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
 
 
+
+            //1년간 컨설팅 내역
+            CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
+            pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq()));
+            cBATechGuidanceService.countConsultingApplication(pCBATechGuidanceInsertDTO);
+
+            modelMap.addAttribute("consultingYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
 
 
             //나의 1:1문의 호출

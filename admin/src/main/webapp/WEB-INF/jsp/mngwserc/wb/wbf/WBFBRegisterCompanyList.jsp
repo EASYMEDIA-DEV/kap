@@ -95,8 +95,17 @@
                 <h6 class="pull-left mt0">
                     <em class="ion-play mr-sm"></em>스마트공장구축 신청부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
+                <div class="pull-right ml-sm">
+                    <select class="form-control input-sm listRowSizeContainer" >
+                        <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
+                            <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                        </jsp:include>
+                    </select>
+                </div>
                 <div class="pull-right">
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
             </div>
             <!--VUE 영역 시작 -->
@@ -122,7 +131,7 @@
                         <th class="text-center">신청자</br>(아이디)</th>
                         <th class="text-center">휴대폰번호</th>
                         <th class="text-center">이메일</th>
-                        <th class="text-center">관리자등록일</th>
+                        <%--<th class="text-center">관리자등록일</th>--%>
                         <th class="text-center">사용자수정일</th>
                         <th class="text-center">최종 수정자<br>(아이디)</th>
                         <th class="text-center">최종 수정일시</th>
@@ -135,12 +144,6 @@
                 <div id="pagingContainer"/>
             </div>
             <!--리스트 종료 -->
-            <div class="pull-left">
-                <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
-            </div>
-            <div class="pull-right">
-                <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-            </div>
         </form>
     </div>
 </div>

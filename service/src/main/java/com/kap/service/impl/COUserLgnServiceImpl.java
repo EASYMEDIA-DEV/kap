@@ -92,14 +92,15 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 
 					try {
 						Date date1 = dateFormat.parse(rtnCOUserDto.getLastLgnDtm());
-						Date date2 = dateFormat2.parse("2024-03-08");
+						Date date2 = dateFormat2.parse("2024-03-27");
 						dateResult = date1.compareTo(date2);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
 				}
+				//TODO 24-01-22 이 부분은 반영시 삭제 해야 함
 				LocalDate currentDate = LocalDate.now();
-				LocalDate targetDate = LocalDate.parse("2024-03-08");
+				LocalDate targetDate = LocalDate.parse("2024-03-27");
 				if(currentDate.isBefore(targetDate)) {
 					dateResult = 0;
 				}
@@ -184,7 +185,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 					RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
 				}
         		/// 로그인 세션을 생성한다.
-        		if (rtnCode.endsWith("00"))
+        		if (rtnCode.endsWith("00") || rtnCode.equals("1310"))
         		{
     				// 로그인 IP set
 					cOUserDetailsDTO.setLoginIp(loginIp);
@@ -362,4 +363,11 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 
 		return rtnCOUserDto;
 	}
+
+	@Override
+	public int setLastLgnDtm(COUserDetailsDTO cOUserDetailsDTO) throws Exception {
+		return	cOUserLgnMapper.updateLastLgnDtm(cOUserDetailsDTO);
+	}
+
+
 }

@@ -29,7 +29,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             ctrl.obj.find("#techGuidanceListContainerTotCnt").text(totCnt);
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "techGuidanceListContainer", "pagingContainer");
-        }, "/mngwserc/mp/mpe/selectManageConsultList", $formObj, "POST", "html",'',false);
+        }, "/mngwserc/mp/mpe/selectTechGuidanceList", $formObj, "POST", "html",'',false);
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리

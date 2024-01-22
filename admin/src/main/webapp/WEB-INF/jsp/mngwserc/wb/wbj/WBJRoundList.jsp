@@ -29,6 +29,7 @@
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="기간검색" />
 					<jsp:param name="srchType" value="wbja" />
+					<jsp:param name="srchOption" value="접수기간,사업기간,최초등록일시,최종수정일시" />
 				</jsp:include>
 				<!--기간 검색 종료-->
 				<fieldset>
@@ -103,6 +104,10 @@
 							</jsp:include>
 						</select>
 					</div>
+					<div class="pull-right">
+						<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
+						<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+					</div>
 				</div>
 
 				<!--VUE 영역 시작 -->
@@ -127,20 +132,14 @@
 								<th class="text-center">장소</th>
 								<th class="text-center">최초 등록자</th>
 								<th class="text-center">최초 등록일시</th>
-								<th class="text-center">최초 수정자</th>
-								<th class="text-center">최초 수정일시</th>
+								<th class="text-center">최종 수정자</th>
+								<th class="text-center">최종 수정일시</th>
 								<th class="text-center">노출여부</th>
 							</tr>
 						</thead>
 						<!-- 리스트 목록 결과 -->
 						<tbody id="listContainer"/>
 					</table>
-						<div class="pull-right">
-							<button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-						</div>
-						<div class="pull-left mr-sm">
-							<button type="button" class="btn btn-danger btn-sm mb-sm" id="btnChooseDelete">선택삭제</button>
-						</div>
 					<!-- 페이징 버튼 -->
 					<div id="pagingContainer"/>
 				</div>

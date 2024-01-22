@@ -275,4 +275,13 @@ public interface WBFBRegisterCompanyMapper {
      */
     public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
 
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 }

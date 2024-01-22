@@ -77,6 +77,13 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
     }
 
     /**
+     * 재단소식 조회 갯수(통합검색)
+     */
+    public int selectCompanyNewsListCnt(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
+        return bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO);
+    }
+
+    /**
      * 재단소식 상세
      */
     public BDBCompanyNewsDTO selectCompanyNewsDtl(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{

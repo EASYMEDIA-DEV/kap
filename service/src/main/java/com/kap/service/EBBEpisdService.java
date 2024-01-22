@@ -33,6 +33,11 @@ public interface EBBEpisdService {
 	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 목록을 조회한다.
+	 */
+	public int selectEpisdListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육과정에 속한 차수목록을 호출한다.
 	 */
 	public EBBEpisdDTO selectCouseChildEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -165,11 +170,16 @@ public interface EBBEpisdService {
 	 */
 	public EBBPtcptDTO setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
-
 	/**
 	 * 마이페이지 출석체크 진행
 	 */
 	public void updateAtndcInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 마이페이지 퇴실체크 진행
+	 */
+	public void updateLvgrmInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
 
 	/**
 	 * 마이페이지 - 교육신청을 취소한다.

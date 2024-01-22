@@ -49,6 +49,36 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
+            //검색 초기화
+            btnSearchRefresh : {
+                event : {
+                    click : function() {
+                        //FORM 데이터 전체 삭제
+                        var pageIndex 	= $formObj.find("#pageIndex").val();
+                        var listRowSize = $formObj.find("#listRowSize").val();
+                        var pageRowSize = $formObj.find("#pageRowSize").val();
+                        var csrfKey 	= $formObj.find("#csrfKey").val();
+                        var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+                        var bsnNo       = $formObj.find("#bsnNo").val();
+
+                        $formObj.clearForm();
+                        //FORM 전송 필수 데이터 삽입
+                        $formObj.find("#pageIndex").val( pageIndex );
+                        $formObj.find("#listRowSize").val( listRowSize );
+                        $formObj.find(".listRowSizeContainer").val( listRowSize );
+                        $formObj.find("#pageRowSize").val( pageRowSize );
+                        $formObj.find("#csrfKey").val( csrfKey );
+                        $formObj.find("input[name=srchLayer]").val( srchLayer );
+                        $formObj.find("#bsnNo").val( bsnNo );
+
+                        //캘린더 초기화
+                        cmmCtrl.setPeriod(this, "", "", false);
+
+                        //검색 로직 실행
+                        $formObj.find("#btnSearch").click();
+                    }
+                }
+            },
             deleteBtn : {
                 event: {
                     click: function () {

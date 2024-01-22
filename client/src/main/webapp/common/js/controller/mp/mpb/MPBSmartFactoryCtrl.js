@@ -254,7 +254,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 removeComma($formObj);
                                 //이용약관 체크여부
                                 cmmCtrl.fileFrm(function (data) {
-                                    if (data.respCnt == 999) {
+                                    if (data.respCnt == 300) {
                                         if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                             location.href = "/my-page/main";
                                         }

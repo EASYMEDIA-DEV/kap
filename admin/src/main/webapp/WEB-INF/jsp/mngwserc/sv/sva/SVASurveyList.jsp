@@ -17,6 +17,8 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정일" />
+                <jsp:param name="endDtVal" value="${rtnData.endDt}" />
+                <jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
             </jsp:include>
 
             <!--기간 검색 종료-->

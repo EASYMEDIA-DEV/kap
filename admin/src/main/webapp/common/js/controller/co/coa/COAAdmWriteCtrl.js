@@ -127,10 +127,10 @@ define(["ezCtrl", "ezVald", "controller/co/COMenuCtrl"], function(ezCtrl, ezVald
 			btnList : {
 				event : {
 					click : function (){
-						if(confirm(msgCtrl.getMsg("confirm.list")))
-						{
+						// if(confirm(msgCtrl.getMsg("confirm.list")))
+						// {
 							location.href = "./list?"+$(this).data("param");
-						}
+//						}
 					}
 				}
 			},

@@ -51,7 +51,7 @@ public class BDDNewsletterController {
     {
         try
         {
-            modelMap.addAttribute("rtnData", pBDDNewsletterDTO);
+            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
         }
         catch (Exception e)
         {
@@ -66,36 +66,18 @@ public class BDDNewsletterController {
     }
 
     /**
-     * 뉴스레터 목록 조회
-     */
-    @GetMapping(value = "/select")
-    public String selectNewsletterListAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception
-    {
-        try
-        {
-            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
-        }
-        catch (Exception e)
-        {
-            if (log.isDebugEnabled())
-            {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "front/bd/bdd/BDDNewsletterListAjax";
-    }
-
-    /**
      * 뉴스레터 상세 페이지
      */
-    @GetMapping(value="/write")
-    public String getNewsletterWritePage(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception
+    @GetMapping(value="/view")
+    public String getNewsletterViewPage(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception
     {
         try
         {
             if(!"".equals(pBDDNewsletterDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", bDDNewsletterService.selectNewsletterDtl(pBDDNewsletterDTO));
+                modelMap.addAttribute("ordList", bDDNewsletterService.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+                modelMap.addAttribute("nextPrevInfo", bDDNewsletterService.selectNextAndPrevSeqVal(pBDDNewsletterDTO));
+                bDDNewsletterService.updateNewsletterReadCnt(pBDDNewsletterDTO);
             }
         }
         catch (Exception e)
@@ -107,7 +89,7 @@ public class BDDNewsletterController {
             throw new Exception(e.getMessage());
         }
 
-        return "mngwserc/bd/bdd/BDDNewsletterWrite.front";
+        return "front/bd/bdd/BDDNewsletterView.front";
     }
 
     /**

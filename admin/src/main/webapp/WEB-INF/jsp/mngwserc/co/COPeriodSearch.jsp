@@ -5,12 +5,16 @@
 <c:set var="startId" value="strtDt" />
 <c:set var="endId" value="endDt" />
 
+<c:set var="endDtVal" value="${param.endDtVal}" />
+<c:set var="strtDtVal" value="${param.strtDtVal}" />
+
 <c:if test="${fn:length(param.startId) > 0 }">
 	<c:set var="startId" value="${param.startId}" />
 </c:if>
 <c:if test="${fn:length(param.endId) > 0 }">
 	<c:set var="endId" value="${param.endId}" />
 </c:if>
+
 <c:set var="srchDate" value="${ rtnData['srchDate'] == null ? param.srchDate : rtnData['srchDate'] }" />
 
 <fieldset>
@@ -18,22 +22,41 @@
 		<label class="col-sm-1 control-label">${param.srchText}</label>
 		<div class="col-sm-11">
 
-			<c:if test="${fn:length(param.srchOption) > 0 }">
+			<c:choose>
+				<c:when test="${fn:substring(param.srchType,0,2) eq 'wb'}">
+					<c:set var="carbonDate" value="${ rtnData['carbonDate'] == null ? param.srchDate : rtnData['carbonDate'] }" />
+					<c:if test="${fn:length(param.srchOption) > 0 }">
+						<div class="form-group mr-sm">
+							<select class="form-control input-sm" data-name="carbonDate">
+								<c:forTokens var="item" items="${param.srchOption}" delims="," varStatus="status">
+									<option value="${status.count}" <c:if test="${carbonDate eq status.count}">selected</c:if>>${item}</option>
+								</c:forTokens>
+							</select>
+						</div>
+					</c:if>
+				</c:when>
+				<c:otherwise>
+					<c:if test="${fn:length(param.srchOption) > 0 }">
+						<div class="form-group mr-sm">
+							<select class="form-control input-sm" data-srch-date="srchDate" id="srchDate" name="srchDate">
+								<c:forTokens var="item" items="${param.srchOption}" delims="," varStatus="status">
+									<option value="${status.count}" <c:if test="${srchDate eq status.count}">selected</c:if>>${item}</option>
+								</c:forTokens>
+							</select>
+						</div>
+					</c:if>
+				</c:otherwise>
+			</c:choose>
+
+
+
+			<c:if test="${param.selPer eq 'select'}">
 				<div class="form-group mr-sm">
-					<select class="form-control input-sm" data-srch-date="srchDate" id="srchDate" name="srchDate">
-						<c:forTokens var="item" items="${param.srchOption}" delims="," varStatus="status">
-							<option value="${status.count}" <c:if test="${srchDate eq status.count}">selected</c:if>>${item}</option>
-						</c:forTokens>
+					<select class="form-control input-sm" data-name="date">
+						<option value="1" selected>가입일</option>
+						<option value="2" >수정일</option>
 					</select>
 				</div>
-			</c:if>
-			<c:if test="${param.selPer eq 'select'}">
-			<div class="form-group mr-sm">
-				<select class="form-control input-sm" data-name="date">
-					<option value="1" selected>가입일</option>
-					<option value="2" >수정일</option>
-				</select>
-			</div>
 			</c:if>
 			<c:if test="${param.selPer eq 'wthdrw'}">
 				<div class="form-group mr-sm">
@@ -43,70 +66,21 @@
 				</div>
 			</c:if>
 			<div class="form-group mr-sm">
-				<c:if test="${param.srchType eq 'wbba'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최초 등록일시</option>
-						<option value="4" <c:if test="${rtnData.carbonDate eq '4'}">selected</c:if>>최종 수정일시</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbea'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbeb'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초등록일시</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종수정일시</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbia'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초 등록일시</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종 수정일시</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbib' or param.srchType eq 'wbjb'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초 등록일시</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종 수정일시</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbja'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>접수기간</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>사업기간</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최초 등록일시</option>
-						<option value="4" <c:if test="${rtnData.carbonDate eq '4'}">selected</c:if>>최종 수정일시</option>
-					</select>
-				</c:if>
-				<c:if test="${param.srchType eq 'wbbb'}">
-					<select class="form-control input-sm" data-name="carbonDate">
-						<option value="1" <c:if test="${rtnData.carbonDate eq '1'}">selected</c:if>>신청일</option>
-						<option value="2" <c:if test="${rtnData.carbonDate eq '2'}">selected</c:if>>최초등록일시</option>
-						<option value="3" <c:if test="${rtnData.carbonDate eq '3'}">selected</c:if>>최종수정일시</option>
-					</select>
-				</c:if>
+
 				<div class="input-group">
 					<%--교육 및 컨설팅은 날짜 기본값이 30일전 그 외에는 1년전 처리 관련--%>
 					<c:choose>
 						<c:when test="${param.srchType eq 'cnstg' or param.srchType eq 'edctn' or param.srchType eq 'episd'}">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${param.srchType eq 'defaultBoard'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:otherwise>
 					</c:choose>
 					<span class="input-group-btn" style="z-index:0;">
@@ -117,16 +91,16 @@
 					<span class="input-group-addon bg-white b0">~</span>
 					<c:choose>
 						<c:when test="${param.srchType eq 'episd'}">
-							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${kl:convertDate(kl:addDay(today, '+30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : kl:convertDate(kl:addDay(today, '+30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${param.srchType eq 'defaultBoard'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
-							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${kl:convertDate(kl:addDay(today, '+180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : kl:convertDate(kl:addDay(today, '+180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>
-							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:otherwise>
 					</c:choose>
 					<span class="input-group-btn" style="z-index:0;">

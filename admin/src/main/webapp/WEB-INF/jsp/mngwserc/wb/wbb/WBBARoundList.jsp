@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbb/WBBARoundListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>미래차다각화 회차 검색</h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -18,6 +18,8 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchType" value="wbba" />
+                <jsp:param name="srchOption" value="신청일,사업기간,최초등록일시,최종수정일시" />
+
             </jsp:include>
             <fieldset>
                 <div class="form-group text-sm">
@@ -76,7 +78,7 @@
                     </div>
                     <div class="pull-left ml-sm">
                         <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                        <button type="button" class="btn btn-default btn-sm" id="btnSearchRefresh">초기화</button>
                     </div>
                 </div>
             </fieldset>
@@ -84,14 +86,18 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>미래차다각화 회차 목록(총 <span id="listContainerTotCnt">0</span>건)
                 </h6>
-                <div class="pull-right">
+                <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >
                         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
                             <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
                         </jsp:include>
                     </select>
+                </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>
             </div>
             <!--리스트 시작 -->
@@ -121,12 +127,6 @@
                     <!-- 리스트 목록 결과 -->
                     <tbody id="listContainer"/>
                 </table>
-                <div class="pull-right mr-sm">
-                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-                </div>
-                <div class="pull-left mr-sm">
-                    <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDeleteList">선택삭제</button>
-                </div>
                 <!-- 페이징 버튼 -->
                 <div id="pagingContainer"/>
             </div>

@@ -17,7 +17,7 @@
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
-                <jsp:param name="srchOption" value="신청일,방문일,킥오프일,랩업일,등록일,수정일" />
+                <jsp:param name="srchOption" value="신청일,사업연도,방문일,킥오프일,랩업일,등록일,수정일" />
                 <jsp:param name="srchType" value="cnstg" />
             </jsp:include>
             <fieldset>

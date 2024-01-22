@@ -47,6 +47,8 @@ public class MPHCertificationController {
 
     private final MPEPartsCompanyService mpePartsCompanyService;
 
+
+
     /**
      * 정보 수정 비밀번호 페이지
      * @return
@@ -72,6 +74,10 @@ public class MPHCertificationController {
         MPAUserDto mpaUserDto = new MPAUserDto();
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
+
+        if(cOUserDetailsDTO.getRespCd().equals("1310")) {
+            coUserLgnService.setLastLgnDtm(cOUserDetailsDTO);
+        }
 
         // 공통코드 배열 셋팅
         ArrayList<String> cdDtlList = new ArrayList<String>();

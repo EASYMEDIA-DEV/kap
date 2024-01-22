@@ -21,6 +21,8 @@
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="periodType" value="notSelect" />
                 <jsp:param name="selPer" value="select" />
+                <jsp:param name="endDtVal" value="${rtnData.endDt}" />
+                <jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
             </jsp:include>
             <!--기간 검색 종료-->
             <fieldset>

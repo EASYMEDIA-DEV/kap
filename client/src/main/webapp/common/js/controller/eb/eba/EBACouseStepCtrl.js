@@ -133,6 +133,88 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
+			cancelApply : {
+				event : {
+					click : function(e){
+
+						if(confirm("교육 취소 시 입력된 정보는 저장되지 않습니다. \n 교육 신청을 취소하시겠습니까?")){
+							location.href="/education/apply/detail?detailsKey="+$("#edctnSeq").val();
+						}
+
+					}
+				}
+			},
+
+
+			//GPC 아이디 인증 API
+			gpcCheck : {
+				event : {
+					click : function(e) {
+
+						var seqObj = {};
+						var gpcId = $("#gpcId").val();
+
+						seqObj.gpcId = gpcId;
+
+
+						var passFlag = true;
+
+						//gpcId 인증 체크
+						cmmCtrl.jsonAjax(function(data){
+
+							var rtn = JSON.parse(data);
+							var kapUserId = rtn.kapUserId; //gpc에서 전달받은 kap아이디
+							var isGpcUser = rtn.isGpcUser; //gpc에서 전달받은 gpc가입여부(아이디가 있는지)
+							var gndrCd = rtn.gndrCd; //gpc에서 전달받은 gpc아이디로 가입된 성별
+
+							var nowId = $("#memId").val();
+							var gndr = $("#gndr").val();
+
+							//입력된 GPC 아이디가 GPC에 회원가입되어 있지 않은 경우 노출
+							if(passFlag && isGpcUser =="N"){
+								alert("GPC 홈페이지에 회원가입해주세요.");
+								passFlag = false;
+							}
+
+							//입력된 GPC 아이디에 KAP 아이디가 등록되어 있지 않은 경우 노출
+							if(passFlag && kapUserId == ""){
+								alert("GPC 계정에 KAP 아이디를 등록해주세요.");
+								passFlag = false;
+							}
+
+							//입력된 GPC 아이디에 KAP 아이디가 등록되어있지만 현재 신청하려는 kap아이디와 일치하지 않음
+							if(passFlag && nowId != kapUserId){
+								alert("GPC 계정의 KAP 아이디를 확인해주세요.");
+								passFlag = false;
+							}
+
+							//입력된 GPC 아이디의 성별과 현재 로그인된 계정의 성별이 다른 경우 노출
+							if(passFlag && gndr != gndrCd){
+								alert("GPC 계정의 성별과 KAP 성별이 일치하지 않습니다.");
+								passFlag = false;
+							}
+
+
+							if(passFlag){
+								console.log("온다 Y");
+								$(".for-status-chk").addClass("satisfy");
+								$("#gpcPass").val("Y");
+							}else{
+								console.log("온다 N");
+								$(".for-status-chk").removeClass("satisfy");
+								$("#gpcPass").val("N");
+							}
+
+
+						}, "/gpc/kapedu/verifyUserId?gpcId="+gpcId, seqObj, "text")
+
+
+
+					}
+				}
+			},
+
+
 			//회차 담당자문의 팝업
 			popupPicPrevSet : {
 				event : {
@@ -174,13 +256,21 @@ define(["ezCtrl"], function(ezCtrl) {
 			setPtcptInfo : {
 				event: {
 					click: function (e) {
+						//교육과정 신청
 
-						//gpc 인증 부분
+						var gpcId = $("#gpcId").val();
+						if(gpcId == ""){
+							alert("GPC 아이디를 입력해주세요.");
+							return false;
+						}
 
+						var gpcYn = $("#gpcYn").val();
+						var gpcPass = $("#gpcPass").val();
 
-
-
-
+						if(gpcYn == "Y" && gpcPass == "N"){
+							alert("GPC 아이디를 인증해주세요.");
+							return false;
+						}
 
 						if($("#agreeChk").is(":checked")){
 							setPtcptInfo(this);

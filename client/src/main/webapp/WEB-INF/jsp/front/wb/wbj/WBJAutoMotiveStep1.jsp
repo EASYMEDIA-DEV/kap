@@ -176,7 +176,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.qlty5starCd}">
-                                                            ${qlty5starCd.qlty5starNm} / ${rtnData.qlty5starYear}
+                                                            ${rtnData.qlty5starNm} / ${rtnData.qlty5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -187,7 +187,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.pay5starCd}">
-                                                            ${qlty5starCd.pay5starNm} / ${rtnData.pay5starYear}
+                                                            ${rtnData.pay5starNm} / ${rtnData.pay5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -198,7 +198,7 @@
                                                 <td>
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.tchlg5starCd}">
-                                                            ${qlty5starCd.tchlg5starNm} / ${rtnData.tchlg5starYear}
+                                                            ${rtnData.tchlg5starNm} / ${rtnData.tchlg5starYear}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -209,9 +209,16 @@
                                             <tr>
                                                 <th>SQ정보</th>
                                                 <td>
-                                                    <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
-                                                        <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
-                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.sqInfoList}">
+                                                            <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
+                                                                <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="f-body1">-</p>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:if>

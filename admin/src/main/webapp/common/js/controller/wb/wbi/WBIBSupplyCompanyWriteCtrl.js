@@ -221,7 +221,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     cmmCtrl.frmAjax(function(respObj) {
                                         /* return data input */
                                         setInputValue(respObj);
-                                        fnpstnNmShow();
+                                        fnpstnNmShow($('#pstnCd').val());
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");
@@ -266,6 +266,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
+            var pstnCd = $("#pstnCd").val();
+
+            if(pstnCd =='MEM_CD01007'){
+                $("#pstnNm").css("display", "block");
+            }else{
+                $("#pstnNm").val("");
+                $("#pstnNm").css("display", "none");
+            }
+
             //리스트 조회
             //폼 데이터 처리
             $formObj.find(".dropzone").each(function(){
@@ -298,6 +307,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         isValid = false;
                         return false;
                     }
+
+                    jQuery.ajax({
+                        url : "./getBsnmNoCnt",
+                        type : "POST",
+                        timeout: 30000,
+                        data : $formObj.serializeArray(),
+                        dataType : "json",
+                        async: false,
+                        cache : false,
+                        success : function(data, status, xhr){
+                            if(data.respCnt > 0 ){
+                                alert("이미 해당 회차에 신청한 부품사입니다.");
+                                isValid = false;
+                            }
+                        }
+                    });
 
                     return isValid;
                 },

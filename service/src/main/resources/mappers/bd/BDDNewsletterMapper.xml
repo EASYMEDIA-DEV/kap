@@ -153,6 +153,71 @@
     </delete>
 
     <!--
+         쿼리명 : BDDNewsletterMapper.selectNewsletterFileOrdList
+         설  명 : [사용자] 뉴스레터 첨부파일 ord 목록 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.22   구은희       최초생성
+    -->
+    <select id="selectNewsletterFileOrdList" parameterType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNewsletterFileOrdList */
+            FILE_ORD
+             , FILE_SEQ
+             , ORGN_FILE_NM AS FILE_NAME
+        FROM CO_FILE_DTL
+        WHERE USE_YN = 'Y'
+          AND FILE_SEQ = (SELECT FILE_SEQ FROM BD_NWSLT_MST where NWSLT_SEQ = #{detailsKey})
+    </select>
+
+    <!--
+         쿼리명 : BDDNewsletterMapper.updateNewsletterReadCnt
+         설  명 : [사용자] 뉴스레터 조회수 증가
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.22   구은희       최초생성
+    -->
+    <update id="updateNewsletterReadCnt" parameterType="BDDNewsletterDTO">
+        UPDATE /* BDDNewsletterMapper.updateNewsletterReadCnt */  BD_NWSLT_MST
+        SET READ_CNT = (SELECT A.READ_CNT
+                        FROM
+                        (
+                            SELECT READ_CNT + 1 AS READ_CNT
+                            FROM BD_NWSLT_MST
+                            WHERE NWSLT_SEQ = #{detailsKey}
+                        ) AS A
+                        WHERE NWSLT_SEQ = #{detailsKey})
+        WHERE NWSLT_SEQ = #{detailsKey};
+    </update>
+
+    <!--
+         쿼리명 : BDDNewsletterMapper.selectNextAndPrevSeqVal
+         설  명 : [사용자] 뉴스레터 이전, 다음 글 SEQ 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.22   구은희       최초생성
+    -->
+    <select id="selectNextAndPrevSeqVal" parameterType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNextAndPrevSeqVal */
+            ROW_NUM
+             , NEXT_SEQ
+             , (SELECT TITL FROM BD_NWSLT_MST WHERE NWSLT_SEQ = NEXT_SEQ) AS NEXT_TITL
+             , PREV_SEQ
+             , (SELECT TITL FROM BD_NWSLT_MST WHERE NWSLT_SEQ = PREV_SEQ) AS PREV_TITL
+        FROM
+            (
+                SELECT
+                    (SELECT COUNT(*) FROM BD_NWSLT_MST B WHERE B.NWSLT_SEQ <![CDATA[<=]]> A.NWSLT_SEQ) AS ROW_NUM
+                     , (SELECT MIN(NWSLT_SEQ) FROM BD_NWSLT_MST C WHERE C.NWSLT_SEQ <![CDATA[>]]> A.NWSLT_SEQ) AS NEXT_SEQ
+                     , (SELECT MAX(NWSLT_SEQ) FROM BD_NWSLT_MST D WHERE D.NWSLT_SEQ <![CDATA[<]]> A.NWSLT_SEQ) AS PREV_SEQ
+                FROM
+                    BD_NWSLT_MST A
+                WHERE NWSLT_SEQ = #{detailsKey}
+                ORDER BY
+                    NWSLT_SEQ
+            ) TB
+    </select>
+
+    <!--
     쿼리명 : selectNewsletterListwhereSql
     설  명 : 뉴스레터 관리 where Sql
       수정일      수정자       수정내용
@@ -162,6 +227,10 @@
     <sql id="selectNewsletterListwhereSql">
         <if test='siteGubun == "front"'>
             AND exps_yn = 'Y'
+            <if test="srchVal != null and srchVal != ''">
+                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+            </if>
         </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
@@ -198,22 +267,22 @@
                 <when test="f == 2">
                     AND (
                     INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> -1)
                     )
                 </when>
                 <when test="f == 3">
                     AND (
                     INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> -1)
                     )
                 </when>
                 <otherwise>
                     AND (
                     INSTR(#{q}, TITL) <![CDATA[>]]> 0 OR
                     INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> -1) OR
                     INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> -1)
                     )
                 </otherwise>
             </choose>

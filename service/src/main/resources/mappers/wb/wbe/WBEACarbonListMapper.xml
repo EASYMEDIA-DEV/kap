@@ -41,6 +41,10 @@
             WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
             ELSE '마감'
             END AS ACCT_STATUS
+            , CASE WHEN NOW() <![CDATA[< ]]> ACCS_STRT_DTM THEN '2'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '1'
+            ELSE '3'
+            END AS STATUS_ORD
             ,DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
             ,EXPS_YN
             ,REG_ID
@@ -52,7 +56,13 @@
             FROM CX_EPISD_MST A
         ) A
         <include refid="selectCarbonListwhereSql" />
+        <if test='siteGubun != "front"'>
         ORDER BY A.REG_DTM DESC
+        </if>
+        <if test='siteGubun != "admin"'>
+        ORDER BY STATUS_ORD ASC ,A.ACCS_STRT_DTM ASC
+        </if>
+
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 

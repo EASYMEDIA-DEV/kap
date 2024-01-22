@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -101,7 +102,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			if (eBBEpisdDTO.getMainYn().equals("Y")) {
 				eBBEpisdDTO.setPageRowSize(24);
 			} else {
-				eBBEpisdDTO.setPageRowSize(9);
+				if(eBBEpisdDTO.getPageRowSize() != null){
+					eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
+				}else{
+					eBBEpisdDTO.setPageRowSize(9);
+				}
 			}
 			int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
 
@@ -130,6 +135,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 
 		return eBBEpisdDTO;
+	}
+
+	/**
+	 * 교육차수 목록 갯수(통합검색)
+	 */
+	public int selectEpisdListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+		return eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO);
 	}
 
 	/**
@@ -532,8 +544,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.insertIsttrRel(eBBEpisdDTO);
 
 		//교육강의 상세 등록(온라인교육)
-		eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후
-		setLctrList(eBBEpisdDTO, cOUserDetailsDTO);//재등록
+
+		if(eBBEpisdDTO.getModifyYn().equals("Y")){
+			eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후
+			setLctrList(eBBEpisdDTO, cOUserDetailsDTO);//재등록
+		}
 
 
 		//예산지출 내역 등록
@@ -812,19 +827,32 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		List<EBBPtcptDTO> atndcDtoList = new ArrayList<>();
 		// 반복문을 통해 날짜 출력
 		while (!startDate.isAfter(endDate)) {
-			EBBPtcptDTO atndcDto = new EBBPtcptDTO();
 
-			atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
-			atndcDto.setEdctnDt(String.valueOf(startDate));
-			atndcDto.setAtndcDtm(null);
-			atndcDto.setLvgrmDtm(null);
-			atndcDto.setEtcNm(null);
-			atndcDto.setRegId(eBBPtcptDTO.getRegId());
-			atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
-			atndcDto.setModId(eBBPtcptDTO.getModId());
-			atndcDto.setModIp(eBBPtcptDTO.getModIp());
-			atndcDtoList.add(atndcDto);
+
+			// 주말인지 판단하여 출력
+			if (startDate.getDayOfWeek() == DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
+
+			} else {
+				EBBPtcptDTO atndcDto = new EBBPtcptDTO();
+
+				atndcDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+				atndcDto.setEdctnDt(String.valueOf(startDate));
+				atndcDto.setAtndcDtm(null);
+				atndcDto.setLvgrmDtm(null);
+				atndcDto.setEtcNm(null);
+				atndcDto.setRegId(eBBPtcptDTO.getRegId());
+				atndcDto.setRegIp(eBBPtcptDTO.getRegIp());
+				atndcDto.setModId(eBBPtcptDTO.getModId());
+				atndcDto.setModIp(eBBPtcptDTO.getModIp());
+				atndcDtoList.add(atndcDto);
+			}
+
+
+
 			startDate = startDate.plusDays(1); // 다음 날짜로 이동
+
+
+
 		}
 
 
@@ -1672,10 +1700,22 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 		eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
-
 		eBBEpisdMapper.updateAtndcInfo(eBBPtcptDTO);
-
 	}
+
+	/**
+	 * 마이페이지 퇴실체크 진행
+	 */
+	public void updateLvgrmInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception {
+
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+		eBBEpisdMapper.updateLvgrmInfo(eBBPtcptDTO);
+	}
+
+
 
 
 	/**

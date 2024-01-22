@@ -244,12 +244,19 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     click: function () {
                         $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            $formObj.find('#memSeq').val(data.memSeq);
-                            cmmCtrl.frmAjax(function(respObj) {
-                                /* return data input */
-                                setInputValue(respObj);
-                                fnpstnNmShow();
-                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                            cmmCtrl.frmAjax(function (respObj) {
+                                $formObj.find('#memSeq').val(data.memSeq);
+                                if(respObj.rtnData == 0){
+                                    cmmCtrl.frmAjax(function(respObj) {
+                                        /* return data input */
+                                        setInputValue(respObj);
+                                        fnpstnNmShow($('#pstnCd').val());
+                                    }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                                } else {
+                                    alert("이관 이력이 있는 회원은 선택이 불가합니다.");
+                                    return false;
+                                }
+                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
                         });
                     }
                 }
@@ -347,6 +354,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
+            var pstnCd = $("#pstnCd").val();
+
+            if(pstnCd =='MEM_CD01007'){
+                $("#pstnNm").css("display", "block");
+            }else{
+                $("#pstnNm").val("");
+                $("#pstnNm").css("display", "none");
+            }
+
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {

@@ -267,7 +267,7 @@
                             <p class="form-control-static">${rtnDto.regName} (${rtnDto.regId})</p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최초 등록일</label>
+                        <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
                         </div>
@@ -290,7 +290,7 @@
                             </p>
                         </div>
                         <div class="col-sm-1"></div>
-                        <label class="col-sm-1 control-label">최종 수정일</label>
+                        <label class="col-sm-1 control-label">최종 수정일시</label>
                         <div class="col-sm-4">
                             <p class="form-control-static">
                                 <c:choose>

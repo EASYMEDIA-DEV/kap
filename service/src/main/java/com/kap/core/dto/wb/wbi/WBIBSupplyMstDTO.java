@@ -32,6 +32,9 @@ public class WBIBSupplyMstDTO extends BaseDTO {
     @Schema(title = "신청사업자번호")
     private String appctnBsnmNo;
 
+    @Schema(title = "사업자번호", example = "")
+    private String bsnmNo;
+
     @Schema(title = "관리자메모")
     private String admMemo;
 

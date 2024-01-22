@@ -7,6 +7,7 @@ import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
@@ -374,4 +375,45 @@ public class WBFBRegisterCompanyController {
         }
     }
 
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getBsnmNoCnt")
+    public String getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.getBsnmNoCnt(wBFBRegisterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getSbrdnBsnmNoCnt")
+    public String getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBFBRegisterCompanyService.getSbrdnBsnmNoCnt(wBFBRegisterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }

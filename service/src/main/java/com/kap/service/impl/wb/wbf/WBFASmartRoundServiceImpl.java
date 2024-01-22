@@ -14,6 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -302,6 +304,7 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
                 } else {
                     //신청가능 코드 200
                     rtnCode = 200;
+                    RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
                 }
             }
         }

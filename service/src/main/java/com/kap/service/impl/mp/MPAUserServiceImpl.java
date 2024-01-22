@@ -119,6 +119,17 @@ public class MPAUserServiceImpl implements MPAUserService {
         return mpaUserMapper.selectUserDtlTab(mpaUserDto);
     }
 
+
+    /**
+     * ci값 조회
+     * @param mpaUserDto
+     * @return
+     */
+    public MPAUserDto selectCiUser(MPAUserDto mpaUserDto) {
+        return mpaUserMapper.selectCiUser(mpaUserDto);
+    }
+
+
     /**
      * 이메일 중복 검사
      * @param mpaUserDto

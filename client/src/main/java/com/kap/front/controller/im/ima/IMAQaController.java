@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 
 /**
@@ -49,7 +50,7 @@ public class IMAQaController {
      * 1:1문의 페이지
      */
     @GetMapping(value = "/index")
-    public String getPartUserListPage(IMAQaDTO pIMAQaDTO, ModelMap modelMap) throws Exception {
+    public String getPartUserListPage(IMAQaDTO pIMAQaDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         COUserDetailsDTO lgnData = COUserDetailsHelperService.getAuthenticatedUser();
 
         if(lgnData != null) {
@@ -62,7 +63,7 @@ public class IMAQaController {
             return "/front/im/ima/IMAQaWrite.front";
         }
         else {
-            return "redirect:/login";
+            return "redirect:/login?rtnUrl=/foundation/cs/qa/index";
         }
     }
 

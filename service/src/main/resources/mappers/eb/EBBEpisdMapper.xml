@@ -618,6 +618,7 @@
 			 , parnt_seq
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 		     , jdgmt_yn
+		     , gpc_yn
 			 , ctgry_cd
 			 , ctgry_cd_nm
 		     , cbsn_cd
@@ -728,6 +729,7 @@
 		FROM (SELECT
 				  b.edctn_seq
 		           , a.episd_seq
+		           , b.gpc_yn
 				   , b.ctgry_cd
 		           , a.cbsn_cd
 				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
@@ -2453,7 +2455,7 @@
 
 	<!--
       쿼리명 : EBBEpisdMapper.updateAtndcInfo
-      설  명 : 마이페이지 - 교육신청을 취소한다
+      설  명 : 마이페이지 - 출석체크를 진행한다.
        수정일     수정자       수정내용
      ==========   ======    ==============
      2024.01.17   김학규       최초생성
@@ -2468,6 +2470,26 @@
 
 			WHERE ptcpt_seq = #{ptcptSeq}
 			  AND edctn_dt =  DATE_FORMAT(NOW(), '%Y-%m-%d')
+
+	</update>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.updateLvgrmInfo
+      설  명 : 마이페이지 - 출석체크를 진행한다.
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.17   김학규       최초생성
+ 	-->
+	<update id="updateLvgrmInfo" parameterType="EBBEpisdDTO" >
+
+		UPDATE ep_edctn_atndc_dtl /* EBBEpisdMapper.updateLvgrmInfo */
+		SET lvgrm_dtm = NOW()
+		  , mod_id = #{modId}
+		  , mod_ip = #{modIp}
+		  , mod_dtm = now()
+
+		WHERE ptcpt_seq = #{ptcptSeq}
+		  AND edctn_dt =  DATE_FORMAT(NOW(), '%Y-%m-%d')
 
 	</update>
 

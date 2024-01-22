@@ -316,6 +316,31 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         if(wBCBSecurityPbsnDtlDTO.getTtlPmt() == null || wBCBSecurityPbsnDtlDTO.getTtlPmt().equals("")){
             wBCBSecurityPbsnDtlDTO.setTtlPmt(null);
         }
+        if(wBCBSecurityPbsnDtlDTO.getChkDt() == null || wBCBSecurityPbsnDtlDTO.getChkDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setChkDt(null);
+        }
+
+        if(wBCBSecurityPbsnDtlDTO.getExamScore() == null || wBCBSecurityPbsnDtlDTO.getExamScore().equals("")){
+            wBCBSecurityPbsnDtlDTO.setExamScore(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getPayDt() == null || wBCBSecurityPbsnDtlDTO.getPayDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setPayDt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getNslltSchdlDt() == null || wBCBSecurityPbsnDtlDTO.getNslltSchdlDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setNslltSchdlDt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getAccsDt() == null || wBCBSecurityPbsnDtlDTO.getAccsDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setAccsDt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getGiveSeq() == null || wBCBSecurityPbsnDtlDTO.getGiveSeq().equals("")){
+            wBCBSecurityPbsnDtlDTO.setGiveSeq(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getCmpltnBrfngDt() == null || wBCBSecurityPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setCmpltnBrfngDt(null);
+        }
+        if(wBCBSecurityPbsnDtlDTO.getLastChkDt() == null || wBCBSecurityPbsnDtlDTO.getLastChkDt().equals("")){
+            wBCBSecurityPbsnDtlDTO.setLastChkDt(null);
+        }
 
         wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
         wBCBSecurityPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
@@ -1128,6 +1153,30 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             if(wBCBSecurityPbsnDtlDTO.getTtlPmt() == null || wBCBSecurityPbsnDtlDTO.getTtlPmt().equals("")){
                 wBCBSecurityPbsnDtlDTO.setTtlPmt(null);
             }
+            if(wBCBSecurityPbsnDtlDTO.getChkDt() == null || wBCBSecurityPbsnDtlDTO.getChkDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setChkDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getExamScore() == null || wBCBSecurityPbsnDtlDTO.getExamScore().equals("")){
+                wBCBSecurityPbsnDtlDTO.setExamScore(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getPayDt() == null || wBCBSecurityPbsnDtlDTO.getPayDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setPayDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getNslltSchdlDt() == null || wBCBSecurityPbsnDtlDTO.getNslltSchdlDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setNslltSchdlDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getAccsDt() == null || wBCBSecurityPbsnDtlDTO.getAccsDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setAccsDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getGiveSeq() == null || wBCBSecurityPbsnDtlDTO.getGiveSeq().equals("")){
+                wBCBSecurityPbsnDtlDTO.setGiveSeq(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getCmpltnBrfngDt() == null || wBCBSecurityPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setCmpltnBrfngDt(null);
+            }
+            if(wBCBSecurityPbsnDtlDTO.getLastChkDt() == null || wBCBSecurityPbsnDtlDTO.getLastChkDt().equals("")){
+                wBCBSecurityPbsnDtlDTO.setLastChkDt(null);
+            }
 
             wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
             wBCBSecurityPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
@@ -1187,6 +1236,21 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 
         wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
         respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+        respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 

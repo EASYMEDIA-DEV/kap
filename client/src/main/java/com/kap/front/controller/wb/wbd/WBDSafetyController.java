@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -41,6 +42,7 @@ public class WBDSafetyController {
     /**
      * 서비스
      **/
+    private final COCodeService cOCodeService;
     public final WBDASafetyListService wBDASafetyListService;
     public final WBDBSafetyService wBDBSafetyService;
     public final COGCntsService pCOGCntsService;
@@ -56,7 +58,7 @@ public class WBDSafetyController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            wBRoundMstSearchDTO.setBsnCd("BNS04");
+            wBRoundMstSearchDTO.setBsnCd("BSN04");
 
             //CMS
             pCOGCntsDTO.setMenuSeq(717);
@@ -121,6 +123,11 @@ public class WBDSafetyController {
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("MEM_CD"); // 신청 진행상태
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
             modelMap.addAttribute("episd", wBDBSafetySearchDTO.getEpisdSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
             modelMap.addAttribute("rtnData", wBDBSafetyService.selectCompanyUserDtl(wBDBSafetySearchDTO));
@@ -152,7 +159,7 @@ public class WBDSafetyController {
 
             //사업접수 하단플로팅 영역용
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("BNS04");
+            wBRoundMstSearchDTO.setBsnCd("BSN04");
             modelMap.addAttribute("rtnRoundDtl", wBDASafetyListService.getRoundDtl(wBRoundMstSearchDTO));
 
         } catch (Exception e) {

@@ -91,7 +91,7 @@
                                                             <div class="info-list-w">
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">접수기간</p>
-                                                                    <p class="txt f-body2">${item.accsStrtDtm} ~ <br class="only-pc"/>${item.accsEndDtm}</p>
+                                                                    <p class="txt f-body2">${kl:convertDate(item.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')} ~ <br class="only-pc"/>${kl:convertDate(item.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">사업기간</p>
@@ -123,11 +123,11 @@
                                 <div class="btn-wrap add-load align-center">
                                     <a class="btn-solid small black-line addMore" href="javascript:"><span>더보기</span>
                                         <c:choose>
-                                            <c:when test="${rtnData.totalCount > 10}">
-                                                <c:set var="curruntCnt" value="10" />
+                                            <c:when test="${rtnData.totalCount > 3}">
+                                                <c:set var="curruntCnt" value="3" />
                                             </c:when>
                                             <c:otherwise>
-                                                <c:set var="curruntCnt" value="${rtnData.totalCount % 10}" />
+                                                <c:set var="curruntCnt" value="${rtnData.totalCount % 3}" />
                                             </c:otherwise>
                                         </c:choose>
                                         <span class="item-count">
@@ -175,21 +175,21 @@
                 <div class="accepting-fixed-area">
                     <div class="for-position">
                         <button class="open-click-area" type="button">
-                            <p class="tit"><span>${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차 다각화 사업 접수중</span></p>
+                            <p class="tit"><span>${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</span></p>
                             <div class="btn-text-icon plus"><span>더보기</span></div>
                         </button>
 
                         <div class="hide-area">
                             <div class="inner-con">
                                 <div class="tit-area">
-                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차 다각화 사업 접수중</p>
+                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</p>
                                 </div>
                                 <div class="con-area">
                                     <div class="scroll-area">
                                         <div class="info-line-list-w">
                                             <div class="list">
                                                 <p class="tit">접수기간</p>
-                                                <p class="txt">${rtnRoundDtl.accsStrtDtm} ~ ${rtnRoundDtl.accsEndDtm}</p>
+                                                <p class="txt">${kl:convertDate(rtnRoundDtl.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')} ~ ${kl:convertDate(rtnRoundDtl.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                                             </div>
                                             <div class="list">
                                                 <p class="tit">사업기간</p>

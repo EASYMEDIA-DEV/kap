@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -41,6 +42,7 @@ public class WBECarbonController {
     /**
      * 서비스
      **/
+    private final COCodeService cOCodeService;
     public final WBEACarbonListService wBEACarbonListService;
     public final WBEBCarbonCompanyService wBEBCarbonCompanyService;
     public final COGCntsService pCOGCntsService;
@@ -56,7 +58,7 @@ public class WBECarbonController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            wBRoundMstSearchDTO.setBsnCd("BNS05");
+            wBRoundMstSearchDTO.setBsnCd("BSN05");
 
             //CMS
             pCOGCntsDTO.setMenuSeq(718);
@@ -121,6 +123,11 @@ public class WBECarbonController {
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("MEM_CD"); // 신청 진행상태
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
             modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
             modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCompanyUserDtl(wBEBCarbonCompanySearchDTO));
@@ -152,7 +159,7 @@ public class WBECarbonController {
 
             //사업접수 하단플로팅 영역용
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("BNS05");
+            wBRoundMstSearchDTO.setBsnCd("BSN05");
             modelMap.addAttribute("rtnRoundDtl", wBEACarbonListService.getRoundDtl(wBRoundMstSearchDTO));
 
         } catch (Exception e) {

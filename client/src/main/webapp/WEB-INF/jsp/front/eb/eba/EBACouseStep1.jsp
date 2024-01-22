@@ -19,10 +19,30 @@
         <input type="hidden" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${episdDto.rcrmtMthdCd}" />
 
 
+        <input type="hidden" id="gpcYn" name="gpcYn" value="${episdDto.gpcYn}" />
+
+        <c:set var="gpcYn" value="${episdDto.gpcYn}"/>
+        <c:set var="gpcPass" value="Y"/>
+        <c:choose>
+            <c:when test="${gpcYn eq 'Y'}">
+                <c:set var="gpcPass" value="N"/>
+            </c:when>
+            <c:otherwise>
+                <c:set var="gpcPass" value="Y"/>
+            </c:otherwise>
+
+        </c:choose>
+
+        <input type="hidden" id="gpcPass" name="gpcPass" value="${gpcPass}" />
 
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
-        <input type="hidden" id="bsnmNo" name="bsnmNo" value="${loginMap.bsnmNo}" />
 
+        <input type="hidden" id="memId" name="memId" value="${applicantInfo.id}" /><!--로그인 한 사람의 id -->
+
+        <c:set var="gndr" value="${applicantInfo.gndr eq 1 ? 'M' : 'F'}" />
+        <input type="hidden" id="gndr" name="gndr" value="${gndr}" /><!--로그인 한 사람의 성별 -->
+
+        <input type="hidden" id="bsnmNo" name="bsnmNo" value="${loginMap.bsnmNo}" />
 
 
         <!-- content 영역 start -->
@@ -383,48 +403,53 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="cont-sec no-border scroll-motion">
-                            <div class="for-motion">
-                                <div class="sec-tit-area">
-                                    <p class="f-title3">GPC 아이디 인증</p>
-                                </div>
-                                <div class="sec-con-area">
-                                    <div class="data-enter-form">
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-head">GPC 아이디</p>
-                                            </div>
-                                            <div class="td">
-                                                <div class="data-line-w">
-                                                    <div class="data-line">
-                                                        <div class="for-status-chk satisfy"><!-- 조건 충족 시 satisfy 클래스 추가 -->
-                                                            <div class="form-group">
-                                                                <div class="form-input">
-                                                                    <input type="text" placeholder="GPC 아이디 입력" required="">
+
+                        <c:if test="${gpcYn eq 'Y'}">
+
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">GPC 아이디 인증</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="data-enter-form">
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-head">GPC 아이디</p>
+                                                </div>
+                                                <div class="td">
+                                                    <div class="data-line-w">
+                                                        <div class="data-line">
+                                                            <div class="for-status-chk"><!-- 조건 충족 시 satisfy 클래스 추가 -->
+                                                                <div class="form-group">
+                                                                    <div class="form-input">
+                                                                        <input type="text" name="gpcId" id="gpcId" placeholder="GPC 아이디 입력" required="">
+                                                                    </div>
+                                                                    <div class="btn-wrap">
+                                                                        <button class="btn-solid small gray-bg gpcCheck" type="button"><span>인증</span></button>
+                                                                    </div>
                                                                 </div>
-                                                                <div class="btn-wrap">
-                                                                    <button class="btn-solid small gray-bg" type="button"><span>인증</span></button>
-                                                                </div>
+                                                                <p class="satisfy-msg">아이디가 인증되었습니다.</p>
                                                             </div>
-                                                            <p class="satisfy-msg">아이디가 인증되었습니다.</p>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="info-sec">
-                                        <p class="exclamation-txt f-body1">GPC 교육의 경우 GPC 홈페이지의 KAP 아이디와 로그인한 아이디가 동일해야 신청 가능합니다.</p>
-                                        <p class="exclamation-txt f-body1">GPC(글로벌상생협력센터) 아이디의 경우 본인의 계정만 사용 가능하며, 타인의 아이디는 사용이 불가능합니다.</p>
-                                    </div>
-                                    <div class="btn-sec">
-                                        <div class="btn-wrap">
-                                            <button class="btn-text-icon black-arrow" type="button"><span>GPC 회원가입</span></button>
+                                        <div class="info-sec">
+                                            <p class="exclamation-txt f-body1">GPC 교육의 경우 GPC 홈페이지의 KAP 아이디와 로그인한 아이디가 동일해야 신청 가능합니다.</p>
+                                            <p class="exclamation-txt f-body1">GPC(글로벌상생협력센터) 아이디의 경우 본인의 계정만 사용 가능하며, 타인의 아이디는 사용이 불가능합니다.</p>
+                                        </div>
+                                        <div class="btn-sec">
+                                            <div class="btn-wrap">
+                                                <button class="btn-text-icon black-arrow" type="button"><span>GPC 회원가입</span></button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </c:if>
+
                         <div class="cont-sec no-border scroll-motion">
                             <div class="for-motion">
                                 <div class="sec-tit-area">
@@ -496,7 +521,7 @@
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap for-motion">
                             <div class="btn-set">
-                                <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                                <a class="btn-solid small gray-bg cancelApply" href="javascript:"><span>취소</span></a>
                             </div>
                             <div class="btn-set">
                                 <a class="btn-solid small black-bg setPtcptInfo" href="javascript:"><span>신청하기</span></a>

@@ -5,7 +5,6 @@ import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.service.*;
@@ -14,8 +13,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -87,7 +87,7 @@ public class WBFSmartFactoryController {
             SMJFormDTO smjFormDTO = new SMJFormDTO();
             smjFormDTO.setTypeCd("BUSINESS02");
             modelMap.addAttribute("rtnRoundForm", smjFormService.selectFormDtl(smjFormDTO));
-
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -140,15 +140,28 @@ public class WBFSmartFactoryController {
     public String getStep1Page(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryStep1.front";
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BSN06");
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-            wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
 
-            modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getCompanyUserDtl(wBFBRegisterSearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBFBRegisterSearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            } else {
+                wBFBRegisterSearchDTO.setBsnCd("BSN06");
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+
+                modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getCompanyUserDtl(wBFBRegisterSearchDTO));
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBFBRegisterSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -166,19 +179,28 @@ public class WBFSmartFactoryController {
     public String getStep2Page(WBRoundMstSearchDTO wbRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryStep2.front";
         try {
-            /* 회차 정보 */
-            wbRoundMstSearchDTO.setBsnCd("BSN06");
-            wbRoundMstSearchDTO.setDetailsKey(wbRoundMstSearchDTO.getEpisdSeq().toString());
-            modelMap.addAttribute("rtnData", wBFASmartRoundService.selRoundDetail(wbRoundMstSearchDTO));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
-            SMJFormDTO smjFormDTO = new SMJFormDTO();
-            smjFormDTO.setTypeCd("BUSINESS02");
-            modelMap.addAttribute("rtnRoundForm", smjFormService.selectFormDtl(smjFormDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbRoundMstSearchDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                vwUrl = "redirect:./content";
+            } else {
+                /* 회차 정보 */
+                wbRoundMstSearchDTO.setBsnCd("BSN06");
+                wbRoundMstSearchDTO.setDetailsKey(wbRoundMstSearchDTO.getEpisdSeq().toString());
+                modelMap.addAttribute("rtnData", wBFASmartRoundService.selRoundDetail(wbRoundMstSearchDTO));
 
-            /* 스마트 상태 코드 값 */
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            cdDtlList.add("BGN_REG_INF");
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                SMJFormDTO smjFormDTO = new SMJFormDTO();
+                smjFormDTO.setTypeCd("BUSINESS02");
+                modelMap.addAttribute("rtnRoundForm", smjFormService.selectFormDtl(smjFormDTO));
+
+                /* 스마트 상태 코드 값 */
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("BGN_REG_INF");
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -195,8 +217,16 @@ public class WBFSmartFactoryController {
     @RequestMapping(value = "/insert")
     public String insert(WBFBRegisterDTO wBFBRegisterDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
-            wBFBRegisterDTO.setBsnCd("BSN06");
-            modelMap.addAttribute("actCnt", wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBFBRegisterDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                wBFBRegisterDTO.setBsnCd("BSN06");
+                modelMap.addAttribute("actCnt", wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -215,15 +245,20 @@ public class WBFSmartFactoryController {
     public String getCompletePage(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryComplete.front";
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BSN06");
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-            wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            } else {
+                wBFBRegisterSearchDTO.setBsnCd("BSN06");
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
 
-            modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getApplyDtl(wBFBRegisterSearchDTO));
+                modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getApplyDtl(wBFBRegisterSearchDTO));
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

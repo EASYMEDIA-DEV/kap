@@ -19,6 +19,8 @@
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="기간검색" />
 					<jsp:param name="srchOption" value="취득일,만료예정일,수정일" />
+					<jsp:param name="endDtVal" value="${rtnData.endDt}" />
+					<jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
 				</jsp:include>
 				<fieldset>
 					<div class="form-group text-sm">

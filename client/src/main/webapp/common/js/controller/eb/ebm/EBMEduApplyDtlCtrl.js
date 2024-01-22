@@ -120,7 +120,7 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
-			episdCheck : {
+			atndcCheck : {
 				event: {
 					click: function () {
 						//QR코드로 접근시 출석체크를 진행한다
@@ -145,6 +145,33 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+
+			lvgrmCheck : {
+				event: {
+					click: function () {
+						//퇴실체크를 진행한다.
+
+						var seqObj = {};
+						var ptcptSeq = $("#ptcptSeq").val();
+
+						seqObj.ptcptSeq = ptcptSeq;
+
+						if(confirm("퇴실 처리 하시겠습니까?")){
+							cmmCtrl.jsonAjax(function(data){
+
+								if(data == "Y"){
+									alert("퇴실 처리되었습니다.");
+									location.reload();
+								}
+
+							}, "/my-page/edu-apply/updateLvgrmInfo", seqObj, "text")
+						}
+
+
+					}
+				}
+			},
+
 
 			srvStart : {
 				event : {
