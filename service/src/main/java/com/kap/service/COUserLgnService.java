@@ -58,4 +58,7 @@ public interface COUserLgnService {
 
 	MPAUserDto getPasswordChk(COLoginDTO cOLoginDTO) throws Exception;
 
+
+	int setLastLgnDtm(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
+
 }

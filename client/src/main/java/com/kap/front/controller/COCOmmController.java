@@ -239,7 +239,7 @@ public class COCOmmController {
         log.info("*************************************");
 
         session.setAttribute("niceSession", cocNiceMyResDto);
-        session.setMaxInactiveInterval(3*60); //TODO 양현우 506 시간 재 설정 하기
+        session.setMaxInactiveInterval(30*60); //TODO 양현우 506 시간 재 설정 하기
 //        session.setMaxInactiveInterval(20); //TODO 양현우 506 시간 재 설정 하기
 
         if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {

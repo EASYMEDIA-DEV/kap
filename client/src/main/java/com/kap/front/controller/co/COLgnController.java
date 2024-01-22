@@ -270,8 +270,8 @@ public class COLgnController {
 			{
 				COUserDetailsDTO rtnCOAAdmDTO = (COUserDetailsDTO)RequestContextHolder.getRequestAttributes().getAttribute("tmpLgnMap", RequestAttributes.SCOPE_SESSION);
 				MPAUserDto mpaUserDto = new MPAUserDto();
-				mpaUserDto.setDetailsKey(String.valueOf(rtnCOAAdmDTO.getSeq()));
-				modelMap.addAttribute("rtnDtl", mpaUserService.selectUserDtlTab(mpaUserDto));
+				mpaUserDto.setId(String.valueOf(rtnCOAAdmDTO.getId()));
+				modelMap.addAttribute("rtnDtl", mpaUserService.selectCiUser(mpaUserDto));
 				modelMap.addAttribute("tmpLgnVO", rtnCOAAdmDTO);
 			}
 		}

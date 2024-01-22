@@ -62,6 +62,8 @@ public interface MPAUserMapper {
      */
     MPAUserDto selectUserDtlTab(MPAUserDto mpaUserDto);
 
+    MPAUserDto selectCiUser(MPAUserDto mpaUserDto);
+
     /**
      * 이메일 중복 체크
      * @param mpaUserDto

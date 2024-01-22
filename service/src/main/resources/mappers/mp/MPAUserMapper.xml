@@ -1282,4 +1282,20 @@
           and bsnm_no =#{workBsnmNo}
     </update>
 
+    <!--
+    쿼리명 : MPAUserMapper.selectCiUser
+    설  명 : 사용자 ci 값조회
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.01.17    양현우       최초생성
+-->
+    <select id="selectCiUser" parameterType="MPAUserDto" resultType="MPAUserDto">
+        select ci
+          from co_mem_mst m1
+           inner join co_mem_dtl m2
+            on m1.mem_seq = m2.mem_seq
+             where id =#{id}
+              and wthdrw_yn ='Y'
+    </select>
+
 </mapper>

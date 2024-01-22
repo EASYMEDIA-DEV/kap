@@ -51,6 +51,11 @@ public interface MPAUserService {
      */
     MPAUserDto selectUserDtl(MPAUserDto mpaUserDto) throws Exception;
 
+
+    MPAUserDto selectCiUser(MPAUserDto mpaUserDto) throws Exception;
+
+
+
     /**
      * 사용자 상세 탭 조회
      * @param mpaUserDto
