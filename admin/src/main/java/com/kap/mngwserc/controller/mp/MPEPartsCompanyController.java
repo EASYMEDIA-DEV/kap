@@ -341,4 +341,31 @@ public class MPEPartsCompanyController {
             throw new Exception(e.getMessage());
         }
     }
+
+    /**
+     * 등록된 부품사 회원이 있는지 체크
+     */
+    @PostMapping(value="/member-exists-check")
+    public String selectMemberPartsSocietyExistsCheck(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            String chk;
+            if(mpePartsCompanyService.selectMemberPartsSocietyExistsCheck(mpePartsCompanyDTO) >= 1) {
+                chk = "Y";
+            } else {
+                chk = "N";
+            }
+            modelMap.addAttribute("existsChk", chk);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }

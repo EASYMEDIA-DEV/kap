@@ -715,4 +715,12 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
         return wbgaExamSearchDTO;
     }
+
+    /**
+     * 등록된 부품사 회원이 있는지 체크
+     */
+    public int selectMemberPartsSocietyExistsCheck(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception {
+        return mpePartsCompanyMapper.selectMemberPartsSocietyExistsCheck(mpePartsCompanyDTO);
+    }
+
 }

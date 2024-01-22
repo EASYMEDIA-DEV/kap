@@ -14,11 +14,11 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
     var $formObj = ctrl.obj.find("form").eq(0);
     var width = 500; //팝업의 너비
     var height = 600; //팝업의 높이
-
+    var isFile = true;
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
-        var fileObj = jQuery(obj).val(), isFile = true;
+        var fileObj = jQuery(obj).val();
         var fileId = obj.id;
 
         if (!fileObj)
@@ -58,6 +58,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
             if (isFile) {
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
+                $('#'+fileId).closest(".form-group").find('.empty-txt').addClass("attached");
             }
         }
     };
@@ -155,6 +156,16 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     }
                 }
             },
+            cancelBtn : {
+                event : {
+                    click : function () {
+                       alert("목록으로 이동 시 입력한 값이 초기화 처리됩니다.\n이동하시겠습니까?");
+                       location.href = "/education/visit/index";
+                    }
+                }
+            }
+
+            ,
             // 상세주소 입력 시 체크박스 해제
             placeDtlAddr : {
                 event : {
@@ -213,6 +224,13 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             $("#ptcptHh").focus();
                             return false;
                         }
+
+                        if($(".form-group").find('.empty-txt').text() == "선택된 파일 없음") {
+                            alert(msgCtrl.getMsg("fail.eb.input.al_011"));
+                            $("#searchFile").focus();
+                            return false;
+                        }
+
                         // controller에 json으로 넘길 form값
                         cmmCtrl.fileFrm(function(data){
                             //콜백함수. 페이지 이동

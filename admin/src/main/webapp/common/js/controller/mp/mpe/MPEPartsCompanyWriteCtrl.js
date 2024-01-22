@@ -73,9 +73,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnBsnmNo : {
                 event : {
                     click : function () {
-                        // 사업자등록번호 형식 체크 알럿 추가하기
-
-
                         workChk = false;
                         if($("#bsnmNo").val() =='' || $("#bsnmNo").val() == undefined) {
                             alert(msgCtrl.getMsg("fail.mp.mpa.al_016"));
@@ -151,10 +148,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                     alert("인증에 실패했습니다.");
                                 }
                             });
-
-
-
-                        }
+                       }
                     }
                 }
             },
