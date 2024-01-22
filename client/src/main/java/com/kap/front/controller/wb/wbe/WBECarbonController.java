@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -41,6 +42,7 @@ public class WBECarbonController {
     /**
      * 서비스
      **/
+    private final COCodeService cOCodeService;
     public final WBEACarbonListService wBEACarbonListService;
     public final WBEBCarbonCompanyService wBEBCarbonCompanyService;
     public final COGCntsService pCOGCntsService;
@@ -120,6 +122,11 @@ public class WBECarbonController {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            cdDtlList.add("MEM_CD"); // 신청 진행상태
+            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);

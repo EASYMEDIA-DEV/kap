@@ -8,10 +8,7 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
-import com.kap.service.COGCntsService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.WBBARoundService;
-import com.kap.service.WBBBCompanyService;
+import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -24,6 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -53,6 +51,7 @@ public class WBBManagementController {
     /**
      * 서비스
      **/
+    private final COCodeService cOCodeService;
     public final WBBARoundService wbbaRoundService;
     public final WBBBCompanyService wbbbCompanyService;
     public final COGCntsService pCOGCntsService;
@@ -135,10 +134,16 @@ public class WBBManagementController {
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
+
                 modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wbbbCompanyService.selectCompanyUserDtl(wbbaCompanySearchDTO));
                 modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
                 RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbbaCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
