@@ -56,7 +56,7 @@ public class WBDSafetyController {
             wBRoundMstSearchDTO.setExpsYn("Y");
             wBRoundMstSearchDTO.setFirstIndex(0);
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
-            wBRoundMstSearchDTO.setBsnCd("BNS04");
+            wBRoundMstSearchDTO.setBsnCd("BSN04");
 
             //CMS
             pCOGCntsDTO.setMenuSeq(717);
@@ -152,7 +152,7 @@ public class WBDSafetyController {
 
             //사업접수 하단플로팅 영역용
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
-            wBRoundMstSearchDTO.setBsnCd("BNS04");
+            wBRoundMstSearchDTO.setBsnCd("BSN04");
             modelMap.addAttribute("rtnRoundDtl", wBDASafetyListService.getRoundDtl(wBRoundMstSearchDTO));
 
         } catch (Exception e) {
