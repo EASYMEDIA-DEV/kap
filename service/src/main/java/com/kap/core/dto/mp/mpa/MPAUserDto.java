@@ -316,4 +316,7 @@ public class MPAUserDto extends BaseDTO {
     @Schema(title="재단공지변경여부")
     private String chngFndn;
 
+    @Schema(title = "종료일자")
+    private String bsnEndDtm;
+
 }
