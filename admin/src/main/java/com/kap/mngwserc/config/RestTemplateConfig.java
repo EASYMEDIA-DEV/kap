@@ -41,11 +41,11 @@ public class RestTemplateConfig {
     private String endPoint;
 
     /** GPC KEY **/
-    @Value("${api.kap.key}")
+    @Value("${api.gpc.key}")
     private String apiKey;
 
     /** GPC SECRET **/
-    @Value("${api.kap.secret}")
+    @Value("${api.gpc.secret}")
     private String apiSecret;
 
     /** 서비스  **/

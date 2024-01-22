@@ -29,6 +29,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/mngwserc/dext5editor/upload")
                 .excludePathPatterns("/mngwserc/upload")
                 .excludePathPatterns("/api/**")
+                .excludePathPatterns("/gpc/**")
                 .excludePathPatterns("/**/*.*");
         //관리자 메뉴 적용
         registry.addInterceptor(cOMenuInterceptor()).addPathPatterns("/mngwserc/**")
@@ -48,11 +49,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/mngwserc/editor-image/upload")
                 .excludePathPatterns("/**/*.*")
                 .excludePathPatterns("/api/**")
+                .excludePathPatterns("/gpc/**")
                 .excludePathPatterns("/mngwserc/co/coa/pwd-check");
 
         //API 권한 체크
         registry.addInterceptor(cOApiValidInterceptor()).addPathPatterns("/api/**")
-                .excludePathPatterns("/gpc/chcekc/id")
+                .excludePathPatterns("/gpc/**")
                 .order(1);
     }
 
