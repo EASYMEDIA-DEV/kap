@@ -474,37 +474,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                         }
                                                     }
                                                     if(!qltyPicCnt){
-                                                        alert("품질담당인원을 입력하세요.")
+                                                        alert("품질담당인원을 입력해주세요.")
                                                         $(".qltyPicCnt").focus();
                                                         return false;
                                                     }else{
                                                         if(!zipcode){
-                                                            alert("주소를 입력하세요.")
+                                                            alert("주소를 입력해주세요.")
                                                             $("#zipcode").focus();
                                                             return false;
                                                         }else{
                                                             if(mainAddr == '선택'){
-                                                                alert("소재 지역을 선택하세요.");
+                                                                alert("소재 지역을 선택해주세요.");
                                                                 $("#mainAddr").focus();
                                                                 return false;
                                                             }else{
                                                                 if(subAddr == ''){
-                                                                    alert("소재 지역을 선택하세요.");
+                                                                    alert("소재 지역을 선택해주세요.");
                                                                     $("#subAddr").focus();
                                                                     return false;
                                                                 }else{
                                                                     if(!rprsntApprvYn){
-                                                                        alert("대표자 승인여부를 선택하세요.");
+                                                                        alert("대표자 승인여부를 선택해주세요.");
                                                                         $("input[name='rprsntApprvYn']").focus();
                                                                         return false;
                                                                     }else{
                                                                         if(!appctnRsnCd){
-                                                                            alert("신청사유를 선택하세요.");
+                                                                            alert("신청사유를 선택해주세요.");
                                                                             $("input[name='appctnRsnCd']").focus();
                                                                             return false;
                                                                         }else{
                                                                             if(!cbsnCd){
-                                                                                alert("업종을 선택하세요.");
+                                                                                alert("업종을 선택해주세요.");
                                                                                 $("input[name='cbsnCd']").focus();
                                                                                 return false;
                                                                             }else if(cbsnCd == 'TEC_GUIDE_INDUS01'){
@@ -513,7 +513,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                                                 return false;
                                                                             }else{
                                                                                 if(!appctnTypeCd){
-                                                                                    alert("신청사항을 선택하세요.");
+                                                                                    alert("신청사항을 선택해주세요.");
                                                                                     $("input[name='appctnTypeCd']").focus();
                                                                                     return false;
                                                                                 }else{

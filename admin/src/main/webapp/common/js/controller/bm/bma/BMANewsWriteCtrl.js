@@ -121,7 +121,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 msg : {
                     empty : {
                         names : {
-                            cntn : "내용을 등록하세요."
+                            cntn : "내용을 등록해주세요."
                         }
                     },
                     confirm : {

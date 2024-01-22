@@ -552,67 +552,67 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                                                     }
                                                                                 }
                                                                                 if (!frgnDpndnRate) {
-                                                                                    alert("해외의존율을 입력하세요.")
+                                                                                    alert("해외의존율을 입력해주세요.")
                                                                                     $(".frgnDpndnRate").focus();
                                                                                     return false;
                                                                                 } else {
                                                                                     if (!ttlSlsPmt) {
-                                                                                        alert("전체 매출액을 입력하세요.")
+                                                                                        alert("전체 매출액을 입력해주세요.")
                                                                                         $(".ttlSlsPmt").focus();
                                                                                         return false;
                                                                                     } else {
                                                                                         if (!dmstcSlsPmt) {
-                                                                                            alert("국내 매출액을 입력하세요.")
+                                                                                            alert("국내 매출액을 입력해주세요.")
                                                                                             $(".dmstcSlsPmt").focus();
                                                                                             return false;
                                                                                         } else {
                                                                                             if (!frgnSlsPmt) {
-                                                                                                alert("해외 매출액을 입력하세요.")
+                                                                                                alert("해외 매출액을 입력해주세요.")
                                                                                                 $(".frgnSlsPmt").focus();
                                                                                                 return false;
                                                                                             } else {
                                                                                                 if (!carPartSlsPmt) {
-                                                                                                    alert("자동차부품 매출액을 입력하세요.")
+                                                                                                    alert("자동차부품 매출액을 입력해주세요.")
                                                                                                     $(".carPartSlsPmt").focus();
                                                                                                     return false;
                                                                                                 } else {
                                                                                                     if (!carPartXcludSlsPmt) {
-                                                                                                        alert("자동차부품 외 매출액을 입력하세요.")
+                                                                                                        alert("자동차부품 외 매출액을 입력해주세요.")
                                                                                                         $(".carPartXcludSlsPmt").focus();
                                                                                                         return false;
                                                                                                     } else {
                                                                                                         if (!zipcode) {
-                                                                                                            alert("공장 주소를 입력하세요.")
+                                                                                                            alert("공장 주소를 입력해주세요.")
                                                                                                             $("#zipcode").focus();
                                                                                                             return false;
                                                                                                         } else {
                                                                                                             if (mainAddr == '선택') {
-                                                                                                                alert("소재 지역을 선택하세요.");
+                                                                                                                alert("소재 지역을 선택해주세요.");
                                                                                                                 $("#mainAddr").focus();
                                                                                                                 return false;
                                                                                                             } else {
                                                                                                                 if (subAddr == '') {
-                                                                                                                    alert("소재 지역을 선택하세요.");
+                                                                                                                    alert("소재 지역을 선택해주세요.");
                                                                                                                     $("#subAddr").focus();
                                                                                                                     return false;
                                                                                                                 } else {
                                                                                                                     if (!appctnRsnCd) {
-                                                                                                                        alert("신청사유를 선택하세요.");
+                                                                                                                        alert("신청사유를 선택해주세요.");
                                                                                                                         $("input[name='appctnRsnCd']").focus();
                                                                                                                         return false;
                                                                                                                     } else {
                                                                                                                         if (!qltyPicCnt) {
-                                                                                                                            alert("품질담당인원을 입력하세요.")
+                                                                                                                            alert("품질담당인원을 입력해주세요.")
                                                                                                                             $(".qltyPicCnt").focus();
                                                                                                                             return false;
                                                                                                                         } else {
                                                                                                                             if (!cbsnCd) {
-                                                                                                                                alert("신청분야를 선택하세요.")
+                                                                                                                                alert("신청분야를 선택해주세요.")
                                                                                                                                 $("#cbsnCdSelect").focus();
                                                                                                                                 return false;
                                                                                                                             } else {
                                                                                                                                 if (!rqstCntn) {
-                                                                                                                                    alert("컨설팅요청 세부내용을 입력하세요.")
+                                                                                                                                    alert("컨설팅요청 세부내용을 입력해주세요.")
                                                                                                                                     $("#rqstCntn").focus();
                                                                                                                                     return false;
                                                                                                                                 } else {
