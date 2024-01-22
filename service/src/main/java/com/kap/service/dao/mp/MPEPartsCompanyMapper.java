@@ -131,4 +131,8 @@ public interface MPEPartsCompanyMapper {
      */
     public List<WBJAcomSearchDTO> selectCarTargetList(WBJAcomSearchDTO wbjAcomSearchDTO) throws Exception;
 
+    /**
+     * 등록된 부품사 회원이 있는지 체크
+     */
+    public int selectMemberPartsSocietyExistsCheck(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }
