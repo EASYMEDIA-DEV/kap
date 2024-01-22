@@ -51,12 +51,12 @@ public interface CBBManageConsultService {
     public CBBManageConsultInsertDTO selectManageConsultDtl(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
-     * 경영 컨설팅 관리 등록 (사용자)
+     * 경영 컨설팅 관리 등록 (관리자)
      */
     public int insertManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception;
 
     /**
-     * 경영 컨설팅 관리 등록 (관리자)
+     * 경영 컨설팅 관리 등록 (사용자)
      */
     public int insertUserManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception;
 
@@ -70,9 +70,13 @@ public interface CBBManageConsultService {
      */
     public CBBManageConsultInsertDTO selectTrsfGuidanceList(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultSearchDTO pCBBManageConsultSearchDTO) throws Exception;
 
-
     /**
      * 컨설팅사업 경영컨설팅 삭제
      */
     public int deleteManageConsult(CBBManageConsultSearchDTO CBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     * 컨설팅사업 등록 사용자
+     */
+    public int insertUserManageCmssrInfoConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO) throws Exception;
 }
