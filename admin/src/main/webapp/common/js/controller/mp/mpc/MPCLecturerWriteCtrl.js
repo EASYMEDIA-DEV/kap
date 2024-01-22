@@ -2,7 +2,7 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
     "use strict";
 
-// set controller name
+    // set controller name
     var exports = {
         controller : "controller/mp/mpc/MPCLecturerWriteCtrl"
     };

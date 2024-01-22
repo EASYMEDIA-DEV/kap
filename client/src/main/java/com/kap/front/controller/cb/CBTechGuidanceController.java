@@ -4,6 +4,7 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.service.CBATechGuidanceService;
@@ -63,7 +64,6 @@ public class CBTechGuidanceController {
 
     @GetMapping("/index")
     public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
-
         String url = "";
         if(type.equals("tech")){
             url = "front/cb/cba/CBATechGuidanceIndex.front";
@@ -89,38 +89,56 @@ public class CBTechGuidanceController {
     @GetMapping("/application")
     public String getConsultApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
-        if(type.equals("tech")){
-            url = "front/cb/cba/CBATechGuidanceApplication.front";
-        }else{
-            url = "front/cb/cbb/CBBManageConsultApplication.front";
+        try {
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+            if(cOLoginUserDTO != null) {
+
+                if (type.equals("tech")) {
+                    url = "front/cb/cba/CBATechGuidanceApplication.front";
+                } else {
+                    url = "front/cb/cbb/CBBManageConsultApplication.front";
+                }
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                url = "front/COBlank.error";
+            }
+        }catch(Exception e){
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
         }
 
         return url;
     }
 
     @PostMapping("/insert")
-    public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
-        /*try {*/
+    public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO,  MultipartHttpServletRequest multiRequest, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
+        try {
 
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
-
-            pCBATechGuidanceInsertDTO.setRegId(cOLoginUserDTO.getId());
-            pCBATechGuidanceInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
-            pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
-
             if(type.equals("tech")){
+                pCBATechGuidanceInsertDTO.setRegId(cOLoginUserDTO.getId());
+                pCBATechGuidanceInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
+                pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
+                pCBATechGuidanceInsertDTO.setRsumeSttsCd("MNGTECH_STATUS_01");
                 modelMap.addAttribute("actCnt", cBATechGuidanceService.insertUserTechGuidance(pCBATechGuidanceInsertDTO, multiRequest));
             }else{
-                modelMap.addAttribute("actCnt", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
+                pCBBManageConsultInsertDTO.setRegId(cOLoginUserDTO.getId());
+                pCBBManageConsultInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
+                pCBBManageConsultInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
+                pCBBManageConsultInsertDTO.setRsumeSttsCd("MNGCNSLT_STATUS01");
+                modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
             }
 
-        /*}catch(Exception e){
+        }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
         }
-*/
         return "jsonView";
     }
     @GetMapping("/consInfoAppl")
@@ -144,6 +162,7 @@ public class CBTechGuidanceController {
                 cdDtlList.add("TEC_GUIDE_INDUS"); // 업종
                 cdDtlList.add("TEC_GUIDE_APPCTN"); // 직종 코드
                 cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
+                cdDtlList.add("MNGCNSLT_APP_AREA"); // 신청 분야 코드
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             }else{
@@ -167,8 +186,27 @@ public class CBTechGuidanceController {
             if(type.equals("tech")){
                 url = "front/cb/cba/CBATechGuidanceComplete.front";
             }else{
-                url = "front/cb/cbb/CBBManageConsultWrite.front";
+                url = "front/cb/cbb/CBBManageConsultComplete.front";
             }
+
+           /* //이메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("["+siteName+"] 아이디 찾기 결과 안내");
+            //인증요청일시
+            //수신자 정보
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            //이메일
+            receiverDto.setEmail(coIdFindDto.getEmail());
+            //이름
+            receiverDto.setName("");
+            //치환문자1
+            receiverDto.setNote1(coIdFindDto.getName());
+            receiverDto.setNote2(coIdFindDto.getId());
+            //수신자 정보 등록
+            cOMailDTO.getReceiver().add(receiverDto);
+            cOMessageService.sendMail(cOMailDTO, "IdEmailEDM.html");*/
+
+
         }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -182,10 +220,12 @@ public class CBTechGuidanceController {
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="consulting/{type:tech|manage}")
-    public class CBATechGuidanceRestController {
+    public class CBTechGuidanceRestController {
 
         private final MPAUserService mPAUserService;
         private final MPEPartsCompanyService mPEPartsCompanyService;
+        private final CBBManageConsultService cBBManageConsultService;
+        private final CBATechGuidanceService cBATechGuidanceService;
         private final COCodeService cOCodeService;
 
         /**
@@ -232,6 +272,32 @@ public class CBTechGuidanceController {
                 throw new Exception(e.getMessage());
             }
             return detailList;
+        }
+
+        /**
+         * 담당임원 정보 입력
+         */
+        @PostMapping(value = "/cmssrInfo")
+        @ResponseBody
+        public int insertCmssrInfo(@RequestBody CBBManageConsultInsertDTO cBBManageConsultInsertDTO) throws Exception {
+            try {
+                cBBManageConsultService.insertUserManageCmssrInfoConsult(cBBManageConsultInsertDTO);
+            } catch (Exception e) {
+                if (log.isErrorEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return cBBManageConsultService.insertUserManageCmssrInfoConsult(cBBManageConsultInsertDTO);
+        }
+
+        /**
+         * 신청 완료 페이지 정보
+         */
+        @PostMapping(value = "/completeInfo")
+        @ResponseBody
+        public CBATechGuidanceInsertDTO selectCompleteInfo(@RequestBody CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
+            return cBATechGuidanceService.selectCompleteInfo(cBATechGuidanceInsertDTO);
         }
     }
 }

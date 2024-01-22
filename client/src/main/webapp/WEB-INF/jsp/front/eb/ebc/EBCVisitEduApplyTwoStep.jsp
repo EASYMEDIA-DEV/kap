@@ -313,7 +313,7 @@
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap for-motion">
                             <div class="btn-set">
-                                <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                                <a class="btn-solid small gray-bg" id="cancelBtn" href="javascript:"><span>취소</span></a>
                             </div>
                             <div class="btn-set">
                                 <a class="btn-solid small black-bg" href="javascript:" id="applyCompleteBtn"><span>신청하기</span></a>

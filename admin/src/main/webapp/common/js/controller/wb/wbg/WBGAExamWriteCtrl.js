@@ -152,6 +152,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./consultinglist.ajax", $formObj, "POST", "html");
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -233,6 +242,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }

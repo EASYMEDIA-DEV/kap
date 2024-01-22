@@ -832,7 +832,7 @@
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
     -->
-    <update id="updateManageConsult" parameterType="CBBManageConsultUpdateDTO">
+    <update id="updateManageConsult" parameterType="CBBManageConsultInsertDTO">
         UPDATE CP_CNSTG_APPCTN_MST  /*CBBManageConsultMapper.updateManageConsult*/
         SET
             APPCTN_MEM_SEQ = #{memSeq},
@@ -844,6 +844,7 @@
             TTL_SLS_PMT = #{ttlSlsPmt},
             DMSTC_SLS_PMT = #{dmstcSlsPmt},
             FRGN_SLS_PMT = #{frgnSlsPmt},
+            HMPGE_URL = #{hmpgeUrl},
             CAR_PART_SLS_PMT = #{carPartSlsPmt},
             CAR_PART_XCLUD_SLS_PMT = #{carPartXcludSlsPmt},
             CMPN_ADDR_SAME_YN = #{cmpnAddrSameYn},

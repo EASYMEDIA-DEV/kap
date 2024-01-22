@@ -18,7 +18,7 @@
                                             <a class="btn-solid small white-bg" <c:if test="${list.wnppYn eq 'Y'}">target="_blank"</c:if> href="${list.urlUrl}"><span>자세히 보기</span></a>
                                         </c:when>
                                         <c:otherwise>
-                                            <a class="btn-solid small white-bg" href="javascript:"><span>자세히 보기</span></a>
+
                                         </c:otherwise>
                                     </c:choose>
                                 </div>

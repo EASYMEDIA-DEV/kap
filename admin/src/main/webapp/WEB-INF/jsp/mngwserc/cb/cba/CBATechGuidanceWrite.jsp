@@ -107,7 +107,7 @@
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm notRequired telRex"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력" maxlength="13"/>
+                            <input type="text" class="form-control input-sm notRequired telRex" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력" maxlength="13"/>
                         </div>
                     </div>
                 </fieldset>

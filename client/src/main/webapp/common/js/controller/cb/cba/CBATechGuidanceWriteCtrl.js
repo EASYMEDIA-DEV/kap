@@ -77,7 +77,6 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 }
             }
 
-            console.log(fileId);
             if (isFile) {
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
             }
@@ -258,7 +257,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                         for(var i =0; i<dpndnRateSize; i++){
                             if(!$(".dpndnRate").eq(i).val()){
                                 alert("매출비중을 입력해주세요.");
-                                $(".dlvryRate").eq(i).focus();
+                                $(".dpndnRate").eq(i).focus();
                                 return false;
                             }
                         }
@@ -272,12 +271,12 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                 $("#hqZipcode").focus();
                                 return false;
                             }else{
-                                if(!mainAddr){
+                                if(mainAddr == "선택"){
                                     alert("소재 지역을 선택해주세요.");
                                     $("#mainAddr").focus();
                                     return false;
                                 }else{
-                                    if(!subAddr){
+                                    if(subAddr == "선택"){
                                         alert("소재 지역을 선택해주세요.");
                                         $("#subAddr").val();
                                         return false;
@@ -334,15 +333,11 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                             return false;
                         }else{
                             cmmCtrl.fileFrm(function(data){
-                                var appctnDt = $("#appctnDt").val();
-                                var bsnmNo = $("#bsnmNo").val();
-                                var cbsnCd = $(".cbsnCd").val();
-                                //?appctnDt="+appctnDt+"&bsnmNo="+bsnmNo+"&cbsnCd="+cbsnCd+"&"
                                 //콜백함수. 페이지 이동
-                                location.replace("./complete");
+                                var cnstgSeq = data.actCnt;
+                               location.replace("./complete?cnstgSeq="+cnstgSeq);
                             }, "./insert", $formObj, "json");
                         }
-
                     }
                 }
             },telRex : {

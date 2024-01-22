@@ -114,6 +114,7 @@
                             <div class="table-sec">
                                 <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                     <input type="hidden" id="bsnmNo" value="${loginMap.bsnmNo}" >
+                                    <input type="hidden" id="ctgryCd" value="${loginMap.bsnmNo}" >
                                     <table class="basic-table">
                                         <caption>소속 부품사 기본정보</caption>
                                         <colgroup>
@@ -215,7 +216,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="picName" name="picName"  placeholder="이름 입력" title="이름">
+                                                        <input type="text" class="picName" name="picName" oninput="this.value = this.value.replace(/[^ㄱ-ㅎ|가-힣|a-z|A-Z]/g, '').replace(/(\..*)\./g, '$1');" placeholder="이름 입력" title="이름">
                                                     </div>
                                                 </div>
                                             </div>
@@ -248,11 +249,11 @@
                                                 <div class="form-group form-email">
                                                     <input type="hidden" class="picEmail" name="picEmail" value=""/>
                                                     <div class="form-input">
-                                                        <input type="text" class="id" name="id" placeholder="이메일 입력" title="이메일">
+                                                        <input type="text" class="id" name="picEmail" oninput="this.value = this.value.replace(/^[ㄱ-ㅎ|가-힣]/g, '').replace(/(\..*)\./g, '$1');" placeholder="이메일 입력" title="이메일">
                                                     </div>
                                                     @
                                                     <div class="form-input">
-                                                        <input type="text" name="address" class="address" placeholder="직접입력" title="이메일">
+                                                        <input type="text" name="picEmail" class="address" placeholder="직접입력" title="이메일">
                                                     </div>
                                                     <div class="form-select">
                                                         <select id="addressSelect" title="메일 선택">
@@ -277,7 +278,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="cmssrCmpnTelNo" name="cmssrCmpnTelNo" placeholder="회사 전화번호 입력" required="" title="회사 전화번호">
+                                                        <input type="text" class="cmssrCmpnTelNo telRex" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="cmssrCmpnTelNo" maxlength="13" placeholder="회사 전화번호 입력" required="" title="회사 전화번호">
                                                     </div>
                                                 </div>
                                             </div>
