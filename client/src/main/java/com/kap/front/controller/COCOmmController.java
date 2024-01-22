@@ -93,8 +93,8 @@ public class COCOmmController {
      * 통합 검색
      */
     @Operation(summary = "통합 검색", tags = "", description = "")
-    @GetMapping(value="/search")
-    public String getTotalSearc(@Valid COSearchDTO cOSearchDTO, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request) throws Exception
+    @GetMapping(value={"/search", "/search/{menuType:menu|education|notice|foundation|newsletter}"})
+    public String getTotalSearc(@Valid COSearchDTO cOSearchDTO, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request, @PathVariable(required = false) String menuType) throws Exception
     {
         //메뉴는 인터셉터 조회
         String[] titleList = new String[3];
@@ -110,7 +110,17 @@ public class COCOmmController {
                     && !"".equals(COStringUtil.nullConvert(menuList.get(i).getUserUrl()))){
                 COMenuDTO  cOMenuDTO = new COMenuDTO();
                 cOMenuDTO.setUserUrl( menuList.get(i).getUserUrl() );
-                cOMenuDTO.setMenuNm( String.join("__", titleList) );
+                String menuNm = "";
+                for(String val : titleList){
+                    if(val != null){
+                        if(!"".equals(menuNm)){
+                            menuNm += "__" +  val;
+                        }else{
+                            menuNm += val;
+                        }
+                    }
+                }
+                cOMenuDTO.setMenuNm( menuNm );
                 qMenuList.add( cOMenuDTO );
             }
         }
@@ -138,7 +148,12 @@ public class COCOmmController {
         modelMap.put("letterCnt", letterCnt);
 
         modelMap.put("q", cOSearchDTO.getQ());
-        return "/front/co/COSearch.front";
+        modelMap.put("menuType", menuType);
+        String rtnUrl = "/front/co/COSearch.front";
+        if(menuType != null){
+            rtnUrl = "/front/co/COSearchDtl.front";
+        }
+        return rtnUrl;
     }
 
     /**
@@ -239,7 +254,7 @@ public class COCOmmController {
         log.info("*************************************");
 
         session.setAttribute("niceSession", cocNiceMyResDto);
-        session.setMaxInactiveInterval(30*60); //TODO 양현우 506 시간 재 설정 하기
+        session.setMaxInactiveInterval(3*60); //TODO 양현우 506 시간 재 설정 하기
 //        session.setMaxInactiveInterval(20); //TODO 양현우 506 시간 재 설정 하기
 
         if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {
