@@ -289,6 +289,38 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         return false;
                     }
 
+                    jQuery.ajax({
+                        url : "./getBsnmNoCnt",
+                        type : "POST",
+                        timeout: 30000,
+                        data : $formObj.serializeArray(),
+                        dataType : "json",
+                        async: false,
+                        cache : false,
+                        success : function(data, status, xhr){
+                            if(data.respCnt > 0 ){
+                                alert("이미 해당 회차에 신청한 부품사입니다.");
+                                isValid = false;
+                            }
+                        }
+                    });
+
+                    jQuery.ajax({
+                        url : "./getSbrdnBsnmNoCnt",
+                        type : "POST",
+                        timeout: 30000,
+                        data : $formObj.serializeArray(),
+                        dataType : "json",
+                        async: false,
+                        cache : false,
+                        success : function(data, status, xhr){
+                            if(data.respCnt > 0 ){
+                                alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                isValid = false;
+                            }
+                        }
+                    });
+
                     return isValid;
                 },
                 async : {

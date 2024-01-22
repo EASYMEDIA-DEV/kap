@@ -1241,4 +1241,19 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
         return respCnt;
     }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
+        respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
+
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
 }

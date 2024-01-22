@@ -6,6 +6,7 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.*;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
@@ -1561,6 +1562,34 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return respCnt;
+    }
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBFBRegisterCompanyMapper.getBsnmNoCnt(wBFBRegisterDTO);
+
+        wBFBRegisterDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBFBRegisterCompanyMapper.getSbrdnBsnmNoCnt(wBFBRegisterDTO);
+
+        wBFBRegisterDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
