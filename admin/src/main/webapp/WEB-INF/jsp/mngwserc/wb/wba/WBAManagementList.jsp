@@ -59,6 +59,9 @@
                         </jsp:include>
                     </select>
                 </div>
+                <div class="pull-right">
+                    <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
+                </div>
             </div>
             <!--VUE 영역 시작 -->
             <div class="table-responsive col-sm-12 p0 m0" id="vueList">
@@ -81,10 +84,6 @@
             </div>
             <!--리스트 종료 -->
         </form>
-
-        <div class="pull-right">
-            <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
-        </div>
     </div>
 </div>
 

@@ -88,14 +88,27 @@ public class IMAQaServiceImpl implements IMAQaService {
      * 1:1 문의 상세
      */
     public IMAQaDTO selectQaDtl(IMAQaDTO pIMAQaDTO) throws Exception{
+        IMAQaDTO rtnData;
+
         pIMAQaDTO.setDetailsKey(pIMAQaDTO.getDetailsKey());
 
-        if(pIMAQaDTO.getRsumeCd().equals("SYN")) {
-            pIMAQaDTO.setRsumeCd("SYNACK");
-            iMAQaMapper.updateQaRsume(pIMAQaDTO);
+        if(null != pIMAQaDTO.getMypageYn() && !"Y".equals(pIMAQaDTO.getMypageYn())) {
+            if (null != pIMAQaDTO.getRsumeCd() && "SYN".equals(pIMAQaDTO.getRsumeCd())) {
+                pIMAQaDTO.setRsumeCd("SYNACK");
+                iMAQaMapper.updateQaRsume(pIMAQaDTO);
+            }
         }
 
-        return iMAQaMapper.selectQaDtl(pIMAQaDTO);
+        rtnData = iMAQaMapper.selectQaDtl(pIMAQaDTO);
+
+        if(rtnData.getFileSeq() != null) {
+            rtnData.setFileList(cOFileService.getFileInfs(rtnData.getFileSeq()));
+        }
+        if(rtnData.getRplyFileSeq() != null) {
+            rtnData.setRplyFileList(cOFileService.getFileInfs(rtnData.getRplyFileSeq()));
+        }
+
+        return rtnData;
     }
 
     /**
@@ -242,18 +255,18 @@ public class IMAQaServiceImpl implements IMAQaService {
     @Transactional
     public int insertQa(IMAQaDTO pIMAQaDTO, MultipartFile[] atchFile) throws Exception {
         /* 첨부파일 처리 */
-        int fileCnt = atchFile.length;
-        if(fileCnt > 0) {
+        if(atchFile[0].getSize() > 0) {
+            int fileCnt = atchFile.length;
             List<COFileDTO> rtnList = null;
             Map<String, MultipartFile> files = new HashMap<>();
-            for(int i = 0; i < fileCnt; i++) {
+            for (int i = 0; i < fileCnt; i++) {
                 files.put("file" + i, atchFile[i]);
             }
 
             rtnList = cOFileUtil.parseFileInf(files, "", 1, "", "file", 0);
 
             List<COFileDTO> fileList = new ArrayList();
-            for(int j = 0; j < fileCnt; j++) {
+            for (int j = 0; j < fileCnt; j++) {
                 rtnList.get(j).setStatus("success");
                 rtnList.get(j).setFieldNm("fileSeq");
                 fileList.add(rtnList.get(j));

@@ -464,9 +464,9 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         cell.setCellValue("이메일");
         cell.setCellStyle(style_header);
         
-        cell = row.createCell(11);
+        /*cell = row.createCell(11);
         cell.setCellValue("관리자등록일");
-        cell.setCellStyle(style_header);
+        cell.setCellStyle(style_header);*/
         
         cell = row.createCell(12);
         cell.setCellValue("사용자등록일");
@@ -538,10 +538,10 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
             cell.setCellValue(list.get(i).getEmail());
             cell.setCellStyle(style_body);
 
-            //관리자등록일
+            /*//관리자등록일
             cell = row.createCell(11);
             cell.setCellValue(list.get(i).getMngSttsChngDtm());
-            cell.setCellStyle(style_body);
+            cell.setCellStyle(style_body);*/
 
             //사용자수정일
             cell = row.createCell(12);

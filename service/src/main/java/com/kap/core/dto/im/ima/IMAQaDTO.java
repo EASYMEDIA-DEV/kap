@@ -1,6 +1,7 @@
 package com.kap.core.dto.im.ima;
 
 import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.COFileDTO;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -75,6 +76,9 @@ public class IMAQaDTO extends BaseDTO {
     //QA답변 파일 순번
     private Integer rplyFileSeq;
 
+    //QA답면 파일 리스트
+    private List<COFileDTO> rplyFileList;
+
     //검색 리스트
     private String inqFir;
     private String inqSec;
@@ -89,4 +93,7 @@ public class IMAQaDTO extends BaseDTO {
 
     //마이페이지 여부
     private String mypageYn;
+
+    //나의 1:1 문의 검색어
+    private String searchText;
 }
