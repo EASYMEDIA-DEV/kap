@@ -231,9 +231,16 @@
                                             <tr>
                                                 <th>SQ정보</th>
                                                 <td>
-                                                    <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
-                                                        <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
-                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.sqInfoList}">
+                                                            <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
+                                                                <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <p class="f-body1">-</p>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:if>

@@ -329,7 +329,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                fnpstnNmShow();
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -359,7 +359,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $("#newBsnmNo").val(data.seq);
                             $("#bsnmNoNm").val(data.titl);
                             $("#ctgryNm").val(data.ctgryNm);
-                            fnNewPstnNmShow();
+                            fnNewPstnNmShow($('#newPstnCd').val());
                         });
                     }
                 }
@@ -410,6 +410,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
+            var pstnCd = $("#pstnCd").val();
+
+            if(pstnCd =='MEM_CD01007'){
+                $("#pstnNm").css("display", "block");
+            }else{
+                $("#pstnNm").val("");
+                $("#pstnNm").css("display", "none");
+            }
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {
