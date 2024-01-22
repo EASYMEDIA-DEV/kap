@@ -15,11 +15,12 @@
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
             <input type="hidden" id="bsnmNo" name="bsnmNo" value="" />
             <input type="hidden" id="memSeq" name="memSeq" value="" />
-            <input type="hidden" id="bsnNo" name="bsnCd" value="${bsnCd}" />
+            <input type="hidden" id="bsnCd" name="bsnCd" value="${bsnCd}" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchType" value="wbbb" />
+                <jsp:param name="srchOption" value="신청일,최초등록일시,최종수정일시" />
             </jsp:include>
             <!--기간 검색 종료-->
 
@@ -74,7 +75,7 @@
                     </div>
                     <div class="pull-left ml-sm">
                         <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                        <button type="button" class="btn btn-default btn-sm" id="btnSearchRefresh">초기화</button>
                     </div>
                 </div>
             </fieldset>

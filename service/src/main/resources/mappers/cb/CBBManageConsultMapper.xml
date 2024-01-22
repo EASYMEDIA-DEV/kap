@@ -303,18 +303,21 @@
                         AND APPCTN_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 2">
-                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND BSN_YEAR <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y')
                     </when>
                     <when test="srchDate == 3">
-                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 4">
-                        AND LVLUP_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 5">
-                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND LVLUP_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 6">
+                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                    </when>
+                    <when test="srchDate == 7">
                         AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                 </choose>
@@ -325,18 +328,21 @@
                         AND APPCTN_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 2">
-                        AND VST_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND BSN_YEAR <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y')
                     </when>
                     <when test="srchDate == 3">
-                        AND CNSTG_KICKF_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND VST_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 4">
-                        AND LVLUP_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND CNSTG_KICKF_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 5">
-                        AND REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                        AND LVLUP_DT <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                     <when test="srchDate == 6">
+                        AND REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 7">
                         AND MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
                     </when>
                 </choose>

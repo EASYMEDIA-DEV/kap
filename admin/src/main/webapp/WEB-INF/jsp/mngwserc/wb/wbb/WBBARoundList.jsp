@@ -18,6 +18,8 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchType" value="wbba" />
+                <jsp:param name="srchOption" value="신청일,사업기간,최초등록일시,최종수정일시" />
+
             </jsp:include>
             <fieldset>
                 <div class="form-group text-sm">
@@ -76,7 +78,7 @@
                     </div>
                     <div class="pull-left ml-sm">
                         <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                        <button type="button" class="btn btn-default btn-sm" id="btnSearchRefresh">초기화</button>
                     </div>
                 </div>
             </fieldset>

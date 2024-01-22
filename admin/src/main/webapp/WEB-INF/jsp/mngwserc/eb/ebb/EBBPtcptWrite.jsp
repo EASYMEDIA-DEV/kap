@@ -13,8 +13,23 @@
             <input type="hidden" class="notRequired" id="episdYear" name="episdYear" value="${rtnDto.episdYear}" />
             <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="${ rtnDto.stduyMthdCd}" />
-            <input type="hidden" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${episdDto.rcrmtMthdCd}" />
-
+            <input type="hidden" class="notRequired" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${rtnDto.rcrmtMthdCd}" />
+            <input type="hidden" id="gpcYn" name="gpcYn" value="${rtnDto.gpcYn}" />
+            <c:set var="gpcYn" value="${rtnDto.gpcYn}"/>
+            <c:set var="gpcPass" value="Y"/>
+            <c:choose>
+                <c:when test="${gpcYn eq 'Y'}">
+                    <c:set var="gpcPass" value="N"/>
+                </c:when>
+                <c:otherwise>
+                    <c:set var="gpcPass" value="Y"/>
+                </c:otherwise>
+            </c:choose>
+            <input type="hidden" class="notRequired"id="gpcPass" name="gpcPass" value="${gpcPass}" />
+            <input type="hidden" class="notRequired"id="memSeq" name="memSeq" value="${loginMap.seq}" />
+            <input type="hidden" class="notRequired"id="memId" name="memId" value="${applicantInfo.id}" /><!--로그인 한 사람의 id -->
+            <c:set var="gndr" value="${applicantInfo.gndr eq 1 ? 'M' : 'F'}" />
+            <input type="hidden" class="notRequired"id="gndr" name="gndr" value="${gndr}" /><!--로그인 한 사람의 성별 -->
 
             <!-- 과정정보 -->
             <fieldset>
@@ -204,31 +219,33 @@
             </fieldset>
 
             <!-- GPC 아이디 -->
-            <fieldset>
-                <div class="form-group text-sm">
-                    <div class="col-sm-12">
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em>GPC 아이디</h6>
+            <c:if test="${gpcYn eq 'Y'}">
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <div class="col-sm-12">
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em>GPC 아이디</h6>
+                        </div>
                     </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">GPC 아이디<span class="star"> *</span></label>
-                    <div class="col-sm-11 form-inline" style="margin-left: -15px">
-                        <input type="text" class="form-control input-sm notRequired" id="gpcId" name="gpcId" value="" title="GPC 아이디" maxlength="50" placeholder="GPC 아이디" style="max-width: 150px;"/>
+                </fieldset>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">GPC 아이디<span class="star"> *</span></label>
+                        <div class="col-sm-11 form-inline" style="margin-left: -15px">
+                            <input type="text" class="form-control input-sm notRequired gpcCheck" id="gpcId" name="gpcId" value="" title="GPC 아이디" maxlength="50" placeholder="GPC 아이디" style="max-width: 150px;"/>
 
+                            <button type="button" class="btn btn-inverse btn-sm gpcIdSearch">
+                                인증
+                            </button>
+                            <span id="gpcIdText"></span>
 
-                        <button type="button" class="btn btn-inverse btn-sm gpcIdSearch">
-                            인증
-                        </button>
-                        <span id="gpcIdText"></span>
+                            <input type="hidden" class="form-control input-sm notRequired" id="memSeq" name="memSeq" value="" title="회원번호"/>
+                            <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>
+                        </div>
 
-                        <input type="hidden" class="form-control input-sm notRequired" id="memSeq" name="memSeq" value="" title="회원번호"/>
-                        <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>
                     </div>
+                </fieldset>
+            </c:if>
 
-                </div>
-            </fieldset>
 
             <hr />
             <div class="clearfix">

@@ -111,6 +111,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             var memId = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text()); // 신청자 아이디
                             var memName = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(0)").text(); // 신청자 이름
 
+                            var gndr = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").data("gndr")); // 신청자 성별
+
                             var memEmail = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(8)").text(); // 이메일
                             var cmpnNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(1)").text(); // 회사 이름
                             var hpNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(7)").text(); // 핸드폰 번호
@@ -142,6 +144,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             clickObj.memSeq = memSeq;
                             clickObj.memId = memId;
                             clickObj.memName = memName;
+                            clickObj.gndr = gndr;
+
                             clickObj.memEmail = memEmail;
                             clickObj.cmpnNm = cmpnNm;
                             clickObj.deptDtlNm = deptDtlNm;

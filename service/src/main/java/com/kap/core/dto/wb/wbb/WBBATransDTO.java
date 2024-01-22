@@ -48,6 +48,9 @@ public class WBBATransDTO extends BaseDTO {
     @Schema(title = "이후회원명", example = "")
     private String aftrMemNm;
 
+    @Schema(title = "이전회원명", example = "")
+    private String bfreMemNm;
+
     @Schema(title = "이후회원아이디", example = "")
     private String aftrMemId;
 
