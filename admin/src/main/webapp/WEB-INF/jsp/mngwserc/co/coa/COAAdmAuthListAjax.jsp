@@ -5,7 +5,7 @@
       <tr data-total-count="${rtnData.totalCount}">
         <td class="text-center">${ list.bfreAuthCdNm}</td><!-- 이전 권한 -->
         <td class="text-center">${ list.modAuthCdNm}</td><!-- 변경 권한 -->
-        <td class="text-center">${ list.regDtm} / ${list.regName}(${list.regId})</td><!-- 변경일/ 변경자 -->
+        <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '-') } / ${list.regName}(${list.regId})</td><!-- 변경일/ 변경자 -->
       </tr>
     </c:forEach>
   </c:when>

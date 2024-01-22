@@ -115,11 +115,13 @@
         select /* COEMenuRoleMapper.selectModDtl */
                adm_id
              , adm_nm
-             , adm_dept as adm_dept_nm
+             , adm_dept
+             , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd= adm_dept) as adm_dept_nm
              , mod_dtm
              , trgt_adm_id
              , trgt_adm_nm
-             , trgt_adm_dept as trgt_adm_dept_nm
+             , trgt_adm_dept
+             , (select cd_nm from co_code_mst where cd_id='ADMIN_DEPT_CD' and cd= trgt_adm_dept) as trgt_adm_dept_nm
              , reg_dtm
         from
              co_adm_mod_mst
