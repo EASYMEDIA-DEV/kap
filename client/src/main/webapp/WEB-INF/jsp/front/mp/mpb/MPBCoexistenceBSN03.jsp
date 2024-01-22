@@ -133,7 +133,7 @@
                                                         <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                     </div>
                                                     <div class="file-prev-area">
-                                                        <a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>
+                                                        <a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=${rtnFile[0].fileOrd}" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -250,7 +250,7 @@
                                                         <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                     </div>
                                                     <div class="file-prev-area">
-                                                        <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
+                                                        <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=${rtnFile[1].fileOrd}" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -349,7 +349,7 @@
                                                         <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                     </div>
                                                     <div class="file-prev-area">
-                                                        <a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>
+                                                        <a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=${rtnFile[3].fileOrd}" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -545,7 +545,7 @@
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].spprtAppctnFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].spprtAppctnFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[0].spprtAppctnFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].spprtAppctnFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -570,7 +570,7 @@
                                                                                 <label class="btn-solid gray-bg" for="agrmtFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].agrmtFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].agrmtFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].agrmtFileSeq}&fileOrd=${rtnSpprt[0].agrmtFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].agrmtFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -595,7 +595,7 @@
                                                                                 <label class="btn-solid gray-bg" for="grnteInsrncFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].grnteInsrncFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[0].grnteInsrncFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[0].grnteInsrncFileSeq}&fileOrd=${rtnSpprt[0].grnteInsrncFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].grnteInsrncFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -721,7 +721,7 @@
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq1">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].spprtAppctnFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].spprtAppctnFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -746,7 +746,7 @@
                                                                                 <label class="btn-solid gray-bg" for="blingFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].blingFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].blingFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].blingFileSeq}&fileOrd=${rtnSpprt[1].blingFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].blingFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -771,7 +771,7 @@
                                                                                 <label class="btn-solid gray-bg" for="slsFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].slsFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].slsFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].slsFileSeq}&fileOrd=${rtnSpprt[1].slsFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].slsFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -796,7 +796,7 @@
                                                                                 <label class="btn-solid gray-bg" for="insptChkFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].insptChkFileSeq}&fileOrd=2" download="" title="파일 다운로드">${rtnSpprt[1].insptChkFileNm}</a>
+                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].insptChkFileSeq}&fileOrd=${rtnSpprt[1].insptChkFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].insptChkFileNm}</a>
                                                                             </div>
                                                                         </div>
                                                                     </div>

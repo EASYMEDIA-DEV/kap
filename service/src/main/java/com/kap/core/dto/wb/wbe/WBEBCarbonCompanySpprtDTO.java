@@ -91,7 +91,10 @@ public class WBEBCarbonCompanySpprtDTO extends BaseDTO {
     private Integer spprtAppctnFileSeq;
     @Schema(title = "지원신청파일명", example = "")
     private String spprtAppctnFileNm;
-
+    @Schema(title = "지원신청파일정렬", example = "")
+    private Integer spprtAppctnFileOrd;
+    
+    
     @Schema(title = "계좌파일순번", example = "숫자")
     private Integer acntFileSeq;
 
@@ -108,24 +111,35 @@ public class WBEBCarbonCompanySpprtDTO extends BaseDTO {
     private Integer agrmtFileSeq;
     @Schema(title = "협약파일명", example = "")
     private String agrmtFileNm;
+    @Schema(title = "협약파일정렬", example = "숫자")
+    private Integer agrmtFileOrd;
+    
 
     @Schema(title = "보증보험파일순번", example = "숫자")
     private Integer grnteInsrncFileSeq;
     @Schema(title = "보증보험파일명", example = "")
     private String grnteInsrncFileNm;
+    @Schema(title = "보증보험파일정렬", example = "숫자")
+    private Integer grnteInsrncFileOrd;
 
     @Schema(title = "거래파일순번", example = "숫자")
     private Integer blingFileSeq;
     @Schema(title = "거래파일명", example = "")
     private String blingFileNm;
+    @Schema(title = "거래파일정렬", example = "숫자")
+    private Integer blingFileOrd;
 
     @Schema(title = "매출파일순번", example = "숫자")
     private Integer slsFileSeq;
     @Schema(title = "매출파일명", example = "")
     private String slsFileNm;
+    @Schema(title = "매출파일정렬", example = "숫자")
+    private Integer slsFileOrd;
 
     @Schema(title = "검수확인파일순번", example = "숫자")
     private Integer insptChkFileSeq;
     @Schema(title = "검수확인파일명", example = "")
     private String insptChkFileNm;
+    @Schema(title = "검수확인파일순정렬", example = "숫자")
+    private Integer insptChkFileOrd;
 }

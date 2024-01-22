@@ -46,6 +46,9 @@ public class WBDBSafetyFileDtlDTO extends BaseDTO {
     @Schema(title = "파일명", example = "숫자")
     private String fileNm;
 
+    @Schema(title = "파일정렬", example = "숫자")
+    private Integer fileOrd;
+
     @Schema(title = "조회 리스트", example = "")
     List<WBDBSafetyFileDtlDTO> list;
 
