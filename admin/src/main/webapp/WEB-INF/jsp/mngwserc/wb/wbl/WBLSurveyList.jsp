@@ -94,7 +94,7 @@
                                     <option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>1차사코드</option>
                                     <option value="3" <c:if test="${rtnData.f eq '3'}">selected</c:if>>2차사명</option>
                                     <option value="4" <c:if test="${rtnData.f eq '4'}">selected</c:if>>2차사코드</option>
-                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최종등록자</option>
+                                    <option value="5" <c:if test="${rtnData.f eq '5'}">selected</c:if>>최초등록자</option>
                                     <option value="6" <c:if test="${rtnData.f eq '6'}">selected</c:if>>최종수정자</option>
                                 </select>
                             </div>
