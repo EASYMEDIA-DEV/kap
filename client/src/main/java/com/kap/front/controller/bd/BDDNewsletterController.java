@@ -75,6 +75,9 @@ public class BDDNewsletterController {
         {
             if(!"".equals(pBDDNewsletterDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", bDDNewsletterService.selectNewsletterDtl(pBDDNewsletterDTO));
+                modelMap.addAttribute("ordList", bDDNewsletterService.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+                modelMap.addAttribute("nextPrevInfo", bDDNewsletterService.selectNextAndPrevSeqVal(pBDDNewsletterDTO));
+                bDDNewsletterService.updateNewsletterReadCnt(pBDDNewsletterDTO);
             }
         }
         catch (Exception e)

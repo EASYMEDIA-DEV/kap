@@ -16,7 +16,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
-
+            nextBtn : {
+                event : {
+                    click : function() {
+                        $formObj.find("input[name=detailsKey]").val($(this).data("nextSeq"));
+                        location.href = "./view?" + $formObj.serialize();
+                    }
+                }
+            },
+            prevBtn : {
+                event : {
+                    click : function() {
+                        $formObj.find("input[name=detailsKey]").val($(this).data("prevSeq"));
+                        location.href = "./view?" + $formObj.serialize();
+                    }
+                }
+            },
+            listBtn : {
+                event : {
+                    click : function(){
+                        location.href = "./list?" + $(this).data("strPam");
+                    }
+                }
+            }
         },
         classname : {
 

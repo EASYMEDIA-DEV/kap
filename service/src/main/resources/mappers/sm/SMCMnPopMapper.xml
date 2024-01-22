@@ -16,8 +16,8 @@
         , DATE_FORMAT(EXPS_STRT_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_STRT_DTM
         , DATE_FORMAT(EXPS_END_DTM, '%Y-%m-%d %H:%i:%s') AS EXPS_END_DTM
         , #{srchDate} AS 'srchDate'
-        , #{dStrDt} AS 'dStrDt'
-        , #{dEndDt} AS 'dEndDt'
+        , #{ptupSrchStrDt} AS 'ptupSrchStrDt'
+        , #{ptupSrchEndDt} AS 'ptupSrchEndDt'
         , ODTM_YN
         , TITL
         , TAG_CD
@@ -322,11 +322,11 @@
             <if test="mdCd != null and mdCd != ''.toString() ">
                 AND MD_CD = #{mdCd}
             </if>
-            <if test="expsStrtDtm != null and expsStrtDtm != ''.toString() ">
-                AND EXPS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{expsStrtDtm}, '%Y-%m-%d')
+            <if test="ptupSrchStrDt != null and ptupSrchStrDt != ''.toString() ">
+                AND EXPS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{ptupSrchStrDt}, '%Y-%m-%d')
             </if>
-            <if test="expsEndDtm !=  null and expsEndDtm != ''.toString() ">
-                AND EXPS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{expsEndDtm}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            <if test="ptupSrchEndDt !=  null and ptupSrchEndDt != ''.toString() ">
+                AND EXPS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{ptupSrchEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
             </if>
             <if test="srchDate != null and srchDate != ''.toString() ">
                 <choose>

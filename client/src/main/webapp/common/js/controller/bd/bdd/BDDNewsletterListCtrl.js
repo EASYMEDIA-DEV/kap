@@ -135,7 +135,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         //상세보기
-                        location.href = "./view?" + $formObj.serialize();
+                        $formObj.find("input[name=detailsKey]").val($(this).data("detailsKey"));
+                        var url = "./view?detailsKey=" + $formObj.find("input[name=detailsKey]").val();
+
+                        if($formObj.find("input[name=srchVal]").val() != null) {
+                            location.href = url;
+                        } else {
+                            location.href = url + "&srchVal=" + $formObj.find("input[name=srchVal]").val();
+                       }
                     }
                 }
             }

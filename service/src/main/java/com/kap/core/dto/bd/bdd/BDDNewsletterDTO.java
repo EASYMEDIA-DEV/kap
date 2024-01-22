@@ -50,6 +50,12 @@ public class BDDNewsletterDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일정렬값")
+    private Integer fileOrd;
+
+    @Schema(title = "파일명")
+    private String fileName;
+
     @Schema(title = "PC 썸네일 이미지 순번")
     private Integer pcThnlSeq;
 
@@ -67,6 +73,18 @@ public class BDDNewsletterDTO extends BaseDTO {
 
     @Schema(title = "사용자 검색값")
     private String srchVal;
+
+    @Schema(title = "다음글 뉴스레터 순번")
+    private String nextSeq;
+
+    @Schema(title = "이전글 뉴스레터 순번")
+    private String prevSeq;
+
+    @Schema(title = "다음글 제목")
+    private String nextTitl;
+
+    @Schema(title = "이전 글 제목")
+    private String prevTitl;
 
     @Schema(title = "노출여부 리스트")
     @Hidden

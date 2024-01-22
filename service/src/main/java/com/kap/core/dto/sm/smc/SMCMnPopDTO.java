@@ -105,10 +105,10 @@ public class SMCMnPopDTO extends BaseDTO {
     private List<String> expsYnList;
 
     @Schema(title = "검색 등록/수정 기간 시작일자", example = "yyyy-MM-dd")
-    private String dStrDt;
+    private String ptupSrchStrDt;
 
     @Schema(title = "검색 등록/수정 기간 종료일자", example = "yyyy-MM-dd")
-    private String dEndDt;
+    private String ptupSrchEndDt;
 
     // 게시 기간 등록
     @Schema(title = "게시 시작 일자", example = "yyyy-MM-dd")

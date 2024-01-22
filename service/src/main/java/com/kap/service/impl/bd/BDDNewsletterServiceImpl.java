@@ -2,7 +2,6 @@ package com.kap.service.impl.bd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
 import com.kap.service.BDDNewsletterService;
@@ -148,4 +147,29 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
 
         return bDDNewsletterMapper.deleteNewsletter(pBDDNewsletterDTO);
     }
+
+    /**
+     * 뉴스레터 첨부파일 ord 목록 조회
+     */
+    public BDDNewsletterDTO selectNewsletterFileOrdList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+        return pBDDNewsletterDTO;
+    }
+
+    /**
+     * 뉴스레터 조회수 증가
+     */
+    public int updateNewsletterReadCnt(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception{
+        return bDDNewsletterMapper.updateNewsletterReadCnt(pBDDNewsletterDTO);
+    }
+
+    /**
+     * 뉴스레터 이전, 다음 글 SEQ 조회
+     */
+    public BDDNewsletterDTO selectNextAndPrevSeqVal(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception{
+        return bDDNewsletterMapper.selectNextAndPrevSeqVal(pBDDNewsletterDTO);
+    }
+
+
+    
 }

@@ -195,6 +195,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
 
     @Schema(title = "초도방문자료")
     private Integer initVstFileSeq;
+    @Schema(title = "초도방문ord")
+    private Integer initVstFileOrd;
     @Schema(title = "킥오프자료")
     private Integer kickfFileSeq;
     @Schema(title = "킥오프파일ord")
@@ -269,6 +271,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String admMemo;
     @Schema(title = "소개파일순번")
     private Integer itrdcFileSeq;
+    @Schema(title = "소개파일ord")
+    private Integer itrdcFileOrd;
     @Schema(title = "개선파일순번")
     private Integer impvmFileSeq;
     @Schema(title = "파일순번")

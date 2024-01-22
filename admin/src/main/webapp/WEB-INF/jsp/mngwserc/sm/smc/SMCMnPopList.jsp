@@ -20,15 +20,19 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="게시기간" />
                 <jsp:param name="useOdtmYn" value="Y" />
-                <jsp:param name="startId" value="dStrDt" />
-                <jsp:param name="endId" value="dEndDt" />
+                <jsp:param name="startId" value="ptupSrchStrDt" />
+                <jsp:param name="endId" value="ptupSrchEndDt" />
+                <jsp:param name="strtDtVal" value="${rtnData.ptupSrchStrDt}" />
+                <jsp:param name="endDtVal" value="${rtnData.ptupSrchEndDt}" />
             </jsp:include>
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정기간" />
+                <jsp:param name="endDtVal" value="${rtnData.endDt}" />
+                <jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
             </jsp:include>
-
             <!--기간 검색 종료-->
+
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구분</label>
@@ -107,8 +111,6 @@
                     </select>
                 </div>
                 <div class="pull-right">
-                    <%--<button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">다중순서변경</button>--%>
-                    <%--<button type="button" class="btn btn-primary btn-sm mb-sm" id="btnExpsYn">미노출</button>--%>
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btn_delete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                 </div>

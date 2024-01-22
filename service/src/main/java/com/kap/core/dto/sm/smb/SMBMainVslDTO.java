@@ -92,9 +92,9 @@ public class SMBMainVslDTO extends BaseDTO {
     private List<String> seqList;
 
     // 게시 시작 날짜 (검색)
-    private String dStrDt;
+    private String ptupSrchStrDt;
     // 게시 종료 날짜 (검색)
-    private String dEndDt;
+    private String ptupSrchEndDt;
 
     @Schema(title = "파일 경로")
     private String webPath;

@@ -568,10 +568,10 @@
                                           NAME
                                            , work_bsnm_no
                                            , episd_seq
-                                           , (SELECT episd_year from ed_edctn_episd_mst WHERE episd_seq = aa.episd_seq and edctn_stts_cd = 'EDCTN_STTS_CD01') AS EPISD_YEAR -- 교육코드가 개강인 경우우
+                                           , (SELECT episd_year from ed_edctn_episd_mst WHERE episd_seq = aa.episd_seq and edctn_stts_cd = 'EDCTN_STTS_CD01') AS EPISD_YEAR -- 교육코드가 개강인 경우
                                            , (SELECT LEFT(ctgry_cd, 7) from ED_EDCTN_PRCS_MST WHERE edctn_seq = aa.edctn_seq) AS ctgry_cd
                                   FROM co_mem_mst bb
-					LEFT JOIN ep_edctn_ptcpt_mst aa ON aa.stts_cd = 'EDU_STTS_CD01' AND aa.ptcpt_bsnm_no = bb.work_bsnm_no -- 상태코드가 신청인 경우우
+					LEFT JOIN ep_edctn_ptcpt_mst aa ON aa.stts_cd = 'EDU_STTS_CD01' AND aa.ptcpt_bsnm_no = bb.work_bsnm_no -- 상태코드가 신청인 경우
                               WHERE bb.work_bsnm_no = #{bsnmNo}
                           ) TTT ON TT.CD = TTT.CTGRY_CD
                  ) TB
@@ -601,47 +601,104 @@
          설  명 : 실적정보 컨설팅 목록을 조회한다.
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.12.26   구은희       최초생성
+        2023.01.22   구은희       최초생성
     -->
     <select id="selectConsultingList" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* MPEPartsCompanyMapper.selectConsultingList */
-            CNSTG_SEQ					-- 컨설팅순번
-             , APPCTN_BSNM_NO			-- 신청당시 사업자번호
-             , CMSSR_NM					-- 위원이름
-             , CBSN_NM                  -- 신청업종
-             , INIT_VST_FILE_SEQ        -- 초도방문파일순번
-             , KICKF_FILE_SEQ			-- 킥오프파일순번
-             , LVLUP_FILE_SEQ			-- 렙업파일순번
-             , ITRDC_FILE_SEQ			-- 회사소개파일순번
-             , FLTY_IMPVM_RATE          -- 공정개선율
+            CNSTG_SEQ					/* 컨설팅순번 */
+             , CNSTG_CD                  /* 컨설팅코드 */
+             , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
+             , CBSN_NM                   /* 신청 업종 */
+             , CBSN_CD                   /* 신청 업종 코드 */
+             , CMSSR_SEQ					/* 위원순번 */
+             , CMSSR_NM					/* 위원이름 */
+             , GUIDE_KICKF_DT			/* 킥오프시작일 */
+             , KICKF_FILE_SEQ			/* 킥오프파일순번 */
+             , KICKF_FILE_ORD            /* 킥오프파일ORD */
+             , GUIDE_BGN_DT              /* 지도착수일 */
+             , LVLUP_FILE_SEQ			/* 렙업파일순번 */
+             , LVLUP_FILE_ORD			/* 렙업파일ORD */
+             , init_vst_file_seq         /* 초도방문자료순번 */
+             , init_vst_file_ORD         /* 초도방문자료ORD */
+             , itrdc_file_seq            /* 회사소개서파일일순번 */
+             , itrdc_file_ORD            /* 회사소개서ORD */
+             , flty_impvm_rate           /* 개선율 */
         FROM(
-                SELECT
-                    CP_MST.CNSTG_SEQ
-                     , CP_MST.APPCTN_BSNM_NO
-                     , CP_MST.CNSTG_CD
-                     , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
-                     , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
-                     , CPR_MST.INIT_VST_FILE_SEQ
-                     , CPR_MST.KICKF_FILE_SEQ
-                     , CPR_MST.FLTY_IMPVM_RATE
-                     , CPR_MST.LVLUP_FILE_SEQ
-                     , CP_MST.ITRDC_FILE_SEQ
-                     , CP_MST.REG_DTM
-                FROM
-                    CP_CNSTG_APPCTN_MST CP_MST
-                        JOIN CO_MEM_MST MEM_MST
-                             ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
-                        LEFT JOIN CP_CMPN_MST CMPN_MST
-                                  ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
-                        LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-                                  ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            SELECT
+                CP_MST.CNSTG_SEQ
+                 , CP_MST.CNSTG_CD
+                 , CP_MST.BSN_YEAR
+                 , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                         WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                             AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                         ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                                                                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                                                        AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                                                    ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                 , CMPN_MST.CMPN_NM
+                 , CMPN_MST.CTGRY_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
+                 , CMPN_MST.SIZE_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.SIZE_CD AND CD_ID = 'COMPANY_TYPE') SIZE_NM
+                 , CP_MST.APPCTN_BSNM_NO
+                 , CP_MST.APPCTN_MEM_SEQ
+                 , CMPN_MST.SLS_PMT
+                 , CMPN_MST.MPLE_CNT
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                 , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
+                 , CP_MST.FIRST_RGNS_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
+                 , CP_MST.SCND_RGNS_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.SCND_RGNS_CD AND CD_ID = 'ADDR_CD') SCND_RGNS_NM
+                 , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL CMPNDTL WHERE BSNM_NO = CP_MST.APPCTN_BSNM_NO ORDER BY CMPNDTL.YEAR DESC, CMPNDTL.REG_DTM DESC LIMIT 1) CRTFN_CMPN_NM
+           , (SELECT CMPN_NM FROM CP_CNSTG_DLVRY_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ORDER BY RATE DESC LIMIT 1) MN_CMPN_NM
+           , CPR_MST.VST_DT
+           , CPR_MST.CMSSR_SEQ
+           , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
+           , (SELECT COUNT(*) FROM CO_CMSSR_ATNDC_MST WHERE CNSTG_SEQ_1 = CP_MST.CNSTG_SEQ OR CNSTG_SEQ_2 = CP_MST.CNSTG_SEQ) VST_CNT
+           , (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_CBSN_CD
+           , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'MEM_CD' AND CD = (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ))) CMSSR_CBSN_NM
+           , CPR_MST.GUIDE_KICKF_DT
+           , CPR_MST.KICKF_FILE_SEQ
+           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.KICKF_FILE_SEQ AND USE_YN = 'Y') KICKF_FILE_ORD
+           , CPR_MST.CNSTG_PSCND_CD
+           , CPR_MST.GUIDE_PSCND_DT
+           , CPR_MST.GUIDE_BGN_DT
+           , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.CNSTG_PSCND_CD AND CD_ID = 'CNSTG_PSCND') CNSTG_PSCND_NM
+           , CPR_MST.CNSTG_PSCND_DT
+           , CPR_MST.LVLUP_FILE_SEQ
+           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
+           , CPR_MST.init_vst_file_seq
+           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
+           , CP_MST.itrdc_file_seq
+           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
+           , CP_MST.APPCTN_DT
+           , CPR_MST.flty_impvm_rate
+           , CP_MST.REG_ID
+           , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
+           , CP_MST.REG_DTM
+           , CP_MST.MOD_ID
+           , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+           , CPR_MST.MOD_DTM
+            FROM
+                CP_CNSTG_APPCTN_MST CP_MST
+            JOIN CO_MEM_MST MEM_MST
+        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+            LEFT JOIN CP_CMPN_MST CMPN_MST
+            ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+            LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+            ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
             ) MST
         WHERE 1=1
-         AND CNSTG_CD = #{cnstgCd}
-         AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND CNSTG_CD = #{cnstgCd}
+          AND APPCTN_BSNM_NO = #{bsnmNo}
         ORDER BY
-        REG_DTM DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+            REG_DTM DESC
     </select>
 
     <!--
@@ -649,22 +706,107 @@
          설  명 :  컨설팅 목록 개수
           수정일     수정자       수정내용
         ==========   ======    ==============
-        2023.12.26   구은희      최초 생성
+        2023.01.22   구은희      최초 생성
     -->
     <select id="selectConsultingListCnt" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
         SELECT /* MPEPartsCompanyMapper.selectConsultingListCnt */
             COUNT(*)
         FROM
-        CP_CNSTG_APPCTN_MST CP_MST
-        JOIN CO_MEM_MST MEM_MST
-        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
-        LEFT JOIN CP_CMPN_MST CMPN_MST
-        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
-        LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
-        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            (
+                SELECT
+                    CNSTG_SEQ					/* 컨설팅순번 */
+                     , CNSTG_CD                  /* 컨설팅코드 */
+                     , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
+                     , CBSN_NM                   /* 신청 업종 */
+                     , CBSN_CD                   /* 신청 업종 코드 */
+                     , CMSSR_SEQ					/* 위원순번 */
+                     , CMSSR_NM					/* 위원이름 */
+                     , GUIDE_KICKF_DT			/* 킥오프시작일 */
+                     , KICKF_FILE_SEQ			/* 킥오프파일순번 */
+                     , KICKF_FILE_ORD            /* 킥오프파일ORD */
+                     , GUIDE_BGN_DT              /* 지도착수일 */
+                     , LVLUP_FILE_SEQ			/* 렙업파일순번 */
+                     , LVLUP_FILE_ORD			/* 렙업파일ORD */
+                     , init_vst_file_seq         /* 초도방문자료순번 */
+                     , init_vst_file_ORD         /* 초도방문자료ORD */
+                     , itrdc_file_seq            /* 회사소개서파일일순번 */
+                     , itrdc_file_ORD            /* 회사소개서ORD */
+                     , flty_impvm_rate           /* 개선율 */
+                FROM(
+                    SELECT
+                        CP_MST.CNSTG_SEQ
+                         , CP_MST.CNSTG_CD
+                         , CP_MST.BSN_YEAR
+                         , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                        AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                            AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                                 WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                     AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                 ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                        AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                            AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                                                                            WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                                                                AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                                                            ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                         , CMPN_MST.CMPN_NM
+                         , CMPN_MST.CTGRY_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
+                         , CMPN_MST.SIZE_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.SIZE_CD AND CD_ID = 'COMPANY_TYPE') SIZE_NM
+                         , CP_MST.APPCTN_BSNM_NO
+                         , CP_MST.APPCTN_MEM_SEQ
+                         , CMPN_MST.SLS_PMT
+                         , CMPN_MST.MPLE_CNT
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                         , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
+                         , CP_MST.FIRST_RGNS_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
+                         , CP_MST.SCND_RGNS_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.SCND_RGNS_CD AND CD_ID = 'ADDR_CD') SCND_RGNS_NM
+                         , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL CMPNDTL WHERE BSNM_NO = CP_MST.APPCTN_BSNM_NO ORDER BY CMPNDTL.YEAR DESC, CMPNDTL.REG_DTM DESC LIMIT 1) CRTFN_CMPN_NM
+                   , (SELECT CMPN_NM FROM CP_CNSTG_DLVRY_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ORDER BY RATE DESC LIMIT 1) MN_CMPN_NM
+                   , CPR_MST.VST_DT
+                   , CPR_MST.CMSSR_SEQ
+                   , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
+                   , (SELECT COUNT(*) FROM CO_CMSSR_ATNDC_MST WHERE CNSTG_SEQ_1 = CP_MST.CNSTG_SEQ OR CNSTG_SEQ_2 = CP_MST.CNSTG_SEQ) VST_CNT
+                   , (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_CBSN_CD
+                   , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'MEM_CD' AND CD = (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ))) CMSSR_CBSN_NM
+                   , CPR_MST.GUIDE_KICKF_DT
+                   , CPR_MST.KICKF_FILE_SEQ
+                   , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.KICKF_FILE_SEQ AND USE_YN = 'Y') KICKF_FILE_ORD
+                   , CPR_MST.CNSTG_PSCND_CD
+                   , CPR_MST.GUIDE_PSCND_DT
+                   , CPR_MST.GUIDE_BGN_DT
+                   , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.CNSTG_PSCND_CD AND CD_ID = 'CNSTG_PSCND') CNSTG_PSCND_NM
+                   , CPR_MST.CNSTG_PSCND_DT
+                   , CPR_MST.LVLUP_FILE_SEQ
+                   , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
+                   , CPR_MST.init_vst_file_seq
+                   , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
+                   , CP_MST.itrdc_file_seq
+                   , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
+                   , CP_MST.APPCTN_DT
+                   , CPR_MST.flty_impvm_rate
+                   , CP_MST.REG_ID
+                   , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
+                   , CP_MST.REG_DTM
+                   , CP_MST.MOD_ID
+                   , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+                   , CPR_MST.MOD_DTM
+                    FROM
+                CP_CNSTG_APPCTN_MST CP_MST
+            JOIN CO_MEM_MST MEM_MST
+                ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+                    LEFT JOIN CP_CMPN_MST CMPN_MST
+                    ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+                    LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+                    ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+            ) MST
         WHERE 1=1
           AND CNSTG_CD = #{cnstgCd}
           AND APPCTN_BSNM_NO = #{bsnmNo}
+            ) TB
     </select>
 
     <!--
@@ -672,39 +814,39 @@
          설  명 : 자금지원 목록 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
-        2023.12.26  구은희     최초 생성
+        2024.01.22  구은희     최초 생성
     -->
     <select id="selectFundingList" parameterType="wBGAExamSearchDTO" resultType="wBGAExamSearchDTO">
         SELECT /* MPEPartsCompanyMapper.selectFundingList */
             B.APPCTN_SEQ
-            ,F.BSNM_NO
-            ,(SELECT cd_nm FROM CO_CODE_MST WHERE cd = A.BSN_CD) AS BSN_NM
-            ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM -- 담당위원명
-            ,(SELECT TCHLG_NM FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ AND TCHLG_ORD = 1) AS TCHLG_NM -- 장비명
-            ,(SELECT SUM(TCHLG_CNT) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_CNT_SUM -- 장비수량
-            ,(SELECT MAX(TCHLG_ORD) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_ORD_MAX -- 장비 리스트 수
-            ,V.NVSTM_PMT -- 총투자비
-            ,V.FNDN_SPPRT_PMT -- 재단지원금
-            ,V.REAL_GIVE_DT -- 실지급일
+             ,(SELECT cd_nm FROM CO_CODE_MST WHERE cd = A.BSN_CD) AS BSN_NM -- 사업명구분
+             ,F.BSNM_NO
+             ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM -- 담당위원
+             ,(SELECT TCHLG_NM FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ AND TCHLG_ORD = 1) AS TCHLG_NM -- 장비명
+             ,(SELECT SUM(TCHLG_CNT) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_CNT_SUM -- 장비수량
+             ,(SELECT MAX(TCHLG_ORD) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_ORD_MAX -- 장비 리스트 수
+             ,V.NVSTM_PMT -- 총투자비
+             ,V.FNDN_SPPRT_PMT -- 재단지원금
+             ,V.REAL_GIVE_DT -- 실지급일
+
         FROM CX_EPISD_MST A
-        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
-        JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
-        LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
-        INNER JOIN (
+                 JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                 JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                 JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
+                 JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
+                 LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
+                 INNER JOIN (
             SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
             FROM CX_EPISD_MST A
-            JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-            JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-            WHERE BSN_CD IN('INQ07007', 'INQ07008', 'INQ07009')
+                     JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                     JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+            WHERE BSN_CD IN('BSN07', 'BSN08', 'BSN09')
             GROUP BY APPCTN_SEQ
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
-        WHERE 1=1
-         AND BSN_CD IN('INQ07007', 'INQ07008', 'INQ07009')
-         AND appctn_bsnm_no = #{bsnmNo}
+        WHERE 1 = 1
+          AND BSN_CD IN('BSN07', 'BSN08', 'BSN09')
+          AND BSNM_NO = #{bsnmNo}
         ORDER BY B.APPCTN_SEQ DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -712,30 +854,44 @@
          설  명 : 자금지원 목록 개수 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
-        2023.12.26  구은희     최초 생성
+        2024.01.22  구은희     최초 생성
     -->
     <select id="selectFundingCnt" parameterType="wBGAExamSearchDTO" resultType="java.lang.Integer">
         SELECT /* MPEPartsCompanyMapper.selectFundingCnt */
             COUNT(*)
-        FROM (
-        SELECT A.* FROM CX_EPISD_MST A
-        JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-        JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
-        JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
-        LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
-        INNER JOIN (
-            SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
-            FROM CX_EPISD_MST A
-            JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-            JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-            WHERE BSN_CD IN('INQ07007', 'INQ07008', 'INQ07009')
-            GROUP BY APPCTN_SEQ
-        ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
-        WHERE 1=1
-          AND BSN_CD IN('INQ07007', 'INQ07008', 'INQ07009')
-          AND appctn_bsnm_no = #{bsnmNo}
-        ) A
+        FROM
+            (
+                SELECT
+                    B.APPCTN_SEQ
+                     ,(SELECT cd_nm FROM CO_CODE_MST WHERE cd = A.BSN_CD) AS BSN_NM -- 사업명구분
+                     ,F.BSNM_NO
+                     ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM -- 담당위원
+                     ,(SELECT TCHLG_NM FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ AND TCHLG_ORD = 1) AS TCHLG_N -- 장비명
+                     ,(SELECT SUM(TCHLG_CNT) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_CNT_SUM -- 장비수량
+                     ,(SELECT MAX(TCHLG_ORD) FROM CX_APPCTN_TCHLG_DTL WHERE APPCTN_SEQ = C.APPCTN_SEQ) AS  TCHLG_ORD_MAX -- 장비 리스트 수
+                     ,V.NVSTM_PMT -- 총투자비
+                     ,V.FNDN_SPPRT_PMT -- 재단지원금
+                     ,V.REAL_GIVE_DT -- 실지급일
+
+                FROM CX_EPISD_MST A
+                         JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                         JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
+                         JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
+                         LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
+                         INNER JOIN (
+                    SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
+                    FROM CX_EPISD_MST A
+                             JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
+                             JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
+                    WHERE BSN_CD IN('BSN07', 'BSN08', 'BSN09')
+                    GROUP BY APPCTN_SEQ
+                ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
+                WHERE 1 = 1
+                  AND BSN_CD IN('BSN07', 'BSN08', 'BSN09')
+                  AND BSNM_NO = #{bsnmNo}
+                ORDER BY B.APPCTN_SEQ DESC
+            ) TB
     </select>
 
     <!--
@@ -746,7 +902,7 @@
         2023.12.07   구은희       최초생성
     -->
     <select id="selectCarTargetList" parameterType="WBJAcomSearchDTO">
-        SELECT
+        SELECT /* MPEPartsCompanyMapper.selectCarTargetList */
             DISTINCT A.year as year -- 사업연도
         , B.appctn_seq
         , B.reg_dtm
@@ -754,14 +910,14 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = F.mrts_cd) as mrts_cd_nm -- 훈격명
         , D.PRIZE_PMT -- 포상금액
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.MNG_STTS_CD) as MNG_STTS_CD_NM -- 최종결과
-        , C.CMPN_NM -- 부품사명
+        , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm -- 부품사명
         , F.pstn_nm -- 직급명
 		  , F.NAME -- 수상자명
         FROM
             (
             SELECT *
             FROM cx_episd_mst
-            WHERE bsn_cd = 'INQ07010'
+            WHERE bsn_cd = 'BSN10'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN
             (

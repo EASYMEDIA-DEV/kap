@@ -50,4 +50,19 @@ public interface BDDNewsletterService {
      */
     public int deleteNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
 
+    /**
+     * 뉴스레터 첨부파일 ord 목록 조회
+     */
+    public BDDNewsletterDTO selectNewsletterFileOrdList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+
+    /**
+     * 뉴스레터 조회수 증가
+     */
+    public int updateNewsletterReadCnt(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+
+    /**
+     * 뉴스레터 이전, 다음 글 SEQ 조회
+     */
+    public BDDNewsletterDTO selectNextAndPrevSeqVal(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+
 }
