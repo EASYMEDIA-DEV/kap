@@ -157,6 +157,7 @@
                     EPISD_SEQ
                     ,BSN_CD
                     ,YEAR
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = BSN_CD) AS BSN_NM
                     ,EPISD
                     ,ACCS_STRT_DTM
                     ,ACCS_END_DTM
@@ -191,6 +192,7 @@
                      , OPTN_NM
                      , OPTN_ORD
                      , FILE_SEQ
+                     , (SELECT CONCAT(file_dsc,'.',file_extn)  FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
                      , STAGE_ORD
                  FROM CX_OPTN_DTL A
                  JOIN CX_STAGE_DTL B ON A.STAGE_SEQ = B.STAGE_SEQ AND B.BSN_CD = #{bsnCd} AND B. FILE_YN = 'Y'

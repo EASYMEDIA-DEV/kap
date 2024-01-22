@@ -41,6 +41,11 @@ public interface WBAManagementMapper {
     public int selectManagementCnt(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
 
     /**
+     * 상생사업 신청자수를 조회
+     */
+    public int selecApplyCnt(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;
+
+    /**
      * 상생사업 마스터 상세를 조회
      */
     public WBAManageInsertDTO selectManagementMst(WBAManageSearchDTO wbaManageSearchDTO) throws Exception;

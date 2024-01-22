@@ -94,6 +94,14 @@ public class WBAManagementServiceImpl implements WBAManagementService {
     }
 
     /**
+     * 상생사업 신청자수를 조회한다.
+     */
+    @Override
+    public int selecApplyCnt(WBAManageSearchDTO wbaManageSearchDTO) throws Exception {
+        return wbaManagementMapper.selecApplyCnt(wbaManageSearchDTO);
+    }
+    
+    /**
      * 상세를 조회한다.
      */
     public WBAManageInsertDTO selectManagementDtl(WBAManageSearchDTO wbaManageSearchDTO) throws Exception {
@@ -107,7 +115,7 @@ public class WBAManagementServiceImpl implements WBAManagementService {
             List<WBAManagementOptnDTO> wbaOptnDtlList = wbaManagementMapper.selectOptnDtlList(wbaManagementDtlDTO);
 
             for(WBAManagementOptnDTO wbaManagementOptnDTO : wbaOptnDtlList) {
-                if (wbaManagementDtlDTO.getStageSeq() == wbaManagementOptnDTO.getStageSeq()) {
+                if (wbaManagementDtlDTO.getStageSeq().equals(wbaManagementOptnDTO.getStageSeq())) {
                     wbaManagementDtlDTO.getManagementOptnList().add(wbaManagementOptnDTO);
                 }
             }
@@ -138,7 +146,7 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         //사용자 메뉴
         coMenuDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
         coMenuDTO.setUserUrl("/coexistence/business/"+wbaManageInsertDTO.getBsnCd()+"/content");
-        coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+wbaManageInsertDTO.getBsnCd());
+        coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+coMenuDTO.getMenuSeq()+"/list");
         cOBUserMenuMapper.updateMenuUrl(coMenuDTO);
 
         //관리자 메뉴(회차관리)
@@ -230,7 +238,7 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         //사용자 메뉴
         coMenuDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
         coMenuDTO.setUserUrl("/coexistence/business/"+wbaManageInsertDTO.getBsnCd()+"/content");
-        coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+wbaManageInsertDTO.getBsnCd());
+        coMenuDTO.setAdmUrl("/mngwserc/contentsid/"+coMenuDTO.getMenuSeq()+"/list");
         cOBUserMenuMapper.updateMenuUrl(coMenuDTO);
 
         //관리자 메뉴(회차관리)
@@ -386,5 +394,12 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         WBAManagementDtlDTO wbaManagementDtlDTO =  wbaManagementMapper.getStepDtl(wbaManageSearchDTO);
 
         return wbaManagementMapper.selectOptnDtlList(wbaManagementDtlDTO);
+    }
+
+    /**
+     * 상생공통사업 마스터를 조회한다.
+     */
+    public WBAManageInsertDTO selectManagementMst(WBAManageSearchDTO wbaManageSearchDTO) throws Exception {
+        return wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
     }
 }

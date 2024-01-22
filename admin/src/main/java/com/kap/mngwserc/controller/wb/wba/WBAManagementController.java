@@ -109,6 +109,7 @@ public class WBAManagementController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("BM_CODE");
+            cdDtlList.add("INQUIRY_TYPE");
 
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
@@ -140,6 +141,28 @@ public class WBAManagementController {
         try {
 
             rtnCnt = wbaManagementService.selectManagementCnt(wbaManageSearchDTO);
+
+        } catch (Exception e) {
+
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return rtnCnt;
+    }
+
+    @Operation(summary = "상생 사업 신청자 여부체크", tags = "상생 사업 신청자 여부체크", description = "상생 사업 신청자 여부체크")
+    @PostMapping(value="/applyCount")
+    @ResponseBody
+    public int applyCount(@Valid WBAManageSearchDTO wbaManageSearchDTO) throws Exception {
+
+        int rtnCnt = 0;
+
+        try {
+
+            rtnCnt = wbaManagementService.selecApplyCnt(wbaManageSearchDTO);
 
         } catch (Exception e) {
 

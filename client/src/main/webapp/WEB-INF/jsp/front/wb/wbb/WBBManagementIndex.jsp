@@ -139,6 +139,7 @@
                         </div>
                     </div>
                 </div>
+                    ${rtnDtl}
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
@@ -154,14 +155,7 @@
                                         <p class="txt f-head">사업 신청 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다.<br/>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <c:choose>
-                                            <c:when test="${rtnData.bsnCd eq 'futureTech'}">
-                                                <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ07&inqSec=미래차다각화"><span>신청 문의하기</span></a>
-                                            </c:when>
-                                            <c:when test="${rtnData.bsnCd eq 'support'}">
-                                                <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ07&inqSec=사업재편지원"><span>신청 문의하기</span></a>
-                                            </c:when>
-                                        </c:choose>
+                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ07&inqSec=${rtnDtl.qaCtgryName}"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                                 <p class="noti-txt f-caption2">* 다만 문의 사항이 많아 답변이 다소 늦어질 수 있으니 양해 바랍니다.</p>
@@ -175,14 +169,14 @@
                 <div class="accepting-fixed-area">
                     <div class="for-position">
                         <button class="open-click-area" type="button">
-                            <p class="tit"><span>${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</span></p>
+                            <p class="tit">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 ${rtnRoundDtl.bsnNm} 사업 접수중</p>
                             <div class="btn-text-icon plus"><span>더보기</span></div>
                         </button>
 
                         <div class="hide-area">
                             <div class="inner-con">
                                 <div class="tit-area">
-                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 미래차다각화 사업 접수중</p>
+                                    <p class="f-title1">${rtnRoundDtl.year} ${rtnRoundDtl.episd}차 ${rtnRoundDtl.bsnNm} 사업 접수중</p>
                                 </div>
                                 <div class="con-area">
                                     <div class="scroll-area">
@@ -195,6 +189,27 @@
                                                 <p class="tit">사업기간</p>
                                                 <p class="txt">${kl:convertDate(rtnRoundDtl.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')} - ${kl:convertDate(rtnRoundDtl.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
                                             </div>
+                                            <c:if test="${not empty rtnRoundDtl.optnList}">
+                                                <!-- 2024-01-02 첨부파일 영역 추가 -->
+                                                <div class="list">
+                                                    <p class="tit">첨부파일</p>
+                                                    <div class="txt">
+                                                        <!-- 2024-01-03 첨부파일 양식 변경 -->
+                                                        <div class="file-prev-area">
+                                                            <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                                                                <a href="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download="" title="파일 다운로드" id="down${status.index}">${item.fileNm}</a>
+                                                            </c:forEach>
+                                                        </div>
+                                                        <!-- // 2024-01-03 첨부파일 양식 변경 -->
+                                                    </div>
+                                                </div>
+                                                <!-- //2024-01-02 첨부파일 영역 추가 -->
+                                                <c:if test="${not empty rtnRoundDtl.optnList}">
+                                                    <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                                                        <input type="hidden" class="optnFile" value="${item.fileSeq}">
+                                                    </c:forEach>
+                                                </c:if>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
@@ -202,15 +217,14 @@
                                 <div class="btn-wrap">
                                     <c:if test="${not empty rtnRoundDtl.optnList}">
                                         <div class="btn-set">
-                                            <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                                <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>${item.optnNm} 다운로드</span></a>
-                                            </c:forEach>
+                                            <a class="btn-solid small gray-bg has-icon download downloadAll" href="javascript:" download="" title="첨부파일 전체 다운로드"><span>첨부파일 전체 다운로드</span></a><!-- 2024-01-02 전체다운로드 버튼 추가 -->
                                         </div>
                                     </c:if>
                                     <div class="btn-set">
-                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
+                                        <a class="btn-solid small black-bg apply" href="javascript:"><span>신청하기</span></a>
                                     </div>
                                 </div>
+
                                 <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
                             </div>
                         </div>
@@ -218,11 +232,6 @@
                 </div>
             </c:if>
 
-            <c:if test="${not empty rtnRoundDtl.optnList}">
-                <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                    <input type="hidden" class="optnFile" value="${item.fileSeq}">
-                </c:forEach>
-             </c:if>
         </div>
     </div>
 </div>

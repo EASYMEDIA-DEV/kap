@@ -62,6 +62,12 @@ public class WBAManageInsertDTO  extends BaseDTO {
     @Schema(title = "관리자신청메뉴명")
     private String admAppctnMenuName;
 
+    @Schema(title = "문의유형코드")
+    private String qaCtgryCd;
+
+    @Schema(title = "문의유형코드명")
+    private String qaCtgryName;
+
     @Schema(title = "등록 ID")
     private String regId;
 
