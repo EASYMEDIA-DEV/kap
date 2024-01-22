@@ -515,12 +515,12 @@
                 </div>
             </fieldset>
 
-            <h6 class="mt0">선급금 해당 여부</h6>
+            <h6 class="mt0">지급관리</h6>
 
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부 <span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">선급금 해당 여부 <span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
                             <input type="radio" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">checked</c:if> title="노출여부"/>
