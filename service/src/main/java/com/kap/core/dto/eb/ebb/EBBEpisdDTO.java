@@ -360,6 +360,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육진행중 여부", example = "Y/N")
     private String eduIng;
 
+    @Schema(title = "GPC여부", example = "Y/N")
+    private String gpcYn;
+
     //오프라인여부
 
     //로그인세션ID

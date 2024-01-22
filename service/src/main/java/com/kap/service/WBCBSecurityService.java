@@ -85,4 +85,9 @@ public interface WBCBSecurityService {
      */
     public int getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
+
 }

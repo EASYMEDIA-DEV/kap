@@ -20,6 +20,7 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchType" value="wbbb" />
+                <jsp:param name="srchOption" value="신청일,최초등록일시,최종수정일시" />
             </jsp:include>
             <!--기간 검색 종료-->
 

@@ -618,6 +618,7 @@
 			 , parnt_seq
 			 , (select cd_nm from co_code_mst WHERE cd_seq = aa.parnt_seq) AS prnt_cd_nm
 		     , jdgmt_yn
+		     , gpc_yn
 			 , ctgry_cd
 			 , ctgry_cd_nm
 		     , cbsn_cd
@@ -728,6 +729,7 @@
 		FROM (SELECT
 				  b.edctn_seq
 		           , a.episd_seq
+		           , b.gpc_yn
 				   , b.ctgry_cd
 		           , a.cbsn_cd
 				   , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm

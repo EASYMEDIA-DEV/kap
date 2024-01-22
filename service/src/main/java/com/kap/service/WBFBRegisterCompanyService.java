@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.wb.WBAppctnTrnsfDtlDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -110,5 +111,15 @@ public interface WBFBRegisterCompanyService {
      *  엑셀 Download
      */
     public void excelDownload(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 
 }

@@ -14,7 +14,7 @@
         </c:if>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <c:if test="${rtnData.srchLayer eq 'Y'}">
-          <td class="text-center srchListView">
+          <td class="text-center srchListView" data-gndr="${list.gndr}">
               ${list.id}
           </td>
           <td class="text-center">${list.name}</td>

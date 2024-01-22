@@ -344,4 +344,25 @@ public class WBCBSecurityController {
         }
         return "jsonView";
     }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getSbrdnBsnmNoCnt")
+    public String getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBCBSecurityService.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }

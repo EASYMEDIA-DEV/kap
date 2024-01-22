@@ -81,7 +81,7 @@ public class COGpcSendRestController {
      * GPC 요청 Rest
      * GPC & KAP ID 검증
      */
-    @GetMapping(value="/kapedu/verifyUserId")
+    @PostMapping(value="/kapedu/verifyUserId")
     public Map GpcKapIdCheck(@RequestParam(required = true) String gpcId, HttpServletResponse response, HttpServletRequest request) throws Exception
     {
         //파라미터 정리

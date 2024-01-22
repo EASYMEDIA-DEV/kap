@@ -7,6 +7,7 @@ import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBEBCarbonCompanyService;
 import lombok.RequiredArgsConstructor;
@@ -334,6 +335,27 @@ public class WBEBCarbonCompanyController {
         try
         {
             modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getSbrdnBsnmNoCnt")
+    public String getSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
         }
         catch (Exception e)
         {
