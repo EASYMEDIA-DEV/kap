@@ -159,7 +159,7 @@
 			, mod_id
 			, mod_ip
 			, mod_dtm
-			/*, last_lgn_dtm*/
+			, last_lgn_dtm
 		)
 		values
 		(
@@ -183,7 +183,7 @@
 			, #{regId}
 			, #{regIp}
 			, now()
-			/*, 0*/
+			, now()
 		)
 	</insert>
 

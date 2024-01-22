@@ -124,6 +124,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./log-list.ajax", $formObj, "POST", "html");
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
     // set model
     ctrl.model = {
         id : {
@@ -198,6 +206,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                         console.log(respObj);
                                         /* return data input */
                                         setInputValue(respObj);
+                                        fnpstnNmShow($('#pstnCd').val());
                                     }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                                 } else {
                                     alert("이관 이력이 있는 회원은 선택이 불가합니다.");

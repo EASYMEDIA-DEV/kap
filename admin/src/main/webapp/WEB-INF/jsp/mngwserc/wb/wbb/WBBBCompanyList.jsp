@@ -2,7 +2,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbb/WBBBCompanyListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>미래차다각화 신청부품사 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -84,7 +84,7 @@
 
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>${pageTitle} 목록 (총 <span id="listContainerTotCnt">0</span> 건)
+                    <em class="ion-play mr-sm"></em>미래차다각화 신청부품사 목록 (총 <span id="listContainerTotCnt">0</span> 건)
                 </h6>
                 <div class="pull-right">
                     <select class="form-control input-sm listRowSizeContainer" >

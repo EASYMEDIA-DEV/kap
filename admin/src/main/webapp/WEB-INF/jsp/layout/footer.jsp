@@ -2,15 +2,15 @@
 					
 					</div>
 	        	</section>
-	        	<footer class="sticky-footer">
-			      	<div class="container">
-			        	<div class="text-center">
-							<small>COPYRIGHT 2023 KAP. ALL RIGHTS RESERVED.</small>
-			        	</div>
-			      	</div>
-		    	</footer>
 			</main>
     	</div>
+		<footer class="sticky-footer">
+			<div class="container">
+				<div class="text-center">
+					<small>COPYRIGHT 2023 KAP. ALL RIGHTS RESERVED.</small>
+				</div>
+			</div>
+		</footer>
 
     	<!-- Settings template-->
     	<div class="modal-settings modal modal-right fade" tabindex="-1" role="dialog">
