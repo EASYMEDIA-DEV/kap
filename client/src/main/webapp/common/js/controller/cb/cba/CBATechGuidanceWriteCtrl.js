@@ -381,6 +381,17 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                         extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
                     }
                 }
+            },
+            cancelApply : {
+                event : {
+                    click : function(e){
+                        if(e){
+                            if(confirm("현재 입력된 정보는 초기화됩니다. 계속하시겠습니까?")){
+                                location.href="./index";
+                            }
+                        }
+                    }
+                }
             }
         },
         immediately : function() {

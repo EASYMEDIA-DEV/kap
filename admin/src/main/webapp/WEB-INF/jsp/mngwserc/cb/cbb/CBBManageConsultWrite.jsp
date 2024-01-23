@@ -79,7 +79,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4" style="margin-left: -15px">
-                            <input type="text" class="form-control" name="deptDtlNm" value="${rtnDto.deptDtlNm}" maxlength="50" title="부서" placeholder="부서 상세 입력">
+                            <input type="text" class="form-control input-sm" name="deptDtlNm" value="${rtnDto.deptDtlNm}" maxlength="50" title="부서" placeholder="부서 상세 입력">
                         </div>
                     </div>
 
@@ -96,7 +96,7 @@
                             </select>
                         </div>
                         <div class="col-sm-4 pstnCdInput" <c:if test="${rtnDto.pstnCd ne 'MEM_CD01007'}">style="display: none; margin-left: -15px;"</c:if>>
-                            <input type="text" class="form-control notRequired" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
                         </div>
                     </div>
                 </div>
@@ -227,7 +227,7 @@
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.slsYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.slsYear eq cdList.cd}">selected</c:if>>${fn:replace(cdList.cdNm, "년",'')}</option>
                             </c:forEach>
                         </select>
                         &nbsp;년&nbsp;
@@ -243,9 +243,9 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">주생산품</label>
                     <div class="col-sm-10">
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력해주세요."/>
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력해주세요."/>
-                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력해주세요."/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력"/>
                     </div>
                 </div>
             </fieldset>
@@ -816,8 +816,8 @@
                     <!-- 진행 정보 -->
                     <div id="episdList" class="tab-pane fade in active">
                         <fieldset>
-                            <input type="hidden" name="rsumeSttsCd" class="rsumeSttsCd" value="MNGCNSLT_STATUS01">
-                            <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태: <label class="rsumeSttsNm" style="color: red;">신청</label></h6>
+                            <input type="hidden" name="rsumeSttsCd" class="rsumeSttsCd" value="${rtnDto.rsumeSttsCd}">
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em> 진행상태: <label class="rsumeSttsNm" style="color: red;">${rtnDto.rsumeSttsNm}</label></h6>
                         </fieldset>
                         <c:choose>
                             <c:when test="${empty rtnDto.rsumeList}">

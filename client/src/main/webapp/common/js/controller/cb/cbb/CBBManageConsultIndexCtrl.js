@@ -62,13 +62,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
             techApplication : {
                 event : {
-                    click : function(){
-                       var authCd = $(".techApplication").data("authCd");
-                       if(authCd == 'CS'){
-                           alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
-                       }else{
-                            location.href = '/consulting/manage/application';
-                       }
+                    click : function(e){
+                        if(e){
+                            if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
+                                location.href="/login?rtnUrl=/consulting/manage/index/";
+                            }
+                        }
                     }
                 }
             }

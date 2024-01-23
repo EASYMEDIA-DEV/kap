@@ -15,7 +15,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         info.bsnmNo = data;
         cmmCtrl.jsonAjax(function (data) {
             var coInfo = JSON.parse(data)
-            console.log(coInfo)
             $("#cmpnNm").text(coInfo.list[0].cmpnNm);
             $("#rprsntNm").text(coInfo.list[0].rprsntNm);
             $("#ctgryNm").text(coInfo.list[0].ctgryNm);
@@ -88,6 +87,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function(){
                         location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val()+"&sizeCd="+$("#sizeCd").val();
+                    }
+                }
+            },
+            cancelApply : {
+                event : {
+                    click : function(e){
+                        if(e){
+                            if(confirm("현재 입력된 정보는 초기화됩니다. 계속하시겠습니까?")){
+                                location.href="./index";
+                            }
+                        }
                     }
                 }
             }

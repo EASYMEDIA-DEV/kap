@@ -26,6 +26,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 var name = completeInfo.name;
                 var cmpnNm = completeInfo.cmpnNm;
                 var appctnFldNm = completeInfo.appctnFldNm;
+                var appctnMemSeq = completeInfo.appctnMemSeq;
                 var etcNm = completeInfo.etcNm;
                 var cbsnCd = completeInfo.cbsnCd
 
@@ -33,6 +34,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 $(".name").text(name);
                 $(".cmpnNm").text(cmpnNm);
                 $(".appctnFldNm").text(appctnFldNm);
+                console.log(appctnMemSeq)
 
             }, './completeInfo', info, "text");
         }

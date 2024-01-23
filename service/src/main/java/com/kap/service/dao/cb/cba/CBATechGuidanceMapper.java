@@ -243,5 +243,9 @@ public interface CBATechGuidanceMapper {
      */
     public CBATechGuidanceInsertDTO selectCompleteInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     * 작성자 seq 값 조회
+     */
+    public int selectWriteMemSeq(Integer cnstgSeq) throws Exception;
 
 }

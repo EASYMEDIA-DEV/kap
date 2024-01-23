@@ -516,7 +516,7 @@
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion">
                         <div class="btn-set">
-                            <a class="btn-solid small gray-bg" href="./index"><span>취소</span></a>
+                            <a class="btn-solid small gray-bg cancelApply" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
                             <a class="btn-solid small black-bg submit" href="javascript:"><span>신청하기</span></a>

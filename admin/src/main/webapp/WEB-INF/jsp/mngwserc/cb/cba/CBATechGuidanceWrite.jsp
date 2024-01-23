@@ -240,9 +240,9 @@
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">주생산품</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력해주세요."/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력해주세요."/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력해주세요."/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력"/>
                         </div>
                     </div>
                 </fieldset>

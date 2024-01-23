@@ -11,6 +11,7 @@ import com.kap.service.CBATechGuidanceService;
 import com.kap.service.CBBManageConsultService;
 import com.kap.service.COCodeService;
 import com.kap.service.MPEPartsCompanyService;
+import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -53,7 +54,9 @@ public class CBTechGuidanceController {
     private final CBATechGuidanceService cBATechGuidanceService;
     private final CBBManageConsultService cBBManageConsultService;
     private final MPAUserService mPAUserService;
+    private final MPEPartsCompanyService mPEPartsCompanyService;
     private final COCodeService cOCodeService;
+    private final CBATechGuidanceMapper cBATechGuidanceMapper;
 
     // 파일 확장자
     @Value("${app.file.imageExtns}")
@@ -65,25 +68,31 @@ public class CBTechGuidanceController {
     @GetMapping("/index")
     public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
-        if(type.equals("tech")){
-            url = "front/cb/cba/CBATechGuidanceIndex.front";
-        }else{
-            url = "front/cb/cbb/CBBManageConsultIndex.front";
+        try {
+            MPAUserDto mpaUserDto = new MPAUserDto();
+
+            List typeList = new ArrayList();
+                typeList.add("MEM_CD03003");
+            List workCdList = new ArrayList();
+                workCdList.add("MEM_CD04001");
+            mpaUserDto.setCmssrTypeList(typeList);
+            mpaUserDto.setMemCd("CS");
+            mpaUserDto.setCmssrWorkList(workCdList);
+
+            modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
+
+            if(type.equals("tech")){
+                url = "front/cb/cba/CBATechGuidanceIndex.front";
+            }else{
+                url = "front/cb/cbb/CBBManageConsultIndex.front";
+            }
+
+        }catch(Exception e){
+            if (log.isErrorEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
         }
-
-        MPAUserDto mpaUserDto = new MPAUserDto();
-
-        List typeList = new ArrayList();
-            typeList.add("MEM_CD03001");
-            typeList.add("MEM_CD03002");
-        List workCdList = new ArrayList();
-            workCdList.add("MEM_CD04001");
-        mpaUserDto.setCmssrTypeList(typeList);
-        mpaUserDto.setMemCd("CS");
-        mpaUserDto.setCmssrWorkList(workCdList);
-
-        modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
-
         return url;
     }
     @GetMapping("/application")
@@ -93,11 +102,35 @@ public class CBTechGuidanceController {
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
 
             if(cOLoginUserDTO != null) {
+                String authCd = cOLoginUserDTO.getAuthCd();
+                if(authCd.equals("CP")){
 
-                if (type.equals("tech")) {
-                    url = "front/cb/cba/CBATechGuidanceApplication.front";
-                } else {
-                    url = "front/cb/cbb/CBBManageConsultApplication.front";
+                    MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+                    mpePartsCompanyDTO.setBsnmNo( cOLoginUserDTO.getBsnmNo());
+
+                    mpePartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                    String ctgryCd = mpePartsCompanyDTO.getList().get(0).getCtgryCd();
+
+                    if(ctgryCd.equals("COMPANY01002") || ctgryCd.equals("COMPANY01001")){
+                        if (type.equals("tech")) {
+                            url = "front/cb/cba/CBATechGuidanceApplication.front";
+                        } else {
+                            url = "front/cb/cbb/CBBManageConsultApplication.front";
+                        }
+                    }else{
+                        modelMap.addAttribute("msg", "1, 2차 부품사만 신청 가능합니다.");
+                        modelMap.addAttribute("url", "/");
+                        url = "front/COBlank.error";
+                    }
+                }else if(authCd.equals("CS")){
+                    modelMap.addAttribute("msg", "위원회원은 해당 서비스를 이용할 수 없습니다.");
+                    modelMap.addAttribute("url", "/");
+                    url = "front/COBlank.error";
+                }else if(authCd.equals("CO")){
+                    modelMap.addAttribute("msg", "해당 사업은 부품사 회원만 신청 가능합니다.");
+                    modelMap.addAttribute("url", "/");
+                    url = "front/COBlank.error";
                 }
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
@@ -133,6 +166,23 @@ public class CBTechGuidanceController {
                 modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
             }
 
+            /* //이메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("["+siteName+"] 아이디 찾기 결과 안내");
+            //인증요청일시
+            //수신자 정보
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            //이메일
+            receiverDto.setEmail(coIdFindDto.getEmail());
+            //이름
+            receiverDto.setName("");
+            //치환문자1
+            receiverDto.setNote1(coIdFindDto.getName());
+            receiverDto.setNote2(coIdFindDto.getId());
+            //수신자 정보 등록
+            cOMailDTO.getReceiver().add(receiverDto);
+            cOMessageService.sendMail(cOMailDTO, "IdEmailEDM.html");*/
+
         }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
@@ -147,7 +197,6 @@ public class CBTechGuidanceController {
 
         try {
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
-
             if(cOLoginUserDTO != null){
 
                 if(type.equals("tech")){
@@ -183,30 +232,27 @@ public class CBTechGuidanceController {
     public String getConsultInfoCompletePage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
         try {
-            if(type.equals("tech")){
-                url = "front/cb/cba/CBATechGuidanceComplete.front";
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            int cnstgSeq = Integer.parseInt(request.getParameter("cnstgSeq"));
+            int memSeq = cBATechGuidanceMapper.selectWriteMemSeq(cnstgSeq);
+
+            if(cOLoginUserDTO != null) {
+                if(memSeq == cOLoginUserDTO.getSeq()){
+                    if (type.equals("tech")) {
+                        url = "front/cb/cba/CBATechGuidanceComplete.front";
+                    } else {
+                        url = "front/cb/cbb/CBBManageConsultComplete.front";
+                    }
+                }else{
+                    modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                    modelMap.addAttribute("url", "/");
+                    url = "front/COBlank.error";
+                }
             }else{
-                url = "front/cb/cbb/CBBManageConsultComplete.front";
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                url = "front/COBlank.error";
             }
-
-           /* //이메일 발송
-            COMailDTO cOMailDTO = new COMailDTO();
-            cOMailDTO.setSubject("["+siteName+"] 아이디 찾기 결과 안내");
-            //인증요청일시
-            //수신자 정보
-            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-            //이메일
-            receiverDto.setEmail(coIdFindDto.getEmail());
-            //이름
-            receiverDto.setName("");
-            //치환문자1
-            receiverDto.setNote1(coIdFindDto.getName());
-            receiverDto.setNote2(coIdFindDto.getId());
-            //수신자 정보 등록
-            cOMailDTO.getReceiver().add(receiverDto);
-            cOMessageService.sendMail(cOMailDTO, "IdEmailEDM.html");*/
-
-
         }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());

@@ -1022,7 +1022,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         immediately: function () {
 
             questionSet();
-            changeStts();
+            /*changeStts();*/
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function () {
                 cmmCtrl.setEditor({

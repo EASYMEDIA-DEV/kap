@@ -305,6 +305,19 @@
             (SELECT FILE_SEQ FROM CO_FILE_MST WHERE FILE_SEQ = A.IMPVM_FILE_SEQ ) IMPVM_FILE_SEQ,
             (SELECT CMPN_NFRML_NM from cp_cmpn_mst where bsnm_no = A.APPCTN_BSNM_NO) AS CMPN_NFRML_NM,
             (SELECT CMPN_CD from cp_cmpn_mst where bsnm_no = A.APPCTN_BSNM_NO) AS CMPN_CD,
+            (CASE WHEN A.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()
+                AND (SELECT IFNULL(GUIDE_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[>]]> CURDATE()) THEN 'MNGTECH_STATUS_08'
+                WHEN (A.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR A.RSUME_STTS_CD = 'MNGTECH_STATUS_08')
+                    AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGTECH_STATUS_09'
+            ELSE A.RSUME_STTS_CD END) RSUME_STTS_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (CASE WHEN A.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                    AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()
+                    AND (SELECT IFNULL(GUIDE_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[>]]> CURDATE()) THEN 'MNGTECH_STATUS_08'
+            WHEN (A.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR A.RSUME_STTS_CD = 'MNGTECH_STATUS_08')
+              AND ((SELECT IFNULL(GUIDE_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGTECH_STATUS_09'
+            ELSE A.RSUME_STTS_CD END)
+             AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM,
             A.ADM_MEMO,
             A.REG_DTM,
             A.REG_ID,
@@ -315,7 +328,7 @@
                 END AS REG_NAME,
             A.MOD_DTM,
             A.MOD_ID,
-            (SELECT NAME FROM CO_ADM_MST WHERE ID=B.MOD_ID) AS MOD_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.MOD_ID) AS MOD_NAME
         FROM
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
@@ -882,7 +895,7 @@
             AFTR_MEM_SEQ,
             REG_DTM,
             REG_ID,
-            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID) REG_NAME
+            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE CNSTG_SEQ = #{detailsKey}
             LIMIT #{firstIndex}, #{recordCountPerPage}
@@ -1525,6 +1538,7 @@
             DATE_FORMAT(REG_DTM, '%Y-%m-%d %h:%m') REG_DTM,
             (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) NAME,
             (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
+            APPCTN_MEM_SEQ,
             CASE
                 WHEN ((SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq}))) IS NULL
                     THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT APPCTN_FLD_CD FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = #{cnstgSeq}))
@@ -1538,5 +1552,21 @@
             (SELECT ETC_NM FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq}) AS ETC_NM
         FROM CP_CNSTG_APPCTN_MST A
         WHERE CNSTG_SEQ = #{cnstgSeq}
+    </select>
+
+    <!--
+      쿼리명 : CBATechGuidanceMapper.selectWriteMemSeq
+      설  명 :  작성자 seq 값 조회
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.23   임서화      최초 생성
+ -->
+    <select id="selectWriteMemSeq" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectWriteMemSeq */
+            APPCTN_MEM_SEQ
+        FROM
+            CP_CNSTG_APPCTN_MST A
+        WHERE
+            CNSTG_SEQ = ${cnstgSeq}
     </select>
 </mapper>

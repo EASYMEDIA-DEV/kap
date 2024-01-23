@@ -474,7 +474,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }else{
                             cmmCtrl.fileFrm(function(data){
-                                console.log(data)
                                 var cnstgSeq = $(".cnstgSeq").val();
                                 //콜백함수. 페이지 이동
                                 location.replace("./complete?cnstgSeq="+cnstgSeq);
@@ -485,8 +484,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             },
             searchFile : {
                 event : {
-                    change : function() {
+                    change: function () {
                         extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
+                    }
+                }
+            },
+            cancelApply : {
+                event : {
+                    click : function(e){
+                        if(e){
+                            if(confirm("현재 입력된 정보는 초기화됩니다. 계속하시겠습니까?")){
+                                location.href="./index";
+                            }
+                        }
                     }
                 }
             }

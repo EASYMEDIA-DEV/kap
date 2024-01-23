@@ -77,7 +77,7 @@
                                         </tr>
                                         <tr>
                                             <th>휴대폰번호</th>
-                                            <td class="appHpNo">${loginMap.telNo}</td>
+                                            <td class="appHpNo">${loginMap.hpNo}</td>
                                         </tr>
                                         <tr>
                                             <th>이메일</th>
@@ -85,7 +85,7 @@
                                         </tr>
                                         <tr>
                                             <th>일반 전화번호</th>
-                                            <td class="appTelNo">${empty loginMap.hpNo ? '-': loginMap.hpNo }</td>
+                                            <td class="appTelNo">${empty loginMap.memTelNo ? '-': loginMap.memTelNo }</td>
                                         </tr>
                                         <tr>
                                             <th>부서</th>
@@ -324,8 +324,8 @@
             </div>
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
-                    <a class="btn-solid small gray-bg" href="./index"><span>취소</span></a>
-                    <a class="btn-solid small black-bg consInfoAppl"><span>다음</span></a>
+                    <a class="btn-solid small gray-bg cancelApply" href="javascript:"><span>취소</span></a>
+                    <a class="btn-solid small black-bg consInfoAppl" href="javascript:"><span>다음</span></a>
                 </div>
             </div>
         </div>
