@@ -73,7 +73,7 @@
                               <label class="btn-solid gray-bg" for="searchFile${status.index}">파일 찾기</label>
                             </div>
                             <div class="btn-wrap btn-down-wrap">
-                              <a class="btn-text-icon download gray" href="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download=""><span>양식 다운로드</span></a>
+                              <a class="btn-text-icon download" href="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download=""><span>양식 다운로드</span></a>
                             </div>
                           </div>
                         </div>

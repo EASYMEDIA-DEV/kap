@@ -203,7 +203,7 @@
                                                             <label class="btn-solid gray-bg btnFile" for="searchFile1">파일 찾기</label>
                                                         </div>
                                                         <div class="btn-wrap btn-down-wrap">
-                                                            <a class="btn-text-icon download gray downloadForm" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" title="양식 다운로드" download=""><span>양식 다운로드</span></a>
+                                                            <a class="btn-text-icon download downloadForm" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" title="양식 다운로드" download=""><span>양식 다운로드</span></a>
                                                         </div>
                                                     </div>
                                                 </div>
