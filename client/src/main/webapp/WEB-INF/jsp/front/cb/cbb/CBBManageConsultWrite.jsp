@@ -2,12 +2,12 @@
 <c:set var="csList" value="${rtnDto.list}"/>
 <%
   String bsnmNo = request.getParameter("bsnmNo");
-%>
-<%
   String cnstgSeq = request.getParameter("cnstgSeq");
 %>
 <input type="hidden" class="bsnmNo" value="<%=bsnmNo%>">
 <input type="hidden" class="cnstgSeq" value="<%=cnstgSeq%>">
+<c:set var="today" value="<%=new java.util.Date()%>" />
+<c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
 <div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultWriteCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가

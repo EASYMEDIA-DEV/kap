@@ -285,7 +285,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             }
         }
 
-        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.updateManageConsult(pCBBManageConsultInsertDTO));
+        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.insertManageConsult(pCBBManageConsultInsertDTO));
 
         return pCBBManageConsultInsertDTO.getRespCnt();
     }
