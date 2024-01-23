@@ -320,7 +320,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             //다음 단계명 넣기
                             $('input[name=nextStageNm]').val(nextStepNm.trim());
 
-                            var beforeUser = $("#memSeq").val();
+                            var beforeUser = $formObj.find("input[name='bfreMemSeq']").val();
                             var afterUser = $formObj.find("input[name='memSeq']").val();
 
                             if (beforeUser != afterUser) {
