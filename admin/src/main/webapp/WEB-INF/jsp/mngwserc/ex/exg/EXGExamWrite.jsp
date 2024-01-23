@@ -91,7 +91,7 @@
                             <c:forEach var="qstnList" items="${rtnDto.exExamQstnDtlList}" varStatus="qstnStatus">
                                 <div class="col-sm-12 examList mt-sm pl0 pr0">
                                     <hr>
-                                    <label class="col-sm-1 control-label examQstnNm">질문 ${qstnList.qstnOrd+1}</label>
+                                    <label class="col-sm-1 control-label examQstnNm">질문 ${qstnList.qstnOrd}</label>
                                     <input type="hidden" class="notRequired" name="qstnSeq" value="${qstnList.qstnSeq}" />
                                     <div class="col-sm-11 pl0 pr0">
                                         <div class="col-sm-12">
