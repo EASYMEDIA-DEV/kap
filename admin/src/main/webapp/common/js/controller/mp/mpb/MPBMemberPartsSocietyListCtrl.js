@@ -122,6 +122,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
                             var deptCd= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptCd").val();
                             var deptDtlNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptDtlNm").val();
+                            var pstnNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnNm").val();
 
                             $('input[name=memSeq]').val(memSeq);
                             $('input[name=name]').val(memName);
@@ -130,6 +131,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             $("#deptCd").val(deptCd);
                             if(pstnCd == 'MEM_CD01007'){
                                 $(".pstnCdInput").show();
+                                $(".pstnNm").val(pstnNm);
+                            }else{
+                                $(".pstnCdInput").hide();
                             }
                             $('input[name=deptCd]').val(deptCd);
                             $('input[name=deptDtlNm]').val(deptDtlNm);

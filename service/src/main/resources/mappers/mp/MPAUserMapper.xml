@@ -46,6 +46,7 @@
              , dept_cd_nm
              , pstn_cd_nm
              , pstn_cd
+             , pstn_nm
              , reg_id
              , cmssr_mjr_carer_cntn
              , birth
@@ -100,6 +101,7 @@
                       , mem.dept_dtl_nm
                       , mem.pstn_cd
                       , (select cd_nm from co_code_mst where  cd=mem.pstn_cd ) as pstn_cd_nm
+                      , mem.pstn_nm
                       , mem.reg_id
                       , mem.cmssr_mjr_carer_cntn
                     FROM CO_MEM_MST MEM
