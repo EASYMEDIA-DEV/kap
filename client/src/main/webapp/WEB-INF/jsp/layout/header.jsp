@@ -59,6 +59,23 @@
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
+
+	<script type="text/javascript">
+
+
+		$(document).ready(function() {
+
+			$("#backBtn").click(function() {
+
+				if(window.document.referrer) {
+					history.back();
+				} else {
+					location.href="/";
+				}
+			});
+		});
+	</script>
+
 	<c:set var="servletPath" value="${requestScope['javax.servlet.forward.servlet_path']}" scope="request" />
 	<c:set var="mainYn" value="${ not empty mainYn ? mainYn : 'N'}" />
 	<c:choose>
@@ -85,7 +102,7 @@
 
 		<!-- header - START -->
 		<h1><a class="logo" href="/"></a></h1>
-		<a href="javascript:" class="prev-btn icon-btn"></a>
+		<a href="javascript:" class="prev-btn icon-btn" id="backBtn"></a>
 		<h2 class="nav-tit">${ not empty pageMenuDto ? pageMenuDto.menuNm : ''}</h2><!-- @ 해당 서브페이지의 이름 -->
 		<nav>
 			<c:if test="${ not empty gnbMenuList}">
@@ -303,8 +320,9 @@
 					<div class="notice-wrap">
 						<div class="notice-rolling">
 							<ul>
+								${headerNtfyList}
                                 <c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
-                                    ${ status.index}
+<%--                                    ${ status.index}--%>
                                     <c:choose>
                                         <c:when test="${ status.index eq 0 }">
                                             <c:set var="cls" value="current" />

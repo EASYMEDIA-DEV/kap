@@ -120,7 +120,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                     <div class="col-sm-2" style="margin-left: -15px">
-                        <input type="text" class="form-control input-sm" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${rtnDto.ptcptBsnmNo}" title="사업자등록번호" maxlength="50" />
+                        <input type="text" class="form-control input-sm" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${rtnDto.ptcptBsnmNo}" title="사업자등록번호" maxlength="10" />
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="btn btn-inverse btn-sm btnCmpnChk">인증</button>

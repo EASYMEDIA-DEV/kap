@@ -243,7 +243,7 @@ public class COCOmmController {
      * @return
      * @throws Exception
      */
-    @GetMapping(value = "/nice/my-idnttvrfct-confirm")
+    @RequestMapping(value = "/nice/my-idnttvrfct-confirm")
     public String idnttvrfctConfirm(HttpServletRequest request , ModelMap modelMap , HttpSession session) throws Exception {
         COCNiceMyResDto cocNiceMyResDto = cOCommService.idnttvrfctConfirm(request.getParameter("enc_data"), request);
         modelMap.addAttribute("rtnData",cocNiceMyResDto);

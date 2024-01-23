@@ -61,7 +61,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control notRequired ckeditorRequired" id="cntn" name="cntn" title="내용" data-type="${pageGb}">${rtnDto.cntn}</textarea>
+                        <textarea class="form-control notRequired ckeditorRequired" id="cntn" name="cntn" title="내용" data-type="${pageGb}" maxlength="500">${rtnDto.cntn}</textarea>
                     </div>
                 </div>
             </fieldset>

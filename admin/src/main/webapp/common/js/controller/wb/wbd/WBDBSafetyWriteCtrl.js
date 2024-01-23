@@ -134,6 +134,38 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
+            telNo : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
         },
         classname : {
             // 회원검색 모달
@@ -148,6 +180,38 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                     setInputValue(respObj);
                                 }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
+                    }
+                }
+            },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
                     }
                 }
             },
@@ -189,42 +253,59 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 after : function() {
                     var isValid = true;
 
-                    if($(".dropzone .dz-preview").length < 1) {
-                        alert(msgCtrl.getMsg("fail.notFileRequired"));
-                        isValid = !isValid;
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
                     }
 
-                    jQuery.ajax({
-                        url : "./getBsnmNoCnt",
-                        type : "POST",
-                        timeout: 30000,
-                        data : $formObj.serializeArray(),
-                        dataType : "json",
-                        async: false,
-                        cache : false,
-                        success : function(data, status, xhr){
-                            if(data.respCnt > 0 ){
-                                alert("이미 해당 회차에 신청한 부품사입니다.");
-                                isValid = false;
-                            }
-                        }
-                    });
+                    if($(".dropzone .dz-preview").length < 1) {
+                        alert(msgCtrl.getMsg("fail.notFileRequired"));
+                        isValid = false;
+                        return false;
+                    }
 
-                    jQuery.ajax({
-                        url : "./getSbrdnBsnmNoCnt",
-                        type : "POST",
-                        timeout: 30000,
-                        data : $formObj.serializeArray(),
-                        dataType : "json",
-                        async: false,
-                        cache : false,
-                        success : function(data, status, xhr){
-                            if(data.respCnt > 0 ){
-                                alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
-                                isValid = false;
+                    var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+                    if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                        jQuery.ajax({
+                            url : "./getBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.");
+                                    isValid = false;
+                                    return;
+                                }
                             }
-                        }
-                    });
+                        });
+                    }else{
+                        jQuery.ajax({
+                            url : "./getSbrdnBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                    isValid = false;
+                                    return;
+                                }
+                            }
+                        });
+                    }
 
                     return isValid;
                 },

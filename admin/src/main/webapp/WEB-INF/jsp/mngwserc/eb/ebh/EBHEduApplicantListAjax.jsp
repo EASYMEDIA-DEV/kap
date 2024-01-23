@@ -23,7 +23,7 @@
                 <td class="text-center">${ list.stduyDd }일/${ list.stduyTime }시간</td>
                 <td class="text-center">${ kl:convertDate(list.episdYear, 'yyyy', 'yyyy', '-') }</td>
                 <td class="text-center">${ list.episdOrd }회차</td>
-                <td class="text-center">${ list.cbsnNm }</td>
+                <td class="text-center">${ empty list.cbsnNm ? '-' : list.cbsnNm }</td>
                 <td class="text-center">${ list.cmpnNm }</td>
                 <td class="text-center">${ kl:bsnmNoConvert(list.ptcptBsnmNo) }</td>
                 <td class="text-center">${ list.cmpnCateNm }</td>
