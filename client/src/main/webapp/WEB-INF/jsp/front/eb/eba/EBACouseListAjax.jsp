@@ -32,7 +32,7 @@
                             </div>
                             <div class="txt-area">
                                 <!--비회원 구분자를 사용하여 영역 표시-->
-                                <c:if test="${1 ne 1}">
+                                <c:if test="${list.nonMemberCd eq 'N'}">
                                     <div class="top-label-area">
                                         <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
                                     </div>
@@ -148,12 +148,19 @@
                                         </c:choose>
                                     </div>
                                     <div class="btn-wrap">
-                                        <c:if test="${list.accsStatusOrder eq 3}">
-                                            <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                        </c:if>
-                                        <c:if test="${list.accsStatusOrder ne 3}">
-                                            <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                        </c:if>
+                                        <c:choose>
+                                            <c:when test="${ list.nonMemberCd eq 'N' }">
+                                                <div class="btn-solid small black-bg nonMemberDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <c:if test="${list.accsStatusOrder eq 3}">
+                                                    <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                </c:if>
+                                                <c:if test="${list.accsStatusOrder ne 3}">
+                                                    <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                                </c:if>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </div>
                                 </div>
                             </div>

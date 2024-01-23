@@ -475,6 +475,15 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			/*nonMemberDtl : {
+				event : {
+					click : function(e){
+						var edctnseq = $(e.target).closest("div").data("edctnseq");
+						location.href="/education/apply/detail?detailsKey="+edctnseq;
+					}
+				}
+			},*/
+
 			//회차 담당자문의 팝업
 			eduTotCal : {
 				event : {

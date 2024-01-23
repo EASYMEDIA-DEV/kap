@@ -77,6 +77,7 @@ public class EBACouseController {
         String vwUrl = "front/eb/eba/EBACouseList.front";
         try
         {
+            eBBEpisdDTO.setPageRowSize(null);
             EBBEpisdDTO rtnList  = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
             SMJFormDTO smjFormDTO = new SMJFormDTO();
             smjFormDTO.setTypeCd("BUSINESS03");
@@ -124,7 +125,8 @@ public class EBACouseController {
         String rtnView = "front/eb/eba/EBACouseListAjax";
         try
         {
-            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
+            eBBEpisdDTO.setApplyListYn("Y");
+//            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }
