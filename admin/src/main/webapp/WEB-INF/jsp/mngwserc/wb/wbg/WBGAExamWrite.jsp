@@ -105,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" style="display: none;" class="form-control " id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
+                                <input type="text" style="display: none;" class="form-control notRequired" id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -585,6 +585,16 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">담당위원</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <input type="hidden" id="chkCmssrSeq" name="chkCmssrSeq" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrSeq}">
+                                                <input type="text" id="chkCmssrNm" class="form-control" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                 <c:choose>
@@ -947,6 +957,8 @@
         </form >
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
+        <%-- 위원 검색 모달 --%>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
 
     </div>
 </div>

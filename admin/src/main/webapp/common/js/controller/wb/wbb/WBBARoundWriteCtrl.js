@@ -20,13 +20,19 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function() {
                         //삭제
-                        if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))){
-                            cmmCtrl.frmAjax(function(data){
-                                if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.del.target.none"));
-                                    location.replace("./list");
+                        if(confirm("선택한 게시물을 " + msgCtrl.getMsg("confirm.del"))) {
+                            cmmCtrl.frmAjax(function (respObj) {
+                                if(respObj != undefined && respObj.respCnt > 0){
+                                    alert("신청정보가 존재하여 삭제할 수 없습니다.");
+                                } else {
+                                    cmmCtrl.frmAjax(function (data) {
+                                        if (data.respCnt > 0) {
+                                            alert(msgCtrl.getMsg("success.del.target.none"));
+                                            location.replace("./list");
+                                        }
+                                    }, "./delete", $formObj, "post", "json")
                                 }
-                            }, "./delete", $formObj, "post", "json")
+                            }, "./getAppctnCnt", $formObj, "POST", "json");
                         }
                     }
                 }
@@ -85,18 +91,39 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
                         wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
                         wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
-
+                        wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
                         wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#bsnStrtDtm").val() +" "+ctrl.obj.find("#bsnStrtHour").val()+":00:00";
                         wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#bsnEndDtm").val() +" "+ctrl.obj.find("#bsnEndHour").val()+":59:59";
 
-                        wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
-                        cmmCtrl.jsonAjax(function(data){
-                            alert(actionMsg);
-                            location.href = "./list";
-                        }, actionUrl, wbRoundMstDTO, "text")
+                        var bfreYear = $("#bfreYear").val();
+                        var bfreExpsYn = $("#bfreExpsYn").val();
+                        var bfreAccsStrtDtm = $("#bfAccStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
+                        var bfreAccsEndDtm = $("#bfAccEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
+                        var bfreBnsStrtDtm = $("#bfBnsStrtDtm").val() +" "+ctrl.obj.find("#bsnStrtHour").val() +":00:00";
+                        var bfreBnsEndDtm = $("#bfBnsEndDtm").val() +" "+ctrl.obj.find("#bsnEndHour").val()+":59:59";
+                        var bfreEpisd = $("#bfreEpisd").val();
 
+                        if(actionUrl.indexOf('update') != -1 ){
+                            cmmCtrl.frmAjax(function(respObj) {
+                                if(respObj.respCnt == 0 ||
+                                    (wbRoundMstDTO.expsYn != bfreExpsYn && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm && bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
+                                        && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd && bfreBnsStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBnsEndDtm == wbRoundMstDTO.bsnEndDtm) ){
+                                    cmmCtrl.jsonAjax(function(data){
+                                        alert(actionMsg);
+                                        location.href = "./list";
+                                    }, actionUrl, wbRoundMstDTO, "text")
+                                }else{
+                                    alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                }
+                            }, "./getAppctnCnt", $formObj, "POST", "json");
+                        }else{
+                            cmmCtrl.jsonAjax(function(data){
+                                alert(actionMsg);
+                                location.href = "./list";
+                            }, actionUrl, wbRoundMstDTO, "text")
+                        }
                     }
                 },
                 msg : {
