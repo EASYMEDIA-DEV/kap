@@ -180,7 +180,7 @@
                                         </div>
                                     </c:if>
                                     <div class="btn-set">
-                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episd}'><span>신청하기</span></a>
+                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
                                     </div>
                                 </div>
                                 <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
