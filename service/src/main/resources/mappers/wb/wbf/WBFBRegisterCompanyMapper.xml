@@ -1080,7 +1080,8 @@
     <select id="getSbrdmNoCheck" parameterType="WBFBRegisterSearchDTO">
         SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
         FROM cx_appctn_mst
-        WHERE appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+        WHERE episd_seq = #{episdSeq}
+            AND appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
     </select>
 
     <!--
