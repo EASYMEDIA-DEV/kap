@@ -139,7 +139,6 @@
                         </div>
                     </div>
                 </div>
-                    ${rtnDtl}
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
