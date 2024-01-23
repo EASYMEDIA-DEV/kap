@@ -82,9 +82,4 @@ public interface WBBARoundService {
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 
-    /**
-     * 회차 신청 갯수
-     *
-     */
-    public int episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }
