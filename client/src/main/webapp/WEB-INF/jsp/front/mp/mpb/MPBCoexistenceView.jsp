@@ -1,15 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-wrap" data-controller="controller/mp/mpb/MPBCoexistenceCtrl">
+<div class="cont-wrap">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
     -->
-    <!--
-      교육 사업: edu-biz
-      컨실팅 사업: consult-biz
-      상생 사업: coexisting-biz
-    -->
-    <div class="sub-top-vis-area basic-page">
+    <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
         </div>
@@ -19,6 +14,7 @@
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 종료-->
+
         <div class="right-con-area">
             <div class="cont-sec-w">
                 <div class="cont-sec no-border scroll-motion">
@@ -38,7 +34,6 @@
                                 <c:set var="classType" value="accepting" />
                             </c:otherwise>
                         </c:choose>
-
                         <div class="sec-con-area">
                             <div class="gray-bg-sec">
                                 <div class="flex">
@@ -75,104 +70,111 @@
                                     <div class="def-list">
                                         <p class="tit f-head">사업기간</p>
                                         <p class="txt f-sub-head">${ kl:convertDate(rtnBsnData.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnBsnData.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
+                                    </div>
+                                </div>
+                                <c:if test="${rtnBsnData.cancelYn eq 'Y' && rtnBsnData.rsumeOrd == 1 && rtnBsnData.appctnSttsCdNm ne '사용자취소'}">
+                                    <form name="cancelFrm" id="cancelFrm">
+                                        <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <input type="hidden" class="notRequired" name="bsnCd" value="${rtnBsnData.bsnCd}" />
+                                        <div class="btn-wrap">
+                                            <a class="btn-solid small black-bg cancel" href="javascript:"><span>신청취소</span></a>
                                         </div>
-                                    </div>
-                                    <c:if test="${rtnBsnData.cancelYn eq 'Y' && rtnBsnData.rsumeOrd == 1 && rtnBsnData.appctnSttsCdNm ne '사용자취소'}">
-                                        <form name="cancelFrm" id="cancelFrm">
-                                            <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnBsnData.bsnCd}" />
-                                            <div class="btn-wrap">
-                                                <a class="btn-solid small black-bg cancel" href="javascript:"><span>신청취소</span></a>
-                                            </div>
-                                        </form>
-                                    </c:if>
+                                    </form>
+                                </c:if>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="cont-sec no-border scroll-motion">
+                    <div class="for-motion">
+                        <div class="sec-tit-area">
+                            <p class="f-title3">신청자 기본정보</p>
+                        </div>
+                        <div class="sec-con-area">
+                            <div class="table-sec">
+                                <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                    <table class="basic-table">
+                                        <caption>신청자 기본 정보</caption>
+                                        <colgroup>
+                                            <col style="width: 273rem;">
+                                            <col style="width: 820rem;">
+                                        </colgroup>
+                                        <tbody>
+                                        <tr>
+                                            <th>신청자</th><!-- 2024-01-18 텍스트 수정 -->
+                                            <td>${rtnUser.name}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>휴대폰번호</th>
+                                            <td>${rtnUser.hpNo}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>이메일</th>
+                                            <td>${rtnUser.email}</td>
+                                        </tr>
+                                        <tr>
+                                            <th>일반 전화번호</th><!-- 2024-01-19 텍스트 수정 -->
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${not empty rtnUser.memTelNo}">
+                                                        ${rtnUser.memTelNo}
+                                                    </c:when>
+                                                    <c:otherwise>-</c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>부서</th>
+                                            <td>
+                                                <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                    <c:if test="${cdList.cd eq rtnUser.deptCd}">
+                                                        <c:choose>
+                                                            <c:when test="${empty(rtnUser.deptNm)}">
+                                                                ${cdList.cdNm}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${cdList.cdNm}(${rtnUser.deptNm})
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:if>
+                                                </c:forEach>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>직급</th>
+                                            <td>
+                                                <c:choose>
+                                                    <c:when test="${empty(rtnUser.pstnNm)}">
+                                                        ${rtnUser.pstnCdNm}
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="cont-sec no-border scroll-motion">
-                        <div class="for-motion">
-                            <div class="sec-tit-area">
-                                <p class="f-title3">신청자 기본정보</p>
-                            </div>
-                            <div class="sec-con-area">
-                                <div class="table-sec">
-                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                        <table class="basic-table">
-                                            <caption>신청자 기본 정보</caption>
-                                            <colgroup>
-                                                <col style="width: 273rem;">
-                                                <col style="width: 820rem;">
-                                            </colgroup>
-                                            <tbody>
-                                            <tr>
-                                                <th>성명</th>
-                                                <td>${rtnUser.name}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>휴대폰번호</th>
-                                                <td>${rtnUser.hpNo}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>이메일</th>
-                                                <td>${rtnUser.email}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>일반 전화번호</th>
-                                                <td>${rtnUser.memTelNo}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>부서(부서상세)</th>
-                                                <td>
-                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
-                                                        <c:if test="${cdList.cd eq rtnUser.deptCd}">
-                                                            <c:choose>
-                                                                <c:when test="${empty(rtnUser.deptNm)}">
-                                                                    ${cdList.cdNm}
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    ${cdList.cdNm}(${rtnUser.deptNm})
-                                                                </c:otherwise>
-                                                            </c:choose>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>직급(기타직급)</th>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${empty(rtnUser.pstnNm)}">
-                                                            ${rtnUser.pstnCdNm}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ${rtnUser.pstnCdNm}(${rtnUser.pstnNm})
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </td>
-                                            </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
+                </div>
+                <div class="cont-sec no-border scroll-motion">
+                    <div class="for-motion">
+                        <div class="sec-tit-area">
+                            <p class="f-title3">소속 부품사 기본정보</p>
                         </div>
-                    </div>
-                    <div class="cont-sec no-border scroll-motion">
-                        <div class="for-motion">
-                            <div class="sec-tit-area">
-                                <p class="f-title3">소속 부품사 기본정보</p>
-                            </div>
-                            <div class="sec-con-area">
-                                <div class="table-sec">
-                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                        <table class="basic-table">
-                                            <caption>소속 부품사 기본정보</caption>
-                                            <colgroup>
-                                                <col style="width: 273rem;">
-                                                <col style="width: 820rem;">
-                                            </colgroup>
-                                            <tbody>
+                        <div class="sec-con-area">
+                            <div class="table-sec">
+                                <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                    <table class="basic-table">
+                                        <caption>소속 부품사 기본정보</caption>
+                                        <colgroup>
+                                            <col style="width: 273rem;">
+                                            <col style="width: 820rem;">
+                                        </colgroup>
+                                        <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
                                                 <td>${kl:bsnmNoConvert(rtnCompany.bsnmNo)}</td>
@@ -284,13 +286,13 @@
                                                     </td>
                                                 </tr>
                                             </c:if>
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
                 <c:choose>
                     <c:when test="${businessYn eq 'Y'}">
                         <jsp:include page="MPBCoexistence.jsp"/>
@@ -302,7 +304,7 @@
             </div>
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion align-right">
-                    <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                    <a class="btn-solid small black-bg" href="./list"><span>목록</span></a>
                 </div>
             </div>
         </div>

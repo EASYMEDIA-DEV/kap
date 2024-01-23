@@ -95,7 +95,7 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">사업기간</p>
-                                                                    <p class="txt f-body2">${kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')} ~ ${kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
+                                                                    <p class="txt f-body2">${kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')} ~ ${kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
                                                                 </div>
                                                             </div>
                                                             <div class="btn-wrap">
@@ -186,7 +186,7 @@
                                             </div>
                                             <div class="list">
                                                 <p class="tit">사업기간</p>
-                                                <p class="txt">${kl:convertDate(rtnRoundDtl.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')} - ${kl:convertDate(rtnRoundDtl.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
+                                                <p class="txt">${kl:convertDate(rtnRoundDtl.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')} - ${kl:convertDate(rtnRoundDtl.bsnEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
                                             </div>
                                             <c:if test="${not empty rtnRoundDtl.optnList}">
                                                 <!-- 2024-01-02 첨부파일 영역 추가 -->

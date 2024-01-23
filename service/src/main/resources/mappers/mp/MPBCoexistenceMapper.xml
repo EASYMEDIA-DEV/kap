@@ -298,7 +298,7 @@
                 )
             </if>
             <if test="statusChk != null and statusChk.size() > 0">
-                bsnStatus IN
+                AND bsnStatus IN
                 <foreach collection="statusChk" item="statusChk" index="index" separator=", " open="(" close=")">
                     #{statusChk}
                 </foreach>

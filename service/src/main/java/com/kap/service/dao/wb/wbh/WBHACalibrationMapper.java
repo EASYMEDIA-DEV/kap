@@ -221,6 +221,11 @@ public interface WBHACalibrationMapper {
     public int updateApply(WBHAApplyMstDTO wbhaApplyMstDTO) throws Exception;
 
     /**
+     * 신청업체관리 마스터 수정
+     */
+    public int updatePicCmssrSeq(WBHAApplyMstDTO wbhaApplyMstDTO) throws Exception;
+
+    /**
      * 신청업체관리 파일 삭제
      */
     public int deleteFileInfo(WBHAApplyDtlDTO wbhaApplyDtlDTO) throws Exception;

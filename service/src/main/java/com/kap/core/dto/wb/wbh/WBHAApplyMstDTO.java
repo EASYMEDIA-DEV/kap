@@ -44,6 +44,9 @@ public class WBHAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "신청사업자번호")
     private String appctnBsnmNo;
+    
+    @Schema(title = "담당위원번호")
+    private String chkCmssrSeq;
 
     @Schema(title = "관리자메모")
     private String admMemo;
@@ -101,4 +104,16 @@ public class WBHAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "계측장비상세")
     private WBHAMsEuipmentDTO wbhaMsEuipmentDTO;
+
+    @Schema(title = "담당위원명")
+    private String name;
+
+    @Schema(title = "담당위원이메일")
+    private String email;
+
+    @Schema(title = "담당위원핸드폰번호")
+    private String hpNo;
+
+    @Schema(title = "담당위원업체명")
+    private String picCmssrCmpnNm;
 }

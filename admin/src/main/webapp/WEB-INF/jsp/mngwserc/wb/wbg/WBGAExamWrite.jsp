@@ -417,14 +417,32 @@
                     <label class="col-sm-1 control-label">담당위원명</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.name}</p>
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${empty rtnData.name}">
+                                        -
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${rtnData.name}
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
 
                     <label class="col-sm-1 control-label">이메일</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.email}</p>
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${empty rtnData.email}">
+                                        -
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${rtnData.email}
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
                 </div>
@@ -435,14 +453,32 @@
                     <label class="col-sm-1 control-label">휴대폰번호</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.hpNo}</p>
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${empty rtnData.hpNo}">
+                                        -
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${rtnData.hpNo}
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
 
                     <label class="col-sm-1 control-label">업체명</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.name}</p>
+                            <p class="form-control-static">
+                                <c:choose>
+                                    <c:when test="${empty rtnData.picCmssrCmpnNm}">
+                                        -
+                                    </c:when>
+                                    <c:otherwise>
+                                        ${rtnData.picCmssrCmpnNm}
+                                    </c:otherwise>
+                                </c:choose>
+                            </p>
                         </div>
                     </div>
                 </div>

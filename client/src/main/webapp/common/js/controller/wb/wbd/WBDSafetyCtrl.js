@@ -41,6 +41,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            nextBtn : {
+                event : {
+                    click : function() {
+                        var episdSeq = $(this).data("episdSeq");
+                        if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            location.href = "./step2?episdSeq="+episdSeq;
+                        }
+                    }
+                }
+            }
         },
         classname : {
             addMore : {

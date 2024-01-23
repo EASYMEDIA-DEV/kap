@@ -123,15 +123,17 @@
                                             <div class="data-line">
                                                 <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
-                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                        <div class="file-list">
+                                                    <c:if test="${rtnDtl[0].appctnSttsCd eq 'PRO_TYPE01001_01_002'}">
+                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                            <div class="file-list">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="file-btn-area">
-                                                        <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
-                                                        <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
-                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
-                                                    </div>
+                                                        <div class="file-btn-area">
+                                                            <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                            <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
+                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
+                                                        </div>
+                                                    </c:if>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=${rtnFile[0].fileOrd}" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>
                                                     </div>
@@ -240,15 +242,17 @@
                                             <div class="data-line">
                                                 <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
-                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                        <div class="file-list">
+                                                    <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
+                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                            <div class="file-list">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="file-btn-area">
-                                                        <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
-                                                        <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
-                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
-                                                    </div>
+                                                        <div class="file-btn-area">
+                                                            <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
+                                                            <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
+                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
+                                                        </div>
+                                                    </c:if>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=${rtnFile[1].fileOrd}" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
                                                     </div>
@@ -338,16 +342,18 @@
                                             <div class="data-line">
                                                 <p class="data-title f-body1">완료보고서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
-                                                    <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                        <p class="empty-txt">선택된 파일 없음</p>
-                                                        <div class="file-list">
+                                                    <c:if test="${rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_001' or rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_003'}">
+                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                            <p class="empty-txt">선택된 파일 없음</p>
+                                                            <div class="file-list">
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="file-btn-area">
-                                                        <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
-                                                        <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
-                                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
-                                                    </div>
+                                                        <div class="file-btn-area">
+                                                            <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
+                                                            <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
+                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
+                                                        </div>
+                                                    </c:if>
                                                     <div class="file-prev-area">
                                                         <a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=${rtnFile[3].fileOrd}" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>
                                                     </div>

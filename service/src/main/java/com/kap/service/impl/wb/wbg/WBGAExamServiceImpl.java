@@ -847,6 +847,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             //계측장비상세 데이터처리
             wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
             wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
+            wBGAExamMapper.updatePicCmssrSeq(wBGAApplyMstDTO);
 
         } else if (wBGAApplyDtlDTO.getRsumeOrd() == 2) {
             //심사단계
@@ -883,6 +884,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             //계측장비상세 데이터처리
             wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
             wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
+            wBGAExamMapper.updatePicCmssrSeq(wBGAApplyMstDTO);
 
         } else if (wBGAApplyDtlDTO.getRsumeOrd() == 3) {
             //증빙단계
