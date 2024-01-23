@@ -501,7 +501,11 @@
             REG_DTM,
             MOD_ID,
             MOD_IP,
-            MOD_DTM
+            MOD_DTM,
+            (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.PIC_CMSSR_SEQ ) NAME,
+            (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = A.PIC_CMSSR_SEQ ) EMAIL,
+            (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = A.PIC_CMSSR_SEQ ) HP_NO,
+            (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = (SELECT WORK_BSNM_NO FROM CO_MEM_MST WHERE MEM_SEQ = A.PIC_CMSSR_SEQ)) AS PIC_CMSSR_CMPN_NM
         FROM CX_APPCTN_MST A
         WHERE APPCTN_SEQ = #{detailsKey}
     </select>
@@ -1102,6 +1106,20 @@
             MOD_ID = #{modId},
             MOD_IP = #{modIp},
             MOD_DTM = NOW()
+        WHERE APPCTN_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : WBHACalibrationMapper.updatePicCmssrSeq
+         설  명 : 신청업체관리 마스터 수정
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.12.22   김태훈       최초생성
+    -->
+    <update id="updatePicCmssrSeq" parameterType="wbhaApplyMstDTO">
+        UPDATE /* WBHACalibrationMapper.updatePicCmssrSeq */ CX_APPCTN_MST
+        SET
+            PIC_CMSSR_SEQ = #{chkCmssrSeq}
         WHERE APPCTN_SEQ = #{detailsKey}
     </update>
 

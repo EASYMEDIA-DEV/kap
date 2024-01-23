@@ -831,6 +831,10 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                 wbhaApplyDtlDTO.setAppctnSttsCd("PRO_TYPE07001_01_004");
                 wbhaCalibrationMapper.updateApplyStatus(wbhaApplyDtlDTO);
             }
+            //신청단계 데이터처리(PK가 없어 삭제후 재등록)
+            wbhaCalibrationMapper.deleteMsEuipment(wbhaMsEuipmentDTO);
+            wbhaCalibrationMapper.insertMsEuipment(wbhaMsEuipmentDTO);
+            wbhaCalibrationMapper.updatePicCmssrSeq(wbhaApplyMstDTO);
         } else if (wbhaApplyDtlDTO.getRsumeOrd() == 2) {
             //심사단계
             if ("PRO_TYPE07001_04_006".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
@@ -866,6 +870,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
             //심사단계 데이터처리(PK가 없어 삭제후 재등록)
             wbhaCalibrationMapper.deleteMsEuipment(wbhaMsEuipmentDTO);
             wbhaCalibrationMapper.insertMsEuipment(wbhaMsEuipmentDTO);
+            wbhaCalibrationMapper.updatePicCmssrSeq(wbhaApplyMstDTO);
 
         } else if (wbhaApplyDtlDTO.getRsumeOrd() == 3) {
             //증빙단계

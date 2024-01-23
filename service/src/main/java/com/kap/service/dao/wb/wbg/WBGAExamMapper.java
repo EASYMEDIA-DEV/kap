@@ -217,6 +217,11 @@ public interface WBGAExamMapper {
     public int updateApply(WBGAApplyMstDTO wBGAApplyMstDTO) throws Exception;
 
     /**
+     * 신청업체관리 마스터 수정
+     */
+    public int updatePicCmssrSeq(WBGAApplyMstDTO wBGAApplyMstDTO) throws Exception;
+
+    /**
      * 신청업체관리 파일 삭제
      */
     public int deleteFileInfo(WBGAApplyDtlDTO wBGAApplyDtlDTO) throws Exception;
