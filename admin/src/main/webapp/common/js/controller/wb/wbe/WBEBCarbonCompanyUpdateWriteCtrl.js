@@ -225,12 +225,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
+                        /* 공통 모달 - 상생 사용 처리 */
+                        $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                        let appctnSeqVal = $formObj.find('input[type=hidden][id=appctnSeq]').val() ;
+                        $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -240,7 +245,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnCmtSearch: {
                 event: {
                     click: function () {
-                        cmmCtrl.getCmtSrchPop(function (data) {
+                        $('.mpcLecturerSrchLayer .modal-title #title').html("▣ 강사 및 위탁위원 검색");
+
+                        cmmCtrl.getLecturerLayerPop(function (data) {
                             var memName = data.name;
 
                             $('#picName').val(memName);
@@ -300,6 +307,38 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var detailsKey = $(this).data("detailsKey");
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
                         /*location.href = "./write?" + $formObj.serialize();*/
+                    }
+                }
+            },
+            telNumber : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
                     }
                 }
             },
@@ -369,6 +408,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 after : function() {
                     var isValid = true, editorChk = true;
 
+                    if( $("#telNo").val().length !=0 && $("#telNo").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_011"));
+                        isValid = false;
+                        return false;
+                    }
+                    if( $("#compTel").val().length !=0 && $("#compTel").val().length < 11 ) {
+                        alert(msgCtrl.getMsg("fail.mp.mpb.al_014"));
+                        isValid = false;
+                        return false;
+                    }
+
                     $formObj.find(".ckeditorRequired").each(function() {
                         jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
                         jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
@@ -392,6 +442,43 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             return false;
                         }
                     });
+
+                    var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+                    if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                        jQuery.ajax({
+                            url : "./getBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.");
+                                    isValid = false;
+                                    return;
+                                }
+                            }
+                        });
+                    }else{
+                        jQuery.ajax({
+                            url : "./getSbrdnBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                    isValid = false;
+                                    return;
+                                }
+                            }
+                        });
+                    }
 
                     if (!editorChk)
                     {

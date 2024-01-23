@@ -103,7 +103,7 @@
                                                                     <c:when test="${ not empty rtnData.inqSec and not empty rtnData.inqFir }">
                                                                         <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
                                                                             <c:if test="${fn:length(cdList.cd) < 6}">
-                                                                                <option value="${cdList.cd}" <c:if test="${fn:contains(cdList.cd, 'INQ07')}">selected</c:if>>${cdList.cdNm}</option>
+                                                                                <option value="${cdList.cd}" <c:if test="${fn:contains(cdList.cd, rtnData.inqFir)}">selected</c:if>>${cdList.cdNm}</option>
                                                                             </c:if>
                                                                         </c:forEach>
                                                                     </c:when>
@@ -126,7 +126,7 @@
                                                                         <option class="ctgryCd" <c:if test="${ not fn:contains(cdList.cd, 'INQ02') }">style="display: none;"</c:if> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
                                                                     </c:when>
                                                                     <c:when test="${ not empty rtnData.inqSec and not empty rtnData.inqFir }">
-                                                                        <option class="ctgryCd" <c:if test="${ not fn:contains(cdList.cd, 'INQ07') }">style="display: none;"</c:if> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
+                                                                        <option class="ctgryCd" <c:if test="${ not fn:contains(cdList.cd, rtnData.inqFir) }">style="display: none;"</c:if> value="${cdList.cd}" <c:if test="${rtnData.inqSec eq cdList.cdNm}">selected</c:if>>${cdList.cdNm}</option>
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                         <option class="ctgryCd" style="display: none;" value="${cdList.cd}" <c:if test="${rtnData.ctgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>

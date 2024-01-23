@@ -93,10 +93,10 @@
             ,(SELECT bsn_type_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as bsn_type_cd
             ,(SELECT smtfn_prsnt_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as smtfn_prsnt_cd
             ,(SELECT smtfn_trgt_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as smtfn_trgt_cd
-            ,(SELECT name FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_nm
-            ,(SELECT email FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_email
-            ,(SELECT hp_no FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_hp_no
-            ,(SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = (SELECT work_bsnm_no FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq)) as pic_cmssr_cmpn_nm
+            ,(SELECT name FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_nm
+            ,(SELECT email FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_email
+            ,(SELECT hp_no FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_hp_no
+            ,(SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_cmpn_nm
         FROM
             (
                 SELECT a.*, YEAR(b.year) as year, b.episd
@@ -830,7 +830,8 @@
             ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
             ,ntdcn_cmpn_brdn_pmt = #{ntdcnCmpnBrdnPmt}
             ,ttl_pmt = #{ttlPmt}
-            ,ttl_pmt = #{ttlPmt}
+            ,agrmt_dt = #{agrmtDt}
+            ,agrmt_term_dt = #{agrmtTermDt}
         </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
@@ -1079,7 +1080,8 @@
     <select id="getSbrdmNoCheck" parameterType="WBFBRegisterSearchDTO">
         SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
         FROM cx_appctn_mst
-        WHERE appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+        WHERE episd_seq = #{episdSeq}
+            AND appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
     </select>
 
     <!--
@@ -1114,17 +1116,19 @@
                     <when test="srchDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND INFO.reg_dtm <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-                        </if>
-                        <if test="endDt != null and endDt != ''.toString() ">
-                            and INFO.reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                     <when test="srchDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND INFO.mod_dtm <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
-                        <if test="endDt != null and endDt != ''.toString() ">
-                            and INFO.mod_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND INFO.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.MOD_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                 </choose>

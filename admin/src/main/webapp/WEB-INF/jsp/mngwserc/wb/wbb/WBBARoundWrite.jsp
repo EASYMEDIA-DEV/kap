@@ -25,10 +25,13 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="bsnCd" name="bsnCd" value="${bsnCd}" />
             <c:if test="${not empty rtnDto.episdSeq}">
+                <input type="hidden" class="notRequired" id="bfreYear" value="${rtnInfo.year}" />
                 <input type="hidden" class="notRequired" id="bfAccStrtDtm" value="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" />
                 <input type="hidden" class="notRequired" id="bfAccEndDtm" value="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" />
                 <input type="hidden" class="notRequired" id="bfBnsStrtDtm" value="${kl:convertDate(rtnDto.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" />
                 <input type="hidden" class="notRequired" id="bfBnsEndDtm" value="${kl:convertDate(rtnDto.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" />
+                <input type="hidden" class="notRequired" id="bfreExpsYn" value="${rtnDto.expsYn}"/>
+                <input type="hidden" class="notRequired" id="bfreEpisd" value="${rtnDto.episd}" />
             </c:if>
 
             <fieldset>

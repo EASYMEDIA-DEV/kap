@@ -55,14 +55,16 @@
                                                                     <div class="inner-line">
                                                                         <p class="data-title f-body1">${itemOptn.optnNm}<span class="essential-mark color-sky">*</span></p>
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                            </div>
-                                                                            <div class="file-btn-area">
-                                                                                <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
-                                                                                <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
-                                                                            </div>
+                                                                            <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
+                                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                </div>
+                                                                                <div class="file-btn-area">
+                                                                                    <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
+                                                                                    <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
+                                                                                </div>
+                                                                            </c:if>
                                                                             <!-- 2024-01-03 추가 -->
                                                                             <c:if test="${not empty itemOptn.fileSeq}">
                                                                                 <div class="file-prev-area">
@@ -81,10 +83,12 @@
                                                                     <div class="inner-line">
                                                                         <p class="data-title f-body1">${itemOptn.optnNm}<span class="essential-mark color-sky">*</span></p>
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                            </div>
+                                                                            <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
+                                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                </div>
+                                                                            </c:if>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" id="searchFile${status1.index}">
                                                                                 <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>

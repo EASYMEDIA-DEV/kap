@@ -80,25 +80,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
         },
         immediately : function() {
 
-            /*$(".stepList").each(function(){
+            $(".stepList").each(function(){
                 var fileCk = $(this).find("input[name=fileYn]").is(":checked");
                 if(fileCk){
                     $(this).find('.dropzone').css("pointer-events","none").css("background-color","#eee");
                 }
-            });*/
+            });
 
-            /*$("#btn_update").click(function () {
-                $formObj.submit();
+            $("#btn_update").click(function () {
                 //신청자가 있는지 확인
-                /!*cmmCtrl.frmAjax(function(result) {
+                cmmCtrl.frmAjax(function(result) {
                     if (result > 0) {
                         alert('신청정보가 존재하여 수정할 수 없습니다.');
                     } else {
                         $formObj.submit();
                     }
-                },"./applyCount",$formObj);*!/
+                },"./applyCount",$formObj);
 
-            });*/
+            });
 
             $("#btn_delete").click(function () {
                 //신청자가 있는지 확인

@@ -72,7 +72,14 @@
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <td>${rtnUser.memTelNo}</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnUser.memTelNo}">
+                                                            ${rtnUser.memTelNo}
+                                                        </c:when>
+                                                        <c:otherwise>-</c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>부서(부서상세)</th>

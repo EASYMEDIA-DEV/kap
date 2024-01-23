@@ -401,20 +401,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
+                        /* 공통 모달 - 상생 사용 처리 */
+                        $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                        let appctnSeqVal = $basicData.find('input[type=hidden][name=appctnSeq]').val() ;
+                        $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            cmmCtrl.frmAjax(function (respObj) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                if(respObj.rtnData == 0){
-                                    cmmCtrl.frmAjax(function(respObj) {
-                                        /* return data input */
-                                        setInputValue(respObj);
-                                        fnpstnNmShow($('#pstnCd').val());
-                                    }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                                } else {
-                                    alert("이관 이력이 있는 회원은 선택이 불가합니다.");
-                                    return false;
-                                }
-                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }
@@ -423,9 +421,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnCmtSearch: {
                 event: {
                     click: function () {
+                        $('.mpcLecturerSrchLayer .modal-title #title').html("▣ 강사 및 위탁위원 검색");
                         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
                         let rsumeTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`);
-                        cmmCtrl.getCmtSrchPop(function (data) {
+                        cmmCtrl.getLecturerLayerPop(function (data) {
                             rsumeTask.find('.chkCmssrSeq').val(data.seq);
                             rsumeTask.find('.chkCmssrNm').val(data.name);
                         });
@@ -525,6 +524,43 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                 alert(msgCtrl.getMsg("fail.notFileRequired"));
                                 isValid = false;
                                 return false;
+                            }
+                        });
+                    }
+
+                    var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+                    if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                        jQuery.ajax({
+                            url : "./getBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.");
+                                    isValid = false;
+                                    return;
+                                }
+                            }
+                        });
+                    }else{
+                        jQuery.ajax({
+                            url : "./getSbrdnBsnmNoCnt",
+                            type : "POST",
+                            timeout: 30000,
+                            data : $formObj.serializeArray(),
+                            dataType : "json",
+                            async: false,
+                            cache : false,
+                            success : function(data, status, xhr){
+                                if(data.respCnt > 0 ){
+                                    alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                    isValid = false;
+                                    return;
+                                }
                             }
                         });
                     }

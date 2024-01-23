@@ -92,7 +92,7 @@ public class IMAQaServiceImpl implements IMAQaService {
 
         pIMAQaDTO.setDetailsKey(pIMAQaDTO.getDetailsKey());
 
-        if(null != pIMAQaDTO.getMypageYn() && !"Y".equals(pIMAQaDTO.getMypageYn())) {
+        if(null == pIMAQaDTO.getMypageYn() || !"Y".equals(pIMAQaDTO.getMypageYn())) {
             if (null != pIMAQaDTO.getRsumeCd() && "SYN".equals(pIMAQaDTO.getRsumeCd())) {
                 pIMAQaDTO.setRsumeCd("SYNACK");
                 iMAQaMapper.updateQaRsume(pIMAQaDTO);
@@ -281,7 +281,7 @@ public class IMAQaServiceImpl implements IMAQaService {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-        System.out.println("현재 날짜: " + formattedDate);
+//        System.out.println("현재 날짜: " + formattedDate);
 
 
         /* 문의 작성자에게 보내는 메일 처리 */

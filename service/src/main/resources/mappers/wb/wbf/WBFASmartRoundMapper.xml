@@ -54,7 +54,12 @@
             WHERE BSN_CD = #{bsnCd}
         ) A
         <include refid="selectListwhereSql" />
-        ORDER BY A.REG_DTM DESC
+        <if test='siteGubun == "admin"'>
+            ORDER BY A.REG_DTM DESC
+        </if>
+        <if test='siteGubun == "front"'>
+            ORDER BY DATE_ORD, ACCS_STRT_DTM ASC
+        </if>
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 

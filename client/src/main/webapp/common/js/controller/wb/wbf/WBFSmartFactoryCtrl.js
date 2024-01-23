@@ -10,17 +10,20 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 3;
-    var imageText = "";
+    var fileInput = "";
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -54,6 +57,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
+                fileInput = jQuery(obj).clone(true);
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
             }
         }
@@ -170,12 +174,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
-
                                 cmmCtrl.fileFrm(function(data){
                                     //콜백함수. 페이지 이동
                                     if (data.actCnt == 999) {
                                         if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                            location.href = "/my-page/main";
+                                            location.href = "/my-page/coexistence/list";
                                         }
                                     } else {
                                         location.href = "./complete?episdSeq="+$('input[name=episdSeq]').val();

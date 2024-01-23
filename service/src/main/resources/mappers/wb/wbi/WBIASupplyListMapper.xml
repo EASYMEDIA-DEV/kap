@@ -118,13 +118,15 @@
                 ELSE '접수마감'
             END AS DATE_STATE
              ,EXPS_YN
+             ,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
              ,REG_ID
              ,REG_IP
              ,REG_DTM
+             ,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              ,MOD_ID
              ,MOD_IP
              ,MOD_DTM
-        FROM CX_EPISD_MST
+        FROM CX_EPISD_MST A
         WHERE EPISD_SEQ = #{detailsKey}
     </select>
 

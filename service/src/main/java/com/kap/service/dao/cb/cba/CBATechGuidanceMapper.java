@@ -24,6 +24,7 @@ import java.util.List;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.10.16		임서화				   최초 생성
+ *  2024.01.23      양현우             컨설팅 내역 조회(사용자 취소 제외)
  * </pre>
  */
 @Mapper
@@ -237,6 +238,12 @@ public interface CBATechGuidanceMapper {
      * 최근 1년 간 신청한 컨설팅 내역 조회
      */
     public int selectYearConsultingCount(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 최근 1년 간 신청한 컨설팅 내역 조회(사용자 취소 제외)
+     */
+    public int selectYearCancelNotConsultingCount(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 
     /**
      * 컨설팅 신청 완료 정보

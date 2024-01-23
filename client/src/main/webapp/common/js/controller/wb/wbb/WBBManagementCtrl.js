@@ -10,16 +10,20 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 3;
+    var fileInput = "";
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -33,7 +37,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).val("");
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
-
                 isFile = false;
            } else {
                 //파일용량 체크
@@ -53,6 +56,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
             
             if (isFile) {
+                fileInput = jQuery(obj).clone(true);
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
             }
         }
@@ -67,6 +71,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            nextBtn : {
+                event : {
+                    click : function() {
+                        var episdSeq = $(this).data("episdSeq");
+                        if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            location.href = "./step2?episdSeq="+episdSeq;
+                        }
+                    }
+                }
+            }
         },
         classname : {
             addMore : {
@@ -160,16 +174,18 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             insertSkip : {
                 event : {
                     click : function() {
-                        cmmCtrl.fileFrm(function(data){
-                            //콜백함수. 페이지 이동
-                            if (data.actCnt == 999) {
-                                if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                    location.href = "/my-page/coexistence/list";
+                        if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            cmmCtrl.fileFrm(function (data) {
+                                //콜백함수. 페이지 이동
+                                if (data.actCnt == 999) {
+                                    if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                        location.href = "/my-page/coexistence/list";
+                                    }
+                                } else {
+                                    location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                 }
-                            } else {
-                                location.href = "./complete?episdSeq="+$('input[name=episdSeq]').val();
-                            }
-                        }, "./insert", $formObj, "json");
+                            }, "./insert", $formObj, "json");
+                        }
                     }
                 }
             },

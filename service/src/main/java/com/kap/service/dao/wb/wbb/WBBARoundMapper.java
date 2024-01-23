@@ -93,4 +93,9 @@ public interface WBBARoundMapper {
      * 회차 중복 체크
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
+    /**
+     * 회차 신청 갯수
+     */
+    public int episdCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;
 }

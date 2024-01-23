@@ -156,7 +156,7 @@
 
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-1">
-                        <input type="text" id="telNo" class="form-control notRequired" name="memList[0].telNo" value="${rtnMem.telNo}" title="전화번호" maxlength="50"/>
+                        <input type="text" class="form-control telNumber notRequired" id="telNo" name="memList[0].telNo" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                     </div>
                 </div>
             </fieldset>
@@ -254,7 +254,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm" id="compTel" name="companyDtl.telNo" value="${rtnCompany.telNo}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                            <input type="text" class="form-control telNumber notRequired" id="compTel" name="companyDtl.telNo" value="${rtnCompany.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
 
@@ -1789,7 +1789,7 @@
         </form>
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
-        <%-- 위원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
+        <!-- 강사 검색 맵핑 -->
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include>
     </div>
 </div>

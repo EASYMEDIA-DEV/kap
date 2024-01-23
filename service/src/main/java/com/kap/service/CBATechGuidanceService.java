@@ -23,6 +23,7 @@ import java.util.List;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *  2023.11.14      임서화             최초 생성
+ *  2024.01.23      양현우             컨설팅 내역 조회(사용자 취소 제외)
  * </pre>
  */
 public interface CBATechGuidanceService {
@@ -84,6 +85,11 @@ public interface CBATechGuidanceService {
      * 최근 1년 간 신청한 컨설팅 카운트(마이페이지)
      */
     public int countConsultingApplication(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 최근 1년 간 신청한 컨설팅 카운트(사용자취소 제외)
+     */
+    public int selectYearCancelNotConsultingCount(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
     /**
      * 컨설팅 신청 완료 정보

@@ -105,7 +105,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" style="display: none;" class="form-control " id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
+                                <input type="text" style="display: none;" class="form-control notRequired" id="pstnNm" name="pstnNm" value="${userInfo.pstnNm}" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>
@@ -121,7 +121,7 @@
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="${userInfo.telNo}" title="전화번호" maxlength="50"/>
+                            <input type="text" class="form-control telNumber notRequired" id="telNo" name="telNo" value="${userInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                         </div>
                     </div>
                 </fieldset>
@@ -219,17 +219,17 @@
 
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                        <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="${userInfo.compTel}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                                <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="${userInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                             </div>
                         </div>
 
                         <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <p class="form-control-static" id="bsnm" title="재직 회사사업자번호">${fn:substring(userInfo.bsnmNo,0,3) } - ${fn:substring(userInfo.bsnmNo,3,5) } - ${fn:substring(userInfo.bsnmNo,5, 10) }</p>
-                            <input type="hidden" id="bsnmNo" class="notRequired" value="${userInfo.bsnmNo}">
+                            <input type="hidden" id="" class="notRequired" value="${userInfo.bsnmNo}">
                         </div>
                     </div>
                 </fieldset>
@@ -411,41 +411,77 @@
             <div id="appctnPdfArea2">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>담당위원 정보</h6>
 
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">담당위원명</label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.name}</p>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">담당위원명</label>
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <div class="col-sm-3">
+                                <p class="form-control-static">
+                                    <c:choose>
+                                        <c:when test="${empty rtnData.name}">
+                                            -
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${rtnData.name}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <label class="col-sm-1 control-label">이메일</label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.email}</p>
+                        <label class="col-sm-1 control-label">이메일</label>
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <div class="col-sm-3">
+                                <p class="form-control-static">
+                                    <c:choose>
+                                        <c:when test="${empty rtnData.email}">
+                                            -
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${rtnData.email}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
 
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">휴대폰번호</label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.hpNo}</p>
+                <fieldset>
+                    <div class="form-group text-sm">
+                        <label class="col-sm-1 control-label">휴대폰번호</label>
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <div class="col-sm-3">
+                                <p class="form-control-static">
+                                    <c:choose>
+                                        <c:when test="${empty rtnData.hpNo}">
+                                            -
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${rtnData.hpNo}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
                         </div>
-                    </div>
 
-                    <label class="col-sm-1 control-label">업체명</label>
-                    <div class="col-sm-5" style="margin-left: -15px">
-                        <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.name}</p>
+                        <label class="col-sm-1 control-label">업체명</label>
+                        <div class="col-sm-5" style="margin-left: -15px">
+                            <div class="col-sm-3">
+                                <p class="form-control-static">
+                                    <c:choose>
+                                        <c:when test="${empty rtnData.picCmssrCmpnNm}">
+                                            -
+                                        </c:when>
+                                        <c:otherwise>
+                                            ${rtnData.picCmssrCmpnNm}
+                                        </c:otherwise>
+                                    </c:choose>
+                                </p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </fieldset>
+                </fieldset>
                 <br>
             <h6 class="mt0"><em class="ion-play mr-sm"></em>컨설팅 내역</h6>
             <fieldset>
@@ -567,6 +603,16 @@
                                         </div>
                                     </fieldset>
                                     <h6 class="mt0">관리자</h6>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">담당위원</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <input type="hidden" id="chkCmssrSeq" name="chkCmssrSeq" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrSeq}">
+                                                <input type="text" id="chkCmssrNm" class="form-control" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
@@ -931,7 +977,8 @@
         </form >
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
-
+        <%-- 위원 검색 모달 --%>
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
     </div>
 </div>
 

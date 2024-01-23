@@ -10,7 +10,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 3;
-    var imageText = "";
+    var fileInput = "";
 
     $(".file-list").hide();
     // 파일 체크
@@ -19,10 +19,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
         var fileLengh = document.querySelectorAll('p.file-name').length;;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -68,6 +71,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).closest(".form-group").find('.file-list').append(fileHtml);
                 // 파일 추가되면 class 추가
                 $('#'+fileId).closest(".form-group").find('.file-list-area').addClass('attached');
+
+                fileInput = jQuery(obj).clone(true);
             }
         }
     };

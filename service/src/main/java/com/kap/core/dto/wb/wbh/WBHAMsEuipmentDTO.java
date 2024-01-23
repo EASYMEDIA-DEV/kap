@@ -37,6 +37,12 @@ public class WBHAMsEuipmentDTO extends BaseDTO {
     @Schema(title = "지원상한선여부")
     private String spprtCllngYn;
 
+    @Schema(title = "담당위원순번")
+    private String chkCmssrSeq;
+
+    @Schema(title = "담당위원이름")
+    private String chkCmssrNm;
+
     @Schema(title = "접수일자")
     private String accsDt;
 

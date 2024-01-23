@@ -271,21 +271,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
+                        /* 공통 모달 - 상생 사용 처리 */
+                        $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                        let appctnSeqVal = $formObj.find('input[type=hidden][name=appctnSeq]').val() ;
+                        $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            cmmCtrl.frmAjax(function (respObj) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                if(respObj.rtnData == 0){
-                                    cmmCtrl.frmAjax(function(respObj) {
-                                        /* return data input */
-                                        setInputValue(respObj);
-                                        fnpstnNmShow($('#pstnCd').val());
-                                    }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                                } else {
-                                    alert("이관 이력이 있는 회원은 선택이 불가합니다.");
-                                    return false;
-                                }
-                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }

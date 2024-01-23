@@ -344,7 +344,7 @@
                 <c:choose>
                     <c:when test="${ not empty rtnDto.bsnCd}">
                         <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-                        <button type="submit" class="btn btn-sm btn-success">수정</button>
+                        <button type="button" class="btn btn-sm btn-success" id="btn_update">수정</button>
                     </c:when>
                     <c:otherwise>
                         <button type="submit" class="btn btn-sm btn-success">등록</button>

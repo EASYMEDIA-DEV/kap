@@ -4,6 +4,7 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 /**
  * <pre>
@@ -80,4 +81,5 @@ public interface WBBARoundService {
      * 회차 중복 체크
      */
     public int episdChk(WBRoundMstDTO wBRoundMstDTO) throws Exception;
+
 }

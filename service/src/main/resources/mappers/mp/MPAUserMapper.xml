@@ -68,8 +68,7 @@
                       , CMPN_MST.CMPN_NM
                       , CASE WHEN CMPN_MST.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD )
                               ELSE '' END as SIZE_CD_NM
-                      , CASE WHEN CMPN_MST.SIZE_CD != '' THEN  (SELECT CD FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD )
-                              ELSE '' END as SIZE_CD
+                      , CMPN_MST.SIZE_CD
                       , CASE WHEN CMPN_MST.CTGRY_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.CTGRY_CD )
                               ELSE '' END as CTGRY_CD_NM
                       , CMPN_MST.CTGRY_CD
@@ -97,9 +96,12 @@
                       , CMPN_MST.TEL_NO AS CMPN_TEL_NO
                       , mem.mod_id
                       , mem.dept_cd
-                      , (select cd_nm from co_code_mst where  cd=mem.dept_cd ) as dept_cd_nm
+                      , CASE WHEN mem.dept_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=mem.dept_cd )
+                            ELSE '' END as dept_cd_nm
                       , mem.dept_dtl_nm
                       , mem.pstn_cd
+                      , CASE WHEN mem.pstn_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=mem.pstn_cd )
+                            ELSE '' END as pstn_cd_nm
                       , (select cd_nm from co_code_mst where  cd=mem.pstn_cd ) as pstn_cd_nm
                       , mem.pstn_nm
                       , mem.reg_id
@@ -172,8 +174,11 @@
                             when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
                                 else null end as  mod_name
                      , cmpn_mst.cmpn_nm
-                     , (SELECT cd_nm FROM  co_code_mst WHERE cd = cmpn_mst.size_cd)  AS size_cd_nm
-                     , (SELECT cd_nm FROM  co_code_mst WHERE cd = cmpn_mst.ctgry_cd) AS ctgry_cd_nm
+                    , CASE WHEN CMPN_MST.size_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.size_cd )
+                        ELSE '' END as size_cd_nm
+                    , CMPN_MST.SIZE_CD
+                    , CASE WHEN CMPN_MST.ctgry_cd != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.ctgry_cd )
+                        ELSE '' END as ctgry_cd_nm
                      , cmpn_mst.ctgry_cd
                      , mem.tel_no
                      , mem.zipcode
@@ -226,8 +231,10 @@
                           when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
                             else null end as  mod_name
                    , cmpn_mst.cmpn_nm
-                   , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd ) as size_cd_nm
-                   , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_nm
+                   , CASE WHEN CMPN_MST.size_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.size_cd )
+                       ELSE '' END as size_cd_nm
+                    , CASE WHEN CMPN_MST.ctgry_cd != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.ctgry_cd )
+                       ELSE '' END as ctgry_cd_nm
                    , cmpn_mst.ctgry_cd
                    , mem.tel_no
                    , mem.zipcode

@@ -13,6 +13,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var $formObj5 = $("#formUploadSubmit");
     var chgkickImage =0;
     var chglvlImage =0;
+
+    $('input:radio[name=atndcCd]').change( function () {
+        if(this.value !='CMSSR_ATTEND_001') {
+            $("#guidePartCmpn1").val("");
+            $("#guidePartCmpn2").val("");
+            $("#rgnsOne").text("-");
+            $("#rgnsTwo").text("-");
+            $("input[name=etcBsntrp]").val("");
+            $("#guidePartCmpn1").attr('disabled', 'true');
+            $("#guidePartCmpn2").attr('disabled', 'true');
+            $("input[name=etcBsntrp]").attr('disabled', 'true');
+        } else {
+            $("#guidePartCmpn1").removeAttr('disabled');
+            $("#guidePartCmpn2").removeAttr('disabled');
+            $("input[name=etcBsntrp]").removeAttr('disabled');
+        }
+    });
     // set model
     ctrl.model = {
         id : {
@@ -355,7 +372,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         immediately : function() {
-
+            $("#guidePartCmpn1").attr('disabled', 'true');
+            $("#guidePartCmpn2").attr('disabled', 'true');
+            $("input[name=etcBsntrp]").attr('disabled', 'true');
             $formObj.validation({
                 msg : {
                     confirm : {

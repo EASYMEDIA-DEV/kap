@@ -643,8 +643,9 @@ public class WBGAExamServiceImpl implements WBGAExamService {
 
                     int index = 1;
 
-                    for (int t = 0; t < wBGACompanyDTO.getSqInfoList().size(); t++) {
+                    for(int t=0; t<wBGACompanyDTO.getSqInfoList().size();t++) {
                         seq = String.valueOf(wBGACompanyDTO.getSqInfoList().get(t).getCbsnSeq());
+
 
                         wBGACompanyDTO.setYear(wBGACompanyDTO.getSqInfoList().get(t).getYear());
                         wBGACompanyDTO.setScore(wBGACompanyDTO.getSqInfoList().get(t).getScore());
@@ -659,7 +660,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                         wBGACompanyDTO.setPay5starYear(null);
                         wBGACompanyDTO.setQlty5starYear(null);
 
-                        if (!seq.isEmpty()) {
+                        if (!"null".equals(seq)) {
                             wBGACompanyDTO.setCbsnSeq(Integer.valueOf(seq));
                             wBGAExamMapper.updatePartsComSQInfo(wBGACompanyDTO);
                         } else {
@@ -846,6 +847,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             //계측장비상세 데이터처리
             wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
             wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
+            wBGAExamMapper.updatePicCmssrSeq(wBGAApplyMstDTO);
 
         } else if (wBGAApplyDtlDTO.getRsumeOrd() == 2) {
             //심사단계
@@ -882,6 +884,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             //계측장비상세 데이터처리
             wBGAExamMapper.deleteMsEuipment(wBGAMsEuipmentDTO);
             wBGAExamMapper.insertMsEuipment(wBGAMsEuipmentDTO);
+            wBGAExamMapper.updatePicCmssrSeq(wBGAApplyMstDTO);
 
         } else if (wBGAApplyDtlDTO.getRsumeOrd() == 3) {
             //증빙단계

@@ -16,10 +16,10 @@
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
             <div id="basicData">
                 <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" class="notRequired" name="beforeMemSeq" value="${registerDtl.memSeq}" />
-                <input type="hidden" class="notRequired" name="beforeId" value="${registerDtl.id}" />
+                <input type="hidden" class="notRequired" name="bfreMemSeq" value="${registerDtl.memSeq}" />
+                <input type="hidden" class="notRequired" name="bfreId" value="${registerDtl.id}" />
                 <%-- 현재 신청자 id --%>
-                <input type="hidden" class="notRequired" name="memSeq" value="${registerDtl.memSeq}" />
+                <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${registerDtl.memSeq}" />
                 <input type="hidden" class="notRequired" name="id" value="${registerDtl.id}" />
                 <%-- 변형 전 사업자번호 --%>
                 <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${registerDtl.bsnmNo}" />
@@ -1520,7 +1520,7 @@
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
                                                     <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[2].chkCmssrSeq}">
-                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[2].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[2].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -1630,7 +1630,7 @@
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
                                                     <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[3].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -1959,7 +1959,7 @@
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
                                                     <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[6].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 </div>
                                                 <div class="col-sm-1">
                                                     <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
@@ -2001,7 +2001,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">스마트화 수준확인</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm" name="rsumeTaskDtl.smtfnPrsntCd notRequired" title="스마트화 현재 수준">
+                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.smtfnPrsntCd" title="스마트화 현재 수준">
                                                     <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].smtfnPrsntCd eq cdList.cd}" >selected</c:if> >
@@ -2061,8 +2061,8 @@
 
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
-        <%-- 위원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
+        <!-- 강사 검색 맵핑 -->
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include>
 
     </div>
 </div>
