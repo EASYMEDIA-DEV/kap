@@ -15,7 +15,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm" id="bsnNm" name="bsnNm" value="${rtnDto.bsnNm}" title="제목" maxlength="20" placeholder="제목을 입력해주세요." />
+                        <input type="text" class="form-control input-sm" id="bsnNm" name="bsnNm" value="${rtnDto.bsnNm}" title="제목" maxlength="50" placeholder="제목을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
@@ -23,7 +23,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="dsc" name="dsc" value="${rtnDto.dsc}" title="내용" maxlength="150" placeholder="내용을 입력해주세요." />
+                        <input type="text" class="form-control input-sm" id="dsc" name="dsc" value="${rtnDto.dsc}" title="내용" maxlength="50" placeholder="내용을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>

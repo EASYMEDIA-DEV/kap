@@ -54,7 +54,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
-                                <input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="30" />
+                                <input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="50" />
                             </div>
                         </div>
                     </div>
