@@ -92,7 +92,7 @@ public class IMAQaServiceImpl implements IMAQaService {
 
         pIMAQaDTO.setDetailsKey(pIMAQaDTO.getDetailsKey());
 
-        if(null != pIMAQaDTO.getMypageYn() && !"Y".equals(pIMAQaDTO.getMypageYn())) {
+        if(null == pIMAQaDTO.getMypageYn() || !"Y".equals(pIMAQaDTO.getMypageYn())) {
             if (null != pIMAQaDTO.getRsumeCd() && "SYN".equals(pIMAQaDTO.getRsumeCd())) {
                 pIMAQaDTO.setRsumeCd("SYNACK");
                 iMAQaMapper.updateQaRsume(pIMAQaDTO);
