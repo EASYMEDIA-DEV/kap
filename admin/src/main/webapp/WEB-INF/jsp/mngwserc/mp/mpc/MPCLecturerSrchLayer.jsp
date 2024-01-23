@@ -4,7 +4,7 @@
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:1500px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >▣ 강사 검색
+                <h5 class="modal-title" ><span id="title">▣ 강사 검색</span>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

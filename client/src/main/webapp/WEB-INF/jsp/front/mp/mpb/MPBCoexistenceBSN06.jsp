@@ -313,9 +313,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
+                                </c:if>
                             </form>
                         </div>
                     </div>

@@ -421,9 +421,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnCmtSearch: {
                 event: {
                     click: function () {
+                        $('.mpcLecturerSrchLayer .modal-title #title').html("▣ 강사 및 위탁위원 검색");
                         let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
                         let rsumeTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`);
-                        cmmCtrl.getCmtSrchPop(function (data) {
+                        cmmCtrl.getLecturerLayerPop(function (data) {
                             rsumeTask.find('.chkCmssrSeq').val(data.seq);
                             rsumeTask.find('.chkCmssrNm').val(data.name);
                         });

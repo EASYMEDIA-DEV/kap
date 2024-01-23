@@ -93,10 +93,10 @@
             ,(SELECT bsn_type_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as bsn_type_cd
             ,(SELECT smtfn_prsnt_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as smtfn_prsnt_cd
             ,(SELECT smtfn_trgt_cd FROM cx_appctn_rsume_task_dtl WHERE rsume_seq = (SELECT rsume_seq FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{appctnSeq} AND rsume_ord = 1)) as smtfn_trgt_cd
-            ,(SELECT name FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_nm
-            ,(SELECT email FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_email
-            ,(SELECT hp_no FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq) as pic_cmssr_hp_no
-            ,(SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = (SELECT work_bsnm_no FROM co_mem_mst WHERE mem_seq = A.pic_cmssr_seq)) as pic_cmssr_cmpn_nm
+            ,(SELECT name FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_nm
+            ,(SELECT email FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_email
+            ,(SELECT hp_no FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_hp_no
+            ,(SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = A.pic_cmssr_seq) as pic_cmssr_cmpn_nm
         FROM
             (
                 SELECT a.*, YEAR(b.year) as year, b.episd
