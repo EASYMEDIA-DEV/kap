@@ -16,7 +16,7 @@
                 <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}" />
                 <input type="hidden" class="notRequired" name="id" value="${rtnInfo.id}" />
-                <input type="hidden" class="notRequired" name="bsnmNo" value="${rtnInfo.bsnmNo}" />
+                <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" />
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnInfo.detailsKey}" />
                 <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
                 <input type="hidden" class="notRequired" name="userLogYn" value=""/>
@@ -214,7 +214,7 @@
 
                             <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <p class="form-control-static" id="workBsnmNo" title="재직 회사사업자번호">${rtnInfo.bsnmNo}</p>
+                                <p class="form-control-static" id="changeBsnmNo" title="재직 회사사업자번호">${rtnInfo.bsnmNo}</p>
                             </div>
                         </div>
                     </fieldset>

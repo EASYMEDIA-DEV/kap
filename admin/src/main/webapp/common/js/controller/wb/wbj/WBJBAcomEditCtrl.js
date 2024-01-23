@@ -12,11 +12,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
-    var $formDataObj = ctrl.obj.find("#frm").eq(0);
     // 1차 심사사용자 신청 상태값
     var mngSttsCd = $("#mngSttsCd option:selected").val();
 
@@ -72,7 +70,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
-        rtnData['workBsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+        rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+
         rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
 
         /* Input Hidden Tag Value  */

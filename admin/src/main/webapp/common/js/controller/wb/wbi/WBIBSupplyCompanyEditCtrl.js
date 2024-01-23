@@ -19,7 +19,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     var $modalObj = $(".part-modal");
     //modalForm
     var $modalFormObj = $modalObj.find("form").eq(0);
-    var $formDataObj = ctrl.obj.find("#frm").eq(0);
 
     // 구분 코드로 영역 노출
     var ctgryCd = $("#ctgryCd").val();
@@ -76,6 +75,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
         rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+
         rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
         /* Input Hidden Tag Value  */
         $formObj.find(`input[type=hidden][name=id]`).val(rtnData['id']);

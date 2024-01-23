@@ -32,7 +32,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
-        rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+        rtnData['bsnm'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+
+        rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
 
         /* Input Hidden Tag Value  */
 

@@ -18,7 +18,7 @@
                 <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}"/>
                 <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnInfo.memSeq}"/>
                 <input type="hidden" class="notRequired" id="id" name="id" value="${rtnInfo.id}"/>
-                <input type="hidden" class="notRequired" name="bsnmNo" value="${rtnInfo.bsnmNo}"/>
+                <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}"/>
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnInfo.detailsKey}"/>
                 <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.detailsKey}"/>
                 <input type="hidden" class="notRequired" name="userLogYn" value=""/>
@@ -226,7 +226,13 @@
 
                             <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                             <div class="col-sm-5">
-                                <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호">${rtnInfo.bsnmNo}</p>
+                                <p class="form-control-static" id="changeBsnmNo" title="재직 회사사업자번호">
+                                    ${fn:substring(rtnInfo.bsnmNo, 0, 3)}
+                                    -
+                                    ${fn:substring(rtnInfo.bsnmNo, 3, 5)}
+                                    -
+                                    ${fn:substring(rtnInfo.bsnmNo, 5, -1)}
+                                </p>
                             </div>
                         </div>
                     </fieldset>
@@ -625,16 +631,6 @@
                 </div>
             </div>
         </form>
-
-        <form class="form-horizontal" id="frm" name="frm" method="post">
-            <input type="hidden" class="notRequired" name="memSeq" value="${rtnInfo.memSeq}"/>
-            <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}"/>
-            <input type="hidden" class="notRequired" name="nextStageNm" value=""/>
-            <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}">
-        </form>
-
-
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
 

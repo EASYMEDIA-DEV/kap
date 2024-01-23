@@ -568,6 +568,7 @@
             B.MOD_ID,
             B.MOD_IP,
             B.MOD_DTM,
+            B.BSNM_NO
             E.APPCTN_STTS_CD,
             E.APPCTN_STTS_CHNG_DTM,
             E.MNG_STTS_CD,

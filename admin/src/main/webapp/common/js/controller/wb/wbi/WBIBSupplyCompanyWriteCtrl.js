@@ -12,7 +12,6 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
-    let selPartUser; /* 선택 사용자 ID*/
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
@@ -22,11 +21,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
-        rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+        rtnData['changeBsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
 
         rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
-        /* Input Hidden Tag Value  */
 
+        /* Input Hidden Tag Value  */
         $formObj.find(`input[type=hidden][name=id]`).val(rtnData['id']);
         $formObj.find(`input[type=hidden][name=bsnmNo]`).val(dataBsnmNo);
 
@@ -213,21 +212,13 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            cmmCtrl.frmAjax(function (respObj) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                if(respObj.rtnData == 0){
-                                    cmmCtrl.frmAjax(function(respObj) {
-                                        /* return data input */
-                                        setInputValue(respObj);
-                                        fnpstnNmShow($('#pstnCd').val());
-                                    }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                                } else {
-                                    alert("이관 이력이 있는 회원은 선택이 불가합니다.");
-                                    return false;
-                                }
-                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }
