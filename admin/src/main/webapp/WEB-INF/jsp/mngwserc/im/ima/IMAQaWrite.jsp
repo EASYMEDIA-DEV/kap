@@ -90,11 +90,12 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnQaInfo.qaSeq}" />
             <input type="hidden" class="notRequired" id="regName" name="regName" value="${rtnQaInfo.regName}" />
             <input type="hidden" class="notRequired" id="titl" name="titl" value="${rtnQaInfo.titl}" />
-<%--            <input type="hidden" class="notRequired" id="cntn" name="cntn" value="${rtnQaInfo.cntn}" />--%>
+            <input type="hidden" class="notRequired" id="email" name="email" value="${rtnQaInfo.email}" />
             <input type="hidden" class="notRequired" id="parntCtgryNm" name="parntCtgryNm" value="${rtnQaInfo.parntCtgryNm}" />
             <input type="hidden" class="notRequired" id="ctgryNm" name="ctgryNm" value="${rtnQaInfo.ctgryNm}" />
-            <input type="hidden" class="notRequired" id="rsumeCd" name="rsumeCd" value="${rtnQaInfo.rsumeCd}" />
             <input type="hidden" class="notRequired" id="regDtm" name="regDtm" value="${kl:convertDate(rtnQaInfo.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '')}" />
+<%--            <input type="hidden" class="notRequired" id="cntn" name="cntn" value="${rtnQaInfo.cntn}" />--%>
+            <input type="hidden" class="notRequired" id="rsumeCd" name="rsumeCd" value="${rtnQaInfo.rsumeCd}" />
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="rplyFileSeq" name="rplyFileSeq" value="${rtnQaInfo.rplyFileSeq}" />
             <fieldset>

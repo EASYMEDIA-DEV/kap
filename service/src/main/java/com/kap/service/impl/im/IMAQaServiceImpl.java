@@ -281,7 +281,7 @@ public class IMAQaServiceImpl implements IMAQaService {
         LocalDate currentDate = LocalDate.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String formattedDate = currentDate.format(formatter);
-        System.out.println("현재 날짜: " + formattedDate);
+//        System.out.println("현재 날짜: " + formattedDate);
 
 
         /* 문의 작성자에게 보내는 메일 처리 */
