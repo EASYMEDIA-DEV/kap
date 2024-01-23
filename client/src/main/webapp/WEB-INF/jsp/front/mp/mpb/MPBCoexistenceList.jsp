@@ -4,12 +4,7 @@
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
     -->
-    <!--
-      교육 사업: edu-biz
-      컨실팅 사업: consult-biz
-      상생 사업: coexisting-biz
-    -->
-    <div class="sub-top-vis-area basic-page">
+    <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
         </div>
@@ -19,6 +14,7 @@
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 종료-->
+
         <div class="right-con-area">
             <div class="cont-sec-w">
                 <div class="cont-sec no-border scroll-motion">
@@ -42,7 +38,7 @@
                                     </div>
                                     <div class="right">
                                         <a class="filter-open-btn" href="javascript:" title="필터 열기">
-                                            <span>필터</span>
+                                            <span>필터<!--<b class="filter-count">(7)</b>--></span><!-- 2024-01-09 filter-conut 삭제 -->
                                         </a>
                                     </div>
                                 </div>
@@ -99,8 +95,8 @@
                                                                     <div class="form-input srch-input w-longer">
                                                                         <input type="text" name="q" placeholder="사업명 입력">
                                                                         <div class="input-btn-wrap">
-                                                                            <button type="button" class="delete-btn" title="지우기"></button>
-                                                                            <button type="button" class="srch-btn searchBtn" title="검색"></button>
+                                                                            <button class="delete-btn" title="지우기" type="button"></button>
+                                                                            <button class="srch-btn searchBtn" title="검색"></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -117,11 +113,11 @@
                                                                     <div class="middle-line">
                                                                         <div class="opt-group">
                                                                             <div class="form-radio">
-                                                                                <input type="radio" name="dateType" value="1" id="searchPeriodRadio1" name="searchPeriodRadio" checked>
+                                                                                <input type="radio" id="searchPeriodRadio1" value="1" name="dateType" checked>
                                                                                 <label for="searchPeriodRadio1">사업기간</label>
                                                                             </div>
                                                                             <div class="form-radio">
-                                                                                <input type="radio" name="dateType" value="2" id="searchPeriodRadio2" name="searchPeriodRadio">
+                                                                                <input type="radio" id="searchPeriodRadio2" value="2" name="dateType">
                                                                                 <label for="searchPeriodRadio2">신청일시</label>
                                                                             </div>
                                                                         </div>
@@ -129,10 +125,10 @@
                                                                     <div class="middle-line">
                                                                         <div class="form-group form-calendar">
                                                                             <div class="form-input">
-                                                                                <input type="text" name="strtDt" class="datetimepicker_strtDt" onclick="cmmCtrl.initCalendar(this);" placeholder="2023.01.01">
+                                                                                <input type="text" name="strtDt" class="datetimepicker_strtDt" onclick="cmmCtrl.initCalendar(this);">
                                                                             </div>
                                                                             <div class="form-input calendar">
-                                                                                <input type="text" name="endDt" class="datetimepicker_endDt" onclick="cmmCtrl.initCalendar(this);"  placeholder="2023.01.01">
+                                                                                <input type="text" name="endDt" class="datetimepicker_endDt" onclick="cmmCtrl.initCalendar(this);">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -144,11 +140,11 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <div class="btn-set">
-                                                    <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span><!--ㅠ-->
+                                                    <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span>
                                                     </button></div>
                                                 <div class="btn-set">
-                                                    <button type="button" class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
-                                                    <button type="button" class="btn-solid small black-bg searchBtn"><span>적용</span></button>
+                                                    <button class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
+                                                    <button class="btn-solid small black-bg searchBtn"><span>적용</span></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -266,4 +262,3 @@
         </div>
     </div>
 </div>
-<!-- content 영역 end -->
