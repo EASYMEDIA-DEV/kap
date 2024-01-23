@@ -10,16 +10,20 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 3;
+    var fileInput = "";
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -33,7 +37,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).val("");
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
-
                 isFile = false;
            } else {
                 //파일용량 체크
@@ -53,6 +56,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
             
             if (isFile) {
+                fileInput = jQuery(obj).clone(true);
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
             }
         }

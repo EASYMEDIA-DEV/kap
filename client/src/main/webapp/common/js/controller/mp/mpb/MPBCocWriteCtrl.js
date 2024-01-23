@@ -8,6 +8,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
+    var fileInput = "";
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
