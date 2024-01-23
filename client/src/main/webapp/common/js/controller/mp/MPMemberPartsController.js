@@ -20,6 +20,90 @@ define(["ezCtrl"], function(ezCtrl) {
 
     let $formObj = $("#formNextSubmit");
 
+    function dataIns() {
+
+        //new
+        if ($(".new").css("display") == 'block') {
+            $(".cmpnNm").text($(".cmpn_nm_new").val());
+            $(".rprsntNm").text($(".rprsnt_nm").val());
+            $(".ctgryNm").text($("#ctgryCd").val()=='COMPANY01001' ? '1차' : '2차');
+            $(".addrNm").text($("#bscAddr").val() + " " + $("#dtlAddr").val());
+            $(".buseo").text()
+            $(".gikgub").text();
+            $(".cmpnNm").val($(".cmpn_nm_new").val());
+            $(".rprsntNm").val($(".rprsnt_nm").val());
+            $("#formDeptCd").val($("#deptCd").val());
+            $("#formDeptDtlNm").val($("#deptDtlNm").val());
+            $("#formpstnNm").val($(".pstnNm").val());
+            $("#formPstnCd").val($("#pstnCd").val());
+
+            let buseonDtl = $("#deptDtlNmOld").val() == "" ? ' ' : "(" + $("#deptDtlNm").val() +")";
+            $(".buseo").text($("#deptCd option:selected").text() +" " + buseonDtl);
+            let gikgubDtl = $("#pstnCd option:selected").text() == '기타' ? "(" + $(".pstnNm").val() +")" : '';
+            $(".gikgub").text($("#pstnCd option:selected").text() + " " + gikgubDtl);
+
+
+        } else {
+            //old
+            let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNmOld").val() +")";
+            $(".buseo").text($("#deptCdOld option:selected").text() +" " + buseonDtl);
+            let gikgubDtl = $("#pstnCdOld option:selected").text() == '기타' ? "(" + $(".pstnNmOld").val() +")" : '';
+            $(".gikgub").text($("#pstnCdOld option:selected").text() + " " + gikgubDtl);
+            $(".bsnmNoNum").text($("#bsnmNo").val().substring(0, 3) + "-" + $("#bsnmNo").val().substring(3, 5) + "-" + $("#bsnmNo").val().substring(5));
+            $(".cmpnNm").text($(".cmpn_nm").text());
+            $(".rprsntNm").text($(".rsNm").text());
+            $(".ctgryNm").text($(".gubun ").text());
+            $(".addrNm").text($(".addr").text());
+            $(".cmpnNm").val($(".cmpn_nm").text());
+            $(".rprsntNm").val($(".rsNm").text());
+            if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver") {
+                $("#formDeptCd").val($(".deptCdOld").val());
+                $("#formDeptDtlNm").val($(".deptDtlNm").val());
+                $("#formpstnNm").val($(".pstnNmOld2").val());
+                $("#formPstnCd").val($(".pstnCdOld").val());
+            } else {
+                $("#formDeptCd").val($("#deptCdOld").val());
+                $("#formDeptDtlNm").val($("#deptDtlNmOld").val());
+                $("#formpstnNm").val($(".pstnNmOld").val());
+                $("#formPstnCd").val($("#pstnCdOld").val());
+            }
+        }
+
+
+        $("#btnParts span").text("부품사정보 변경");
+        //form 데이터 넣기
+        $("#bsnmNos").val($("#bsnmNo").val());
+        $(".ctgryCd").val($("#ctgryCd").val());
+        $(".sizeCd").val($("#sizeCd").val())
+        $(".stbsmDt").val($("#stbsmDt").val());
+        $(".cmpnTel").val($("#telNo").val());
+        $(".cmpnZipcode").val($("#zipcode").val());
+        $(".cmpnBscAddr").val($("#bscAddr").val());
+        $(".cmpnDtlAddr").val($("#dtlAddr").val());
+        $(".slsPmt").val($("#slsPmt").val());
+        $(".slsYear").val($("#slsYear").val());
+        $(".mpleCnt").val($("#mpleCnt").val());
+        $(".mjrPrdct1").val($("#mjrPrdct1").val());
+        $(".mjrPrdct2").val($("#mjrPrdct2").val());
+        $(".mjrPrdct3").val($("#mjrPrdct3").val());
+        $(".qlty5StarCd").val($("#qlty5StarCd").val());
+        $(".qlty5StarYear").val($("#qlty5StarYear").val());
+        $(".pay5StarCd").val($("#pay5StarCd").val());
+        $(".pay5StarYear").val($("#pay5StarYear").val());
+        $(".tchlg5StarCd").val($("#tchlg5StarCd").val());
+        $(".tchlg5StarYear").val($("#tchlg5StarYear").val());
+        $(".sqInfoList1").val($(".sqInfoList1").val());
+        $(".sqInfoList2").val($(".sqInfoList2").val());
+        $(".sqInfoList3").val($(".sqInfoList3").val());
+
+
+        $(".bsnmNoNum").text($("#bsnmNo").val().substring(0, 3) + "-" + $("#bsnmNo").val().substring(3, 5) + "-" + $("#bsnmNo").val().substring(5));
+        // $("#bsnmChkal(bsnmOldNewChk);
+        $("#stbsmDt").val($("#stbsmDt").val())
+        $("#formMemCd").val("CP");
+
+    }
+
     function init() {
         if($("#formMemCd").val() == "CP") {
             if($("#bsnmNosOld").val() != "") {
@@ -265,85 +349,13 @@ define(["ezCtrl"], function(ezCtrl) {
                                 }
 
                             }
-                            //new
-                            if ($(".new").css("display") == 'block') {
-                                $(".cmpnNm").text($(".cmpn_nm_new").val());
-                                $(".rprsntNm").text($(".rprsnt_nm").val());
-                                $(".ctgryNm").text($("#ctgryCd").val()=='COMPANY01001' ? '1차' : '2차');
-                                $(".addrNm").text($("#bscAddr").val() + " " + $("#dtlAddr").val());
-                                $(".buseo").text()
-                                $(".gikgub").text();
-                                $(".cmpnNm").val($(".cmpn_nm_new").val());
-                                $(".rprsntNm").val($(".rprsnt_nm").val());
-                                $("#formDeptCd").val($("#deptCd").val());
-                                $("#formDeptDtlNm").val($("#deptDtlNm").val());
-                                $("#formpstnNm").val($(".pstnNm").val());
-                                $("#formPstnCd").val($("#pstnCd").val());
-
-                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? ' ' : "(" + $("#deptDtlNm").val() +")";
-                                $(".buseo").text($("#deptCd option:selected").text() +" " + buseonDtl);
-                                let gikgubDtl = $("#pstnCd option:selected").text() == '기타' ? "(" + $(".pstnNm").val() +")" : '';
-                                $(".gikgub").text($("#pstnCd option:selected").text() + " " + gikgubDtl);
 
 
-                            } else {
-                                //old
-                                let buseonDtl = $("#deptDtlNmOld").val() == "" ? '' : "(" + $("#deptDtlNmOld").val() +")";
-                                $(".buseo").text($("#deptCdOld option:selected").text() +" " + buseonDtl);
-                                let gikgubDtl = $("#pstnCdOld option:selected").text() == '기타' ? "(" + $(".pstnNmOld").val() +")" : '';
-                                $(".gikgub").text($("#pstnCdOld option:selected").text() + " " + gikgubDtl);
-
-                                $(".cmpnNm").text($(".cmpn_nm").text());
-                                $(".rprsntNm").text($(".rsNm").text());
-                                $(".ctgryNm").text($(".gubun ").text());
-                                $(".addrNm").text($(".addr").text());
-                                $(".cmpnNm").val($(".cmpn_nm").text());
-                                $(".rprsntNm").val($(".rsNm").text());
-                                $("#formDeptCd").val($("#deptCdOld").val());
-                                $("#formDeptDtlNm").val($("#deptDtlNmOld").val());
-                                $("#formpstnNm").val($(".pstnNmOld").val());
-                                $("#formPstnCd").val($("#pstnCdOld").val());
-                                // $(".deptCd").val($("#deptCdOld").val());
-                                // $(".deptCdPar").val($("#deptCdOld").val());
-                                // $(".deptDtlNm").val($(".deptDtlNm").val());
-                                // $(".pstnNm").val($(".pstnNmOld").val());
-                                // $(".pstnCd").val($("#pstnCdOld").val());
-                            }
-                            $("#btnParts span").text("부품사정보 변경");
-                            //form 데이터 넣기
-                            $("#bsnmNos").val($("#bsnmNo").val());
-                            $(".ctgryCd").val($("#ctgryCd").val());
-                            $(".sizeCd").val($("#sizeCd").val())
-                            $(".stbsmDt").val($("#stbsmDt").val());
-                            $(".cmpnTel").val($("#telNo").val());
-                            $(".cmpnZipcode").val($("#zipcode").val());
-                            $(".cmpnBscAddr").val($("#bscAddr").val());
-                            $(".cmpnDtlAddr").val($("#dtlAddr").val());
-                            $(".slsPmt").val($("#slsPmt").val());
-                            $(".slsYear").val($("#slsYear").val());
-                            $(".mpleCnt").val($("#mpleCnt").val());
-                            $(".mjrPrdct1").val($("#mjrPrdct1").val());
-                            $(".mjrPrdct2").val($("#mjrPrdct2").val());
-                            $(".mjrPrdct3").val($("#mjrPrdct3").val());
-                            $(".qlty5StarCd").val($("#qlty5StarCd").val());
-                            $(".qlty5StarYear").val($("#qlty5StarYear").val());
-                            $(".pay5StarCd").val($("#pay5StarCd").val());
-                            $(".pay5StarYear").val($("#pay5StarYear").val());
-                            $(".tchlg5StarCd").val($("#tchlg5StarCd").val());
-                            $(".tchlg5StarYear").val($("#tchlg5StarYear").val());
-                            $(".sqInfoList1").val($(".sqInfoList1").val());
-                            $(".sqInfoList2").val($(".sqInfoList2").val());
-                            $(".sqInfoList3").val($(".sqInfoList3").val());
-
-
-                            $(".bsnmNoNum").text($("#bsnmNo").val().substring(0, 3) + "-" + $("#bsnmNo").val().substring(3, 5) + "-" + $("#bsnmNo").val().substring(5));
-                            // $("#bsnmChkal(bsnmOldNewChk);
-                            $("#stbsmDt").val($("#stbsmDt").val())
-                            $("#formMemCd").val("CP");
 
                             //부품사 변경 시
                             if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="chg") {
                                 if (confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    dataIns();
                                     var $formObj5 = $("#formUserSubmit");
                                     cmmCtrl.frmAjax(function(respObj) {
                                         popChk = true;
@@ -357,6 +369,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             } else if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="turnOver"){
                                 //이직 시
                                 if(confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    $(".partDtl").hide();
+                                    // dataIns();
+
                                     cmmCtrl.niceCertification("no&"+$("#ci").val()+"&compChg");
                                     popChk = true;
                                   } else {
@@ -365,6 +380,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             } else {
                                 if (confirm(msgCtrl.getMsg("confirm.sve"))) {
+                                    dataIns();
                                     //신규 등록 시
                                     $(".partDtl").show()
                                 } else {
