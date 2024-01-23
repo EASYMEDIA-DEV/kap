@@ -261,7 +261,7 @@
                         <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
                     </div>
                     <div class="btn-set">
-                        <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episdSeq}"><span>다음</span></a>
+                        <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episd}"><span>다음</span></a>
                     </div>
                 </div>
             </div>
