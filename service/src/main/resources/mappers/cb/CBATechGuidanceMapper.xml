@@ -1539,4 +1539,24 @@
         FROM CP_CNSTG_APPCTN_MST A
         WHERE CNSTG_SEQ = #{cnstgSeq}
     </select>
+
+    <!--
+  쿼리명 : CBATechGuidanceMapper.selectYearCancelNotConsultingCount
+  설  명 :  최근 1년 간 신청한 컨설팅 내역 조회(사용자 취소 제외)
+   수정일     수정자       수정내용
+ ==========   ======    ==============
+ 2024.01.23   양현우      최초 생성
+-->
+    <select id="selectYearCancelNotConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectYearCancelNotConsultingCount */
+            COUNT(*)
+        FROM
+            CP_CNSTG_APPCTN_MST A
+        WHERE
+            APPCTN_MEM_SEQ = #{memSeq}
+          AND REG_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
+          AND RSUME_STTS_CD NOT IN('MNGTECH_STATUS_02')
+    </select>
+
+
 </mapper>
