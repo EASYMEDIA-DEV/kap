@@ -248,6 +248,17 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 },
             },
+            // 위원검색 모달
+            btnCmtSearch: {
+                event: {
+                    click: function () {
+                        cmmCtrl.getCmtSrchPop(function (data) {
+                            $formObj.find('#chkCmssrSeq').val(data.seq);
+                            $formObj.find('#chkCmssrNm').val(data.name);
+                        });
+                    }
+                }
+            },
             //페이징 처리
             pageSet : {
                 event : {

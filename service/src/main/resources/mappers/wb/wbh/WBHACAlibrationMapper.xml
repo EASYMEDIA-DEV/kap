@@ -597,6 +597,8 @@
             RSUME_SEQ
              , RSUME_ORD
              , SPPRT_CLLNG_YN
+             , CHK_CMSSR_SEQ
+             , (SELECT NAME FROM CO_MEM_MST  WHERE MEM_SEQ = CHK_CMSSR_SEQ) as CHK_CMSSR_NM
              , ACCS_DT
              , FORMAT(NVSTM_PMT,0) AS NVSTM_PMT
              , FORMAT(CLBTN_EXPNS_PMT,0) AS CLBTN_EXPNS_PMT
@@ -1210,6 +1212,7 @@
         INSERT INTO CX_APPCTN_RSUME_TCHLG_DTL (
             RSUME_SEQ,
             RSUME_ORD,
+            CHK_CMSSR_SEQ,
             ACCS_DT,
             CLBTN_EXPNS_PMT,
             REAL_GIVE_DT,
@@ -1221,6 +1224,7 @@
         ) VALUES (
             #{rsumeSeq},
             #{rsumeOrd},
+            #{chkCmssrSeq},
             <if test='siteGubun == "admin"'>
                 #{accsDt},
             </if>
