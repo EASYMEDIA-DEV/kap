@@ -15,9 +15,16 @@
                 <td class="text-center">${list.rsumeSttsCdNm}</td>
                 <td class="text-center">${list.mngSttsCdNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm}</a></td>
+                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${not empty list.sbrdnBsnmNo}">${list.sbrdnBsnmNo}</c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+
+                </td>
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>
-                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>

@@ -125,9 +125,10 @@
                         <th class="text-center">진행상태</th>
                         <th class="text-center">관리자</br>상태값</th>
                         <th class="text-center">부품사명</th>
+                        <th class="text-center">사업자등록번호</th>
+                        <th class="text-center">종된사업장번호</th>
                         <th class="text-center">구분</th>
                         <th class="text-center">규모</th>
-                        <th class="text-center">사업자등록번호</th>
                         <th class="text-center">신청자</br>(아이디)</th>
                         <th class="text-center">휴대폰번호</th>
                         <th class="text-center">이메일</th>
