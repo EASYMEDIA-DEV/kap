@@ -71,6 +71,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            nextBtn : {
+                event : {
+                    click : function() {
+                        var episdSeq = $(this).data("episdSeq");
+                        if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            location.href = "./step2?episdSeq="+episdSeq;
+                        }
+                    }
+                }
+            }
         },
         classname : {
             addMore : {
@@ -164,16 +174,18 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             insertSkip : {
                 event : {
                     click : function() {
-                        cmmCtrl.fileFrm(function(data){
-                            //콜백함수. 페이지 이동
-                            if (data.actCnt == 999) {
-                                if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                    location.href = "/my-page/coexistence/list";
+                        if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            cmmCtrl.fileFrm(function (data) {
+                                //콜백함수. 페이지 이동
+                                if (data.actCnt == 999) {
+                                    if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                        location.href = "/my-page/coexistence/list";
+                                    }
+                                } else {
+                                    location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                 }
-                            } else {
-                                location.href = "./complete?episdSeq="+$('input[name=episdSeq]').val();
-                            }
-                        }, "./insert", $formObj, "json");
+                            }, "./insert", $formObj, "json");
+                        }
                     }
                 }
             },

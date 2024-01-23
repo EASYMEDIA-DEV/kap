@@ -19,7 +19,7 @@
                 <td class="text-center">${list.mngSttsNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm }</a></td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
-                <td class="text-center">${kl:bsnmNoConvert(list.sbrdnBsnmNo)}</td>
+                <td class="text-center">${list.sbrdnBsnmNo}</td>
                 <td class="text-center">${list.ctgryNm}</td>
                 <td class="text-center">${list.sizeNm}</td>
                 <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>

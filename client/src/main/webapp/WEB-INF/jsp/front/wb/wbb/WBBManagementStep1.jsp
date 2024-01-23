@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-wrap">
+<div class="cont-wrap" data-controller="controller/wb/wbb/WBBManagementCtrl">
     <form id="frmData" name="frmData" enctype="multipart/form-data">
         <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" class="notRequired" name="episdSeq" value="${episdSeq}" />
@@ -276,7 +276,7 @@
                         <div class="btn-set">
                             <c:choose>
                                 <c:when test="${fileYn eq 'Y'}">
-                                    <a class="btn-solid small black-bg" href="./step2?episdSeq=${episdSeq}"><span>다음</span></a>
+                                    <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episdSeq}"><span>다음</span></a>
                                 </c:when>
                                 <c:otherwise>
                                     <a class="btn-solid small black-bg insertSkip" href="javascript:"><span>다음</span></a>
