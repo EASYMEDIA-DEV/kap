@@ -266,7 +266,7 @@
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-9">
                         <div>
-                            <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색">
+                            <input type="button" class="btn btn-sm btn-gray" id="searchPostCode" value="우편번호 검색">
                         </div>
                         <br>
                         <div style="display: flex; gap: 10px;">

@@ -212,7 +212,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         let trArea = $modalFormObj.find("#listContainer input[type=checkbox]:checked").parents("tr");
 
                         if(trArea.length == 0) {
-                            alert("회원을 1명 선택하세요.")
+                            alert("회원을 1명 선택해주세요.")
                         }else if(trArea.length !== 0 || trArea != undefined){
                             selPartUser = trArea.find('[data-point=id]').html();
                             $modalFormObj.find("#selPartUser").val(selPartUser);

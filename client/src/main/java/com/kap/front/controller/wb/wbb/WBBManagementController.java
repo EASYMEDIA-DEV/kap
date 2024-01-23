@@ -4,6 +4,8 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wba.WBAManageInsertDTO;
+import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
@@ -54,6 +56,7 @@ public class WBBManagementController {
     private final COCodeService cOCodeService;
     public final WBBARoundService wbbaRoundService;
     public final WBBBCompanyService wbbbCompanyService;
+    public final WBAManagementService wbaManagementService;
     public final COGCntsService pCOGCntsService;
 
     /**
@@ -69,8 +72,11 @@ public class WBBManagementController {
             wBRoundMstSearchDTO.setRecordCountPerPage(3);
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, wBRoundMstSearchDTO.getBsnCd(), "Y"));
             modelMap.addAttribute("rtnData", wbbaRoundService.selectRoundList(wBRoundMstSearchDTO));
-            //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wbbaRoundService.getRoundDtl(wBRoundMstSearchDTO));
+
+            WBAManageSearchDTO wbaManageSearchDTO = new WBAManageSearchDTO();
+            wbaManageSearchDTO.setDetailsKey(wBRoundMstSearchDTO.getBsnCd());
+            modelMap.addAttribute("rtnDtl", wbaManagementService.selectManagementMst(wbaManageSearchDTO));
 
             RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
 

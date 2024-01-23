@@ -107,7 +107,7 @@
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm notRequired telRex"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력" maxlength="13"/>
+                            <input type="text" class="form-control input-sm notRequired telRex" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력" maxlength="13"/>
                         </div>
                     </div>
                 </fieldset>
@@ -203,7 +203,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                         <div class="col-sm-11">
-                            <input type="button" class="btn btn-sm searchPostCode" id="hqAddr" value="우편번호 검색"><br>
+                            <input type="button" class="btn btn-sm btn-gray searchPostCode" id="hqAddr" value="우편번호 검색"><br>
                             <br>
                             <div style="display: flex; gap: 10px;">
                                 <input type="text" class="form-control input-sm" id="hqZipcode" name="zipcode" value="${rtnDto.zipcode}" readonly="readonly" placeholder="우편번호" style="width: 95px;" title="주소">
@@ -545,7 +545,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">지도요청 공장주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm searchPostCode factAddr" data-html2canvas-ignore="true" value="우편번호 검색">
+                        <input type="button" class="btn btn-sm searchPostCode factAddr btn-gray" data-html2canvas-ignore="true" value="우편번호 검색">
                         <label class="checkbox-inline c-checkbox">
                             <c:set var="cmpnAddrSameYn" value="${kl:nvl(rtnDto.cmpnAddrSameYn, 'N')}" />
                             <input type="checkbox" class="notRequired addrSame"  name="cmpnAddrSameYn" value="${cmpnAddrSameYn}"<c:if test="${cmpnAddrSameYn eq 'Y'}">checked</c:if> title="주소 동일 여부"/>

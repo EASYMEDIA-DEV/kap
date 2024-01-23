@@ -65,7 +65,22 @@
                     </div>
                 </div>
             </fieldset>
-
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">문의유형코드<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <select class="form-control input-sm" id="qaCtgryCd" name="qaCtgryCd" title="문의유형코드" style="width:auto; display:inline-block;" <c:if test="${not empty info}">disabled</c:if>>
+                            <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
+                                <c:if test="${fn:contains(cdList.cd, 'INQ070')}">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.qaCtgryCd eq cdList.cd}">selected</c:if>>
+                                            ${cdList.cdNm}
+                                    </option>
+                                </c:if>
+                            </c:forEach>
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
             <h7 class="mt0"><em class="ion-android-arrow-dropright mr-sm"></em>
                 <c:if test="${not empty rtnData.bsnCd }">
                     사업단계 상세/수정

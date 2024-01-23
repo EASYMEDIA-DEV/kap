@@ -116,7 +116,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                                 <div class="col-sm-11">
-                                    <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+                                    <input type="button" class="btn btn-sm btn-gray" id="searchPostCode" value="우편번호 검색"><br>
                                     <br>
                                     <div style="display: flex; gap: 10px;">
                                         <input type="text" class="form-control input-sm" id="zipcode" name="zipcode" value="${rtnInfo.zipcode}" readonly placeholder="우편번호" style="width: 95px;" maxlength="50" title="우편번호"/>
@@ -157,7 +157,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset class="qlty5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
+                        <fieldset class="qlty5StarArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">품질5스타</label>
                                 <div class="col-sm-5">
@@ -182,7 +182,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset class="pay5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
+                        <fieldset class="pay5StarArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">납입5스타</label>
                                 <div class="col-sm-5">
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                         </fieldset>
-                        <fieldset class="tchlg5StarArea" <c:if test="${rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
+                        <fieldset class="tchlg5StarArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01002' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">기술5스타</label>
                                 <div class="col-sm-5">

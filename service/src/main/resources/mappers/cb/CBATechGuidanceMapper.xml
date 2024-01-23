@@ -1503,7 +1503,7 @@
      ==========   ======    ==============
      2024.01.11   임서화      최초 생성
  -->
-    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO"  resultType="java.lang.Integer">
+    <select id="selectYearConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
         SELECT /* CBATechGuidanceMapper.selectYearConsultingCount */
             COUNT(*)
         FROM
@@ -1511,5 +1511,32 @@
         WHERE
           APPCTN_MEM_SEQ = #{memSeq}
           AND REG_DTM > DATE_ADD(NOW(), INTERVAL -12 MONTH)
+    </select>
+
+    <!--
+      쿼리명 : CBATechGuidanceMapper.selectCompleteInfo
+      설  명 :  컨설팅 신청 완료 정보
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.22   임서화      최초 생성
+    -->
+    <select id="selectCompleteInfo" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
+        SELECT /*CBATechGuidanceMapper.selectCompleteInfo*/
+            DATE_FORMAT(REG_DTM, '%Y-%m-%d %h:%m') REG_DTM,
+            (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) NAME,
+            (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
+            CASE
+                WHEN ((SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq}))) IS NULL
+                    THEN (SELECT APPCTN_FLD_CD FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = #{cnstgSeq})
+                ELSE ((SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq})))
+                END AS APPCTN_FLD_NM,
+            CASE
+                WHEN ((SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq}))) IS NULL
+                    THEN (SELECT APPCTN_FLD_CD FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = #{cnstgSeq})
+                ELSE ((SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq})))
+                END AS CBSN_CD,
+            (SELECT ETC_NM FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = #{cnstgSeq}) AS ETC_NM
+        FROM CP_CNSTG_APPCTN_MST A
+        WHERE CNSTG_SEQ = #{cnstgSeq}
     </select>
 </mapper>

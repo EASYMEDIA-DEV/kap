@@ -62,7 +62,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
 
         // 킥오프일이 없거나, 킥오프일 전까지
-        if(bfGbDt>=0){
+        if(bfGbDt<=0){
             if(!guideKickfDt || today-kickDt < 0 ){
                 $(".rsumeSttsNm").text("지도착수");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
@@ -84,7 +84,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("지도 완료");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
             }
-        }else if(bfGbDt<0 || guideBgnDt == ''){
+        }else if(bfGbDt>0 || guideBgnDt == ''){
             if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
                 $(".rsumeSttsNm").text("사용자취소");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
@@ -474,37 +474,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                         }
                                                     }
                                                     if(!qltyPicCnt){
-                                                        alert("품질담당인원을 입력하세요.")
+                                                        alert("품질담당인원을 입력해주세요.")
                                                         $(".qltyPicCnt").focus();
                                                         return false;
                                                     }else{
                                                         if(!zipcode){
-                                                            alert("주소를 입력하세요.")
+                                                            alert("주소를 입력해주세요.")
                                                             $("#zipcode").focus();
                                                             return false;
                                                         }else{
                                                             if(mainAddr == '선택'){
-                                                                alert("소재 지역을 선택하세요.");
+                                                                alert("소재 지역을 선택해주세요.");
                                                                 $("#mainAddr").focus();
                                                                 return false;
                                                             }else{
                                                                 if(subAddr == ''){
-                                                                    alert("소재 지역을 선택하세요.");
+                                                                    alert("소재 지역을 선택해주세요.");
                                                                     $("#subAddr").focus();
                                                                     return false;
                                                                 }else{
                                                                     if(!rprsntApprvYn){
-                                                                        alert("대표자 승인여부를 선택하세요.");
+                                                                        alert("대표자 승인여부를 선택해주세요.");
                                                                         $("input[name='rprsntApprvYn']").focus();
                                                                         return false;
                                                                     }else{
                                                                         if(!appctnRsnCd){
-                                                                            alert("신청사유를 선택하세요.");
+                                                                            alert("신청사유를 선택해주세요.");
                                                                             $("input[name='appctnRsnCd']").focus();
                                                                             return false;
                                                                         }else{
                                                                             if(!cbsnCd){
-                                                                                alert("업종을 선택하세요.");
+                                                                                alert("업종을 선택해주세요.");
                                                                                 $("input[name='cbsnCd']").focus();
                                                                                 return false;
                                                                             }else if(cbsnCd == 'TEC_GUIDE_INDUS01'){
@@ -513,7 +513,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                                                 return false;
                                                                             }else{
                                                                                 if(!appctnTypeCd){
-                                                                                    alert("신청사항을 선택하세요.");
+                                                                                    alert("신청사항을 선택해주세요.");
                                                                                     $("input[name='appctnTypeCd']").focus();
                                                                                     return false;
                                                                                 }else{

@@ -1264,12 +1264,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.bdgetList = bdgetList;
 
 						if($("#expnsCprtnInsttNm").val() !="" &&  $("#expnsPmt").val() == ""){
-							alert("협력기관 지출금액을 입력하세요.");
+							alert("협력기관 지출금액을 입력해주세요.");
 							resultFlag = false;
 						}
 
 						if($("#expnsPmt").val() !="" &&  $("#expnsCprtnInsttNm").val() == ""){
-							alert("협력기관을 입력하세요.");
+							alert("협력기관을 입력해주세요.");
 							resultFlag = false;
 						}
 

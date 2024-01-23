@@ -107,4 +107,9 @@ public interface MPEPartsCompanyService {
      * 엑셀 생성
      */
     public void excelDownload(MPEPartsCompanyDTO mpePartsCompanyDTO, HttpServletResponse response) throws Exception;
+
+    /**
+     * 등록된 부품사 회원이 있는지 체크
+     */
+    public int selectMemberPartsSocietyExistsCheck(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 }

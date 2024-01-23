@@ -35,6 +35,9 @@ public class WBRoundMstSearchDTO extends BaseDTO {
     @Schema(title = "사업코드", example = "")
     private String bsnCd;
 
+    @Schema(title = "사업명", example = "")
+    private String bsnNm;
+    
     @Schema(title = "회차순번", example = "숫자")
     private Integer episdSeq;
 

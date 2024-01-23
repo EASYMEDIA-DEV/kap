@@ -272,7 +272,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">본사주소<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm" id="searchPostCode" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-gray" id="searchPostCode" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" class="form-control input-sm" id="zipcode" name="companyDtl.zipcode" value="${rtnCompany.zipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
@@ -503,7 +503,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">구축사업장<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="button" class="btn btn-sm" id="searchPostCode2" value="우편번호 검색"><br>
+                        <input type="button" class="btn btn-sm btn-gray" id="searchPostCode2" value="우편번호 검색"><br>
                         <br>
                         <div style="display: flex; gap: 10px;">
                             <input type="text" class="form-control input-sm" id="zipcode2" name="pbsnDtlList[0].pbsnZipcode" value="${rtnPbsn[0].pbsnZipcode}" readonly placeholder="우편번호" style="width: 95px;" title="주소">
@@ -515,12 +515,12 @@
                 </div>
             </fieldset>
 
-            <h6 class="mt0">선급금 해당 여부</h6>
+            <h6 class="mt0">지급관리</h6>
 
 
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부 <span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">선급금 해당 여부 <span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
                             <input type="radio" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">checked</c:if> title="노출여부"/>

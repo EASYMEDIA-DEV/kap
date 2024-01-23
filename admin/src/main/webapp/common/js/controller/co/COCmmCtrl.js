@@ -820,7 +820,7 @@ var cmmCtrl = (function(){
 				//첨부파일이 필요하다.
 				var lastChar = trgtTit.charAt(trgtTit.length - 1);
 				var josa = (lastChar.charCodeAt(0) - 44032) % 28 ? "을" : "를";
-				alert(trgtTit + josa + " 등록하세요.");
+				alert(trgtTit + josa + " 등록해주세요.");
 				isSend = false;
 				$(this).focus();
 				return false;

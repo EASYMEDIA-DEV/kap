@@ -43,6 +43,19 @@
     </select>
 
     <!--
+         쿼리명 : WBAManagementMapper.selectBusinessManagementCnt
+         설  명 : 상생사업 개수를 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.10    김태훈       최초생성
+    -->
+    <select id="selecApplyCnt" parameterType="WBAManageSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBAManagementMapper.selecApplyCnt*/ COUNT(*)
+        FROM cx_appctn_mst a
+        JOIN cx_episd_mst b ON a.episd_seq = b.episd_Seq AND b.bsn_cd = #{bsnCd}
+    </select>
+
+    <!--
          쿼리명 : WBAManagementMapper.selectManagementMst
          설  명 : 상생사업 마스터 상세를 조회한다.
           수정일     수정자       수정내용
@@ -62,6 +75,8 @@
             (SELECT PARNT_SEQ FROM CO_MENU_MST MENU WHERE MENU_SEQ = ADM_APPCTN_MENU_SEQ) ADM_APPCTN_MENU_PARNT_SEQ,
             (SELECT MENU_NM FROM CO_MENU_MST MENU WHERE MENU_SEQ = ADM_APPCTN_MENU_SEQ) ADM_APPCTN_MENU_NAME,
             (SELECT MENU_NM FROM CO_MENU_MST MENU WHERE MENU_SEQ = ADM_APPCTN_MENU_PARNT_SEQ) ADM_APPCTN_MENU_PARNT_NAME,
+            QA_CTGRY_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = QA_CTGRY_CD) QA_CTGRY_NAME,
             REG_ID,
             (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME,
             REG_IP,
@@ -155,6 +170,7 @@
         , user_menu_seq
         , adm_episd_menu_seq
         , adm_appctn_menu_Seq
+        , qa_ctgry_cd
         , reg_id
         , reg_ip
         , reg_dtm
@@ -168,6 +184,7 @@
             , #{userMenuSeq}
             , #{admEpisdMenuSeq}
             , #{admAppctnMenuSeq}
+            , #{qaCtgryCd}
             , #{regId}
             , #{regIp}
             , now()
@@ -268,6 +285,7 @@
             , user_menu_seq = #{userMenuSeq}
             , adm_episd_menu_seq = #{admEpisdMenuSeq}
             , adm_appctn_menu_Seq = #{admAppctnMenuSeq}
+            , qa_ctgry_cd = #{qaCtgryCd}
             , mod_id = #{modId}
             , mod_ip = #{regId}
             , mod_dtm = now()

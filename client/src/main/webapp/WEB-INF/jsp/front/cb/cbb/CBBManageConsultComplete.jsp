@@ -1,10 +1,10 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
 <%
-    String cnstgSeq = request.getParameter("cnstgSeq");
+  String bsnmNo = request.getParameter("bsnmNo");
 %>
-<div class="cont-wrap" data-controller="controller/cb/cba/CBATechGuidanceCompleteCtrl">
-<input type="hidden" class="cnstgSeq" value="<%=cnstgSeq%>">
+<div class="cont-wrap" data-controller="controller/cb/cba/CBATechGuidanceWriteCtrl">
+
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -65,14 +65,14 @@
                                 <div class="def-list-w">
                                     <div class="def-list">
                                         <p class="tit f-head">신청일시</p>
-                                        <p class="txt f-sub-head regDtm"></p>
+                                        <p class="txt f-sub-head">2023-01-01 10:00</p>
                                     </div>
                                     <div class="def-list">
                                         <p class="tit f-head">신청정보</p>
                                         <p class="txt f-sub-head">
-                                            <span class="txt-item name"></span>
-                                            <span class="txt-item cmpnNm"></span>
-                                            <span class="txt-item appctnFldNm"></span>
+                                            <span class="txt-item">홍길동</span>
+                                            <span class="txt-item">에이테크</span>
+                                            <span class="txt-item">금속분야 - 도금</span>
                                         </p>
                                     </div>
                                 </div>

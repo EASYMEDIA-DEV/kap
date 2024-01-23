@@ -14,6 +14,8 @@ define(["ezCtrl"], function(ezCtrl) {
     var $formObj = ctrl.obj.find("form").eq(0);
     var $excelObj = ctrl.obj.parent().find(".excel-down");
 
+    var isExistsChk = true;
+
     // set model
     ctrl.model = {
         id : {
@@ -40,24 +42,32 @@ define(["ezCtrl"], function(ezCtrl) {
                         if (delActCnt > 0) {
                             if(confirm("해당 게시물을 삭제하시겠습니까?"))
                             {
-                                //삭제 전송
-                                cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj != undefined && respObj.respCnt > 0){
-                                        var msg = "삭제되었습니다.";
+                                cmmCtrl.frmAjax(function(respObj) {
+                                    if(respObj.existsChk == 'Y') {
+                                        alert("소속된 회원이 존재하여 삭제할 수 없습니다.");
+                                        isExistsChk = true;
+                                    } else {
+                                        isExistsChk = false;
+                                    }
+                                }, "./member-exists-check", $formObj, "POST", "json",'',false);
 
-                                        alert(msg);
-                                        $formObj.find("#btnSearch").click();
-                                    }
-                                    else{
-                                        alert(msgCtrl.getMsg("fail.act"));
-                                    }
-                                }, "./delete", frmDataObj, "POST", "json");
+                                if(isExistsChk === false) {
+                                    //삭제 전송
+                                    cmmCtrl.frmAjax(function(respObj){
+                                        if(respObj != undefined && respObj.respCnt > 0){
+                                            var msg = "삭제되었습니다.";
+                                            alert(msg);
+                                            $formObj.find("#btnSearch").click();
+                                        }
+                                        else{
+                                            alert(msgCtrl.getMsg("fail.act"));
+                                        }
+                                    }, "./delete", frmDataObj, "POST", "json");
+                                }
                             }
                         } else {
                             alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
                         }
-
-
                     }
                 }
             },

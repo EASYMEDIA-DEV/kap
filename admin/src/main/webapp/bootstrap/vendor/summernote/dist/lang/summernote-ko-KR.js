@@ -108,7 +108,7 @@
       },
       specialChar: {
         specialChar: '특수문자',
-        select: '특수문자를 선택하세요'
+        select: '특수문자를 선택해주세요'
       }
     }
   });

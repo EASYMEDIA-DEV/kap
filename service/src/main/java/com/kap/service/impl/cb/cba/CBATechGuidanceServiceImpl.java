@@ -262,8 +262,9 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 }
             }
         }
-        pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
-        return pCBATechGuidanceInsertDTO.getRespCnt();
+        cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO);
+
+        return pCBATechGuidanceInsertDTO.getCnstgSeq();
     }
 
     /**
@@ -844,6 +845,14 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             actCnt = cBATechGuidanceMapper.selectYearConsultingCount(pCBATechGuidanceInsertDTO);
         }
         return actCnt;
+    }
+
+    /**
+     * 최근 1년 간 신청한 컨설팅 카운트(마이페이지)
+     */
+    public CBATechGuidanceInsertDTO selectCompleteInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+
+        return cBATechGuidanceMapper.selectCompleteInfo(pCBATechGuidanceInsertDTO);
     }
 }
 

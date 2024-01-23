@@ -35,6 +35,9 @@ public class WBAManagementOptnDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일명")
+    private String fileNm;
+
     @Schema(title = "등록 ID")
     private String regId;
 

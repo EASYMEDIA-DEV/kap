@@ -111,7 +111,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control input-sm" id="cmpnContainerCmpnZipcode" name="cmpnZipcode" value="" maxlength="10"  title="우편번호" readonly />
                         <span class="input-group-btn">
-                            <button type="button" class="btn btn-inverse btn-sm cmpnZipcodeSrchBtn">
+                            <button type="button" class="btn btn-gray btn-sm cmpnZipcodeSrchBtn">
                                 우편번호 검색
                             </button>
                         </span>

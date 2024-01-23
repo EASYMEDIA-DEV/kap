@@ -400,7 +400,7 @@
                             <a class="btn-solid small gray-bg btnCancle" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg insert" href="javascript:"><span>다음</span></a>
+                            <a class="btn-solid small black-bg insert" href="javascript:"><span>신청하기</span></a>
                         </div>
                     </div>
                 </div>

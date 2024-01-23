@@ -233,19 +233,22 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
     }
     /**
-     * 경영 컨설팅 등록 사용자
+     * 경영 컨설팅 담당 임원 등록
      */
-    public int insertUserManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
-
+    public int insertUserManageCmssrInfoConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO) throws Exception {
         pCBBManageConsultInsertDTO.setCnstgSeq(cosultSeqIdgen.getNextIntegerId());
-        pCBBManageConsultInsertDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replaceAll("-", ""));
-
-        // 컨설팅 서브 정보 수정
-        updateSubMngConInfo(pCBBManageConsultInsertDTO);
-
         // 담당임원상세
         updateConsultingPicInfo(pCBBManageConsultInsertDTO);
 
+        return  pCBBManageConsultInsertDTO.getCnstgSeq();
+    }
+
+    /**
+     * 경영 컨설팅 등록 사용자
+     */
+    public int insertUserManageConsult(CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+        // 컨설팅 서브 정보 수정
+        updateSubMngConInfo(pCBBManageConsultInsertDTO);
         //신청파일 넣기
         List<COFileDTO> rtnList = null;
         Map<String, MultipartFile> files = multiRequest.getFileMap();
@@ -274,18 +277,17 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 fileList.add(rtnList.get(i));
 
                 HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                if(i==0){
+                if (i == 0) {
                     pCBBManageConsultInsertDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
-                }else{
+                } else {
                     pCBBManageConsultInsertDTO.setImpvmFileSeq(fileSeqMap.get("fileSeq"));
                 }
             }
         }
 
-        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.insertManageConsult(pCBBManageConsultInsertDTO));
-        pCBBManageConsultInsertDTO.getRespCnt();
+        pCBBManageConsultInsertDTO.setRespCnt(cBBManageConsultMapper.updateManageConsult(pCBBManageConsultInsertDTO));
 
-        return  pCBBManageConsultInsertDTO.getRespCnt();
+        return pCBBManageConsultInsertDTO.getRespCnt();
     }
 
     /**

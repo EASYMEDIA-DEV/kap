@@ -80,10 +80,14 @@ public interface CBATechGuidanceService {
      * 컨설팅 설문 유효성 확인
      */
     public CBATechGuidanceInsertDTO selectTechGuidanceDtlCheck(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
-
     /**
      * 최근 1년 간 신청한 컨설팅 카운트(마이페이지)
      */
     public int countConsultingApplication(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 신청 완료 정보
+     */
+    public CBATechGuidanceInsertDTO selectCompleteInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
 }
