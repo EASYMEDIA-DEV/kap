@@ -136,13 +136,15 @@
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
-                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
-                                                        </div>
-                                                        <div class="file-btn-area">
-                                                            <input type="file" id="searchFile1" class="searchFile" name="atchFile1">
-                                                            <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
-                                                        </div>
+                                                        <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
+                                                            <div class="file-btn-area">
+                                                                <input type="file" id="searchFile1" class="searchFile" name="atchFile1">
+                                                                <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
+                                                            </div>
+                                                        </c:if>
                                                         <div class="file-prev-area">
                                                             <a
                                                                 href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[0].fileOrd}"
@@ -156,14 +158,16 @@
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">보안서약서<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                            </div>
-                                                            <div class="file-btn-area">
-                                                                <input type="file" id="searchFile2" class="searchFile" name="atchFile2">
-                                                                <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
-                                                            </div>
+                                                            <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                </div>
+                                                                <div class="file-btn-area">
+                                                                    <input type="file" id="searchFile2" class="searchFile" name="atchFile2">
+                                                                    <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
+                                                                </div>
+                                                            </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
                                                                     href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[1].fileOrd}"
@@ -178,13 +182,15 @@
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">중소기업확인서<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                            </div>
-                                                            <div class="file-btn-area">
-                                                                <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
-                                                                <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
-                                                            </div>
+                                                            <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                </div>
+                                                                <div class="file-btn-area">
+                                                                    <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
+                                                                    <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
+                                                                </div>
+                                                            </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
                                                                     href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[2].fileOrd}"
@@ -199,14 +205,16 @@
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">사업자등록증<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                            </div>
-                                                            <div class="file-btn-area">
-                                                                <input type="file" id="searchFile4" class="searchFile" name="atchFile4">
-                                                                <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
-                                                            </div>
+                                                            <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                </div>
+                                                                <div class="file-btn-area">
+                                                                    <input type="file" id="searchFile4" class="searchFile" name="atchFile4">
+                                                                    <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
+                                                                </div>
+                                                            </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
                                                                     href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[3].fileOrd}"

@@ -74,16 +74,18 @@
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
-                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
-                                                            <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                            <div class="file-list">
+                                                        <c:if test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_002'}">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                <div class="file-list">
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div class="file-btn-area">
-                                                            <input type="file" name="atchFile" id="searchFile" class="searchFile">
-                                                            <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
-                                                        </div>
+                                                            <div class="file-btn-area">
+                                                                <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                                            </div>
+                                                        </c:if>
                                                         <!-- 2024-01-03 추가 -->
                                                         <div class="file-prev-area">
                                                             <a href="/file/download?fileSeq=${rtnData.appctnSeq}&fileOrd=0" download="" title="파일 다운로드">${rtnData.fileNm}</a>

@@ -1791,7 +1791,7 @@
         </form>
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
-        <%-- 위원 검색 모달 --%>
-        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
+        <!-- 강사 검색 맵핑 -->
+        <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpc/MPCLecturerSrchLayer.jsp"></jsp:include>
     </div>
 </div>

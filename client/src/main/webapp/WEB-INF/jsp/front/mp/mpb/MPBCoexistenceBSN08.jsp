@@ -118,14 +118,16 @@
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
-                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
-                                                        </div>
-                                                        <div class="file-btn-area">
-                                                            <input type="file" name="atchFile" id="searchFile" class="searchFile">
-                                                            <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE01">
-                                                            <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
-                                                        </div>
+                                                        <c:if test="${rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
+                                                            <div class="file-btn-area">
+                                                                <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE01">
+                                                                <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
+                                                            </div>
+                                                        </c:if>
                                                         <!-- 2024-01-03 추가 -->
                                                         <div class="file-prev-area">
                                                             <a href="/file/download?fileSeq=${rtnData.applyList[0].fileInfoList[0].fileSeq}&fileOrd=0" download="" title="파일 다운로드">${rtnData.applyList[0].fileInfoList[0].fileNm}</a>
@@ -136,14 +138,16 @@
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">대상장비리스트<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
-                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
-                                                        </div>
-                                                        <div class="file-btn-area">
-                                                            <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
-                                                            <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE11">
-                                                            <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
-                                                        </div>
+                                                        <c:if test="${rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
+                                                            <div class="file-btn-area">
+                                                                <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                                <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE11">
+                                                                <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
+                                                            </div>
+                                                        </c:if>
                                                         <!-- 2024-01-03 추가 -->
                                                         <div class="file-prev-area">
                                                             <a href="/file/download?fileSeq=${rtnData.applyList[0].fileInfoList[1].fileSeq}&fileOrd=0" download="" title="파일 다운로드">${rtnData.applyList[0].fileInfoList[1].fileNm}</a>
@@ -201,7 +205,7 @@
                                                     <p class="data-title f-body1">검교정비용<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="comma" name="equiment.wbgaMsEuipmentDTO.clbtnExpnsPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].nvstmPmt}">
+                                                            <input type="text" class="comma" name="equiment.wbhaMsEuipmentDTO.clbtnExpnsPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].clbtnExpnsPmt}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -264,14 +268,16 @@
                                                     <div class="data-line">
                                                         <p class="data-title f-body1">영수증<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                            </div>
-                                                            <div class="file-btn-area">
-                                                                <input type="file" name="atchFile" id="searchFile2" class="searchFile">
-                                                                <input type="hidden" name="equiment..fileCdList" value="ATTACH_FILE_TYPE14">
-                                                                <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
-                                                            </div>
+                                                            <c:if test="${rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_001' || rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_003'}">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                </div>
+                                                                <div class="file-btn-area">
+                                                                    <input type="file" name="atchFile" id="searchFile2" class="searchFile">
+                                                                    <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE14">
+                                                                    <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
+                                                                </div>
+                                                            </c:if>
                                                             <!-- 2024-01-03 추가 -->
                                                             <div class="file-prev-area">
                                                                 <a href="/file/download?fileSeq=${rtnData.applyList[2].fileInfoList[0].fileSeq}&fileOrd=0" download="" title="파일 다운로드">${rtnData.applyList[2].fileInfoList[0].fileNm}</a>

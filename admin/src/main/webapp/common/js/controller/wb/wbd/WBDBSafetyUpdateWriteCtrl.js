@@ -263,7 +263,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnCmtSearch: {
                 event: {
                     click: function () {
-                        cmmCtrl.getCmtSrchPop(function (data) {
+                        $('.mpcLecturerSrchLayer .modal-title #title').html("▣ 강사 및 위탁위원 검색");
+                        cmmCtrl.getLecturerLayerPop(function (data) {
                             var memName = data.name;
 
                             $('#picName').val(memName);
