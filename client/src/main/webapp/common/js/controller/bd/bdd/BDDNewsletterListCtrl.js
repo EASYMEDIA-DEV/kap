@@ -12,6 +12,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var chilCnt = $("#infoCard").children("a").length; // 게시물 수
     var pageCnt = 1; // 페이지 카운트
     var page = (chilCnt / 9); // 더보기 페이지
+
+    var agreeYn = 'N';
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
@@ -46,7 +48,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             consentChk : {
                 event : {
                     click : function() {
-                        openPopup('newsletterAgreePopup', this)
+                        var chkYn = $("input:checkbox[name='consentChk']").prop('checked');
+                        if(agreeYn == 'Y') {
+                            $("input:checkbox[name='consentChk']").prop("checked", true);
+                        } else {
+                            $("input:checkbox[name='consentChk']").prop("checked", false);
+                        }
+                        openPopup('newsletterAgreePopup', this);
                     }
                 }
             },
@@ -54,7 +62,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $("input:checkbox[name='consentChk']").prop("checked", false);
-                        $("#subscribe").removeClass("subscribeBtn");
+                        agreeYn = 'N';
                     }
                 }
             },
@@ -62,7 +70,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $("input:checkbox[name='consentChk']").prop("checked", true);
-                        $("#subscribe").addClass("subscribeBtn");
+                        agreeYn = 'Y';
                     }
                 }
             },
@@ -104,7 +112,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         }else{
                             var emailRegex, patten, emailChk;
-                            emailRegex = "^[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.[a-zA-Z]+$"
+                            emailRegex = "^[_a-zA-Z0-9-]+@[a-zA-Z0-9-]+\\.[a-zA-Z]+$"
                             patten = eval("/" + emailRegex + "/g");
                             emailChk = $("input[name=email]").val();
                             if(!patten.test(emailChk)) {

@@ -30,12 +30,12 @@
                 <td class="text-center">${kl:emptyHypen(list.slsPmt)}</td>
                 <td class="text-center">${kl:emptyHypen(list.mpleCnt)}</td>
                 <td class="text-center">${kl:emptyHypen(list.telNo)}</td>
-                <td class="text-center">${list.regName}(${list.regId})</td>
+                <td class="text-center">${ empty list.regUserName ? list.regName : list.regUserName }(${ list.regId })</td>
                 <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ not empty list.modId }">
-                            ${list.modName}(${list.modId})
+                            ${ empty list.modUserName ? list.modName : list.modUserName }(${ list.modId })
                         </c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>

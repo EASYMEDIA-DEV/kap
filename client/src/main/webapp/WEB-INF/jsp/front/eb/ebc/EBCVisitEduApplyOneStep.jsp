@@ -216,12 +216,25 @@
                                                         <c:when test="${not empty rtnInfo.mjrPrdct1}">
                                                             ① ${rtnInfo.mjrPrdct1}
                                                         </c:when>
+                                                        <c:otherwise>
+                                                            ① -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
                                                         <c:when test="${not empty rtnInfo.mjrPrdct2}">
                                                             ② ${rtnInfo.mjrPrdct2}
                                                         </c:when>
+                                                        <c:otherwise>
+                                                            ② -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                    <c:choose>
                                                         <c:when test="${not empty rtnInfo.mjrPrdct3}">
                                                             ③ ${rtnInfo.mjrPrdct3}
                                                         </c:when>
+                                                        <c:otherwise>
+                                                            ③ -
+                                                        </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>

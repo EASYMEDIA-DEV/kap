@@ -55,11 +55,11 @@
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="text" id="email" name="email" placeholder="이메일 주소">
+                                        <input type="text" id="email" name="email" placeholder="이메일 주소" oninput="this.value = this.value.replace(/[^a-zA-Z@.]/g, '');">
                                     </div>
                                     <div class="form-checkbox newsletter-agree">
                                         <input type="checkbox" id="consentChk" name="consentChk">
-                                        <label for="consentChk">소식 및 관련 정보 수신 동의</label>
+                                        <label for="consentChk" id="consentChkLabel">소식 및 관련 정보 수신 동의</label>
                                     </div>
                                     <div class="btn-wrap">
                                         <button class="btn-solid small black-bg subscribeBtn" id="subscribe" type="button"><span>구독하기</span></button>

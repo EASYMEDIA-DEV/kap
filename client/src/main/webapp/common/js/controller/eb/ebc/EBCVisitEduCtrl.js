@@ -159,8 +159,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             cancelBtn : {
                 event : {
                     click : function () {
-                       alert("목록으로 이동 시 입력한 값이 초기화 처리됩니다.\n이동하시겠습니까?");
-                       location.href = "/education/visit/index";
+                        if (confirm("교육 취소 시 입력된 정보는 저장되지 않습니다.\n교육 신청을 취소하시겠습니까?")) {
+                            location.href = "/education/visit/index";
+                        }
                     }
                 }
             }
@@ -231,11 +232,12 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             return false;
                         }
 
-                        // controller에 json으로 넘길 form값
-                        cmmCtrl.fileFrm(function(data){
-                            //콜백함수. 페이지 이동
-                           location.href = "./complete";
-                        }, "./insert", $formObj, "json");
+                        if(confirm("위 정보로 교육을 신청하시겠습니까?")) {
+                            cmmCtrl.fileFrm(function(data){
+                                //콜백함수. 페이지 이동
+                                location.href = "./complete";
+                            }, "./insert", $formObj, "json");
+                        }
                     }
                 }
             },

@@ -152,23 +152,29 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     @SaxFilter
     private String admMemo;
 
-    // 등록ID
+    @Schema(title = "등록ID")
     private String regId;
 
-    // 등록IP
+    @Schema(title = "등록IP")
     private String regIP;
 
-    // 등록일시
+    @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
     private String regDtm;
 
-    // 수정ID
+    @Schema(title = "수정ID")
     private String modId;
 
-    // 수정IP
+    @Schema(title = "수정IP")
     private String modIP;
 
-    // 수정일시
+    @Schema(title = "수정일시", example = "yyyy-MM-dd hh:mm:ss")
     private String modDtm;
+
+    @Schema(title = "등록자 이름(사용자이름)")
+    private String regUserName;
+
+    @Schema(title = "수정자 이름(사용자이름)")
+    private String modUserName;
 
     // 조회
     private List<MPEPartsCompanyDTO> list;

@@ -40,11 +40,13 @@
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
             , TCHLG_5_STAR_YEAR
             , REG_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_USER_NAME -- 사용자이름
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME -- 관리자이름
             , REG_IP
             , REG_DTM
             , MOD_ID
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , (SELECT NAME FROM CO_MEM_MST WHERE ID = A.MOD_ID) MOD_USER_NAME -- 사용자이름
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME -- 관리자이름
             , MOD_IP
             , MOD_DTM
         <if test="srchDate != null and srchDate != ''.toString() ">
