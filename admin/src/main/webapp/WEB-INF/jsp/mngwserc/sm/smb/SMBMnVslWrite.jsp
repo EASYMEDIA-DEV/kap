@@ -111,7 +111,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">Main Copy</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control input-sm notRequired" id="mnCopy" name="mnCopy" maxlength="500" title="Main Copy" placeholder="메인 카피를 입력하세요." >${rtnDto.mnCopy}</textarea>
+                        <textarea class="form-control input-sm notRequired" id="mnCopy" name="mnCopy" maxlength="500" title="Main Copy" placeholder="메인 카피를 입력해주세요." >${rtnDto.mnCopy}</textarea>
                     </div>
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
@@ -124,7 +124,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">Sub Copy</label>
                     <div class="col-sm-5">
-                        <textarea class="form-control input-sm notRequired" id="subCopy" name="subCopy" maxlength="500" title="Sub Copy" placeholder="서브 카피를 입력하세요.">${rtnDto.subCopy}</textarea>
+                        <textarea class="form-control input-sm notRequired" id="subCopy" name="subCopy" maxlength="500" title="Sub Copy" placeholder="서브 카피를 입력해주세요.">${rtnDto.subCopy}</textarea>
                     </div>
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
