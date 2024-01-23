@@ -83,7 +83,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }
                             else
                             {
-                                alert(msgCtrl.getMsg("fail.target"));
+                                alert(msgCtrl.getMsg("fail.targetBoard"));
                             }
 
                             return;
