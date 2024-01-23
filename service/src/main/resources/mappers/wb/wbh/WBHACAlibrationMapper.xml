@@ -1391,6 +1391,7 @@
               FROM cx_episd_mst
               WHERE BSN_CD = 'BSN08' AND YEAR = #{year}) cem
         JOIN cx_appctn_mst cam ON cem.EPISD_SEQ = cam.episd_seq AND cam.mem_seq = #{memSeq}
+        JOIN CX_APPCTN_RSUME_DTL B ON cam.appctn_seq = B.appctn_seq AND B.rsume_ord = 1 AND APPCTN_STTS_CD != 'PRO_TYPE07001_01_004'
     </select>
 
     <!--
@@ -1419,36 +1420,41 @@
        2023.11.24  김태훈     최초 생성
    -->
     <select id="getApplyCompanyCnt" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
-        SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(APPCTN_FLD_CD)
-        FROM
-            ( SELECT
-                APPCTN_FLD_CD
-            FROM   CP_CNSTG_APPCTN_MST A, CP_CNSTG_RSUME_MST B
-            WHERE  A.cnstg_seq = B.cnstg_seq
-            AND  A.cnstg_cd = 'CONSULT_GB01'
-            AND  A.rsume_stts_cd IN ('MNGTECH_STATUS_08','MNGTECH_STATUS_09','MNGTECH_STATUS_13')
-            AND (YEAR(B.guide_bgn_dt) = Year(Now()) OR (Year(Now()) -1))
-            AND   B.guide_type_cd = 'GUIDE_TYPE_CD02'
-            AND A.appctn_bsnm_no = #{bsnmNo}
-            UNION ALL
-            SELECT
-                APPCTN_FLD_CD
-            FROM CP_CNSTG_APPCTN_MST A, CP_CNSTG_RSUME_MST B
-            WHERE A.cnstg_seq = b.cnstg_seq
-            AND ( A.cnstg_cd = 'CONSULT_GB02'
-                    AND A.rsume_stts_cd IN ('MNGCNSLT_STATUS09','MNGCNSLT_STATUS12')
-                    AND (YEAR(b.guide_kickf_dt) = Year(Now()) OR (Year(Now()) -1))
-                    AND  B.guide_type_cd = 'GUIDE_TYPE_CD02'
-                )
-            AND A.appctn_bsnm_no = #{bsnmNo} ) TMP
-            <where>
-                <if test="validDtlDTOList != null and validDtlDTOList.size() > 0">
-                    AND APPCTN_FLD_CD IN
-                    <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" open="(" close=")" separator=",">
-                        #{validDtlDTO.optnCd}
-                    </foreach>
-                </if>
-            </where>
+        SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(*)
+        FROM (
+                SELECT A.CNSTG_SEQ
+                FROM   cp_cnstg_appctn_mst A,cp_cnstg_rsume_mst B
+                WHERE  a.cnstg_seq = b.cnstg_seq AND    a.cnstg_cd = 'CONSULT_GB01'
+                AND    a.rsume_stts_cd IN ('MNGTECH_STATUS_08', 'MNGTECH_STATUS_09', 'MNGTECH_STATUS_13')
+                AND    (Year(b.guide_bgn_dt) = Year(Now()) OR (Year(Now()) -1))
+                AND    b.guide_type_cd = 'GUIDE_TYPE_CD02'
+                AND    (( SELECT cd
+                          FROM   cp_cnstg_cbsn_dtl
+                          WHERE  cnstg_seq = a.cnstg_seq) IN (
+                         <choose>
+                             <when test="validDtlDTOList != null and validDtlDTOList.size() > 0">
+                                 <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" separator=",">
+                                     #{validDtlDTO.optnCd}
+                                 </foreach>
+                             </when>
+                              <otherwise>
+                                  ' '
+                              </otherwise>
+                         </choose>))
+                AND appctn_bsnm_no = #{bsnmNo}
+                UNION ALL
+                SELECT A.CNSTG_SEQ
+                FROM   cp_cnstg_appctn_mst a, cp_cnstg_rsume_mst b
+                WHERE  a.cnstg_seq = b.cnstg_seq AND (a.cnstg_cd = 'CONSULT_GB02'
+                AND    a.rsume_stts_cd IN ('MNGCNSLT_STATUS09','MNGCNSLT_STATUS12')
+                AND    (year(b.guide_kickf_dt) = year(now()) OR (year(now()) -1)))
+                AND    a.appctn_fld_cd IN (
+                        <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" separator=",">
+                            #{validDtlDTO.optnCd}
+                        </foreach>
+                    )
+                AND    appctn_bsnm_no = #{bsnmNo}
+        ) TMP
     </select>
 </mapper>
 

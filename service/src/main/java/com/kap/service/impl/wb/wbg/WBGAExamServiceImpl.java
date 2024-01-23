@@ -1047,16 +1047,20 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                         } else {
                             //컨설팅지도 및 기술지도 체크
                             List<WBGAValidDtlDTO> list = wBGAExamMapper.selectExamValidDtlList(wbgaExamSearchDTO);
-                            wbgaExamSearchDTO.setValidDtlDTOList(list);
 
-                            int rtnCnt = wBGAExamMapper.getApplyCompanyCnt(wbgaExamSearchDTO);
+                            if (list.size() > 0) {
+                                wbgaExamSearchDTO.setValidDtlDTOList(list);
+                                int rtnCnt = wBGAExamMapper.getApplyCompanyCnt(wbgaExamSearchDTO);
 
-                            if (rtnCnt > 0) {
-                                //신청가능 코드 450
-                                rtnCode = 200;
-                                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
+                                if (rtnCnt > 0) {
+                                    //신청가능 코드 450
+                                    rtnCode = 200;
+                                    RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
+                                } else {
+                                    //컨설팅 내역없음 코드 200
+                                    rtnCode = 450;
+                                }
                             } else {
-                                //컨설팅 내역없음 코드 200
                                 rtnCode = 450;
                             }
                         }

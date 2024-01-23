@@ -1034,18 +1034,24 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                         } else {
                             //컨설팅지도 및 기술지도 체크
                             List<WBHAValidDtlDTO> list = wbhaCalibrationMapper.selectExamValidDtlList(wbhaCalibrationSearchDTO);
-                            wbhaCalibrationSearchDTO.setValidDtlDTOList(list);
 
-                            int rtnCnt = wbhaCalibrationMapper.getApplyCompanyCnt(wbhaCalibrationSearchDTO);
+                            if (list.size() > 0) {
+                                wbhaCalibrationSearchDTO.setValidDtlDTOList(list);
 
-                            if (rtnCnt > 0) {
-                                //신청가능 코드 200
-                                rtnCode = 200;
-                                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
+                                int rtnCnt = wbhaCalibrationMapper.getApplyCompanyCnt(wbhaCalibrationSearchDTO);
+
+                                if (rtnCnt > 0) {
+                                    //신청가능 코드 200
+                                    rtnCode = 200;
+                                    RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", "Y", RequestAttributes.SCOPE_SESSION);
+                                } else {
+                                    //컨설팅 내역없음 코드 450
+                                    rtnCode = 450;
+                                }
                             } else {
-                                //컨설팅 내역없음 코드 450
                                 rtnCode = 450;
                             }
+
                         }
                     }
                 }
