@@ -72,14 +72,14 @@
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
-                                                <c:choose>
-                                                    <c:when test="${rtnUser.memTelNo ne null}">
-                                                        <td>${rtnUser.memTelNo}</td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td> - </td>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnUser.memTelNo}">
+                                                            ${rtnUser.memTelNo}
+                                                        </c:when>
+                                                        <c:otherwise>-</c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>성별</th>

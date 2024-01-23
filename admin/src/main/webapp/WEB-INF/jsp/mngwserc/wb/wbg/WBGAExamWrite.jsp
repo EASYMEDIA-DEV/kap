@@ -121,7 +121,7 @@
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="${userInfo.telNo}" title="전화번호" maxlength="50"/>
+                            <input type="text" class="form-control telNumber notRequired" id="telNo" name="telNo" value="${userInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                         </div>
                     </div>
                 </fieldset>
@@ -219,10 +219,10 @@
 
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                        <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <input type="text" class="form-control input-sm" id="compTel" name="compTel" value="${userInfo.compTel}" title="전화번호" maxlength="50" placeholder="전화번호 입력"/>
+                                <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="${userInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                             </div>
                         </div>
 

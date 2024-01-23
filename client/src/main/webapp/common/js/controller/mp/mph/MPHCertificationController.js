@@ -282,6 +282,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         if($("#bsnmNosOld").val()!= "") {
+
                             $(".loading-area").stop().fadeIn(200);
 
                             $(".btnChks").text("부품사 정보 변경");
@@ -445,6 +446,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             pstnNmOld : {
                 event : {
                     input : function() {
+                        $("#formpstnNm").val($(this).val());
                         $(".pstnNmOld").val($(this).val());
                     }
                 }

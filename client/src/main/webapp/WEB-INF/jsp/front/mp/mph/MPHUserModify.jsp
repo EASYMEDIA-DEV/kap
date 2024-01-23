@@ -40,24 +40,24 @@
             <input type="hidden" id="cmpnBscAddr" name="mpePartsCompanyDTO.bscAddr"  class="notRequired cmpnBscAddr"/>
             <input type="hidden" id="cmpnDtlAddr" name="mpePartsCompanyDTO.dtlAddr"  class="notRequired cmpnDtlAddr"/>
             <input type="hidden" id="bsnmChk" name="bsnmChk"  class="notRequired bsnmChk"/>
-            <input type="hidden" id="ctgryCd" name="mpePartsCompanyDTO.ctgryCd"  class="notRequired ctgryCd"/>
-            <input type="hidden" id="sizeCd" name="mpePartsCompanyDTO.sizeCd"  class="notRequired sizeCd"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.stbsmDt" class="notRequired stbsmDt"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.slsPmt"  class="notRequired slsPmt"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.slsYear"  class="notRequired slsYear"/>
-            <input type="hidden" name="mpePartsCompanyDTO.mpleCnt"  class="notRequired mpleCnt"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct1"  class="notRequired mjrPrdct1"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct2"  class="notRequired mjrPrdct2"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.mjrPrdct3"  class="notRequired mjrPrdct3"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.qlty5StarCd"  class="notRequired qlty5StarCd"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.qlty5StarYear" class="notRequired qlty5StarYear"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.pay5StarCd"  class="notRequired pay5StarCd"/>
-            <input type="hidden" name="mpePartsCompanyDTO.pay5StarYear" class="notRequired pay5StarYear"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.tchlg5StarCd"  class="notRequired tchlg5StarCd"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.tchlg5StarYear"  class="notRequired tchlg5StarYear"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.sqInfoList1" class="notRequired sqInfoList1"/>
-            <input type="hidden" name="mpePartsCompanyDTO.sqInfoList2"  class="notRequired sqInfoList2"/>
-            <input type="hidden"  name="mpePartsCompanyDTO.sqInfoList3"  class="notRequired sqInfoList3"/>
+            <input type="hidden" id="ctgryCdIns" name="mpePartsCompanyDTO.ctgryCd"  class="notRequired ctgryCd"/>
+            <input type="hidden" id="sizeCdIns" name="mpePartsCompanyDTO.sizeCd"  class="notRequired sizeCd"/>
+            <input type="hidden" id="popStbsmDt" name="mpePartsCompanyDTO.stbsmDt" class="notRequired stbsmDt"/>
+            <input type="hidden" id="popSlsPmt" name="mpePartsCompanyDTO.slsPmt"  class="notRequired slsPmt"/>
+            <input type="hidden" id="popslsYear" name="mpePartsCompanyDTO.slsYear"  class="notRequired slsYear"/>
+            <input type="hidden" id="popMpleCnt" name="mpePartsCompanyDTO.mpleCnt"  class="notRequired mpleCnt"/>
+            <input type="hidden" id="popMjrPrdct1" name="mpePartsCompanyDTO.mjrPrdct1"  class="notRequired mjrPrdct1"/>
+            <input type="hidden" id="popMjrPrdct2" name="mpePartsCompanyDTO.mjrPrdct2"  class="notRequired mjrPrdct2"/>
+            <input type="hidden" id="popMjrPrdct3" name="mpePartsCompanyDTO.mjrPrdct3"  class="notRequired mjrPrdct3"/>
+            <input type="hidden" id="popQlty5StarCd" name="mpePartsCompanyDTO.qlty5StarCd"  class="notRequired qlty5StarCd"/>
+            <input type="hidden" id="popQlty5StarYear" name="mpePartsCompanyDTO.qlty5StarYear" class="notRequired qlty5StarYear"/>
+            <input type="hidden" id="popPay5StarCd" name="mpePartsCompanyDTO.pay5StarCd"  class="notRequired pay5StarCd"/>
+            <input type="hidden" id="popPay5StarYear" name="mpePartsCompanyDTO.pay5StarYear" class="notRequired pay5StarYear"/>
+            <input type="hidden" id="popTchlg5StarCd" name="mpePartsCompanyDTO.tchlg5StarCd"  class="notRequired tchlg5StarCd"/>
+            <input type="hidden" id="popTchlg5StarYear" name="mpePartsCompanyDTO.tchlg5StarYear"  class="notRequired tchlg5StarYear"/>
+            <input type="hidden" id="popSqInfoList1" name="mpePartsCompanyDTO.sqInfoList1" class="notRequired sqInfoList1"/>
+            <input type="hidden" id="popSqInfoList2" name="mpePartsCompanyDTO.sqInfoList2"  class="notRequired sqInfoList2"/>
+            <input type="hidden" id="popSqInfoList3"  name="mpePartsCompanyDTO.sqInfoList3"  class="notRequired sqInfoList3"/>
 
 
 

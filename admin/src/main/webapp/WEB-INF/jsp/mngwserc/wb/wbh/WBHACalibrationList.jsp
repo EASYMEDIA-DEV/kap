@@ -165,7 +165,7 @@
 
                                 <fieldset>
                                     <div class="form-group text-sm">
-                                        <label class="col-sm-3 control-label">기술지도 업종<span class="star"> *</span></label>
+                                        <label class="col-sm-3 control-label">기술지도 업종</label>
                                         <div class="col-sm-8">
                                             <label class="control-label">금속분야</label><br>
                                             <c:forEach var="cdList" items="${classTypeList.TEC_GUIDE_INDUS}" varStatus="status">
@@ -235,7 +235,7 @@
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
-                                        <label class="col-sm-3 control-label">경영컨설팅 분야<span class="star"> *</span></label>
+                                        <label class="col-sm-3 control-label">경영컨설팅 분야</label>
                                         <div class="col-sm-8">
                                             <c:forEach var="cdList" items="${classList.MNGCNSLT_APP_AREA}" varStatus="status">
                                                 <c:if test="${fn:contains(cdList.cd, 'MNGCNSLT_APP_AREA')}">

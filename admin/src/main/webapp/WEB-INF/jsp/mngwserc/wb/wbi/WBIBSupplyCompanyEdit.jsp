@@ -221,7 +221,6 @@
                             <div class="col-sm-5">
                                 <div class="col-sm-6" style="margin-left: -15px">
                                     <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="${rtnInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
-
                                 </div>
                             </div>
 
