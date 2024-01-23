@@ -1116,17 +1116,19 @@
                     <when test="srchDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND INFO.reg_dtm <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-                        </if>
-                        <if test="endDt != null and endDt != ''.toString() ">
-                            and INFO.reg_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                     <when test="srchDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND INFO.mod_dtm <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
-                        <if test="endDt != null and endDt != ''.toString() ">
-                            and INFO.mod_dtm <![CDATA[<]]> date_add(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                    </when>
+                    <when test="srchDate == 3">
+                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
+                            AND INFO.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND INFO.MOD_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                 </choose>
