@@ -427,11 +427,11 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         wBFBRegisterCompanyMapper.updCoMemMst(wBFBRegisterDTO);
 
         /* 신청자 정보 변경시 */
-        if(!wBFBRegisterDTO.getBeforeMemSeq().equals(wBFBRegisterDTO.getMemSeq())) {
+        if(!wBFBRegisterDTO.getBfreMemSeq().equals(wBFBRegisterDTO.getMemSeq())) {
             WBAppctnTrnsfDtlDTO trnsfDtlDTO = new WBAppctnTrnsfDtlDTO();
             trnsfDtlDTO.setTrnsfSeq(cxAppctnTrnsfDtlIdgen.getNextIntegerId());
             trnsfDtlDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
-            trnsfDtlDTO.setBfreMemSeq(wBFBRegisterDTO.getBeforeMemSeq());
+            trnsfDtlDTO.setBfreMemSeq(wBFBRegisterDTO.getBfreMemSeq());
             trnsfDtlDTO.setAftrMemSeq(wBFBRegisterDTO.getMemSeq());
             trnsfDtlDTO.setRegId(wBFBRegisterDTO.getRegId());
             trnsfDtlDTO.setRegIp(wBFBRegisterDTO.getRegIp());
@@ -867,7 +867,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
                 //평점 - 최초점검 단계의 평점
                 cell = row.createCell(15);
-                cell.setCellValue(rsumeTaskDtlDTO.getExamScore());
+                cell.setCellValue(rsumeTaskDtlDTO.getExamScore() != null ? rsumeTaskDtlDTO.getExamScore().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //결과 - 최초점검 단계의 관리자 상태값

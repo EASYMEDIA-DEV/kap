@@ -72,7 +72,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
         /* 사업자번호 변경 */
         let dataBsnmNo = rtnData['bsnmNo'];
-        rtnData['bsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
+        rtnData['workBsnmNo'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
         rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
 
         /* Input Hidden Tag Value  */
@@ -323,7 +323,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
+                        /* 공통 모달 - 상생 사용 처리 */
+                        $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                        let appctnSeqVal = $formObj.find('input[type=hidden][name=appctnSeq]').val() ;
+                        $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {

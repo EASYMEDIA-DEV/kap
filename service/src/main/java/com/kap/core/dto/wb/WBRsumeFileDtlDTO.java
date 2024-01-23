@@ -42,6 +42,8 @@ public class WBRsumeFileDtlDTO extends BaseDTO {
     private Integer fileOrd;
     @Schema(title = "수정일시", example = "")
     private String orgnFileNm;
+    @Schema(title = "다운로드시 파일순번", example = "")
+    private Integer fileDownSeq;
 
     /* hidden 파일 유형 Type 코드 값 */
     private String type;

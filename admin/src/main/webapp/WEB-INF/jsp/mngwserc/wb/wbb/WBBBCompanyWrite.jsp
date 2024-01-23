@@ -14,10 +14,11 @@
                 <input type="hidden" id="listRowSize" name="listRowSize" value="${rtnInfo.listRowSize}" />
             </c:if>
             <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${userInfo.memSeq}" />
-            <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}" />
+            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${userInfo.bsnmNo}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
             <input type="hidden" class="notRequired" name="bfreMemSeq" value="${userInfo.memSeq}"/>
             <input type="hidden" class="notRequired" name="aftrMemSeq"/>
+            <input type="hidden" id="appctnSeq" name="appctnSeq" value="${rtnInfo.appctnSeq}" />
 
             <c:if test="${empty rtnInfo.appctnSeq}">
                 <h6 class="mt0"><strong>관리자 등록</strong></h6><hr>
@@ -220,7 +221,7 @@
 
                         <label class="col-sm-1 control-label">사업자등록<br/>번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <p class="form-control-static" id="bsnmNo" title="재직 회사사업자번호">${userInfo.bsnmNo}</p>
+                            <p class="form-control-static" id="changeBsnmNo" title="재직 회사사업자번호">${userInfo.bsnmNo}</p>
                         </div>
                     </div>
                 </fieldset>

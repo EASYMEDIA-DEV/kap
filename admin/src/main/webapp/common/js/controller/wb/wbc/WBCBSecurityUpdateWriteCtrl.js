@@ -224,16 +224,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
+                        /* 공통 모달 - 상생 사용 처리 */
+                        $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                        let appctnSeqVal = $formObj.find('input[type=hidden][id=appctnSeq]').val() ;
+                        $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                            cmmCtrl.frmAjax(function (respObj) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                cmmCtrl.frmAjax(function(respObj) {
-                                    console.log(respObj);
-                                    /* return data input */
-                                    setInputValue(respObj);
-                                }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
-                            }, "/mngwserc/wb/partUserChk", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                                fnpstnNmShow($('#pstnCd').val());
+                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }

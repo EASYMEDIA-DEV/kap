@@ -223,13 +223,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnPartUserModal: {
                 event: {
                     click: function () {
-                        $("#srchDivide").val("Y");
+
+                        if($.trim($formObj.find("input[name='detailsKey']").val()) != "") {
+                            /* 공통 모달 - 상생 사용 처리 */
+                            $('.mpbMemberPartsSocietySrchLayer #srchPage').val('WB');
+                            let appctnSeqVal = $formObj.find('input[type=hidden][id=appctnSeq]').val();
+                            $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
+                        }
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                consultingSearch(1,respObj.WBPartCompanyDTO.workBsnmNo);
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
                         });
                     }

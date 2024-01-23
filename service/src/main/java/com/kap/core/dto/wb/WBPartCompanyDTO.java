@@ -34,6 +34,15 @@ public class WBPartCompanyDTO extends BaseDTO {
     @Schema(title = "회원순번")
     private Integer memSeq;
 
+    @Schema(title = "이전회원순번")
+    private Integer bfreMemSeq;
+
+    @Schema(title = "선택한 회원 순번")
+    private Integer selMemSeq;
+    
+    @Schema(title = "이전회원ID")
+    private String bfreId;
+
     @Schema(title = "회원코드")
     private String memCd;
 

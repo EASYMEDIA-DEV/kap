@@ -88,11 +88,6 @@ public class WBFBRegisterDTO extends BaseDTO {
     @Schema(title = "회차", example = "1")
     private String episd;
 
-    @Schema(title = "신청자 이름", example = "")
-    private String beforeMemSeq;
-    @Schema(title = "신청자 이름", example = "")
-    private String beforeId;
-
     /* 신청자 정보 */
     @Schema(title = "신청자 이름", example = "")
     private String memSeq;

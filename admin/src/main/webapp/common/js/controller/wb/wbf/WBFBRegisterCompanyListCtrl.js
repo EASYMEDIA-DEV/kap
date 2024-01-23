@@ -69,7 +69,6 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click: function () {
                         //파라미터를 물고 가야함.
-                        location.href = "./excel-down?" + $formObj.serialize();
                         $.fileDownload("./excel-down?" + $formObj.serialize(), {
                             prepareCallback : function() {
                                 jQuery(".loadingbar").stop().fadeOut(200);

@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.ArrayList;
 
 /**
@@ -75,11 +75,13 @@ public class WBPartCompanyController {
     /**
      * 부품사회원 / 담당위원 Detail Ajax
      */
-    @PostMapping(value = "/partUserChk")
-    public String selectPartUserChkAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
+    @RequestMapping(value = "/partUserChk")
+    @ResponseBody
+    public WBPartCompanyDTO selectPartUserChkAjax(@Valid @RequestBody WBPartCompanyDTO wBPartCompanyDTO, ModelMap modelMap ) throws Exception {
+        WBPartCompanyDTO partCompanyDTO = new WBPartCompanyDTO();
         try
         {
-            modelMap.addAttribute("rtnData", wBPartCompanyService.selectPartUserChkAjax(wBPartCompanyDTO));
+            partCompanyDTO.setRespCnt(wBPartCompanyService.selectPartUserChkAjax(wBPartCompanyDTO));
         }
         catch (Exception e)
         {
@@ -89,7 +91,7 @@ public class WBPartCompanyController {
             }
             throw new Exception(e.getMessage());
         }
-        return "jsonView";
+        return partCompanyDTO;
     }
 
 }

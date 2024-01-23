@@ -830,7 +830,8 @@
             ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
             ,ntdcn_cmpn_brdn_pmt = #{ntdcnCmpnBrdnPmt}
             ,ttl_pmt = #{ttlPmt}
-            ,ttl_pmt = #{ttlPmt}
+            ,agrmt_dt = #{agrmtDt}
+            ,agrmt_term_dt = #{agrmtTermDt}
         </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}

@@ -204,7 +204,7 @@
     <select id="selectPartUserChkAjax" parameterType="WBPartCompanyDTO" resultType="java.lang.Integer">
         SELECT COUNT(*) FROM cx_appctn_trnsf_dtl /*WBPartCompanyMapper.selPartCompanyUserListCnt*/
         WHERE appctn_seq = #{appctnSeq}
-        AND (bfre_mem_seq = #{selPartUser} OR aftr_mem_seq = #{selPartUser})
+        AND (bfre_mem_seq = #{selMemSeq} OR aftr_mem_seq = #{selMemSeq})
     </select>
 
 

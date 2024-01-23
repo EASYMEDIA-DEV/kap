@@ -103,9 +103,66 @@ define(["ezCtrl"], function(ezCtrl) {
                         var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
                         if( choiceCnt > 1){
                             alert(msgCtrl.getMsg("fail.cb.cba.notSrchMember1"));
-                        } else if(choiceCnt == 0){
+                        } else if(choiceCnt == 0) {
                             alert(msgCtrl.getMsg("fail.cb.cba.notSrchMember"));
-                        }else{
+                        } else if($('#srchPage').val() == 'WB') {
+
+                            var wBPartCompanyDTO= {};
+                            wBPartCompanyDTO.selMemSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
+
+                            var resCnt = 0;
+                            console.log(resCnt);
+
+                            if($("#srchAppctnSeq").val() != ''){
+                                wBPartCompanyDTO.appctnSeq = $("#srchAppctnSeq").val();
+                                cmmCtrl.jsonAjax(function(respObj){
+                                    let response = JSON.parse(respObj);
+                                    resCnt = response.respCnt;
+                                }, "/mngwserc/wb/partUserChk", wBPartCompanyDTO, "text");
+                            }
+
+                            console.log(resCnt);
+
+                            if(resCnt > 0){
+                                alert("이관 이력이 있는 회원은 선택이 불가합니다.");
+                                return false;
+                            } else {
+                                var clickObj = {};
+                                var memSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
+                                var memId = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text()); // 신청자 아이디
+                                var memName = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(0)").text(); // 신청자 이름
+
+                                var gndr = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").data("gndr")); // 신청자 성별
+
+                                var memEmail = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(8)").text(); // 이메일
+                                var cmpnNm = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(1)").text(); // 회사 이름
+                                var hpNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(7)").text(); // 핸드폰 번호
+                                var bsnmNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").nextAll("td:eq(2)").text(); // 사업자 번호
+                                var telNo = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".telNo").val(); // 회원 일반 전화번호
+                                var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
+                                var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
+                                var deptCd= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptCd").val();
+                                var deptDtlNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptDtlNm").val();
+
+                                clickObj.bsnmNo = bsnmNo;
+                                clickObj.memSeq = memSeq;
+                                clickObj.memId = memId;
+                                clickObj.memName = memName;
+                                clickObj.gndr = gndr;
+
+                                clickObj.memEmail = memEmail;
+                                clickObj.cmpnNm = cmpnNm;
+                                clickObj.deptDtlNm = deptDtlNm;
+                                clickObj.pstnCdNm = pstnCdNm;
+
+                                clickObj.hpNo = hpNo;
+                                clickObj.telNo = telNo;
+                                clickObj.deptCd = deptCd;
+                                clickObj.pstnCd = pstnCd;
+                                ctrl.obj.trigger("choice", [clickObj])
+                                ctrl.obj.find(".close").click();
+                            }
+                        } else {
                             var clickObj = {};
                             var memSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
                             var memId = $.trim(ctrl.obj.find("input[name=delValueList]:checked").parents("tr").find(".srchListView").text()); // 신청자 아이디
