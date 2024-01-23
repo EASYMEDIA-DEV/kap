@@ -50,6 +50,11 @@
 						</c:if>
 					</c:forEach>
 				</div>
+				<c:if test="${fn:contains(servletPath, '/education/apply/list')}">
+					<div class="lnb-link-area nonmember">
+						<a class="btn-text-icon black-arrow" href="/education/apply/non-member/auth"><span>비회원 신청내역 조회</span></a>
+					</div>
+				</c:if>
 			</div>
 		</c:if>
 	</c:if>
