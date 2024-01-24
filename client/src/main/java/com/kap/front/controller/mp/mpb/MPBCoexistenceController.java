@@ -1,5 +1,6 @@
 package com.kap.front.controller.mp.mpb;
 
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnMstDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
@@ -23,6 +24,7 @@ import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
+import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,11 +37,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <pre>
@@ -77,7 +83,7 @@ public class MPBCoexistenceController {
     public final WBDBSafetyService wBDBSafetyService;
     public final WBEBCarbonCompanyService wBEBCarbonCompanyService;
     public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
-
+    private final COFileUtil cOFileUtil;
 
     /**
      * 마이페이지 상생 사업 신청내역 목록으로 이동한다.
@@ -156,8 +162,21 @@ public class MPBCoexistenceController {
                 wbbApplyMstDTO = wbbbCompanyService.selectCompanyDtl(wbbaCompanySearchDTO);
                 modelMap.addAttribute("rtnInfo", wbbApplyMstDTO);
             } else {
-                if ("코드".equals(mpbBsnSearchDTO.getBsnCd())) {
-
+                if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
+                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
+                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
                 } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                     //스마트공장
                     /* 스마트 상태 코드 값 */
@@ -191,21 +210,6 @@ public class MPBCoexistenceController {
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                     modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
-                } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
-                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
-                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
-                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
-                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
-                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
                 }
             }
 
@@ -266,7 +270,7 @@ public class MPBCoexistenceController {
             int respCnt = 0;
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            
+
             //신청자 순번 세션체크 없으면 수정불가
             if (RequestContextHolder.getRequestAttributes().getAttribute("appctnSeq", RequestAttributes.SCOPE_SESSION) == null){
                 respCnt = 100;
@@ -292,13 +296,28 @@ public class MPBCoexistenceController {
                     wbbApplyDtlDTO.setRsumeOrd(mpbBsnSearchDTO.getRsumeOrd());
                     wbbApplyDtlDTO.setAppctnSttsCd(mpbBsnSearchDTO.getAppctnSttsCd());
                     wbbApplyDtlDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
+                    wbbApplyDtlDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                     respCnt = wbbbCompanyService.updateInfo(wbbApplyDtlDTO, multiRequest, request);
 
                 } else {
-                    if ("코드".equals(mpbBsnSearchDTO.getBsnCd())) {
-
+                    if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
+                        wBCBSecurityMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
+                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //안전설비구축
+                        WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = mpbBsnMstDTO.getWBDBSafetyMstInsertDTO();
+                        wBDBSafetyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        respCnt = wBDBSafetyService.carbonUserUpdate(wBDBSafetyMstInsertDTO, multiRequest, request);
+                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //탄소배출저감
+                        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = mpbBsnMstDTO.getWBEBCarbonCompanyMstInsertDTO();
+                        wBEBCarbonCompanyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
                     } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        mpbBsnMstDTO.getWBFBRegisterDTO().setFileSeqList(mpbBsnMstDTO.getFileSeqList());
                         respCnt = wBFBRegisterCompanyService.updInfoUser(mpbBsnMstDTO.getWBFBRegisterDTO(), multiRequest, request);
                     } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
                         WBGAApplyDtlDTO wbgaApplyDtlDTO = new WBGAApplyDtlDTO();
@@ -310,6 +329,7 @@ public class MPBCoexistenceController {
                         wbgaApplyDtlDTO.setEuipmentList(mpbBsnMstDTO.getExam().getEuipmentList());
                         wbgaApplyDtlDTO.setFileCdList(mpbBsnMstDTO.getExam().getFileCdList());
                         wbgaApplyDtlDTO.setWbgaMsEuipmentDTO(mpbBsnMstDTO.getExam().getWbgaMsEuipmentDTO());
+                        wbgaApplyDtlDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                         respCnt = wbgaExamService.updateInfo(wbgaApplyDtlDTO,multiRequest, request);
 
@@ -324,6 +344,7 @@ public class MPBCoexistenceController {
                         wbhaApplyDtlDTO.setEuipmentList(mpbBsnMstDTO.getEquiment().getEuipmentList());
                         wbhaApplyDtlDTO.setFileCdList(mpbBsnMstDTO.getEquiment().getFileCdList());
                         wbhaApplyDtlDTO.setWbhaMsEuipmentDTO(mpbBsnMstDTO.getEquiment().getWbhaMsEuipmentDTO());
+                        wbhaApplyDtlDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                         respCnt = wbhaCalibrationService.updateInfo(wbhaApplyDtlDTO, multiRequest, request);
                     } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
@@ -334,23 +355,9 @@ public class MPBCoexistenceController {
                         wBIBSupplyDTO.setRsumeOrd(mpbBsnSearchDTO.getRsumeOrd());
                         wBIBSupplyDTO.setAppctnSttsCd(mpbBsnSearchDTO.getAppctnSttsCd());
                         wBIBSupplyDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
+                        wBIBSupplyDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                         respCnt = wBIBSupplyCompanyService.updateInfo(wBIBSupplyDTO, multiRequest, request);
-                    } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
-                        //보안환경구축
-                        WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
-
-                        respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
-                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
-                        //안전설비구축
-                        WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = mpbBsnMstDTO.getWBDBSafetyMstInsertDTO();
-
-                        respCnt = wBDBSafetyService.carbonUserUpdate(wBDBSafetyMstInsertDTO, multiRequest, request);
-                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
-                        //탄소배출저감
-                        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = mpbBsnMstDTO.getWBEBCarbonCompanyMstInsertDTO();
-
-                        respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
                     }
                 }
             }
