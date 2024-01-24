@@ -169,7 +169,7 @@ public class COViewInterceptor implements HandlerInterceptor{
         //위원일 경우 카운팅 x
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         if(cOUserDetailsDTO instanceof COUserDetailsDTO) {
-            if(cOUserDetailsDTO.getRespCd().equals("00") || cOUserDetailsDTO.getRespCd().equals("1310")) {
+            if(cOUserDetailsDTO.getRespCd().equals("0000") || cOUserDetailsDTO.getRespCd().equals("1310")) {
                 if (!cOUserDetailsDTO.getAuthCd().equals("CS")) {
                     EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
                     ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());

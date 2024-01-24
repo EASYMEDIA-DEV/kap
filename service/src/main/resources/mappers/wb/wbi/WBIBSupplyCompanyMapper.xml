@@ -401,25 +401,25 @@
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 2">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 3">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 4">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <when test="f == 5">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                     </when>
                     <otherwise>
                         AND (
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                         OR
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
                         )
                     </otherwise>
                 </choose>

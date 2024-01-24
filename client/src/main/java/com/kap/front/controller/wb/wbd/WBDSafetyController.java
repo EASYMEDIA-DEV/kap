@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -119,19 +121,29 @@ public class WBDSafetyController {
     public String getStep1Page(WBDBSafetySearchDTO wBDBSafetySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbd/WBDSafetyStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-            wBDBSafetySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            cdDtlList.add("MEM_CD"); // 신청 진행상태
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
 
-            modelMap.addAttribute("episd", wBDBSafetySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBDBSafetyService.selectCompanyUserDtl(wBDBSafetySearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBDBSafetySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            }else {
+
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBDBSafetySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                modelMap.addAttribute("episd", wBDBSafetySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBDBSafetyService.selectCompanyUserDtl(wBDBSafetySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBDBSafetySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -150,6 +162,8 @@ public class WBDSafetyController {
     public String getStep2Page(WBDBSafetySearchDTO wBDBSafetySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbd/WBDSafetyStep2.front";
         try {
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
+
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
@@ -162,6 +176,8 @@ public class WBDSafetyController {
             WBRoundMstSearchDTO wBRoundMstSearchDTO = new WBRoundMstSearchDTO();
             wBRoundMstSearchDTO.setBsnCd("BSN04");
             modelMap.addAttribute("rtnRoundDtl", wBDASafetyListService.getRoundDtl(wBRoundMstSearchDTO));
+
+            RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBDBSafetySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
 
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -179,7 +195,16 @@ public class WBDSafetyController {
     @RequestMapping(value = "/insert")
     public String insert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
-           modelMap.addAttribute("actCnt", wBDBSafetyService.carbonUserInsert(wBDBSafetyMstInsertDTO,request));
+
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
+
+            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBDBSafetyMstInsertDTO.getEpisdSeq()))) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                return "redirect:./content";
+            }else{
+                modelMap.addAttribute("actCnt", wBDBSafetyService.carbonUserInsert(wBDBSafetyMstInsertDTO,request));
+                RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
