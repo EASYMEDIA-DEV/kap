@@ -1248,7 +1248,15 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         int respCnt = 0;
 
         wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
-        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+
+        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+
+        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        {
+            respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+        }
 
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
@@ -1263,8 +1271,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         int respCnt = 0;
 
         wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
-        respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
+        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        {
+            respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+        }
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;

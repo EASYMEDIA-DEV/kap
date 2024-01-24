@@ -44,6 +44,9 @@
             <input type="hidden" id="maxRsumeOrd" name="maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
             <input type="hidden" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}"/>
 
+            <input type="hidden" id="episd" name="episd" value="${rtnData.episd}"/>
+            <input type="hidden" id="year" name="year" value="${rtnData.year}"/>
+
             <%--<h6 class="mt0">회차 정보</h6>
 
             <fieldset>
@@ -262,7 +265,7 @@
                     <div class="col-sm-5">
                         <input type="hidden" id="bsnmNoPut1" name="appctnBsnmNo" title="사업자등록번호" value="${rtnCompany.bsnmNo}" />
                         <input type="hidden" id="bsnmNoPut2" name="companyDtl.bsnmNo" title="사업자등록번호" value="${rtnCompany.bsnmNo}" />
-                        <input type="hidden" id="bsnmNo" class="notRequired" value="${rtnCompany.bsnmNo}" />
+                        <input type="hidden" id="bsnmNo" name="bsnmNo" class="notRequired" value="${rtnCompany.bsnmNo}" />
                         <p class="form-control-static" id="bsnm">${fn:substring(rtnCompany.bsnmNo,0,3) } - ${fn:substring(rtnCompany.bsnmNo,3,5) } - ${fn:substring(rtnCompany.bsnmNo,5, 10) }</p>
                     </div>
                 </div>
@@ -492,7 +495,7 @@
                     <label class="col-sm-1 control-label">종된사업장번호</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm notRequired" name="sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}" title="종된사업장번호" maxlength="50"/>
+                            <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}" title="종된사업장번호" maxlength="50"/>
                         </div>
                     </div>
                 </div>

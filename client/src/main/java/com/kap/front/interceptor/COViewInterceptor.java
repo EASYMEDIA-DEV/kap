@@ -169,44 +169,45 @@ public class COViewInterceptor implements HandlerInterceptor{
         //위원일 경우 카운팅 x
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         if(cOUserDetailsDTO instanceof COUserDetailsDTO) {
-            if(!cOUserDetailsDTO.getAuthCd().equals("CS")) {
-                EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
-                ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-                CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
-                pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
+            if(cOUserDetailsDTO.getRespCd().equals("00") || cOUserDetailsDTO.getRespCd().equals("1310")) {
+                if (!cOUserDetailsDTO.getAuthCd().equals("CS")) {
+                    EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
+                    ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
+                    pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
 
-                MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
+                    MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
 
-                Date today = new Date();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+                    Date today = new Date();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(today);
-                calendar.add(Calendar.YEAR, -1);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(today);
+                    calendar.add(Calendar.YEAR, -1);
 
-                Date oneYearAgo = calendar.getTime();
+                    Date oneYearAgo = calendar.getTime();
 
-                String strtDt = df.format(oneYearAgo);
-                String endDt = df.format(today);
+                    String strtDt = df.format(oneYearAgo);
+                    String endDt = df.format(today);
 
-                mpbBnsSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-                mpbBnsSearchDTO.setDateType("2");
-                mpbBnsSearchDTO.setStrtDt(strtDt);
-                mpbBnsSearchDTO.setEndDt(endDt);
-                List<String> status = new ArrayList<>();
-                status.add("1");
-                status.add("2");
-                status.add("3");
-                status.add("4");
-                mpbBnsSearchDTO.setStatusChk(status);
+                    mpbBnsSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    mpbBnsSearchDTO.setDateType("2");
+                    mpbBnsSearchDTO.setStrtDt(strtDt);
+                    mpbBnsSearchDTO.setEndDt(endDt);
+                    List<String> status = new ArrayList<>();
+                    status.add("1");
+                    status.add("2");
+                    status.add("3");
+                    status.add("4");
+                    mpbBnsSearchDTO.setStatusChk(status);
 
-                request.setAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(ebbEpisdDTO)); //교육 1년
+                    request.setAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(ebbEpisdDTO)); //교육 1년
 
-                request.setAttribute("conYearCnt", cbaTechGuidanceService.selectYearCancelNotConsultingCount(pCBATechGuidanceInsertDTO)); //컨설팅 1년
+                    request.setAttribute("conYearCnt", cbaTechGuidanceService.selectYearCancelNotConsultingCount(pCBATechGuidanceInsertDTO)); //컨설팅 1년
 
-                request.setAttribute("sanYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO)); //상생 1년
+                    request.setAttribute("sanYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO)); //상생 1년
+                }
             }
-
         }
 
 

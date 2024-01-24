@@ -64,8 +64,8 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
         page.setPageSize(pBDBCompanyNewsDTO.getPageRowSize());
 
         pBDBCompanyNewsDTO.setFirstIndex(page.getFirstRecordIndex());
-        // 사용자 노출 갯수 조건문 추가
-        if(pBDBCompanyNewsDTO.getSiteGubun().equals("front")) {
+        // 사용자 메인 노출 갯수 조건문 추가
+        if(pBDBCompanyNewsDTO.getMainYn().equals("Y")) {
             pBDBCompanyNewsDTO.setRecordCountPerPage(1);
         }else{
             pBDBCompanyNewsDTO.setRecordCountPerPage(page.getRecordCountPerPage());

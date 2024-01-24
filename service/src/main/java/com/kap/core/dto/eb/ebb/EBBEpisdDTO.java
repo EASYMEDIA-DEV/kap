@@ -363,6 +363,20 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "GPC여부", example = "Y/N")
     private String gpcYn;
 
+    @Schema(title = "GPC ID", example = "텍스트")
+    private String gpcId;
+
+    @Schema(title = "평가점수", example = "텍스트")
+    private Integer examScore;
+
+    @Schema(title = "양도 여부", example = "Y/N")
+    private String trnsfYn;
+
+    @Schema(title = "양도전 회원번호", example = "숫자")
+    private Integer bfreMemSeq;
+
+
+
     //오프라인여부
 
     //로그인세션ID
@@ -428,7 +442,7 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "변경사유", example = "이유")
     private String rsn;
 
-    @Schema(title = "메인여부", example = "Y/N")
+    @Schema(title = "사용자 메인여부", example = "Y/N")
     @Builder.Default
     private String mainYn = "N";
 

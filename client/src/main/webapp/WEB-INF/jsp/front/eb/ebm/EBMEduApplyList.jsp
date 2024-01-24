@@ -41,7 +41,7 @@
                                             <div class="sort-select">
                                                 <div class="form-select txt-select">
                                                     <select id="srchOrder" name="srchOrder" title="정렬 바꾸기">
-                                                        <option value="1" selected>신청마감순</option>
+                                                        <option value="1" selected>접수일자순</option>
                                                         <option value="2">교육일자순</option>
                                                         <option value="3">학습시간 짧은순</option>
                                                         <option value="4">학습시간 긴 순</option>

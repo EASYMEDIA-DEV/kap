@@ -24,7 +24,15 @@
                                         <div class="group">
                                             <p class="f-head">${list.episdOrd}회차</p>
                                             <div class="status-info-w">
-                                                <p class="box-label bigger waiting"><span>${list.eduStat}</span></p><!-- 2023-12-18 라벨 값 변경 -->
+                                                <c:choose>
+                                                    <c:when test="${list.trnsfYn eq 'N'}">
+                                                        <p class="box-label bigger waiting"><span>${list.eduStat}</span></p><!-- 2023-12-18 라벨 값 변경 -->
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <p class="box-label bigger waiting"><span>교육양도</span></p><!-- 2023-12-18 라벨 값 변경 -->
+                                                    </c:otherwise>
+                                                </c:choose>
+
                                             </div>
                                         </div>
                                     </div>

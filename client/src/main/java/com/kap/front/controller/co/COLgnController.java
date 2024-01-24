@@ -226,7 +226,7 @@ public class COLgnController {
     /**
    	 * 비밀번호변경 페이지
    	 */
-   	@RequestMapping(value="/change-password", method=RequestMethod.GET)
+   	@RequestMapping(value="/change-password")
    	public String getPasswordChnagePage(ModelMap modelMap) throws Exception
    	{
 		String rtnUrl = "/front/co/COPwdChngWrite.front";

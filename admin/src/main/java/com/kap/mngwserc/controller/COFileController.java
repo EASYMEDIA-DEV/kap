@@ -140,7 +140,7 @@ public class COFileController {
         @PostMapping(value="/mngwserc/dropzone/upload")
         public List<COFileDTO> getUpdoadFileInfs(COFileDTO coFileDTO, HttpServletRequest request) throws Exception
         {
-            log.error("1111");
+            //log.error("1111");
             List<COFileDTO> rtnList = null;
             try
             {
