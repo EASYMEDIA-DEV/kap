@@ -369,6 +369,10 @@
         <if test="mypageYn != null and mypageYn != '' and 'Y'.toString().equals(mypageYn)">
             AND A.MEM_SEQ = #{memSeq}
         </if>
+        <if test="mypageMainYn != null and mypageMainYn != '' and 'Y'.toString().equals(mypageMainYn)">
+            AND A.REG_DTM <![CDATA[<=]]> NOW()
+            AND A.REG_DTM <![CDATA[>=]]> DATE_SUB(NOW(), INTERVAL 3 MONTH)
+        </if>
         <if test="searchText != null and searchText != ''">
             AND (
             A.TITL LIKE CONCAT('%', #{searchText}, '%')
