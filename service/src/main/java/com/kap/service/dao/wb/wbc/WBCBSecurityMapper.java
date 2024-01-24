@@ -1,6 +1,7 @@
 package com.kap.service.dao.wb.wbc;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.*;
 
@@ -83,6 +84,11 @@ public interface WBCBSecurityMapper {
      * 신청자 조회
      */
     public List<MPAUserDto> selectCarbonCompanyMember(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
+
+    /**
+     * 강사 및 위탁위원 조회
+     */
+    public MPCLecturerDTO selectIsttrDtl(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
     /**
      * 신청 부품사 조회

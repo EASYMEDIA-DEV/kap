@@ -111,7 +111,8 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         //CMSSR
         if(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() != null){
             wBEBCarbonCompanySearchDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq());
-            wBEBCarbonCompanyMstInsertDTO.getMemList().add(wBEBCarbonCompanyMapper.selectCarbonCompanyMember(wBEBCarbonCompanySearchDTO).get(0));
+
+            wBEBCarbonCompanyMstInsertDTO.setIsttrDtl(wBEBCarbonCompanyMapper.selectIsttrDtl(wBEBCarbonCompanyMstInsertDTO));
         }
 
         //COMPANY
@@ -217,6 +218,16 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyMapper.deleteCarbonCompanySQ(wBEBCompanyDTO);
             for(int i=0; i < wBEBCompanyDTO.getDtlList().size(); i++){
                 WBEBCompanyDtlDTO wBEBCompanyDtlDTO = wBEBCompanyDTO.getDtlList().get(i);
+
+                if(wBEBCompanyDtlDTO.getYear() == null || wBEBCompanyDtlDTO.getYear().equals("")){
+                    wBEBCompanyDtlDTO.setYear(null);
+                }
+                if(wBEBCompanyDtlDTO.getScore() == null || wBEBCompanyDtlDTO.getScore().equals("")){
+                    wBEBCompanyDtlDTO.setScore(null);
+                }
+                if(wBEBCompanyDtlDTO.getCrtfnCmpnNm() == null || wBEBCompanyDtlDTO.getCrtfnCmpnNm().equals("")){
+                    wBEBCompanyDtlDTO.setCrtfnCmpnNm(null);
+                }
 
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
 
@@ -381,9 +392,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 if(wBEBCompanyDtlDTO.getYear() == null || wBEBCompanyDtlDTO.getYear().equals("")){
                     wBEBCompanyDtlDTO.setYear(null);
                 }
-
                 if(wBEBCompanyDtlDTO.getScore() == null || wBEBCompanyDtlDTO.getScore().equals("")){
                     wBEBCompanyDtlDTO.setScore(null);
+                }
+                if(wBEBCompanyDtlDTO.getCrtfnCmpnNm() == null || wBEBCompanyDtlDTO.getCrtfnCmpnNm().equals("")){
+                    wBEBCompanyDtlDTO.setCrtfnCmpnNm(null);
                 }
 
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();

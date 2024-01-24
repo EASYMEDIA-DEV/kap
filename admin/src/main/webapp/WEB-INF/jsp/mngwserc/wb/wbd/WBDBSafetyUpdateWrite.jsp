@@ -7,7 +7,7 @@
 <c:set var="rtnDtl" value="${rtnData.rsumeDtlList}" />
 <c:set var="rtnSpprt" value="${rtnData.spprtList}" />
 <c:set var="rtnMem" value="${rtnData.memList[0]}" />
-<c:set var="rtnCmssr" value="${rtnData.memList[1]}" />
+<c:set var="rtnCmssr" value="${rtnData.isttrDtl}" />
 <c:set var="rtnCompany" value="${rtnData.companyDtl}" />
 <c:set var="rtnSQ" value="${rtnCompany.dtlList}" />
 <c:set var="rtnPbsn" value="${rtnData.pbsnDtlList}" />
@@ -477,7 +477,7 @@
                     <label class="col-sm-1 control-label">업체명</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <p class="form-control-static">${rtnCmssr.name}</p>
+                            <p class="form-control-static">${rtnCmssr.ffltnNm}</p>
                         </div>
                     </div>
                 </div>
