@@ -99,6 +99,7 @@ public class IMAQaServiceImpl implements IMAQaService {
             }
         }
 
+
         rtnData = iMAQaMapper.selectQaDtl(pIMAQaDTO);
 
         if(rtnData.getFileSeq() != null) {

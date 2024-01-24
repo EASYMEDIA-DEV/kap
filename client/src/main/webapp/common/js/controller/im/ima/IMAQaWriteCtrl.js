@@ -189,7 +189,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             searchFile : {
                 event : {
                     change : function() {
-                        extnCheck(this, "pdf,ppt,pptx,doc,docx,xls,xlsx,zip", 50);
+                        extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
                     }
                 }
             },
@@ -197,42 +197,45 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             qaSubmit : {
                 event : {
                     click : function() {
-                        if ($("#parntCtgryCd").val() == '') {
-                            alert(msgCtrl.getMsg("fail.im.ima.al_002"));
-                            $("#parntCtgryCd").focus();
-                            return false;
-                        }
-                        if ($("#ctgryCd").val() == '') {
-                            alert(msgCtrl.getMsg("fail.im.ima.al_002"));
-                            $("#ctgryCd").focus();
-                            return false;
-                        }
-                        if ($("#titl").val() == '') {
-                            alert(msgCtrl.getMsg("fail.im.ima.al_003"));
-                            $("#titl").focus();
-                            return false;
-                        }
-                        if ($("#cntn").val() == '') {
-                            alert(msgCtrl.getMsg("fail.im.ima.al_004"));
-                            $("#cntn").focus();
-                            return false;
-                        }
 
-                        $("#parntCtgryNm").val($("#parntCtgryCd option:selected").text());
-                        $("#ctgryNm").val($("#ctgryCd option:selected").text());
+                        if(confirm('문의를 등록하시겠습니까?')){
+                            if ($("#parntCtgryCd").val() == '') {
+                                alert(msgCtrl.getMsg("fail.im.ima.al_002"));
+                                $("#parntCtgryCd").focus();
+                                return false;
+                            }
+                            if ($("#ctgryCd").val() == '') {
+                                alert(msgCtrl.getMsg("fail.im.ima.al_002"));
+                                $("#ctgryCd").focus();
+                                return false;
+                            }
+                            if ($("#titl").val() == '') {
+                                alert(msgCtrl.getMsg("fail.im.ima.al_003"));
+                                $("#titl").focus();
+                                return false;
+                            }
+                            if ($("#cntn").val() == '') {
+                                alert(msgCtrl.getMsg("fail.im.ima.al_004"));
+                                $("#cntn").focus();
+                                return false;
+                            }
 
-                        cmmCtrl.fileFrm(function(data){
-                            console.log(data.respCnt);
-                            if(data.respCnt > 0) {
-                                alert(msgCtrl.getMsg("fail.im.ima.al_001"));
-                                //콜백함수, 나의 1:1문의 > 해당 문의내역 상세페이지(FO-PC-MYP-07-003)로 링크(_Self)
-                                location.href = "/my-page/member/qa/list";
-                            }
-                            else {
-                                alert("문제가 발생하였습니다.");
-                                location.reload();
-                            }
-                        }, "./insert", $formObj, "json");
+                            $("#parntCtgryNm").val($("#parntCtgryCd option:selected").text());
+                            $("#ctgryNm").val($("#ctgryCd option:selected").text());
+
+                            cmmCtrl.fileFrm(function(data){
+                                console.log(data.respCnt);
+                                if(data.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("fail.im.ima.al_001"));
+                                    //콜백함수, 나의 1:1문의 > 해당 문의내역 상세페이지(FO-PC-MYP-07-003)로 링크(_Self)
+                                    location.href = "/my-page/member/qa/list";
+                                }
+                                else {
+                                    alert("문제가 발생하였습니다.");
+                                    location.reload();
+                                }
+                            }, "./insert", $formObj, "json");
+                        }
                     }
                 }
             },

@@ -81,7 +81,7 @@
                                     <input type="hidden" id="rsumeCd" name="rsumeCd" value="" />
 
                                     <div class="form-input srch-input">
-                                        <input type="text" name="searchText" id="searchText" placeholder="검색어를 입력해 주세요.">
+                                        <input type="text" name="searchText" id="searchText" placeholder="검색어를 입력해 주세요." value="${rtnData.searchText}">
                                         <div class="input-btn-wrap">
                                             <button class="delete-btn" title="지우기" type="button"></button>
                                             <button class="srch-btn" id="btnSearch" title="검색" type="button"></button>
@@ -134,7 +134,7 @@
                                                     <tr>
                                                         <td class="t-align-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                                                         <td class="t-align-center">${ list.parntCtgryNm } > ${ list.ctgryNm }</td>
-                                                        <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="listView"  data-details-key="${list.qaSeq}" data-mem-seq="${list.memSeq}" data-rsume-cd="${list.rsumeCd}">${ list.titl }</a></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
+                                                        <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="listView"  data-details-key="${list.qaSeq}" data-mem-seq="${list.memSeq}" data-rsume-cd="${list.rsumeCd}">${ list.titl }</a></p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
                                                         <td class="t-align-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                                                         <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
                                                         <td class="t-align-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
