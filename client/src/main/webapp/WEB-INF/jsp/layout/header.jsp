@@ -250,20 +250,24 @@
                                     <p class="info-tit f-title3">신청내역</p>
 									<span class="f-caption2">최근 1년 기준</span>
                                     <div class="info-cont">
-                                        <ul class="counts">
-                                            <li class="count">
-                                                <span class="f-sub-head">교육사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                            <li class="count">
-                                                <span class="f-sub-head">컨설팅사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                            <li class="count">
-                                                <span class="f-sub-head">상생사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                        </ul>
+
+											<ul class="counts">
+												<c:if test="${ loginMap.authCd ne 'CS'}">
+												<li class="count">
+													<span class="f-sub-head">교육사업</span>
+													<a class="f-title1" href="/my-page/edu-apply/list">${eduYearCnt}</a>
+												</li>
+												<li class="count">
+													<span class="f-sub-head">컨설팅사업</span>
+													<a class="f-title1" href="/my-page/consulting/list">${conYearCnt}</a>
+												</li>
+												<li class="count">
+													<span class="f-sub-head">상생사업</span>
+													<a class="f-title1" href="/my-page/coexistence/list">${sanYearCnt}</a>
+												</li>
+												</c:if>
+											</ul>
+
                                         <div class="pc btn-wrap">
                                             <div class="btn-set">
                                                 <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>

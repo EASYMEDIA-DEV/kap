@@ -203,10 +203,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".subNumber").hide()
                                 .end()
                                 .find(".answer").css("width","100%")
-                            $(filedset).last().after(clone);
-                        }else{
-                            $("."+surveyType).last().after(clone);
                         }
+                        $(filedset).last().after(clone);
+
                         questionSet(surveyType);
 
                     }

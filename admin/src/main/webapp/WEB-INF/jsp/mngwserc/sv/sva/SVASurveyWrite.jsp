@@ -123,7 +123,7 @@
                                         </tr>
                                         <tr>
                                             <th>질문<span class="star"> *</span></th>
-                                            <td ><input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if>" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="200" title="질문" placeholder="질문을 입력해주세요." /></td>
+                                            <td ><input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if>" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="50" title="질문" placeholder="질문을 입력해주세요." /></td>
                                             <td></td>
                                         </tr>
                                         <c:choose>
@@ -134,20 +134,20 @@
                                                     <td class="form-inline">
                                                         <c:choose>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST01'}">
-                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
+                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST02'}">
-                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
+                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                                <input type="text" class="form-control input-sm notRequired answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
+                                                                <input type="text" class="form-control input-sm notRequired answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                                <input type="text" class="form-control input-sm answer <c:if test="${!(exmplStatus.first || exmplStatus.last)}">notRequired</c:if>" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="200" title="라벨" placeholder="라벨명을 입력해주세요." style="width:80%" <c:if test="${!(exmplStatus.first || exmplStatus.last)}">disabled</c:if>/>
-                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%;" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
+                                                                <input type="text" class="form-control input-sm answer <c:if test="${!(exmplStatus.first || exmplStatus.last)}">notRequired</c:if>" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="50" title="라벨" placeholder="라벨명을 입력해주세요." style="width:80%" <c:if test="${!(exmplStatus.first || exmplStatus.last)}">disabled</c:if>/>
+                                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%;" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
@@ -162,8 +162,8 @@
                                                 <tr class="answerForm">
                                                     <th>응답<span class="star"> *</span></th>
                                                     <td class="form-inline">
-                                                        <input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if> answer" name="exmpl_nm" value="" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
-                                                        <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
+                                                        <input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if> answer" name="exmpl_nm" value="" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
+                                                        <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                                     </td>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
@@ -213,14 +213,14 @@
                                         </tr>
                                         <tr>
                                             <th>질문<span class="star"> *</span></th>
-                                            <td ><input type="text" class="form-control input-sm" name="qstn_nm" value="" maxlength="200" title="질문" placeholder="질문을 입력해주세요." /></td>
+                                            <td ><input type="text" class="form-control input-sm" name="qstn_nm" value="" maxlength="50" title="질문" placeholder="질문을 입력해주세요." /></td>
                                             <td></td>
                                         </tr>
                                         <tr class="answerForm">
                                             <th>응답<span class="star"> *</span></th>
                                             <td class="form-inline">
-                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="" maxlength="200" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
-                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="" maxlength="200" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
+                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
+                                                <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                             </td>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>

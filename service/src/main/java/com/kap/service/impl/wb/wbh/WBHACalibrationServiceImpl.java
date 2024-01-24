@@ -328,9 +328,9 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         cell.setCellValue("실지급일");
         cell.setCellStyle(style_header);
 
-        /*cell = row.createCell(18);
-        cell.setCellValue("관리자등록일");
-        cell.setCellStyle(style_header);*/
+        cell = row.createCell(18);
+        cell.setCellValue("등록일시");
+        cell.setCellStyle(style_header);
 
         cell = row.createCell(19);
         cell.setCellValue("사용자수정일");
@@ -437,10 +437,10 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
             cell.setCellValue(list.get(i).getRealGiveDt());
             cell.setCellStyle(style_body);
 
-            /*//관리자 등록일
+            //등록일시
             cell = row.createCell(18);
             cell.setCellValue(list.get(i).getRegDtm());
-            cell.setCellStyle(style_body);*/
+            cell.setCellStyle(style_body);
 
             //사용자 수정일
             cell = row.createCell(19);
