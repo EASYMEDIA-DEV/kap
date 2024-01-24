@@ -16,7 +16,7 @@
                                         <div class="article-list-w txt-list">
                                             <dl class="list-item">
                                                 <dt class="f-body1">전문위원</dt>
-                                                <dd class="f-body2 name"></dd>
+                                                <dd class="f-body2 cmssrName"></dd>
                                             </dl>
                                             <dl class="list-item">
                                                 <dt class="f-body1">이메일</dt>

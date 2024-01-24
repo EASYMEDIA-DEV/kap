@@ -19,29 +19,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         classname : {
             //검색 레이어에서 선택시 호출
-            open : {
-                event : {
-                    click : function(){
-                       $(".memberDetailsPopup ").show();
-                       $("body").addClass("stop-scroll");
-                       $(".dimd").css("z-index", `${ dimdIdxNum + $(".layer-popup:visible").length }`).stop(true, true).fadeIn(300);
-                       var memSeq = $(this).find(".memSeq").val();
-                       var cmssrCbsnCdNm = $(this).find(".cmssrCbsnCdNm").text();
-                       var cssInfo = {};
-                       cssInfo.detailsKey = memSeq;
-                        cmmCtrl.jsonAjax(function (data) {
-                            var info = JSON.parse(data);
-                            $(".name").text(info.name);
-                            $(".email").text(info.email);
-                            $(".cmssrCbsnCd").text(cmssrCbsnCdNm);
-                            var expsYn = info.cmssrMjrCarerExpsYn;
-                            if(expsYn == 'Y'){
-                                $(".cmssrMjrCarerCntn").text(info.cmssrMjrCarerCntn);
-                            }
-                        }, './selectDtlInfo', cssInfo, "text");
-                    }
-                }
-            },
             moreBtn : {
                 event : {
                     click : function(){
@@ -68,6 +45,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 location.href="/login?rtnUrl=/consulting/tech/index/";
                             }
                         }
+                    }
+                }
+            },
+            popOpen : {
+                event : {
+                    click : function() {
+                        var memSeq = $(this).find(".memSeq").val();
+                        var cmssrCbsnCdNm = $(this).find(".cmssrCbsnCdNm").text();
+                        var cssInfo = {};
+                        cssInfo.detailsKey = memSeq;
+                        cmmCtrl.jsonAjax(function (data) {
+                            var info = JSON.parse(data);
+                            $(".cmssrName").text(info.name);
+                            $(".email").text(info.email);
+                            $(".cmssrCbsnCd").text(cmssrCbsnCdNm);
+                            var expsYn = info.cmssrMjrCarerExpsYn;
+                            if(expsYn == 'Y'){
+                                $(".cmssrMjrCarerCntn").text(info.cmssrMjrCarerCntn);
+                            }
+                        }, './selectDtlInfo', cssInfo, "text");
+                        openPopup('memberDetailsPopup');
                     }
                 }
             }

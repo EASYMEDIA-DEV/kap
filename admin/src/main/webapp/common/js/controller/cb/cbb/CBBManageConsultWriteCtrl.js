@@ -198,15 +198,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var initVstRsltCd = $("#initVstRsltCd").val();
         var guidePscndCd = $("#guidePscndCd").val();
         var guideKickfDt = $('input[name="guideKickfDt"]').val();
-        var vstDt = $("#vstDt").val(); // 방문일
-        var vstDtFormat = new Date(vstDt);// 방문일
+        var vstDt = $("#vstDt").val(); // 킥오프시작(방문일)
+        var vstDtFormat = new Date(vstDt);// 킥오프시작(방문일)
         var today = new Date();
         var gbDt = new Date(guideKickfDt);
         var bfGbDt = (gbDt-today)/(24*60*60*1000);
         var vstDtFormat = (vstDtFormat - today)/(24*60*60*1000);
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
 
-        if(bfGbDt <= 0) {
+        if(vstDtFormat <= 0) {
             $(".rsumeSttsNm").text("지도중");
             $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
 
@@ -323,24 +323,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            ctgryCd: {
-                event: {
-                    change: function () {
-                        var ctgryCd = $("#ctgryCd option:selected").val();
-                        if (ctgryCd == "COMPANY01001") {
-                            $(".sqInfoArea").hide();
-                            $(".qlty5StarArea").show();
-                            $(".pay5StarArea").show();
-                            $(".tchlg5StarArea").show();
-                        } else if (ctgryCd == "COMPANY01002") {
-                            $(".sqInfoArea").show();
-                            $(".qlty5StarArea").hide();
-                            $(".pay5StarArea").hide();
-                            $(".tchlg5StarArea").hide();
-                        }
-                    }
-                }
-            },
             pstnCdSelect: {
                 event: {
                     click: function () {
@@ -392,21 +374,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             },
             bfJdgmtRslt : {
                 event : {
-                    click : function(){
+                    change : function(){
                         changeStts();
                     }
                 }
             },
             guidePscndCd : {
                 event : {
-                    click : function(){
+                    change : function(){
                         changeStts();
                     }
                 }
             },
             initVstRsltCd : {
                 event : {
-                    click : function(){
+                    change : function(){
                         changeStts();
                     }
                 }
@@ -655,7 +637,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
 
                         var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
-                        var actionMsg = msgCtrl.getMsg("success.ins");
+                        var actionMsg = msgCtrl.getMsg("success.sve");
                         var cmpnNm = $("#cmpnNmText").text();
                         var bsnmNo = $("#bsnmNoText").text();
                         var emailTxt = $("#emailTxt").text();
@@ -826,13 +808,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             ctgryCd: {
                 event: {
                     click: function () {
-                        var selectVal = $("select[name=ctgryCd]").val();
-                        if (selectVal == "COMPANY01001") {
+                        var ctgryCd = $("#ctgryCdSelect option:selected").val();
+                        if (ctgryCd == "COMPANY01001") {
                             $(".sqInfo").hide();
                             $(".fiveStar").show();
-                        } else {
-                            $(".fiveStar").hide();
+                        } else if (ctgryCd == "COMPANY01002") {
                             $(".sqInfo").show();
+                            $(".fiveStar").hide();
+                        }else{
+                            $(".sqInfo").hide();
+                            $(".fiveStar").hide();
                         }
                     }
                 }
@@ -1022,7 +1007,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         immediately: function () {
 
             questionSet();
-            /*changeStts();*/
+            changeStts();
             /* Editor Setting */
             jQuery("textarea[id^='cntn']").each(function () {
                 cmmCtrl.setEditor({

@@ -1,16 +1,14 @@
 package com.kap.front.controller.cb;
 
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.CBBManageConsultService;
-import com.kap.service.COCodeService;
-import com.kap.service.MPEPartsCompanyService;
+import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
@@ -57,6 +55,7 @@ public class CBTechGuidanceController {
     private final MPEPartsCompanyService mPEPartsCompanyService;
     private final COCodeService cOCodeService;
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
+    public final COGCntsService pCOGCntsService;
 
     // 파일 확장자
     @Value("${app.file.imageExtns}")
@@ -65,11 +64,58 @@ public class CBTechGuidanceController {
     @Value("${app.file.max-size}")
     private int atchUploadMaxSize;
 
+
+    /**
+     * 메인
+     */
+    @GetMapping(value = "/content")
+    public String getMnagementIndex(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
+        String url = "";
+       /* try {*/
+
+            cBATechGuidanceInsertDTO.setFirstIndex(0);
+            cBATechGuidanceInsertDTO.setRecordCountPerPage(3);
+
+            if(type.equals("tech")){
+                url = "front/cb/cba/CBATechGuidanceIndex.front";
+                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "760", "N"));
+            }else{
+                url = "front/cb/cbb/CBBManageConsultIndex.front";
+                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "761", "N"));
+            }
+
+            MPAUserDto mpaUserDto = new MPAUserDto();
+
+            List typeList = new ArrayList();
+            typeList.add("MEM_CD03003");
+            List workCdList = new ArrayList();
+            workCdList.add("MEM_CD04001");
+            mpaUserDto.setCmssrTypeList(typeList);
+            mpaUserDto.setMemCd("CS");
+            mpaUserDto.setCmssrWorkList(workCdList);
+
+            cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
+            modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
+            modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
+
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
+
+        /*} catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }*/
+
+        return url;
+    }
+
     @GetMapping("/index")
     public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
         try {
             MPAUserDto mpaUserDto = new MPAUserDto();
+            CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
 
             List typeList = new ArrayList();
                 typeList.add("MEM_CD03003");
@@ -79,7 +125,9 @@ public class CBTechGuidanceController {
             mpaUserDto.setMemCd("CS");
             mpaUserDto.setCmssrWorkList(workCdList);
 
+            cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
+            modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
 
             if(type.equals("tech")){
                 url = "front/cb/cba/CBATechGuidanceIndex.front";

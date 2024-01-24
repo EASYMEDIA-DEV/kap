@@ -111,7 +111,7 @@
                 , CP_MST.REG_DTM
                 , CP_MST.MOD_ID
                 , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
-                , CPR_MST.MOD_DTM
+                , CP_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
             JOIN CO_MEM_MST MEM_MST
@@ -238,7 +238,7 @@
            , CP_MST.REG_DTM
            , CPR_MST.MOD_ID
            , (SELECT NAME FROM CO_ADM_MST WHERE ID = CPR_MST.MOD_ID) MOD_NAME
-           , CPR_MST.MOD_DTM
+           , CP_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
             JOIN CO_MEM_MST MEM_MST
@@ -895,7 +895,7 @@
             AFTR_MEM_SEQ,
             REG_DTM,
             REG_ID,
-            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE CNSTG_SEQ = #{detailsKey}
             LIMIT #{firstIndex}, #{recordCountPerPage}
@@ -1571,12 +1571,12 @@
     </select>
 
     <!--
-  쿼리명 : CBATechGuidanceMapper.selectYearCancelNotConsultingCount
-  설  명 :  최근 1년 간 신청한 컨설팅 내역 조회(사용자 취소 제외)
-   수정일     수정자       수정내용
- ==========   ======    ==============
- 2024.01.23   양현우      최초 생성
--->
+      쿼리명 : CBATechGuidanceMapper.selectYearCancelNotConsultingCount
+      설  명 :  최근 1년 간 신청한 컨설팅 내역 조회(사용자 취소 제외)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.01.23   양현우      최초 생성
+    -->
     <select id="selectYearCancelNotConsultingCount" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
         SELECT /* CBATechGuidanceMapper.selectYearCancelNotConsultingCount */
             COUNT(*)
@@ -1589,4 +1589,23 @@
     </select>
 
 
+    <!--
+       쿼리명 : CBATechGuidanceMapper.selectConsultingFilePath
+       설  명 :  컨설팅 개선활동 추진계획서 다운로드
+        수정일     수정자       수정내용
+      ==========   ======    ==============
+      2024.01.24   임서화      최초 생성
+     -->
+    <select id="selectConsultingFilePath" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
+        SELECT /* CBATechGuidanceMapper.selectConsultingFilePath */
+            TCHGD_FILE_SEQ,
+            (SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.TCHGD_FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) TCHGD_FILE_PATH,
+			(SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = A.TCHGD_FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) TCHGD_FILE_ORD,
+			MNGMNT_FILE_SEQ,
+			(SELECT WEB_PATH FROM CO_FILE_DTL WHERE FILE_SEQ = A.MNGMNT_FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) MNGMNT_FILE_PATH,
+			(SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = A.MNGMNT_FILE_SEQ ORDER BY FILE_ORD DESC LIMIT 1) MNGMNT_FILE_ORD
+        FROM
+            SM_STY_MST A
+        WHERE TYPE_CD = 'BUSINESS01'
+    </select>
 </mapper>

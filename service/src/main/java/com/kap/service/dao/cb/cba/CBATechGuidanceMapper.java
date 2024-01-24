@@ -255,4 +255,9 @@ public interface CBATechGuidanceMapper {
      */
     public int selectWriteMemSeq(Integer cnstgSeq) throws Exception;
 
+    /**
+     * 컨설팅 개선활동 추진계획서 다운로드
+     */
+    public CBATechGuidanceInsertDTO selectConsultingFilePath(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 }
