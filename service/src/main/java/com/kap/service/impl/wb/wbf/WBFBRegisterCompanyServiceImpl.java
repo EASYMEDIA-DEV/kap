@@ -1284,8 +1284,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             String regIp = CONetworkUtil.getMyIPaddress(request);
 
             WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+            wBFBRegisterSearchDTO.setEpisdSeq(wBFBRegisterDTO.getEpisdSeq());
             wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-            wBFBRegisterSearchDTO.setSbrdnBsnmNo(wBFBRegisterDTO.getSbrdnBsnmNo());
+            wBFBRegisterSearchDTO.setSbrdnBsnmNo(wBFBRegisterDTO.getSbrdnBsnmNo().trim());
             int Overlap =  wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
 
             if(Overlap > 0){
