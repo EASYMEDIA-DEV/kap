@@ -1,15 +1,18 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 
-<div id="wrap" data-controller="controller/bd/bdd/BDDNewsletterViewCtrl">
+<div id="wrap" data-controller="controller/bd/bda/BDANoticeViewCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
-        <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.nwsltSeq}" />
+        <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.ntfySeq}" />
         <div class="cont-wrap">
             <div class="inner">
                 <div class="cont-sec-w">
                     <div class="cont-sec">
                         <div class="view-sec">
                             <div class="title-area">
+                                <c:if test="${rtnDto.ntfyYn eq 'Y'}">
+                                    <p class="info f-head">중요</p>
+                                </c:if>
                                 <p class="title f-title1">${rtnDto.titl}</p>
                                 <p class="date f-body1">${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                             </div>

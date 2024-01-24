@@ -875,7 +875,7 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, null AS  edctn_seq
+		,  A.vst_seq AS edctn_seq
 		,  null AS episd_seq
 		,  null AS episd_ord
 		,  null AS parnt_seq
@@ -1501,7 +1501,7 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, null AS  edctn_seq
+		, A.vst_seq AS edctn_seq
 		,  null AS episd_seq
 		,  null AS episd_ord
 		,  null AS parnt_seq

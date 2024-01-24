@@ -153,14 +153,14 @@
     </delete>
 
     <!--
-         쿼리명 : BDDNewsletterMapper.selectNewsletterFileOrdList
-         설  명 : [사용자] 뉴스레터 첨부파일 ord 목록 조회
+         쿼리명 : BDDNewsletterMapper.selectNewsletterFileList
+         설  명 : [사용자] 뉴스레터 첨부파일 목록 조회
           수정일     수정자       수정내용
         ==========   ======    ==============
         2024.01.22   구은희       최초생성
     -->
-    <select id="selectNewsletterFileOrdList" parameterType="BDDNewsletterDTO">
-        SELECT /* BDDNewsletterMapper.selectNewsletterFileOrdList */
+    <select id="selectNewsletterFileList" parameterType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNewsletterFileList */
             FILE_ORD
              , FILE_SEQ
              , ORGN_FILE_NM AS FILE_NAME
@@ -226,7 +226,7 @@
     -->
     <sql id="selectNewsletterListwhereSql">
         <if test='siteGubun == "front"'>
-            AND exps_yn = 'Y'
+            AND EXPS_YN = 'Y'
             <if test="srchVal != null and srchVal != ''">
                 AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
                 CNTN LIKE CONCAT('%', #{srchVal}, '%')

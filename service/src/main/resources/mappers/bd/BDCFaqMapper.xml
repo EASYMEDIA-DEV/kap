@@ -15,6 +15,7 @@
             , CTGRY_CD
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD) CTGRY_NAME
             , TITL
+            , CNTN
             , READ_CNT
             , EXPS_YN
             <if test='siteGubun != "front"'>
@@ -125,6 +126,37 @@
     </update>
 
     <!--
+         쿼리명 : BDCFaqMapper.selectFaqFileList
+         설  명 : [사용자] FAQ 첨부파일 목록 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectFaqFileList" parameterType="BDCFaqDTO">
+        SELECT /* BDCFaqMapper.selectFaqFileList */
+            A.FAQ_SEQ
+             , B.FILE_ORD
+             , B.FILE_SEQ
+             , B.FILE_NAME
+        FROM
+            (
+                SELECT FAQ_SEQ, FILE_SEQ
+                FROM BD_FAQ_MST
+                WHERE EXPS_YN = 'Y'
+            ) A
+                LEFT JOIN
+            (
+                SELECT
+                    FILE_ORD
+                     , FILE_SEQ
+                     , ORGN_FILE_NM AS FILE_NAME
+                FROM CO_FILE_DTL
+                WHERE USE_YN = 'Y'
+            ) B
+            ON A.FILE_SEQ = B.FILE_SEQ
+    </select>
+
+    <!--
          쿼리명 : BDCFaqMapper.deleteFaq
          설  명 : FAQ 삭제
           수정일     수정자       수정내용
@@ -161,6 +193,13 @@
     <sql id="selectFaqListwhereSql">
         <if test='siteGubun == "front"'>
             AND EXPS_YN = 'Y'
+            <if test="srchVal != null and srchVal != ''">
+                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+            </if>
+            <if test="ctgryCd != null and ctgryCd != ''">
+                AND CTGRY_CD = #{ctgryCd}
+            </if>
         </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
