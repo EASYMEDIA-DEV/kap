@@ -1,13 +1,12 @@
 package com.kap.mngwserc.schedule;
 
 import com.kap.common.utility.CODateUtil;
-import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.service.COMessageService;
 import com.kap.service.EBDSqCertiReqService;
-import com.kap.service.dao.eb.EBDSqCertiReqMapper;
+import com.kap.service.dao.COScheduleMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.javacrumbs.shedlock.spring.annotation.EnableSchedulerLock;
@@ -43,6 +42,9 @@ public class COScheduleService {
     /** 메일 서비스 **/
     private final COMessageService cOMessageService;
 
+    /** 스케줄러 Mapper **/
+    private final COScheduleMapper cOScheduleMapper;
+
     /**
      * SQ평가원 자격증 취득 후 2년 6개월 경과 시 이메일 발송(만료 일시 6개월 전)
      */
@@ -67,5 +69,19 @@ public class COScheduleService {
             cOMessageService.sendMail(cOMailDTO, "EBDSqCertiValidEndCrtfnMail.html");
         }
     }
+
+    /**
+     * 교육 시작 후 해당 교육의 선발대기 상태인 신청자 상태 미선발로 변경
+     */
+    @Scheduled(cron = "0 0 2 * * ?") // 초(0~59) 분(0~59) 시(0~23) 일(1~31) 월(1~12) 요일(1~7, 일요일 : 1) 연도(생략가능)
+    @SchedulerLock(name = "EP_EDCTN_PTCPT_STTS_CRTFN", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
+    public void updateStrtEduPtctpSttsCrtfn() throws Exception {
+        log.info("EP_EDCTN_PTCPT_STTS_CRTFN Schedule Start");
+
+        cOScheduleMapper.updateStrtEduPtctpStts();
+
+        log.info("EP_EDCTN_PTCPT_STTS_CRTFN Schedule End");
+    }
+
 
 }
