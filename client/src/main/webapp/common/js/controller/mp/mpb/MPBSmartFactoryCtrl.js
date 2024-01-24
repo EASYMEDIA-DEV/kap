@@ -97,7 +97,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     }
 
     let btnSpprtUpdateShow = function(sttsCd){
-        let passCd = ['PRO_TYPE03001_01_003', 'PRO_TYPE03002_01_003', 'PRO_TYPE03003_01_003']
+        let passCd = ['PRO_TYPE03001_01_001', 'PRO_TYPE03001_01_003','PRO_TYPE03002_01_001','PRO_TYPE03002_01_003','PRO_TYPE03003_01_001','PRO_TYPE03003_01_003']
 
         if(passCd.includes(sttsCd)) {
             $('.paymentInfoManagPopup').find('.btnSpprtUpdate').show();
@@ -160,8 +160,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             },
             btnSpprtPop : {
                 event : {
-                    click : function() {
-                        openPopup('paymentInfoManagPopup', this);
+                    click : function(e) {
+                        openPopup('paymentInfoManagPopup', e, 'Y');
                     }
                 }
             },
@@ -254,13 +254,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 removeComma($formObj);
                                 //이용약관 체크여부
                                 cmmCtrl.fileFrm(function (data) {
-                                    if (data.respCnt == 300) {
-                                        if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                            location.href = "/my-page/main";
-                                        }
-                                    } else if (data.respCnt > 0) {
-                                        location.href = "/my-page/coexistence/list";
+                                    if (data.respCnt == 100) {
+                                        alert("잘못된 접근입니다. 다시 시도바랍니다.");
                                     }
+                                    location.href = "./list";
                                 }, "./update", $formObj, "json");
                             }
                         }
@@ -289,37 +286,42 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         var $formObj = $('.paymentInfoManagPopup').find(`form[data-give-type=${formGiveType}]`);
 
-                        if(formGiveType == 'PRO_TYPE03001' || formGiveType == 'PRO_TYPE03001') {
+                        if(formGiveType == 'PRO_TYPE03001' || formGiveType == 'PRO_TYPE03002') {
+                            if(!$formObj.find('.accsDt').val()) {
+                                alert('접수일을 입력해주세요');
+                                valid = false;
+                                return;
+                            }
                             if(!$formObj.find('.gvmntSpprtPmt').val()) {
                                 alert('정부지원금을 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                             if(!$formObj.find('.mjcmnAprncPmt').val()) {
                                 alert('대기업출연금을 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                             if(!$formObj.find('.bankNm').val()) {
                                 alert('은행명을 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                             if(!$formObj.find('.acntNo').val()) {
                                 alert('계좌번호를 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                             if(!$formObj.find('.dpsitNm').val()) {
                                 alert('예금주를 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                         } else if(formGiveType == 'PRO_TYPE03003') {
                             if(!$formObj.find('.cmssnPmt').val()) {
                                 alert('수수료를 입력해주세요');
                                 valid = false;
-                                return false;
+                                return;
                             }
                         }
 
@@ -337,10 +339,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 /* 금액 ',' 제거 */
                                 removeComma($formObj);
                                 cmmCtrl.fileFrm(function(data){
-                                    if(data.respCnt > 0) {
-                                        alert()
-                                        location.href = "/my-page/coexistence/list";
+                                    if (data.respCnt == 100) {
+                                        alert("잘못된 접근입니다. 다시 시도바랍니다.");
                                     }
+                                    location.href = "./list";
                                 }, "./update", $formObj, "json");
                             }
                         }
@@ -389,6 +391,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         },
         immediately : function(){
             cmmCtrl.setCalendar()
+            $('.btnSpprtTab').eq(0).click();
         }
     };
 

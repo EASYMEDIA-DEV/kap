@@ -246,7 +246,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     if (data.respCnt == 100) {
                                         alert("잘못된 접근입니다. 다시 시도바랍니다.");
                                     }
-                                    $(".btn-role-close").click();
+                                    location.href = "./list";
                                 }, "./update", $formObj, "json");
                             }
                         }
