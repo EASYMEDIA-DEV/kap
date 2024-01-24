@@ -65,8 +65,8 @@ public class BDCFaqServiceImpl implements BDCFaqService {
 
         pBDCFaqDTO.setFirstIndex(page.getFirstRecordIndex());
 
-        // 사용자 노출 갯수 조건문 추가
-        if(pBDCFaqDTO.getSiteGubun().equals("front")) {
+        // 사용자 메인 노출 갯수 조건문 추가
+        if(pBDCFaqDTO.getMainYn().equals("Y")) {
             pBDCFaqDTO.setRecordCountPerPage(3);
         }else{
             pBDCFaqDTO.setRecordCountPerPage(page.getRecordCountPerPage());

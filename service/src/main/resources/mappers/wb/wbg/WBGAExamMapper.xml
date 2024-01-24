@@ -699,7 +699,7 @@
     -->
     <select id="getConsultingList" parameterType="wBGAConsultingDTO" resultType="wBGAConsultingDTO">
         SELECT /* WBGAExamMapper.getConsultingList */
-            YEAR(A.BSN_YEAR)
+            YEAR(A.BSN_YEAR) AS BSN_YEAR
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) AS CNSTG_NM
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) AS RSUME_STTS_NM
              ,B.CMPN_NM
@@ -1336,7 +1336,7 @@
                       ,BSN_END_DTM
                       ,EXPS_YN
                       , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
-                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 1
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A
@@ -1372,13 +1372,14 @@
     -->
     <select id="getApplyDtl" parameterType="wBGAExamSearchDTO" resultType="wBGAExamSearchDTO">
         SELECT /* WBGAExamMapper.getApplyDtl */
-            APPCTN_SEQ,
+            A.APPCTN_SEQ,
             EPISD_SEQ,
             MEM_SEQ,
             APPCTN_BSNM_NO,
-            REG_DTM
+            A.REG_DTM
         FROM CX_APPCTN_MST A
-        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+        JOIN cx_appctn_rsume_dtl B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE07001_01_004'
     </select>
 
     <!--

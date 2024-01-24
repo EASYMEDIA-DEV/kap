@@ -323,13 +323,13 @@ public class IMAQaServiceImpl implements IMAQaService {
                 //이름
                 mngReceiverDto.setName(pic.getPicNm());
                 //치환문자1
-                mngReceiverDto.setNote1(pIMAQaDTO.getParntCtgryNm());
+                mngReceiverDto.setNote1(pIMAQaDTO.getRegName());
                 //치환문자2
-                mngReceiverDto.setNote2(pIMAQaDTO.getCtgryNm());
+                mngReceiverDto.setNote2(pIMAQaDTO.getParntCtgryNm());
                 //치환문자3
-                mngReceiverDto.setNote3(pIMAQaDTO.getTitl());
+                mngReceiverDto.setNote3(pIMAQaDTO.getCtgryNm());
                 //치환문자4
-                mngReceiverDto.setNote4(pIMAQaDTO.getRegName());
+                mngReceiverDto.setNote4(pIMAQaDTO.getTitl());
                 //치환문자5
                 mngReceiverDto.setNote5(formattedDate);
                 //수신자 정보 등록

@@ -120,6 +120,18 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
+			transfer : {
+				event : {
+					click : function(){
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+
+						location.href="./transfer?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+					}
+				}
+			},
+
 			atndcCheck : {
 				event: {
 					click: function () {

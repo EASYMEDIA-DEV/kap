@@ -435,6 +435,19 @@
     </select>
 
     <!--
+         쿼리명 : WBCBSecurityMapper.selectIsttrDtl
+         설  명 : 보안환경구축 신청자 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="selectIsttrDtl" parameterType="wBCBSecurityMstInsertDTO" resultType="mPCLecturerDTO">
+        SELECT /* WBCBSecurityMapper.selectIsttrDtl */ *
+        FROM CP_ISTTR_MST
+        WHERE ISTTR_SEQ  = #{picCmssrSeq};
+    </select>
+
+    <!--
          쿼리명 : WBCBSecurityMapper.selectCarbonCompany
          설  명 : 보안환경구축 부품사 조회
          수정일     수정자     수정내용
@@ -1345,7 +1358,7 @@
         2023.11.08  김대성     최초 생성
     -->
     <select id="getSbrdnBsnmNoCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
-        SELECT /* WBCBSecurityMapper.getBsnmNoCnt*/ COUNT(*)
+        SELECT /* WBCBSecurityMapper.getSbrdnBsnmNoCnt*/ COUNT(*)
         FROM CX_APPCTN_MST
         WHERE EPISD_SEQ = #{episdSeq}
         AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}

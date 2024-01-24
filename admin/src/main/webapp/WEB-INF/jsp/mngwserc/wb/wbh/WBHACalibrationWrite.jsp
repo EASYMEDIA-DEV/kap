@@ -54,7 +54,7 @@
                                         <input type="text" class="form-control" id="id" value="${userInfo.name}(${userInfo.id})" title="신청자" maxlength="50" disabled/>
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="text" class="form-control" id="id" value="" title="신청자" maxlength="50" disabled/>
+                                        <input type="text" class="form-control" id="nameAndId" value="" title="신청자" maxlength="50" disabled/>
                                     </c:otherwise>
                                 </c:choose>
                             </div>

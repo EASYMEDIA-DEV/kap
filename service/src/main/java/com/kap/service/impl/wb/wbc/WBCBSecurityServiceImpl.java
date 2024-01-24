@@ -111,7 +111,8 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         //CMSSR
         if(wBCBSecurityMstInsertDTO.getPicCmssrSeq() != null){
             wBCBSecuritySearchDTO.setMemSeq(wBCBSecurityMstInsertDTO.getPicCmssrSeq());
-            wBCBSecurityMstInsertDTO.getMemList().add(wBCBSecurityMapper.selectCarbonCompanyMember(wBCBSecuritySearchDTO).get(0));
+
+            wBCBSecurityMstInsertDTO.setIsttrDtl(wBCBSecurityMapper.selectIsttrDtl(wBCBSecurityMstInsertDTO));
         }
 
         //COMPANY
@@ -212,7 +213,6 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         wBCBSecurityMapper.updateAppctnCompany(wBCBCompanyDTO);
 
         //부품사 SQ
-
         if(wBCBCompanyDTO.getCtgryCd().equals("COMPANY01002")){
             wBCBSecurityMapper.deleteCarbonCompanySQ(wBCBCompanyDTO);
             for(int i=0; i < wBCBCompanyDTO.getDtlList().size(); i++){
@@ -221,6 +221,16 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
 
                 wBCBCompanyDtlDTO.setCbsnSeq(firstMpePartsCompanyDtlSeqIdgen);
+
+                if(wBCBCompanyDtlDTO.getYear() == null || wBCBCompanyDtlDTO.getYear().equals("")){
+                    wBCBCompanyDtlDTO.setYear(null);
+                }
+                if(wBCBCompanyDtlDTO.getScore() == null || wBCBCompanyDtlDTO.getScore().equals("")){
+                    wBCBCompanyDtlDTO.setScore(null);
+                }
+                if(wBCBCompanyDtlDTO.getCrtfnCmpnNm() == null || wBCBCompanyDtlDTO.getCrtfnCmpnNm().equals("")){
+                    wBCBCompanyDtlDTO.setCrtfnCmpnNm(null);
+                }
 
                 wBCBSecurityMapper.insertCarbonCompanySQ(wBCBCompanyDtlDTO);
             }
@@ -381,9 +391,11 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
                 if(wBCBCompanyDtlDTO.getYear() == null || wBCBCompanyDtlDTO.getYear().equals("")){
                     wBCBCompanyDtlDTO.setYear(null);
                 }
-
                 if(wBCBCompanyDtlDTO.getScore() == null || wBCBCompanyDtlDTO.getScore().equals("")){
                     wBCBCompanyDtlDTO.setScore(null);
+                }
+                if(wBCBCompanyDtlDTO.getCrtfnCmpnNm() == null || wBCBCompanyDtlDTO.getCrtfnCmpnNm().equals("")){
+                    wBCBCompanyDtlDTO.setCrtfnCmpnNm(null);
                 }
 
                 int firstMpePartsCompanyDtlSeqIdgen = mpePartsCompanyDtlIdgen.getNextIntegerId();
@@ -1235,7 +1247,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         int respCnt = 0;
 
         wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
-        respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
+
+        if(wBCBTrnsfDTO.getMemSeq() != wBCBSecurityMstInsertDTO.getMemSeq()) {
+            respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+        }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
@@ -1250,7 +1269,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         int respCnt = 0;
 
         wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
-        respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
+
+        if(wBCBTrnsfDTO.getMemSeq() != wBCBSecurityMstInsertDTO.getMemSeq()) {
+            respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
+        }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 

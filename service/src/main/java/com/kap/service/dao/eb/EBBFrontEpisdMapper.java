@@ -2,6 +2,7 @@ package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -62,6 +63,17 @@ public interface EBBFrontEpisdMapper {
 	 * 마이페이지 - 교육/세미나 사입 신청내역 카운트
 	 */
 	public List<EBBEpisdDTO> selectMypageEduListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+	/**
+	 * 마이페이지 - 교육양도시 회원목록을 호출한다.(카운트)
+	 */
+	public int selectApplyUserListCnt(MPAUserDto mpaUserDto) throws Exception;
+
+	/**
+	 * 마이페이지 - 교육양도시 회원목록을 호출한다.
+	 */
+	public List<MPAUserDto> selectApplyUserList(MPAUserDto mpaUserDto) throws Exception;
 
 
 }

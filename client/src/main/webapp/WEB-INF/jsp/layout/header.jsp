@@ -246,32 +246,38 @@
 						</div>
                         <c:if test="${ not empty loginMap}">
                             <div class="loginfo-wrap">
+								<c:if test="${ loginMap.authCd ne 'CS'}">
                                 <div class="loginfo-box">
                                     <p class="info-tit f-title3">신청내역</p>
 									<span class="f-caption2">최근 1년 기준</span>
                                     <div class="info-cont">
-                                        <ul class="counts">
-                                            <li class="count">
-                                                <span class="f-sub-head">교육사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                            <li class="count">
-                                                <span class="f-sub-head">컨설팅사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                            <li class="count">
-                                                <span class="f-sub-head">상생사업</span>
-                                                <a class="f-title1" href="javascript:">목록갯수</a>
-                                            </li>
-                                        </ul>
+
+											<ul class="counts">
+												<li class="count">
+													<span class="f-sub-head">교육사업</span>
+													<a class="f-title1" href="/my-page/edu-apply/list">${eduYearCnt}</a>
+												</li>
+												<li class="count">
+													<span class="f-sub-head">컨설팅사업</span>
+													<a class="f-title1" href="/my-page/consulting/list">${conYearCnt}</a>
+												</li>
+												<li class="count">
+													<span class="f-sub-head">상생사업</span>
+													<a class="f-title1" href="/my-page/coexistence/list">${sanYearCnt}</a>
+												</li>
+
+											</ul>
+
                                         <div class="pc btn-wrap">
                                             <div class="btn-set">
                                                 <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
                                                 <a class="btn-solid small white-bg" href="javascript:"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
+								</c:if>
                                 <div class="mob btn-wrap">
                                     <div class="btn-set">
                                         <a class="btn-solid small gray-bg" href="javascript:"><span>증명서 발급</span></a>
@@ -282,42 +288,85 @@
                             </div>
                         </c:if>
 					</div>
-                    <c:if test="${ not empty gnbMenuList}">
-                        <ul class="gnb">
-                            <c:forEach var="menu" items="${gnbMenuList}" varStatus="status">
-                                <c:if test="${ menu.attr.gnbYn eq 'Y'}">
-                                    <li>
+					<c:if test="${ not empty gnbMenuList}">
+						<ul class="gnb">
+							<c:forEach var="menu" items="${gnbMenuList}" varStatus="status">
+								<c:if test="${ not empty loginMap || menu.data !='마이페이지' }">
+									<li>
+										<div class="one-pack">
+<%--											<a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>--%>
+											<a class="one-depth for-move" href="javascript:">${ menu.data}</a>
+										</div>
+										<c:if test="${ menu.children != null && fn:length(menu.children) > 0 }">
+											<ul class="two-pack">
+												<c:if test="${menu.data eq '마이페이지' && loginMap.authCd ne 'CS'}">
+													<li>
+														<div class="for-move">
+															<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link}">${ menu.data}</a>
+														</div>
+													</li>
 
-                                        <div class="one-pack">
-                                            <a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>
-                                        </div>
-                                    <c:if test="${ menu.children != null && fn:length(menu.children) > 0 }">
-                                        <ul class="two-pack">
-                                            <c:forEach var="menu2" items="${menu.children}" varStatus="status2">
-                                                <c:if test="${ menu2.attr.gnbYn eq 'Y'}">
-                                                    <li>
-                                                        <div class="for-move">
-                                                            <a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
-                                                            <c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
-                                                                <ul class="three-pack">
-                                                                    <c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
-                                                                        <c:if test="${ menu3.attr.gnbYn eq 'Y'}">
-                                                                            <li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
-                                                                        </c:if>
-                                                                    </c:forEach>
-                                                                </ul>
-                                                            </c:if>
-                                                        </div>
-                                                    </li>
-                                                </c:if>
-                                            </c:forEach>
-                                        </ul>
-                                    </c:if>
-                                    </li>
-                                </c:if>
-                            </c:forEach>
-                        </ul>
-                    </c:if>
+												</c:if>
+												<c:forEach var="menu2" items="${menu.children}" varStatus="status2">
+													<c:if test="${ menu2.attr.gnbYn eq 'Y'}">
+														<c:if test="${menu2.data ne '근태 체크' && menu.data ne '마이페이지' }">
+															<li>
+																<div class="for-move">
+																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																		<ul class="three-pack">
+																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																					<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																				</c:if>
+																			</c:forEach>
+																		</ul>
+																	</c:if>
+																</div>
+															</li>
+														</c:if>
+													<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'  }">
+														<li>
+															<div class="for-move">
+																<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																	<ul class="three-pack">
+																		<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																			<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																				<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																			</c:if>
+																		</c:forEach>
+																	</ul>
+																</c:if>
+															</div>
+														</li>
+													</c:if>
+														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' }">
+															<li>
+																<div class="for-move">
+																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																		<ul class="three-pack">
+																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																					<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																				</c:if>
+																			</c:forEach>
+																		</ul>
+																	</c:if>
+																</div>
+															</li>
+														</c:if>
+
+													</c:if>
+												</c:forEach>
+											</ul>
+										</c:if>
+									</li>
+								</c:if>
+							</c:forEach>
+						</ul>
+					</c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">
 							<ul>

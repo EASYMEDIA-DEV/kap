@@ -22,7 +22,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <p class="box-label bigger">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[0].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[0].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[0].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[0].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label ${classType}">
                                 <span>${rsumeTaskDtl[0].appctnSttsCdNm}</span>
                             </p>
                         </a>
@@ -243,7 +255,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[1].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[1].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[1].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[1].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[1]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[1]}">${rsumeTaskDtl[1].appctnSttsCdNm}</c:if>
@@ -277,7 +301,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">사업자등록번호<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">└ 사업자등록번호<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
                                                             <input type="text" class="numberChk" id="offerBsnmNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerBsnmNo" placeholder="사업자등록번호" value="${rsumeTaskDtl[1].offerBsnmNo}">
@@ -286,7 +310,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">담당자명<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">└ 담당자명<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
                                                             <input type="text" placeholder="담당자명" id="offerPicNm" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicNm" value="${rsumeTaskDtl[1].offerPicNm}">
@@ -294,7 +318,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">담당자 휴대폰<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">└ 담당자 휴대폰<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
                                                             <input type="text" placeholder="담당자 휴대폰" id="offerPicHpNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicHpNo" value="${rsumeTaskDtl[1].offerPicHpNo}">
@@ -302,7 +326,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">담당자 이메일<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">└ 담당자 이메일<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
                                                             <input type="text" placeholder="담당자 이메일" id="offerPicEmail" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicEmail" value="${rsumeTaskDtl[1].offerPicEmail}">
@@ -321,7 +345,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
+                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_001' or rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
@@ -334,7 +358,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최초점검</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[2].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[2].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[2].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[2].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[2]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[2]}">${rsumeTaskDtl[2].appctnSttsCdNm}</c:if>
@@ -347,7 +383,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">중간점검</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[3].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[3].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[3].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[3].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[3]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[3]}">${rsumeTaskDtl[3].appctnSttsCdNm}</c:if>
@@ -360,7 +408,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">원가계산</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[4].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[4].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[4].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[4].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[4]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[4]}">${rsumeTaskDtl[4].appctnSttsCdNm}</c:if>
@@ -373,7 +433,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">협약</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[5].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[5].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[5].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[5].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[5]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[5]}">${rsumeTaskDtl[5].appctnSttsCdNm}</c:if>
@@ -386,7 +458,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최종점검</p>
                             </div>
-                            <p class="box-label bigger arr">
+                            <c:choose>
+                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[6].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[6].appctnSttsCdNm eq '사용자취소'
+                                     || rsumeTaskDtl[6].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[6].appctnSttsCdNm eq '탈락'}">
+                                    <c:set var="classType" value="arr" />
+                                </c:when>
+                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '접수전'}">
+                                    <c:set var="classType"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <c:set var="classType" value="accepting" />
+                                </c:otherwise>
+                            </c:choose>
+                            <p class="box-label bigger ${classType}">
                                 <span>
                                     <c:if test="${empty rsumeTaskDtl[6]}">접수전</c:if>
                                     <c:if test="${not empty rsumeTaskDtl[6]}">${rsumeTaskDtl[6].appctnSttsCdNm}</c:if>
@@ -439,6 +523,7 @@
                                                     <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[0].appctnSpprtSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[0].appctnSeq}"/>
+                                                    <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}"/>
                                                     <div class="tab-con-area">
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
@@ -597,7 +682,7 @@
                                                                                             <label class="btn-solid gray-bg" for="searchFile5">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
-                                                                                            <a href="/file/download?fileSeq=${spprtDtl[0].spprtAppctnFileSeq}&fileOrd=0"
+                                                                                            <a class="btnDownload" data-file-seq="${spprtDtl[0].spprtAppctnFileSeq}" href="javascript:void(0);"
                                                                                                download="" title="파일 다운로드">${spprtDtl[0].spprtAppctnFileNm}</a><!-- 204-01-03 속성 변경 -->
                                                                                         </div>
                                                                                     </div>
@@ -622,7 +707,7 @@
                                                                                             <label class="btn-solid gray-bg" for="searchFile6">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
-                                                                                            <a href="/file/download?fileSeq=${spprtDtl[0].acntFileSeq}&fileOrd=0"
+                                                                                            <a class="btnDownload" data-file-seq="${spprtDtl[0].acntFileSeq}" href="javascript:void(0);"
                                                                                                download="" title="파일 다운로드">${spprtDtl[0].acntFileNm}</a>
                                                                                         </div>
                                                                                     </div>
@@ -646,7 +731,7 @@
                                                                                             <label class="btn-solid gray-bg" for="searchFile7">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
-                                                                                            <a href="/file/download?fileSeq=${spprtDtl[0].bnkbkFileSeq}&fileOrd=0"
+                                                                                            <a class="btnDownload" data-file-seq="${spprtDtl[0].bnkbkFileSeq}" href="javascript:void(0);"
                                                                                                download="" title="파일 다운로드">${spprtDtl[0].bnkbkFileNm}</a>
                                                                                         </div>
                                                                                     </div>
@@ -667,6 +752,7 @@
                                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[1].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[1].appctnSeq}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -825,7 +911,7 @@
                                                                                         <label class="btn-solid gray-bg" for="searchFile8">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[1].spprtAppctnFileSeq}&fileOrd=0"
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[1].spprtAppctnFileSeq}" href="javascript:void(0);"
                                                                                            download="" title="파일 다운로드">${spprtDtl[1].spprtAppctnFileNm}</a>
                                                                                     </div>
                                                                                 </div>
@@ -850,7 +936,7 @@
                                                                                         <label class="btn-solid gray-bg" for="searchFile9">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[1].acntFileSeq}&fileOrd=0"
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[1].acntFileSeq}" href="javascript:void(0);"
                                                                                            download="" title="파일 다운로드">${spprtDtl[1].acntFileNm}</a>
                                                                                     </div>
                                                                                 </div>
@@ -874,8 +960,8 @@
                                                                                         <label class="btn-solid gray-bg" for="searchFile10">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[1].bnkbkFileSeq}&fileOrd=0"
-                                                                                           download="" title="파일 다운로드">${spprtDtl[1].bnkbkFileNm}</a><!-- 204-01-03 속성 변경 -->
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[1].bnkbkFileSeq}" href="javascript:void(0);"
+                                                                                           download="" title="파일 다운로드">${spprtDtl[1].bnkbkFileNm}</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -894,6 +980,7 @@
                                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[2].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[2].appctnSeq}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -960,7 +1047,7 @@
                                                                                         <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[2].spprtAppctnFileSeq}&fileOrd=0"
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[2].spprtAppctnFileSeq}" javascript:void(0);
                                                                                            download="" title="파일 다운로드">${spprtDtl[2].spprtAppctnFileNm}</a>
                                                                                     </div>
                                                                                 </div>
@@ -985,7 +1072,7 @@
                                                                                         <label class="btn-solid gray-bg" for="searchFile12">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[2].tchlgLseFileSeq}&fileOrd=0"
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[2].tchlgLseFileSeq}" javascript:void(0);
                                                                                            download="" title="파일 다운로드">${spprtDtl[2].tchlgLseFileNm}</a>
                                                                                     </div>
                                                                                 </div>
@@ -1010,7 +1097,7 @@
                                                                                     </div>
                                                                                     <!-- 2023-12-20 추가 -->
                                                                                     <div class="file-prev-area">
-                                                                                        <a href="/file/download?fileSeq=${spprtDtl[2].lsePayFileSeq}&fileOrd=0"
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[2].lsePayFileSeq}" javascript:void(0);
                                                                                            download="" title="파일 다운로드">${spprtDtl[2].lsePayFileNm}</a>
                                                                                     </div>
                                                                                     <!-- // 2023-12-20 추가 -->

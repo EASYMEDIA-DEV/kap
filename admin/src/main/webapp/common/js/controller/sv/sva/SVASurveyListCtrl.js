@@ -179,9 +179,16 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
+
+            var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
+            searchInput.on('keypress', function(e){
+                if (e.keyCode == 13){
+                    $formObj.find("#btnSearch").click();
+                }
+            })
+
             // 리스트 조회
             cmmCtrl.setFormData($formObj);
-
             search($formObj.find("input[name=pageIndex]").val());
 
         }

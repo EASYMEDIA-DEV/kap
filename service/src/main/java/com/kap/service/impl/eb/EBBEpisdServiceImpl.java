@@ -6,10 +6,12 @@ import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
 import com.kap.service.dao.eb.EBBFrontEpisdMapper;
+import com.kap.service.dao.mp.MPAUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -61,6 +63,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 	private final EBBFrontEpisdMapper eBBFrontEpisdMapper;
 
+	private final MPAUserMapper mpaUserMapper;
+
 
 	//교육장 서비스
 	private final EBFEduRoomService eBFEduRoomService;
@@ -85,6 +89,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/* 교육차수 - 차수별 만족도 결과 상세 */
 	private final EgovIdGnrService edctnRsltSeqIdgen;
 
+	/* 교육차수 - 차수별 만족도 결과 상세 */
+	private final EgovIdGnrService edctnTrnsfSeqIdgen;
+
 	//로그인 상태값 시스템 등록
 	private final COSystemLogService cOSystemLogService;
 
@@ -108,6 +115,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 					eBBEpisdDTO.setPageRowSize(9);
 				}
 			}
+
+
 			int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
 
 			eBBEpisdDTO.setFirstIndex(0);
@@ -191,6 +200,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 		HashMap<String, Object> map = new HashMap();
 
+
+
+		System.out.println("@@@ eBBEpisdDTO.getMemSeq()= " + eBBEpisdDTO.getMemSeq());
 		EBBEpisdDTO ebbDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
 		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
@@ -393,27 +405,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public EBBEpisdDTO selectMypageEduList(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
-		/*
-		COPaginationUtil page = new COPaginationUtil();
-
-
-		page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
-		page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
-
-		page.setPageSize(eBBEpisdDTO.getPageRowSize());
-
-		eBBEpisdDTO.setFirstIndex(0);//더보기라서 0 고정
-		int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
-		eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
-
-
-		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
-		int totcnt = eBBFrontEpisdMapper.selectMypageEduListCnt(eBBEpisdDTO).size();
-		eBBEpisdDTO.setTotalCount( totcnt );*/
-
-
+		System.out.println("@@@ eBBEpisdDTO LIST = " + eBBEpisdDTO.getMemSeq());
 
 		int totcnt = eBBFrontEpisdMapper.selectMypageEduListCnt(eBBEpisdDTO).size();
+		System.out.println("@@@ eBBEpisdDTO totcnt = " + totcnt);
+
 		eBBEpisdDTO.setTotalCount( totcnt  );
 
 		eBBEpisdDTO.setPageRowSize(9);
@@ -422,6 +418,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setFirstIndex(0);
 		eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
+
+
 
 		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
 
@@ -1726,6 +1724,105 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.updateApplyCancel(eBBPtcptDTO);
 
 	}
+
+	/**
+	 * 마이페이지 - 교육양도시 회원목록을 호출한다.
+	 */
+	public MPAUserDto selectApplyUserList(MPAUserDto mpaUserDto) throws Exception {
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(mpaUserDto.getPageIndex());
+		page.setRecordCountPerPage(mpaUserDto.getListRowSize());
+
+		page.setPageSize(mpaUserDto.getPageRowSize());
+
+		mpaUserDto.setFirstIndex( page.getFirstRecordIndex() );
+		mpaUserDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+		mpaUserDto.setTotalCount( eBBFrontEpisdMapper.selectApplyUserListCnt(mpaUserDto ));
+		List<MPAUserDto> mpaUserDtos = eBBFrontEpisdMapper.selectApplyUserList(mpaUserDto);
+		mpaUserDto.setList( mpaUserDtos );
+
+		return mpaUserDto;
+
+	}
+
+	/**
+	 * 마이페이지 - 교육양도 진행
+	 */
+	public EBBPtcptDTO setTrnsf(EBBPtcptDTO eBBPtcptDTO) throws Exception {
+
+		System.out.println("@@@getPtcptSeq = " + eBBPtcptDTO.getPtcptSeq());
+		System.out.println("@@@getBfreMemSeq = " + eBBPtcptDTO.getBfreMemSeq());
+		System.out.println("@@@getAftrMemSeq = " + eBBPtcptDTO.getAftrMemSeq());
+		System.out.println("@@@getEdctnSeq = " + eBBPtcptDTO.getEdctnSeq());
+		System.out.println("@@@getEpisdOrd = " + eBBPtcptDTO.getEpisdOrd());
+		System.out.println("@@@getEpisdYear = " + eBBPtcptDTO.getEpisdYear());
+
+
+		EBBPtcptDTO tempDto = new EBBPtcptDTO();
+		//edctnSeq, episdYear, episdOrd, memSeq
+
+		eBBPtcptDTO.setMemSeq(eBBPtcptDTO.getAftrMemSeq());
+
+		tempDto = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
+
+		if(tempDto != null){
+
+			System.out.println("@@@ 이사람은 이미 신청한 사람임");
+
+			eBBPtcptDTO.setRegStat("F");
+
+		}else{
+
+			//신청자의 정보로 양도테이블 검색해서 이력이 있는지 확인 없으면 S반환 있으면 M 반환
+			//edctnSeq, episdYear, episdOrd, bfreMemSeq(memSeq)
+			EBBPtcptDTO trnsfLog = eBBEpisdMapper.selectTrnsfLog(eBBPtcptDTO);
+
+			//해당 차수에 대한 양도 이력이 있으므로 양도 취소 M 반환
+			if(trnsfLog != null){
+
+				System.out.println("@@@양도 이력 있어서 안함");
+
+				eBBPtcptDTO.setRegStat("M");
+			//양도 이력도 없고 신청 내역도 없으니 양도 진행
+			}else{
+
+				System.out.println("@@@양도 프로세스 진행");
+
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
+				eBBPtcptDTO.setRegName( cOUserDetailsDTO.getName() );
+				eBBPtcptDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+				eBBPtcptDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+				eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+
+				int firstTrnsfIdgen = edctnTrnsfSeqIdgen.getNextIntegerId();
+				eBBPtcptDTO.setTrnsfSeq(firstTrnsfIdgen);
+
+				//양도 업데이트
+				eBBEpisdMapper.updatePtcptInfo(eBBPtcptDTO);
+
+				//이력 업데이트
+				eBBEpisdMapper.insertTrnsfLog(eBBPtcptDTO);
+
+
+				eBBPtcptDTO.setRegStat("S");
+			}
+
+
+		}
+
+		//텍스트 이미있음(실패):F, 성공:S, T: 해당차수에 양도이력 있음
+		return eBBPtcptDTO;
+	}
+
+
+
+
 
 
 

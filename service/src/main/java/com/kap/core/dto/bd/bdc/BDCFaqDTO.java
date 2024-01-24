@@ -73,4 +73,8 @@ public class BDCFaqDTO extends BaseDTO {
     @Schema(title = "FAQ 구분 코드 리스트")
     @Hidden
     private List<String> ctgryCdList;
+
+    @Schema(title = "사용자 메인여부", example = "Y/N")
+    @Builder.Default
+    private String mainYn = "N";
 }

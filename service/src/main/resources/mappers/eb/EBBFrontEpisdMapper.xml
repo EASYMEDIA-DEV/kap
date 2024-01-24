@@ -642,6 +642,7 @@
 									when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
 									end
 							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 							when stts_cd = 'EDU_STTS_CD05' then '미선발'
 							when stts_cd = 'EDU_STTS_CD06' then '교육양도'
 					end
@@ -649,7 +650,8 @@
 		end edu_stat
 		, ptcpt_dtm
 		, web_path
-
+		, bfre_mem_seq
+		, TRNSF_YN
 		FROM (SELECT
 					'E' as edu_gubun
 					, b.edctn_seq
@@ -706,6 +708,8 @@
 					, mem_seq
 					, ptcpt_dtm
 					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+		      		, bfre_mem_seq
+					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
@@ -713,10 +717,12 @@
 							episd_seq
 							, mem_seq
 							, stts_cd
+							, gpc_id
+							, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
 							, cmptn_yn
 							, cmptn_dtm
 							, reg_dtm as ptcpt_dtm
-						FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+						FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
 		) AA
 
 		<include refid="selectMypageEduListWhereSql" />
@@ -795,6 +801,8 @@
 		END AS edu_stat
 		,  ptcpt_dtm
 		,  web_path
+		, bfre_mem_seq
+		, TRNSF_YN
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -867,48 +875,50 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, "" AS  edctn_seq
-		,  "" AS episd_seq
-		,  "" AS episd_ord
-		,  "" AS parnt_seq
-		,  "" AS prnt_cd_nm
-		,  "" AS cbsn_cd
-		,  "" AS cbsn_cd_nm
+		, null AS  edctn_seq
+		,  null AS episd_seq
+		,  null AS episd_ord
+		,  null AS parnt_seq
+		,  null AS prnt_cd_nm
+		,  null AS cbsn_cd
+		,  null AS cbsn_cd_nm
 		,  "방문교육" AS nm
 		,  "STDUY_MTHD01" AS stduy_mthd_cd
 		,  "집체교육" AS stduy_mthd_cd_nm
-		,  "" AS stduy_dd_cd
-		,  "" AS stduy_dd_cd_nm
-		,  "" AS accs_order_day
-		,  "" AS accs_strt_dtm
-		,  "" AS accs_end_dtm
-		,  "" AS accs_status_nm
-		,  "" AS accs_status_order
+		,  null AS stduy_dd_cd
+		,  null AS stduy_dd_cd_nm
+		,  null AS accs_order_day
+		,  null AS accs_strt_dtm
+		,  null AS accs_end_dtm
+		,  null AS accs_status_nm
+		,  null AS accs_status_order
 		, "알 수 없음" AS edctn_status_nm
-		,  "" AS isttr_name
-		,  "" AS ffltn_nm
-		,  "" AS fxnum_cnt
-		,  "" AS fxnum_impsb_yn
-		,  "" AS accs_cnt
-		,  "" AS rcrmt_mthd_cd
-		,  "" AS rcrmt_mthd_cd_nm
-		,  "" AS pic_nm
-		,  "" AS pic_email
-		,  "" AS pic_tel_no
-		,  "" AS edctn_ntctn_file_seq
-		,  "" AS file_ord
-		,  "" AS place_seq
-		,  "" AS rprsnt_tel_no
-		,  "" AS bdget_expns_yn
-		,  "" AS bdget_expns_nm
-		,  "" AS exps_yn
-		,  "" AS edctn_cmpltn_yn
-		,  "" AS stts_cd
-		,  "" AS stts_cd_nm
-		,  "" AS cmptn_yn
-		,  "" AS cmptn_dtm
-		,  "" AS ptcpt_dtm
-		,  "" AS web_path
+		,  null AS isttr_name
+		,  null AS ffltn_nm
+		,  null AS fxnum_cnt
+		,  null AS fxnum_impsb_yn
+		,  null AS accs_cnt
+		,  null AS rcrmt_mthd_cd
+		,  null AS rcrmt_mthd_cd_nm
+		,  null AS pic_nm
+		,  null AS pic_email
+		,  null AS pic_tel_no
+		,  null AS edctn_ntctn_file_seq
+		,  null AS file_ord
+		,  null AS place_seq
+		,  null AS rprsnt_tel_no
+		,  null AS bdget_expns_yn
+		,  null AS bdget_expns_nm
+		,  null AS exps_yn
+		,  null AS edctn_cmpltn_yn
+		,  null AS stts_cd
+		,  null AS stts_cd_nm
+		,  null AS cmptn_yn
+		,  null AS cmptn_dtm
+		,  null AS ptcpt_dtm
+		,  null AS web_path
+		, "N" AS TRNSF_YN
+		, 0 AS bfre_mem_seq
 		FROM
 		(
 		SELECT vst_seq
@@ -1008,7 +1018,8 @@
 		<choose>
 			<when test="srchOrder == 1">
 				<!-- 신청 마감순-->
-				ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+				/*ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc*/
+				ORDER BY ptcpt_dtm asc
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
@@ -1043,7 +1054,7 @@
 	<sql id="selectMypageEduListWhereSql">
 		<where>
 
-			AND MEM_SEQ = #{memSeq}
+			AND (MEM_SEQ = #{memSeq} OR bfre_mem_seq = #{memSeq} )
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
 				AND edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
@@ -1238,7 +1249,6 @@
 		, mod_dtm
 		, exps_yn
 		, edctn_cmpltn_yn
-
 		, stts_cd
 		, CASE STTS_CD
 		WHEN 'EDU_STTS_CD01' THEN '선발'
@@ -1259,6 +1269,7 @@
 											when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
 									end
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+									when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
 									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
 							end
@@ -1266,7 +1277,8 @@
 					end edu_stat
 		, ptcpt_dtm
 		, web_path
-
+		, bfre_mem_seq
+		, TRNSF_YN
 		FROM (SELECT
 		'E' as edu_gubun
 		, b.edctn_seq
@@ -1301,7 +1313,6 @@
 		, a.pic_tel_no
 		, a.edctn_ntctn_file_seq
 		, a.place_seq
-
 		, c.nm as place_nm
 		, c.bsc_addr
 		, c.dtl_addr
@@ -1323,6 +1334,8 @@
 		, mem_seq
 		, ptcpt_dtm
 		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+	  	, bfre_mem_seq
+		, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
@@ -1330,10 +1343,12 @@
 		episd_seq
 		, mem_seq
 		, stts_cd
+		, gpc_id
+		, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
 		, cmptn_yn
 		, cmptn_dtm
 		, reg_dtm as ptcpt_dtm
-		FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+		FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
 		) AA
 
 		<include refid="selectMypageEduListWhereSql" />
@@ -1410,8 +1425,10 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
-		,  ptcpt_dtm
-		,  web_path
+		, ptcpt_dtm
+		, web_path
+		, bfre_mem_seq
+		, TRNSF_YN
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -1484,48 +1501,50 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, "" AS  edctn_seq
-		,  "" AS episd_seq
-		,  "" AS episd_ord
-		,  "" AS parnt_seq
-		,  "" AS prnt_cd_nm
-		,  "" AS cbsn_cd
-		,  "" AS cbsn_cd_nm
+		, null AS  edctn_seq
+		,  null AS episd_seq
+		,  null AS episd_ord
+		,  null AS parnt_seq
+		,  null AS prnt_cd_nm
+		,  null AS cbsn_cd
+		,  null AS cbsn_cd_nm
 		,  "방문교육" AS nm
 		,  "STDUY_MTHD01" AS stduy_mthd_cd
 		,  "집체교육" AS stduy_mthd_cd_nm
-		,  "" AS stduy_dd_cd
-		,  "" AS stduy_dd_cd_nm
-		,  "" AS accs_order_day
-		,  "" AS accs_strt_dtm
-		,  "" AS accs_end_dtm
-		,  "" AS accs_status_nm
-		,  "" AS accs_status_order
+		,  null AS stduy_dd_cd
+		,  null AS stduy_dd_cd_nm
+		,  null AS accs_order_day
+		,  null AS accs_strt_dtm
+		,  null AS accs_end_dtm
+		,  null AS accs_status_nm
+		,  null AS accs_status_order
 		, "알 수 없음" AS edctn_status_nm
-		,  "" AS isttr_name
-		,  "" AS ffltn_nm
-		,  "" AS fxnum_cnt
-		,  "" AS fxnum_impsb_yn
-		,  "" AS accs_cnt
-		,  "" AS rcrmt_mthd_cd
-		,  "" AS rcrmt_mthd_cd_nm
-		,  "" AS pic_nm
-		,  "" AS pic_email
-		,  "" AS pic_tel_no
-		,  "" AS edctn_ntctn_file_seq
-		,  "" AS file_ord
-		,  "" AS place_seq
-		,  "" AS rprsnt_tel_no
-		,  "" AS bdget_expns_yn
-		,  "" AS bdget_expns_nm
-		,  "" AS exps_yn
-		,  "" AS edctn_cmpltn_yn
-		,  "" AS stts_cd
-		,  "" AS stts_cd_nm
-		,  "" AS cmptn_yn
-		,  "" AS cmptn_dtm
-		,  "" AS ptcpt_dtm
-		,  "" AS web_path
+		,  null AS isttr_name
+		,  null AS ffltn_nm
+		,  null AS fxnum_cnt
+		,  null AS fxnum_impsb_yn
+		,  null AS accs_cnt
+		,  null AS rcrmt_mthd_cd
+		,  null AS rcrmt_mthd_cd_nm
+		,  null AS pic_nm
+		,  null AS pic_email
+		,  null AS pic_tel_no
+		,  null AS edctn_ntctn_file_seq
+		,  null AS file_ord
+		,  null AS place_seq
+		,  null AS rprsnt_tel_no
+		,  null AS bdget_expns_yn
+		,  null AS bdget_expns_nm
+		,  null AS exps_yn
+		,  null AS edctn_cmpltn_yn
+		,  null AS stts_cd
+		,  null AS stts_cd_nm
+		,  null AS cmptn_yn
+		,  null AS cmptn_dtm
+		,  null AS ptcpt_dtm
+		,  null AS web_path
+		, 0 AS bfre_mem_seq
+		, "N" AS TRNSF_YN
 		FROM
 		(
 		SELECT vst_seq
@@ -1622,6 +1641,73 @@
 
 		<include refid="selectMypageEduListWhereSql" />
 
+
+	</select>
+
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectApplyUserListCnt
+		설  명 : 회원이 속한 부품사의 회원목록 조회(카운트)
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.01.22    김학규       최초생성
+    -->
+	<select id="selectApplyUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
+		SELECT /* EBBFrontEpisdMapper.selectApplyUserListCnt */
+			count(*)
+		FROM co_mem_mst MEM
+				 INNER JOIN ( SELECT MEM_MOD_SEQ
+								   , MEM_SEQ
+								   , MOD_CD
+								   , REG_ID
+							  FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
+																						  , MEM_SEQ
+																					 FROM CO_MEM_MOD_LOG
+																					 GROUP BY MEM_SEQ )
+		) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
+				 LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
+
+		WHERE 1=1
+		  AND MEM.wthdrw_yn = 'Y'
+		  AND MEM.MEM_CD = 'CP'
+		  AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+	</select>
+
+
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectApplyUserList
+		설  명 : 회원이 속한 부품사의 회원목록 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.01.22    김학규       최초생성
+    -->
+	<select id="selectApplyUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
+		SELECT /* EBBFrontEpisdMapper.selectApplyUserList */
+		   	mem.mem_seq
+			, mem.ID
+			 , MEM.NAME
+			 , hp_no
+			 , email
+			 , gndr
+		FROM co_mem_mst MEM
+				 INNER JOIN ( SELECT MEM_MOD_SEQ
+								   , MEM_SEQ
+								   , MOD_CD
+								   , REG_ID
+							  		FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
+																						  , MEM_SEQ
+																					 FROM CO_MEM_MOD_LOG
+																					 GROUP BY MEM_SEQ )
+		) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
+				 LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
+
+		WHERE 1=1
+		  AND MEM.wthdrw_yn = 'Y'
+		  AND MEM.MEM_CD = 'CP'
+		  AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+
+		ORDER BY MEM.REG_DTM DESC
+
+			limit #{firstIndex}, #{recordCountPerPage}
 
 	</select>
 

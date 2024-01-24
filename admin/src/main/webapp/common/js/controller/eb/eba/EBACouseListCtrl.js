@@ -210,16 +210,16 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 						$(".classType input:checked").each(function(){
-							console.log($(this).val());
 
 							var checkVal = $(this).val();
 
 							var cdnm = $(this).data("cdnm"); //내일 이거 해야됨 클릭한것의 cdnm값 갖고오기
+
 							$("."+checkVal).find(".cdnm").html(cdnm);
 							$("."+checkVal).css("display","block");
 
 							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-							console.log(cdnm);
+
 							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
 
 

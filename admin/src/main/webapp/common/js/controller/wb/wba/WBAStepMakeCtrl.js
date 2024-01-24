@@ -33,14 +33,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var stepLength = ctrl.obj.find(".stepList").length;
 
                         if (stepLength < 20) {
-                            ctrl.obj.append(stepInitHtml);
-                            ctrl.obj.find(".stepList").last().find(".stepNm").text("단계 " + (ctrl.obj.find(".stepList").size()));
+                            $(this).closest(".stepList").after(stepInitHtml);
+                            ctrl.obj.find(".stepList").each(function(index, row){
+                                $(this).find(".stepNm").text("단계 " + (index+1));
+                                $(this).find('.stepName').empty().append('<input type="text" class="form-control input-s notRequired" name="stageNm" placeholder="단계명" title="단계명">');
+                            })
+                            /*ctrl.obj.find(".stepList").last().find(".stepNm").text("단계 " + (ctrl.obj.find(".stepList").size()));
                             ctrl.obj.find(".stepList").last().find('.stepName').empty().append('<input type="text" class="form-control input-s notRequired" name="stageNm" placeholder="단계명" title="단계명">');
                             ctrl.obj.find(".stepList").last().find('.fileBtn');
-                            ctrl.obj.find(".stepList").last().find('.fileBtn')[0].dataset.filedsize = ctrl.obj.find(".stepList").size();
+                            ctrl.obj.find(".stepList").last().find('.fileBtn')[0].dataset.filedsize = ctrl.obj.find(".stepList").size();*/
 
 
-                            var trgtObj = ctrl.obj.find(".stepList").last().find(".dropzone");
+                            var trgtObj = $(this).closest(".stepList").next().find(".dropzone");
 
                             cmmCtrl.setDropzone(trgtObj, {
                                 maxFileCnt  : trgtObj.data("maxFileCnt"),

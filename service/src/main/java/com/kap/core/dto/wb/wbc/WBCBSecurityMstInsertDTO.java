@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -83,6 +84,9 @@ public class WBCBSecurityMstInsertDTO extends BaseDTO {
 
     @Schema(title = "회원 리스트")
     private List<MPAUserDto> memList;
+
+    @Schema(title = "강사 및 위원")
+    private MPCLecturerDTO isttrDtl;
 
     @Schema(title = "부품사")
     WBCBCompanyDTO companyDtl;

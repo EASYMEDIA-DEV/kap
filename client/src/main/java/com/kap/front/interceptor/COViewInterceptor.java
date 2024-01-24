@@ -4,12 +4,14 @@ import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.sm.smk.SMKTrendDTO;
-import com.kap.service.COBUserMenuService;
-import com.kap.service.COCodeService;
-import com.kap.service.COCommService;
-import com.kap.service.SMJFormService;
+import com.kap.service.*;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @Slf4j
 public class COViewInterceptor implements HandlerInterceptor{
@@ -42,6 +42,15 @@ public class COViewInterceptor implements HandlerInterceptor{
 
     @Autowired
     private SMJFormService sMJFormService;
+
+    @Autowired
+    private EBBEpisdService eBBEpisdService;
+
+    @Autowired
+    private CBATechGuidanceService cbaTechGuidanceService;
+
+    @Autowired
+    private MPBCoexistenceService mpbCoexistenceService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -154,6 +163,53 @@ public class COViewInterceptor implements HandlerInterceptor{
         // 트랜드 리스트 관련
         SMKTrendDTO sMKTrendDTO = new SMKTrendDTO();
         request.setAttribute("quickTrendList", cOCommService.quickTrendList(sMKTrendDTO));
+
+
+        //1년간 사업 카운팅
+        //위원일 경우 카운팅 x
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        if(cOUserDetailsDTO instanceof COUserDetailsDTO) {
+            if(cOUserDetailsDTO.getRespCd().equals("00") || cOUserDetailsDTO.getRespCd().equals("1310")) {
+                if (!cOUserDetailsDTO.getAuthCd().equals("CS")) {
+                    EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
+                    ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
+                    pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
+
+                    MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
+
+                    Date today = new Date();
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(today);
+                    calendar.add(Calendar.YEAR, -1);
+
+                    Date oneYearAgo = calendar.getTime();
+
+                    String strtDt = df.format(oneYearAgo);
+                    String endDt = df.format(today);
+
+                    mpbBnsSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    mpbBnsSearchDTO.setDateType("2");
+                    mpbBnsSearchDTO.setStrtDt(strtDt);
+                    mpbBnsSearchDTO.setEndDt(endDt);
+                    List<String> status = new ArrayList<>();
+                    status.add("1");
+                    status.add("2");
+                    status.add("3");
+                    status.add("4");
+                    mpbBnsSearchDTO.setStatusChk(status);
+
+                    request.setAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(ebbEpisdDTO)); //교육 1년
+
+                    request.setAttribute("conYearCnt", cbaTechGuidanceService.selectYearCancelNotConsultingCount(pCBATechGuidanceInsertDTO)); //컨설팅 1년
+
+                    request.setAttribute("sanYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO)); //상생 1년
+                }
+            }
+        }
+
 
         //과정분류 - 소분류
         COCodeDTO cOCodeDTO = new COCodeDTO();

@@ -1093,13 +1093,14 @@
     -->
     <select id="getApplyDtl" parameterType="WBFBRegisterSearchDTO" resultType="WBFBRegisterSearchDTO">
         SELECT /* WBFBRegisterCompanyMapper.getApplyDtl */
-            APPCTN_SEQ,
+            A.APPCTN_SEQ,
             EPISD_SEQ,
             MEM_SEQ,
             APPCTN_BSNM_NO,
-            REG_DTM
+            A.REG_DTM
         FROM CX_APPCTN_MST A
-        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+        JOIN cx_appctn_rsume_dtl B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE02001_01_004'
     </select>
 
     <!--

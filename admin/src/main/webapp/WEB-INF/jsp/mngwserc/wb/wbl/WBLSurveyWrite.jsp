@@ -65,7 +65,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnNm1}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnNm1" name="partCmpnNm1"  maxlength="200" title="1차부품사명" placeholder="부품사명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm" id="partCmpnNm1" name="partCmpnNm1"  maxlength="50" title="1차부품사명" placeholder="부품사명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -77,7 +77,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnCd1}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnCd1" name="partCmpnCd1" maxlength="200" title="1차부품사명" placeholder="부품사명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm" id="partCmpnCd1" name="partCmpnCd1" maxlength="50" title="1차부품사명" placeholder="부품사명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -96,7 +96,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnNm2}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnNm2" name="partCmpnNm2" maxlength="200" title="2차부품사명" placeholder="부품사명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm" id="partCmpnNm2" name="partCmpnNm2" maxlength="50" title="2차부품사명" placeholder="부품사명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -108,7 +108,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnCd2}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnCd2" name="partCmpnCd2" maxlength="200" title="2차부품사코드" placeholder="코드 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm" id="partCmpnCd2" name="partCmpnCd2" maxlength="50" title="2차부품사코드" placeholder="코드 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -134,7 +134,7 @@
                                 <p class="form-control-static">${rtnDto.rprsntNm}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm nameChk" id="rprsntNm" name="rprsntNm"  maxlength="200" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm nameChk" id="rprsntNm" name="rprsntNm"  maxlength="50" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -163,7 +163,7 @@
                                 <p class="form-control-static">${rtnDto.picNm}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm nameChk" id="picNm" name="picNm" value="" maxlength="200" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm nameChk" id="picNm" name="picNm" value="" maxlength="50" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -175,7 +175,7 @@
                                 <p class="form-control-static">${rtnDto.telNo}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="200" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="50" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -192,7 +192,7 @@
                                 <p class="form-control-static">${rtnDto.email}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm emailChk" id="email" name="email" value="" maxlength="200" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm emailChk" id="email" name="email" value="" maxlength="50" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>

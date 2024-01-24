@@ -121,7 +121,7 @@
                         <th class="text-center">투자금액</th>
                         <th class="text-center">재단지원금</th>
                         <th class="text-center">실지급일</th>
-                        <%--<th class="text-center">관리자 등록일</th>--%>
+                        <th class="text-center">등록일시</th>
                         <th class="text-center">사용자 수정일</th>
                         <th class="text-center">최종 수정자<br>(아이디)</th>
                         <th class="text-center">최종 수정일시</th>

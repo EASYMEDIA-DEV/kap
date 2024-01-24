@@ -1,5 +1,6 @@
 package com.kap.mngwserc.controller;
 
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COBDashBoardDTO;
 import com.kap.core.dto.COMenuDTO;
@@ -89,6 +90,25 @@ public class COBDashBoardController {
 			List<COMenuDTO> menuList = cOLgnService.getMenuList(cOUserDetailsDTO);
 			RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
 
+			String pageAuth = "N";
+			String admUrl = "";
+			for (int i = 0, size = menuList.size(); i < size; i++)
+			{
+				admUrl = "";
+				if(!"".equals(COStringUtil.nullConvert(menuList.get(i).getAdmUrl())))
+				{
+					admUrl = menuList.get(i).getAdmUrl().substring(0, menuList.get(i).getAdmUrl().lastIndexOf("/")+1);
+				}
+
+				admUrl = admUrl.replaceAll("/mngwserc","");
+				if (admUrl != null && !"".equals(admUrl) && moveLink.indexOf(admUrl) > -1)
+				{
+					pageAuth = "Y";
+					break;
+				}
+			}
+
+			modelMap.addAttribute("pageAuth", pageAuth);
 			modelMap.addAttribute("moveLink", moveLink);
 		}
 		catch (Exception e)

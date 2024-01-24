@@ -82,7 +82,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.episd = ctrl.obj.find("#episd").val();
 
                         wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
-                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
+                        wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":00:00";
 
                         wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
@@ -91,7 +91,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var bfreYear = $("#bfreYear").val();
                         var bfreExpsYn = $("#bfreExpsYn").val();
                         var bfreAccsStrtDtm = $("#bfreAccsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
-                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":59:59";
+                        var bfreAccsEndDtm = $("#bfreAccsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":00:00";
                         var bfreEpisd = $("#bfreEpisd").val();
                         cmmCtrl.frmAjax(function(respObj) {
                             var episdCnt = respObj.optEpisdCnt[0];

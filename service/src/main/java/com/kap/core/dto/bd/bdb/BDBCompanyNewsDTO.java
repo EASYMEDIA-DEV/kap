@@ -87,4 +87,8 @@ public class BDBCompanyNewsDTO extends BaseDTO {
 
     @Schema(title = "디바이스구분")
     private String deviceGubun;
+
+    @Schema(title = "사용자 메인여부", example = "Y/N")
+    @Builder.Default
+    private String mainYn = "N";
 }

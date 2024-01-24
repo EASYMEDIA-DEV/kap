@@ -31,6 +31,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         let dataBsnmNo = rtnData['bsnmNo'];
         rtnData['bsnm'] = dataBsnmNo.slice(0,3) + '-' + dataBsnmNo.slice(3,5) + '-' + dataBsnmNo.slice(5);
 
+        rtnData['nameAndId'] = `${rtnData['name']}(${rtnData['id']})`;
+
         /* Input Hidden Tag Value  */
         $formObj.find(`input[type=hidden][name=id]`).val(rtnData['id']);
         $formObj.find(`input[type=hidden][name=bsnmNo]`).val(dataBsnmNo);

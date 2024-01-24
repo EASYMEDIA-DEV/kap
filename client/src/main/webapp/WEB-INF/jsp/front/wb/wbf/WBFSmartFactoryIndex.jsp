@@ -175,8 +175,8 @@
                                 <div class="btn-wrap">
                                     <c:if test="${not empty rtnRoundForm}">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon download downloadForm" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>신청서 다운로드</span></a>
-                                            <a class="btn-solid small gray-bg has-icon download downloadForm" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>보안서약서 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>신청서 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>보안서약서 다운로드</span></a>
                                         </div>
                                     </c:if>
                                     <div class="btn-set">

@@ -172,25 +172,29 @@ define(["ezCtrl"], function(ezCtrl) {
 
 							//입력된 GPC 아이디가 GPC에 회원가입되어 있지 않은 경우 노출
 							if(passFlag && isGpcUser =="N"){
-								alert("GPC 홈페이지에 회원가입해주세요.");
+								//alert("GPC 홈페이지에 회원가입해주세요.");
+								openPopup('joinMemPopup', e);
 								passFlag = false;
 							}
 
 							//입력된 GPC 아이디에 KAP 아이디가 등록되어 있지 않은 경우 노출
 							if(passFlag && kapUserId == ""){
-								alert("GPC 계정에 KAP 아이디를 등록해주세요.");
+								//alert("GPC 계정에 KAP 아이디를 등록해주세요.");
+								openPopup('iDregistPopup', e);
 								passFlag = false;
 							}
 
 							//입력된 GPC 아이디에 KAP 아이디가 등록되어있지만 현재 신청하려는 kap아이디와 일치하지 않음
 							if(passFlag && nowId != kapUserId){
-								alert("GPC 계정의 KAP 아이디를 확인해주세요.");
+								//alert("GPC 계정의 KAP 아이디를 확인해주세요.");
+								openPopup('chkIdPopup', e);
 								passFlag = false;
 							}
 
 							//입력된 GPC 아이디의 성별과 현재 로그인된 계정의 성별이 다른 경우 노출
 							if(passFlag && gndr != gndrCd){
-								alert("GPC 계정의 성별과 KAP 성별이 일치하지 않습니다.");
+								//alert("GPC 계정의 성별과 KAP 성별이 일치하지 않습니다.");
+								openPopup('genderMatchPopup', e);
 								passFlag = false;
 							}
 
@@ -259,13 +263,13 @@ define(["ezCtrl"], function(ezCtrl) {
 						//교육과정 신청
 
 						var gpcId = $("#gpcId").val();
-						if(gpcId == ""){
+						var gpcYn = $("#gpcYn").val();
+						var gpcPass = $("#gpcPass").val();
+
+						if(gpcYn == "Y" && gpcId == ""){
 							alert("GPC 아이디를 입력해주세요.");
 							return false;
 						}
-
-						var gpcYn = $("#gpcYn").val();
-						var gpcPass = $("#gpcPass").val();
 
 						if(gpcYn == "Y" && gpcPass == "N"){
 							alert("GPC 아이디를 인증해주세요.");

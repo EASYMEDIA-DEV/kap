@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.eb.ebb.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
@@ -185,6 +186,16 @@ public interface EBBEpisdService {
 	 * 마이페이지 - 교육신청을 취소한다.
 	 */
 	public void updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 * 마이페이지 - 교육양도시 회원목록을 호출한다.
+	 */
+	public MPAUserDto selectApplyUserList(MPAUserDto mPAUserDto) throws Exception;
+
+	/**
+	 * 마이페이지 - 교육양도 진행
+	 */
+	public EBBPtcptDTO setTrnsf(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 
 }
