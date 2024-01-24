@@ -177,25 +177,40 @@
                                             <tr>
                                                 <th>본사주소</th>
                                                 <td>
-                                                    <c:if test="${not empty rtnData.zipcode}">
-                                                        (${rtnData.zipcode}) ${rtnData.bscAddr} ${rtnData.dtlAddr}
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.zipcode}">
+                                                            (${rtnData.zipcode}) ${rtnData.bscAddr} ${rtnData.dtlAddr}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>매출액</th>
                                                 <td>
-                                                    <c:if test="${not empty rtnData.slsPmt}">
-                                                        ${rtnData.slsPmt}억 원(${rtnData.slsYear}년)
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.slsPmt}">
+                                                            ${rtnData.slsPmt}억 원(${rtnData.slsYear}년)
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>직원수</th>
                                                 <td>
-                                                    <c:if test="${not empty rtnData.mpleCnt}">
-                                                        ${rtnData.mpleCnt}명
-                                                    </c:if>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.mpleCnt}">
+                                                            ${rtnData.mpleCnt}명
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -204,11 +219,22 @@
                                                     <c:if test="${not empty rtnData.mjrPrdct1}">
                                                         ① ${rtnData.mjrPrdct1}
                                                     </c:if>
+                                                    <c:if test="${empty rtnData.mjrPrdct1}">
+                                                        ① -
+                                                    </c:if>
+
                                                     <c:if test="${not empty rtnData.mjrPrdct2}">
                                                         ② ${rtnData.mjrPrdct2}
                                                     </c:if>
+                                                    <c:if test="${empty rtnData.mjrPrdct2}">
+                                                        ② -
+                                                    </c:if>
+
                                                     <c:if test="${not empty rtnData.mjrPrdct3}">
                                                         ③ ${rtnData.mjrPrdct3}
+                                                    </c:if>
+                                                    <c:if test="${empty rtnData.mjrPrdct3}">
+                                                        ③ -
                                                     </c:if>
                                                 </td>
                                             </tr>
