@@ -100,6 +100,7 @@ public class WBEACarbonListController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("ROUND_CD");
+            cdDtlList.add("SYSTEM_HOUR");
 
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 

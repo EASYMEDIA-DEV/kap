@@ -355,26 +355,25 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            downloadForm : {
+            btnDownload : {
                 event : {
                     click : function() {
-                        var fielFieldValue = $(this).data("fileSeq");
                         cmmCtrl.paramAjax(function(data){
-                            if(data.rtnData != null)
+                            if(data != null && data.length > 0)
                             {
                                 var fileInfo = {
-                                    url : data.rtnData[0].webPath,
-                                    name: data.rtnData[0].orgnFileNm,
-                                    size: data.rtnData[0].fileSize,
-                                    fileSeq: data.rtnData[0].fileSeq,
-                                    fileOrd: data.rtnData[0].fileOrd,
-                                    fileDsc: data.rtnData[0].fileDsc,
-                                    type: data.rtnData[0].fileExtn,
-                                    webPath: data.rtnData[0].webPath
+                                    url : data[0].webPath,
+                                    name: data[0].orgnFileNm,
+                                    size: data[0].fileSize,
+                                    fileSeq: data[0].fileSeq,
+                                    fileOrd: data[0].fileOrd,
+                                    fileDsc: data[0].fileDsc,
+                                    type: data[0].fileExtn,
+                                    webPath: data[0].webPath
                                 };
                                 location.href = `/file/download?fileSeq=${fileInfo.fileSeq}&fileOrd=${fileInfo.fileOrd}`
                             }
-                        }, "./file/list", { fileSeq : fielFieldValue }, "json");
+                        }, "/file/list", { fileSeq : $(this).data("fileSeq") }, "json");
                     }
                 }
             },

@@ -199,7 +199,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            downloadForm : {
+            btnDownload : {
                 event : {
                     click : function() {
                         cmmCtrl.paramAjax(function(data){
