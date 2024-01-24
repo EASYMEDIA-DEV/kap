@@ -40,7 +40,7 @@
                 <td class="text-center">${list.nvstmPmt}</td>
                 <td class="text-center">${list.fndnSpprtPmt}</td>
                 <td class="text-center">${list.realGiveDt}</td>
-                <%--<td class="text-center">
+                <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.regDtm}">
                             ${ kl:convertDate(list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
@@ -49,7 +49,7 @@
                             -
                         </c:otherwise>
                     </c:choose>
-                </td>--%>
+                </td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.appctnSttsChngDtm}">
