@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -30,7 +31,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 @EqualsAndHashCode(callSuper=false)
-@Schema(title = "보안환경구축 신청 마스터")
+@Schema(title = "안전설비구축 신청 마스터")
 public class WBDBSafetyMstInsertDTO extends BaseDTO {
 
     @Schema(title = "신청순번", example = "숫자")
@@ -83,6 +84,9 @@ public class WBDBSafetyMstInsertDTO extends BaseDTO {
 
     @Schema(title = "회원 리스트")
     private List<MPAUserDto> memList;
+
+    @Schema(title = "강사 및 위원")
+    private MPCLecturerDTO isttrDtl;
 
     @Schema(title = "부품사")
     WBDBCompanyDTO companyDtl;

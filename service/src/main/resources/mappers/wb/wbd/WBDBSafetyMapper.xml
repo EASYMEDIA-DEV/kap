@@ -383,7 +383,7 @@
 
     <!--
          쿼리명 : WBDBSafetyMapper.selectCarbonCompanyDtl
-         설  명 : 탄소배출저감 신청 정보 조회
+         설  명 : 안전설비구축 신청 정보 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
@@ -411,7 +411,7 @@
 
     <!--
          쿼리명 : WBDBSafetyMapper.selectCarbonCompanyMember
-         설  명 : 탄소배출저감 신청자 조회
+         설  명 : 안전설비구축 신청자 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
@@ -435,8 +435,21 @@
     </select>
 
     <!--
+     쿼리명 : WBDBSafetyMapper.selectIsttrDtl
+     설  명 : 안전설비구축 강사 및 위탁위원 조회
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2023.11.08  김대성     최초 생성
+-->
+    <select id="selectIsttrDtl" parameterType="wBDBSafetyMstInsertDTO" resultType="mPCLecturerDTO">
+        SELECT /* WBDBSafetyMapper.selectIsttrDtl */ *
+        FROM CP_ISTTR_MST
+        WHERE ISTTR_SEQ  = #{picCmssrSeq};
+    </select>
+
+    <!--
          쿼리명 : WBDBSafetyMapper.selectCarbonCompany
-         설  명 : 탄소배출저감 부품사 조회
+         설  명 : 안전설비구축 부품사 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
@@ -491,7 +504,7 @@
 
     <!--
          쿼리명 : WBDBSafetyMapper.selectCarbonCompanyDtlDetail
-         설  명 : 탄소배출저감 신청정보 조회
+         설  명 : 안전설비구축 신청정보 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성

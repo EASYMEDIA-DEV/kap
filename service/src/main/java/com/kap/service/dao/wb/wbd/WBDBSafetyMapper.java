@@ -1,10 +1,7 @@
 package com.kap.service.dao.wb.wbd;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
-import com.kap.core.dto.wb.wbc.WBCBCompanyDtlDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
+import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.core.dto.wb.wbd.*;
 
 import java.util.List;
@@ -86,6 +83,11 @@ public interface WBDBSafetyMapper {
      * 신청자 조회
      */
     public List<MPAUserDto> selectCarbonCompanyMember(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
+
+    /**
+     * 강사 및 위탁위원 조회
+     */
+    public MPCLecturerDTO selectIsttrDtl(WBDBSafetyMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
     /**
      * 신청 부품사 조회
