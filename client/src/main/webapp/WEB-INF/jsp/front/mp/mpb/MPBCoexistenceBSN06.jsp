@@ -42,12 +42,13 @@
                             <form name="frmData" enctype="multipart/form-data">
                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}" />
+                                <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
-                                <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
 
                                 <div class="data-enter-form">
                                     <div class="row">
@@ -241,7 +242,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeTaskDtl[0].appctnSttsCd eq 'PRO_TYPE02001_01_002'}">
+                                <c:if test="${rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
@@ -280,6 +281,7 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[1].appctnSttsCd}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}" />
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[1].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[1].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[1].rsumeOrd}" />
@@ -345,7 +347,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_001' or rsumeTaskDtl[1].appctnSttsCd eq 'PRO_TYPE02002_01_003'}">
+                                <c:if test="${rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_003'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
@@ -482,7 +484,6 @@
             </div>
         </div>
     </div>
-
     <!--지급정보관리 -->
     <div id="wrap">
         <!-- 지급정보관리 팝업 -->
@@ -498,7 +499,7 @@
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}">
-                                            <a class="swiper-slide txt-tab-btn btnSpprtTab active" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].appctnSttsCd}" href="javascript:">
+                                            <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].appctnSttsCd}" href="javascript:">
                                                 <p class="txt"><span class="menu-name">선급금</span></p>
                                             </a>
                                         </c:if>
@@ -524,6 +525,8 @@
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[0].appctnSpprtSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[0].appctnSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}"/>
+                                                    <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}"/>
+                                                    <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[0].giveType}"/>
                                                     <div class="tab-con-area">
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
@@ -753,6 +756,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[1].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[1].appctnSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[1].mngSttsCd}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[1].giveType}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -770,7 +775,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input calendar">
-                                                                                        <input type="text" class="datetimepicker_input accsDt" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[0].accsDt}" readonly="" placeholder="날짜 선택">
+                                                                                        <input type="text" class="datetimepicker_input accsDt" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[1].accsDt}" readonly="" placeholder="날짜 선택">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -878,7 +883,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="comma dpsitNm" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" placeholder="예금주 입력" value="${spprtDtl[1].dpsitNm}">
+                                                                                        <input type="text" class="dpsitNm" name="wBFBRegisterDTO.spprtDtlList[0].dpsitNm" placeholder="예금주 입력" value="${spprtDtl[1].dpsitNm}">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -981,6 +986,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[2].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[2].appctnSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[2].mngSttsCd}"/>
+                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[2].giveType}"/>
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -1118,9 +1125,7 @@
                         </div>
                         <div class="bot-fix-btn-area">
                             <div class="btn-wrap align-right">
-                                <c:if test="${spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003'}">
-                                    <button class="btn-solid small black-bg btn-role-close btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
-                                </c:if>
+                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
                             </div>
                         </div>
                         <div class="user-opt-area">

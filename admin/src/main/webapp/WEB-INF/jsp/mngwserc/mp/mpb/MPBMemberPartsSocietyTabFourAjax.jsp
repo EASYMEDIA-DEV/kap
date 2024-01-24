@@ -7,7 +7,7 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ kl:emptyHypen(list.year)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.episd)}</td>
-                <td class="text-center">${ kl:emptyHypen(list.menuCdNm)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.typeCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.bsnCdNm)} </td>
                 <td class="text-center">${ kl:emptyHypen(list.status)}</td>
                 <td class="text-center">${kl:emptyHypen(list.cmpnNm)}</td>

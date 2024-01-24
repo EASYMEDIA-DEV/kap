@@ -708,6 +708,7 @@
             accs_dt = #{accsDt}
             ,appctn_stts_cd = #{appctnSttsCd}
             ,appctn_stts_chng_dtm = now()
+            ,mng_stts_cd = #{mngSttsCd}
             ,gvmnt_spprt_pmt = #{gvmntSpprtPmt}
             ,mjcmn_aprnc_pmt = #{mjcmnAprncPmt}
             ,ttl_pmt = #{ttlPmt}
@@ -761,8 +762,10 @@
             appctn_stts_cd = #{appctnSttsCd}
             <if test='siteGubun == "front"'>,appctn_stts_chng_dtm = now()</if>
             ,mng_stts_cd = #{mngSttsCd}
-            ,rtrn_rsn_cntn = #{rtrnRsnCntn}
-            <if test='siteGubun == "admin"'>,mng_stts_chng_dtm = now()</if>
+            <if test='siteGubun == "admin"'>
+                ,mng_stts_chng_dtm = now()
+                ,rtrn_rsn_cntn = #{rtrnRsnCntn}
+            </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()

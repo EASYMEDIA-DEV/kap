@@ -1417,6 +1417,30 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 wbfbRsumeTaskDtlDTO.setModId(modId);
                 wbfbRsumeTaskDtlDTO.setModIp(modIp);
 
+                switch (wBFBRegisterDTO.getAppctnSttsCd()) {
+                    case "PRO_TYPE02001_01_002":
+                        wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_002");
+                        wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
+                        break;
+                    case "PRO_TYPE02002_01_003":
+                        wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02002_01_003");
+                        wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02002_02_002");
+                        break;
+                }
+
+                /* 공통 - 상태값 변경*/
+                WBFBRsumeTaskDtlDTO rsumeTaskDtlDTO = WBFBRsumeTaskDtlDTO.builder()
+                        .appctnSttsCd(wBFBRegisterDTO.getAppctnSttsCd())
+                        .mngSttsCd(wBFBRegisterDTO.getMngSttsCd())
+                        .modId(modId)
+                        .modIp(modIp)
+                        .rsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq())
+                        .rsumeOrd(wbfbRsumeTaskDtlDTO.getRsumeOrd())
+                        .appctnSeq(wBFBRegisterDTO.getAppctnSeq())
+                        .build();
+
+                wBFBRegisterCompanyMapper.updRsumeDtl(rsumeTaskDtlDTO);
+
                 if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02001")) {
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = WBFBRegisterSearchDTO.builder()
                             .bsnmNo(wBFBRegisterDTO.getBsnmNo())
@@ -1473,8 +1497,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                                 HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
 
                                 WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
-                                fileInfo.setRsumeSeq(wBFBRegisterDTO.getRsumeSeq());
-                                fileInfo.setRsumeOrd(wBFBRegisterDTO.getRsumeOrd());
+                                fileInfo.setRsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq());
+                                fileInfo.setRsumeOrd(wbfbRsumeTaskDtlDTO.getRsumeOrd());
                                 if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE01"); }
                                 else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
                                 else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
@@ -1535,7 +1559,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             } else if (i == 2) {
                                 spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
                             }
-                        } else if(wBFBRegisterDTO.getGiveType().equals("PRO_TYPE03002")) {
+                        } else if(spprtDtl.getGiveType().equals("PRO_TYPE03002")) {
                             /* 지원금 */
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
@@ -1544,7 +1568,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             } else if (i == 2) {
                                 spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
                             }
-                        } else if(wBFBRegisterDTO.getGiveType().equals("PRO_TYPE03003")) {
+                        } else if(spprtDtl.getGiveType().equals("PRO_TYPE03003")) {
                             /* 기울임치 */
                             if(i == 0) {
                                 spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
@@ -1556,6 +1580,22 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         }
                     }
                 }
+
+                switch (spprtDtl.getAppctnSttsCd()) {
+                    case "PRO_TYPE03001_01_003":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03001_01_004");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03001_02_002");
+                        break;
+                    case "PRO_TYPE03002_01_003":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03002_01_004");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03002_02_002");
+                        break;
+                    case "PRO_TYPE03003_01_003":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03003_01_004");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03003_02_002");
+                        break;
+                }
+
                 /* 상생신청지원금액상세 */
                 respCnt = wBFBRegisterCompanyMapper.updSpprtDtl(spprtDtl);
             }

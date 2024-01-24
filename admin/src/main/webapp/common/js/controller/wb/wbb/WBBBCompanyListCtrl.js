@@ -159,6 +159,14 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
+
+            var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
+            searchInput.on('keypress', function(e){
+                if (e.keyCode == 13){
+                    $formObj.find("#btnSearch").click();
+                }
+            })
+
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
 
