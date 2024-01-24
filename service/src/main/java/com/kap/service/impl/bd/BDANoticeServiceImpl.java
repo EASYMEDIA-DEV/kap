@@ -65,8 +65,8 @@ public class BDANoticeServiceImpl implements BDANoticeService {
 
         pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
 
-        // 사용자 노출 갯수 조건문 추가
-        if(pBDANoticeDTO.getSiteGubun().equals("front")) {
+        // 사용자 메인 노출 갯수 조건문 추가
+        if (pBDANoticeDTO.getMainYn().equals("Y")) {
             pBDANoticeDTO.setRecordCountPerPage(3);
         }else{
             pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());

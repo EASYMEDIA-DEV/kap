@@ -874,48 +874,48 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, "" AS  edctn_seq
-		,  "" AS episd_seq
-		,  "" AS episd_ord
-		,  "" AS parnt_seq
-		,  "" AS prnt_cd_nm
-		,  "" AS cbsn_cd
-		,  "" AS cbsn_cd_nm
+		, null AS  edctn_seq
+		,  null AS episd_seq
+		,  null AS episd_ord
+		,  null AS parnt_seq
+		,  null AS prnt_cd_nm
+		,  null AS cbsn_cd
+		,  null AS cbsn_cd_nm
 		,  "방문교육" AS nm
 		,  "STDUY_MTHD01" AS stduy_mthd_cd
 		,  "집체교육" AS stduy_mthd_cd_nm
-		,  "" AS stduy_dd_cd
-		,  "" AS stduy_dd_cd_nm
-		,  "" AS accs_order_day
-		,  "" AS accs_strt_dtm
-		,  "" AS accs_end_dtm
-		,  "" AS accs_status_nm
-		,  "" AS accs_status_order
+		,  null AS stduy_dd_cd
+		,  null AS stduy_dd_cd_nm
+		,  null AS accs_order_day
+		,  null AS accs_strt_dtm
+		,  null AS accs_end_dtm
+		,  null AS accs_status_nm
+		,  null AS accs_status_order
 		, "알 수 없음" AS edctn_status_nm
-		,  "" AS isttr_name
-		,  "" AS ffltn_nm
-		,  "" AS fxnum_cnt
-		,  "" AS fxnum_impsb_yn
-		,  "" AS accs_cnt
-		,  "" AS rcrmt_mthd_cd
-		,  "" AS rcrmt_mthd_cd_nm
-		,  "" AS pic_nm
-		,  "" AS pic_email
-		,  "" AS pic_tel_no
-		,  "" AS edctn_ntctn_file_seq
-		,  "" AS file_ord
-		,  "" AS place_seq
-		,  "" AS rprsnt_tel_no
-		,  "" AS bdget_expns_yn
-		,  "" AS bdget_expns_nm
-		,  "" AS exps_yn
-		,  "" AS edctn_cmpltn_yn
-		,  "" AS stts_cd
-		,  "" AS stts_cd_nm
-		,  "" AS cmptn_yn
-		,  "" AS cmptn_dtm
-		,  "" AS ptcpt_dtm
-		,  "" AS web_path
+		,  null AS isttr_name
+		,  null AS ffltn_nm
+		,  null AS fxnum_cnt
+		,  null AS fxnum_impsb_yn
+		,  null AS accs_cnt
+		,  null AS rcrmt_mthd_cd
+		,  null AS rcrmt_mthd_cd_nm
+		,  null AS pic_nm
+		,  null AS pic_email
+		,  null AS pic_tel_no
+		,  null AS edctn_ntctn_file_seq
+		,  null AS file_ord
+		,  null AS place_seq
+		,  null AS rprsnt_tel_no
+		,  null AS bdget_expns_yn
+		,  null AS bdget_expns_nm
+		,  null AS exps_yn
+		,  null AS edctn_cmpltn_yn
+		,  null AS stts_cd
+		,  null AS stts_cd_nm
+		,  null AS cmptn_yn
+		,  null AS cmptn_dtm
+		,  null AS ptcpt_dtm
+		,  null AS web_path
 		, "N" AS TRNSF_YN
 		, 0 AS bfre_mem_seq
 		FROM
@@ -1499,48 +1499,48 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, "" AS  edctn_seq
-		,  "" AS episd_seq
-		,  "" AS episd_ord
-		,  "" AS parnt_seq
-		,  "" AS prnt_cd_nm
-		,  "" AS cbsn_cd
-		,  "" AS cbsn_cd_nm
+		, null AS  edctn_seq
+		,  null AS episd_seq
+		,  null AS episd_ord
+		,  null AS parnt_seq
+		,  null AS prnt_cd_nm
+		,  null AS cbsn_cd
+		,  null AS cbsn_cd_nm
 		,  "방문교육" AS nm
 		,  "STDUY_MTHD01" AS stduy_mthd_cd
 		,  "집체교육" AS stduy_mthd_cd_nm
-		,  "" AS stduy_dd_cd
-		,  "" AS stduy_dd_cd_nm
-		,  "" AS accs_order_day
-		,  "" AS accs_strt_dtm
-		,  "" AS accs_end_dtm
-		,  "" AS accs_status_nm
-		,  "" AS accs_status_order
+		,  null AS stduy_dd_cd
+		,  null AS stduy_dd_cd_nm
+		,  null AS accs_order_day
+		,  null AS accs_strt_dtm
+		,  null AS accs_end_dtm
+		,  null AS accs_status_nm
+		,  null AS accs_status_order
 		, "알 수 없음" AS edctn_status_nm
-		,  "" AS isttr_name
-		,  "" AS ffltn_nm
-		,  "" AS fxnum_cnt
-		,  "" AS fxnum_impsb_yn
-		,  "" AS accs_cnt
-		,  "" AS rcrmt_mthd_cd
-		,  "" AS rcrmt_mthd_cd_nm
-		,  "" AS pic_nm
-		,  "" AS pic_email
-		,  "" AS pic_tel_no
-		,  "" AS edctn_ntctn_file_seq
-		,  "" AS file_ord
-		,  "" AS place_seq
-		,  "" AS rprsnt_tel_no
-		,  "" AS bdget_expns_yn
-		,  "" AS bdget_expns_nm
-		,  "" AS exps_yn
-		,  "" AS edctn_cmpltn_yn
-		,  "" AS stts_cd
-		,  "" AS stts_cd_nm
-		,  "" AS cmptn_yn
-		,  "" AS cmptn_dtm
-		,  "" AS ptcpt_dtm
-		,  "" AS web_path
+		,  null AS isttr_name
+		,  null AS ffltn_nm
+		,  null AS fxnum_cnt
+		,  null AS fxnum_impsb_yn
+		,  null AS accs_cnt
+		,  null AS rcrmt_mthd_cd
+		,  null AS rcrmt_mthd_cd_nm
+		,  null AS pic_nm
+		,  null AS pic_email
+		,  null AS pic_tel_no
+		,  null AS edctn_ntctn_file_seq
+		,  null AS file_ord
+		,  null AS place_seq
+		,  null AS rprsnt_tel_no
+		,  null AS bdget_expns_yn
+		,  null AS bdget_expns_nm
+		,  null AS exps_yn
+		,  null AS edctn_cmpltn_yn
+		,  null AS stts_cd
+		,  null AS stts_cd_nm
+		,  null AS cmptn_yn
+		,  null AS cmptn_dtm
+		,  null AS ptcpt_dtm
+		,  null AS web_path
 		, 0 AS bfre_mem_seq
 		, "N" AS TRNSF_YN
 		FROM

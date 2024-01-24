@@ -442,7 +442,7 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "변경사유", example = "이유")
     private String rsn;
 
-    @Schema(title = "메인여부", example = "Y/N")
+    @Schema(title = "사용자 메인여부", example = "Y/N")
     @Builder.Default
     private String mainYn = "N";
 
