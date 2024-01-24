@@ -106,4 +106,7 @@ public class WBCBSecurityMstInsertDTO extends BaseDTO {
     @Schema(title = "파일 리스트")
     private List<COFileDTO> optnFileList;
 
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
+
 }

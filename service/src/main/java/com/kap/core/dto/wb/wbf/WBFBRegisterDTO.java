@@ -211,5 +211,8 @@ public class WBFBRegisterDTO extends BaseDTO {
     /* 스마트 공장 상세 DTO */
     WBFBRsumeTaskDtlDTO rsumeTaskDtl;
 
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
+
 
 }

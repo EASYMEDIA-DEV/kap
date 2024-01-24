@@ -1490,11 +1490,18 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             for (int i = 0; i < rtnList.size() ; i++) {
 
                                 List<COFileDTO> fileList = new ArrayList();
-                                rtnList.get(i).setStatus("success");
-                                rtnList.get(i).setFieldNm("fileSeq");
-                                fileList.add(rtnList.get(i));
+                                Integer fileSeq;
 
-                                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                                if ("99".equals(rtnList.get(i).getRespCd())) {
+                                    fileSeq = wBFBRegisterDTO.getFileSeqList().get(i);
+                                } else {
+                                    rtnList.get(i).setStatus("success");
+                                    rtnList.get(i).setFieldNm("fileSeq");
+                                    fileList.add(rtnList.get(i));
+                                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                                    fileSeq = fileSeqMap.get("fileSeq");
+                                }
 
                                 WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
                                 fileInfo.setRsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq());
@@ -1503,7 +1510,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                                 else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
                                 else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
                                 else if(i == 3) { fileInfo.setFileCd("ATTACH_FILE_TYPE04"); }
-                                fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
+                                fileInfo.setFileSeq(fileSeq);
                                 fileInfo.setRegId(modId);
                                 fileInfo.setRegIp(modIp);
 
@@ -1545,37 +1552,45 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
                     for (int i = 0; i < rtnList.size() ; i++) {
                         List<COFileDTO> fileList = new ArrayList();
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
-                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                        Integer fileSeq;
+
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wBFBRegisterDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
 
                         if(spprtDtl.getGiveType().equals("PRO_TYPE03001")) {
                             /* 선급금 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             } else if (i == 1) {
-                                spprtDtl.setAcntFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                                spprtDtl.setAcntFileSeq(fileSeq); /*계좌이체약정서*/
                             } else if (i == 2) {
-                                spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                                spprtDtl.setBnkbkFileSeq(fileSeq); /*통장사본*/
                             }
                         } else if(spprtDtl.getGiveType().equals("PRO_TYPE03002")) {
                             /* 지원금 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             } else if (i == 1) {
-                                spprtDtl.setAcntFileSeq(fileSeqMap.get("fileSeq")); /*계좌이체약정서*/
+                                spprtDtl.setAcntFileSeq(fileSeq); /*계좌이체약정서*/
                             } else if (i == 2) {
-                                spprtDtl.setBnkbkFileSeq(fileSeqMap.get("fileSeq")); /*통장사본*/
+                                spprtDtl.setBnkbkFileSeq(fileSeq); /*통장사본*/
                             }
                         } else if(spprtDtl.getGiveType().equals("PRO_TYPE03003")) {
                             /* 기울임치 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq")); /*지원금신청서*/
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             } else if (i == 1) {
-                                spprtDtl.setTchlgLseFileSeq(fileSeqMap.get("fileSeq")); /*기술임치증*/
+                                spprtDtl.setTchlgLseFileSeq(fileSeq); /*기술임치증*/
                             } else if (i == 2) {
-                                spprtDtl.setLsePayFileSeq(fileSeqMap.get("fileSeq")); /*임치료납입영수증*/
+                                spprtDtl.setLsePayFileSeq(fileSeq); /*임치료납입영수증*/
                             }
                         }
                     }

@@ -74,17 +74,19 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     click : function() {
                         var id = $(this).data("seq");
                         var $formObj = $('#frmData'+id);
-                        console.log($formObj);
-                        var file = $formObj.find('input[type=file]');
+                        var status = $(this).data("status");
+                        var file = $formObj.find('.fileFlag');
                         var valid = true;
 
-                        file.each(function(i) {
-                            if (!$(this).val()) {
-                                alert('신청서류를 모두 등록해주세요.');
-                                valid = false;
-                                return false;
-                            }
-                        });
+                        if (status == "접수전") {
+                            file.each(function(i) {
+                                if (!$(this).val()) {
+                                    alert('신청서류를 모두 등록해주세요.');
+                                    valid = false;
+                                    return false;
+                                }
+                            });
+                        }
 
                         if (valid) {
                             if(confirm("저장 후 내용을 수정할 수 없습니다.\n저장하시겠습니까?")) {
@@ -110,7 +112,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $(this).closest(".form-group").find("input[type=file]").val("");
-                        $(this).closest(".form-group").find('.file-list').empty();
+                        $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $(this).closest(".form-group").find('.file-list').remove();
                     }
                 }
             }

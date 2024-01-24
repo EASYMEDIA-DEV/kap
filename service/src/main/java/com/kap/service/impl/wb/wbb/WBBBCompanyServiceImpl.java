@@ -918,16 +918,20 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 }
 
                 for (int i = 0; i < rtnList.size() ; i++) {
-
                     List<COFileDTO> fileList = new ArrayList();
-                    rtnList.get(i).setStatus("success");
-                    rtnList.get(i).setFieldNm("fileSeq");
-                    fileList.add(rtnList.get(i));
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    if ("99".equals(rtnList.get(i).getRespCd())) {
+                        wbbaApplyDtlDTO.setFileSeq(wbbaApplyDtlDTO.getFileSeqList().get(i));
+                    } else {
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                        wbbaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                    }
 
                     wbbaApplyDtlDTO.setSbmsnSeq(fileApplyIdgen.getNextIntegerId());
                     wbbaApplyDtlDTO.setOptnSeq(optinList.get(i).getOptnSeq());
-                    wbbaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
 
                     wbbbCompanyMapper.insertFileInfo(wbbaApplyDtlDTO);
                 }

@@ -78,11 +78,10 @@
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                                 <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                <div class="file-list">
-                                                                </div>
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.appctnSeq}"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
                                                         </c:if>

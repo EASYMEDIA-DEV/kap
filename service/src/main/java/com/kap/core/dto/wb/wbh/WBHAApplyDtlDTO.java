@@ -93,4 +93,7 @@ public class WBHAApplyDtlDTO extends BaseDTO {
 
     @Schema(title = "계측장비상세")
     private WBHAMsEuipmentDTO wbhaMsEuipmentDTO;
+
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
 }

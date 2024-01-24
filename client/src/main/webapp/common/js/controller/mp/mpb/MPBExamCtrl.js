@@ -204,7 +204,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     click : function() {
                         var id = $(this).data("seq");
                         var $formObj = $('#frmData'+id);
-                        var file = $formObj.find('input[type=file]');
+                        var status = $(this).data("status");
                         var tchlgNm = $('.tchlgNm');
                         var valid = true;
 
@@ -218,8 +218,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             });
                         }
 
-                        if (id == 1 || id == 3) {
+                        if (status == "접수전") {
                             if (valid) {
+                                var file = $formObj.find('input[type=file]');
+
                                 file.each(function (i) {
                                     if (!$(this).val()) {
                                         alert('신청서류를 모두 등록해주세요.');
@@ -229,6 +231,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 });
                             }
                         }
+
                         if (valid) {
 
                             $formObj.children().find('.comma').each(function () {

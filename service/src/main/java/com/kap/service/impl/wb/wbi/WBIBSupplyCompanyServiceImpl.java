@@ -692,12 +692,20 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
                 for (int i = 0; i < rtnList.size() ; i++) {
 
                     List<COFileDTO> fileList = new ArrayList();
-                    rtnList.get(i).setStatus("success");
-                    rtnList.get(i).setFieldNm("fileSeq");
-                    fileList.add(rtnList.get(i));
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    Integer fileSeq;
 
-                    wBIBSupplyDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                    if ("99".equals(rtnList.get(i).getRespCd())) {
+                        fileSeq = wBIBSupplyDTO.getFileSeqList().get(i);
+                    } else {
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                        fileSeq = fileSeqMap.get("fileSeq");
+                    }
+
+                    wBIBSupplyDTO.setFileSeq(fileSeq);
                     wBIBSupplyDTO.setFileCd("ATTACH_FILE_TYPE01");
                     wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
                 }
