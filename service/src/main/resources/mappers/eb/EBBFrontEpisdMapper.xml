@@ -917,7 +917,7 @@
 		,  "" AS ptcpt_dtm
 		,  "" AS web_path
 		, "N" AS TRNSF_YN
-		, "0" AS bfre_mem_seq
+		, 0 AS bfre_mem_seq
 		FROM
 		(
 		SELECT vst_seq
@@ -1541,7 +1541,7 @@
 		,  "" AS cmptn_dtm
 		,  "" AS ptcpt_dtm
 		,  "" AS web_path
-		, "0" AS bfre_mem_seq
+		, 0 AS bfre_mem_seq
 		, "N" AS TRNSF_YN
 		FROM
 		(
