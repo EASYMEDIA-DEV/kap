@@ -1,7 +1,19 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/co/COFormCtrl controller/wb/wbb/WBBARoundListCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>미래차다각화 회차 검색</h6>
+        <h6 class="mt0"><em class="ion-play mr-sm"></em>
+            <c:choose>
+                <c:when test="${bsnCd == 'futureTech'}">
+                    미래차다각화 회차 검색
+                </c:when>
+                <c:when test="${bsnCd == 'support'}">
+                    사업재편지원 회차 검색
+                </c:when>
+                <c:when test="${bsnCd == 'GlobalStandard'}">
+                    글로벌스탠다드 회차 검색
+                </c:when>
+            </c:choose>
+        </h6>
         <form class="form-horizontal" name="frmSearch" method="post" action="">
             <!-- 현재 페이징 번호 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
@@ -86,7 +98,18 @@
             <hr class="mt0" />
             <div class="clearfix">
                 <h6 class="pull-left mt0">
-                    <em class="ion-play mr-sm"></em>미래차다각화 회차 목록(총 <span id="listContainerTotCnt">0</span>건)
+                    <em class="ion-play mr-sm"></em>
+                    <c:choose>
+                        <c:when test="${bsnCd == 'futureTech'}">
+                            미래차다각화 회차 목록(총 <span id="listContainerTotCnt">0</span>건)
+                        </c:when>
+                        <c:when test="${bsnCd == 'support'}">
+                            사업재편지원 회차 목록(총 <span id="listContainerTotCnt">0</span>건)
+                        </c:when>
+                        <c:when test="${bsnCd == 'GlobalStandard'}">
+                            글로벌스탠다드 회차 목록(총 <span id="listContainerTotCnt">0</span>건)
+                        </c:when>
+                    </c:choose>
                 </h6>
                 <div class="pull-right ml-sm">
                     <select class="form-control input-sm listRowSizeContainer" >

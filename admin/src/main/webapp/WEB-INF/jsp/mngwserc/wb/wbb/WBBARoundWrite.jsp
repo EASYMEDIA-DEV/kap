@@ -14,10 +14,30 @@
     <div class="card-body" data-controller="controller/wb/wbb/WBBARoundWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>
             <c:if test="${not empty rtnDto.episdSeq }">
-                미래차다각화 회차 상세/수정
+                <c:choose>
+                    <c:when test="${bsnCd == 'futureTech'}">
+                        미래차다각화 회차 상세/수정
+                    </c:when>
+                    <c:when test="${bsnCd == 'support'}">
+                        사업재편지원 회차 상세/수정
+                    </c:when>
+                    <c:when test="${bsnCd == 'GlobalStandard'}">
+                        글로벌스탠다드 회차 상세/수정
+                    </c:when>
+                </c:choose>
             </c:if>
             <c:if test="${empty rtnDto.episdSeq }">
-                미래차다각화 회차 등록
+                <c:choose>
+                    <c:when test="${bsnCd == 'futureTech'}">
+                        미래차다각화 회차 등록
+                    </c:when>
+                    <c:when test="${bsnCd == 'support'}">
+                        사업재편지원 회차 등록
+                    </c:when>
+                    <c:when test="${bsnCd == 'GlobalStandard'}">
+                        글로벌스탠다드 회차 등록
+                    </c:when>
+                </c:choose>
             </c:if>
         </h6>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
