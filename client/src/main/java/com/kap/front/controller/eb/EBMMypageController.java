@@ -585,8 +585,9 @@ public class EBMMypageController
         String vwUrl = "front/eb/ebm/EBMEduApplySrvStep2.front";
         try{
 
-            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            eBBEpisdDTO.setMemSeq(cOLoginUserDTO.getSeq());
+            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
 
             if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
 
@@ -678,8 +679,10 @@ public class EBMMypageController
         String vwUrl = "";
         try
         {
-            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            eBBEpisdDTO.setMemSeq(cOLoginUserDTO.getSeq());
+
+            EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
             if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
                 vwUrl = "front/eb/ebm/EBMEduApplySrvStep3.front";
             }else{
