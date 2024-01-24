@@ -470,7 +470,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${item.applyDtl.appctnSttsChngDtm}
+                                                    ${ kl:convertDate(item.applyDtl.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -511,7 +511,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${item.applyDtl.mngSttsChngDtm}
+                                                    ${ kl:convertDate(item.applyDtl.mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>

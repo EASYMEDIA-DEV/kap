@@ -646,7 +646,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rtnInfo.appctnSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rtnInfo.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -657,7 +659,6 @@
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-3 form-inline">
                                                 <select class="form-control input-sm" id="mngSttsCd" name="mngSttsCd" title="관리자 상태값">
-                                                    <option value="" >선택</option>
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE05001_02')}">
                                                             <c:if test="${cdList.cd ne 'PRO_TYPE05001_02'}">
@@ -676,7 +677,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rtnInfo.mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rtnInfo.mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -730,7 +733,9 @@
                                                 <div class="form-group text-sm">
                                                     <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                                     <div class="col-sm-6 form-inline">
-                                                        <p class="form-control-static" >${item.appctnSttsChngDtm}</p>
+                                                        <p class="form-control-static" >
+                                                                ${ kl:convertDate(item.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </fieldset>
@@ -752,7 +757,6 @@
                                                     <label class="col-sm-2 control-label">관리자 상태값</label>
                                                     <div class="col-sm-3 form-inline">
                                                         <select class="form-control notRequired" title="관리자 상태값">
-                                                            <option value="" >선택</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -804,7 +808,9 @@
                                                     <div class="form-group text-sm">
                                                         <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                                         <div class="col-sm-6 form-inline">
-                                                            <p class="form-control-static" >${item.appctnSttsChngDtm}</p>
+                                                            <p class="form-control-static" >
+                                                                    ${ kl:convertDate(item.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </fieldset>
@@ -828,7 +834,6 @@
                                                         <label class="col-sm-2 control-label">관리자 상태값</label>
                                                         <div class="col-sm-3 form-inline">
                                                             <select class="form-control notRequired" id="finalMngSttsCd" name="finalMngSttsCd" title="관리자 상태값">
-                                                                <option value="" >선택</option>
                                                                 <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                     <c:if test="${fn:contains(cdList, 'PRO_TYPE05002_02')}">
                                                                         <c:if test="${cdList.cd ne 'PRO_TYPE05002_02'}">
@@ -847,7 +852,9 @@
                                                     <div class="form-group text-sm">
                                                         <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                                         <div class="col-sm-6 form-inline">
-                                                            <p class="form-control-static" >${item.mngSttsChngDtm}</p>
+                                                            <p class="form-control-static" >
+                                                                    ${ kl:convertDate(item.mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                            </p>
                                                         </div>
                                                     </div>
                                                 </fieldset>
