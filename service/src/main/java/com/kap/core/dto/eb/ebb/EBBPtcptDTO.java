@@ -203,5 +203,8 @@ public class EBBPtcptDTO extends BaseDTO {
 
     private List<EBBPtcptDTO> atndcList;//교육 참여자 출석목록
 
+    @Schema(title = "대참 대상 GPC 아이디", example = "텍스트")
+    private String aftGpcId;
+
 
 }

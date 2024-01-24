@@ -96,11 +96,15 @@ public class COMainController
             //상생사업 관리 리스트
             modelMap.addAttribute("winData", sMGWinBusinessService.selectWinBusinessList(sMGWinBusinessDTO));
             //공지사항 리스트
+            bDANoticeDTO.setMainYn("Y");
             modelMap.addAttribute("noticeData", bDANoticeService.selectNoticeList(bDANoticeDTO));
             //FAQ 리스트
+            bDCFaqDTO.setMainYn("Y");
             modelMap.addAttribute("faqData", bDCFaqService.selectFaqList(bDCFaqDTO));
             //메인여부
             modelMap.addAttribute("mainYn", "Y");
+            //재단소식 메인여부
+            bDBCompanyNewsDTO.setMainYn("Y");
 
             if(device.isNormal() == true || device.isTablet() == true){
                 sMBMainVslDTO.setMdCd("pc");
