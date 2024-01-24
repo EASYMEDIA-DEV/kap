@@ -18,7 +18,7 @@
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
-                <td class="text-center">${kl:nameMasking(list.name)}(${kl:idMasking(list.id)})</td>
+                <td class="text-center">${list.name}(${list.id})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>
                 <td class="text-center">${not empty list.appctnSttsChngDtm ? kl:convertDate(list.appctnSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') : "-"}</td>
@@ -26,7 +26,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modId}">
-                            ${kl:nameMasking(list.modName)}<br>(${kl:idMasking(list.modId)})
+                            ${list.modName}<br>(${list.modId})
                         </c:when>
                         <c:otherwise>
                             -
