@@ -6,14 +6,18 @@ import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
+import com.kap.core.dto.wb.wbd.WBDBCompanyDTO;
+import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBDASafetyListService;
 import com.kap.service.dao.wb.wbd.WBDASafetyListMapper;
+import com.kap.service.dao.wb.wbd.WBDBSafetyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -25,6 +29,7 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
 
 
     //Mapper
+    private final WBDBSafetyMapper wBDBSafetyMapper;
     private final WBDASafetyListMapper wBDASafetyListMapper;
 
     /* 회차관리 마스터 시퀀스 */
@@ -218,17 +223,31 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
             if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                rtnCode = 100;
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-                int cnt = wBDASafetyListMapper.getApplyCount(wBRoundMstSearchDTO);
+                WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-                if (cnt > 0) {
-                    //신청여부 존재 코드 300
-                    rtnCode = 300;
-                }else{
-                    //신청가능 코드 200
-                    rtnCode = 200;
+                WBDBCompanyDTO wBDBCompanyDTO = wBDBSafetyMapper.getCompanyInfo(wBDBSafetySearchDTO);
+
+                if ("COMPANY01001".equals(wBDBCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wBDBCompanyDTO.getCtgryCd())) {
+                    wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    int cnt = wBDASafetyListMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                    if (cnt > 0) {
+                        //신청여부 존재 코드 300
+                        rtnCode = 300;
+                    }else{
+                        //신청가능 코드 200
+                        rtnCode = 200;
+                        RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                    }
                 }
             }
         }

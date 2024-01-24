@@ -85,18 +85,22 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         //신청페이지 로직점검
                         cmmCtrl.paramAjax(function(data){
-                           if (data.resultCode == 999) {
+                            if (data.resultCode == 999) {
                                 if (confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
                                     location.href = "/login?rtnUrl="+encodeURIComponent(window.location.pathname);
                                 }
                             } else if (data.resultCode == 100) {
                                 alert('해당 사업은 부품사 회원만 신청 가능합니다.');
+                            } else if (data.resultCode == 150) {
+                                alert('위원회원은 해당 서비스를 이용할 수 없습니다.');
+                            } else if (data.resultCode == 190) {
+                                alert('1,2차 부품사만 신청가능합니다.');
                             } else if (data.resultCode == 300) {
                                 if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                     location.href = "/my-page/coexistence/list";
                                 }
                             } else if (data.resultCode == 200) {
-                               location.href = "./step1?episdSeq="+episdSeq;
+                                location.href = "./step1?episdSeq="+episdSeq;
                             }
                         },"./applyChecked",param, "json", false, false, "get");
                     }

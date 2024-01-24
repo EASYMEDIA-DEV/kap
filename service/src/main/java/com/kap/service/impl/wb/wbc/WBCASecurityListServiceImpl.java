@@ -7,11 +7,13 @@ import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
+import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBCASecurityListService;
 import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbc.WBCASecurityListMapper;
+import com.kap.service.dao.wb.wbc.WBCBSecurityMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -29,6 +31,7 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
 
 
     //Mapper
+    private final WBCBSecurityMapper wBCBSecurityMapper;
     private final WBCASecurityListMapper wBCASecurityListMapper;
     private final COGCntsMapper cOGCntsMapper;
 
@@ -223,18 +226,31 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
             if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                rtnCode = 100;
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-                int cnt = wBCASecurityListMapper.getApplyCount(wBRoundMstSearchDTO);
 
-                if (cnt > 0) {
-                    //신청여부 존재 코드 300
-                    rtnCode = 300;
-                }else{
-                    //신청가능 코드 200
-                    rtnCode = 200;
-                    RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                WBCBCompanyDTO wBCBCompanyDTO = wBCBSecurityMapper.getCompanyInfo(wBCBSecuritySearchDTO);
+                if ("COMPANY01001".equals(wBCBCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wBCBCompanyDTO.getCtgryCd())) {
+                    wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    int cnt = wBCASecurityListMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                    if (cnt > 0) {
+                        //신청여부 존재 코드 300
+                        rtnCode = 300;
+                    }else{
+                        //신청가능 코드 200
+                        rtnCode = 200;
+                        RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                    }
                 }
             }
         }
