@@ -161,7 +161,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             btnSpprtPop : {
                 event : {
                     click : function(e) {
-                        openPopup('paymentInfoManagPopup', e, 'Y');
+                        openPopup('paymentInfoManagPopup', e);
                     }
                 }
             },

@@ -74,7 +74,7 @@ public class WBEBCompanyDTO extends BaseDTO {
     @Schema(title = "매출년도", example = "")
     private String slsYear;
     @Schema(title = "직원수", example = "")
-    private int mpleCnt;
+    private Integer mpleCnt;
 
     @Schema(title = "회원 순번", example = "")
     private Integer memSeq;

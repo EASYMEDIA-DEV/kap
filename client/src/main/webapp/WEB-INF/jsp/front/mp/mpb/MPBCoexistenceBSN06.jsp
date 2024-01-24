@@ -1125,7 +1125,7 @@
                         </div>
                         <div class="bot-fix-btn-area">
                             <div class="btn-wrap align-right">
-                                <button class="btn-solid small black-bg btn-role-close btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
+                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
                             </div>
                         </div>
                         <div class="user-opt-area">

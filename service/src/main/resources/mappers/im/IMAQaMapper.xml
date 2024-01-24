@@ -358,10 +358,10 @@
                 </when>
                 <otherwise>
                     AND (
-                    INSTR(#{q}, A.TITL) <![CDATA[>]]> 0 OR
-                    INSTR(#{q}, MEM.NAME) <![CDATA[>]]> 0 OR
-                    INSTR(#{q}, MEM.EMAIL) <![CDATA[>]]> 0 OR
-                    INSTR(#{q}, MEM.HP_NO) <![CDATA[>]]> 0 OR
+                    A.TITL LIKE CONCAT('%', #{q}, '%') OR
+                    MEM.NAME LIKE CONCAT('%', #{q}, '%') OR
+                    MEM.EMAIL LIKE CONCAT('%', #{q}, '%') OR
+                    MEM.HP_NO LIKE CONCAT('%', #{q}, '%') OR
                     )
                 </otherwise>
             </choose>
