@@ -485,9 +485,22 @@
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
              , m1.episd-- 회차
-             , (select cd_nm from co_code_mst where  cd=m4.optn_cd )  as type_cd_nm-- 사업구분
---              , m4.optn_nm as bsnCdNm
---              , (select cd_nm from co_code_mst where  cd=m5.rsume_stts_cd )  as status -- 진행상태
+        , case when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('미래차다각화',
+                                                                            '사업재편지원',
+                                                                            '글로벌스탠다드',
+                                                                            '청년인재양성',
+                                                                            '보안환경구축',
+                                                                            '안전설비구축',
+                                                                            '탄소배출저감',
+                                                                            '스마트공장구축',
+                                                                            '기획전용사업') then '경쟁력향상지원'
+                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('시험계측장비',
+                                                                              '검교정',
+                                                                              '공급망안정화기금') then '자금지원'
+                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('자동차부품산업대상',
+                                                                              '미래차공모전',
+                                                                              '역대 수상자') then '포상지원'
+                    else '설문조사' end  as type_cd_nm
         , (select cd_nm from co_code_mst where cd =(select rsume_stts_cd from cx_appctn_rsume_dtl where appctn_seq = m2.appctn_seq order by rsume_ord desc limit 1)) as status
              , (select cd_nm from co_code_mst where  cd=m1.bsn_cd )  as bsn_cd_nm-- 과제명
              , (select menu_nm from co_menu_mst cmm where menu_seq =  (select user_menu_seq from cx_mst where bsn_cd = m1.bsn_cd) ) as menu_cd_nm -- 사업구분
@@ -504,8 +517,6 @@
            on m1.episd_seq = m2.episd_seq
           inner join cp_cmpn_mst m3
            on m2.appctn_bsnm_no  = m3.bsnm_no
-          inner join cx_episd_bsn_optn_dtl m4
-           on m1.episd_seq  = m4.episd_seq
             where 1 = 1
             <if test="chkPS == 'P'.toString() ">
                 and m2.mem_seq =#{detailsKey}
@@ -526,30 +537,41 @@
     -->
         <select id="selectSanListCnt" parameterType="MPBSanDto" resultType="java.lang.Integer">
             select count(*)
-                from ( select m1.episd_seq as san_ctn_seq /*MPBMemberPartsSocietyMapper.selectSanList */
-                            , m1.year-- 사업년도
-                            , m1.episd-- 회차
-                            , (select cd_nm from co_code_mst where cd=m4.optn_cd ) as type_cd_nm-- 사업구분
-                            -- , m4.optn_nm as bsnCdNm
-                            -- , (select cd_nm from co_code_mst where cd=m5.rsume_stts_cd ) as status -- 진행상태
-                            , (select cd_nm from co_code_mst where cd =(select rsume_stts_cd from cx_appctn_rsume_dtl where appctn_seq = m2.appctn_seq order by rsume_ord desc limit 1)) as status
-                            , (select cd_nm from co_code_mst where cd=m1.bsn_cd ) as bsn_cd_nm-- 과제명
-                            , (select menu_nm from co_menu_mst cmm where menu_seq = (select user_menu_seq from cx_mst where bsn_cd = m1.bsn_cd) ) as menu_cd_nm -- 사업구분
-                            , m3.cmpn_nm -- 부품사명
-                            , (select cd_nm from co_code_mst where cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
-                            , (select cd_nm from co_code_mst where cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
-                            , m2.appctn_bsnm_no-- 사업자등록번호
-                            , (select name from co_mem_mst where mem_seq=m2.pic_cmssr_seq) as name -- 담당위원
-                            , m2.reg_dtm-- 신청일
-                            , m1.bsn_strt_dtm
-                            , m1.bsn_end_dtm
+                from (  select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
+                                , m1.year-- 사업년도
+                                , m1.episd-- 회차
+                                , case when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('미래차다각화',
+                                                                                                    '사업재편지원',
+                                                                                                    '글로벌스탠다드',
+                                                                                                    '청년인재양성',
+                                                                                                    '보안환경구축',
+                                                                                                    '안전설비구축',
+                                                                                                    '탄소배출저감',
+                                                                                                    '스마트공장구축',
+                                                                                                    '기획전용사업') then '경쟁력향상지원'
+                                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('시험계측장비',
+                                                                                              '검교정',
+                                                                                              '공급망안정화기금') then '자금지원'
+                                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('자동차부품산업대상',
+                                                                                              '미래차공모전',
+                                                                                               '역대 수상자') then '포상지원'
+                                        else '설문조사' end  as type_cd_nm
+                                , (select cd_nm from co_code_mst where cd =(select rsume_stts_cd from cx_appctn_rsume_dtl where appctn_seq = m2.appctn_seq order by rsume_ord desc limit 1)) as status
+                                , (select cd_nm from co_code_mst where  cd=m1.bsn_cd )  as bsn_cd_nm-- 과제명
+                                , (select menu_nm from co_menu_mst cmm where menu_seq =  (select user_menu_seq from cx_mst where bsn_cd = m1.bsn_cd) ) as menu_cd_nm -- 사업구분
+                                , m3.cmpn_nm -- 부품사명
+                                , (select cd_nm from co_code_mst where  cd=m3.ctgry_cd ) as ctgry_cd_nm -- 구분
+                                , (select cd_nm from co_code_mst where  cd=m3.size_cd ) as cmpn_size_cd_nm -- 규모
+                                , m2.appctn_bsnm_no-- 사업자등록번호
+                                , (select name from co_mem_mst where mem_seq=m2.pic_cmssr_seq) as name -- 담당위원
+                                , m2.reg_dtm-- 신청일
+                                , m1.bsn_strt_dtm
+                                , m1.bsn_end_dtm
                        from cx_episd_mst m1
                         inner join cx_appctn_mst m2
                          on m1.episd_seq = m2.episd_seq
                        inner join cp_cmpn_mst m3
                         on m2.appctn_bsnm_no = m3.bsnm_no
-                       inner join cx_episd_bsn_optn_dtl m4
-                        on m1.episd_seq = m4.episd_seq
                     <if test="chkPS == 'P'.toString() ">
                          and m2.mem_seq =#{detailsKey}
                     </if>
