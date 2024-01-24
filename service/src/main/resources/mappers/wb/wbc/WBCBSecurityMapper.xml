@@ -1358,7 +1358,7 @@
         2023.11.08  김대성     최초 생성
     -->
     <select id="getSbrdnBsnmNoCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
-        SELECT /* WBCBSecurityMapper.getBsnmNoCnt*/ COUNT(*)
+        SELECT /* WBCBSecurityMapper.getSbrdnBsnmNoCnt*/ COUNT(*)
         FROM CX_APPCTN_MST
         WHERE EPISD_SEQ = #{episdSeq}
         AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}

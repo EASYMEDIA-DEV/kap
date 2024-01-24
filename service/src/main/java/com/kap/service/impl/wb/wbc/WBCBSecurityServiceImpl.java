@@ -1247,7 +1247,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         int respCnt = 0;
 
         wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
-        respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
+
+        if(wBCBTrnsfDTO.getMemSeq() != wBCBSecurityMstInsertDTO.getMemSeq()) {
+            respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+        }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
@@ -1262,7 +1269,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         int respCnt = 0;
 
         wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
-        respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
+
+        if(wBCBTrnsfDTO.getMemSeq() != wBCBSecurityMstInsertDTO.getMemSeq()) {
+            respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
+        }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 

@@ -4,6 +4,8 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbd.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -1248,7 +1250,15 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         int respCnt = 0;
 
         wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
-        respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
+
+        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+        wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+        WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
+
+        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq())
+        {
+            respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
+        }
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
@@ -1263,7 +1273,14 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         int respCnt = 0;
 
         wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
-        respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
+
+        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+        wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+        WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
+
+        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq()) {
+            respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
+        }
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
