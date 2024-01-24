@@ -23,11 +23,11 @@ import java.util.Random;
 
 /**
  * <pre>
- * 관리자 로그인/로그아웃을 위한 Controller
+ * 로그인/로그아웃을 위한 Controller
  * </pre>
  *
  * @ClassName		: COBLgnController.java
- * @Description		: 관리자 로그인/로그아웃을 위한 Controller
+ * @Description		: 로그인/로그아웃을 위한 Controller
  * @author 허진영
  * @since 2020.10.20
  * @version 1.0
