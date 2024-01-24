@@ -87,7 +87,7 @@
                                     <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
                                         <a class="list-item popOpen" title="팝업 열기">
                                             <div class="bg">
-                                                <img src="/common/images/@img-foundation-group-member.png" alt="">
+                                                <img src="${csList.webPath}" alt="">
                                             </div>
                                             <input type="hidden" class="memSeq" value="${csList.memSeq}">
                                             <div class="txt-box">
@@ -197,7 +197,7 @@
                     </div>
                     <div class="bot-fix-btn-area">
                         <div class="btn-wrap align-right">
-                            <a class="btn-solid small black-bg" href="javascript:"><span>위원 문의</span></a>
+                            <a class="btn-solid small black-bg contact" href="javascript:"><span>위원 문의</span></a>
                         </div>
                     </div>
                     <div class="user-opt-area">
@@ -207,5 +207,4 @@
             </div>
         </div>
     </div>
-    <div class="dimd"></div>
 </div>

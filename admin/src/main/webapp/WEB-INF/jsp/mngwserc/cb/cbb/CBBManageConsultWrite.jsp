@@ -105,10 +105,10 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
-                    <div class="col-sm-5" style="margin-left: -15px">
+                    <div class="col-sm-5" style="margin-left: -2px">
                         <p class="form-control-static" name="hpNo">${rtnDto.hpNo}</p>
                     </div>
-                    <label class="col-sm-1 control-label">일반 전화번호</label>
+                    <label class="col-sm-1 control-label" style="margin-left: -13px">일반 전화번호</label>
                     <div class="col-sm-2">
                         <input type="text" class="form-control input-sm notRequired telRex"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" maxlength="13" placeholder="일반 전화번호 입력"/>
                     </div>
@@ -396,7 +396,7 @@
                             </div>
                             <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm picEmail" name="picEmail" title="이메일" value="${picInfoLIst.picEmail}" placeholder="이메일 입력"/>
+                                <input type="text" class="form-control input-sm picEmail" name="picEmail" oninput="this.value = this.value.replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣\s]/g, '').replace(/(\..*)\./g, '$1');" title="이메일" value="${picInfoLIst.picEmail}" placeholder="이메일 입력"/>
                             </div>
                         </div>
                 </fieldset>
