@@ -363,8 +363,8 @@
                                                 <c:set var="examStatus" value="0"/>
 
                                                 <c:choose>
-                                                    <!--오프라인여부 -->
                                                     <c:when test="${rtnData.trnsfYn eq 'N' && rtnData.otsdExamPtcptYn eq 'Y'}">
+                                                        <!--오프라인여부 Y일경우 일정상관없이 평가 가능-->
                                                         <c:set var="examStatus" value="1"/>
                                                     </c:when>
                                                     <c:otherwise>

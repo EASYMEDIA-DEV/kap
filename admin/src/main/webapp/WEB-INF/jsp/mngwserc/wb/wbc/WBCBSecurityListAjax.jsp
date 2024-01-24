@@ -22,7 +22,7 @@
                 <td class="text-center">${list.sbrdnBsnmNo}</td>
                 <td class="text-center">${list.ctgryNm}</td>
                 <td class="text-center">${list.sizeNm}</td>
-                <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
+                <td class="text-center">${list.name}<br>(${list.id})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>
                 <td class="text-center">
@@ -48,7 +48,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.modId}">
-                            ${kl:nameMasking(list.modNm)}<br>(${kl:idMasking(list.modId)})
+                            ${list.modNm}<br>(${list.modId})
                         </c:when>
                         <c:otherwise>
                             -
