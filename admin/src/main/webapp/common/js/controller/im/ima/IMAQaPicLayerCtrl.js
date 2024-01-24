@@ -34,6 +34,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             $("#QaPicLayerFrm #inqSecPic").val("");
             $("#QaPicLayerFrm #picNm").val("");
             $("#QaPicLayerFrm #piceMail").val("");
+            $("#QaPicLayerFrm #detailsKey").val("");
         }, "/mngwserc/im/ima/select-pic", $formObj, "GET", "html");
     }
 
@@ -161,6 +162,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var picSeq = $(this).data("detailsKey");
                         if(picSeq > -1){
                             if(confirm(msgCtrl.getMsg("confirm.del"))){
+
                                 jQuery.ajax({
                                     type: "post",
                                     url: "./delete-pic",

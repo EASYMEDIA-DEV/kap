@@ -8,6 +8,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -203,4 +204,28 @@ public class COFileRestController {
             throw new FileNotFoundException("파일이 없습니다.");
         }
     }
+
+    /**
+     * 파일 정보 조회한다.
+     */
+    @RequestMapping(value="/file/list")
+    public List<COFileDTO> getFileList(COFileDTO coFileDTO, ModelMap modelMap) throws Exception
+    {
+        List<COFileDTO> rtnList = null;
+        try
+        {
+            if(coFileDTO != null && coFileDTO.getFileSeq() != null)
+            {
+                rtnList = cOFileService.getFileInfs(coFileDTO.getFileSeq());
+            }
+        }
+        catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return rtnList;
+    }
+
 }

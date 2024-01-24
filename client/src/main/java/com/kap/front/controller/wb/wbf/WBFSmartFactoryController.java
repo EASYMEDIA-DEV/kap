@@ -269,27 +269,4 @@ public class WBFSmartFactoryController {
         return vwUrl;
     }
 
-    /**
-     * 파일 정보 조회한다.
-     */
-    @RequestMapping(value="/file/list")
-    public String getFileList(COFileDTO coFileDTO, ModelMap modelMap) throws Exception
-    {
-        List<COFileDTO> rtnList = null;
-        try
-        {
-            if(coFileDTO != null && coFileDTO.getFileSeq() != null)
-            {
-                modelMap.addAttribute("rtnData", cOFileService.getFileInfs(coFileDTO.getFileSeq()));
-            }
-        }
-        catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return "jsonView";
-    }
-
 }

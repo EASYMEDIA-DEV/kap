@@ -3,6 +3,7 @@ package com.kap.front.controller.eb;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -168,10 +169,6 @@ public class EBMMypageController
 
         //사용자 출석정보 호출
 
-
-        System.out.println("@@@ rtnDto= " + rtnDto);
-
-
         if(rtnDto != null){
 
             EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
@@ -262,6 +259,98 @@ public class EBMMypageController
 
 
         return "front/eb/ebm/EBMEduApplyDtl.front";
+    }
+
+    /**
+     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     */
+    @GetMapping("/my-page/edu-apply/transfer")
+    public String getTrnsfDetail(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        String vwUrl = "";
+
+        COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+        EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+        if(rtnMap !=null){
+
+            if(cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()){
+
+
+
+                //회원 기본정보 호출
+                mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+                MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+                if(applicantDto.getMemCd().equals("CP")) {
+                    mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                    MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                    if (originList.getList().size() != 0) {
+                        modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                    }
+                    modelMap.addAttribute("applicantInfo", applicantDto);
+                    modelMap.addAttribute("sqInfoList", originList);
+                }
+
+                //회원이 속한 부품사의 회원목록 조회
+                MPAUserDto cmmUserDto = eBBEpisdService.selectApplyUserList(applicantDto);
+
+                modelMap.addAttribute("cmmUserData", cmmUserDto);
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                // 코드 set
+                cdDtlList.add("MEM_CD");
+                modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+
+                modelMap.addAttribute("rtnData", rtnDto);
+
+
+                vwUrl = "front/eb/ebm/EBMEduApplyTrnsf.front";
+
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+        }else{
+            modelMap.addAttribute("msg", "잘못된 접근입니다.");
+            modelMap.addAttribute("url", "/");
+            vwUrl = "front/COBlank.error";
+        }
+
+        return vwUrl;
+
+    }
+
+    /**
+     * 회원이 속한 부품사의 회원목록 조회
+     */
+    @GetMapping(value = "/my-page/edu-apply/cmmSelect")
+    public String getCmmUserListPageAjax(MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            //회원이 속한 부품사의 회원목록 조회
+            modelMap.addAttribute("rtnData",  eBBEpisdService.selectApplyUserList(mpaUserDto));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/eb/ebm/EBMEduApplyTrnsfListAjax";
     }
 
 
@@ -674,6 +763,31 @@ public class EBMMypageController
                 throw new Exception(e.getMessage());
             }
             return rtnStr;
+        }
+
+
+        @Operation(summary = "마이페이지 교육 양도", tags = "교육차수 신청자 등록", description = "")
+        @PostMapping(value="/edu-apply/setTrnsf")
+        public EBBPtcptDTO setTrnsf(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
+        {
+
+            //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+            EBBPtcptDTO temoDto = new EBBPtcptDTO();
+            try {
+
+                temoDto = eBBEpisdService.setTrnsf(eBBPtcptDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return temoDto;
         }
 
 

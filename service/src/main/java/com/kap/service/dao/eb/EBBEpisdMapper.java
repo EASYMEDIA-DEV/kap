@@ -1,6 +1,7 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.ebb.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -259,7 +260,20 @@ public interface EBBEpisdMapper {
 	 */
 	public int setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+	/**
+	 *  마이페이지 - 양도 전 양도이력 체크
+	 */
+	public EBBPtcptDTO selectTrnsfLog(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
+	/**
+	 *  마이페이지 - 양도 정보 업데이트
+	 */
+	public int updatePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 *  마이페이지 - 양도  이력 등록
+	 */
+	public int insertTrnsfLog(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 
 }
