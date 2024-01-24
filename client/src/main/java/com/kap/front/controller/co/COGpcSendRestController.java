@@ -74,9 +74,6 @@ public class COGpcSendRestController {
     @PostMapping(value="/kapedu/verifyUserId")
     public Map GpcKapIdCheck(@RequestParam(required = true) String gpcId,  HttpServletResponse response, HttpServletRequest request) throws Exception
     {
-
-        System.out.println("@@@ gpcId = " + gpcId);
-
         //파라미터 정리
         HashMap<String, Object> param = new HashMap<String, Object>();
         param.put("gpcUserId", gpcId);
@@ -96,13 +93,19 @@ public class COGpcSendRestController {
      * GPC 요청 Rest
      * GPC 관련 집체 교육 대참 요청
      */
-    @GetMapping(value="/kapedu/changeEduMem")
+    @PostMapping(value="/kapedu/changeEduMem")
     public Map ChangeKapEduMem( @RequestParam(required = true) String bfrGpcId
                                ,@RequestParam(required = true) String aftGpcId
                                ,@RequestParam(required = true) int kapSeq
                                ,@RequestParam(required = true) int kapSchdSeq
             ,EBBPtcptDTO eBBPtcptDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
     {
+
+        System.out.println("@ bfrGpcId =" + bfrGpcId);
+        System.out.println("@ aftGpcId =" + aftGpcId);
+        System.out.println("@ kapSeq =" + kapSeq);
+        System.out.println("@ kapSchdSeq =" + kapSchdSeq);
+
         //파라미터 정리
         HashMap<String, Object> param = new HashMap<String, Object>();
         UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(endPoint + "/api/kapedu/changeEduMem.ajax")

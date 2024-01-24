@@ -117,7 +117,7 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "교육상태", example = "텍스트")
     private String eduStat;
 
-    @Schema(title = "등록상태", example = "텍스트 이미있음(실패):F, 성공:S")
+    @Schema(title = "등록상태", example = "텍스트 이미있음(실패):F, 성공:S, M:양도이력 있음(마이페이지 교육양도에서만 사용)")
     private String regStat;
 
     @Schema(title = "교육일자", example = "날짜 yyyy-MM-dd")
@@ -165,6 +165,16 @@ public class EBBPtcptDTO extends BaseDTO {
 
     @Schema(title = "강의번호", example = "숫자")
     private Integer lctrSeq;
+
+    @Schema(title = "양도순번", example = "숫자")
+    private Integer trnsfSeq;
+
+    @Schema(title = "이전회원순번", example = "숫자")
+    private Integer bfreMemSeq;
+
+    @Schema(title = "이후회원순번", example = "숫자")
+    private Integer aftrMemSeq;
+
 
 
 

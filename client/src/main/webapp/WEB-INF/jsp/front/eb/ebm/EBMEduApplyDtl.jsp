@@ -15,7 +15,6 @@
         <input type="hidden" id="edctnSeq" name="edctnSeq" value="${ rtnData.edctnSeq }" />
         <input type="hidden" id="episdOrd" name="episdOrd" value="${ rtnData.episdOrd }" />
         <input type="hidden" id="episdYear" name="episdYear" value="${ rtnData.episdYear }" />
-
         <input type="hidden" id="ptcptSeq" name="ptcptSeq" value="${ rtnData.ptcptSeq }" />
 
 
@@ -98,7 +97,14 @@
                                                             </div>
                                                             <div class="property-list education"><!-- education: 교육상태 -->
                                                                 <p class="txt">
-                                                                    <span>${rtnData.eduStat}</span>
+                                                                    <c:choose>
+                                                                        <c:when test="${list.trnsfYn eq 'N'}">
+                                                                            <span>${rtnData.eduStat}</span>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <span>교육양도</span>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -193,8 +199,26 @@
                                     <div class="btn-sec">
                                         <div class="btn-wrap align-right">
                                             <div class="btn-set">
-                                                <button class="btn-solid small gray-bg icon btn-print" type="button" onclick="printFn()"><span>수료증 출력</span></button>
-                                                <button class="btn-solid small gray-bg icon transfer" type="button"><span>교육양도</span></button>
+                                                <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.cmptnYn eq 'Y'}">
+                                                    <button class="btn-solid small gray-bg icon btn-print" type="button" onclick="printFn()"><span>수료증 출력</span></button>
+                                                </c:if>
+
+                                                <c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
+                                                <%--<c:set var="accsEndDt" value="2024.01.21"/>--%>
+                                                <c:set var="edctnStatDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
+                                                <%--<c:set var="edctnStatDt" value="2024.01.24"/>--%>
+
+                                                <%
+                                                    Date nowDate = new Date();
+                                                    pageContext.setAttribute("nowDate", nowDate);//현재 시간
+                                                %>
+
+                                                <fmt:formatDate pattern="yyyy.MM.dd" value="${nowDate}" var="nowDate" />
+
+                                                <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.sttsCd eq 'EDU_STTS_CD01' && accsEndDt lt nowDate && nowDate lt edctnStatDt}">
+                                                    <button class="btn-solid small gray-bg icon transfer" type="button"><span>교육양도</span></button>
+                                                </c:if>
+
                                                 <c:if test="${rtnData.stduyMthdCd ne 'STDUY_MTHD01'}">
                                                     <!--출력조건  교육중, 교육대기지만 시작시간 30분전부터   -->
 
@@ -206,7 +230,7 @@
                                                                 // 현재 날짜와 시간 가져오기
                                                                 Date currentDate = new Date();
                                                                 EBBEpisdDTO  eBBEpisdDTO= (EBBEpisdDTO)request.getAttribute("rtnData");
-                                                                String dateString = "2024-01-16 16:25:00";//eBBEpisdDTO.getEdctnStrtDtm();
+                                                                String dateString = eBBEpisdDTO.getEdctnStrtDtm();//"2024-01-16 16:25:00";
                                                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                                 Date convertedDate = sdf.parse(dateString);
 
@@ -225,7 +249,7 @@
 
 
                                                             <c:choose>
-                                                                <c:when test="${edctnStrtDtm.before(currentDate)}">
+                                                                <c:when test="${rtnData.trnsfYn eq 'N' && edctnStrtDtm.before(currentDate)}">
                                                                     <button class="btn-solid small gray-bg icon taking onlineStep" type="button" data-lctrSeq="${list.lctrSeq}"><span>수강하기</span></button>
                                                                 </c:when>
                                                                 <c:otherwise>
@@ -234,7 +258,7 @@
                                                             </c:choose>
 
                                                         </c:when>
-                                                        <c:when test="${rtnData.eduStat eq '교육중'}">
+                                                        <c:when test="${rtnData.trnsfYn eq 'N' && rtnData.eduStat eq '교육중'}">
                                                             <button class="btn-solid small gray-bg icon taking" type="button"><span>수강하기</span></button>
                                                         </c:when>
 
@@ -292,12 +316,12 @@
                                                         <c:set var="edctnStrtDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                         <c:set var="edctnEndDt" value="${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
 
-                                                        <c:if test="${edctnStrtDt le nowDate && nowDate le edctnEndDt}">
+                                                        <c:if test="${rtnData.trnsfYn eq 'N' && edctnStrtDt le nowDate && nowDate le edctnEndDt}">
                                                             <c:if test="${episdCheck eq 'Y' && nowAtndcYn eq 'N'}">
                                                                 <button class="btn-solid small gray-bg icon attendance atndcCheck" type="button"><span>출석하기</span></button>
                                                             </c:if>
 
-                                                            <c:if test="${nowAtndcYn eq 'Y' && nowLvgrmYn eq 'N'}">
+                                                            <c:if test="${rtnData.trnsfYn eq 'N' && nowAtndcYn eq 'Y' && nowLvgrmYn eq 'N'}">
                                                                 <button class="btn-solid small gray-bg icon checkout lvgrmCheck" type="button"><span>퇴실하기</span></button>
                                                             </c:if>
 
@@ -307,17 +331,61 @@
 
                                                 </c:choose>
 
+                                                <%--<%
 
 
-                                                <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
+                                                    String examStrtString = eBBEpisdDTO.getExamStrtDtm();//"2024-01-15 16:25:00";
+                                                    String examEndString = eBBEpisdDTO.getExamEndDtm();//"2024-01-15 16:25:00";
+                                                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
+
+                                                    Date convertedExam1 = sdf.parse(examStrtString);
+                                                    Date convertedExam2 = sdf.parse(examEndString);
+
+                                                    // Calendar 객체를 사용하여 30분 전의 날짜 및 시간 계산
+
+                                                    cal.setTime(convertedExam1);
+                                                    Date examStat = cal.getTime();
+                                                    cal.setTime(convertedExam1);
+                                                    Date examEnd = cal.getTime();
+
+
+                                                    // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
+                                                    pageContext.setAttribute("currentDate", parsedDate);//현재 시간
+                                                    pageContext.setAttribute("examStat", examStat);//설문 시작시간
+                                                    pageContext.setAttribute("examEnd", examEnd);//설문 시작시간
+                                                %>--%>
+
+                                                <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate" />
+
+                                                <c:set var="examStatDt" value="${ empty rtnData.examStrtDtm ? '-' : kl:convertDate(rtnData.examStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                <c:set var="examEndDt" value="${ empty rtnData.examEndDtm ? '-' : kl:convertDate(rtnData.examEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                <!-- 0: 평가하기 비활성화, 1:평가하기 활성화-->
+                                                <c:set var="examStatus" value="0"/>
 
                                                 <c:choose>
-                                                    <c:when test="${currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm}">
-                                                        <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
+                                                    <!--오프라인여부 -->
+                                                    <c:when test="${rtnData.trnsfYn eq 'N' && rtnData.otsdExamPtcptYn eq 'Y'}">
+                                                        <c:set var="examStatus" value="1"/>
                                                     </c:when>
                                                     <c:otherwise>
-
+                                                        <c:choose>
+                                                            <c:when test="${rtnData.trnsfYn eq 'N' && examStatDt le nowDate && nowDate le examEndDt}">
+                                                                <c:set var="examStatus" value="1"/>
+                                                            </c:when>
+                                                        </c:choose>
                                                     </c:otherwise>
+                                                </c:choose>
+
+
+
+                                                <c:if test="${examStatus eq '1'}">
+                                                    <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
+                                                </c:if>
+
+                                                <c:choose>
+                                                    <c:when test="${rtnData.trnsfYn eq 'N' && (currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm)  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
+                                                        <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
+                                                    </c:when>
                                                 </c:choose>
                                             </div>
                                         </div>
@@ -331,7 +399,6 @@
 
                             String srvStrtString = eBBEpisdDTO.getSrvStrtDtm();//"2024-01-15 16:25:00";
                             String srvEndString = eBBEpisdDTO.getSrvEndDtm();//"2024-01-15 16:25:00";
-                            SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
 
                             Date convertedDate1 = sdf.parse(srvStrtString);
                             Date convertedDate2 = sdf.parse(srvEndString);
@@ -346,14 +413,14 @@
 
                             // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
                             pageContext.setAttribute("currentDate", parsedDate);//현재 시간
-                            pageContext.setAttribute("srvStrt", srvStrt);//교육 시작시간-30분
-                            pageContext.setAttribute("srvEnd", srvEnd);//교육 시작시간-30분
+                            pageContext.setAttribute("srvStrt", srvStrt);//설문 시작시간
+                            pageContext.setAttribute("srvEnd", srvEnd);//설문 시작시간
                         %>
 
                         <c:choose>
                             <c:when test="${not empty rtnData.srvSeq}">
                                 <c:choose>
-                                    <c:when test="${  (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
+                                    <c:when test="${rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
                                         <div class="cont-sec no-border scroll-motion">
                                             <div class="for-motion">
                                                 <div class="sec-tit-area">
@@ -554,155 +621,166 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="cont-sec no-border scroll-motion">
-                            <div class="for-motion">
-                                <div class="sec-tit-area">
-                                    <p class="f-title3">GPC 아이디</p>
-                                </div>
-                                <div class="sec-con-area">
-                                    <div class="table-sec">
-                                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                            <table class="basic-table">
-                                                <caption>신청자 기본 정보</caption>
-                                                <colgroup>
-                                                    <col style="width: 273rem;">
-                                                    <col style="width: 820rem;">
-                                                </colgroup>
-                                                <tbody>
-                                                <tr>
-                                                    <th>GPC 아이디</th>
-                                                    <td>Abcdcs1234</td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                        <c:if test="${rtnData.gpcYn eq 'Y'}">
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">GPC 아이디</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="table-sec">
+                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                <table class="basic-table">
+                                                    <caption>신청자 기본 정보</caption>
+                                                    <colgroup>
+                                                        <col style="width: 273rem;">
+                                                        <col style="width: 820rem;">
+                                                    </colgroup>
+                                                    <tbody>
+                                                    <tr>
+                                                        <th>GPC 아이디</th>
+                                                        <td>${rtnData.gpcId}</td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cont-sec no-border scroll-motion">
-                            <div class="for-motion">
-                                <div class="sec-tit-area">
-                                    <p class="f-title3">출석내역</p>
-                                </div>
-                                <div class="sec-con-area">
-                                    <div class="progress-sec">
-                                        <!-- @ data-progress에 수치 값 입력 (0~100) -->
-                                        <c:set var="atndcTotLength" value="${fn:length(ptcptList)}"/>
-                                        <c:set var="atndcLength" value="0"/>
-                                        <c:forEach var="list" items="${ptcptList}" varStatus="status">
-                                            <c:if test="${not empty list.atndcDtm}">
-                                                <c:set var="atndcLength" value="${atndcLength+1}"/>
-                                            </c:if>
-                                        </c:forEach>
-
-                                        <div class="progress-area" data-progress="<fmt:formatNumber value="${(atndcLength/atndcTotLength)*100}" pattern=".00"/>">
-                                            <div class="progress">
-                                                <div class="progress-bar"></div>
-                                            </div>
-                                            <div class="progress-info">
-                                                <p class="txt f-sub-head">출석률</p>
-                                                <p class="progress-num f-head color-sky">
-                                                    <span class="num">0</span>
-                                                    <span>%</span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                        <ul class="progress-list">
+                        </c:if>
 
 
+                        <c:if test="${rtnData.trnsfYn eq 'N'}">
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">출석내역</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="progress-sec">
+                                            <!-- @ data-progress에 수치 값 입력 (0~100) -->
+                                            <c:set var="atndcTotLength" value="${fn:length(ptcptList)}"/>
+                                            <c:set var="atndcLength" value="0"/>
                                             <c:forEach var="list" items="${ptcptList}" varStatus="status">
-                                                <li class="list-item">
-                                                    <div class="txt-area">
-                                                        <p class="day f-head">${fn:length(ptcptList) - status.index}일차</p>
-                                                        <p class="date f-caption2">${kl:convertDate(list.edctnDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
-                                                    </div>
-                                                    <div class="status-area">
-                                                        <dl class="status to">
-                                                            <dt class="dt f-caption1">출석</dt>
-                                                            <dd class="dd f-body1">${kl:convertDate(list.atndcDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '')}</dd>
-                                                        </dl>
-                                                        <dl class="status off">
-                                                            <dt class="dt f-caption1">퇴실</dt>
-                                                            <dd class="dd f-body1">
-                                                                ${kl:convertDate(list.lvgrmDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '')}
-
-                                                                <c:if test="${not empty list.etcNm}">
-                                                                    <div class="tooltip-wrap">
-                                                                        <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
-                                                                        <div class="tooltip-box">
-                                                                            <p class="txt f-caption2">${list.etcNm}</p>
-                                                                            <button class="btn-close" title="툴팁 닫기" type="button"></button>
-                                                                        </div>
-                                                                    </div>
-                                                                </c:if>
-
-
-                                                            </dd>
-                                                        </dl>
-                                                    </div>
-                                                </li>
+                                                <c:if test="${not empty list.atndcDtm}">
+                                                    <c:set var="atndcLength" value="${atndcLength+1}"/>
+                                                </c:if>
                                             </c:forEach>
 
-                                        </ul>
+                                            <div class="progress-area" data-progress="<fmt:formatNumber value="${(atndcLength/atndcTotLength)*100}" pattern=".00"/>">
+                                                <div class="progress">
+                                                    <div class="progress-bar"></div>
+                                                </div>
+                                                <div class="progress-info">
+                                                    <p class="txt f-sub-head">출석률</p>
+                                                    <p class="progress-num f-head color-sky">
+                                                        <span class="num">0</span>
+                                                        <span>%</span>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                            <ul class="progress-list">
+
+
+                                                <c:forEach var="list" items="${ptcptList}" varStatus="status">
+                                                    <li class="list-item">
+                                                        <div class="txt-area">
+                                                            <p class="day f-head">${fn:length(ptcptList) - status.index}일차</p>
+                                                            <p class="date f-caption2">${kl:convertDate(list.edctnDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
+                                                        </div>
+                                                        <div class="status-area">
+                                                            <dl class="status to">
+                                                                <dt class="dt f-caption1">출석</dt>
+                                                                <dd class="dd f-body1">${kl:convertDate(list.atndcDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '')}</dd>
+                                                            </dl>
+                                                            <dl class="status off">
+                                                                <dt class="dt f-caption1">퇴실</dt>
+                                                                <dd class="dd f-body1">
+                                                                        ${kl:convertDate(list.lvgrmDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '')}
+
+                                                                    <c:if test="${not empty list.etcNm}">
+                                                                        <div class="tooltip-wrap">
+                                                                            <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                                                            <div class="tooltip-box">
+                                                                                <p class="txt f-caption2">${list.etcNm}</p>
+                                                                                <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:if>
+
+
+                                                                </dd>
+                                                            </dl>
+                                                        </div>
+                                                    </li>
+                                                </c:forEach>
+
+                                            </ul>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cont-sec no-border scroll-motion">
-                            <div class="for-motion">
-                                <div class="sec-tit-area">
-                                    <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
-                                </div>
-                                <div class="sec-con-area">
-                                    <div class="gray-bg-sec">
-                                        <div class="con-list-box-w">
-                                            <div class="con-list-box">
-                                                <p class="f-head">교육 만족도 설문 조사</p>
-                                                <div class="ul-txt-w info">
-                                                    <div class="ul-txt-list">
-                                                        <div class="ul-txt">
-                                                            <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
-                                                            <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">-</dd></dl>
+
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="gray-bg-sec">
+                                            <div class="con-list-box-w">
+                                                <div class="con-list-box">
+                                                    <p class="f-head">교육 만족도 설문 조사</p>
+                                                    <div class="ul-txt-w info">
+                                                        <div class="ul-txt-list">
+                                                            <div class="ul-txt">
+                                                                <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
+                                                                <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">-</dd></dl>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                            <p class="txt f-body1">미참여</p>
+                                            <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                <p class="txt f-body1">미참여</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="cont-sec no-border scroll-motion">
-                            <div class="for-motion">
-                                <div class="sec-tit-area">
-                                    <p class="f-title3">수료 평가 참여내역</p>
-                                </div>
-                                <div class="sec-con-area">
-                                    <div class="gray-bg-sec">
-                                        <div class="con-list-box-w">
-                                            <div class="con-list-box">
-                                                <p class="f-head">평가</p>
-                                                <div class="ul-txt-w info">
-                                                    <div class="ul-txt-list">
-                                                        <div class="ul-txt">
-                                                            <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl>
-                                                            <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">2023.01.01 10:30</dd></dl>
+
+                            <div class="cont-sec no-border scroll-motion">
+                                <div class="for-motion">
+                                    <div class="sec-tit-area">
+                                        <p class="f-title3">수료 평가 참여내역</p>
+                                    </div>
+                                    <div class="sec-con-area">
+                                        <div class="gray-bg-sec">
+                                            <div class="con-list-box-w">
+                                                <div class="con-list-box">
+                                                    <p class="f-head">평가</p>
+                                                    <div class="ul-txt-w info">
+                                                        <div class="ul-txt-list">
+                                                            <div class="ul-txt">
+                                                                <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl>
+                                                                <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">2023.01.01 10:30</dd></dl>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                            <p class="txt f-body1">참여완료</p>
+                                            <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                <p class="txt f-body1">참여완료</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+
+                        </c:if>
+
                     </div>
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap for-motion align-right">
@@ -721,6 +799,5 @@
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAPicLayer.jsp"></jsp:include><!-- 문의 담당자 팝업 -->
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduLctrLayer.jsp"></jsp:include><!-- 온라인 강의 팝업 -->
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduRoomLayer.jsp"></jsp:include><!-- 교육장 팝업 -->
-
 
 </div>

@@ -540,6 +540,12 @@
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduLctrLayer.jsp"></jsp:include><!-- 온라인 강의 팝업 -->
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduRoomLayer.jsp"></jsp:include><!-- 교육장 팝업 -->
 
+
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduGpcLayer1.jsp"></jsp:include><!-- gpc id인증 팝업1-->
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduGpcLayer2.jsp"></jsp:include><!-- gpc id인증 팝업2-->
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduGpcLayer3.jsp"></jsp:include><!-- gpc id인증 팝업3-->
+    <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduGpcLayer4.jsp"></jsp:include><!-- gpc id인증 팝업4 -->
+
 </div>
 
 
