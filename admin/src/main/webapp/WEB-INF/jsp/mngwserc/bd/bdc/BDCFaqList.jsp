@@ -75,7 +75,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-9 pr0">
-                                <input type="text" class="form-control input-sm" data-name="q" value="${rtnData.q}" maxlength="50" />
+                                <input type="text" class="form-control input-sm" data-name="q" id="q" value="${rtnData.q}" maxlength="50" />
                             </div>
                         </div>
                     </div>
