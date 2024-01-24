@@ -20,7 +20,7 @@
                 <td class="text-center">${kl:nameMasking(list.name)}<br>(${kl:idMasking(list.id)})</td>
                 <td class="text-center">${kl:phoneMasking(list.hpNo)}</td>
                 <td class="text-center">${kl:emailMasking(list.email)}</td>
-                <%--<td class="text-center">${kl:convertDate(list.mngSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-')}</td>--%>
+                <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${not empty list.appctnSttsChngDtm}">
