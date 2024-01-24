@@ -642,6 +642,7 @@
 									when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
 									end
 							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 							when stts_cd = 'EDU_STTS_CD05' then '미선발'
 							when stts_cd = 'EDU_STTS_CD06' then '교육양도'
 					end
@@ -1109,7 +1110,6 @@
 											when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
 									end
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
-									when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
 									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
 									end
