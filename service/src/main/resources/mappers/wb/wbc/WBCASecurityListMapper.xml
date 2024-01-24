@@ -22,27 +22,27 @@
             ,BSN_STRT_DTM
             ,BSN_END_DTM
             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '접수중'
             WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
-            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ < ]]> BSN_END_DTM THEN '사업진행중'
             ELSE '사업종료'
             END AS DATE_STATE
             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 'STATE02'
             WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
-            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ < ]]> BSN_END_DTM THEN 'STATE04'
             ELSE 'STATE05'
             END AS DATE_STATE_CD
             , CASE WHEN NOW() <![CDATA[< ]]>  ACCS_STRT_DTM THEN 2
-            WHEN NOW()   <![CDATA[ >= ]]>  ACCS_STRT_DTM AND NOW()   <![CDATA[ <= ]]>  ACCS_END_DTM THEN 1
+            WHEN NOW()   <![CDATA[ >= ]]>  ACCS_STRT_DTM AND NOW()   <![CDATA[ < ]]>  ACCS_END_DTM THEN 1
             ELSE 3
             END AS DATE_ORD
             , CASE WHEN NOW() <![CDATA[< ]]> ACCS_STRT_DTM THEN '접수대기'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '접수중'
             ELSE '마감'
             END AS ACCT_STATUS
             , CASE WHEN NOW() <![CDATA[< ]]> ACCS_STRT_DTM THEN '2'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '1'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '1'
             ELSE '3'
             END AS STATUS_ORD
             ,DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
@@ -85,15 +85,15 @@
             ,BSN_STRT_DTM
             ,BSN_END_DTM
             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '접수중'
             WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
-            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ < ]]> BSN_END_DTM THEN '사업진행중'
             ELSE '사업종료'
             END AS DATE_STATE
             , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 'STATE01'
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 'STATE02'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 'STATE02'
             WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN 'STATE03'
-            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN 'STATE04'
+            WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ < ]]> BSN_END_DTM THEN 'STATE04'
             ELSE 'STATE05'
             END AS DATE_STATE_CD
             ,EXPS_YN
@@ -147,9 +147,9 @@
              ,BSN_STRT_DTM
              ,BSN_END_DTM
              , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN '접수전'
-                WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN '접수중'
+                WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '접수중'
                 WHEN NOW() <![CDATA[ > ]]> ACCS_END_DTM AND NOW() <![CDATA[ < ]]> BSN_STRT_DTM THEN '사업진행예정'
-                WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ <= ]]> BSN_END_DTM THEN '사업진행중'
+                WHEN NOW() <![CDATA[ >= ]]> BSN_STRT_DTM AND NOW() <![CDATA[ < ]]> BSN_END_DTM THEN '사업진행중'
                 ELSE '사업종료'
             END AS DATE_STATE
              ,EXPS_YN
@@ -528,7 +528,7 @@
                       ,BSN_END_DTM
                       ,EXPS_YN
                       , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
-                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 1
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A

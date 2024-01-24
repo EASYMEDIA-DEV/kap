@@ -1367,7 +1367,7 @@
                       ,BSN_END_DTM
                       ,EXPS_YN
                       , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
-                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ <= ]]> ACCS_END_DTM THEN 1
+                     WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 1
                      ELSE 3
                      END AS DATE_ORD
                  FROM CX_EPISD_MST A

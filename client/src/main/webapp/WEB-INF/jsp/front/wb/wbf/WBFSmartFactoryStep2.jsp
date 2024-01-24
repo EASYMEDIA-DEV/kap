@@ -58,7 +58,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="text" id="sbrdnBsnmNo" name="sbrdnBsnmNo" class="numberChk notRequired" placeholder="종된사업장번호 입력">
+                                                            <input type="text" id="sbrdnBsnmNo" name="sbrdnBsnmNo" class="numberChk notRequired" placeholder="종된사업장번호 입력" maxlength="4">
                                                         </div>
                                                     </div>
                                                     <div class="noti-txt-w">
@@ -203,7 +203,7 @@
                                                             <label class="btn-solid gray-bg btnFile" for="searchFile1">파일 찾기</label>
                                                         </div>
                                                         <div class="btn-wrap btn-down-wrap">
-                                                            <a class="btn-text-icon download downloadForm" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" title="양식 다운로드" download=""><span>양식 다운로드</span></a>
+                                                            <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" title="양식 다운로드" download=""><span>양식 다운로드</span></a>
                                                         </div>
                                                     </div>
                                                 </div>
