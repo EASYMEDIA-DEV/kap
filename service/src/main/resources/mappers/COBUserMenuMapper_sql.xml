@@ -731,7 +731,9 @@
 	<update id="updateMenuUseYn" parameterType ="COMenuDTO">
 		update /* COBUserMenuMapper.updateMenuUseYn */ co_menu_mst
 		set
-			USE_YN = 'N'
+			USE_YN = 'N',
+		    adm_url = null,
+		    user_url = null
 		where
 			menu_seq = #{menuSeq}
 	</update>

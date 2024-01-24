@@ -14,7 +14,7 @@
                     <c:set var="classType" value="accepting" />
                 </c:otherwise>
             </c:choose>
-            <div class="training-confirm moveView" data-bsn-cd="${item.bsnCd}" data-appctn-seq="${item.appctnSeq}">
+            <div class="training-confirm" data-bsn-cd="${item.bsnCd}" data-appctn-seq="${item.appctnSeq}">
                 <div class="top-info">
                     <div class="training-view-page">
                         <div class="training-list">
@@ -30,7 +30,7 @@
                                     </span>
                                         </p>
                                     </div>
-                                    <p class="training-name f-title3">${item.year} ${item.episd}차 ${item.bsnNm}
+                                    <p class="training-name f-title3 moveView">${item.year} ${item.episd}차 ${item.bsnNm}
                                     </p>
                                 </div>
                                 <div class="group">
