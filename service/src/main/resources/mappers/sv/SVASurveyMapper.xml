@@ -113,7 +113,7 @@
 				</foreach>
 				)
 			</if>
-
+R
 
 			<if test="q != null and q != ''">
 				<choose>
@@ -138,7 +138,7 @@
 						INSTR(REG_ID , #{q} ) <![CDATA[>]]> 0 OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(NAME , #{q}) <![CDATA[>]]> 0) OR
 						INSTR(MOD_ID  , #{q}  ) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(NAME , #{q}) <![CDATA[>]]> 0)
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INST(NAME , #{q}) <![CDATA[>]]> 0)
 						)
 					</otherwise>
 				</choose>

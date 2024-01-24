@@ -157,6 +157,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
+
+            var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
+            searchInput.on('keypress', function(e){
+                if (e.keyCode == 13){
+                    $formObj.find("#btnSearch").click();
+                }
+            })
+
             //리스트 조회
             search(1);
         }
