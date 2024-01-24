@@ -25,7 +25,7 @@ import java.util.ArrayList;
  *
  * @author 김대성
  * @version 1.0
- * @ClassName : WBCSrcurityController.java
+ * @ClassName : WBCSecurityController.java
  * @Description : 보안환경구축 Controller
  * @Modification Information
  * <pre>
@@ -40,7 +40,7 @@ import java.util.ArrayList;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping(value = "/coexistence/environment/srcurity")
-public class WBCSrcurityController {
+public class WBCSecurityController {
     /**
      * 서비스
      **/
@@ -133,6 +133,7 @@ public class WBCSrcurityController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBCBSecuritySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 // 공통코드 배열 셋팅
                 ArrayList<String> cdDtlList = new ArrayList<String>();

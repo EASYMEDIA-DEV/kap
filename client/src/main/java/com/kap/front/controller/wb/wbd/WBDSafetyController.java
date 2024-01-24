@@ -122,6 +122,7 @@ public class WBDSafetyController {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wBDBSafetySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
