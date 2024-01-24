@@ -28,7 +28,11 @@ define(["ezCtrl"], function(ezCtrl) {
 						dashMst.link = moreLink;
 							cmmCtrl.jsonAjax(function(data){
 								var rtn = JSON.parse(data);
-								location.href="/mngwserc"+rtn.moveLink;
+								if(rtn.pageAuth == 'Y'){
+									location.href="/mngwserc"+rtn.moveLink;
+								}else{
+									alert('메뉴접근권한이 없습니다.');
+								}
 							}, './dashboardAuth', dashMst, "text")
 						}
 					}
