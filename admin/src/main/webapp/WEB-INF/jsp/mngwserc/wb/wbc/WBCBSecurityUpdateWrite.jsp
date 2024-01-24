@@ -159,7 +159,7 @@
 
                     <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-1">
-                        <input type="text" class="form-control telNumber notRequired" id="telNo" name="memList[0].telNo" value="${rtnInfo.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
+                        <input type="text" class="form-control telNumber notRequired" id="telNo" name="memList[0].telNo" value="${rtnMem.telNo}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="전화번호"/>
                     </div>
                 </div>
             </fieldset>

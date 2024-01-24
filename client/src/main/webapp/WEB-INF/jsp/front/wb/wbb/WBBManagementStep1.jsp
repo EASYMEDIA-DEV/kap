@@ -84,8 +84,8 @@
                                                 <th>일반 전화번호</th>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${not empty rtnUser.memTelNo}">
-                                                            ${rtnUser.memTelNo}
+                                                        <c:when test="${not empty rtnData.telNo}">
+                                                            ${rtnData.telNo}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
@@ -148,7 +148,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
-                                                <td>${fn:substring(rtnData.bsnmNo,0,3) } - ${fn:substring(rtnData.bsnmNo,3,5) } - ${fn:substring(rtnData.bsnmNo,5, 10) }</td>
+                                                <td>${fn:substring(rtnData.bsnmNo,0,3) }-${fn:substring(rtnData.bsnmNo,3,5) }-${fn:substring(rtnData.bsnmNo,5, 10) }</td>
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>

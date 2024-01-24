@@ -294,10 +294,19 @@
 								<c:if test="${ not empty loginMap || menu.data !='마이페이지' }">
 									<li>
 										<div class="one-pack">
-											<a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>
+<%--											<a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>--%>
+											<a class="one-depth for-move" href="javascript:">${ menu.data}</a>
 										</div>
 										<c:if test="${ menu.children != null && fn:length(menu.children) > 0 }">
 											<ul class="two-pack">
+												<c:if test="${menu.data eq '마이페이지' && loginMap.authCd ne 'CS'}">
+													<li>
+														<div class="for-move">
+															<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link}">${ menu.data}</a>
+														</div>
+													</li>
+
+												</c:if>
 												<c:forEach var="menu2" items="${menu.children}" varStatus="status2">
 													<c:if test="${ menu2.attr.gnbYn eq 'Y'}">
 														<c:if test="${menu2.data ne '근태 체크' && menu.data ne '마이페이지' }">

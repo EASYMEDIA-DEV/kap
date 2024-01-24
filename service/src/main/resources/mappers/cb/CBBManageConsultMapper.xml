@@ -108,7 +108,7 @@
                 , CP_MST.REG_DTM
                 , CP_MST.MOD_ID
                 , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
-                , CPR_MST.MOD_DTM
+                , CP_MST.MOD_DTM
                 , CMPN_MST.MJR_PRDCT_1
                 , CMPN_MST.MJR_PRDCT_2
                 , CMPN_MST.MJR_PRDCT_3
@@ -1133,7 +1133,7 @@
 
     <!--
      쿼리명 : CBBManageConsultMapper.selectManageConsultDtl
-     설  명 :  컨설팅 기술 관리 상세 조회
+     설  명 :  경영 컨설팅 상세 조회
       수정일     수정자       수정내용
     ==========   ======    ==============
     2023.11.14   임서화      최초생성
@@ -1145,6 +1145,7 @@
             A.APPCTN_MEM_SEQ,
             A.CNSTG_CD,
             A.RSUME_STTS_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM,
             A.APPCTN_DT,
             A.CMPN_SIZE_CD AS SIZE_CD,
             A.FRGN_DPNDN_RATE,
@@ -1186,12 +1187,12 @@
             (CASE WHEN A.RSUME_STTS_CD = 'MNGCNSLT_STATUS03'
                   AND (SELECT IFNULL(vst_dt, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE() THEN 'MNGCNSLT_STATUS06'
                   WHEN (A.RSUME_STTS_CD = 'MNGCNSLT_STATUS07')
-                  AND ((SELECT IFNULL(cnstg_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ )<![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
+                  AND ((SELECT IFNULL(CNSTG_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ )<![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
             ELSE A.RSUME_STTS_CD END) RSUME_STTS_CD,
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (CASE WHEN A.RSUME_STTS_CD = 'MNGCNSLT_STATUS03'
                 AND (SELECT IFNULL(vst_dt, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE() THEN 'MNGCNSLT_STATUS06'
                 WHEN (A.RSUME_STTS_CD = 'MNGCNSLT_STATUS07')
-                AND ((SELECT IFNULL(cnstg_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
+                AND ((SELECT IFNULL(CNSTG_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
                 ELSE A.RSUME_STTS_CD END) AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM,
             A.ADM_MEMO,
             A.REG_DTM,
@@ -1231,7 +1232,7 @@
             AFTR_MEM_SEQ,
             REG_DTM,
             REG_ID,
-            (SELECT NAME FROM CO_MEM_MST WHERE ID=A.REG_ID) REG_NAME
+            (SELECT NAME FROM CO_ADM_MST WHERE ID=A.REG_ID) REG_NAME
         FROM
             CP_CNSTG_APPCTN_TRNSF_DTL A
         WHERE

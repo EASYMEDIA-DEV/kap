@@ -269,15 +269,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	//강사 테이블 넘버링
 	var isttrTable = function(data){
 
-		//tr 갯수 감지해서 카운트해줌, 없으면 없는폼 꺼냄
-		var totCnt = $("#isttrContainer").find("tr").size();
-		var startCount = 2;
+		// //tr 갯수 감지해서 카운트해줌, 없으면 없는폼 꺼냄
+		// var totCnt = $("#isttrContainer").find("tr").size();
+		// var startCount = 2;
+		//
+		//
+		// $("#isttrContainer").find("tr").each(function(idx, data){
+		// 	if(idx>1){
+		// 		$(this).find("td").eq(0).text(totCnt-idx);
+		// 	}
+		// });
 
+		var totCnt = $("#isttrContainer").find("tr:visible").size();
 
-		$("#isttrContainer").find("tr").each(function(idx, data){
-			if(idx>1){
-				$(this).find("td").eq(0).text(totCnt-idx);
-			}
+		$("#isttrContainer").find("tr:visible").each(function(idx, data){
+			$(this).find("td").eq(0).text(totCnt-idx);
 		});
 
 		//삭제했는데 하나도없으면 목록 없다는걸로 돌림
@@ -943,7 +949,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 													exIsttr.find("td").eq(2).text(ffltnNm);
 													exIsttr.find("td").eq(3).text(spclCntn);
 													exIsttr.find("input:hidden").val(seq);
-													$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+//													$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+													$("#isttrContainer").prepend("<tr>"+exIsttr.html()+"</tr>");
 												}
 											}
 
@@ -982,11 +989,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 											if((nextRow+nowRow)>6){
 												alert("강사는 6명까지만 입력 가능합니다.");
 											}else{
-												$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+//												$("#isttrContainer").append("<tr>"+exIsttr.html()+"</tr>");
+												$("#isttrContainer").prepend("<tr>"+exIsttr.html()+"</tr>");
 											}
-
-
-
 										}
 
 									}

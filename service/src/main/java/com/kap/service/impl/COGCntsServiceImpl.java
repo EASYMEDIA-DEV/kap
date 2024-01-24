@@ -2,9 +2,9 @@ package com.kap.service.impl;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.wb.wba.WBAManageInsertDTO;
 import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
 import com.kap.service.COGCntsService;
@@ -190,6 +190,23 @@ public class COGCntsServiceImpl implements COGCntsService {
 			wbaManageSearchDTO.setDetailsKey(value);
 			WBAManageInsertDTO wbaManageInsertDTO = wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
 			pCOGCntsDTO.setMenuSeq(wbaManageInsertDTO.getUserMenuSeq());
+		} else {
+			pCOGCntsDTO.setMenuSeq(Integer.valueOf(value));
+		}
+
+		return cOGCntsMapper.getCmsDtl(pCOGCntsDTO);
+	}
+	
+	/**
+	 * 컨설팅 컨텐츠 배포 내용조회
+	 */
+	public COGCntsDTO getCmsConsultingDtl(COGCntsDTO pCOGCntsDTO, String value, String type) throws Exception
+	{
+		if ("Y".equals(type)) {
+			CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
+
+			cBATechGuidanceInsertDTO.setDetailsKey(value);
+			pCOGCntsDTO.setMenuSeq(Integer.valueOf(pCOGCntsDTO.getMenuSeq()));
 		} else {
 			pCOGCntsDTO.setMenuSeq(Integer.valueOf(value));
 		}

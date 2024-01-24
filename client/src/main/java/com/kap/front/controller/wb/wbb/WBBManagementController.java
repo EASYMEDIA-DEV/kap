@@ -139,6 +139,7 @@ public class WBBManagementController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wbbaCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
 
                 modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
@@ -178,6 +179,7 @@ public class WBBManagementController {
                 vwUrl = "redirect:./content";
             } else {
                 wbRoundMstSearchDTO.setStageOrd(1);
+                modelMap.addAttribute("episdSeq", wbRoundMstSearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnData", wbbaRoundService.getRoundDtl(wbRoundMstSearchDTO));
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
