@@ -139,6 +139,7 @@ public class WBBManagementController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wbbaCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
 
                 modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());

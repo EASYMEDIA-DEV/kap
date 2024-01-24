@@ -122,6 +122,7 @@ public class WBECarbonController {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wBEBCarbonCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();

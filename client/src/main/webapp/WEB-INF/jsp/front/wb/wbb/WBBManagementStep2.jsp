@@ -174,8 +174,4 @@
   </div>
   </form>
 </div>
-
-<form id="test" name="test" enctype="multipart/form-data">
-
-</form>
 <!-- content 영역 end -->
