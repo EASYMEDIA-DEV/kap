@@ -25,235 +25,7 @@
         <!--LNB 시작-->
         <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
         <!--LNB 종료-->
-        <div class="right-con-area">
-            <div class="cont-sec-w">
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">사업개요</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="txt-sec">
-                                <div class="paragraph">
-                                    <p class="f-sub-head">재단은 2007년 자동차메이커의 연구개발 생산기술, 품질, 해외마케팅 등 다양한 분야의 임원 출신으로 구성된 협력 부품사 지원단을 발족, 회사 전반의 경영자문과 현장 맞춤형 컨설팅을 무상으로 제공하여 부품사의 관리시스템 체계화와 글로벌 경쟁력 향상을 적극 지원하고 있습니다.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">사업목적</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="txt-sec">
-                                <div class="paragraph">
-                                    <p class="f-sub-head">자동차 메이커 및 유관기관 임원 출신으로 구성된 자문위원이 전문 경력과 노하우를 전수하기 위하여 부품사를 방문하여 경영전반에 걸쳐 맞춤형 컨설팅 무상으로 제공</p>
-                                </div>
-                                <div class="img-area">
-                                    <p class="img">
-                                        <img src="/common/images/img-managementconsulting-business-purpose.jpg" alt="">
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">컨설팅 개요</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="table-sec">
-                                <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                    <table class="basic-table">
-                                        <caption>신청자 기본 정보</caption>
-                                        <colgroup>
-                                            <col style="width: 273rem;">
-                                            <col style="width: 820rem;">
-                                        </colgroup>
-                                        <tbody>
-                                        <tr>
-                                            <th>지원대상</th>
-                                            <td>한국자동차부품사</td>
-                                        </tr>
-                                        <tr>
-                                            <th>활동기간</th>
-                                            <td>3~6개월 (필요 시 연장 가능)</td>
-                                        </tr>
-                                        <tr>
-                                            <th>비용(무상)</th>
-                                            <td>
-                                                <p>국내 : 일체 무상지원 (교통비, 숙박비 등 재단 부담)</p>
-                                                <p>해외 : 항공료 및 현지 체제비용 업체부담</p>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>자문위원 인원</th>
-                                            <td>11명</td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">컨설팅 분야</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="gray-bg-sec-w">
-                                <div class="gray-bg-sec">
-                                    <p class="f-title3">경영자문</p>
-                                    <div class="con-list-box-w">
-                                        <div class="con-list-box">
-                                            <p class="f-body1">종합 경영컨설팅</p>
-                                            <div class="ul-txt-w">
-                                                <div class="ul-txt-list">
-                                                    <p class="ul-txt">분야별 자문활동</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="con-list-box">
-                                            <p class="f-body1">자문업체 협력사 One-Point 자문</p>
-                                            <div class="ul-txt-w">
-                                                <div class="ul-txt-list">
-                                                    <p class="ul-txt">연구개발, 생산, 품질, 원가, 물류 등</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gray-bg-sec">
-                                    <p class="f-title3">경영진단</p>
-                                    <div class="con-list-box-w">
-                                        <div class="con-list-box">
-                                            <p class="f-body1">회사 전반적인 부문 진단 희망 시</p>
-                                            <div class="ul-txt-w">
-                                                <div class="ul-txt-list">
-                                                    <p class="ul-txt">사업분야별 경영진단팀 구성<br/>1개월 진단</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="gray-bg-sec">
-                                    <p class="f-title3">교육 세미나</p>
-                                    <div class="con-list-box-w">
-                                        <div class="con-list-box">
-                                            <p class="f-body1">맞춤형 교육·세미나</p>
-                                            <div class="ul-txt-w">
-                                                <div class="ul-txt-list">
-                                                    <p class="ul-txt">부품사 현지 방문<br/>(품질, 생산기술, 연구개발 등)</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">컨설팅 세부 내용</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="gray-bg-sec">
-                                <div class="con-list-box-w">
-                                    <div class="con-list-box">
-                                        <p class="f-head">연구개발</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">미래차 사업 확대, 기술개발 로드맵 수립, 부품·신차개발 프로세스 정립, 연구소 운영</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="con-list-box">
-                                        <p class="f-head">생산</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">공장운영, 생산(생산성 향상)설비 관리·개선, 공장라인 운영 적정성 관리, 부품 재고 관리</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="con-list-box">
-                                        <p class="f-head">생산기술</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">공정자동화, 6M 표준화, 수익성 개선, 공장 레이아웃·불량분석·설비 개선</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="con-list-box">
-                                        <p class="f-head">품질</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">품질경영시스템구축, 품질 불량 개선, 품질5스타 및 SQ 평가·인증</p>
-                                                <p class="ul-txt has-dot">자동차부품 Recall(제작 결함) 대응</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="con-list-box">
-                                        <p class="f-head">원가(재경)</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">손익분석 관련 업무지원(제품, 공단단위별), 원가 계산, 재경 업무(회계·세무·재무)</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="con-list-box">
-                                        <p class="f-head">기획/전략</p>
-                                        <div class="ul-txt-w">
-                                            <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">경영관리 체계 정립, 리더십·직원역량개발, 미래비전 및 중장기 전략 수립</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="cont-sec scroll-motion">
-                    <div class="for-motion">
-                        <div class="sec-tit-area">
-                            <p class="f-title3">경영컨설팅 신청 안내</p>
-                        </div>
-                        <div class="sec-con-area">
-                            <div class="graphic-sec">
-                                <div class="guide-step-w">
-                                    <div class="step-list">
-                                        <p class="step-num">STEP 01</p>
-                                        <div class="step-info">
-                                            <p class="step-con">온라인 신청</p>
-                                        </div>
-                                    </div>
-                                    <div class="step-list">
-                                        <p class="step-num">STEP 02</p>
-                                        <div class="step-info">
-                                            <p class="step-con">담당자연락</p>
-                                        </div>
-                                    </div>
-                                    <div class="step-list">
-                                        <p class="step-num">STEP 03</p>
-                                        <div class="step-info">
-                                            <p class="step-con">초도방문</p>
-                                        </div>
-                                    </div>
-                                    <div class="step-list">
-                                        <p class="step-num">STEP 04</p>
-                                        <div class="step-info">
-                                            <p class="step-con">상주경영컨설팅 부품사선정</p>
-                                        </div>
-                                    </div>
-                                </div>
+            ${rtnCms.cnts}
 
                                 <div class="box-btn-area">
                                     <div class="bg-area">
@@ -277,7 +49,7 @@
                                     </div>
                                     <div class="right has-button">
                                         <div class="btn-wrap">
-                                            <a class="btn-text-icon download" href="javascript:" download><span>개선활동 추진계획서 다운로드</span></a>
+                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -319,7 +91,7 @@
                             <div class="list-sec">
                                 <div class="article-list-w txt-card-list" id="infoCard"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
                                     <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
-                                        <a class="list-item open" title="팝업 열기">
+                                        <a class="list-item popOpen" title="팝업 열기">
                                             <div class="bg">
                                                 <img src="/common/images/@img-foundation-group-member.png" alt="">
                                             </div>
@@ -384,5 +156,61 @@
         </div>
     </div>
 </div>
+</div>
 <!-- content 영역 end -->
-<jsp:include page="/WEB-INF/jsp/front/cb/cbb/CBBManageConsultLayer.jsp"></jsp:include>
+<div class="layer-popup memberDetailsPopup">
+    <div class="for-center">
+        <div class="pop-wrap">
+            <div class="pop-con-area">
+                <div class="tit-area">
+                    <p class="f-title1">위원 상세</p>
+                </div>
+                <div class="con-area">
+                    <div class="scroll-area">
+                        <div class="p-cont-sec">
+                            <div class="sec-con-area">
+                                <div class="article-list-w txt-list">
+                                    <dl class="list-item">
+                                        <dt class="f-body1">전문위원</dt>
+                                        <dd class="f-body2 cmssrName"></dd>
+                                    </dl>
+                                    <dl class="list-item">
+                                        <dt class="f-body1">이메일</dt>
+                                        <dd class="f-body2 email"></dd>
+                                    </dl>
+                                    <dl class="list-item">
+                                        <dt class="f-body1">업종/분야</dt>
+                                        <dd class="f-body2">
+                                            <p class="box-label cmssrCbsnCd"><span></span></p>
+                                        </dd>
+                                    </dl>
+                                    <dl class="list-item">
+                                        <dt class="f-body1">경력</dt>
+                                        <dd class="f-body2 cmssrMjrCarerCntn">
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                    <dl class="list-item">
+                                        <dt class="f-body1">컨설팅 분야</dt>
+                                        <dd class="f-body2">
+                                            <p></p>
+                                            <p></p>
+                                        </dd>
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bot-fix-btn-area">
+                    <div class="btn-wrap align-right">
+                        <a class="btn-solid small black-bg" href="javascript:"><span>위원 문의</span></a>
+                    </div>
+                </div>
+                <div class="user-opt-area">
+                    <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

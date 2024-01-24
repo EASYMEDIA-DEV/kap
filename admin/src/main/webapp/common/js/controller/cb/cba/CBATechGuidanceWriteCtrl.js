@@ -325,29 +325,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            ctgryCd: {
-                event: {
-                    change: function () {
-                        var ctgryCd = $("#ctgryCd option:selected").val();
-                        if (ctgryCd == "COMPANY01001") {
-                            $(".sqInfoArea").hide();
-                            $(".qlty5StarArea").show();
-                            $(".pay5StarArea").show();
-                            $(".tchlg5StarArea").show();
-                        } else if (ctgryCd == "COMPANY01002") {
-                            $(".sqInfoArea").show();
-                            $(".qlty5StarArea").hide();
-                            $(".pay5StarArea").hide();
-                            $(".tchlg5StarArea").hide();
-                        }else{
-                            $(".sqInfoArea").hide();
-                            $(".qlty5StarArea").hide();
-                            $(".pay5StarArea").hide();
-                            $(".tchlg5StarArea").hide();
-                        }
-                    }
-                }
-            },
             pstnCdSelect: {
                 event: {
                     click: function () {
@@ -384,7 +361,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             initVstRsltCd : {
                 event : {
                     click: function(){
-                        changeStts();
+                       changeStts();
                     }
                 }
             },
@@ -550,7 +527,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
 
                         var actionUrl = ($.trim($formObj.find("input[name='detailsKey']").val()) == "" ? "./insert" : "./update");
-                        var actionMsg = msgCtrl.getMsg("success.ins");
+                        var actionMsg = msgCtrl.getMsg("success.sve");
                         var cmpnNm = $("#cmpnNmText").text();
                         var bsnmNo = $("#bsnmNoText").text();
                         var emailTxt = $("#emailTxt").text();
@@ -701,13 +678,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             ctgryCd: {
                 event: {
                     click: function () {
-                        var selectVal = $("select[name=ctgryCd]").val();
-                        if (selectVal == "COMPANY01001") {
+                        var ctgryCd = $("#ctgryCdSelect option:selected").val();
+                        if (ctgryCd == "COMPANY01001") {
                             $(".sqInfo").hide();
                             $(".fiveStar").show();
-                        } else {
-                            $(".fiveStar").hide();
+                        } else if (ctgryCd == "COMPANY01002") {
                             $(".sqInfo").show();
+                            $(".fiveStar").hide();
+                        }else{
+                            $(".sqInfo").hide();
+                            $(".fiveStar").hide();
                         }
                     }
                 }

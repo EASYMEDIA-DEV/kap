@@ -93,7 +93,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4 pstnCdInput" <c:if test="${rtnDto.pstnCd ne 'MEM_CD01007'}">style="display: none; margin-left: -15px;"</c:if>>
-                                <input type="text" class="form-control input-sm notRequired" class="pstnNm" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
+                                <input type="text" class="form-control input-sm notRequired pstnNm" class="pstnNm" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
                             </div>
                         </div>
                     </div>
@@ -240,9 +240,9 @@
                     <div class="form-group text-sm form-inline">
                         <label class="col-sm-1 control-label">주생산품</label>
                         <div class="col-sm-10">
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1)을 입력"/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2)을 입력"/>
-                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3)을 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct1" name="mjrPrdct1" value="${rtnDto.mjrPrdct1}" title="주생산품(1)" maxlength="50" placeholder="주생산품(1) 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct2" name="mjrPrdct2" value="${rtnDto.mjrPrdct2}" title="주생산품(2)" maxlength="50" placeholder="주생산품(2) 입력"/>
+                            <input type="text" class="form-control input-sm notRequired" id="mjrPrdct3" name="mjrPrdct3" value="${rtnDto.mjrPrdct3}" title="주생산품(3)" maxlength="50" placeholder="주생산품(3) 입력"/>
                         </div>
                     </div>
                 </fieldset>
@@ -726,7 +726,7 @@
                     <label class="col-sm-1 control-label">관리자 메모</label>
                     <div class="col-sm-11">
                         <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
-                        <span style="float: right">저장 시간 <c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></span>
+                        <span style="float: right">저장 시간 <c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></span>
                     </div>
                 </div>
             </fieldset>

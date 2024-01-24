@@ -338,4 +338,25 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
 
     @Schema(title = "신청부품사 업종 리스트", example = "")
     List<CBATechGuidanceInsertDTO> dtlList;
+
+    @Schema(title = "기술지도 개선활동 파일")
+    private String tchgdFileSeq;
+    @Schema(title = "경영컨설팅 개선활동 파일")
+    private String mngmntFileSeq;
+    @Schema(title = "기술지도 개선활동 파일 경로")
+    private String tchgdFilePath;
+    @Schema(title = "경영컨설팅 개선활동 파일 경로")
+    private String mngmntFilePath;
+    @Schema(title = "기술지도 개선활동 파일 순번")
+    private String tchgdFileOrd;
+    @Schema(title = "경영컨설팅 개선활동 파일 순변")
+    private String mngmntFileOrd;
+    @Schema(title = "")
+    private String bsnCd;
+
+    @Schema(title = "사용자 메뉴 시퀀스")
+    private String UserMenuSeq;
+
+    
+
 }
