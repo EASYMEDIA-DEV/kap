@@ -11,9 +11,27 @@
                 <td class="text-center">${ list.ctgryNm}</td><!-- 구분 -->
                 <td class="text-center">${ list.sizeNm}</td><!-- 규모 -->
                 <td class="text-center">${ list.appctnBsnmNo}</td><!-- 사업자등록번호 -->
-                <td class="text-center">${ list.appctnFldNm}</td><!-- 신청분야/업종 -->
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${empty list.appctnFldNm}">
+                            -
+                        </c:when>
+                        <c:otherwise>
+                            ${ list.appctnFldNm}
+                        </c:otherwise>
+                    </c:choose>
+                </td><!-- 신청분야/업종 -->
                 <td class="text-center">${ list.rgnsName}</td><!-- 신청 소재지 -->
-                <td class="text-center">${ list.cmssrNm}</td><!-- 담당위원 -->
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${empty list.cmssrNm}">
+                            -
+                        </c:when>
+                        <c:otherwise>
+                            ${ list.cmssrNm}
+                        </c:otherwise>
+                    </c:choose>
+                </td><!-- 담당위원 -->
                 <td class="text-center">${ kl:convertDate(list.regDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</td><!-- 신청일 -->
             </tr>
         </c:forEach>

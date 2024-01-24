@@ -699,7 +699,7 @@
     -->
     <select id="getConsultingList" parameterType="wBGAConsultingDTO" resultType="wBGAConsultingDTO">
         SELECT /* WBGAExamMapper.getConsultingList */
-            YEAR(A.BSN_YEAR)
+            YEAR(A.BSN_YEAR) AS BSN_YEAR
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) AS CNSTG_NM
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) AS RSUME_STTS_NM
              ,B.CMPN_NM
