@@ -738,6 +738,7 @@ footer .copy-area span:last-child:after {display: none;}
 
     /* 배경있는 다운로드 */
 .btn-text-icon.download-bg {display: inline-block; width: 370rem; /*min-height: 48rem;*/ padding: 11rem 24rem; background-color: #F5F6F7;}
+.btn-text-icon.download-bg.gray {background-color: #ECEEEF;}
 .btn-text-icon.download-bg span {display: block; padding-right: 44rem; font-family: "Pretendard_Regular", sans-serif; font-size: max(16rem, 14px); color: #06161E; line-height: 160%; letter-spacing: -.02em; word-wrap: break-word; word-break: break-all;}
 .btn-text-icon.download-bg span:after {position: absolute; left: auto; right: 0; top: 0rem; margin-left: 0; width: 24rem; height: 24rem; background: url("/common/images/icon-download-thin-black.svg") no-repeat center center / 100% auto;}
 .btn-text-icon.download-bg:hover span {text-decoration: underline;}
@@ -818,6 +819,8 @@ footer .copy-area span:last-child:after {display: none;}
 .satisfy .satisfy-msg {display: block;}
 
 .form-group {display: flex; align-items: flex-end; flex-wrap: wrap; column-gap: 20rem; row-gap: 16rem;}
+.form-group .file-list-area ~ .attatched-file-area {margin-top: 8rem}
+.form-group .file-list-area ~ .btn-wrap.btn-down-wrap {margin-top: 8rem !important;}
 
 .form-group.form-calendar .form-input:first-child{position:relative; margin-right: 10rem; width:160rem;}
 .form-group.form-calendar .form-input:first-child:after{display:block; content:"~"; position:absolute; top:50%; right:max(-18rem, -16px); transform:translateY(-50%); font-size: max(16rem, 14px); font-family: "Pretendard_Regular", sans-serif; color: #697278; line-height: 160%; letter-spacing: -.02em;}
@@ -939,6 +942,8 @@ footer .copy-area span:last-child:after {display: none;}
   .satisfy-msg {font-size: 12rem; margin-top: 6rem;}
 
   .form-group {row-gap: 12rem; column-gap: 10rem;}
+  .form-group .file-list-area ~ .attatched-file-area {margin-top: 4rem;}
+  .form-group .file-list-area ~ .btn-wrap.btn-down-wrap {margin-top: 4rem !important;}
 
   .form-address .form-group {row-gap: 16rem;}
 
@@ -1204,7 +1209,7 @@ footer .copy-area span:last-child:after {display: none;}
 .table-box .basic-table tr td .dot-txt:before{display:block; content:""; position:absolute; top:10rem; left:0; width:4px; height:4px; background:#06161E; border-radius:50%;}
 .table-box .basic-table tr td .dot-txt + .dot-txt{margin-top:8rem;}
 .table-box .basic-table tr td .f-body1 + .f-body1{margin-top:8rem;}
-.table-box .basic-table tr td a {text-decoration: underline;}
+.table-box .basic-table tr td a {text-decoration: underline; text-underline-position: under;}
 
 /* 말줄임 가능 테이블 */
 .basic-table:has(.txt-ellipsis) {table-layout: fixed;}
@@ -1469,6 +1474,8 @@ footer .copy-area span:last-child:after {display: none;}
 .accepting-fixed-area .hide-area .con-area .info-line-list-w .list:last-child {border-bottom: 1px solid #ECEEEF; }
 .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .tit {width: 120rem; padding-right: 40rem; font-family: "Pretendard_Medium", sans-serif; color: #06161E; font-size: max(16rem, 14px); line-height: 160%; letter-spacing: -0.32rem;}
 .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt {display: flex; align-items: center; color: #697278; font-size: max(16rem, 14px); line-height: 160%; letter-spacing: -0.32rem;}
+.accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap {display: block; margin-top: 0;}
+.accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap > * ~ * {margin-top: 8rem;}
 .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .img {display: inline-block; width: 44rem; height: 44rem; margin-right: 12rem;}
 .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .img img {width: 100%}
 .accepting-fixed-area .hide-area .btn-wrap {margin-top: 96rem;}
@@ -1513,6 +1520,7 @@ footer .copy-area span:last-child:after {display: none;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .tit {font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt {margin-top: 10rem; font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .img {display: none;}
+  .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap > * ~ * {margin-top: 4rem;}
   .accepting-fixed-area .hide-area .btn-wrap {margin-top: 60rem;}
   .accepting-fixed-area .hide-area .btn-wrap .btn-solid.gray-bg {padding: 0; width: 50rem;}
   .accepting-fixed-area .hide-area .btn-wrap .btn-set {column-gap: 5rem;}
@@ -2507,6 +2515,7 @@ footer .copy-area span:last-child:after {display: none;}
 .lnb-link-area.nonmember {background-image: url("/common/images/bg-nonmember-history.jpg");}
 .lnb-link-area .btn-text-icon span {flex-wrap: wrap;}
 .right-con-area .lnb-link-area {display: none;}
+.right-con-area img {max-width: 100%;}
 @media all and (max-width: 1023px) {
   .lnb-area {display: none;}
 
@@ -2883,6 +2892,7 @@ footer .copy-area span:last-child:after {display: none;}
           /* 교육/세미나 > 상세 - 회차정보 */
 .index-list-w {margin-top: 40rem;}
 /* .index-list-w .no-data-area {margin-top: -32rem;} */
+.index-list-w .list-item.available {margin-top: 72rem;}
 .index-list-w .list-item {position: relative; margin-top: 40rem; border: 1px solid #D9DDE0;}
 .index-list-w .list-item::before {content: ''; display: block; position: absolute; left: 0; top: 0; width: 100%; height: 2px; background-color: #fff; z-index: 2;}
 .index-list-w .list-item:first-child {margin-top: 0;}
@@ -2910,13 +2920,17 @@ footer .copy-area span:last-child:after {display: none;}
 .index-list-w .list-item.accepting {border: 1px solid #0064FF;} /* available: 신청 가능한 회차, accepting: 접수중 */
 .index-list-w .list-item.available .available-label {display: block;} /* available: 신청 가능한 회차, accepting: 접수중 */
 .index-list-w:has(.list-item.available) {margin-top: 72rem;}
-.index-list-w.divide {display: grid; grid-template-columns: 1fr 1fr 1fr; column-gap: 41rem; row-gap: 41rem;}
+.index-list-w.divide {display: flex; flex-wrap: wrap; column-gap: 41rem; row-gap: 41rem;}
+.index-list-w.divide:has(.list-item) {display: grid; align-items: flex-end; grid-template-columns: 1fr 1fr 1fr; row-gap: 0;}
+.index-list-w.divide .list-item {margin-top: 40rem;}
+.index-list-w.divide .list-item.available {margin-top: 72rem;}
+.index-list-w.divide .list-item:is(:nth-child(1), :nth-child(2), :nth-child(3)) {margin-top: 0}
 .index-list-w.divide .status-info-w {flex-wrap: wrap;}
-.index-list-w.divide .list-item {margin-top: 0;}
 .index-list-w.divide .list-item .cont-area .info-list-w{display:block; margin:35rem 0 40rem; padding-top:32rem; padding-bottom: 0; border-bottom:0; border-top:1px solid #ECEEEF;}
 .index-list-w.divide .list-item .cont-area .info-list-w .info-list{margin-top:16rem; min-height:auto; width:100%; padding:0; border-right:0;}
 .index-list-w.divide .list-item .cont-area .info-list-w .info-list:first-child {margin-top: 0;}
 .index-list-w.divide .list-item .cont-area .btn-wrap{justify-content: flex-end;}
+.index-list-w.divide .no-data-area{width:100%;}
 
         /* 교육/세미나 > 상세 - 학습내용(커리큘럼) */
 .curriculum-div {margin-top: 40rem;}
@@ -2955,6 +2969,7 @@ footer .copy-area span:last-child:after {display: none;}
   .index-list-w {margin-top: 24rem;}
   .index-list-w:has(.list-item.available) {margin-top: 48rem;}
   .index-list-w .list-item {margin-top: 16rem;}
+  .index-list-w .list-item.available {margin-top: 48rem;}
   .index-list-w .list-item .cont {padding: 24rem;}
   .index-list-w .list-item .top-area .index-num {font-size: 20rem;}
   .index-list-w .list-item .cont-area > .btn-wrap:first-child {justify-content: flex-start; position: relative; right: auto; top: auto; margin-top: 24rem;}
@@ -2969,9 +2984,9 @@ footer .copy-area span:last-child:after {display: none;}
   .index-list-w .list-item .available-label:after {bottom:0;}
   .index-list-w .list-item .available-label span {padding-left: 12rem; font-size: 13rem; line-height: 15rem;}
   .index-list-w .list-item .available-label span::before {left: 56%; height: 30rem;}
-  .index-list-w.divide {display: block;}
-  .index-list-w.divide .list-item{margin:16rem 0 0 0; width:100%;}
-  .index-list-w.divide .list-item.available {margin-top: 48rem;}
+  .index-list-w.divide, .index-list-w.divide:has(.list-item) {display: block;}
+  .index-list-w.divide .list-item {margin-top: 16rem !important; width:100%;}
+  .index-list-w.divide .list-item.available {margin-top: 46rem !important;}
   .index-list-w.divide .list-item .cont-area .info-list-w{margin:20rem 0 48rem; padding-top: 20rem;}
   .index-list-w.divide .list-item .cont-area .info-list-w .info-list {margin-top: 4rem;}
   .index-list-w.divide .list-item .top-area .group {display: flex;}
@@ -2999,7 +3014,6 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; width: 100%;}
 .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 10rem;}
 .training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem; border-right: 1px solid #ECEEEF;}
-.training-confirm .training-view-page .training-list .txt-area .training-name {font-size: max(24rem, 18px); line-height: 150%;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a {position: relative;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a::after {content: ""; vertical-align: middle; position: relative; top: -2rem; display: inline-block; margin-left: 4rem;  width: 32rem; height: 32rem; background: url("/common/images/icon-arrow-right.svg") no-repeat center center / 100% auto; transition: .3s transform;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a:hover::after {transform: translateX(6rem);}
@@ -3050,7 +3064,6 @@ footer .copy-area span:last-child:after {display: none;}
   .training-confirm .training-view-page .training-list .txt-area .group .status-info-w {margin-top: 0;}
   .training-confirm .training-view-page .training-list .txt-area .top-line {width: 100%; padding-right: 100rem; border-right: 0;}
   .training-confirm .training-view-page .training-list .txt-area .status-info-w {margin-top: 12rem;}
-  .training-confirm .training-view-page .training-list .txt-area .training-name {line-height: 160%; font-size: 17rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-name a::after {top: -2rem; margin-left: 2rem; width: 24rem; height: 24rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 4rem; font-size: 12rem;}
   .training-confirm .training-view-page .training-list .class-property-w {grid-template-columns: repeat(2, 1fr); gap: 12rem; width: 100%; margin-top: 12rem; padding: 0; padding-right: 78rem;}
@@ -3158,6 +3171,7 @@ footer .copy-area span:last-child:after {display: none;}
           /* info-head */
   .info-head {flex-wrap: wrap; height: auto; padding: 0; border: none;}
   .info-head:has(.filter-open-btn) {padding-bottom: 17rem; border-bottom: 1px solid #D9DDE0;}
+  .info-head .form-horizontal {width: 100%;}
   .info-head .form-input.srch-input {width: 100%; margin-top: 16rem;}
   .info-head .left .sort-select {margin-left: 18rem; padding-left: 10rem;}
   .info-head .left .sort-select::before {top: 2rem; height: 16rem;}
@@ -3222,7 +3236,7 @@ footer .copy-area span:last-child:after {display: none;}
 .article-list-w.accordion-st .list-item .acco-click-area .sub-info-wrap + .txt-box {max-width: -webkit-calc(100% - 136rem); max-width: calc(100% - 136rem);}
 .article-list-w.accordion-st .list-item .acco-click-area .txt-box .tit {white-space: normal;}
 .article-list-w.accordion-st .list-item .acco-hide-area {display: none; padding: 24rem 0 64rem 136rem;}            
-.article-list-w.accordion-st .list-item .acco-hide-area .attatched-file-area:not(:first-child) {margin-top: 48rem;}
+.article-list-w.accordion-st .list-item .acco-hide-area:not(:has(.file-list-area ~ .attatched-file-area)) .attatched-file-area {margin-top: 48rem;}
 .article-list-w.accordion-st .list-item:hover .acco-click-area:after {opacity: 1;}
 .article-list-w.accordion-st .list-item.active .acco-click-area .txt-box .tit {color: #59B7E2;}
 .article-list-w.accordion-st .list-item.active .acco-click-area:after {opacity: 1; transform: rotate(180deg);}
@@ -3436,6 +3450,7 @@ footer .copy-area span:last-child:after {display: none;}
 .view-sec .title-area .info {color: #59B7E2; padding-bottom: 40rem;}
 .view-sec .title-area .date {margin-top: 24rem; color: #697278;}
 .view-sec .body-area .txt-wrap {color: #06161E;}
+.view-sec .body-area .attatched-file-area {margin-top: 80rem;}
 .answer-sec .title-area {margin-bottom: 64rem; }
 .answer-sec .title-area .title {margin-bottom: 12rem;}
 .answer-sec .title-area .date {color: #9CA1A6;}
@@ -3452,6 +3467,7 @@ footer .copy-area span:last-child:after {display: none;}
   .view-sec .title-area {padding-bottom: 32rem; margin-bottom: 48rem;}
   .view-sec .title-area .info {padding-bottom: 12rem; font-size: 13rem; line-height: 165%;}
   .view-sec .title-area .date {margin-top: 8rem;}
+  .view-sec .body-area .attatched-file-area {margin-top: 48rem;}
   .answer-sec .title-area {margin-bottom: 32rem;}
   .answer-sec .title-area .title {margin-bottom: 8rem;}
   .answer-sec .answer-wrap {padding: 24rem 44rem 28rem;}
@@ -3482,10 +3498,10 @@ footer .copy-area span:last-child:after {display: none;}
 
 
 /* 첨부파일 영역 */
-.attatched-file-area {display: flex; flex-direction: column; margin-top: 80rem;}
+.attatched-file-area {display: flex; width: 100%; flex-direction: column;}
 .attatched-file-area .download-bg ~ .download-bg {margin-top: 20rem;}
 @media all and (max-width: 1023px) {
-  .attatched-file-area {margin-top: 48rem;}
+  /* .attatched-file-area {width: 100%;} */
   .attatched-file-area .download-bg ~ .download-bg {margin-top: 12rem;}
 
 }
