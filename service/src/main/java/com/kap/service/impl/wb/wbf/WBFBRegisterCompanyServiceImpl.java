@@ -358,6 +358,20 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
     /**
      *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBFBRegisterCompanyMapper.updAdmMemo(wBFBRegisterDTO);
+
+        return respCnt;
+    }
+
+    /**
+     *  Edit Page
      *  신청 부품사 정보 Update
      */
     @Transactional

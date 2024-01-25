@@ -215,6 +215,12 @@ public interface WBFBRegisterCompanyMapper {
 
     /**
      *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBFBRegisterDTO wBFBRegisterDTO);
+
+    /**
+     *  Edit Page
      *  상생참여이관로그
      */
     public int insAppctnTrnsfDtl(WBAppctnTrnsfDtlDTO wBAppctnTrnsfDtlDTO);

@@ -78,6 +78,12 @@ public interface WBFBRegisterCompanyService {
     public int updRegisterCompany(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
 
     /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+
+    /**
      *  신청 부품사 삭제
      */
     public int deleteRegister(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
