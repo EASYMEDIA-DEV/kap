@@ -330,7 +330,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(18);
-        cell.setCellValue("등록일시");
+        cell.setCellValue("신청일시");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(19);
