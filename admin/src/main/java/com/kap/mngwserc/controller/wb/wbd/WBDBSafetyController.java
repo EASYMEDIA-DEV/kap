@@ -174,7 +174,7 @@ public class WBDBSafetyController {
 
             cdDtlList = new ArrayList<String>();
             cdDtlList.add("PRO_TYPE");
-            modelMap.addAttribute("proTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
+            modelMap.addAttribute("proTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             /*modelMap.addAttribute("rtnYear", wBDBSafetyService.selectYearDtl(wBDBSafetySearchDTO));*/
 
