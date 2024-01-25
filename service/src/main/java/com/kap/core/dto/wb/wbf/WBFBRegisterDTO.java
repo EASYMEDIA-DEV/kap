@@ -184,6 +184,8 @@ public class WBFBRegisterDTO extends BaseDTO {
 
     @Schema(title = "관리자메모", example = "")
     private String admMemo;
+    @Schema(title = "관리자메모", example = "")
+    private String admMemoModDtm;
     @Schema(title = "등록ID", example = "")
     private String regId;
     @Schema(title = "등록IP", example = "")
