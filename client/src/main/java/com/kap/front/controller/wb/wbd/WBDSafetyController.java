@@ -227,7 +227,7 @@ public class WBDSafetyController {
     /**
      * 사업신청 기본정보
      */
-    @RequestMapping(value = "/complet")
+    @RequestMapping(value = "/complete")
     public String getCompletPage(WBDBSafetySearchDTO wBDBSafetySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbd/WBDSafetyComplet.front";
         try {
