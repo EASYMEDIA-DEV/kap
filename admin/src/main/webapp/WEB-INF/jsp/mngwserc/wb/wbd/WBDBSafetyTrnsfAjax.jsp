@@ -5,7 +5,7 @@
       <tr data-total-count="${rtnData.totalCount}">
         <td class="text-center">${ list.bfreMemNm}(${list.bfreMemId})</td><!-- 이전 권한 -->
         <td class="text-center">${ list.aftrMemNm}(${list.aftrMemId})</td><!-- 변경 권한 -->
-        <td class="text-center">${ kl:convertDate( list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')} / ${kl:nameMasking(list.regNm)}</td><!-- 변경일/ 변경자 -->
+        <td class="text-center">${ kl:convertDate( list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')} / ${list.regNm}</td><!-- 변경일/ 변경자 -->
       </tr>
     </c:forEach>
   </c:when>
