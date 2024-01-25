@@ -299,6 +299,21 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     // set model
     ctrl.model = {
         id : {
+            btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        if($('#offerBsnmNo').val() != '') {
+                            var wBFBRegisterDTO = {}
+                            wBFBRegisterDTO.admMemo = $('#admMemo').val();
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                location.replace("./list");
+                            }, "/mngwserc/wb/wbfb/updAdmMemo", wBFBRegisterDTO, "text")
+                        }
+                    }
+                }
+            },
             bsnmNoAuth :{
                 event : {
                     click : function() {

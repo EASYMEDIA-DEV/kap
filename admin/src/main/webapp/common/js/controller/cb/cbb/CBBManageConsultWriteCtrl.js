@@ -196,7 +196,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     var changeStts = function(){
         var bfJdgmtRslt = $("#bfJdgmtRslt").val();
         var initVstRsltCd = $("#initVstRsltCd").val();
-        var guidePscndCd = $("#guidePscndCd").val();
+        var cnstgPscndCd = $("#cnstgPscndCd").val();
         var guideKickfDt = $('input[name="guideKickfDt"]').val();
         var vstDt = $("#vstDt").val(); // 킥오프시작(방문일)
         var vstDtFormat = new Date(vstDt);// 킥오프시작(방문일)
@@ -210,13 +210,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             $(".rsumeSttsNm").text("지도중");
             $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
 
-            if (guidePscndCd == 'CNSTG_PSCND01') {
+            if (cnstgPscndCd == 'CNSTG_PSCND01') {
                 $(".rsumeSttsNm").text("재단취소");
                 $(".rsumeSttsCd").val("MNGCNSLT_STATUS10");
-            } else if (guidePscndCd == 'CNSTG_PSCND02') {
+            } else if (cnstgPscndCd == 'CNSTG_PSCND02') {
                 $(".rsumeSttsNm").text("부품사취소");
                 $(".rsumeSttsCd").val("MNGCNSLT_STATUS11");
-            } else if (guidePscndCd == 'CNSTG_PSCND03') {
+            } else if (cnstgPscndCd == 'CNSTG_PSCND03') {
                 $(".rsumeSttsNm").text("지도 완료");
                 $(".rsumeSttsCd").val("MNGCNSLT_STATUS12");
             }
@@ -389,6 +389,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             initVstRsltCd : {
                 event : {
                     change : function(){
+                        changeStts();
+                    }
+                }
+            },
+            cnstgPscndCd : {
+                event : {
+                    click : function(){
                         changeStts();
                     }
                 }

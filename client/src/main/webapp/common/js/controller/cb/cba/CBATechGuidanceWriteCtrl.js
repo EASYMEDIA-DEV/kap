@@ -387,7 +387,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                     click : function(e){
                         if(e){
                             if(confirm("현재 입력된 정보는 초기화됩니다. 계속하시겠습니까?")){
-                                location.href="./index";
+                                location.href="./content";
                             }
                         }
                     }

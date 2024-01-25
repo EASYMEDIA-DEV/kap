@@ -112,7 +112,7 @@ public class WBGAEaxmController {
                 cdDtlList.add("MEM_CD"); // 신청 진행상태
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
