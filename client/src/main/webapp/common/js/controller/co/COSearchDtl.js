@@ -9,9 +9,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = ctrl.obj.find("form").eq(0);
     var q = $.trim($formObj.find("input[name=q]").val());
-    var endValue = 0;
-
-
+    var menuType = $formObj.find("input[name=menuType]").val();
 
     // 목록 조회
     var search = function (page){
@@ -52,7 +50,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html");
 
     }
-
 
     ctrl.model = {
         id : {
@@ -113,16 +110,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             });
 
-
-            var menuType = $formObj.find("input[name=menuType]").val();
+            //통합검색 탭
             if(menuType !=null && menuType != "" && menuType != 'menu') {
+                //통합검색 뉴스레터 클릭
                 if(menuType == 'newsletter')
                     cmmCtrl.listFrmAjax(function(respObj) {
                         $("#letterTabContainer").html(respObj);
                         //링크연결 여기서
                     }, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html", false, false);
             }
-
         }
     };
 

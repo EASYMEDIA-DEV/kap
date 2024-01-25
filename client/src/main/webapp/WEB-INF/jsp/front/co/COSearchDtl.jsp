@@ -8,8 +8,8 @@
             </div>
         </div>
         <form method="get">
-            <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
             <!-- 페이징 버튼 사이즈 -->
+            <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
             <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
             <input type="hidden" id="firstIndex" name="firstIndex" value="0" />
             <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
