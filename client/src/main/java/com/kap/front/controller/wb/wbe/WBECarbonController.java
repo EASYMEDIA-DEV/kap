@@ -71,6 +71,9 @@ public class WBECarbonController {
 
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBEACarbonListService.getRoundDtl(wBRoundMstSearchDTO));
+
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
