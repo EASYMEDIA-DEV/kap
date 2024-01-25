@@ -45,6 +45,7 @@ import java.util.List;
  * 		since			author				   description
  *   ===========    ==============    =============================
  *   2023.12.06			양현우			 		최초생성
+ *   2024.01.25			양현우			 		위원 재직중일 때만 로그인 되게 수정
  * </pre>
  */
 @Slf4j
@@ -73,6 +74,11 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 		MPAUserDto rtnCOUserDto = cOUserLgnMapper.getLoginInfo(cOLoginDTO);
 		if (rtnCOUserDto != null)
     	{
+			if(rtnCOUserDto.getMemCd().equals("CS")) {
+				if(!rtnCOUserDto.getCmssrWorkCd().equals("MEM_CD04001")) {
+					cOLoginDTO.setRespCd("1290");
+				}
+			}
     		// 차단여부 확인
 			if (!"Y".equals(rtnCOUserDto.getWthdrwYn()))
 			{

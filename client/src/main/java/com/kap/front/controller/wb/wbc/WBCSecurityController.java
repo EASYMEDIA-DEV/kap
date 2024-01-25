@@ -183,6 +183,7 @@ public class WBCSecurityController {
                 wBRoundMstSearchDTO.setBsnCd("BSN03");
                 modelMap.addAttribute("rtnRoundDtl", wBCASecurityListService.getRoundDtl(wBRoundMstSearchDTO));
 
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBCBSecuritySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
 
@@ -206,7 +207,7 @@ public class WBCSecurityController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBCBSecurityMstInsertDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             }else{
                 modelMap.addAttribute("actCnt", wBCBSecurityService.carbonUserInsert(wBCBSecurityMstInsertDTO,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
@@ -231,8 +232,9 @@ public class WBCSecurityController {
         try {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             }else{
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -241,6 +243,8 @@ public class WBCSecurityController {
                 modelMap.addAttribute("episd", wBCBSecuritySearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBCBSecurityService.selectCompanyUserDtl(wBCBSecuritySearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
             }
 
 
