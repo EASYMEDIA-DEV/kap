@@ -105,4 +105,7 @@ public class WBBAApplyDtlDTO extends BaseDTO {
     @Schema(title = "상생단계옵션 상세 리스트")
     private List<WBBAApplyDtlDTO> applyOptnList;
 
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
+
 }

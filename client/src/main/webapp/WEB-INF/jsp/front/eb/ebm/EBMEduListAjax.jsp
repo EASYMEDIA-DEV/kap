@@ -111,7 +111,7 @@
                     <div class="training-confirm">
                         <div class="top-info">
                             <div class="training-view-page">
-                                <div class="training-list">
+                                <div class="training-list visitEduDtl" data-edctnseq="${list.edctnSeq}">
                                     <div class="txt-area">
                                         <div class="top-line">
                                             <div class="sort-label-area">

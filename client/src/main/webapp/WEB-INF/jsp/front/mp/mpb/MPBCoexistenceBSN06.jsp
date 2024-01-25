@@ -50,6 +50,10 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
 
+                                <c:if test="${not empty rsumeTaskDtl[0].rtrnRsnCntn && rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
+                                    <p class="exclamation-txt f-body1">${rsumeTaskDtl[0].rtrnRsnCntn}</p>
+                                </c:if>
+
                                 <div class="data-enter-form">
                                     <div class="row">
                                         <div class="th">
@@ -155,6 +159,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" id="searchFile1" class="searchFile" name="atchFile1">
+                                                                <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
                                                         </c:if>
@@ -178,6 +183,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile2" class="searchFile" name="atchFile2">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -201,6 +207,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -225,6 +232,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile4" class="searchFile" name="atchFile4">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -244,7 +252,7 @@
                                 </div>
                                 <c:if test="${rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg btnUpdate" data-Status="${rsumeTaskDtl[0].appctnSttsCdNm}" href="javascript:"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </form>
@@ -285,6 +293,10 @@
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[1].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[1].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[1].rsumeOrd}" />
+
+                                <c:if test="${not empty rsumeTaskDtl[1].rtrnRsnCntn && rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_003'}">
+                                    <p class="exclamation-txt f-body1">${rsumeTaskDtl[1].rtrnRsnCntn}</p>
+                                </c:if>
 
                                 <div class="data-enter-form">
                                     <div class="row">
@@ -527,6 +539,8 @@
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[0].giveType}"/>
+                                                    <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[0].gvmntSpprtPmt ? 'update' : 'insert'}"/>
+
                                                     <div class="tab-con-area">
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
@@ -682,6 +696,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile5" class="searchFile" name="atchFile1">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].spprtAppctnFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile5">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -707,6 +722,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile6" class="searchFile" name="atchFile2">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].acntFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile6">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -731,6 +747,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile7" class="searchFile" name="atchFile3">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].bnkbkFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile7">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -749,6 +766,7 @@
                                                 </form>
                                             </div>
                                         </c:if>
+
                                         <!-- 지원금 탭 -->
                                         <div class="tab-con">
                                             <form name="frmData" data-give-type="${spprtDtl[1].giveType}" enctype="multipart/form-data">
@@ -758,6 +776,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[1].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[1].giveType}"/>
+                                                <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[1].gvmntSpprtPmt ? 'update' : 'insert'}"/>
+
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -913,6 +933,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile8" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile8">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -938,6 +959,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile9" class="searchFile" name="atchFile2">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].acntFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile9">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -962,6 +984,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile10" class="searchFile" name="atchFile3">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].bnkbkFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile10">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -988,6 +1011,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[2].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[2].giveType}"/>
+                                                <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[2].cmssnPmt ? 'update' : 'insert'}"/>
+
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -1051,6 +1076,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile11" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -1076,6 +1102,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile12" class="searchFile" name="atchFile2">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].tchlgLseFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile12">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -1100,6 +1127,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile13" class="searchFile" name="atchFile3">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].lsePayFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile13">파일 찾기</label>
                                                                                     </div>
                                                                                     <!-- 2023-12-20 추가 -->
@@ -1125,7 +1153,7 @@
                         </div>
                         <div class="bot-fix-btn-area">
                             <div class="btn-wrap align-right">
-                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
+                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" data-status="${flag}" type="button"><span>저장</span></button>
                             </div>
                         </div>
                         <div class="user-opt-area">

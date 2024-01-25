@@ -1278,12 +1278,21 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                     for (int i = 0; i < rtnList.size() ; i++) {
 
                         List<COFileDTO> fileList = new ArrayList();
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
+                        Integer fileSeq;
+
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wbgaApplyDtlDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
 
                         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                        wbgaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                        wbgaApplyDtlDTO.setFileSeq(fileSeq);
                         wbgaApplyDtlDTO.setFileCd(wbgaApplyDtlDTO.getFileCdList().get(i));
 
                         wBGAExamMapper.insertFileInfo(wbgaApplyDtlDTO);

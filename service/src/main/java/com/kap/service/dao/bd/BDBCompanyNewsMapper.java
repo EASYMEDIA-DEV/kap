@@ -49,5 +49,17 @@ public interface BDBCompanyNewsMapper {
      * 재단소식 삭제
      */
     public int deleteCompanyNews(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception;
+    /**
+     * 재단소식 첨부파일 목록 조회
+     */
+    public List<BDBCompanyNewsDTO> selectCompanyNewsFileList(BDBCompanyNewsDTO pBDBCompanyNewsDTO);
+    /**
+     * 재단소식 조회수 증가
+     */
+    public int updateCompanyNewsReadCnt(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception;
+    /**
+     * 재단소식 이전, 다음 글 SEQ 조회
+     */
+    public BDBCompanyNewsDTO selectNextAndPrevSeqVal(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception;
 
 }

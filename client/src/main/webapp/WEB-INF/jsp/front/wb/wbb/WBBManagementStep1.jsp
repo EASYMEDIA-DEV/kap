@@ -277,9 +277,43 @@
                                                 <tr>
                                                     <th>SQ정보</th>
                                                     <td>
-                                                        <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
-                                                            <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
-                                                        </c:forEach>
+                                                        <c:choose>
+                                                            <c:when test="${empty rtnData.sqInfoList}">
+                                                                -
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
+                                                                    <c:if test="${empty item.nm}">
+                                                                        <c:set var="nm" value="-"/>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty item.nm}">
+                                                                        <c:set var="nm" value="${item.nm}"/>
+                                                                    </c:if>
+
+                                                                    <c:if test="${empty item.score}">
+                                                                        <c:set var="score" value="-"/>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty item.score}">
+                                                                        <c:set var="score" value="${item.score}"/>
+                                                                    </c:if>
+
+                                                                    <c:if test="${empty item.year}">
+                                                                        <c:set var="year" value="-"/>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty item.year}">
+                                                                        <c:set var="year" value="${item.year} 년"/>
+                                                                    </c:if>
+
+                                                                    <c:if test="${empty item.crtfnCmpnNm}">
+                                                                        <c:set var="crtfnCmpnNm" value="-"/>
+                                                                    </c:if>
+                                                                    <c:if test="${not empty item.crtfnCmpnNm}">
+                                                                        <c:set var="crtfnCmpnNm" value="${item.crtfnCmpnNm}"/>
+                                                                    </c:if>
+                                                                    <p class="f-body1">${status.index}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
+                                                                </c:forEach>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                 </tr>
                                             </c:if>

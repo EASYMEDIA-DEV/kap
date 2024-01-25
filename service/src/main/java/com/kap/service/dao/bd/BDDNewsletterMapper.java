@@ -50,9 +50,9 @@ public interface BDDNewsletterMapper {
      */
     public int deleteNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
     /**
-     * 뉴스레터 첨부파일 ord 목록 조회
+     * 뉴스레터 첨부파일 목록 조회
      */
-    public List<BDDNewsletterDTO> selectNewsletterFileOrdList(BDDNewsletterDTO pBDDNewsletterDTO);
+    public List<BDDNewsletterDTO> selectNewsletterFileList(BDDNewsletterDTO pBDDNewsletterDTO);
     /**
      * 뉴스레터 조회수 증가
      */

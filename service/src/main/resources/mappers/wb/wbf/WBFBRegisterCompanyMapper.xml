@@ -796,6 +796,21 @@
     </update>
 
     <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updAppctnMst
+         설  명 : 상생신청진행상세 수정
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updAdmMemo" parameterType="WBFBRegisterDTO">
+        UPDATE cx_appctn_mst /*WBFBRegisterCompanyMapper.updAppctnMst*/
+        SET
+            ,adm_memo = #{admMemo}
+            ,adm_memo_mod_dtm = now()
+        WHERE appctn_seq = #{appctnSeq}
+    </update>
+
+    <!--
          쿼리명 : WBFBRegisterCompanyMapper.updRsumeTaskDtl
          설  명 : 상생신청진행스마트상세 수정
          수정일     수정자     수정내용

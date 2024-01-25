@@ -3,8 +3,9 @@ package com.kap.front.controller.eb;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
+import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
+import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
@@ -22,11 +23,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
-import java.util.Date;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -62,6 +64,9 @@ public class EBMMypageController
 
     /** 부품사 회원정보 서비스 **/
     private final MPAUserService mpaUserService;
+
+    /** 방문교육 서비스 **/
+    public final EBCVisitEduService ebcVisitEduService;
 
     /**
      * 교육/세미나 사업 신청내역 목록/my-page/edu-apply/list
@@ -259,6 +264,44 @@ public class EBMMypageController
 
 
         return "front/eb/ebm/EBMEduApplyDtl.front";
+    }
+
+    /**
+     * 방문교육 신청내역 상세 /my-page/edu-apply/visit-edu-detail
+     */
+    @GetMapping("/my-page/edu-apply/visit-edu-detail")
+    public String getVisitEduApplyDetail(EBCVisitEduDTO ebcVisitEduDTO, EBCVisitEduExcelDTO ebcVisitEduExcelDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq()); ;
+            EBCVisitEduDTO applicantDto = ebcVisitEduService.selectApplicantInfo(ebcVisitEduDTO);
+
+            mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+            MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+            EBCVisitEduDTO visitEduApplyList = ebcVisitEduService.selectVisitEduDtl(ebcVisitEduDTO);
+
+            if (originList.getList().size() != 0) {
+                modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            }
+            modelMap.addAttribute("applicantInfo", applicantDto);
+            modelMap.addAttribute("sqInfoList", originList);
+            modelMap.addAttribute("visitEduApplyList", visitEduApplyList);
+            modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
+            modelMap.addAttribute("isttrList", ebcVisitEduService.selectIsttrExcelList(ebcVisitEduExcelDTO));
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/eb/ebm/EBMVisitEduApplyDtl.front";
     }
 
     /**
@@ -820,6 +863,25 @@ public class EBMMypageController
             return rtnStr;
         }
 
+        /**
+         * 마이페이지 > 교육신청 내역 > 방문교육 상세 > 신청분야 상세 리스트 조회
+         */
+        @PostMapping(value = "/edu-apply/getAppctnFldCdList")
+        public String getAppctnFldCdList(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+                modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
 
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
     }
 }
