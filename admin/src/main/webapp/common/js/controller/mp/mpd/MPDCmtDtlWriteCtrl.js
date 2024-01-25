@@ -795,6 +795,8 @@ var exports = {
         //리스트 조회
         //폼 데이터 처리
         // cmmCtrl.setFormData($formObj);
+        $formObj.find("input[name=listRowSize]").val("10");
+        $(".listRowSizeContainer").val("10");
         init();
 
 
