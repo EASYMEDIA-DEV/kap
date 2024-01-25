@@ -40,6 +40,8 @@
              , CMSSR_WORK_CD_NM
              , CMT_MOD_NAME
              , CMPN_TEL_NO
+             , CMSSR_MPLMN_DT
+             , CMSSR_RSGNT_DT
              , mod_id
              , dept_cd
              , dept_dtl_nm
@@ -50,6 +52,7 @@
              , reg_id
              , cmssr_mjr_carer_cntn
              , birth
+             , cmssr_cnstg_fld_cntn
           FROM ( SELECT MEM.MEM_SEQ
                       , MEM.ID
                       , MEM.NAME
@@ -105,6 +108,7 @@
                       , mem.pstn_nm
                       , mem.reg_id
                       , mem.cmssr_mjr_carer_cntn
+                      , mem.cmssr_cnstg_fld_cntn
                     FROM CO_MEM_MST MEM
                      INNER JOIN ( SELECT MEM_MOD_SEQ
                                        , MEM_SEQ
