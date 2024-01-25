@@ -25,7 +25,11 @@
             BD_MNGDSCLSR_MST A
         WHERE 1=1
           <include refid="selectDisclosureListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <choose>
+            <when test="siteGubun == 'admin'">
+                LIMIT #{firstIndex}, #{recordCountPerPage}
+            </when>
+        </choose>
     </select>
 
     <!--
@@ -63,6 +67,11 @@
             BD_MNGDSCLSR_MST A
         WHERE
             DSCLSR_SEQ = #{detailsKey}
+        <choose>
+            <when test="siteGubun == 'front'">
+                AND EXPS_YN = "Y"
+            </when>
+        </choose>
     </select>
 
     <insert id="insertDisclosure" parameterType="BDEDisclosureDTO">
@@ -146,6 +155,9 @@
     2023.11.22    장두석       최초생성
     -->
     <sql id="selectDisclosureListwhereSql">
+        <if test='siteGubun == "front"'>
+            AND EXPS_YN = 'Y'
+        </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">

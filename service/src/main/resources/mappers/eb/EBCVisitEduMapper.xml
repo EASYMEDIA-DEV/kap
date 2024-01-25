@@ -1242,6 +1242,37 @@
 	</select>
 
 	<!--
+         쿼리명 : EBCVisitEduMapper.updateVisitEduApplyCancel
+         설  명 : 신청한 방문교육을 교육취소로 변경한다.
+		  수정일     수정자       수정내용
+		==========   ======    ==============
+		2024.01.25   구은희       최초생성
+    -->
+
+	<update id="updateVisitEduApplyCancel" parameterType="EBCVisitEduDTO">
+		UPDATE /* EBCVisitEduMapper.updateVisitEduApplyCancel */
+		    ev_edctn_vst_mst
+		SET
+			edctn_stts_cd = #{edctnSttsCd}
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		WHERE 1=1
+		  and vst_seq = #{vstSeq}
+		  and mem_seq = #{memSeq}
+	</update>
+
+	<!--<delete id="deleteVisitEduApplyAllInfo" parameterType="EBCVisitEduDTO">
+		DELETE A, B, C, D, E /*EBCVisitEduMapper.deleteVisitEduApplyAllInfo*/
+		FROM ev_edctn_vst_mst AS A
+		LEFT JOIN ev_edctn_vst_rslt_dtl AS B ON A.vst_seq = B.vst_seq AND A.mem_seq = B.mem_seq
+		LEFT JOIN ev_edctn_vst_optn_dtl AS C ON B.vst_seq = C.vst_seq AND B.mem_seq = C.mem_seq
+		LEFT JOIN ev_edctn_appctn_type_dtl AS D ON A.vst_seq = D.vst_seq AND A.mem_seq = D.mem_seq
+		LEFT JOIN ev_edctn_isttr_rel AS E ON A.vst_seq = E.vst_seq AND A.mem_seq = E.mem_seq
+		WHERE A.vst_seq = #{vstSeq} AND A.mem_seq = #{memSeq};
+	</delete>-->
+
+	<!--
 		쿼리명 : selectVisitEduListwhereSql
 		설  명 : 방문교육 관리 where Sql
 		  수정일      수정자       수정내용

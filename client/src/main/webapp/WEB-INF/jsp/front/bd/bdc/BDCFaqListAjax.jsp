@@ -2,7 +2,7 @@
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <div class="list-item">
+            <div class="list-item" data-total-count="${rtnData.totalCount}" data-ctgryCdctive="${rtnData.totalCount}">
                 <a class="acco-click-area" href="javascript:">
                     <div class="sub-info-wrap">
                         <span class="f-body2">${list.ctgryName}</span>
@@ -27,4 +27,3 @@
         </div>
     </c:otherwise>
 </c:choose>
-

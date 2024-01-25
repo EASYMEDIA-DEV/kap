@@ -22,6 +22,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -838,5 +839,13 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
      */
     public EBCVisitEduDTO selectApplicantInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
         return ebcVisitEduMapper.selectApplicantInfo(ebcVisitEduDTO);
+    }
+
+    /**
+     * 신청한 방문교육을 교육취소로 변경
+     */
+    @Transactional
+    public void updateVisitEduApplyCancel(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+        ebcVisitEduMapper.updateVisitEduApplyCancel(ebcVisitEduDTO);
     }
 }
