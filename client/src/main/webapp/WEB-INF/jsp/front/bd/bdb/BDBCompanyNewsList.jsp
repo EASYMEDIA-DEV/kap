@@ -16,33 +16,9 @@
                 </div>
             </div>
             <div class="divide-con-area">
-                <div class="lnb-area">
-                    <div class="for-motion">
-                        <div class="lnb-list">
-                            <a class="btn-two-depth" href="javascript:"><span>재단소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                            <div class="three-depth-wrap">
-                                <a class="btn-three-depth" href="javascript:"><span>인사말</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>재단개요</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>재단연혁</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>재단조직</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>윤리경영</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>경영공시</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>홍보자료</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>오시는길</span></a>
-                            </div>
-                        </div>
-                        <div class="lnb-list">
-                            <a class="btn-two-depth active" href="javascript:"><span>고객센터</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                            <div class="three-depth-wrap">
-                                <a class="btn-three-depth" href="javascript:"><span>공지사항</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>재단소식</span></a>
-                                <a class="btn-three-depth active" href="javascript:"><span>뉴스레터 구독</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>FAQ</span></a>
-                                <a class="btn-three-depth" href="javascript:"><span>1:1 문의</span></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <!--LNB 시작-->
+                <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+                <!--LNB 종료-->
 
                 <div class="right-con-area">
                     <div class="cont-sec-w">
