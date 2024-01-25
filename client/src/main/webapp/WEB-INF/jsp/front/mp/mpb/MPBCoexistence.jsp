@@ -91,7 +91,8 @@
                                                                                 </div>
                                                                             </c:if>
                                                                             <div class="file-btn-area">
-                                                                                <input type="file" id="searchFile${status1.index}">
+                                                                                <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${itemOptn.fileSeq}"/>
                                                                                 <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
                                                                             </div>
                                                                         </div>
