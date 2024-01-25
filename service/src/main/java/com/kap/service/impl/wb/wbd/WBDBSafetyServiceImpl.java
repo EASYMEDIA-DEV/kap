@@ -285,7 +285,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq())
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBDBSafetyMstInsertDTO.getMemSeq()))
         {
             int firstAppctnTrnsfDtlSeqIdgen = cxAppctnTrnsfDtlIdgen.getNextIntegerId();
             WBDBSafetyTrnsfDTO wBDBSafetyTrnsfDTO = new WBDBSafetyTrnsfDTO();
@@ -1271,7 +1271,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq())
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBDBSafetyMstInsertDTO.getMemSeq()))
         {
             respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
         }
@@ -1294,7 +1294,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBDBSafetyMstInsertDTO.getMemSeq()) {
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBDBSafetyMstInsertDTO.getMemSeq())) {
             respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
         }
 

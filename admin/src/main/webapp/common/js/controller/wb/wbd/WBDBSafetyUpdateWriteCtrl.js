@@ -585,6 +585,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }
                         });
 
+                        for(var i = 0 ; i < $(".comma").length; i++){
+                            $(".comma").eq(i).val($(".comma").eq(i).val().replaceAll(",",""));
+                        }
+
 
                         cmmCtrl.fileFrmAjax(function(data){
                             alert(actionMsg);
