@@ -52,6 +52,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		{
 			alert(msgCtrl.getMsg("fail.co.login.notMatch"));
 		}
+		//위원일 경우 재직중일 아닐 경우
+		else if(code =='1290') {
+			alert(msgCtrl.getMsg("fail.co.login.notCsExist"));
+		}
 		// 로그인 오류 횟수 초과
 		else if (code == "1191")
 		{

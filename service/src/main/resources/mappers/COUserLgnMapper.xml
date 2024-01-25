@@ -27,6 +27,7 @@
 			 , tmp_pwd_yn
 		     , wthdrw_yn
 		     , chng_xtnsn_cnt
+             , cmssr_work_cd
 		from
 			co_mem_mst
 		where id = #{id}
