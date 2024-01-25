@@ -305,6 +305,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         if($('#offerBsnmNo').val() != '') {
                             var wBFBRegisterDTO = {}
                             wBFBRegisterDTO.admMemo = $('#admMemo').val();
+                            wBFBRegisterDTO.appctnSeq = $basicData.find('input[type=hidden][name=appctnSeq]').val();
 
                             cmmCtrl.jsonAjax(function(respObj) {
                                 var rtnData = JSON.parse(respObj);
