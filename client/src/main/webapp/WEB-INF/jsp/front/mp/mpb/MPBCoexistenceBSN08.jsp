@@ -46,7 +46,7 @@
 
                                                     <div class="data-inner-line addEquiment">
                                                         <c:forEach var="item" items="${rtnData.euipmentList}" varStatus="status">
-                                                            <c:set var="totalTchlg" value="${totalTchlg+status.index}"/>
+                                                            <c:set var="totalTchlg" value="${totalTchlg+(status.index+1)}"/>
                                                             <c:set var="totalTchlgCnt" value="${totalTchlgCnt+item.tchlgCnt}"/>
                                                             <div class="form-group equiment">
                                                                 <div class="form-input w-longer">
