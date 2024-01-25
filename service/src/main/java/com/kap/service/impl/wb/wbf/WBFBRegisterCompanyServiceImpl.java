@@ -676,7 +676,6 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             respCnt = wBFBRegisterCompanyMapper.delAppctnMst(wBFBRegisterDTO);
         }
 
-
         return respCnt;
     }
 
