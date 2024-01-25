@@ -134,9 +134,10 @@ public class WBGAEaxmController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:./content";
+                vwUrl = "redirect:/";
             } else {
                 modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -158,7 +159,7 @@ public class WBGAEaxmController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 modelMap.addAttribute("actCnt", wbgaExamService.insertApply(wbgaApplyMstDTO,multiRequest,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
@@ -182,6 +183,7 @@ public class WBGAEaxmController {
         try {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
                 return "redirect:./content";
             } else {
@@ -190,6 +192,8 @@ public class WBGAEaxmController {
                 wbgaExamSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wbgaExamService.getApplyDtl(wbgaExamSearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
