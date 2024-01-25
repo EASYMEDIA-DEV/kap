@@ -1095,28 +1095,37 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 for (int i = 0; i < rtnList.size() ; i++) {
 
                     List<COFileDTO> fileList = new ArrayList();
-                    rtnList.get(i).setStatus("success");
-                    rtnList.get(i).setFieldNm("fileSeq");
-                    fileList.add(rtnList.get(i));
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    Integer fileSeq;
+
+                    if ("99".equals(rtnList.get(i).getRespCd())) {
+                        fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(i);
+                    } else {
+                        rtnList.get(i).setStatus("success");
+                        rtnList.get(i).setFieldNm("fileSeq");
+                        fileList.add(rtnList.get(i));
+                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                        fileSeq = fileSeqMap.get("fileSeq");
+                    }
+
                     //선급금 지급
                     if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03001")){
                         //지원금신청서
-                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
                         //협약서
-                        if(i == 1)wBEBCarbonCompanySpprtDTO.setAgrmtFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 1)wBEBCarbonCompanySpprtDTO.setAgrmtFileSeq(fileSeq);
                         //보증보험증
-                        if(i == 2)wBEBCarbonCompanySpprtDTO.setGrnteInsrncFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 2)wBEBCarbonCompanySpprtDTO.setGrnteInsrncFileSeq(fileSeq);
                     }
                     else if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03002")){
                         //지원금신청서
-                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
                         //거래명세서
-                        if(i == 1)wBEBCarbonCompanySpprtDTO.setBlingFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 1)wBEBCarbonCompanySpprtDTO.setBlingFileSeq(fileSeq);
                         //매출전표
-                        if(i == 2)wBEBCarbonCompanySpprtDTO.setSlsFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 2)wBEBCarbonCompanySpprtDTO.setSlsFileSeq(fileSeq);
                         //검수확인서
-                        if(i == 3)wBEBCarbonCompanySpprtDTO.setInsptChkFileSeq(fileSeqMap.get("fileSeq"));
+                        if(i == 3)wBEBCarbonCompanySpprtDTO.setInsptChkFileSeq(fileSeq);
                     }
                 }
             }
@@ -1217,16 +1226,24 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             if (!files.isEmpty()) {
                 rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
                 List<COFileDTO> fileList = new ArrayList();
-                rtnList.get(0).setStatus("success");
-                rtnList.get(0).setFieldNm("fileSeq");
-                fileList.add(rtnList.get(0));
-                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                Integer fileSeq;
+
+                if ("99".equals(rtnList.get(0).getRespCd())) {
+                    fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(0);
+                } else {
+                    rtnList.get(0).setStatus("success");
+                    rtnList.get(0).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(0));
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    fileSeq = fileSeqMap.get("fileSeq");
+                }
 
                 WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO = wBEBCarbonCompanyMstInsertDTO.getFileDtlList().get(0);
 
                 wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
                 wBEBCarbonCompanyFileDtlDTO.setRsumeOrd(maxRsumeOrd);
-                wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeq);
                 wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
                 wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 

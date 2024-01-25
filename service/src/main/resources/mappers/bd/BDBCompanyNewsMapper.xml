@@ -165,6 +165,71 @@
     </delete>
 
     <!--
+         쿼리명 : BDBCompanyNewsMapper.selectCompanyNewsFileList
+         설  명 : [사용자] 재단소식 첨부파일 목록 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectCompanyNewsFileList" parameterType="BDBCompanyNewsDTO">
+        SELECT /* BDBCompanyNewsMapper.selectCompanyNewsFileList */
+            FILE_ORD
+             , FILE_SEQ
+             , ORGN_FILE_NM AS FILE_NAME
+        FROM CO_FILE_DTL
+        WHERE USE_YN = 'Y'
+          AND FILE_SEQ = (SELECT FILE_SEQ FROM BD_FNDN_NEWS_MST where FNDN_NEWS_SEQ = #{detailsKey})
+    </select>
+
+    <!--
+         쿼리명 : BDBCompanyNewsMapper.updateCompanyNewsReadCnt
+         설  명 : [사용자] 재단소식 조회수 증가
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <update id="updateCompanyNewsReadCnt" parameterType="BDBCompanyNewsDTO">
+        UPDATE /* BDBCompanyNewsMapper.updateCompanyNewsReadCnt */  BD_FNDN_NEWS_MST
+        SET READ_CNT = (SELECT A.READ_CNT
+                        FROM
+                            (
+                                SELECT READ_CNT + 1 AS READ_CNT
+                                FROM BD_FNDN_NEWS_MST
+                                WHERE FNDN_NEWS_SEQ = #{detailsKey}
+                            ) AS A
+                        WHERE FNDN_NEWS_SEQ = #{detailsKey})
+        WHERE FNDN_NEWS_SEQ = #{detailsKey};
+    </update>
+
+    <!--
+         쿼리명 : BDBCompanyNewsMapper.selectNextAndPrevSeqVal
+         설  명 : [사용자] 재단소식 이전, 다음 글 SEQ 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectNextAndPrevSeqVal" parameterType="BDBCompanyNewsDTO">
+        SELECT /* BDBCompanyNewsMapper.selectNextAndPrevSeqVal */
+            ROW_NUM
+             , NEXT_SEQ
+             , (SELECT TITL FROM BD_FNDN_NEWS_MST WHERE FNDN_NEWS_SEQ = NEXT_SEQ) AS NEXT_TITL
+             , PREV_SEQ
+             , (SELECT TITL FROM BD_FNDN_NEWS_MST WHERE FNDN_NEWS_SEQ = PREV_SEQ) AS PREV_TITL
+        FROM
+            (
+                SELECT
+                    (SELECT COUNT(*) FROM BD_FNDN_NEWS_MST B WHERE B.FNDN_NEWS_SEQ <![CDATA[<=]]> A.FNDN_NEWS_SEQ) AS ROW_NUM
+                     , (SELECT MIN(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST C WHERE C.FNDN_NEWS_SEQ <![CDATA[>]]> A.FNDN_NEWS_SEQ) AS NEXT_SEQ
+                     , (SELECT MAX(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST D WHERE D.FNDN_NEWS_SEQ <![CDATA[<]]> A.FNDN_NEWS_SEQ) AS PREV_SEQ
+                FROM
+                    BD_FNDN_NEWS_MST A
+                WHERE FNDN_NEWS_SEQ = #{detailsKey}
+                ORDER BY
+                    FNDN_NEWS_SEQ
+            ) TB
+    </select>
+
+    <!--
     쿼리명 : selectCompanyNewsListwhereSql
     설  명 : 재단소식 관리 where Sql
       수정일      수정자       수정내용
@@ -175,6 +240,10 @@
     <sql id="selectCompanyNewsListwhereSql">
         <if test='siteGubun == "front"'>
             AND EXPS_YN = 'Y'
+            <if test="srchVal != null and srchVal != ''">
+                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+            </if>
         </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>

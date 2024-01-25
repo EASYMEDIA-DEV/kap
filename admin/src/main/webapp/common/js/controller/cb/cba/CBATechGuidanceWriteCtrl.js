@@ -85,24 +85,28 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
             }
         }else if(bfGbDt>0 || guideBgnDt == ''){
-            if (bfJdgmtRslt == 'BF_JDGMT_RSLT05' || initVstRsltCd == 'BF_JDGMT_RSLT05') {
+            if (bfJdgmtRslt == 'BF_JDGMT_RSLT05') {
                 $(".rsumeSttsNm").text("사용자취소");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
                 $(".rsumeSttsNm").text("사전심사선정");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS_03");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_03")
+                if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
+                    $(".rsumeSttsNm").text("지원단이관");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
+                    $(".rsumeSttsNm").text("지도승인");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_06");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
+                    $(".rsumeSttsNm").text("지도불가");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_07");
+                }else if(initVstRsltCd == 'BF_JDGMT_RSLT05'){
+                    $(".rsumeSttsNm").text("사용자취소");
+                    $(".rsumeSttsCd").val("MNGTECH_STATUS_02");
+                }
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
                 $(".rsumeSttsNm").text("사전심사탈락");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_04");
-            }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
-                $(".rsumeSttsNm").text("지원단이관");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
-            }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
-                $(".rsumeSttsNm").text("지도승인");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS_06");
-            }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
-                $(".rsumeSttsNm").text("지도불가");
-                $(".rsumeSttsCd").val("MNGTECH_STATUS_07");
             }
         }
     }

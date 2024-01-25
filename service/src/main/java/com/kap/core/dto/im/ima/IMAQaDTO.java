@@ -94,6 +94,9 @@ public class IMAQaDTO extends BaseDTO {
     //마이페이지 여부
     private String mypageYn;
 
+    //마이페이지 메인 여부
+    private String mypageMainYn;
+
     //나의 1:1 문의 검색어
     private String searchText;
 }

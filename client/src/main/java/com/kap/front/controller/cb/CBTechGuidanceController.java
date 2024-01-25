@@ -76,24 +76,25 @@ public class CBTechGuidanceController {
             cBATechGuidanceInsertDTO.setFirstIndex(0);
             cBATechGuidanceInsertDTO.setRecordCountPerPage(3);
 
-            if(type.equals("tech")){
-                url = "front/cb/cba/CBATechGuidanceIndex.front";
-                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "760", "N"));
-            }else{
-                url = "front/cb/cbb/CBBManageConsultIndex.front";
-                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "761", "N"));
-            }
-
             MPAUserDto mpaUserDto = new MPAUserDto();
-
             List typeList = new ArrayList();
-            typeList.add("MEM_CD03003");
             List workCdList = new ArrayList();
             workCdList.add("MEM_CD04001");
-            mpaUserDto.setCmssrTypeList(typeList);
             mpaUserDto.setMemCd("CS");
             mpaUserDto.setCmssrWorkList(workCdList);
 
+            if(type.equals("tech")){
+                url = "front/cb/cba/CBATechGuidanceIndex.front";
+                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "760", "N"));
+                typeList.add("MEM_CD03001");
+                typeList.add("MEM_CD03002");
+            }else{
+                url = "front/cb/cbb/CBBManageConsultIndex.front";
+                modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsConsultingDtl(pCOGCntsDTO, "761", "N"));
+                typeList.add("MEM_CD03003");
+
+            }
+            mpaUserDto.setCmssrTypeList(typeList);
             cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
             modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
@@ -110,39 +111,6 @@ public class CBTechGuidanceController {
         return url;
     }
 
-    @GetMapping("/index")
-    public String getConsultIndexPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
-        String url = "";
-        try {
-            MPAUserDto mpaUserDto = new MPAUserDto();
-            CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
-
-            List typeList = new ArrayList();
-                typeList.add("MEM_CD03003");
-            List workCdList = new ArrayList();
-                workCdList.add("MEM_CD04001");
-            mpaUserDto.setCmssrTypeList(typeList);
-            mpaUserDto.setMemCd("CS");
-            mpaUserDto.setCmssrWorkList(workCdList);
-
-            cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
-            modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
-            modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
-
-            if(type.equals("tech")){
-                url = "front/cb/cba/CBATechGuidanceIndex.front";
-            }else{
-                url = "front/cb/cbb/CBBManageConsultIndex.front";
-            }
-
-        }catch(Exception e){
-            if (log.isErrorEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
-        }
-        return url;
-    }
     @GetMapping("/application")
     public String getConsultApplicationPage(ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";

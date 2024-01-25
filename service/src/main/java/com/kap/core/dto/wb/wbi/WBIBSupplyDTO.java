@@ -181,4 +181,7 @@ public class WBIBSupplyDTO extends BaseDTO {
     private String crtfnCmpnNm;
 
     List<WBIBSupplyDTO> list;
+
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
 }

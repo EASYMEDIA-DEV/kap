@@ -49,5 +49,9 @@ public interface BDCFaqMapper {
      * FAQ 삭제
      */
     public int deleteFaq(BDCFaqDTO pBDCFaqDTO) throws Exception;
+    /**
+     * FAQ 첨부파일 목록 조회
+     */
+    public List<BDCFaqDTO> selectFaqFileList(BDCFaqDTO pBDCFaqDTO);
 
 }

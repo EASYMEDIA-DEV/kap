@@ -76,24 +76,18 @@
         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.PARNT_CTGRY_CD) PARNT_CTGRY_NM
         , CT.CTGRY_CD
         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CT.CTGRY_CD) CTGRY_NM
-        <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
-            , RPLY.QA_RPLY_SEQ
-            , RPLY.CNTN AS RPLY_CNTN
-            , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
-            , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
-            , RPLY.REG_DTM AS MOD_DTM
-            , RPLY.REG_ID AS MOD_ID
-        </if>
-        <if test="mypageYn != null and mypageYn != '' and 'Y'.toString().equals(mypageYn)">
-            , A.MEM_SEQ
-        </if>
+        , RPLY.QA_RPLY_SEQ
+        , RPLY.CNTN AS RPLY_CNTN
+        , RPLY.FILE_SEQ AS RPLY_FILE_SEQ
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = RPLY.REG_ID) AS MOD_NAME
+        , RPLY.REG_DTM AS MOD_DTM
+        , RPLY.REG_ID AS MOD_ID
+        , A.MEM_SEQ
         FROM
         BD_QA_MST A
         JOIN CO_MEM_MST MEM ON A.REG_ID = MEM.ID
         JOIN BD_QA_CTGRY_DTL CT ON A.QA_SEQ = CT.QA_SEQ
-        <if test="rsumeCd != null and 'ACK'.toString().equals(rsumeCd)">
-            JOIN BD_QA_RPLY_DTL RPLY ON A.QA_SEQ = RPLY.QA_SEQ
-        </if>
+        LEFT JOIN BD_QA_RPLY_DTL RPLY ON A.QA_SEQ = RPLY.QA_SEQ
         WHERE
         A.QA_SEQ = #{detailsKey}
         <if test="mypageYn != null and mypageYn != '' and 'Y'.toString().equals(mypageYn)">
@@ -368,6 +362,10 @@
         </if>
         <if test="mypageYn != null and mypageYn != '' and 'Y'.toString().equals(mypageYn)">
             AND A.MEM_SEQ = #{memSeq}
+        </if>
+        <if test="mypageMainYn != null and mypageMainYn != '' and 'Y'.toString().equals(mypageMainYn)">
+            AND A.REG_DTM <![CDATA[<=]]> NOW()
+            AND A.REG_DTM <![CDATA[>=]]> DATE_SUB(NOW(), INTERVAL 3 MONTH)
         </if>
         <if test="searchText != null and searchText != ''">
             AND (

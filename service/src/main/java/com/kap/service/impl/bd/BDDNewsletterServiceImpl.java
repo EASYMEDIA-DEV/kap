@@ -149,10 +149,10 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     }
 
     /**
-     * 뉴스레터 첨부파일 ord 목록 조회
+     * 뉴스레터 첨부파일 목록 조회
      */
-    public BDDNewsletterDTO selectNewsletterFileOrdList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
-        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+    public BDDNewsletterDTO selectNewsletterFileList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterFileList(pBDDNewsletterDTO));
         return pBDDNewsletterDTO;
     }
 

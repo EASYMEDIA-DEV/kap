@@ -540,7 +540,8 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rtnInfo.appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">${ kl:convertDate(rtnInfo.appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+
                                             </div>
                                         </div>
                                     </fieldset>
@@ -552,7 +553,6 @@
                                             <div class="col-sm-3 form-inline">
                                                 <select class="form-control input-sm" id="mngSttsCd" name="mngSttsCd"
                                                         title="관리자 상태값">
-                                                    <option value="">선택</option>
                                                     <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}"
                                                                varStatus="status">
                                                         <c:if test="${fn:contains(cdList, 'PRO_TYPE06001_02')}">
@@ -580,7 +580,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rtnInfo.mngSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rtnInfo.mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>

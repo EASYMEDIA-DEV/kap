@@ -2,7 +2,6 @@ package com.kap.service.impl.bd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.service.BDBCompanyNewsService;
@@ -156,7 +155,28 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
      * 재단소식 삭제
      */
     public int deleteCompanyNews(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{
-
         return bDBCompanyNewsMapper.deleteCompanyNews(pBDBCompanyNewsDTO);
+    }
+
+    /**
+     * 재단소식 첨부파일 목록 조회
+     */
+    public BDBCompanyNewsDTO selectCompanyNewsFileList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
+        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsFileList(pBDBCompanyNewsDTO));
+        return pBDBCompanyNewsDTO;
+    }
+
+    /**
+     * 재단소식 조회수 증가
+     */
+    public int updateCompanyNewsReadCnt(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{
+        return bDBCompanyNewsMapper.updateCompanyNewsReadCnt(pBDBCompanyNewsDTO);
+    }
+
+    /**
+     * 재단소식 이전, 다음 글 SEQ 조회
+     */
+    public BDBCompanyNewsDTO selectNextAndPrevSeqVal(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{
+        return bDBCompanyNewsMapper.selectNextAndPrevSeqVal(pBDBCompanyNewsDTO);
     }
 }

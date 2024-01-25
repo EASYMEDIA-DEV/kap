@@ -183,6 +183,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         var $formObj = $(this).closest('form');
                         var formRsumeSttsCd = $formObj.find('.rsumeSttsCd').val();
+                        var status = $(this).data("status");
                         var valid = true;
 
                         if(formRsumeSttsCd == 'PRO_TYPE02001') {
@@ -239,14 +240,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             }
                         }
 
-                        var file = $formObj.find('input[type=file]');
-                        file.each(function(i) {
-                            if (!$(this).val()) {
-                                alert('신청서류를 모두 등록해주세요.');
-                                valid = false;
-                                return false;
-                            }
-                        });
+                        if (status == "접수전") {
+                            var file = $formObj.find('input[type=file]');
+                            file.each(function (i) {
+                                if (!$(this).val()) {
+                                    alert('신청서류를 모두 등록해주세요.');
+                                    valid = false;
+                                    return false;
+                                }
+                            });
+                        }
 
                         //이용약관 체크여부
                         if (valid) {
@@ -276,6 +279,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         var valid = true;
+                        var status = $(this).data("status");
 
                         var formGiveType;
                         $('.btnSpprtTab').each(function(idx, el) {
@@ -324,15 +328,18 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 return;
                             }
                         }
+                        var tabFlag = $formObj.find(".tabFlag").val();
 
-                        var file = $formObj.find('input[type=file]');
-                        file.each(function(i) {
-                            if (!$(this).val()) {
-                                alert('신청서류를 모두 등록해주세요.');
-                                valid = false;
-                                return false;
-                            }
-                        });
+                        if (tabFlag == 'insert') {
+                            var file = $formObj.find('input[type=file]');
+                            file.each(function (i) {
+                                if (!$(this).val()) {
+                                    alert('신청서류를 모두 등록해주세요.');
+                                    valid = false;
+                                    return false;
+                                }
+                            });
+                        }
 
                         if(valid) {
                             if(confirm("저장하시겠습니까?")) {

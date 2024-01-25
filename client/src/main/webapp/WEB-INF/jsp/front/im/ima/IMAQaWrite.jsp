@@ -184,7 +184,7 @@
                                             <div class="data-line-w">
                                                 <div class="data-line">
                                                     <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능한 확장자(pdf, ppt, pptx, doc, docx, xls, xlsx, zip) / 최대 업로드 용량(50MB), 최대 5개 파일 등록 가능</P>
+                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능한 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 최대 업로드 용량(50MB), 최대 1개 파일 등록 가능</P>
                                                     </div>
                                                 </div>
                                                 <div class="data-line">
@@ -202,7 +202,7 @@
                                                                 </div>--%>
                                                             </div>
                                                             <div class="file-btn-area">
-                                                                <input type="file" id="searchFile" name="atchFile" accept="pdf,ppt,pptx,doc,docx,xls,xlsx,zip" class="fileInput notRequired" multiple />
+                                                                <input type="file" id="searchFile" name="atchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
                                                         </div>

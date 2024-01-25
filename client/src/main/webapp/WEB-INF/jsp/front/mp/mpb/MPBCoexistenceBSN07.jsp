@@ -124,6 +124,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.applyList[0].fileInfoList[0].fileSeq}"/>
                                                                 <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE01">
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
@@ -144,6 +145,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.applyList[0].fileInfoList[1].fileSeq}"/>
                                                                 <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE11">
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
@@ -160,8 +162,8 @@
                                     </div>
                                 </div>
                                 <c:if test="${rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
-                                    <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1"><span>저장</span></a>
+                                    <div class="btn-wrap align-right"`>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1" data-status="${rtnData.applyList[0].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>
@@ -215,7 +217,7 @@
                                 </div>
                                 <c:if test="${rtnData.applyList[1].appctnSttsCd eq 'PRO_TYPE07001_03_001' || rtnData.applyList[1].appctnSttsCd eq 'PRO_TYPE07001_03_003'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2" data-status="${rtnData.applyList[1].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>
@@ -274,6 +276,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" name="atchFile" id="searchFile2" class="searchFile">
+                                                                    <input type="hidden" name="fileSeqList" value="${rtnData.applyList[2].fileInfoList[0].fileSeq}"/>
                                                                     <input type="hidden" name="exam.fileCdList" value="ATTACH_FILE_TYPE14">
                                                                     <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                                 </div>
@@ -292,7 +295,7 @@
                                 </div>
                                 <c:if test="${rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_001' || rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_003'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="3"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="3" data-status="${rtnData.applyList[2].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>

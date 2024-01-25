@@ -599,7 +599,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[0].appctnSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[0].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -609,7 +609,7 @@
                                             <label class="col-sm-2 control-label">지원상한선여부</label>
                                             <div class="col-sm-6 form-inline">
                                                 <label class="radio-inline c-radio">
-                                                    <input type="radio" class="spprtCllngYn" name="spprtCllngYn" value="Y" <c:if test="${rtnData.applyList[0].msEquipmentList[0].spprtCllngYn eq 'Y'}">checked</c:if> title="노출여부"/>
+                                                    <input type="radio" class="spprtCllngYn" name="spprtCllngYn" value="Y" checked <c:if test="${rtnData.applyList[0].msEquipmentList[0].spprtCllngYn eq 'Y' || empty rtnData.applyList[0].msEquipmentList[0].spprtCllngYn}">checked</c:if> title="노출여부"/>
                                                     <span class="ion-record"></span> 제한있음
                                                 </label>
                                                 <label class="radio-inline c-radio">
@@ -665,7 +665,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[0].mngSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[0].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -757,7 +757,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[1].appctnSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[1].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -831,7 +831,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[1].mngSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[1].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -860,7 +860,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[2].appctnSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[2].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>
@@ -900,7 +900,7 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                    ${rtnData.applyList[2].mngSttsChngDtm}
+                                                    ${ kl:convertDate(rtnData.applyList[2].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                             </div>
                                         </div>
                                     </fieldset>

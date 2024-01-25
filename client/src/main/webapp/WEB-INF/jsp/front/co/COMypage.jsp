@@ -65,7 +65,7 @@
                                                 <div class="pc btn-wrap">
                                                     <div class="btn-set">
                                                         <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
-                                                        <a class="btn-solid small white-bg" href="javascript:"><span>1:1 문의</span></a>
+                                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -73,7 +73,7 @@
                                         <div class="mob btn-wrap">
                                             <div class="btn-set">
                                                 <a class="btn-solid small gray-bg" href="javascript:"><span>증명서 발급</span></a>
-                                                <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
+                                                <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
                                         <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty loginMap.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
@@ -129,39 +129,36 @@
                                                 </thead>
                                                 <!--  -->
                                                 <tbody>
-                                                <tr>
-                                                    <td class="t-align-center">일반 > 회원가입</td>
-                                                    <td><p class="txt-ellipsis">로그인,</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                    <td class="t-align-center"><p class="box-label bigger waiting"><span>접수대기</span></p></td>
-                                                    <td class="t-align-center">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="t-align-center">일반 > 회원가입</td>
-                                                    <td><p class="txt-ellipsis">로그인, 회원가입, 회원탈퇴는 어떻게 하나요? 로그인, 회원가입, 회원탈퇴는 어떻게 하나요? 로그인, 회원가입, 회원탈퇴는 어떻게 하나요? 로그인, 회원가입, 회원탈퇴는 어떻게 하나요?</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                    <td class="t-align-center"><p class="box-label bigger complete"><span>접수완료</span></p></td>
-                                                    <td class="t-align-center">-</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="t-align-center">일반 > 회원가입</td>
-                                                    <td><p class="txt-ellipsis">로그인, 회원가입, 회원탈퇴는 어떻게 하나요? 로그인, 회원가입, 회원탈퇴는 어떻게 하나요?</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                    <td class="t-align-center"><p class="box-label bigger"><span>답변완료</span></p></td>
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="t-align-center">일반 > 회원가입</td>
-                                                    <td><p class="txt-ellipsis">로그인, 회원가입, 회원탈퇴는 어떻게 하나요? 로그인, 회원가입, 회원탈퇴는 어떻게 하나요?</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                    <td class="t-align-center"><p class="box-label bigger"><span>답변완료</span></p></td>
-                                                    <td class="t-align-center">2023.09.25 13:00</td>
-                                                </tr>
+                                                <c:set var="codeName" value="" />
+                                                <c:set var="statusType" value="" />
+                                                <c:forEach var="qaList" items="${myQaData.list}" varStatus="status">
+                                                    <c:choose>
+                                                        <c:when test="${ qaList.rsumeCd eq 'SYN' }">
+                                                            <c:set var="codeName" value="접수대기" />
+                                                            <c:set var="statusType" value="" />
+                                                        </c:when>
+                                                        <c:when test="${ qaList.rsumeCd eq 'SYNACK' }">
+                                                            <c:set var="codeName" value="접수완료" />
+                                                            <c:set var="statusType" value="waiting" />
+                                                        </c:when>
+                                                        <c:when test="${ qaList.rsumeCd eq 'ACK' }">
+                                                            <c:set var="codeName" value="답변완료" />
+                                                            <c:set var="statusType" value="complete" />
+                                                        </c:when>
+                                                    </c:choose>
+                                                    <tr>
+                                                        <td class="t-align-center">${ qaList.parntCtgryNm } > ${ qaList.ctgryNm }</td>
+                                                        <td><p class="txt-ellipsis">${ qaList.titl }</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
+                                                        <td class="t-align-center">${ kl:convertDate(qaList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                                        <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
+                                                        <td class="t-align-center">${ kl:decode(qaList.modDtm, "", "-", kl:convertDate(qaList.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
+                                                    </tr>
+                                                </c:forEach>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-text-icon black-circle" href="javascript:"><span>나의 1:1문의 바로가기</span></a>
+                                            <a class="btn-text-icon black-circle" href="/my-page/member/qa/list"><span>나의 1:1문의 바로가기</span></a>
                                         </div>
                                     </div>
                                 </div>

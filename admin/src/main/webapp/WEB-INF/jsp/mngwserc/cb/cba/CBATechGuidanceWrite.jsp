@@ -102,11 +102,11 @@
                 <fieldset>
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
-                        <div class="col-sm-5" style="margin-left: -15px">
+                        <div class="col-sm-5" style="margin-left: -2px">
                             <p class="form-control-static" name="hpNo">${rtnDto.hpNo}</p>
                         </div>
                         <label class="col-sm-1 control-label">일반 전화번호</label>
-                        <div class="col-sm-2">
+                        <div class="col-sm-2" style="margin-left: -13px">
                             <input type="text" class="form-control input-sm notRequired telRex" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" name="telNo" value="${rtnDto.telNo}" title="전화번호" placeholder="일반 전화번호 입력" maxlength="13"/>
                         </div>
                     </div>
@@ -798,7 +798,9 @@
                                         <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 322px;">
                                             <option value="">선택</option>
                                             <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
+                                                    <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                </c:if>
                                             </c:forEach>
                                         </select>
                                     </div>
@@ -1099,7 +1101,9 @@
                                             <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 322px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
+                                                        <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>

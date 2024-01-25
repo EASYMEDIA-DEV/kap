@@ -62,6 +62,7 @@
                                                                                 </div>
                                                                                 <div class="file-btn-area">
                                                                                     <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
+                                                                                    <input type="hidden" name="fileSeqList" value="${itemOptn.fileSeq}"/>
                                                                                     <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
                                                                                 </div>
                                                                             </c:if>
@@ -105,7 +106,7 @@
                                     </div>
                                     <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="${status.index}"><span>저장</span></a>
+                                            <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="${status.index}" data-Status="${item.applyDtl.appctnSttsNm}"><span>저장</span></a>
                                         </div>
                                     </c:if>
                                 </div>

@@ -207,9 +207,14 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
-
-
-
+			visitEduDtl : {
+				event : {
+					click : function() {
+						var vstSeq = $(this).data("edctnseq");
+						location.href="./visit-edu-detail?vstSeq="+vstSeq;
+					}
+				}
+			},
 			//페이징 처리
 			pageSet : {
 				event : {

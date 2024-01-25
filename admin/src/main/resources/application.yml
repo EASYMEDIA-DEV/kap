@@ -178,7 +178,7 @@ api:
 #강제 로그인 여부
 app:
   is-login: false
-  user-domain: http://kap.easymedia.kr
+  user-domain: http://mng.kapkorea.org/
   file:
     #파일 업로드 물리 경로
     upload-path: /uploadfiles

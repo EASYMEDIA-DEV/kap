@@ -663,7 +663,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${spprtDtl[0].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(spprtDtl[0].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -719,7 +721,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${spprtDtl[0].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(spprtDtl[0].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -879,7 +883,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${spprtDtl[1].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(spprtDtl[1].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -935,7 +941,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${spprtDtl[1].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(spprtDtl[1].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1045,7 +1053,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${spprtDtl[2].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(spprtDtl[2].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1103,7 +1113,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${spprtDtl[2].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(spprtDtl[2].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1213,7 +1225,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[0].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[0].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1256,7 +1270,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[0].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[0].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1442,7 +1458,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[1].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[1].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1476,7 +1494,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[1].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[1].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1509,7 +1529,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[2].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[2].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1587,7 +1609,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[2].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[2].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1619,7 +1643,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[3].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[3].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1689,7 +1715,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[3].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[3].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1721,7 +1749,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[4].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[4].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1827,7 +1857,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[4].mngSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[4].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1860,7 +1892,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[5].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[5].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1916,7 +1950,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[5].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[5].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1948,7 +1984,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">${rsumeTaskDtl[6].appctnSttsChngDtm}</p>
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[6].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2034,7 +2072,9 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >${rsumeTaskDtl[6].mngSttsChngDtm}</p>
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[6].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
                                             </div>
                                         </div>
                                     </fieldset>

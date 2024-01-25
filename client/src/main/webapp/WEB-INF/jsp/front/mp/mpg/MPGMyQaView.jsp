@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<% pageContext.setAttribute("newLine", "\n"); %>
 <div class="cont-wrap" data-controller="controller/co/COFormCtrl controller/mp/mpg/MPGMyQaViewCtrl">
 
     <div class="sub-top-vis-area">
@@ -42,7 +42,7 @@
                                 </div>
                                 <div class="body-area">
                                     <div class="txt-wrap f-sub-head">
-                                        ${ rtnData.cntn }
+                                        ${fn:replace(rtnData.cntn, newLine, '<br>')}
                                     </div>
                                     <c:if test="${ not empty rtnData.fileList }">
                                     <!-- @ 파일이 없으면 주석처리 -->
@@ -54,7 +54,8 @@
                                     </c:if>
                                 </div>
                             </div>
-                            <c:if test="${ not empty rtnData.rplyFileSeq }">
+<%--                            <c:if test="${ not empty rtnData.rplyFileSeq }">--%>
+                                <c:if test="${ rtnData.rsumeCd eq 'ACK'  }">
                             <div class="answer-wrap">
                                 <div class="title-area">
                                     <div class="title f-title3">답변</div>
@@ -83,7 +84,7 @@
                             </div>
                             // 2023-12-12 삭제 -->
                             <div class="btn-wrap align-center add-load">
-                                <a class="btn-solid small black-bg" href="./list"><span>목록</span></a><!-- 2023-12-06 텍스트 수정 -->
+                                <a class="btn-solid small black-bg" href="./list?${strPam}"><span>목록</span></a><!-- 2023-12-06 텍스트 수정 -->
                             </div>
                         </div>
                     </div>

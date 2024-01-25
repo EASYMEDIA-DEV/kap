@@ -2,11 +2,9 @@ package com.kap.front.controller.co;
 
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.im.ima.IMAQaDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
-import com.kap.service.CBATechGuidanceService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.EBBEpisdService;
-import com.kap.service.MPBCoexistenceService;
+import com.kap.service.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -42,6 +40,8 @@ public class COMypageController
     public final MPBCoexistenceService mpbCoexistenceService;
 
     public final CBATechGuidanceService cBATechGuidanceService;
+
+    private final IMAQaService iMAQaService;
 
 
     @GetMapping("/my-page/main")
@@ -80,6 +80,18 @@ public class COMypageController
 
 
             //나의 1:1문의 호출
+//            LocalDate currentDate = LocalDate.now();
+//            LocalDate threeMonthsAgo = currentDate.minusMonths(3);
+//            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+//            String currentDateString = currentDate.format(formatter);
+//            String threeMonthsAgoDateString = threeMonthsAgo.format(formatter);
+            IMAQaDTO pIMAQaDTO = new IMAQaDTO();
+            pIMAQaDTO.setMypageYn("Y");
+            pIMAQaDTO.setMypageMainYn("Y");
+            pIMAQaDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+//            pIMAQaDTO.setSrchDate("1");
+//            pIMAQaDTO.setStrtDt();
+            modelMap.addAttribute("myQaData", iMAQaService.selectQaList(pIMAQaDTO));
 
         }catch (Exception e){
             if (log.isDebugEnabled())

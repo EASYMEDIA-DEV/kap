@@ -68,6 +68,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         openPopup('memberDetailsPopup');
                     }
                 }
+            },
+            contact : {
+                event : {
+                    click : function(){
+                        var cmssrCbsnCd = $(".cmssrCbsnCd").text()
+                        location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;
+                    }
+                }
             }
         },
         immediately : function() {

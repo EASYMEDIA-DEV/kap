@@ -19,10 +19,10 @@
                                 </div>
                                 <!-- @ 파일이 없으면 주석처리 -->
                                 <c:choose>
-                                    <c:when test="${not empty ordList.list}">
+                                    <c:when test="${not empty fileList.list}">
                                         <div class="attatched-file-area">
-                                            <c:forEach var="ordList" items="${ordList.list}">
-                                                <a class="btn-text-icon download-bg download" href="/file/download?fileSeq=${ordList.fileSeq}&fileOrd=${ordList.fileOrd}" title="파일 다운로드" download><span>${ordList.fileName}</span></a>
+                                            <c:forEach var="fileList" items="${fileList.list}">
+                                                <a class="btn-text-icon download-bg download" href="/file/download?fileSeq=${fileList.fileSeq}&fileOrd=${fileList.fileOrd}" title="파일 다운로드" download><span>${fileList.fileName}</span></a>
                                             </c:forEach>
                                         </div>
                                     </c:when>

@@ -2,7 +2,6 @@ package com.kap.service.impl.bd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdc.BDCFaqDTO;
 import com.kap.service.BDCFaqService;
@@ -136,5 +135,13 @@ public class BDCFaqServiceImpl implements BDCFaqService {
     public int deleteFaq(BDCFaqDTO pBDCFaqDTO) throws Exception{
 
         return bDCFaqMapper.deleteFaq(pBDCFaqDTO);
+    }
+
+    /**
+     * FAQ 첨부파일 목록 조회
+     */
+    public BDCFaqDTO selectFaqFileList(BDCFaqDTO pBDCFaqDTO) throws Exception {
+        pBDCFaqDTO.setList(bDCFaqMapper.selectFaqFileList(pBDCFaqDTO));
+        return pBDCFaqDTO;
     }
 }

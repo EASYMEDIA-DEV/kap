@@ -37,10 +37,10 @@ import javax.validation.Valid;
 @RequestMapping(value="/foundation/board/newsletter")
 public class BDDNewsletterController {
 
-    //뉴스레터 서비스
+    //뉴스레터 구독 서비스
     private final BDDNewsletterService bDDNewsletterService;
 
-    /** 뉴스레터 구독 서비스 **/
+    /** 뉴스레터 신청자 관리 서비스 **/
     public final MPHNewsLetterService mphNewsLetterService;
 
     /**
@@ -75,7 +75,7 @@ public class BDDNewsletterController {
         {
             if(!"".equals(pBDDNewsletterDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", bDDNewsletterService.selectNewsletterDtl(pBDDNewsletterDTO));
-                modelMap.addAttribute("ordList", bDDNewsletterService.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+                modelMap.addAttribute("fileList", bDDNewsletterService.selectNewsletterFileList(pBDDNewsletterDTO));
                 modelMap.addAttribute("nextPrevInfo", bDDNewsletterService.selectNextAndPrevSeqVal(pBDDNewsletterDTO));
                 bDDNewsletterService.updateNewsletterReadCnt(pBDDNewsletterDTO);
             }
