@@ -681,27 +681,48 @@
        2023.11.13    양현우       최초생성
     -->
     <select id="selectAttcntList" parameterType="MPAAttctnDto" resultType="MPAAttctnDto">
+
         select appctn_mst.mem_seq /* MPAUserMapper.selectAttcntList */
              , appctn_mst.reg_dtm
              , episd_mst.year
              , episd_mst.episd
-             , rsume_dtl.appctn_stts_cd
-             , rsume_dtl.mng_stts_cd
-             , ( select name from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as name
-             , ( select ptcpt_type from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as ptcpt_type
-             , ( select theme_cd from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as theme_cd
-             , ( select wdcrm_cd from cx_appctn_rsume_prize_car_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 3) as wdcrm_cd
-             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 1) as seoryu_cd
-             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 2) as first_cd
-             , ( select mng_stts_cd from cx_appctn_rsume_dtl where rsume_seq = rsume_dtl.rsume_seq and rsume_ord = 3) as end_cd
-        from cx_appctn_mst appctn_mst
-                 inner join cx_episd_mst episd_mst
-                            on appctn_mst.episd_seq = episd_mst.episd_seq
-                 inner join cx_appctn_rsume_dtl rsume_dtl
-                            on appctn_mst.appctn_seq =rsume_dtl.appctn_seq
-        where rsume_ord = 1
-          and appctn_mst.mem_seq=#{detailsKey}
-        order by appctn_mst.appctn_seq desc
+             , max_rsume.appctn_stts_cd
+             , max_rsume.mng_stts_cd
+             , carpcd.name as name
+             , carpcd.ptcpt_type
+             ,  case when carpcd.ptcpt_type != '' then  (select cd_nm from co_code_mst where  cd=carpcd.ptcpt_type )
+                     else '' end as ptcpt_type_nm -- 참여코드 명
+             , carpcd.theme_cd
+             , case when carpcd.theme_cd != '' then  (select cd_nm from co_code_mst where  cd=carpcd.theme_cd )
+                     else '' end as theme_cd_nm -- 주제코드 명
+             , carpcd.wdcrm_cd
+             , case when carpcd.wdcrm_cd != '' then  (select cd_nm from co_code_mst where  cd=carpcd.wdcrm_cd )
+                    else '' end as wdcrm_cd_nm -- 시상식코드_명
+             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 1) as seoryu_cd
+             , case when ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 1) != '' then (select cd_nm from co_code_mst where cd = ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 1))
+                    else '' end as seoryu_cd_nm -- 서류 심사_명
+             , ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 2) as first_cd
+             , case when ( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 2) != '' then (select cd_nm from co_code_mst where cd =( select appctn_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 2))
+                    else '' end as first_cd_nm -- 1차 결과_명
+             , ( select mng_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 3) as end_cd
+             , case when( select mng_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 3) != '' then (select cd_nm from co_code_mst where cd =( select mng_stts_cd from cx_appctn_rsume_dtl where rsume_seq = max_rsume.rsume_seq and rsume_ord = 3))
+                    else '' end as end_cd_nm  -- 최종결과_명
+         from cx_appctn_mst appctn_mst
+          inner join cx_episd_mst episd_mst
+           on appctn_mst.episd_seq = episd_mst.episd_seq
+          inner join ( select appctn_seq
+                            , MAX(rsume_ord) AS max_rsume_ord
+                            , rsume_seq
+                            , appctn_stts_cd
+                            , mng_stts_cd
+                         from cx_appctn_rsume_dtl
+                          group by appctn_seq ) max_rsume
+           on appctn_mst.appctn_seq =max_rsume.appctn_seq
+          inner join cx_appctn_rsume_prize_car_dtl carpcd
+           on max_rsume.rsume_seq = carpcd .rsume_seq
+            and max_rsume.max_rsume_ord = carpcd.rsume_ord
+          where appctn_mst.mem_seq=#{detailsKey}
+           order by appctn_mst.appctn_seq desc
             limit   #{firstIndex}, #{recordCountPerPage}
     </select>
 
@@ -714,13 +735,22 @@
         2023.11.13    양현우       최초생성
     -->
     <select id="selectAttcntListCnt" parameterType="MPAAttctnDto" resultType="java.lang.Integer">
-        select count(*)  from cx_appctn_mst appctn_mst /* MPAUserMapper.selectAttcntListCnt */
+        select count(*)
+         from cx_appctn_mst appctn_mst  /* MPAUserMapper.selectAttcntListCnt */
           inner join cx_episd_mst episd_mst
            on appctn_mst.episd_seq = episd_mst.episd_seq
-          inner join cx_appctn_rsume_dtl rsume_dtl
-           on appctn_mst.appctn_seq =rsume_dtl.appctn_seq
-            where rsume_ord = 1
-             and appctn_mst.mem_seq=#{detailsKey}
+          inner join ( select appctn_seq
+                            , MAX(rsume_ord) AS max_rsume_ord
+                            , rsume_seq
+                            , appctn_stts_cd
+                            , mng_stts_cd
+                         from cx_appctn_rsume_dtl
+                          group by appctn_seq ) max_rsume
+           on appctn_mst.appctn_seq =max_rsume.appctn_seq
+          inner join cx_appctn_rsume_prize_car_dtl carpcd
+           on max_rsume.rsume_seq = carpcd .rsume_seq
+            and max_rsume.max_rsume_ord = carpcd.rsume_ord
+             where  appctn_mst.mem_seq=#{detailsKey}
     </select>
 
     <!--
