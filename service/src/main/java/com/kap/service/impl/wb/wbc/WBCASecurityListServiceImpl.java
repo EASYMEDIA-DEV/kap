@@ -252,6 +252,9 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
                         RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
                     }
                 }
+            } else {
+                //부품사가 1차 2차가 아닐떄,
+                rtnCode = 190;
             }
         }
 
