@@ -35,7 +35,7 @@
                                     </c:if>
                                 </a>
                                 <div class="acco-hide-area">
-                                    <c:if test="${not empty item.applyDtl.rtrnRsnCntn && item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
+                                    <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_6' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_8'}">
                                         <p class="exclamation-txt f-body1">${item.applyDtl.rtrnRsnCntn}</p>
                                     </c:if>
                                     <div class="data-enter-form">
