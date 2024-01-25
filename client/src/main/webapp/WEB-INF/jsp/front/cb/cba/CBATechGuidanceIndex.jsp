@@ -185,7 +185,7 @@
                                         </dl>
                                         <dl class="list-item">
                                             <dt class="f-body1">컨설팅 분야</dt>
-                                            <dd class="f-body2">
+                                            <dd class="f-body2 cmssrCnstgFldCntn">
                                                 <p></p>
                                                 <p></p>
                                             </dd>

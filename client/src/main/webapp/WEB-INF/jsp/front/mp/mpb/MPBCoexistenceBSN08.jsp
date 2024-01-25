@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBExamCtrl">
+<div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBCalibrationCtrl">
     <div class="for-motion">
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
@@ -10,22 +10,23 @@
                     <div class="list-item <c:if test="${rtnData.stageOrd eq 1}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData1" id="frmData1" enctype="multipart/form-data">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <c:choose>
-                                <c:when test="${rtnData.applyList[0].appctnSttsNm eq '보완요청' || rtnData.applyList[0].appctnSttsNm eq '미선정' || rtnData.applyList[0].appctnSttsNm eq '사용자취소'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rtnData.applyList[0].appctnSttsNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
                             <a class="acco-click-area" href="javascript:">
                                 <div class="txt-box">
                                     <p class="tit f-head">신청</p>
                                 </div>
-                                <p class="box-label bigger ${classType}"><span>${rtnData.applyList[0].appctnSttsNm}</span></p>
+                                <c:if test="${not empty rtnData.applyList[0].appctnSttsNm}">
+                                    <c:choose>
+                                        <c:when test="${rtnData.applyList[0].appctnSttsNm eq '접수완료' || rtnData.applyList[0].appctnSttsNm eq '보완완료' || rtnData.applyList[0].appctnSttsNm eq '선정'}">
+                                            <c:set var="classType" value="accepting" />
+                                        </c:when>
+                                        <c:when test="${rtnData.applyList[0].appctnSttsNm eq '보완요청' || rtnData.applyList[0].appctnSttsNm eq '미선정'}">
+                                            <c:set var="classType" value="arr" />
+                                        </c:when>
+                                    </c:choose>
+                                    <p class="box-label bigger ${classType}"><span>
+                                            ${rtnData.applyList[0].appctnSttsNm}
+                                    </span></p>
+                                </c:if>
                             </a>
                             <div class="acco-hide-area">
                                 <c:if test="${not empty rtnData.applyList[0].rtrnRsnCntn && rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
@@ -45,7 +46,7 @@
 
                                                     <div class="data-inner-line addEquiment">
                                                         <c:forEach var="item" items="${rtnData.euipmentList}" varStatus="status">
-                                                            <c:set var="totalTchlg" value="${totalTchlg+status.index}"/>
+                                                            <c:set var="totalTchlg" value="${totalTchlg+(status.index+1)}"/>
                                                             <c:set var="totalTchlgCnt" value="${totalTchlgCnt+item.tchlgCnt}"/>
                                                             <div class="form-group equiment">
                                                                 <div class="form-input w-longer">
@@ -124,6 +125,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.applyList[0].fileInfoList[0].fileSeq}"/>
                                                                 <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE01">
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
@@ -144,6 +146,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.applyList[0].fileInfoList[1].fileSeq}"/>
                                                                 <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE11">
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
@@ -161,7 +164,7 @@
                                 </div>
                                 <c:if test="${rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1" data-status="${rtnData.applyList[0].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>
@@ -170,23 +173,25 @@
                     <div class="list-item <c:if test="${rtnData.stageOrd eq 2}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData2" id="frmData2">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <c:choose>
-                                <c:when test="${rtnData.applyList[1].appctnSttsNm eq '보완요청' || rtnData.applyList[1].appctnSttsNm eq '부적합'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rtnData.applyList[1].appctnSttsNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
                             <a class="acco-click-area" href="javascript:">
                                 <div class="txt-box">
                                     <p class="tit f-head">심사</p>
                                 </div>
                                 <c:if test="${not empty rtnData.applyList[1].appctnSttsNm}">
-                                    <p class="box-label bigger ${classType}"><span>${rtnData.applyList[1].appctnSttsNm}</span></p>
+                                    <c:choose>
+                                        <c:when test="${rtnData.applyList[1].appctnSttsNm eq '접수전'}">
+                                            <c:set var="classType" value="waiting" />
+                                        </c:when>
+                                        <c:when test="${rtnData.applyList[1].appctnSttsNm eq '접수완료' || rtnData.applyList[1].appctnSttsNm eq '보완완료' || rtnData.applyList[1].appctnSttsNm eq '적합'}">
+                                            <c:set var="classType" value="accepting" />
+                                        </c:when>
+                                        <c:when test="${rtnData.applyList[1].appctnSttsNm eq '보완요청' || rtnData.applyList[1].appctnSttsNm eq '부적합'}">
+                                            <c:set var="classType" value="arr" />
+                                        </c:when>
+                                    </c:choose>
+                                    <p class="box-label bigger ${classType}"><span>
+                                            ${rtnData.applyList[0].appctnSttsNm}
+                                    </span></p>
                                 </c:if>
                             </a>
                             <div class="acco-hide-area">
@@ -215,7 +220,7 @@
                                 </div>
                                 <c:if test="${rtnData.applyList[1].appctnSttsCd eq 'PRO_TYPE07001_03_001' || rtnData.applyList[1].appctnSttsCd eq 'PRO_TYPE07001_03_003'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2" data-status="${rtnData.applyList[1].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>
@@ -224,23 +229,25 @@
                     <div class="list-item <c:if test="${rtnData.stageOrd eq 3}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData3" id="frmData3">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <c:choose>
-                                <c:when test="${rtnData.applyList[2].appctnSttsNm eq '보완요청' || rtnData.applyList[2].appctnSttsNm eq '부적합'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rtnData.applyList[2].appctnSttsNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
                             <a class="acco-click-area" href="javascript:">
                                 <div class="txt-box">
                                     <p class="tit f-head">증빙</p>
                                 </div>
                                 <c:if test="${not empty rtnData.applyList[2].appctnSttsNm}">
-                                    <p class="box-label bigger ${classType}"><span>${rtnData.applyList[2].appctnSttsNm}</span></p>
+                                    <c:choose>
+                                        <c:when test="${rtnData.applyList[2].appctnSttsNm eq '접수전'}">
+                                            <c:set var="classType" value="waiting" />
+                                        </c:when>
+                                        <c:when test="${rtnData.applyList[2].appctnSttsNm eq '접수완료' || rtnData.applyList[2].appctnSttsNm eq '보완완료' || rtnData.applyList[2].appctnSttsNm eq '적합'}">
+                                            <c:set var="classType" value="accepting" />
+                                        </c:when>
+                                        <c:when test="${rtnData.applyList[2].appctnSttsNm eq '보완요청' || rtnData.applyList[2].appctnSttsNm eq '부적합'}">
+                                            <c:set var="classType" value="arr" />
+                                        </c:when>
+                                    </c:choose>
+                                    <p class="box-label bigger ${classType}"><span>
+                                            ${rtnData.applyList[2].appctnSttsNm}
+                                    </span></p>
                                 </c:if>
                             </a>
                             <div class="acco-hide-area">
@@ -275,6 +282,7 @@
                                                                 <div class="file-btn-area">
                                                                     <input type="file" name="atchFile" id="searchFile2" class="searchFile">
                                                                     <input type="hidden" name="equiment.fileCdList" value="ATTACH_FILE_TYPE14">
+                                                                    <input type="hidden" name="fileSeqList" value="${rtnData.applyList[2].fileInfoList[0].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -292,7 +300,7 @@
                                 </div>
                                 <c:if test="${rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_001' || rtnData.applyList[2].appctnSttsCd eq 'PRO_TYPE07001_05_003'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="3"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="3" data-status="${rtnData.applyList[2].appctnSttsNm}"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </div>

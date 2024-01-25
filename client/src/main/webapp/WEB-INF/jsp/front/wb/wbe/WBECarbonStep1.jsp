@@ -112,7 +112,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -179,7 +179,7 @@
                                             <td>
                                                 <c:choose>
                                                     <c:when test="${not empty rtnData.slsPmt}">
-                                                        ${rtnData.slsPmt}억 원(${rtnData.slsYear}년)
+                                                        ${rtnData.slsPmt}억 원(${kl:convertDate(rtnData.slsYear, 'yyyy-MM-dd', 'yyyy', '')}년)
                                                     </c:when>
                                                     <c:otherwise>
                                                         -
@@ -264,9 +264,43 @@
                                             <tr>
                                                 <th>SQ정보</th>
                                                 <td>
-                                                    <c:forEach var="item" items="${rtnData.dtlList}" varStatus="status">
-                                                        <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
-                                                    </c:forEach>
+                                                    <c:choose>
+                                                        <c:when test="${empty rtnData.dtlList}">
+                                                            -
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:forEach var="item" items="${rtnData.dtlList}" varStatus="status">
+                                                                <c:if test="${empty item.nm}">
+                                                                    <c:set var="nm" value="-"/>
+                                                                </c:if>
+                                                                <c:if test="${not empty item.nm}">
+                                                                    <c:set var="nm" value="${item.nm}"/>
+                                                                </c:if>
+
+                                                                <c:if test="${empty item.score}">
+                                                                    <c:set var="score" value="-"/>
+                                                                </c:if>
+                                                                <c:if test="${not empty item.score}">
+                                                                    <c:set var="score" value="${item.score}"/>
+                                                                </c:if>
+
+                                                                <c:if test="${empty item.year}">
+                                                                    <c:set var="year" value="-"/>
+                                                                </c:if>
+                                                                <c:if test="${not empty item.year}">
+                                                                    <c:set var="year" value="${item.year} 년"/>
+                                                                </c:if>
+
+                                                                <c:if test="${empty item.crtfnCmpnNm}">
+                                                                    <c:set var="crtfnCmpnNm" value="-"/>
+                                                                </c:if>
+                                                                <c:if test="${not empty item.crtfnCmpnNm}">
+                                                                    <c:set var="crtfnCmpnNm" value="${item.crtfnCmpnNm}"/>
+                                                                </c:if>
+                                                                <p class="f-body1">${status.index}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
+                                                            </c:forEach>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                         </c:if>
@@ -274,7 +308,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -284,7 +318,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                        <a class="btn-solid small gray-bg" href="./content"><span>취소</span></a>
                     </div>
                     <div class="btn-set">
                         <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episd}"><span>다음</span></a>

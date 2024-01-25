@@ -16,42 +16,17 @@
                                     <p class="tit f-head">신청</p>
                                 </div>
                                 <c:choose>
-                                    <c:when test="${rtnBsnData.appctnSttsCdNm eq '부적합' || rtnBsnData.appctnSttsCdNm eq '미선정' || rtnBsnData.appctnSttsCdNm eq '사용자취소'
-                                     || rtnBsnData.appctnSttsCdNm eq '보완요청' || rtnBsnData.appctnSttsCdNm eq '탈락'}">
+                                    <c:when test="${rtnData.appctnSttsCdNm eq '접수완료' || rtnData.appctnSttsCdNm eq '보완완료' || rtnData.appctnSttsCdNm eq '선정'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnData.appctnSttsCdNm eq '보완요청' || rtnData.appctnSttsCdNm eq '미선정'}">
                                         <c:set var="classType" value="arr" />
                                     </c:when>
-                                    <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전'}">
-                                        <c:set var="classType"/>
-                                    </c:when>
-                                    <c:otherwise>
-                                        <c:set var="classType" value="accepting" />
-                                    </c:otherwise>
                                 </c:choose>
-                                <p class="box-label bigger ${classType}">
-                                    <span>
+                                <p class="box-label bigger ${classType}"><span>
                                     <input type="hidden" id="appctnSttsCd" name="appctnSttsCd" value="">
-                                        <c:choose>
-                                            <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_001'}">
-                                                접수완료
-                                            </c:when>
-                                            <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_002'}">
-                                                보완요청
-                                            </c:when>
-                                            <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_003'}">
-                                                보완완료
-                                            </c:when>
-                                            <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_004'}">
-                                                사용자취소
-                                            </c:when>
-                                            <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_005'}">
-                                                미선정
-                                            </c:when>
-                                            <c:otherwise>
-                                                선정
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </span>
-                                </p>
+                                    ${rtnData.appctnSttsCdNm}
+                                </span></p>
                             </a>
                             <div class="acco-hide-area">
                                 <p class="exclamation-txt f-body1">
@@ -78,11 +53,10 @@
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                                 <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                <div class="file-list">
-                                                                </div>
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" name="atchFile" id="searchFile" class="searchFile">
+                                                                <input type="hidden" name="fileSeqList" value="${rtnData.appctnSeq}"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                                                             </div>
                                                         </c:if>

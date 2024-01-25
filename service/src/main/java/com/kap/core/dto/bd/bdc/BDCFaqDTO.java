@@ -52,12 +52,17 @@ public class BDCFaqDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일정렬값")
+    private Integer fileOrd;
+
+    @Schema(title = "파일명")
+    private String fileName;
+
     @Schema(title = "조회수")
     private Integer readCnt;
 
     @Schema(title = "노출여부")
     private String expsYn;
-
 
     @Schema(title = "FAQ 구분명")
     private String ctgryName;
@@ -77,4 +82,9 @@ public class BDCFaqDTO extends BaseDTO {
     @Schema(title = "사용자 메인여부", example = "Y/N")
     @Builder.Default
     private String mainYn = "N";
+
+    @Schema(title = "사용자 검색값")
+    private String srchVal;
+
+
 }

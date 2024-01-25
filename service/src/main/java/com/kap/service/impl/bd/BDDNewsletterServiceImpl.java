@@ -65,6 +65,18 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     }
 
     /**
+     * 통합검색 뉴스레터 탭 조회
+     */
+    public BDDNewsletterDTO selectNewsletterTabList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        pBDDNewsletterDTO.setTotalCount(bDDNewsletterMapper.getNewsletterListTotCnt(pBDDNewsletterDTO));
+
+        int recordCountPerPage = (pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize() >= pBDDNewsletterDTO.getTotalCount()) ? pBDDNewsletterDTO.getTotalCount() : pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize();
+        pBDDNewsletterDTO.setRecordCountPerPage(recordCountPerPage);
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterList(pBDDNewsletterDTO));
+        return pBDDNewsletterDTO;
+    }
+
+    /**
      * 뉴스레터 조회 갯수
      */
     public int selectNewsletterListCnt(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
@@ -149,10 +161,10 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     }
 
     /**
-     * 뉴스레터 첨부파일 ord 목록 조회
+     * 뉴스레터 첨부파일 목록 조회
      */
-    public BDDNewsletterDTO selectNewsletterFileOrdList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
-        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+    public BDDNewsletterDTO selectNewsletterFileList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterFileList(pBDDNewsletterDTO));
         return pBDDNewsletterDTO;
     }
 

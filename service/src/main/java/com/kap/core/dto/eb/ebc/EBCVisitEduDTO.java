@@ -59,6 +59,9 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "신청분야상세코드", example = "")
     private String cd;
 
+    @Schema(title = "신청분야상세코드명", example = "")
+    private String cdName;
+
     @Schema(title = "신청분야상세리스트", example = "")
     private List<String> appctnTypeCdList;
 
@@ -98,6 +101,12 @@ public class EBCVisitEduDTO extends BaseDTO {
 
     @Schema(title = "소개파일순번", example = "")
     private Integer itrdcFileSeq;
+
+    @Schema(title = "소개파일정렬값", example = "")
+    private Integer itrdcFileOrd;
+
+    @Schema(title = "소개파일명", example = "")
+    private String itrdcFileName;
 
     @Schema(title = "등록ID", example = "")
     private String regId;

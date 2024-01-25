@@ -71,6 +71,9 @@ public class WBECarbonController {
 
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBEACarbonListService.getRoundDtl(wBRoundMstSearchDTO));
+
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -121,21 +124,28 @@ public class WBECarbonController {
     public String getStep1Page(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbe/WBECarbonStep1.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-            wBEBCarbonCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            cdDtlList.add("MEM_CD"); // 신청 진행상태
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
 
-            modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCompanyUserDtl(wBEBCarbonCompanySearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBEBCarbonCompanySearchDTO.getEpisdSeq()))) {
+                vwUrl = "redirect:./content";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBEBCarbonCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
-            RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBEBCarbonCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+
+                modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCompanyUserDtl(wBEBCarbonCompanySearchDTO));
+
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wBEBCarbonCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -157,7 +167,7 @@ public class WBECarbonController {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBEBCarbonCompanySearchDTO.getEpisdSeq()))) {
-                vwUrl = "redirect:./content";
+                vwUrl = "redirect:/";
             }else {
 
                 COUserDetailsDTO cOUserDetailsDTO = null;
@@ -173,6 +183,7 @@ public class WBECarbonController {
                 wBRoundMstSearchDTO.setBsnCd("BSN05");
                 modelMap.addAttribute("rtnRoundDtl", wBEACarbonListService.getRoundDtl(wBRoundMstSearchDTO));
 
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBEBCarbonCompanySearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -195,7 +206,7 @@ public class WBECarbonController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBEBCarbonCompanyMstInsertDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             }else {
                 modelMap.addAttribute("actCnt", wBEBCarbonCompanyService.carbonUserInsert(wBEBCarbonCompanyMstInsertDTO, request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
@@ -217,13 +228,22 @@ public class WBECarbonController {
     public String getCompletPage(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbe/WBECarbonComplet.front";
         try {
-            COUserDetailsDTO cOUserDetailsDTO = null;
-            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-            modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCompanyUserDtl(wBEBCarbonCompanySearchDTO));
+            if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+                return "redirect:/";
+            } else {
+                COUserDetailsDTO cOUserDetailsDTO = null;
+                cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                modelMap.addAttribute("episd", wBEBCarbonCompanySearchDTO.getEpisdSeq());
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCompanyUserDtl(wBEBCarbonCompanySearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
+            }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

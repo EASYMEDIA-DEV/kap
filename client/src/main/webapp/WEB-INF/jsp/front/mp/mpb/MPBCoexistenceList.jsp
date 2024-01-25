@@ -156,16 +156,18 @@
                                         <c:when test="${not empty rtnData}">
                                             <c:forEach var="item" items="${rtnData.list}" varStatus="status">
                                                 <c:choose>
-                                                    <c:when test="${item.appctnSttsCd eq '미선정' || item.appctnSttsCd eq '보완요청' || item.appctnSttsCd eq '사용자취소'
-                                                    || item.appctnSttsCd eq '부적합' || item.appctnSttsCd eq '탈락'}">
-                                                        <c:set var="classType" value="arr" />
+                                                    <c:when test="${item.appctnSttsCdNm eq '접수전' || item.appctnSttsCdNm eq '대기' || item.appctnSttsCdNm eq '결과대기'}">
+                                                        <c:set var="classType" value="waiting"/>
                                                     </c:when>
-                                                    <c:when test="${item.appctnSttsCd eq '접수전'}">
-                                                        <c:set var="classType" value="" />
+                                                    <c:when test="${item.appctnSttsCdNm eq '접수완료' || item.appctnSttsCdNm eq '적합' || item.appctnSttsCdNm eq '선정' }">
+                                                        <c:set var="classType" value="accepting"/>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        <c:set var="classType" value="accepting" />
-                                                    </c:otherwise>
+                                                    <c:when test="${item.appctnSttsCdNm eq '사용자취소'}">
+                                                        <c:set var="classType" value="end"/>
+                                                    </c:when>
+                                                    <c:when test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
+                                                        <c:set var="classType" value="arr"/>
+                                                    </c:when>
                                                 </c:choose>
                                                 <div class="training-confirm">
                                                     <div class="top-info">
@@ -189,9 +191,9 @@
                                                                     <div class="group">
                                                                         <p class="index-num f-head">${item.rsumeSttsCdNm}</p>
                                                                         <div class="status-info-w">
-                                                                            <p class="box-label bigger ${classType}"><span>${item.appctnSttsCd}</span></p>
+                                                                            <p class="box-label bigger ${classType}"><span>${item.appctnSttsCdNm}</span></p>
                                                                         </div>
-                                                                        <c:if test="${not empty item.rtrnRsnCntn && item.appctnSttsCd ne '사용자취소'}">
+                                                                        <c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
                                                                             <div class="tooltip-wrap">
                                                                                 <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                                                 <div class="tooltip-box">

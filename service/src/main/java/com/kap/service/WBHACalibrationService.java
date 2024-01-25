@@ -5,6 +5,7 @@ import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbh.*;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -128,4 +129,10 @@ public interface WBHACalibrationService {
      * @return
      */
     public int updateInfo(WBHAApplyDtlDTO wbhaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(WBHACalibrationSearchDTO wBHACalibrationSearchDTO) throws Exception;
 }

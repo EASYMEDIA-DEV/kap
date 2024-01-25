@@ -12,6 +12,8 @@ import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.List;
+
 /**
  *  상생사업 신청 전체 DTO
  *
@@ -66,4 +68,7 @@ public class MPBBsnMstDTO extends BaseDTO {
 
     @Schema(title = "스마트공장", example = "")
     private WBFBRegisterDTO wBFBRegisterDTO;
+
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
 }

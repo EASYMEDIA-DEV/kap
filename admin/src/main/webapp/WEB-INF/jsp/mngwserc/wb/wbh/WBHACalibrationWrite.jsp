@@ -539,7 +539,15 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">관리자메모</label>
                         <div class="col-sm-11">
-                            <textarea class="form-control input-sm notRequired" name="admMemo" rows="10" maxlength="2000" title="관리자메모" placeholder="관리자메모를 입력하세요.">${rtnData.admMemo}</textarea>
+                            <textarea class="form-control input-sm notRequired" id="admMemoUpd" name="admMemo" rows="10" maxlength="2000" title="관리자메모" placeholder="관리자메모를 입력하세요.">${rtnData.admMemo}</textarea>
+                            <div class="pull-right">
+                                <div class="pull-right">
+                                    <p class="form-control-static">${ kl:convertDate(rtnData.admMemoModDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                                </div>
+                                <div>
+                                    <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </fieldset>

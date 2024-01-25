@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyTrnsfDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBDBSafetyService;
 import lombok.RequiredArgsConstructor;
@@ -364,5 +365,26 @@ public class WBDBSafetyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBDBSafetySearchDTO updAdmMemo(@Valid @RequestBody WBDBSafetySearchDTO wBDBSafetySearchDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+            wBDBSafetySearchDTO.setRespCnt(wBDBSafetyService.updAdmMemo(wBDBSafetySearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBDBSafetySearchDTO;
     }
 }

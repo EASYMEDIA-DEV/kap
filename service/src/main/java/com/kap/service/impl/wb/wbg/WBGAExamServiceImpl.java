@@ -8,6 +8,7 @@ import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
@@ -1278,12 +1279,21 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                     for (int i = 0; i < rtnList.size() ; i++) {
 
                         List<COFileDTO> fileList = new ArrayList();
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
+                        Integer fileSeq;
+
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wbgaApplyDtlDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
 
                         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                        wbgaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                        wbgaApplyDtlDTO.setFileSeq(fileSeq);
                         wbgaApplyDtlDTO.setFileCd(wbgaApplyDtlDTO.getFileCdList().get(i));
 
                         wBGAExamMapper.insertFileInfo(wbgaApplyDtlDTO);
@@ -1371,5 +1381,19 @@ public class WBGAExamServiceImpl implements WBGAExamService {
         }
 
         return rsultCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBGAExamMapper.updAdmMemo(wBGAExamSearchDTO);
+
+        return respCnt;
     }
 }

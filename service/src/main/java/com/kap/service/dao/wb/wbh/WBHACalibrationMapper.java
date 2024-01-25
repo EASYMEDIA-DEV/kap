@@ -3,6 +3,7 @@ package com.kap.service.dao.wb.wbh;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbh.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -294,4 +295,10 @@ public interface WBHACalibrationMapper {
      * 계측장비정보 신청여부 조회
      */
     public int updateMsEuipment(WBHAMsEuipmentDTO wbhaMsEuipmentDTO) throws Exception;
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 }

@@ -16,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.WorkbookUtil;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -374,6 +375,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         XSSFCellStyle style_header = workbook.createCellStyle();
         XSSFCellStyle style_body = workbook.createCellStyle();
         Sheet sheet = workbook.createSheet();
+        workbook.setSheetName(0,mpdKenDto.getMonthpicker());
 
         YearMonth yearMonth = YearMonth.of(year, month);
         int lastDayOfMonth = yearMonth.lengthOfMonth();
@@ -433,14 +435,14 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             column++;
         }
 
-        //출장소계
+        //출근소계
         cell = row.createCell(column++);
-        cell.setCellValue("출장소계");
+        cell.setCellValue("출근소계");
         cell.setCellStyle(style_header);
 
         //출장
         cell = row.createCell(column++);
-        cell.setCellValue("출장");
+        cell.setCellValue("출장소계");
         cell.setCellStyle(style_header);
         cell = row.createCell(column++);
         cell.setCellStyle(style_header);
@@ -689,9 +691,13 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
         }
 
+        // 열 너비 설정
+        for(int i =0; i < 32; i++){
+            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 1200));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
-
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원_월_근태_", "UTF-8") + timeStamp +".xlsx");
@@ -737,6 +743,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         int lecture = 0 ; //강의
         int cmptnDvlpm = 0; //역량 개발
         int etc = 0; //기타
+        int home = 0; //재택
         String outputDateStr="";
         try {
             SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
@@ -835,37 +842,41 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
-        cell.setCellValue("출장");
+        cell.setCellValue("재택");
         cell.setCellStyle(style_header);
+
         cell = row.createCell(14);
+        cell.setCellValue("출장");
         cell.setCellStyle(style_header);
         cell = row.createCell(15);
         cell.setCellStyle(style_header);
         cell = row.createCell(16);
         cell.setCellStyle(style_header);
-
         cell = row.createCell(17);
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(18);
         cell.setCellValue("총원");
         cell.setCellStyle(style_header);
 
 
         row = sheet.createRow(rowNum++);
-        for (int i = 0; i <= 17; i++) {
+        for (int i = 0; i <= 18; i++) {
             cell = row.createCell(i);
             cell.setCellStyle(style_header);
-            if (i != 13 && i != 14 && i != 15 && i != 16) {
+            if (i != 14 && i != 15 && i != 16 && i != 17) {
                 sheet.addMergedRegion(new CellRangeAddress(0, 1, i, i)); //열시작, 열종료, 행시작, 행종료 (자바배열과 같이 0부터 시작)
-            } else if(i == 13){
+            } else if(i == 14){
                 cell.setCellValue("지도");
-            } else if(i == 14) {
-                cell.setCellValue("강의");
             } else if(i == 15) {
-                cell.setCellValue("역량개발");
+                cell.setCellValue("강의");
             } else if(i == 16) {
+                cell.setCellValue("역량개발");
+            } else if(i == 17) {
                 cell.setCellValue("기타");
             }
         }
-        sheet.addMergedRegion(new CellRangeAddress(0, 0, 13,16));
+        sheet.addMergedRegion(new CellRangeAddress(0, 0, 14,17));
 
         // Body
         List<MPDKenDto> list = mpdKenDto.getList();
@@ -890,6 +901,9 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                         break;
                     case "CMSSR_ATTEND_007":   //기타
                         etc++;
+                        break;
+                    case "CMSSR_ATTEND_006":   //기타
+                        home++;
                         break;
                     default:
                         log.info("값이 없다.");
@@ -968,28 +982,33 @@ public class MPDCmtServiceImpl implements MPDCmtService {
                 cell.setCellValue(annual);
                 cell.setCellStyle(style_body);
 
-                //지도
+                //재택
                 cell = row.createCell(13);
+                cell.setCellValue(home);
+                cell.setCellStyle(style_body);
+
+                //지도
+                cell = row.createCell(14);
                 cell.setCellValue(eng);
                 cell.setCellStyle(style_body);
 
                 //강의
-                cell = row.createCell(14);
+                cell = row.createCell(15);
                 cell.setCellValue(lecture);
                 cell.setCellStyle(style_body);
 
                 //역량개발
-                cell = row.createCell(15);
+                cell = row.createCell(16);
                 cell.setCellValue(cmptnDvlpm);
                 cell.setCellStyle(style_body);
 
                 //기타
-                cell = row.createCell(16);
+                cell = row.createCell(17);
                 cell.setCellValue(etc);
                 cell.setCellStyle(style_body);
 
                 //총원
-                cell = row.createCell(17);
+                cell = row.createCell(18);
                 cell.setCellValue(list.size());
                 cell.setCellStyle(style_body);
 
@@ -999,17 +1018,17 @@ public class MPDCmtServiceImpl implements MPDCmtService {
             CellRangeAddress mergedRegion = new CellRangeAddress(2, list.size() + 1, 0, 0);
             sheet.addMergedRegion(mergedRegion);
 
-            for (int i = 11; i <= 17; i++) {
+            for (int i = 12; i <= 18; i++) {
                 CellRangeAddress mergedRegion2 = new CellRangeAddress(2, list.size() + 1, i, i);
                 sheet.addMergedRegion(mergedRegion2);
             }
         }
     }
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 19; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 1800));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 

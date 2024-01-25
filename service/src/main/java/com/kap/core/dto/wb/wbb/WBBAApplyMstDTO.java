@@ -49,6 +49,9 @@ public class  WBBAApplyMstDTO extends BaseDTO {
     @Schema(title = "관리자메모")
     private String admMemo;
 
+    @Schema(title = "관리자메모")
+    private String admMemoModDtm;
+
     @Schema(title = "년도")
     private String year;
 

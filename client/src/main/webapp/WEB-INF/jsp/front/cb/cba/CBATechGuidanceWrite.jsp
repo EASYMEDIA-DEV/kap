@@ -56,16 +56,9 @@
     </div>
 
     <div class="divide-con-area">
-        <div class="lnb-area">
-            <div class="for-motion">
-                <div class="lnb-list">
-                    <a class="btn-two-depth single-menu active" href="javascript:"><span>기술지도</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                </div>
-                <div class="lnb-list">
-                    <a class="btn-two-depth single-menu" href="javascript:"><span>경영컨설팅</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                </div>
-            </div>
-        </div>
+        <!--LNB 시작-->
+        <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+        <!--LNB 종료-->
         <form id="frmData" name="frmData" method="post" enctype="multipart/form-data">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="bsnmNo" name="bsnmNo" value="<%=bsnmNo%>">

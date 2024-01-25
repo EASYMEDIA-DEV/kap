@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBAManagementService;
 import com.kap.service.WBBBCompanyService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -282,5 +284,27 @@ public class WBBBCompanyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBBACompanySearchDTO updAdmMemo(@Valid @RequestBody WBBACompanySearchDTO wBBACompanySearchDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+
+            wBBACompanySearchDTO.setRespCnt(wbbbCompanyService.updAdmMemo(wBBACompanySearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBBACompanySearchDTO;
     }
 }

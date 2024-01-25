@@ -9,6 +9,7 @@ import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -1267,12 +1268,20 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                     for (int i = 0; i < rtnList.size() ; i++) {
 
                         List<COFileDTO> fileList = new ArrayList();
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
+                        Integer fileSeq;
 
-                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                        wbhaApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wbhaApplyDtlDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
+
+                        wbhaApplyDtlDTO.setFileSeq(fileSeq);
                         wbhaApplyDtlDTO.setFileCd(wbhaApplyDtlDTO.getFileCdList().get(i));
 
                         wbhaCalibrationMapper.insertFileInfo(wbhaApplyDtlDTO);
@@ -1360,5 +1369,19 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         }
 
         return rsultCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wbhaCalibrationMapper.updAdmMemo(wbhaCalibrationSearchDTO);
+
+        return respCnt;
     }
 }

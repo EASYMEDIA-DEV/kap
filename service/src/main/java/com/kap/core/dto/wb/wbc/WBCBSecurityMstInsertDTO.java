@@ -76,6 +76,9 @@ public class WBCBSecurityMstInsertDTO extends BaseDTO {
     @Schema(title = "관리자 메모", example = "")
     private String admMemo;
 
+    @Schema(title = "관리자 메모", example = "")
+    private String admMemoModDtm;
+
     @Schema(title = "현재 진행 정렬", example = "")
     private int maxRsumeOrd;
 
@@ -105,5 +108,8 @@ public class WBCBSecurityMstInsertDTO extends BaseDTO {
 
     @Schema(title = "파일 리스트")
     private List<COFileDTO> optnFileList;
+
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
 
 }

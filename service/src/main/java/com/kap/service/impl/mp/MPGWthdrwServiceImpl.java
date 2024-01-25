@@ -11,6 +11,7 @@ import com.kap.service.mp.mpg.MPGWthdrwService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.text.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -158,7 +159,7 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
             //탈퇴 사유
             cell = row.createCell(3);
 
-            cell.setCellValue(list.get(i).getWthdrwRsnNm() + " " + (StringUtils.isEmpty(list.get(i).getWthdrwRsnEtcNm()) ? "" : list.get(i).getWthdrwRsnEtcNm()));
+            cell.setCellValue(list.get(i).getWthdrwRsnNm() + " " + (StringUtils.isEmpty(list.get(i).getWthdrwRsnEtcNm()) ? "" : StringEscapeUtils.unescapeHtml4(list.get(i).getWthdrwRsnEtcNm())));
             cell.setCellStyle(style_body);
 
 
@@ -170,10 +171,10 @@ public class MPGWthdrwServiceImpl  implements MPGWthdrwService {
         }
 
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 8; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 1200));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 

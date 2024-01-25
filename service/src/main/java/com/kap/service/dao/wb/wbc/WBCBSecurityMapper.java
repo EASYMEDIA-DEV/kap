@@ -4,6 +4,7 @@ import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 
 import java.util.List;
 
@@ -237,4 +238,9 @@ public interface WBCBSecurityMapper {
      */
     public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 }

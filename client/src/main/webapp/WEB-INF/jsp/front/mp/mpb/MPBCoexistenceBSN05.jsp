@@ -48,16 +48,25 @@
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <p class="box-label bigger"><span>
-                            <c:choose>
-                                <c:when test="${empty rtnDtl[0]}">
-                                    접수전
-                                </c:when>
-                                <c:otherwise>
-                                    ${rtnDtl[0].appctnSttsNm}
-                                </c:otherwise>
-                            </c:choose>
-                            </span></p>
+                            <c:if test="${not empty rtnDtl[0].appctnSttsNm}">
+                                <c:choose>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '접수완료' || rtnDtl[0].appctnSttsNm eq '보완완료' || rtnDtl[0].appctnSttsNm eq '선정'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '보완요청' || rtnDtl[0].appctnSttsNm eq '미선정'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '사용자취소'}">
+                                        <c:set var="classType" value="end" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[0].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[0].rtrnRsnCntn }">
@@ -124,12 +133,12 @@
                                                 <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <c:if test="${rtnDtl[0].appctnSttsCd eq 'PRO_TYPE01001_01_002'}">
-                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <div class="file-list">
-                                                            </div>
+                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                            <p class="empty-txt">선택된 파일 없음</p>
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                            <input type="hidden" name="fileSeqList" value="${rtnFile[0].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                         </div>
@@ -145,7 +154,7 @@
                             </div>
                             <c:if test="${rtnDtl[0].appctnSttsCd eq 'PRO_TYPE01001_01_002'}">
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1"><span>저장</span></a>
+                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="1" data-status="${rtnDtl[0].appctnSttsNm}"><span>저장</span></a>
                                 </div>
                             </c:if>
                         </div>
@@ -175,16 +184,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[1].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[1]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[1].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '접수완료' || rtnDtl[1].appctnSttsNm eq '보완완료' || rtnDtl[1].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '보완요청' || rtnDtl[1].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[1].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[1].rtrnRsnCntn }">
@@ -243,12 +258,12 @@
                                                 <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
-                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <div class="file-list">
-                                                            </div>
+                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                            <p class="empty-txt">선택된 파일 없음</p>
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
+                                                            <input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                             <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                         </div>
@@ -264,7 +279,7 @@
                             </div>
                             <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2"><span>저장</span></a>
+                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="2" data-status="${rtnDtl[1].appctnSttsNm}"><span>저장</span></a>
                                 </div>
                             </c:if>
                         </div>
@@ -276,16 +291,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최초점검</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[2].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[2]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[2].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[2].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
 
@@ -312,16 +333,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">완료보고</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[3].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[3]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[3].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '접수완료' || rtnDtl[3].appctnSttsNm eq '보완완료' || rtnDtl[3].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '보완요청' || rtnDtl[3].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[3].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[3].rtrnRsnCntn }">
@@ -345,11 +372,10 @@
                                                     <c:if test="${rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_001' or rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_003'}">
                                                         <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                             <p class="empty-txt">선택된 파일 없음</p>
-                                                            <div class="file-list">
-                                                            </div>
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
+                                                            <input type="hidden" name="fileSeqList" value="${rtnFile[3].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
                                                             <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                         </div>
@@ -365,7 +391,7 @@
                             </div>
                             <c:if test="${rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_001' or rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_003'}">
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="4"><span>저장</span></a>
+                                    <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="4" data-status="${rtnDtl[3].appctnSttsNm}"><span>저장</span></a>
                                 </div>
                             </c:if>
                         </div>
@@ -377,16 +403,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최종점검</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[4].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[4]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[4].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[4].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
 
@@ -395,16 +427,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">검수보고</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[5].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[5]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[5].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[5].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                 </div>
@@ -451,6 +489,7 @@
 
                                         <input type="hidden" id="spprtAppctnSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[0].appctnSttsCd}" />
                                         <input type="hidden" id="spprtMngSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}" />
+                                        <input type="hidden" class="tabFlag" value="${not empty rtnSpprt[0].acntNo ? 'update' : 'insert'}"/>
 
                                         <div class="tab-con-area">
                                             <div class="p-cont-sec">
@@ -541,13 +580,12 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="spprtAppctnFileSeq" id="spprtAppctnFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].spprtAppctnFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -566,13 +604,12 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="agrmtFileSeq" id="agrmtFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].agrmtFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="agrmtFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -592,12 +629,11 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="grnteInsrncFileSeq" id="grnteInsrncFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].grnteInsrncFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="grnteInsrncFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -616,6 +652,8 @@
                                     </div>
                                     </c:if>
 
+                                    <c:set var="flag" value="${not empty rtnSpprt[1].accsDt ? 'update' : 'insert'}"/>
+
                                     <!-- 지원금 탭 -->
                                     <div id="spprt2" class="tab-con">
                                         <form name="spprtform2" id="spprtform2">
@@ -627,6 +665,7 @@
 
                                         <input type="hidden" id="spprtAppctnSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[1].appctnSttsCd}" />
                                         <input type="hidden" id="spprtMngSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}" />
+                                        <input type="hidden" class="tabFlag" value="${not empty rtnSpprt[1].acntNo ? 'update' : 'insert'}"/>
 
                                         <div class="tab-con-area">
                                             <div class="p-cont-sec">
@@ -717,13 +756,12 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="spprtAppctnFileSeq" id="spprtAppctnFileSeq1" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].spprtAppctnFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq1">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -742,13 +780,12 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="blingFileSeq" id="blingFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].blingFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="blingFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -767,13 +804,12 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="slsFileSeq" id="slsFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].slsFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="slsFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">
@@ -793,12 +829,11 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                <div class="file-list">
-                                                                                </div>
+                                                                                <p class="empty-txt">선택된 파일 없음</p>
                                                                             </div>
                                                                             <div class="file-btn-area">
                                                                                 <input type="file" name="insptChkFileSeq" id="insptChkFileSeq" class="searchFile">
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].insptChkFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="insptChkFileSeq">파일 찾기</label>
                                                                             </div>
                                                                             <div class="file-prev-area">

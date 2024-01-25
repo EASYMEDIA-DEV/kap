@@ -3,6 +3,7 @@ package com.kap.service.dao.wb.wbd;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.core.dto.wb.wbd.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 
 import java.util.List;
 
@@ -235,4 +236,10 @@ public interface WBDBSafetyMapper {
      * 종된 사업자번호 매핑 여부 확인
      */
     public int getSbrdnBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO) throws Exception;
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception;
 }

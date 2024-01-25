@@ -176,11 +176,12 @@ public class WBBManagementController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbRoundMstSearchDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:./content";
+                vwUrl = "redirect:/";
             } else {
                 wbRoundMstSearchDTO.setStageOrd(1);
                 modelMap.addAttribute("episdSeq", wbRoundMstSearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnData", wbbaRoundService.getRoundDtl(wbRoundMstSearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -204,7 +205,7 @@ public class WBBManagementController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbApplyMstDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,multiRequest,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
@@ -228,8 +229,9 @@ public class WBBManagementController {
         try {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -237,6 +239,8 @@ public class WBBManagementController {
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wbbbCompanyService.getApplyDtl(wbbaCompanySearchDTO));
                 modelMap.addAttribute("fileYn", wbbbCompanyService.getFileYn(wbbaCompanySearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {

@@ -44,6 +44,8 @@ public class WBIBSupplyDTO extends BaseDTO {
     private String rsumeSttsCd;
     @Schema(title = "관리자메모", example = "")
     private String admMemo;
+    @Schema(title = "관리자메모수정시간", example = "")
+    private String admMemoModDtm;
     @Schema(title = "신청사업자번호")
     private String appctnBsnmNo;
     @Schema(title = "상생상세 진행순번", example = "숫자")
@@ -181,4 +183,7 @@ public class WBIBSupplyDTO extends BaseDTO {
     private String crtfnCmpnNm;
 
     List<WBIBSupplyDTO> list;
+
+    @Schema(title = "파일리스트", example = "")
+    private List<Integer> fileSeqList;
 }

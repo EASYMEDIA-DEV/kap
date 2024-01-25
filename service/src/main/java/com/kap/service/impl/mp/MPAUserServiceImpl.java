@@ -534,6 +534,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(12);
+        cell.setCellValue("컨설팅분야");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(13);
         cell.setCellValue("등록일");
         cell.setCellStyle(style_header);
 
@@ -565,7 +569,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //업종분야
             cell = row.createCell(4);
-            cell.setCellValue(list.get(i).getCmssrCbsnCdNm());
+            cell.setCellValue(excelHypen(list.get(i).getCmssrCbsnCdNm()));
             cell.setCellStyle(style_body);
 
             //재직여부
@@ -595,26 +599,31 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //퇴사일
             cell = row.createCell(10);
-            cell.setCellValue(list.get(i).getCmssrRsgntDt());
+            cell.setCellValue(excelHypen(list.get(i).getCmssrRsgntDt()));
             cell.setCellStyle(style_body);
 
             //주요경력
             cell = row.createCell(11);
-            cell.setCellValue(list.get(i).getCmssrMjrCarerCntn());
+            cell.setCellValue(excelHypen(StringEscapeUtils.unescapeHtml4(list.get(i).getCmssrMjrCarerCntn())));
+            cell.setCellStyle(style_body);
+
+            //컨설팅분야
+            cell = row.createCell(12);
+            cell.setCellValue(excelHypen(StringEscapeUtils.unescapeHtml4(list.get(i).getCmssrCnstgFldCntn())));
             cell.setCellStyle(style_body);
 
             //등록일
-            cell = row.createCell(12);
+            cell = row.createCell(13);
             cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
             cell.setCellStyle(style_body);
 
         }
 
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 14; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 2000));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
@@ -797,7 +806,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //전화번호
             cell = row.createCell(7);
-            cell.setCellValue(list.get(i).getTelNo());
+            cell.setCellValue(excelHypen(list.get(i).getTelNo()));
             cell.setCellStyle(style_body);
             //주소
             cell = row.createCell(8);
@@ -828,10 +837,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         }
 
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 13; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 2000));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
@@ -1052,7 +1061,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //일반 전화번호
             cell = row.createCell(10);
-            cell.setCellValue(list.get(i).getTelNo());
+            cell.setCellValue(excelHypen(list.get(i).getTelNo()));
             cell.setCellStyle(style_body);
 
             //부서
@@ -1062,7 +1071,7 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //직급
             cell = row.createCell(12);
-            cell.setCellValue(list.get(i).getPstnCdNm());
+            cell.setCellValue(excelHypen(list.get(i).getPstnCdNm()) +(list.get(i).getPstnCdNm().equals("기타") ? "("+StringEscapeUtils.unescapeHtml4(list.get(i).getPstnNm())+")" : ""));
             cell.setCellStyle(style_body);
 
             //이메일
@@ -1116,10 +1125,10 @@ public class MPAUserServiceImpl implements MPAUserService {
         }
 
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 19; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 2000));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
@@ -1142,5 +1151,14 @@ public class MPAUserServiceImpl implements MPAUserService {
         pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
         pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
         cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+    }
+
+    /**
+     * 엑셀 하이픈
+     * @param str
+     * @return
+     */
+    private String excelHypen(String str) {
+        return org.apache.commons.lang.StringUtils.isEmpty(str) ? "-" : str;
     }
 }

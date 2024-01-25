@@ -22,21 +22,25 @@
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[0].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[0].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[0].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[0].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label ${classType}">
-                                <span>${rsumeTaskDtl[0].appctnSttsCdNm}</span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[0].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수완료' || rsumeTaskDtl[0].appctnSttsCdNm eq '보완완료' || rsumeTaskDtl[0].appctnSttsCdNm eq '선정'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[0].appctnSttsCdNm eq '미선정'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '사용자취소'}">
+                                        <c:set var="classType" value="end" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[0].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
@@ -49,6 +53,10 @@
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
+
+                                <c:if test="${not empty rsumeTaskDtl[0].rtrnRsnCntn && rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
+                                    <p class="exclamation-txt f-body1">${rsumeTaskDtl[0].rtrnRsnCntn}</p>
+                                </c:if>
 
                                 <div class="data-enter-form">
                                     <div class="row">
@@ -155,6 +163,7 @@
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" id="searchFile1" class="searchFile" name="atchFile1">
+                                                                <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}"/>
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
                                                         </c:if>
@@ -178,6 +187,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile2" class="searchFile" name="atchFile2">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -201,6 +211,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -225,6 +236,7 @@
                                                                 </div>
                                                                 <div class="file-btn-area">
                                                                     <input type="file" id="searchFile4" class="searchFile" name="atchFile4">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}"/>
                                                                     <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
                                                                 </div>
                                                             </c:if>
@@ -244,7 +256,7 @@
                                 </div>
                                 <c:if test="${rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
+                                        <a class="btn-solid small black-bg btnUpdate" data-Status="${rsumeTaskDtl[0].appctnSttsCdNm}" href="javascript:"><span>저장</span></a>
                                     </div>
                                 </c:if>
                             </form>
@@ -256,24 +268,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[1].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[1].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[1].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[1].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[1]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[1]}">${rsumeTaskDtl[1].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[1].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수완료' || rsumeTaskDtl[1].appctnSttsCdNm eq '보완완료' || rsumeTaskDtl[1].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[1].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[1].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
@@ -285,6 +295,10 @@
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[1].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[1].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[1].rsumeOrd}" />
+
+                                <c:if test="${not empty rsumeTaskDtl[1].rtrnRsnCntn && rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_003'}">
+                                    <p class="exclamation-txt f-body1">${rsumeTaskDtl[1].rtrnRsnCntn}</p>
+                                </c:if>
 
                                 <div class="data-enter-form">
                                     <div class="row">
@@ -360,24 +374,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최초점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[2].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[2].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[2].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[2].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[2]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[2]}">${rsumeTaskDtl[2].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[2].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[2].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02004'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -385,24 +397,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">중간점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[3].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[3].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[3].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[3].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[3]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[3]}">${rsumeTaskDtl[3].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[3].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[3].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02005'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -410,24 +420,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">원가계산</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[4].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[4].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[4].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[4].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[4]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[4]}">${rsumeTaskDtl[4].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[4].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[4].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02006'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -435,24 +443,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">협약</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[5].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[5].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[5].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[5].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[5]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[5]}">${rsumeTaskDtl[5].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[5].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '협약완료'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[5].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02007'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -460,24 +463,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최종점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[6].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[6].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[6].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[6].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[6]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[6]}">${rsumeTaskDtl[6].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[6].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[6].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                 </div>
@@ -527,6 +528,8 @@
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[0].giveType}"/>
+                                                    <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[0].gvmntSpprtPmt ? 'update' : 'insert'}"/>
+
                                                     <div class="tab-con-area">
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
@@ -682,6 +685,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile5" class="searchFile" name="atchFile1">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].spprtAppctnFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile5">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -707,6 +711,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile6" class="searchFile" name="atchFile2">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].acntFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile6">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -731,6 +736,7 @@
                                                                                         </div>
                                                                                         <div class="file-btn-area">
                                                                                             <input type="file" id="searchFile7" class="searchFile" name="atchFile3">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].bnkbkFileSeq}">
                                                                                             <label class="btn-solid gray-bg" for="searchFile7">파일 찾기</label>
                                                                                         </div>
                                                                                         <div class="file-prev-area">
@@ -749,6 +755,7 @@
                                                 </form>
                                             </div>
                                         </c:if>
+
                                         <!-- 지원금 탭 -->
                                         <div class="tab-con">
                                             <form name="frmData" data-give-type="${spprtDtl[1].giveType}" enctype="multipart/form-data">
@@ -758,6 +765,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[1].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[1].giveType}"/>
+                                                <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[1].gvmntSpprtPmt ? 'update' : 'insert'}"/>
+
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -913,6 +922,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile8" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile8">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -938,6 +948,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile9" class="searchFile" name="atchFile2">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].acntFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile9">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -962,6 +973,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile10" class="searchFile" name="atchFile3">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].bnkbkFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile10">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -988,6 +1000,8 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[2].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[2].giveType}"/>
+                                                <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[2].cmssnPmt ? 'update' : 'insert'}"/>
+
                                                 <div class="tab-con-area">
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
@@ -1051,6 +1065,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile11" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -1076,6 +1091,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile12" class="searchFile" name="atchFile2">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].tchlgLseFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile12">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -1100,6 +1116,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile13" class="searchFile" name="atchFile3">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].lsePayFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile13">파일 찾기</label>
                                                                                     </div>
                                                                                     <!-- 2023-12-20 추가 -->
@@ -1125,7 +1142,7 @@
                         </div>
                         <div class="bot-fix-btn-area">
                             <div class="btn-wrap align-right">
-                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" type="button"><span>저장</span></button>
+                                <button class="btn-solid small black-bg btn-agree btnSpprtUpdate" data-status="${flag}" type="button"><span>저장</span></button>
                             </div>
                         </div>
                         <div class="user-opt-area">

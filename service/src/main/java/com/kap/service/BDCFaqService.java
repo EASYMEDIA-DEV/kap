@@ -45,4 +45,9 @@ public interface BDCFaqService {
      */
     public int deleteFaq(BDCFaqDTO pBDCFaqDTO) throws Exception;
 
+    /**
+     * FAQ 첨부파일 목록 조회
+     */
+    public BDCFaqDTO selectFaqFileList(BDCFaqDTO pBDCFaqDTO) throws Exception;
+
 }

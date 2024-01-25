@@ -367,4 +367,25 @@ public class WBEBCarbonCompanyController {
         }
         return "jsonView";
     }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBEBCarbonCompanySearchDTO updAdmMemo(@Valid @RequestBody WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+            wBEBCarbonCompanySearchDTO.setRespCnt(wBEBCarbonCompanyService.updAdmMemo(wBEBCarbonCompanySearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBEBCarbonCompanySearchDTO;
+    }
 }

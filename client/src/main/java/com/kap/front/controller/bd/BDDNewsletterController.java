@@ -37,10 +37,10 @@ import javax.validation.Valid;
 @RequestMapping(value="/foundation/board/newsletter")
 public class BDDNewsletterController {
 
-    //뉴스레터 서비스
+    //뉴스레터 구독 서비스
     private final BDDNewsletterService bDDNewsletterService;
 
-    /** 뉴스레터 구독 서비스 **/
+    /** 뉴스레터 신청자 관리 서비스 **/
     public final MPHNewsLetterService mphNewsLetterService;
 
     /**
@@ -66,6 +66,41 @@ public class BDDNewsletterController {
     }
 
     /**
+     * 통합검색 뉴스레터 목록 조회
+     */
+    @GetMapping(value = "/select")
+    public String selectNewsletterListAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception {
+        try {
+            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
+            log.info("rtnData : {}", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/bd/bdd/BDDNewsletterListAjax";
+    }
+
+    /**
+     * 통합검색 뉴스레터 탭 조회
+     */
+    @GetMapping(value = "/search/{menuType:newsletter}")
+    public String selectNewsletterTabAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception {
+        try {
+            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterTabList(pBDDNewsletterDTO));
+            int letterCnt = bDDNewsletterService.selectNewsletterListCnt(pBDDNewsletterDTO);
+            modelMap.put("letterCnt", letterCnt);
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/bd/bdd/BDDNewsletterTabAjax";
+    }
+
+    /**
      * 뉴스레터 상세 페이지
      */
     @GetMapping(value="/view")
@@ -75,7 +110,7 @@ public class BDDNewsletterController {
         {
             if(!"".equals(pBDDNewsletterDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", bDDNewsletterService.selectNewsletterDtl(pBDDNewsletterDTO));
-                modelMap.addAttribute("ordList", bDDNewsletterService.selectNewsletterFileOrdList(pBDDNewsletterDTO));
+                modelMap.addAttribute("fileList", bDDNewsletterService.selectNewsletterFileList(pBDDNewsletterDTO));
                 modelMap.addAttribute("nextPrevInfo", bDDNewsletterService.selectNextAndPrevSeqVal(pBDDNewsletterDTO));
                 bDDNewsletterService.updateNewsletterReadCnt(pBDDNewsletterDTO);
             }

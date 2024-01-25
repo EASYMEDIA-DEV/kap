@@ -299,6 +299,26 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     // set model
     ctrl.model = {
         id : {
+            btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        let appctnSeq = $basicData.find('input[type=hidden][name=appctnSeq]').val();
+                        if(appctnSeq != '') {
+                            let wBFBRegisterDTO = {}
+                            wBFBRegisterDTO.admMemo = $('#admMemo').val();
+                            wBFBRegisterDTO.appctnSeq = appctnSeq
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
+                            }, "/mngwserc/wb/wbfb/updAdmMemo", wBFBRegisterDTO, "text")
+                        }
+                    }
+                }
+            },
             bsnmNoAuth :{
                 event : {
                     click : function() {

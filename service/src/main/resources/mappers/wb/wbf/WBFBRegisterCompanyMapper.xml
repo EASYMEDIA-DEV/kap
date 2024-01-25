@@ -102,7 +102,7 @@
                 SELECT a.*, YEAR(b.year) as year, b.episd
                 FROM (
                     SELECT
-                        appctn_seq, episd_seq, mem_seq, appctn_bsnm_no, pic_cmssr_seq, sbrdn_bsnm_no, pmndv_pmt_yn, adm_memo
+                        appctn_seq, episd_seq, mem_seq, appctn_bsnm_no, pic_cmssr_seq, sbrdn_bsnm_no, pmndv_pmt_yn, adm_memo, adm_memo_mod_dtm
                     FROM cx_appctn_mst
                     WHERE appctn_seq = #{appctnSeq}
                 ) a
@@ -270,8 +270,8 @@
             ,DATE_FORMAT(B.agrmt_dt, '%m/%d') AS agrmt_dt_fmt
             ,DATE_FORMAT(B.agrmt_term_dt, '%m/%d') AS agrmt_term_dt_fmt
         FROM (
-            SELECT rsume_seq, rsume_ord, rsume_stts_cd, appctn_stts_cd, DATE_FORMAT(appctn_stts_chng_dtm, '%Y-%m-%d %H:%i') AS appctn_stts_chng_dtm
-             ,mng_stts_cd, rtrn_rsn_cntn, DATE_FORMAT(mng_stts_chng_dtm, '%Y-%m-%d %H:%i') AS mng_stts_chng_dtm, mod_id, DATE_FORMAT(mod_dtm, '%Y-%m-%d %H:%i') AS mod_dtm
+            SELECT rsume_seq, rsume_ord, rsume_stts_cd, appctn_stts_cd, appctn_stts_chng_dtm
+             ,mng_stts_cd, rtrn_rsn_cntn, mng_stts_chng_dtm, mod_id, DATE_FORMAT(mod_dtm, '%Y-%m-%d %H:%i') AS mod_dtm
             FROM cx_appctn_rsume_dtl
             WHERE appctn_seq = #{appctnSeq}
         )A
@@ -792,6 +792,21 @@
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
             ,mod_dtm = now()
+        WHERE appctn_seq = #{appctnSeq}
+    </update>
+
+    <!--
+         쿼리명 : WBFBRegisterCompanyMapper.updAppctnMst
+         설  명 : 상생신청진행상세 수정
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updAdmMemo" parameterType="WBFBRegisterDTO">
+        UPDATE cx_appctn_mst /*WBFBRegisterCompanyMapper.updAppctnMst*/
+        SET
+            adm_memo = #{admMemo}
+            ,adm_memo_mod_dtm = now()
         WHERE appctn_seq = #{appctnSeq}
     </update>
 

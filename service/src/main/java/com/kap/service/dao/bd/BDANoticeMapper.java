@@ -49,5 +49,18 @@ public interface BDANoticeMapper {
      * 공지사항 삭제
      */
     public int deleteNotice(BDANoticeDTO pBDANoticeDTO) throws Exception;
+    /**
+     * 공지사항 첨부파일 목록 조회
+     */
+    public List<BDANoticeDTO> selectNoticeFileList(BDANoticeDTO pBDANoticeDTO);
+    /**
+     * 공지사항 조회수 증가
+     */
+    public int updateNoticeReadCnt(BDANoticeDTO pBDANoticeDTO) throws Exception;
+    /**
+     * 공지사항 이전, 다음 글 SEQ 조회
+     */
+    public BDANoticeDTO selectNextAndPrevSeqVal(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
 
 }

@@ -151,6 +151,8 @@ public class COCOmmController {
         modelMap.put("menuType", menuType);
         String rtnUrl = "/front/co/COSearch.front";
         if(menuType != null){
+            BaseDTO baseDTO = new BaseDTO();
+            modelMap.put("rtnData", baseDTO);
             rtnUrl = "/front/co/COSearchDtl.front";
         }
         return rtnUrl;
@@ -254,7 +256,7 @@ public class COCOmmController {
         log.info("*************************************");
 
         session.setAttribute("niceSession", cocNiceMyResDto);
-        session.setMaxInactiveInterval(3*60); //TODO 양현우 506 시간 재 설정 하기
+        session.setMaxInactiveInterval(30*60); //TODO 양현우 506 시간 재 설정 하기
 //        session.setMaxInactiveInterval(20); //TODO 양현우 506 시간 재 설정 하기
 
         if(cocNiceMyResDto.getReceivedatass().getRedirectUrl().equals("no")) {

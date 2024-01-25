@@ -207,7 +207,16 @@
                                             </tr>
                                             <tr>
                                                 <th>직원수</th>
-                                                <td>${rtnInfo.mpleCnt}명</td>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnInfo.mpleCnt}">
+                                                            ${rtnInfo.mpleCnt}
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose> 명
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>주생산품</th>

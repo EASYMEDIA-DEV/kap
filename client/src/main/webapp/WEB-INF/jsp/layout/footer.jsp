@@ -12,7 +12,7 @@
 						<a class="personal bold" class="active" href="/utility/privacy-policy/index">개인정보 처리방침</a>
 						<a class="terms" href="/utility/terms-of-use/index">이용약관</a>
 						<a class="email" id="showEmailCollectPopup" href="javascript:">이메일무단수집거부</a>
-						<a class="way" href="javascript:">오시는길</a>
+						<a class="way" href="/foundation/intro/location/content">오시는길</a>
 					</div>
 					<div class="copy-area f-caption2">
 						<span>(04365)서울시 용산구 원효로 74</span>
@@ -71,7 +71,7 @@
 						<a class="quick-btn trend" href="javascript:"  onclick="openPopup('trendPopup', this)"><span class="txt">TREND</span></a>
 						<a class="quick-btn edu-schedule" href="javascript:eduSchedule(this);" ><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
-						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn faq" href="/foundation/board/faq/list"><span class="txt">FAQ</span></a>
 						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
 					</div>
 				</div>

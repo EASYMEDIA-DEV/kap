@@ -300,6 +300,29 @@ public class WBFBRegisterCompanyController {
     }
 
     /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBFBRegisterDTO updAdmMemo(@Valid @RequestBody WBFBRegisterDTO wBFBRegisterDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+
+            wBFBRegisterDTO.setBsnCd("BSN06"); /* 스마트 공장 */
+            wBFBRegisterDTO.setRespCnt(wBFBRegisterCompanyService.updAdmMemo(wBFBRegisterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBFBRegisterDTO;
+    }
+
+    /**
      * 신청부품사 수정 기능
      */
     @PostMapping(value="/update")

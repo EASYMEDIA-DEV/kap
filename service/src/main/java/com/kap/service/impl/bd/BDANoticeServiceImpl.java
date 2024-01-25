@@ -2,7 +2,6 @@ package com.kap.service.impl.bd;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bda.BDANoticeDTO;
 import com.kap.service.BDANoticeService;
@@ -165,5 +164,27 @@ public class BDANoticeServiceImpl implements BDANoticeService {
     public int deleteNotice(BDANoticeDTO pBDANoticeDTO) throws Exception{
 
         return bDANoticeMapper.deleteNotice(pBDANoticeDTO);
+    }
+
+    /**
+     * 공지사항 첨부파일 목록 조회
+     */
+    public BDANoticeDTO selectNoticeFileList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeFileList(pBDANoticeDTO));
+        return pBDANoticeDTO;
+    }
+
+    /**
+     * 공지사항 조회수 증가
+     */
+    public int updateNoticeReadCnt(BDANoticeDTO pBDANoticeDTO) throws Exception{
+        return bDANoticeMapper.updateNoticeReadCnt(pBDANoticeDTO);
+    }
+
+    /**
+     * 공지사항 이전, 다음 글 SEQ 조회
+     */
+    public BDANoticeDTO selectNextAndPrevSeqVal(BDANoticeDTO pBDANoticeDTO) throws Exception{
+        return bDANoticeMapper.selectNextAndPrevSeqVal(pBDANoticeDTO);
     }
 }
