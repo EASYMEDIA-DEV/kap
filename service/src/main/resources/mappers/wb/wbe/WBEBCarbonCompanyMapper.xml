@@ -546,11 +546,11 @@
              ,A.PBSN_BSC_ADDR
              ,A.PBSN_DTL_ADDR
              ,A.CHK_CMSSR_SEQ
-             ,A.BSN_PMT
+             ,FORMAT(A.BSN_PMT,0) AS BSN_PMT
              ,A.BSN_PLAN_DT
-             ,A.SPPRT_PMT
-             ,A.PHSW_PMT
-             ,A.TTL_PMT
+             ,FORMAT(A.SPPRT_PMT,0) AS SPPRT_PMT
+             ,FORMAT(A.PHSW_PMT,0) AS PHSW_PMT
+             ,FORMAT(A.TTL_PMT,0) AS TTL_PMT
              ,A.CHK_DT
              ,A.EXAM_SCORE
              ,A.PAY_DT
