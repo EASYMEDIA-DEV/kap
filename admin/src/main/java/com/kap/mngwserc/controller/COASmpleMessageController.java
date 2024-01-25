@@ -97,9 +97,9 @@ public class COASmpleMessageController {
             //수신자 정보
             COMessageReceiverDTO receiverDto2 = new COMessageReceiverDTO();
             //이메일
-            receiverDto2.setEmail("dldhrwjd@easymedia.net ");
+            receiverDto2.setEmail("dudwn137@easymedia.net");
             //이름(비필수)
-            receiverDto2.setName("이옥정2");
+            receiverDto2.setName("곽영주");
             //치환문자1
             receiverDto2.setNote1("치환문자1");
             //치환문자2
@@ -112,7 +112,7 @@ public class COASmpleMessageController {
             receiverDto2.setNote5("치환문자5");
             //수신자 정보 등록
             mailForm.getReceiver().add(receiverDto2);
-            return cOMessageService.sendMail(mailForm, "IMAQaRply.html");
+            return cOMessageService.sendMail(mailForm, "sampleTestMail.html");
         }
 
         /**
