@@ -12,7 +12,7 @@
 						<a class="personal bold" class="active" href="/utility/privacy-policy/index">개인정보 처리방침</a>
 						<a class="terms" href="/utility/terms-of-use/index">이용약관</a>
 						<a class="email" id="showEmailCollectPopup" href="javascript:">이메일무단수집거부</a>
-						<a class="way" href="javascript:">오시는길</a>
+						<a class="way" href="/foundation/intro/location/content">오시는길</a>
 					</div>
 					<div class="copy-area f-caption2">
 						<span>(04365)서울시 용산구 원효로 74</span>
