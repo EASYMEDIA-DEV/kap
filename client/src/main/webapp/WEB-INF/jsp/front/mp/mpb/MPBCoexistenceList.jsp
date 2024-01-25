@@ -193,7 +193,7 @@
                                                                         <div class="status-info-w">
                                                                             <p class="box-label bigger ${classType}"><span>${item.appctnSttsCdNm}</span></p>
                                                                         </div>
-                                                                        <c:if test="${not empty item.rtrnRsnCntn && item.appctnSttsCdNm ne '사용자취소'}">
+                                                                        <c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
                                                                             <div class="tooltip-wrap">
                                                                                 <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                                                 <div class="tooltip-box">
