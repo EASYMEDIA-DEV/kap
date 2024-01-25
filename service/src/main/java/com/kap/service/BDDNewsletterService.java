@@ -26,6 +26,11 @@ public interface BDDNewsletterService {
     public BDDNewsletterDTO selectNewsletterList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
 
     /**
+     * 통합검색 뉴스레터 탭 조회
+     */
+    public BDDNewsletterDTO selectNewsletterTabList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+
+    /**
      * 뉴스레터 조회 갯수(통합검색)
      */
     public int selectNewsletterListCnt(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
