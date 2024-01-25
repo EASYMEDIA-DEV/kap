@@ -215,7 +215,17 @@
 			/*AND episd_year IS NOT NULL*/
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
-				AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
+
+				<choose>
+					<when test="cnnctCd == 'EDCTN_REL01' ">
+						AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd IN ('EDCTN_REL01', 'EDCTN_REL03') )
+					</when>
+					<otherwise>
+						AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
+					</otherwise>
+
+				</choose>
+
 			</if>
 
 			<!--과정분류 검색 중분류까지 있을경우-->
@@ -652,6 +662,7 @@
 		, web_path
 		, bfre_mem_seq
 		, TRNSF_YN
+		, ptcpt_seq
 		FROM (SELECT
 					'E' as edu_gubun
 					, b.edctn_seq
@@ -710,12 +721,14 @@
 					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
 		      		, bfre_mem_seq
 					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
+		      		, ptcpt_seq
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
 		LEFT JOIN (SELECT
 							episd_seq
 							, mem_seq
+		                	, ptcpt_seq
 							, stts_cd
 							, gpc_id
 							, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
@@ -803,6 +816,7 @@
 		,  web_path
 		, bfre_mem_seq
 		, TRNSF_YN
+		, ptcpt_seq
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -919,6 +933,7 @@
 		,  null AS web_path
 		, "N" AS TRNSF_YN
 		, 0 AS bfre_mem_seq
+		, null AS ptcpt_seq
 		FROM
 		(
 		SELECT vst_seq
@@ -1019,23 +1034,23 @@
 			<when test="srchOrder == 1">
 				<!-- 신청 마감순-->
 				/*ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc*/
-				ORDER BY ptcpt_dtm asc
+				ORDER BY stts_cd asc, trnsf_yn asc, ptcpt_dtm asc
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
-				ORDER BY accs_status_order is null asc, edctn_strt_dtm asc
+				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, edctn_strt_dtm asc
 			</when>
 			<when test="srchOrder == 3">
 				<!--학습시간 짧은순-->
-				ORDER BY accs_status_order is null asc, stduy_dd_cd_nm asc
+				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, stduy_dd_cd_nm asc
 			</when>
 			<when test="srchOrder == 4">
 				<!--학습시간 긴순-->
-				ORDER BY accs_status_order is null asc, stduy_dd_cd_nm desc
+				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, stduy_dd_cd_nm desc
 			</when>
 			<otherwise>
 				<!-- 신청 마감순-->
-				ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
+				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
 			</otherwise>
 		</choose>
 
@@ -1279,6 +1294,7 @@
 		, web_path
 		, bfre_mem_seq
 		, TRNSF_YN
+		, ptcpt_seq
 		FROM (SELECT
 		'E' as edu_gubun
 		, b.edctn_seq
@@ -1336,12 +1352,14 @@
 		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
 	  	, bfre_mem_seq
 		, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
+	    , ptcpt_seq
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
 		LEFT JOIN (SELECT
 		episd_seq
 		, mem_seq
+		, ptcpt_seq
 		, stts_cd
 		, gpc_id
 		, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
@@ -1429,6 +1447,7 @@
 		, web_path
 		, bfre_mem_seq
 		, TRNSF_YN
+		, ptcpt_seq
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -1545,6 +1564,7 @@
 		,  null AS web_path
 		, 0 AS bfre_mem_seq
 		, "N" AS TRNSF_YN
+		, null AS ptcpt_seq
 		FROM
 		(
 		SELECT vst_seq
@@ -1652,24 +1672,46 @@
         2023.01.22    김학규       최초생성
     -->
 	<select id="selectApplyUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
-		SELECT /* EBBFrontEpisdMapper.selectApplyUserListCnt */
+		SELECT /* EBBFrontEpisdMapper.selectApplyUserList */
 			count(*)
+		FROM (
+		SELECT
+			mem.mem_seq
+			, mem.ID
+			, MEM.NAME
+			, hp_no
+			, email
+			, gndr
+			, MEM.REG_DTM
 		FROM co_mem_mst MEM
-				 INNER JOIN ( SELECT MEM_MOD_SEQ
-								   , MEM_SEQ
-								   , MOD_CD
-								   , REG_ID
-							  FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
-																						  , MEM_SEQ
-																					 FROM CO_MEM_MOD_LOG
-																					 GROUP BY MEM_SEQ )
-		) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
-				 LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
-
+		INNER JOIN ( SELECT MEM_MOD_SEQ
+							, MEM_SEQ
+							, MOD_CD
+							, REG_ID
+							FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
+							, MEM_SEQ
+						FROM CO_MEM_MOD_LOG
+						GROUP BY MEM_SEQ )
+						) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
+		LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 		WHERE 1=1
-		  AND MEM.wthdrw_yn = 'Y'
-		  AND MEM.MEM_CD = 'CP'
-		  AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+		/*AND MEM.wthdrw_yn = 'Y'
+		AND MEM.MEM_CD = 'CP'*/
+		AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+		) A
+		WHERE 1=1
+
+		AND MEM_SEQ != #{memSeq}
+
+		<if test="q != null and q != ''.toString() ">
+
+			AND (
+				ID like concat('%', #{q}, '%') OR
+				NAME like concat('%', #{q}, '%') OR
+				hp_no like concat('%', #{q}, '%') OR
+				email like concat('%', #{q}, '%')
+			)
+		</if>
 	</select>
 
 
@@ -1682,32 +1724,56 @@
     -->
 	<select id="selectApplyUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
 		SELECT /* EBBFrontEpisdMapper.selectApplyUserList */
-		   	mem.mem_seq
-			, mem.ID
-			 , MEM.NAME
-			 , hp_no
-			 , email
-			 , gndr
-		FROM co_mem_mst MEM
-				 INNER JOIN ( SELECT MEM_MOD_SEQ
-								   , MEM_SEQ
-								   , MOD_CD
-								   , REG_ID
-							  		FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
-																						  , MEM_SEQ
-																					 FROM CO_MEM_MOD_LOG
-																					 GROUP BY MEM_SEQ )
-		) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
-				 LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 
+			mem_seq
+			, ID
+			, NAME
+			, hp_no
+			, email
+			, gndr
+			, REG_DTM
+		FROM (
+			SELECT
+				mem.mem_seq
+				, mem.ID
+				, MEM.NAME
+				, hp_no
+				, email
+				, gndr
+				, MEM.REG_DTM
+			FROM co_mem_mst MEM
+			INNER JOIN ( SELECT MEM_MOD_SEQ
+			, MEM_SEQ
+			, MOD_CD
+			, REG_ID
+			FROM CO_MEM_MOD_LOG WHERE ( MEM_MOD_SEQ , MEM_SEQ)IN ( SELECT MAX(MEM_MOD_SEQ)
+			, MEM_SEQ
+			FROM CO_MEM_MOD_LOG
+			GROUP BY MEM_SEQ )
+			) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
+			LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 		WHERE 1=1
-		  AND MEM.wthdrw_yn = 'Y'
-		  AND MEM.MEM_CD = 'CP'
-		  AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+		/*AND MEM.wthdrw_yn = 'Y'
+		AND MEM.MEM_CD = 'CP'*/
+		AND CMPN_MST.BSNM_NO = #{workBsnmNo}
+		) A
+		WHERE 1=1
 
-		ORDER BY MEM.REG_DTM DESC
+	  	AND MEM_SEQ != #{memSeq}
 
-			limit #{firstIndex}, #{recordCountPerPage}
+
+		<if test="q != null and q != ''.toString() ">
+			AND (
+				ID like concat('%', #{q}, '%') OR
+				NAME like concat('%', #{q}, '%') OR
+				hp_no like concat('%', #{q}, '%') OR
+				email like concat('%', #{q}, '%')
+			)
+		</if>
+
+		ORDER BY REG_DTM DESC
+
+		limit #{firstIndex}, #{recordCountPerPage}
 
 	</select>
 
@@ -1729,9 +1795,9 @@
 		from
 			(select
 				 edctn_seq
-				  , "" as episd_year
-				  , "" as episd_ord
-				  , "" as episd_seq
+				  , null as episd_year
+				  , null as episd_ord
+				  , null as episd_seq
 				  , (select parnt_seq from co_code_mst WHERE cd = dd.ctgry_cd) as parnt_seq
 				  , (SELECT cd_nm FROM co_code_mst WHERE lft_val  <![CDATA[<=]]>  (SELECT lft_val FROM co_code_mst WHERE cd = dd.ctgry_cd) AND rht_val >= (SELECT rht_val FROM co_code_mst WHERE cd = dd.ctgry_cd) AND dpth = 2) prnt_cd_nm
 				  , ctgry_cd

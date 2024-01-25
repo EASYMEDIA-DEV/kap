@@ -61,6 +61,9 @@ define(["ezCtrl"], function(ezCtrl) {
 
 	var setPtcptInfo = function(){
 
+
+		var authCd = $("#authCd").val();
+
 		var seqObj = {};
 		seqObj.edctnSeq = $("#edctnSeq").val();
 		seqObj.detailsKey = $("#edctnSeq").val();
@@ -69,6 +72,17 @@ define(["ezCtrl"], function(ezCtrl) {
 		seqObj.episdSeq = $("#episdSeq").val();
 
 		seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
+		//부품사 회원이 아닌경우
+		if(authCd == "CO"){
+			alert("교육신청은 부품사 회원만 신청 가능합니다.");
+			return false;
+		}else if(authCd == "CS"){
+			alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
+			return false;
+		}
+
+
 
 		//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
 		cmmCtrl.jsonAjax(function(data){
@@ -96,6 +110,9 @@ define(["ezCtrl"], function(ezCtrl) {
 						var rtnData = resultData.rtnData;
 						if(rtnData.regStat == "F"){
 							alert("이미 해당 회차에 신청한 회원입니다.");
+						}else if(rtnData.regStat == "R"){
+							alert("필수과목 수료후 신청 가능합니다.");
+
 						}else if(rtnData.regStat == "S"){
 							//신청 진행
 							location.href="/education/apply/step2?detailsKey="+seqObj.edctnSeq+"&episdSeq="+seqObj.episdSeq+"&episdYear="+seqObj.episdYear+"&episdOrd="+seqObj.episdOrd;

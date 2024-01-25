@@ -147,7 +147,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							var lctrSeq = $(this).data("lctrseq");
 
-							location.href="./onlineStep2?edctnSeq="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&lctrSeq="+lctrSeq;
+							location.href="./onlineStep2?edctnSeq="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&lctrSeq="+lctrSeq+"&ptcptSeq="+ptcptSeq;
 						}
 
 

@@ -2,10 +2,13 @@ package com.kap.front.controller.eb;
 
 import com.easymedia.error.ErrorCode;
 import com.easymedia.error.exception.BusinessException;
+import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.COCodeService;
+import com.kap.service.EBBEpisdService;
 import com.kap.service.EBEExamService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -14,6 +17,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,6 +53,8 @@ public class EBEExamController {
     private final EBEExamService eBEExamService;
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
+
+    public final EBBEpisdService eBBEpisdService;
     /**
      * 시험 상세
      */
@@ -125,6 +132,15 @@ public class EBEExamController {
             //시험 항목 조회
             EXGExamMstSearchDTO eXGExamMstSearchDTO = new EXGExamMstSearchDTO();
             eXGExamMstSearchDTO.setDetailsKey( String.valueOf(eXGExamEdctnPtcptMst.getExamSeq()) );
+
+            EBBEpisdDTO rtnDto = new EBBEpisdDTO();
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            rtnDto.setPtcptSeq(ptcptSeq);
+            rtnDto.setMemSeq(cOLoginUserDTO.getSeq());
+            //수료여부 체크
+            eBBEpisdService.setCmptnChk(rtnDto);
+
+
             modelMap.addAttribute("rtnData", eXGExamEdctnPtcptMst);
         }
         catch (Exception e)

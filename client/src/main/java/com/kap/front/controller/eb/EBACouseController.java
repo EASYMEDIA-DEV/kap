@@ -283,7 +283,7 @@ public class EBACouseController {
     /*
     학습대상 공통코드 분류
      */
-    private List<EmfMap> setEdTargetList(String arg){
+    private List<EmfMap> setEdTargetList(String arg) throws Exception{
 
         List<EmfMap> targetList = new ArrayList<>();
 
@@ -323,7 +323,11 @@ public class EBACouseController {
 
 
         }catch (Exception e){
-
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
         }
 
 
@@ -341,55 +345,112 @@ public class EBACouseController {
 
         try{
 
-            EBACouseDTO eBACouseDTO = new EBACouseDTO();
-
-            eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
-            //선택한 과정정보 호출
-            HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
-
-            EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
-
-            COPaginationUtil page = new COPaginationUtil();
-
-            page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
-            page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
-
-            page.setPageSize(eBBEpisdDTO.getPageRowSize());
-
-            eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
-            eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
-
-            HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
-
-
             //회원 기본정보 호출
             mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
             MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
 
-            if(applicantDto.getMemCd().equals("CP")) {
-                mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
-                MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
-                if (originList.getList().size() != 0) {
-                    modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+            if(applicantDto != null){
+
+                if(applicantDto.getMemCd().equals("CP")){
+
+                    EBACouseDTO eBACouseDTO = new EBACouseDTO();
+
+                    eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
+                    //선택한 과정정보 호출
+                    HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+
+                    EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+
+                    COPaginationUtil page = new COPaginationUtil();
+
+                    page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
+                    page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
+
+                    page.setPageSize(eBBEpisdDTO.getPageRowSize());
+
+                    eBBEpisdDTO.setFirstIndex( page.getFirstRecordIndex() );
+                    eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+                    HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+
+
+
+                    if(applicantDto.getMemCd().equals("CP")) {
+                        mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
+                        MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
+
+                        if (originList.getList().size() != 0) {
+                            modelMap.addAttribute("rtnInfo", originList.getList().get(0));
+                        }
+                        modelMap.addAttribute("applicantInfo", applicantDto);
+                        modelMap.addAttribute("sqInfoList", originList);
+                    }
+
+                    //회원 부품사정보 호출
+
+                    modelMap.addAttribute("rtnData", rtnDto);
+
+                    modelMap.addAttribute("episdDto", episdDto.get("rtnData"));
+
+
+                }else{
+
+                    modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                    modelMap.addAttribute("url", "/");
+                    vwUrl = "front/COBlank.error";
+
                 }
-                modelMap.addAttribute("applicantInfo", applicantDto);
-                modelMap.addAttribute("sqInfoList", originList);
+
+
+            }else{
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+
             }
 
-            //회원 부품사정보 호출
 
-            modelMap.addAttribute("rtnData", rtnDto);
 
-            modelMap.addAttribute("episdDto", episdDto.get("rtnData"));
 
 
         }catch (Exception e){
 
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
         }
 
 
         return vwUrl;
+    }
+
+    @Operation(summary = "교육차수 신청자 가능여부 체크", tags = "교육차수 신청자 등록", description = "")
+    @PostMapping(value="/apply/setPtcptInfoCheck")
+    public String setPtcptInfoCheck(EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
+    {
+
+        //교육차수 신청자를 등록한다. 등록할때 이미 회원이 있으면 취소
+        EBBPtcptDTO temoDto = new EBBPtcptDTO();
+        try {
+            temoDto = eBBEpisdService.setPtcptInfoCheck(eBBPtcptDTO);
+
+            modelMap.addAttribute("rtnData", temoDto);
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "jsonView";
     }
 
     @Operation(summary = "교육차수 신청자 등록", tags = "교육차수 신청자 등록", description = "")

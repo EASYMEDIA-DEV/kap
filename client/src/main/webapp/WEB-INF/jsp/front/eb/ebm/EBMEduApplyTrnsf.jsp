@@ -104,40 +104,18 @@
                                     <div class="info-head">
                                         <p class="article-total-count f-body2">총 <span>1065</span>건</p>
                                         <div class="form-input srch-input">
-                                            <input type="text" placeholder="성명/아이디/핸드폰번호/이메일 입력"><!-- 2023-12-07 수정 -->
+                                            <input type="text" name="q" id="q" placeholder="성명/아이디/핸드폰번호/이메일 입력"><!-- 2023-12-07 수정 -->
                                             <div class="input-btn-wrap">
                                                 <button class="delete-btn" title="지우기" type="button"></button>
-                                                <button class="srch-btn" title="검색"></button>
+                                                <button id="searchBtn" class="srch-btn" title="검색" type="button"></button>
                                             </div>
                                         </div>
                                     </div>
 
-                                    <div class="table-sec">
-                                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                            <table class="basic-table w864"><!-- mobile에서 기본 width 130%, 값 지정 필요할 경우 .w-가로값 클래스 추가  -->
-                                                <caption>회원목록</caption>
-                                                <colgroup>
-                                                    <col style="width: 84rem;">
-                                                    <col style="width: 180rem;">
-                                                    <col style="width: 324rem;">
-                                                    <col style="width: 180rem;">
-                                                    <col style="width: 324rem;">
-                                                </colgroup>
-                                                <thead>
-                                                <tr>
-                                                    <th></th>
-                                                    <th>성명</th>
-                                                    <th>아이디</th>
-                                                    <th>핸드폰번호</th>
-                                                    <th>이메일</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody id="listContainer">
+                                    <div class="table-sec" id="listContainer">
 
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
+
                                     <div class="btn-wrap add-load align-center">
                                         <a class="btn-solid small black-line pageSet" href="javascript:"><span>더보기</span><span class="item-count">(9/40)</span></a>
                                     </div>
@@ -164,7 +142,7 @@
                                                             <div class="for-status-chk"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                                                 <div class="form-group">
                                                                     <div class="form-input">
-                                                                        <input type="text" name="gpcId" id="gpcId" placeholder="GPC 아이디 입력" required="">
+                                                                        <input type="text" class="notRequired" name="gpcId" id="gpcId" placeholder="GPC 아이디 입력" title="gpcId">
                                                                     </div>
                                                                     <div class="btn-wrap">
                                                                         <button class="btn-solid small gray-bg gpcCheck" type="button"><span>인증</span></button>

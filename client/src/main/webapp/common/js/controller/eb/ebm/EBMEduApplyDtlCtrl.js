@@ -36,6 +36,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			//CALLBACK 처리
 			ctrl.obj.find("#listLctrContainer").html(respObj);
 
+
 			//전체 갯수
 			var totCnt = ctrl.obj.find("#listLctrContainer").find("#totalCount").val();
 			//총 건수
@@ -120,14 +121,47 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
+			cmptnPop :{
+
+				event : {
+					click: function () {
+
+						// method 1 (새 윈도우 창 열어서 프린트 후 닫기)
+						var popUrl = "/my-page/edu-apply/cmPtm?detailsKey=28&episdYear=2024&episdOrd=4&ptcptSeq=137";
+						var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
+						var myWindow = window.open(popUrl, popOption);
+						myWindow.document.close();
+						myWindow.focus();
+
+						myWindow.onafterprint = function () { //프린터 출력 후 이벤트
+							myWindow.close();
+						}
+
+						myWindow.print();
+
+					}
+				}
+
+
+
+				/*cmmCtrl.frmAjax(function(respObj) {
+
+					//respObj
+
+
+				}, "/mngwserc/wb/wbfb/getEplisds", $formObj, "post", "json")*/
+
+			},
+
 			transfer : {
 				event : {
 					click : function(){
 						var edctnSeq = $("#edctnSeq").val();
 						var episdYear = $("#episdYear").val();
 						var episdOrd = $("#episdOrd").val();
+						var ptcptSeq = $("#ptcptSeq").val();
 
-						location.href="./transfer?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						location.href="./transfer?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 					}
 				}
 			},
@@ -184,6 +218,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			examStart : {
+				event: {
+					click: function () {
+						location.href="/my-page/education/exam?ptcptSeq="+$("#ptcptSeq").val()+"&memSeq="+$("#memSeq").val();
+
+					}
+				}
+			},
 
 			srvStart : {
 				event : {
@@ -191,13 +233,13 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 						//미참여라서 설문참여 진행
-						if(1 == 1){
+						if($("#srvYn").val() == "N"){
 							var edctnSeq = $(this).data("edctnseq");
 							var episdYear = $(this).data("episdyear");
 							var episdOrd = $(this).data("episdord");
 							var srvSeq = $(this).data("srvseq");
 
-							location.href="./srvStep1?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&srvSeq="+srvSeq;
+							location.href="./srvStep1?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&srvSeq="+srvSeq+"&ptcptSeq="+$("#ptcptSeq").val();
 
 						}else{
 							alert("이미 설문에 참여 하였습니다.");
@@ -256,7 +298,7 @@ define(["ezCtrl"], function(ezCtrl) {
 						var episdOrd = $("#episdOrd").val();
 						var episdYear = $("#episdYear").val();
 
-						location.href="./onlineStep1?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						location.href="./onlineStep1?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+$("#ptcptSeq").val();
 
 					}
 				}

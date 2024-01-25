@@ -17,6 +17,8 @@
         <input type="hidden" id="episdYear" name="episdYear" value="${ rtnData.episdYear }" />
         <input type="hidden" id="ptcptSeq" name="ptcptSeq" value="${ rtnData.ptcptSeq }" />
 
+        <input type="hidden" id="srvYn" name="srvYn" value="${rtnData.srvYn}" />
+
 
 
 
@@ -98,7 +100,7 @@
                                                             <div class="property-list education"><!-- education: 교육상태 -->
                                                                 <p class="txt">
                                                                     <c:choose>
-                                                                        <c:when test="${list.trnsfYn eq 'N'}">
+                                                                        <c:when test="${rtnData.trnsfYn eq 'N'}">
                                                                             <span>${rtnData.eduStat}</span>
                                                                         </c:when>
                                                                         <c:otherwise>
@@ -199,12 +201,14 @@
                                     <div class="btn-sec">
                                         <div class="btn-wrap align-right">
                                             <div class="btn-set">
+
+
                                                 <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.cmptnYn eq 'Y'}">
-                                                    <button class="btn-solid small gray-bg icon btn-print" type="button" onclick="printFn()"><span>수료증 출력</span></button>
+                                                    <button class="btn-solid small gray-bg icon btn-print cmptnPop" type="button" <%--onclick="printFn()"--%>><span>수료증 출력</span></button>
                                                 </c:if>
 
-                                                <c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
-                                                <%--<c:set var="accsEndDt" value="2024.01.21"/>--%>
+                                                <%--<c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>--%>
+                                                <c:set var="accsEndDt" value="2024.01.21"/>
                                                 <c:set var="edctnStatDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
                                                 <%--<c:set var="edctnStatDt" value="2024.01.24"/>--%>
 
@@ -215,7 +219,7 @@
 
                                                 <fmt:formatDate pattern="yyyy.MM.dd" value="${nowDate}" var="nowDate" />
 
-                                                <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.sttsCd eq 'EDU_STTS_CD01' && accsEndDt lt nowDate && nowDate lt edctnStatDt}">
+                                                <c:if test="${rtnData.trnsfYn eq 'N' && (rtnData.sttsCd eq 'EDU_STTS_CD01' || rtnData.sttsCd eq 'EDU_STTS_CD04') && accsEndDt lt nowDate && nowDate lt edctnStatDt}">
                                                     <button class="btn-solid small gray-bg icon transfer" type="button"><span>교육양도</span></button>
                                                 </c:if>
 
@@ -230,7 +234,7 @@
                                                                 // 현재 날짜와 시간 가져오기
                                                                 Date currentDate = new Date();
                                                                 EBBEpisdDTO  eBBEpisdDTO= (EBBEpisdDTO)request.getAttribute("rtnData");
-                                                                String dateString = eBBEpisdDTO.getEdctnStrtDtm();//"2024-01-16 16:25:00";
+                                                                String dateString = "2024-01-16 16:25:00";//eBBEpisdDTO.getEdctnStrtDtm();//
                                                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                                 Date convertedDate = sdf.parse(dateString);
 
@@ -249,7 +253,7 @@
 
 
                                                             <c:choose>
-                                                                <c:when test="${rtnData.trnsfYn eq 'N' && edctnStrtDtm.before(currentDate)}">
+                                                                <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && edctnStrtDtm.before(currentDate)}">
                                                                     <button class="btn-solid small gray-bg icon taking onlineStep" type="button" data-lctrSeq="${list.lctrSeq}"><span>수강하기</span></button>
                                                                 </c:when>
                                                                 <c:otherwise>
@@ -258,7 +262,7 @@
                                                             </c:choose>
 
                                                         </c:when>
-                                                        <c:when test="${rtnData.trnsfYn eq 'N' && rtnData.eduStat eq '교육중'}">
+                                                        <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && rtnData.eduStat eq '교육중'}">
                                                             <button class="btn-solid small gray-bg icon taking" type="button"><span>수강하기</span></button>
                                                         </c:when>
 
@@ -316,12 +320,12 @@
                                                         <c:set var="edctnStrtDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                         <c:set var="edctnEndDt" value="${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
 
-                                                        <c:if test="${rtnData.trnsfYn eq 'N' && edctnStrtDt le nowDate && nowDate le edctnEndDt}">
+                                                        <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && edctnStrtDt le nowDate && nowDate le edctnEndDt}">
                                                             <c:if test="${episdCheck eq 'Y' && nowAtndcYn eq 'N'}">
                                                                 <button class="btn-solid small gray-bg icon attendance atndcCheck" type="button"><span>출석하기</span></button>
                                                             </c:if>
 
-                                                            <c:if test="${rtnData.trnsfYn eq 'N' && nowAtndcYn eq 'Y' && nowLvgrmYn eq 'N'}">
+                                                            <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && nowAtndcYn eq 'Y' && nowLvgrmYn eq 'N' }">
                                                                 <button class="btn-solid small gray-bg icon checkout lvgrmCheck" type="button"><span>퇴실하기</span></button>
                                                             </c:if>
 
@@ -330,30 +334,6 @@
                                                     </c:when>
 
                                                 </c:choose>
-
-                                                <%--<%
-
-
-                                                    String examStrtString = eBBEpisdDTO.getExamStrtDtm();//"2024-01-15 16:25:00";
-                                                    String examEndString = eBBEpisdDTO.getExamEndDtm();//"2024-01-15 16:25:00";
-                                                    SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd");
-
-                                                    Date convertedExam1 = sdf.parse(examStrtString);
-                                                    Date convertedExam2 = sdf.parse(examEndString);
-
-                                                    // Calendar 객체를 사용하여 30분 전의 날짜 및 시간 계산
-
-                                                    cal.setTime(convertedExam1);
-                                                    Date examStat = cal.getTime();
-                                                    cal.setTime(convertedExam1);
-                                                    Date examEnd = cal.getTime();
-
-
-                                                    // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
-                                                    pageContext.setAttribute("currentDate", parsedDate);//현재 시간
-                                                    pageContext.setAttribute("examStat", examStat);//설문 시작시간
-                                                    pageContext.setAttribute("examEnd", examEnd);//설문 시작시간
-                                                %>--%>
 
                                                 <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate" />
 
@@ -369,17 +349,15 @@
                                                     </c:when>
                                                     <c:otherwise>
                                                         <c:choose>
-                                                            <c:when test="${rtnData.trnsfYn eq 'N' && examStatDt le nowDate && nowDate le examEndDt}">
+                                                            <c:when test="${rtnData.trnsfYn eq 'N' && not empty rtnData.examSeq && rtnData.otsdExamPtcptYn ne 'Y' && examStatDt le nowDate && nowDate le examEndDt}">
                                                                 <c:set var="examStatus" value="1"/>
                                                             </c:when>
                                                         </c:choose>
                                                     </c:otherwise>
                                                 </c:choose>
 
-
-
-                                                <c:if test="${examStatus eq '1'}">
-                                                    <button class="btn-solid small gray-bg icon evaluation" type="button"><span>평가하기</span></button>
+                                                <c:if test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty examPtcptSeq}">
+                                                    <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                 </c:if>
 
                                                 <c:choose>
@@ -410,7 +388,6 @@
                             cal.setTime(convertedDate2);
                             Date srvEnd = cal.getTime();
 
-
                             // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
                             pageContext.setAttribute("currentDate", parsedDate);//현재 시간
                             pageContext.setAttribute("srvStrt", srvStrt);//설문 시작시간
@@ -420,7 +397,7 @@
                         <c:choose>
                             <c:when test="${not empty rtnData.srvSeq}">
                                 <c:choose>
-                                    <c:when test="${rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
+                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
                                         <div class="cont-sec no-border scroll-motion">
                                             <div class="for-motion">
                                                 <div class="sec-tit-area">
@@ -722,61 +699,95 @@
                                 </div>
                             </div>
 
-                            <div class="cont-sec no-border scroll-motion">
-                                <div class="for-motion">
-                                    <div class="sec-tit-area">
-                                        <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
-                                    </div>
-                                    <div class="sec-con-area">
-                                        <div class="gray-bg-sec">
-                                            <div class="con-list-box-w">
-                                                <div class="con-list-box">
-                                                    <p class="f-head">교육 만족도 설문 조사</p>
-                                                    <div class="ul-txt-w info">
-                                                        <div class="ul-txt-list">
-                                                            <div class="ul-txt">
-                                                                <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
-                                                                <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">-</dd></dl>
+                            <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                <div class="cont-sec no-border scroll-motion">
+                                    <div class="for-motion">
+                                        <div class="sec-tit-area">
+                                            <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
+                                        </div>
+                                        <div class="sec-con-area">
+                                            <div class="gray-bg-sec">
+                                                <div class="con-list-box-w">
+                                                    <div class="con-list-box">
+                                                        <p class="f-head">교육 만족도 설문 조사</p>
+                                                        <div class="ul-txt-w info">
+                                                            <div class="ul-txt-list">
+                                                                <div class="ul-txt">
+                                                                    <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
+                                                                    <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.srvDtm ? '-' : kl:convertDate(rtnData.srvDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                <p class="txt f-body1">미참여</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                                <c:choose>
+                                                    <c:when test="${rtnData.srvYn eq 'Y'}">
+                                                        <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                            <p class="txt f-body1">참여완료</p>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                            <p class="txt f-body1">미참여</p>
+                                                        </div>
+                                                    </c:otherwise>
 
-                            <div class="cont-sec no-border scroll-motion">
-                                <div class="for-motion">
-                                    <div class="sec-tit-area">
-                                        <p class="f-title3">수료 평가 참여내역</p>
-                                    </div>
-                                    <div class="sec-con-area">
-                                        <div class="gray-bg-sec">
-                                            <div class="con-list-box-w">
-                                                <div class="con-list-box">
-                                                    <p class="f-head">평가</p>
-                                                    <div class="ul-txt-w info">
-                                                        <div class="ul-txt-list">
-                                                            <div class="ul-txt">
-                                                                <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl>
-                                                                <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">2023.01.01 10:30</dd></dl>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                <p class="txt f-body1">참여완료</p>
+                                                </c:choose>
+
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+
+                                <c:if test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                    <div class="cont-sec no-border scroll-motion">
+                                        <div class="for-motion">
+                                            <div class="sec-tit-area">
+                                                <p class="f-title3">수료 평가 참여내역</p>
+                                            </div>
+                                            <div class="sec-con-area">
+                                                <div class="gray-bg-sec">
+                                                    <div class="con-list-box-w">
+                                                        <div class="con-list-box">
+                                                            <p class="f-head">평가</p>
+                                                            <div class="ul-txt-w info">
+                                                                <div class="ul-txt-list">
+                                                                    <div class="ul-txt">
+                                                                        <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">${rtnData.examScore}점</dd></dl>
+                                                                        <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <c:choose>
+                                                        <c:when test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01' && not empty rtnData.examScore}">
+                                                            <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                                <p class="txt f-body1">참여완료</p>
+                                                            </div>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                                <p class="txt f-body1">미참여</p>
+                                                            </div>
+                                                        </c:otherwise>
+
+                                                    </c:choose>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </c:if>
+
+
+
+                            </c:if>
+
+
+
+
 
 
                         </c:if>
@@ -784,7 +795,7 @@
                     </div>
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap for-motion align-right">
-                            <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                            <a class="btn-solid small black-bg" href="/my-page/edu-apply/list"><span>목록</span></a>
                         </div>
                     </div>
                 </div>
