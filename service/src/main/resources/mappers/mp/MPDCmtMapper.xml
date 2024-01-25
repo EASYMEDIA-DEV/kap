@@ -10,7 +10,7 @@
             2023.11.10    양현우       최초생성
     -->
     <insert id="insertCmt" parameterType="MPAUserDto">
-        insert into co_mem_mst
+        insert into co_mem_mst /* MPDCmtMapper.insertCmt */
         ( mem_seq 				-- 회원순번
         , mem_cd  				-- 회원코드
         , id   					-- id
@@ -85,7 +85,7 @@
         2023.11.21   양현우       최초생성
     -->
     <update id="updateCmt" parameterType="MPAUserDto">
-           update co_mem_mst
+           update co_mem_mst  /* MPDCmtMapper.updateCmt */
             set wthdrw_yn = 'N'
                 <where>
                     <choose>
@@ -110,7 +110,7 @@
          2023.11.23    양현우       최초생성
      -->
     <select id="selectKenList" parameterType="MPDKenDto" resultType="MPDKenDto">
-        select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) as atndcCdNm -- 근태옵션
+        select (select cd_nm from co_code_mst where  cd=m1.atndc_cd ) as atndcCdNm  /* MPDCmtMapper.selectKenList */ -- 근태옵션
              , atndc_cd
              , guide_part_cmpn_1
              , guide_part_cmpn_2
@@ -132,6 +132,10 @@
         <if test="dd != null and dd != ''.toString() ">
             and dd = #{dd}
         </if>
+        <if test="detailsKey == null or detailsKey == ''.toString() ">
+            and m2.wthdrw_yn='Y'
+            and m2.cmssr_work_cd = 'MEM_CD04001'
+        </if>
             order by reg_dtm desc
         <if test="excelYn != 'Y'.toString() ">
             limit   #{firstIndex}, #{recordCountPerPage}
@@ -147,7 +151,7 @@
         2023.11.23    양현우       최초생성
     -->
     <select id="selectKenListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
-    select count(*)
+    select count(*)  /* MPDCmtMapper.selectKenListCnt */
         from co_cmssr_atndc_mst m1
          inner join co_mem_mst m2
           on m1.mem_seq = m2.mem_seq
@@ -160,6 +164,10 @@
         <if test="dd != null and dd != ''.toString() ">
             and dd = #{dd}
         </if>
+        <if test="detailsKey == null or detailsKey == ''.toString() ">
+            and m2.wthdrw_yn='Y'
+            and m2.cmssr_work_cd = 'MEM_CD04001'
+        </if>
     </select>
 
 
@@ -171,19 +179,21 @@
          2023.11.23    양현우       최초생성
     -->
     <select id="selectKenMonthList" parameterType="MPDKenDto" resultType="MPDKenDto">
-        SELECT m2.name
+        SELECT m2.name /* MPDCmtMapper.selectKenMonthList */
              , m2.mem_seq
              , GROUP_CONCAT(atndc_dt order by atndc_dt asc SEPARATOR ', ' ) AS monthDays
              , GROUP_CONCAT(atndc_cd order by atndc_dt asc SEPARATOR ', ' ) AS monthTypes
-        , GROUP_CONCAT((select cd_nm from co_code_mst where  cd=m1.atndc_cd ) order by atndc_dt asc SEPARATOR ', ' ) AS monthTypesNm
-             , (select count(*) from co_cmssr_atndc_mst where mem_seq = m1.mem_seq and atndc_cd not in('CMSSR_ ATTEND_002','CMSSR_ ATTEND_005') and year=#{year}) as total
+             , GROUP_CONCAT((select cd_nm from co_code_mst where  cd=m1.atndc_cd ) order by atndc_dt asc SEPARATOR ', ' ) AS monthTypesNm
+             , (select count(*) from co_cmssr_atndc_mst where mem_seq = m1.mem_seq and atndc_cd not in('CMSSR_ATTEND_002','CMSSR_ATTEND_005','CMSSR_ATTEND_006') and year=#{year}  and mnth <![CDATA[<=]]>#{mnth}) as total
          FROM co_cmssr_atndc_mst m1
          inner join co_mem_mst m2
           on m1.mem_seq = m2.mem_seq
            where year=#{year}
             and mnth=#{mnth}
-             and m2.wthdrw_yn=#{wthdrwYn}
+             and m2.wthdrw_yn='Y'
+             and m2.cmssr_work_cd = 'MEM_CD04001'
              GROUP BY m1.mem_seq
+              order by m2.name asc
         <if test="excelYn != 'Y'.toString() ">
         limit  #{firstIndex}, #{recordCountPerPage}
         </if>
@@ -198,14 +208,15 @@
         2023.11.23    양현우       최초생성
     -->
     <select id="selectKenMonthListCnt" parameterType="MPDKenDto" resultType="java.lang.Integer">
-        select count(*)
+        select count(*) /* MPDCmtMapper.selectKenMonthListCnt */
          from ( SELECT count(*)
                   FROM co_cmssr_atndc_mst m1
                    inner join co_mem_mst m2
                     on m1.mem_seq = m2.mem_seq
                      where year=#{year}
                       and mnth=#{mnth}
-                      and m2.wthdrw_yn=#{wthdrwYn}
+                       and m2.wthdrw_yn='Y'
+                       and m2.cmssr_work_cd = 'MEM_CD04001'
                        group by m1.mem_seq ) as a
     </select>
 
@@ -217,18 +228,23 @@
         2023.11.23    양현우       최초생성
     -->
     <select id="selectKenMonthCnt" parameterType="MPDKenDto" resultType="MPDKenDto">
-        select  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_001' and mem_seq=#{detailsKey}) as cnstg_cnt /* MPDCmtMapper.selectKenMonthCnt */
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_002' and mem_seq=#{detailsKey}) as atndn_cnt
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_003' and mem_seq=#{detailsKey}) as lecture_cnt
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_004' and mem_seq=#{detailsKey}) as cpcpty_dvlpm_cnt
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_005' and mem_seq=#{detailsKey}) as annual_cnt
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_006' and mem_seq=#{detailsKey}) as home_cnt
-             ,  (select count(*) from co_cmssr_atndc_mst where atndc_cd ='CMSSR_ATTEND_007' and mem_seq=#{detailsKey}) as etc_cnt
-        from co_cmssr_atndc_mst
+        select  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_001' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as cnstg_cnt /* MPDCmtMapper.selectKenMonthCnt */
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_002' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as atndn_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_003' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as lecture_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_004' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as cpcpty_dvlpm_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_005' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as annual_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_006' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as home_cnt
+             ,  (select count(*) from co_cmssr_atndc_mst m1 inner join co_mem_mst m2 on m1.mem_seq = m2.mem_seq where atndc_cd ='CMSSR_ATTEND_007' and m1.mem_seq=#{detailsKey} and m2.wthdrw_yn='Y'and m2.cmssr_work_cd = 'MEM_CD04001') as etc_cnt
+        from co_cmssr_atndc_mst m1
+        inner join co_mem_mst m2
+         on m1.mem_seq = m2.mem_seq
          where year=#{year}
           and mnth =#{mnth}
-          and mem_seq=#{detailsKey}
+          and m1.mem_seq=#{detailsKey}
+           and m2.wthdrw_yn='Y'
+           and m2.cmssr_work_cd = 'MEM_CD04001'
         group by mem_Seq
+         order by m2.name asc
     </select>
 
     <!--
@@ -276,10 +292,14 @@
              , etc_bsntrp
              , etc
         from co_cmssr_atndc_mst ccam
+         inner join co_mem_mst m2
+        ccam.mem_seq = m2.mem_seq
          where mem_seq=#{detailsKey}
           and year =#{year}
           and mnth=#{mnth}
           and dd=#{dd}
+           and m2.wthdrw_yn='Y'
+           and m2.cmssr_work_cd = 'MEM_CD04001'
     </select>
 
     <!--
