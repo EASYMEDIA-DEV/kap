@@ -71,7 +71,7 @@
 						<a class="quick-btn trend" href="javascript:"  onclick="openPopup('trendPopup', this)"><span class="txt">TREND</span></a>
 						<a class="quick-btn edu-schedule" href="javascript:eduSchedule(this);" ><span class="txt">교육일정</span></a>
 						<a class="quick-btn certificate" href="javascript:"><span class="txt">증명서</span></a>
-						<a class="quick-btn faq" href="javascript:"><span class="txt">FAQ</span></a>
+						<a class="quick-btn faq" href="/foundation/board/faq/list"><span class="txt">FAQ</span></a>
 						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
 					</div>
 				</div>
