@@ -396,7 +396,7 @@
                             </div>
                             <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm picEmail" name="picEmail" oninput="this.value = this.value.replace( /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣\s]/g, '').replace(/(\..*)\./g, '$1');" title="이메일" value="${picInfoLIst.picEmail}" placeholder="이메일 입력"/>
+                                <input type="text" class="form-control input-sm picEmail" name="picEmail" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" title="이메일" value="${picInfoLIst.picEmail}" placeholder="이메일 입력"/>
                             </div>
                         </div>
                 </fieldset>
@@ -434,7 +434,7 @@
                 </div>
                 <label class="col-sm-1 control-label">이메일<span class="star"> *</span></label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control input-sm picEmail" name="picEmail" title="이메일" placeholder="이메일 입력"/>
+                    <input type="text" class="form-control input-sm picEmail" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" name="picEmail" title="이메일" placeholder="이메일 입력"/>
                 </div>
             </div>
             </fieldset>
@@ -802,7 +802,14 @@
                     <label class="col-sm-1 control-label">관리자 메모</label>
                     <div class="col-sm-11">
                         <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
-                        <span style="float: right">저장 시간 <c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></span>
+                        <div class="pull-right">
+                            <div class="pull-right">
+                                <p class="form-control-static"><c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></p>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </fieldset>

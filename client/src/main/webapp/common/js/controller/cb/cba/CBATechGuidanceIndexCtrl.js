@@ -42,7 +42,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function(e){
                         if(e){
                             if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
-                                location.href="/login?rtnUrl=/consulting/tech/index/";
+                                location.href="/login?rtnUrl=/consulting/tech/content";
                             }
                         }
                     }
@@ -75,8 +75,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             contact : {
                 event : {
                     click : function(){
-                        var cmssrCbsnCd = $(".cmssrCbsnCd").text()
-                        location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;
+                        console.log();
+                       /* var cmssrCbsnCd = $(".cmssrCbsnCd").text()
+                        location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;*/
                     }
                 }
             }

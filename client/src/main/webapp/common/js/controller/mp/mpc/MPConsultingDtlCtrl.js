@@ -2,7 +2,7 @@ define(["ezCtrl"], function(ezCtrl) {
     "use strict";
     // set controller name
     var exports = {
-        controller : "controller/mp/mpc/MPConsultingListCtrl"
+        controller : "controller/mp/mpc/MPConsultingLDtlCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
@@ -11,13 +11,6 @@ define(["ezCtrl"], function(ezCtrl) {
     var page = (chilCnt/2); // 더보기 페이지
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var search = function(obj)
-    {
-        cmmCtrl.listFrmAjax(function(respObj) {
-            $('.trainings-list-w').empty();
-            $('.trainings-list-w').append(respObj);
-        }, "./listAjax", $formObj, "POST", "html");
-    };
 
     // set model
     ctrl.model = {
@@ -58,22 +51,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         }
                     }
                 }
-            },searchBtn : {
-                event : {
-                    click : function() {
-                        search($(this));
-                    }
-                }
-            },filterInit : {
-            event : {
-                click : function () {
-                    $('input[name=statusChk]').prop("checked",false);
-                    $('input[name=q]').val('');
-                    $('input[name=strtDt]').val('');
-                    $('input[name=endDt]').val('');
-                }
             }
-        }
         },
         immediately : function() {
             $(window).ready(function(){
@@ -83,7 +61,6 @@ define(["ezCtrl"], function(ezCtrl) {
                 for(var i=0; i<seqLength; i++){
                     arr[i] = $(".cnstgSeq").eq(i).val();
                     data.cnstgSeq =  $(".cnstgSeq").eq(i).val();
-                    data.cnstgCd =  $(".cnstgCd").eq(i).val();
                     cmmCtrl.jsonAjax(function(data){
                         var str = data[0].appctnTypeCd;
                         $("."+arr[i]+"appctnCd").text(str.slice(1));

@@ -46,7 +46,7 @@
                                     </div>
                                     <div class="right has-button">
                                         <div class="btn-wrap">
-                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}"><span>개선활동 추진계획서 다운로드</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -135,7 +135,7 @@
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
+                                    <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
