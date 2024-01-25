@@ -192,7 +192,7 @@
                                     </dl>
                                     <dl class="list-item">
                                         <dt class="f-body1">컨설팅 분야</dt>
-                                        <dd class="f-body2">
+                                        <dd class="f-body2 cmssrCnstgFldCntn">
                                             <p></p>
                                             <p></p>
                                         </dd>
@@ -204,7 +204,7 @@
                 </div>
                 <div class="bot-fix-btn-area">
                     <div class="btn-wrap align-right">
-                        <a class="btn-solid small black-bg" href="javascript:"><span>위원 문의</span></a>
+                        <a class="btn-solid small black-bg" href="javascript:" id="goQa"><span>위원 문의</span></a>
                     </div>
                 </div>
                 <div class="user-opt-area">

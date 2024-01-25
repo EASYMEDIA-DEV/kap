@@ -3,7 +3,7 @@ spring.config.activate.on-profile: local, dev
 app:
   #메일 설정
   mail:
-    senderMail: hagas@kapkore.org
+    senderMail: kapkorea@kapkorea.org
     senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea
@@ -15,7 +15,7 @@ spring.config.activate.on-profile: stg
 app:
   #메일 설정
   mail:
-    senderMail: hagas@kapkore.org
+    senderMail: kapkorea@kapkorea.org
     senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea
@@ -27,7 +27,7 @@ spring.config.activate.on-profile: prod
 app:
   #메일 설정
   mail:
-    senderMail: hagas@kapkore.org
+    senderMail: kapkorea@kapkorea.org
     senderHp: 0232712681
     sender_name: 자동차부품산업진흥재단
     username: kapkorea

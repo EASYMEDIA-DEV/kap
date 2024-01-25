@@ -65,30 +65,32 @@
                 <div class="cont-sec no-border scroll-motion">
                     <div class="for-motion">
                         <div class="sec-con-area">
-                            <div class="info-head">
-                                <p class="article-total-count f-body2">총 <span>${rtnData.totalCount}</span>건</p>
-                                <form class="form-horizontal" name="frmSearch" method="get" action="">
-                                    <!-- 현재 페이징 번호 -->
-                                    <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
-                                    <!-- 페이징 버튼 사이즈 -->
-<%--                                    <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />--%>
-                                    <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
-                                    <!-- CSRF KEY -->
-                                    <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                    <!-- 상세로 이동시 시퀀스 -->
-                                    <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-                                    <input type="hidden" id="memSeq" name="memSeq" value="" />
-                                    <input type="hidden" id="rsumeCd" name="rsumeCd" value="" />
+                            <form class="form-horizontal" name="frmSearch" method="get" action="">
+                                <div class="info-head">
+                                    <p class="article-total-count f-body2">총 <span>${rtnData.totalCount}</span>건</p>
+                                        <div class="form-input srch-input">
+                                        <!-- 현재 페이징 번호 -->
+                                        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+                                        <!-- 페이징 버튼 사이즈 -->
+    <%--                                    <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />--%>
+                                        <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+                                        <!-- CSRF KEY -->
+                                        <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                        <!-- 상세로 이동시 시퀀스 -->
+                                        <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+                                        <input type="hidden" id="memSeq" name="memSeq" value="" />
+                                        <input type="hidden" id="rsumeCd" name="rsumeCd" value="" />
 
-                                    <div class="form-input srch-input">
-                                        <input type="text" name="searchText" id="searchText" placeholder="검색어를 입력해 주세요." value="${rtnData.searchText}">
-                                        <div class="input-btn-wrap">
-                                            <button class="delete-btn" title="지우기" type="button"></button>
-                                            <button class="srch-btn" id="btnSearch" title="검색" type="button"></button>
+                                        <div class="form-input srch-input">
+                                            <input type="text" name="searchText" id="searchText" placeholder="검색어를 입력해 주세요." value="${rtnData.searchText}">
+                                            <div class="input-btn-wrap">
+                                                <button class="delete-btn" title="지우기" type="button"></button>
+                                                <button class="srch-btn" id="btnSearch" title="검색" type="button"></button>
+                                            </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                             <c:choose>
                                 <c:when test="${ not empty rtnData.list }">
                                     <div class="table-sec">

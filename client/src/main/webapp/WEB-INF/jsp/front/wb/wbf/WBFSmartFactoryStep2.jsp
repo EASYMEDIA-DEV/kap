@@ -222,6 +222,9 @@
                                                             />
                                                             <label class="btn-solid gray-bg btnFile" for="searchFile2">파일 찾기</label>
                                                         </div>
+                                                        <div class="btn-wrap btn-down-wrap">
+                                                            <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" title="양식 다운로드" download=""><span>양식 다운로드</span></a>
+                                                        </div>
                                                     </div>
                                                 </div>
 

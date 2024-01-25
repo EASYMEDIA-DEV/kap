@@ -12,7 +12,7 @@
                 <c:when test="${item.appctnSttsCdNm eq '사용자취소'}">
                     <c:set var="classType" value="end"/>
                 </c:when>
-                <c:when test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합'}">
+                <c:when test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
                     <c:set var="classType" value="arr"/>
                 </c:when>
             </c:choose>
@@ -32,7 +32,7 @@
                                     </span>
                                         </p>
                                     </div>
-                                    <p class="training-name f-title3 moveView">${item.year} ${item.episd}차 ${item.bsnNm}
+                                    <p class="training-name f-title3 moveView" data-bsn-cd="${item.bsnCd}" data-appctn-seq="${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}
                                     </p>
                                 </div>
                                 <div class="group">
@@ -40,7 +40,7 @@
                                     <div class="status-info-w">
                                         <p class="box-label bigger ${classType}"><span>${item.appctnSttsCdNm}</span></p>
                                     </div>
-                                    <c:if test="${not empty item.rtrnRsnCntn && item.appctnSttsCdNm ne '사용자취소'}">
+                                    <c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
                                         <div class="tooltip-wrap">
                                             <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                             <div class="tooltip-box">

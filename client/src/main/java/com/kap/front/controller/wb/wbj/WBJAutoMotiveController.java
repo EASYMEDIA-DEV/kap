@@ -81,6 +81,7 @@ public class WBJAutoMotiveController {
             modelMap.addAttribute("rtnData", wBJARoundListService.selectEpisdDtl(wBRoundMstSearchDTO));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBJARoundListService.getRoundDtl(wBRoundMstSearchDTO));
+            RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -152,7 +153,7 @@ public class WBJAutoMotiveController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBRoundMstSearchDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:./content";
+                vwUrl = "redirect:/";
             } else {
                 wBRoundMstSearchDTO.setStageOrd(1);
 
@@ -180,7 +181,7 @@ public class WBJAutoMotiveController {
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
                 modelMap.addAttribute("rtnRoundDtl", wBJARoundListService.getRoundDtl(wBRoundMstSearchDTO));
 
-
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -203,7 +204,7 @@ public class WBJAutoMotiveController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBJAcomDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 wBJAcomDTO.setBsnCd("BUSUNESS_TYPE10"); /* 자동차부품산업대상 코드 */
 
@@ -246,8 +247,9 @@ public class WBJAutoMotiveController {
         String vwUrl = "front/wb/wbj/WBJAutoMotiveComplete.front";
         try {
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -255,6 +257,8 @@ public class WBJAutoMotiveController {
 
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBJBAcomListService.selectRecent(wBJAcomSearchDTO));
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {

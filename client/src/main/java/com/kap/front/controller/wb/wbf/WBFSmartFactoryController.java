@@ -183,7 +183,7 @@ public class WBFSmartFactoryController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbRoundMstSearchDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:./content";
+                vwUrl = "redirect:/";
             } else {
                 /* 회차 정보 */
                 wbRoundMstSearchDTO.setBsnCd("BSN06");
@@ -199,6 +199,7 @@ public class WBFSmartFactoryController {
                 cdDtlList.add("BGN_REG_INF");
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -221,7 +222,7 @@ public class WBFSmartFactoryController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBFBRegisterDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 wBFBRegisterDTO.setBsnCd("BSN06");
                 modelMap.addAttribute("actCnt", wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request));
@@ -246,8 +247,9 @@ public class WBFSmartFactoryController {
         String vwUrl = "front/wb/wbf/WBFSmartFactoryComplete.front";
         try {
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:./content";
+                return "redirect:/";
             } else {
                 wBFBRegisterSearchDTO.setBsnCd("BSN06");
                 COUserDetailsDTO cOUserDetailsDTO = null;
@@ -258,6 +260,9 @@ public class WBFSmartFactoryController {
                 modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getApplyDtl(wBFBRegisterSearchDTO));
+
+                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
