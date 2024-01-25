@@ -25,32 +25,62 @@
         </td><!-- 교육신청일 -->
         <td class="text-center">${ptcptList.eduStat}</td><!-- 교육상태 -->
         <td class="text-center">
-            <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}">${ptcptList.eduAtndc}%</a>
+
+          <c:choose>
+            <c:when test="${ptcptList.eduStat ne '교육양도'}">
+              <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}">${ptcptList.eduAtndc}%</a>
+            </c:when>
+            <c:otherwise>
+              -
+            </c:otherwise>
+          </c:choose>
+
+
+
         </td><!-- 출석 -->
         <td class="text-center  form-inline">
-          <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
-          <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">
-            <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" />점
-            <%--<button type="button" class="btn btn-inverse btn-sm examScoreUpdate">
-              저장
-            </button>--%>
-          </c:if>
-          <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
-            <c:choose>
-                <c:when test="${ not empty ptcptList.examPtcptSeq }">
+
+          <c:choose>
+            <c:when test="${ptcptList.eduStat ne '교육양도'}">
+              <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
+              <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">
+                <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" />점
+                <%--<button type="button" class="btn btn-inverse btn-sm examScoreUpdate">
+                  저장
+                </button>--%>
+              </c:if>
+              <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
+                <c:choose>
+                  <c:when test="${ not empty ptcptList.examPtcptSeq }">
                     <a href="javascript:" class="btnExamPtcptSeq" data-exam-ptcpt-seq="${ptcptList.examPtcptSeq}" data-ptcpt-seq="${ptcptList.ptcptSeq}" data-mem-seq="${ptcptList.memSeq}">${kl:nvl(ptcptList.examScore, '0')}</a>
-                </c:when>
-                <c:otherwise>
-                  -
-                </c:otherwise>
-            </c:choose>
-          </c:if>
+                  </c:when>
+                  <c:otherwise>
+                    -
+                  </c:otherwise>
+                </c:choose>
+              </c:if>
+            </c:when>
+            <c:otherwise>
+              -
+            </c:otherwise>
+          </c:choose>
         </td>
         <td class="text-center form-inline">
-          <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
-            <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
-            <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
-          </select>
+
+          <c:choose>
+            <c:when test="${ptcptList.eduStat ne '교육양도'}">
+              <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
+                <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
+                <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
+              </select>
+            </c:when>
+            <c:otherwise>
+              -
+            </c:otherwise>
+
+          </c:choose>
+
+
           <%--<button type="button" class="btn btn-inverse btn-sm cmptnYnUpdate">
             저장
           </button>--%>

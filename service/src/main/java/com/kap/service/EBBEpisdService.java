@@ -133,6 +133,11 @@ public interface EBBEpisdService {
 
 
 	/**
+	 * 교육차수 신청자 등록 가능여부 체크
+	 */
+	public EBBPtcptDTO setPtcptInfoCheck(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
 	 * 교육차수 신청자 등록
 	 */
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
@@ -196,6 +201,13 @@ public interface EBBEpisdService {
 	 * 마이페이지 - 교육양도 진행
 	 */
 	public EBBPtcptDTO setTrnsf(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+	/**
+	 * 마이페이지 - 수료 체크로직
+	 */
+	public EBBEpisdDTO setCmptnChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 
 
 }

@@ -12,6 +12,9 @@
         <input type="hidden" id="episdYear" name="episdYear" value="" />
         <input type="hidden" id="episdOrd" name="episdOrd" value="" />
         <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnData.edctnSeq}" />
+        <input type="hidden" id="authCd" name="authCd" value="${loginMap.authCd}" />
+        <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
+
         <% pageContext.setAttribute("newLine", "\n"); %>
         <div class="cont-wrap">
             <!--

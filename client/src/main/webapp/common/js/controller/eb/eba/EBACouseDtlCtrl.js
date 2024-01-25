@@ -346,8 +346,80 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						var episdYear =$(this).closest(".list-item").data("episdyear");
 						var episdOrd = $(this).closest(".list-item").data("episdord");
+						var authCd = $("#authCd").val();
+						var seqObj = {};
+						seqObj.edctnSeq = edctnSeq
+						seqObj.detailsKey = edctnSeq
+						seqObj.episdYear = episdYear
+						seqObj.episdOrd = episdOrd
+						seqObj.episdSeq = $("#episdSeq").val();
 
-						location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
+						//부품사 회원이 아닌경우
+						if(authCd == "CO"){
+							alert("교육신청은 부품사 회원만 신청 가능합니다.");
+							return false;
+						}else if(authCd == "CS"){
+							alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
+							return false;
+						}
+
+						//위원인경우
+
+
+						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
+						cmmCtrl.jsonAjax(function(data){
+
+							if(data != "A"){
+								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
+								location.href="./detail?detailsKey="+$("#edctnSeq").val();
+							}
+
+							return false;
+
+						}, "/education/apply/EpisdChk", seqObj, "text")
+
+
+
+						//정원수 체크
+						cmmCtrl.jsonAjax(function(data){
+							if(data !=""){
+								var rtn = JSON.parse(data);
+								//정원여유
+								if(rtn.fxnumStta == "S"){
+									//alert("등록시작");
+
+									cmmCtrl.frmAjax(function(resultData){
+
+										var rtnData = resultData.rtnData;
+										debugger
+										if(rtnData.regStat == "F"){
+											alert("이미 해당 회차에 신청한 회원입니다.");
+											if(confirm("이미 신청한 교육입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다. \n마이페이지로 이동하시겠습니까?")){
+												location.href="/my-page/edu-apply/list";
+											}
+
+										}else if(rtnData.regStat == "R"){
+											alert("선수 이수과정 수료 후 신청 가능한 과정입니다.");
+
+										}else if(rtnData.regStat == "S"){
+											//신청 진행
+											location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+										}
+
+									}, "./setPtcptInfoCheck", $formObj, "post", "json");
+
+									//정원초과
+								}else{
+									alert("교육 가능한 인원이 초과되었습니다. ");
+									return false;
+								}
+							}
+
+						}, "/education/apply/fxnumChk", seqObj, "text")
+
+
 					}
 				}
 			},

@@ -256,7 +256,7 @@ public interface EBBEpisdMapper {
 	public int updateApplyCancel(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 	/**
-	 * 교육차수 상세를 조회한다.(설문유효성)
+	 * 마이페이지 - 온라인강의 수강
 	 */
 	public int setOnlinePtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
@@ -274,6 +274,31 @@ public interface EBBEpisdMapper {
 	 *  마이페이지 - 양도  이력 등록
 	 */
 	public int insertTrnsfLog(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+
+	/**
+	 *  교육 신청시 신청자의 교육과정연계 과정 수료여부 확인
+	 */
+	public EBBPtcptDTO selectRelCmptnInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
+	/**
+	 *  마이페이지 - 참여자의 수료가능여부 체크
+	 */
+	public EBBEpisdDTO selectPtcptCmptnChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 *  마이페이지 - 수료번호 추출
+	 */
+	public EBBEpisdDTO selectCmptnNo(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
+	/**
+	 *  마이페이지 - 수료진행
+	 */
+	public void updatePtcptCmptnInfo(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
 
 
 }

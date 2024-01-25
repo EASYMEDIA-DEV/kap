@@ -6,7 +6,7 @@
 
             <c:choose>
                 <c:when test="${list.eduGubun eq 'E'}">
-                    <div class="training-confirm episdDtl" data-episdseq="${list.episdSeq}" data-edctnseq="${list.edctnSeq}" data-episdyear="${list.episdYear}" data-episdord="${list.episdOrd}" >
+                    <div class="training-confirm episdDtl" data-episdseq="${list.episdSeq}" data-edctnseq="${list.edctnSeq}" data-episdyear="${list.episdYear}" data-episdord="${list.episdOrd}" data-ptcptSeq="${list.ptcptSeq}">
                         <div class="top-info">
                             <div class="training-view-page">
                                 <div class="training-list">
@@ -26,7 +26,13 @@
                                             <div class="status-info-w">
                                                 <c:choose>
                                                     <c:when test="${list.trnsfYn eq 'N'}">
-                                                        <p class="box-label bigger waiting"><span>${list.eduStat}</span></p><!-- 2023-12-18 라벨 값 변경 -->
+                                                        <p class="box-label bigger waiting"><span>
+                                                            <c:choose>
+                                                                <c:when test="${list.eduStat eq '신청대기'}">교육대기</c:when>
+                                                                <c:otherwise>${list.eduStat}</c:otherwise>
+                                                            </c:choose>
+
+                                                        </span></p><!-- 2023-12-18 라벨 값 변경 -->
                                                     </c:when>
                                                     <c:otherwise>
                                                         <p class="box-label bigger waiting"><span>교육양도</span></p><!-- 2023-12-18 라벨 값 변경 -->

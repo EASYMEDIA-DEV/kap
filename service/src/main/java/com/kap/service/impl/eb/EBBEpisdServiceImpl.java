@@ -69,6 +69,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	//교육장 서비스
 	private final EBFEduRoomService eBFEduRoomService;
 
+	//sq평가원 자격증
+	//public final EBDSqCertiReqService eBDSqCertiReqService;
+
+
 	//파일 서비스
 	private final COFileService cOFileService;
 	// DAO
@@ -364,8 +368,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			for(EBBPtcptDTO orgDto: ptcptList){
 				List<EBBPtcptDTO> tempList = new ArrayList();
+				System.out.println("@@orgDto.getPtcptSeq() = " +orgDto.getPtcptSeq());
 				for(EBBPtcptDTO atndcDto : ptcptAtndcList){
 					//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
+					System.out.println("@@@ atndcDto.getPtcptSeq() = " + atndcDto.getPtcptSeq());
 					if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
 						tempList.add(atndcDto);
 					}
@@ -373,7 +379,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				orgDto.setAtndcList(tempList);
 			}
 			dto.setPtcptList(ptcptList);
+
+
 		}
+
+
 
 		return dto;
 	}
@@ -658,6 +668,51 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		return tempDto;
 	}
 
+
+	/**
+	 * 교육차수 신청자 등록 가능여부 체크
+	 */
+	@Transactional
+	public EBBPtcptDTO setPtcptInfoCheck(EBBPtcptDTO eBBPtcptDTO) throws Exception
+	{
+		EBBPtcptDTO tempDto = new EBBPtcptDTO();
+
+		tempDto = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
+
+		//이미 등록된 회원
+		if(tempDto !=null){
+
+			eBBPtcptDTO.setRegStat("F");
+
+			//없어서 새로 추가함
+		}else{
+
+			//필수과정에 있는걸 수료 했는지 체크함
+			EBBPtcptDTO cmptnDto = eBBEpisdMapper.selectRelCmptnInfo(eBBPtcptDTO);
+
+			if(cmptnDto.getRelCnt()>0){
+				System.out.println("@@연계과정 있으므로 연계과정의 수료여부 체크함");
+
+				//연계과정 수료 했으므로 신청 진행
+				if("Y".equals(cmptnDto.getRelCmptnYn())){
+					eBBPtcptDTO.setRegStat("S");
+					//연계과정 미수료로 신청 불가
+				}else{
+					eBBPtcptDTO.setRegStat("R");
+				}
+
+			}else{
+				eBBPtcptDTO.setRegStat("S");
+				System.out.println("@@연계과정 없으므로 수료여부 체크없이 신청 진행");
+			}
+
+		}
+
+
+		return eBBPtcptDTO;
+
+	}
+
 	/**
 	 * 교육차수 신청자 등록
 	 */
@@ -675,6 +730,27 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//없어서 새로 추가함
 		}else{
+
+			//필수과정에 있는걸 수료 했는지 체크함
+			EBBPtcptDTO cmptnDto = eBBEpisdMapper.selectRelCmptnInfo(eBBPtcptDTO);
+
+			if(cmptnDto.getRelCnt()>0){
+				System.out.println("@@연계과정 있으므로 연계과정의 수료여부 체크함");
+
+				//연계과정 수료 했으므로 신청 진행
+				if("Y".equals(cmptnDto.getRelCmptnYn())){
+					eBBPtcptDTO.setRegStat("S");
+				//연계과정 미수료로 신청 불가
+				}else{
+					eBBPtcptDTO.setRegStat("R");
+				}
+
+
+			}else{
+				eBBPtcptDTO.setRegStat("S");
+				System.out.println("@@연계과정 없으므로 수료여부 체크없이 신청 진행");
+			}
+
 
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
@@ -703,10 +779,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
 			}
 
-
-
-
-			eBBPtcptDTO.setRegStat("S");
 		}
 
 
@@ -1734,12 +1806,15 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		page.setCurrentPageNo(mpaUserDto.getPageIndex());
 		page.setRecordCountPerPage(mpaUserDto.getListRowSize());
-
 		page.setPageSize(mpaUserDto.getPageRowSize());
 
-		mpaUserDto.setFirstIndex( page.getFirstRecordIndex() );
-		mpaUserDto.setRecordCountPerPage( page.getRecordCountPerPage() );
+
 		mpaUserDto.setTotalCount( eBBFrontEpisdMapper.selectApplyUserListCnt(mpaUserDto ));
+		mpaUserDto.setFirstIndex( 0 );
+		int recordCountPerPage = (mpaUserDto.getPageIndex() * mpaUserDto.getPageRowSize() >= mpaUserDto.getTotalCount()) ? mpaUserDto.getTotalCount() : mpaUserDto.getPageIndex() * mpaUserDto.getPageRowSize();
+		mpaUserDto.setRecordCountPerPage(recordCountPerPage);
+
+
 		List<MPAUserDto> mpaUserDtos = eBBFrontEpisdMapper.selectApplyUserList(mpaUserDto);
 		mpaUserDto.setList( mpaUserDtos );
 
@@ -1751,14 +1826,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 * 마이페이지 - 교육양도 진행
 	 */
 	public EBBPtcptDTO setTrnsf(EBBPtcptDTO eBBPtcptDTO) throws Exception {
-
-		System.out.println("@@@getPtcptSeq = " + eBBPtcptDTO.getPtcptSeq());
-		System.out.println("@@@getBfreMemSeq = " + eBBPtcptDTO.getBfreMemSeq());
-		System.out.println("@@@getAftrMemSeq = " + eBBPtcptDTO.getAftrMemSeq());
-		System.out.println("@@@getEdctnSeq = " + eBBPtcptDTO.getEdctnSeq());
-		System.out.println("@@@getEpisdOrd = " + eBBPtcptDTO.getEpisdOrd());
-		System.out.println("@@@getEpisdYear = " + eBBPtcptDTO.getEpisdYear());
-
 
 		EBBPtcptDTO tempDto = new EBBPtcptDTO();
 		//edctnSeq, episdYear, episdOrd, memSeq
@@ -1818,6 +1885,46 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		//텍스트 이미있음(실패):F, 성공:S, T: 해당차수에 양도이력 있음
 		return eBBPtcptDTO;
+	}
+
+
+	/**
+	 * 마이페이지 - 수료여부 체크
+	 */
+	public EBBEpisdDTO setCmptnChk(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+
+		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+		eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
+		eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+		EBBEpisdDTO cmptnDto = eBBEpisdMapper.selectPtcptCmptnChk(eBBEpisdDTO);
+
+		eBBEpisdDTO.setLcnsCnnctCd(cmptnDto.getLcnsCnnctCd());
+
+		//사용자의 수료가능여부를 체크한다. 자동화 여부가 Y일때만 - 이미 수료를 한 경우에는 수료처리 안한다.
+		if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn())   && "N".equals(cmptnDto.getCmptnYn())  ){
+
+
+			EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
+
+			eBBEpisdDTO.setCrtfctNo(cmptnNo.getCrtfctNo());
+			System.out.println("@@@ 수료완료 = " + cmptnNo.getCrtfctNo());
+			eBBEpisdMapper.updatePtcptCmptnInfo(eBBEpisdDTO);
+
+			if(!"LCNS_CNNCT01".equals(cmptnDto.getLcnsCnnctCd())){
+				System.out.println("@@@ SQ 갱신");
+				//eBDSqCertiReqService.updateCertiValid(cmptnDto.getEdctnSeq());
+			}
+		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "Y".equals(cmptnDto.getCmptnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn()) ){
+			System.out.println("@@이미 수료함");
+		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "N".equals(cmptnDto.getCmptnYn()) && "N".equals(cmptnDto.getCmptnAutoYn()) ){
+			System.out.println("@@수료 자동화 N이라서 관리자에서 해야됨");
+		}else{
+			System.out.println("@@수료 불가");
+		}
+
+		return eBBEpisdDTO;
+
 	}
 
 

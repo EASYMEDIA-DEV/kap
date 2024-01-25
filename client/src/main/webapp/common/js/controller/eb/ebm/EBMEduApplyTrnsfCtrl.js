@@ -30,8 +30,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//총 건수
 
 			if(totCnt <= 10 ){
-				$(".btn-wrap.add-load.align-center").remove();
+				$(".btn-wrap.add-load.align-center").hide();
 			}else{
+				$(".btn-wrap.add-load.align-center").show();
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
@@ -41,12 +42,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}else{
 					rtnPage = (tempPage * 10);
 				}
-				//debugger
-
 
 				if(rtnPage == totCnt){
-					$(".btn-wrap.add-load.align-center").remove();
+					$(".btn-wrap.add-load.align-center").hide();
 				}else{
+					$(".btn-wrap.add-load.align-center").show();
 					$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 				}
 
@@ -56,17 +56,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
-
-			var eduCnt = 0;
-			//신청한 과정중 학습중인 과정 갯수만 카운트
-			$(".training-confirm").find(".eduStat").each(function(){
-
-				var eduStat = $(this).text();
-				if(eduStat == "교육중") eduCnt++;
-
-			});
-
-			$(".user-tit").find(".userEduCnt").text(eduCnt+"개");
 
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
@@ -84,10 +73,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+
+			searchBtn : {
+				event : {
+					click : function() {
+						search(1);
+					}
+				}
+			},
+
+
 		},
 		classname : {
 
 
+			srchBtn : {
+				event : {
+					click : function() {
+						search(1);
+					}
+				}
+			},
+			//페이징 처리
+			pageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
+
+						var pageIndex = $formObj.find("input[name=pageIndex]").val();
+						search(++pageIndex);
+
+					}
+				}
+			},
 
 			memRadio : {
 				event: {
@@ -239,7 +257,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 									if(trnsfData.regStat == "S"){
 										alert("교육이 양도되었습니다.");
-										location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd;
+										location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd+"&ptcptSeq="+actForm.ptcptSeq;
 
 									}else if(trnsfData.regStat == "F"){
 										alert("이미 교육에 신청한 회원입니다.");
@@ -266,9 +284,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 		},
-		immediately : function() {
+		immediately : function(e) {
 
 			search(1);
+
+			$('#q').on('keydown', function(event) {
+				// 눌린 키가 Enter 키인지 확인
+				if (event.which === 13) {
+					// 다른 이벤트 중지
+					event.preventDefault();
+
+					search(1);
+					return false;
+				}
+			});
 
 			// 유효성 검사
 			$formObj.validation({

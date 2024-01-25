@@ -499,6 +499,7 @@ public class EBBEpisdController {
         try
         {
             //목록 상단 th에 뿌려줄 날짜 리스트를 구한다.
+            eBBEpisdDTO.setAtndcYn("Y");
             EBBPtcptDTO eBBPtcptDTO = eBBEpisdService.setAtndcList(eBBEpisdDTO);
 
             modelMap.addAttribute("rtnData", eBBPtcptDTO);

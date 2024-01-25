@@ -1,5 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("비정상 접근으로 메인보냄");
+            location.href="/";
 
+        }
+    }
+</script>
 <div id="wrap" data-controller="controller/eb/eba/EBACouseStepCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
@@ -17,7 +27,7 @@
         <input type="hidden" id="stduyMthdCd" name="stduyMthdCd" value="${episdDto.stduyMthdCd}" />
         <input type="hidden" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${loginMap.bsnmNo}" />
         <input type="hidden" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${episdDto.rcrmtMthdCd}" />
-
+        <input type="hidden" id="authCd" name="authCd" value="${loginMap.authCd}" />
 
         <input type="hidden" id="gpcYn" name="gpcYn" value="${episdDto.gpcYn}" />
 

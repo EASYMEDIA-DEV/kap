@@ -224,7 +224,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 								var rtn = JSON.parse(data);
 								//정원여유
 								if(rtn.fxnumStta == "S"){
-									//alert("등록시작");
 
 									cmmCtrl.frmAjax(function(resultData){
 
