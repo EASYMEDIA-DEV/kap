@@ -7,6 +7,7 @@ import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbd.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -19,6 +20,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -1299,6 +1301,20 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         }
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBDBSafetySearchDTO wBDBSafetySearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBDBSafetyMapper.updAdmMemo(wBDBSafetySearchDTO);
 
         return respCnt;
     }

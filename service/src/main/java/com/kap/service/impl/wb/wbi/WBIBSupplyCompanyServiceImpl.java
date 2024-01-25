@@ -11,6 +11,7 @@ import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -736,6 +737,20 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         respCnt = wBIBSupplyCompanyMapper.getBsnmNoCnt(wBIBSupplyMstDTO);
 
         wBIBSupplyMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBIBSupplyDTO wBIBSupplyDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBIBSupplyCompanyMapper.updAdmMemo(wBIBSupplyDTO);
 
         return respCnt;
     }

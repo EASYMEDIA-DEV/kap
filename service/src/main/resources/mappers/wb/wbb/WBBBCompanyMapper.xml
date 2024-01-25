@@ -103,6 +103,7 @@
                MEM_SEQ,
                APPCTN_BSNM_NO,
                ADM_MEMO,
+               ADM_MEMO_MOD_DTM,
                REG_ID,
                REG_IP,
                REG_DTM,
@@ -652,7 +653,6 @@
         UPDATE /* WBBBCompanyMapper.updateApply */ CX_APPCTN_MST
         SET
             MEM_SEQ = #{memSeq},
-            ADM_MEMO = #{admMemo},
             MOD_ID = #{modId},
             MOD_IP = #{modIp},
             MOD_DTM = NOW()
@@ -907,6 +907,20 @@
           AND APPCTN_BSNM_NO = #{bsnmNo}
     </select>
 
+    <!--
+         쿼리명 : WBBBCompanyMapper.updAppctnMst
+         설  명 : 상생신청진행상세 수정
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  오병호     최초 생성
+    -->
+    <update id="updAdmMemo" parameterType="WBBACompanySearchDTO">
+        UPDATE cx_appctn_mst /*WBBBCompanyMapper.updAppctnMst*/
+        SET
+            adm_memo = #{admMemo}
+          ,adm_memo_mod_dtm = now()
+        WHERE appctn_seq = #{appctnSeq}
+    </update>
 </mapper>
 
 

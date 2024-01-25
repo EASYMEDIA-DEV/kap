@@ -8,6 +8,7 @@ import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 
 import java.util.List;
 
@@ -241,4 +242,9 @@ public interface WBEBCarbonCompanyMapper {
      */
     public int getSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception;
 
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception;
 }

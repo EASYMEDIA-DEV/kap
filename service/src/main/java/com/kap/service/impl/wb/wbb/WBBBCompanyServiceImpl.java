@@ -6,6 +6,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -74,10 +75,9 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
 
     /**
-     *   신청부품사 목록 List Get
+     * 신청부품사 목록 List Get
      */
-    public WBBACompanySearchDTO selectCompanyList(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception
-    {
+    public WBBACompanySearchDTO selectCompanyList(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(wbbaCompanySearchDTO.getPageIndex());
@@ -92,11 +92,12 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         wbbaCompanySearchDTO.setList(wbbbCompanyMapper.getRegisterCompanyList(wbbaCompanySearchDTO));
         wbbaCompanySearchDTO.setTotalCount(wbbbCompanyMapper.getRegisterCompanyCount(wbbaCompanySearchDTO));
 
-        return wbbaCompanySearchDTO                                                                                                                                       ;
+        return wbbaCompanySearchDTO;
     }
 
     /**
      * 진행상태 목록을 조회한다.
+     *
      * @return
      */
     public WBBAApplyMstDTO selectCompanyDtl(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception {
@@ -110,14 +111,14 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             List<WBBAApplyDtlDTO> wbbApplyDtlDTOList = wbbbCompanyMapper.selectApplyDtlList(wbbaCompanySearchDTO);
 
-            for(WBBAApplyDtlDTO dtlDTO : wbbApplyDtlDTOList) {
+            for (WBBAApplyDtlDTO dtlDTO : wbbApplyDtlDTOList) {
                 if (stpDtlDto.getStageOrd() == dtlDTO.getRsumeOrd()) {
                     stpDtlDto.setApplyDtl(dtlDTO);
                     List<WBBAApplyDtlDTO> wbbApplyOptnList = wbbbCompanyMapper.selectApplyOptnList(dtlDTO);
 
                     dtlDTO.setApplyOptnList(new ArrayList<WBBAApplyDtlDTO>());
                     for (WBBAApplyDtlDTO wbbApplyOptnDTO : wbbApplyOptnList) {
-                        if (dtlDTO.getRsumeSeq().equals(wbbApplyOptnDTO.getRsumeSeq()) &&  dtlDTO.getRsumeOrd().equals(wbbApplyOptnDTO.getRsumeOrd())) {
+                        if (dtlDTO.getRsumeSeq().equals(wbbApplyOptnDTO.getRsumeSeq()) && dtlDTO.getRsumeOrd().equals(wbbApplyOptnDTO.getRsumeOrd())) {
                             dtlDTO.getApplyOptnList().add(wbbApplyOptnDTO);
                         }
                     }
@@ -129,12 +130,12 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
             List<WBBAApplyDtlDTO> optnDTOList = wbbbCompanyMapper.selectOptnList(stpDtlDto.getStageSeq());
             stpDtlDto.setApplyTempOptnList(optnDTOList);
 
-            wbbApplyMstDTO.setStageOrd(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size()-1).getRsumeOrd());
-            wbbApplyMstDTO.setRsumeSttsNm(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size()-1).getRsumeSttsCd());
-            wbbApplyMstDTO.setMngSttsNm(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size()-1).getMngSttsNm());
+            wbbApplyMstDTO.setStageOrd(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size() - 1).getRsumeOrd());
+            wbbApplyMstDTO.setRsumeSttsNm(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size() - 1).getRsumeSttsCd());
+            wbbApplyMstDTO.setMngSttsNm(wbbApplyDtlDTOList.get(wbbApplyDtlDTOList.size() - 1).getMngSttsNm());
         }
 
-        wbbApplyMstDTO.setMaxStage(selectStepDtlList.get(selectStepDtlList.size()-1).getStageOrd());
+        wbbApplyMstDTO.setMaxStage(selectStepDtlList.get(selectStepDtlList.size() - 1).getStageOrd());
         wbbApplyMstDTO.setApplyList(selectStepDtlList);
 
         return wbbApplyMstDTO;
@@ -142,6 +143,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
     /**
      * 부품사 회원 정보를 조회한다.
+     *
      * @return
      */
     public WBBACompanyDTO selectCompanyUserDtl(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception {
@@ -152,21 +154,23 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         List<WBBACompanyDTO> sqList = wbbbCompanyMapper.selectSqList(wbbaCompanySearchDTO);
         wbbCompanyDTO.setSqInfoList(sqList);
         wbbCompanyDTO.setMemSeq(wbbaCompanySearchDTO.getMemSeq());
-        
+
         return wbbCompanyDTO;
     }
 
     /**
      * 진행상태 목록 조회을 조회한다.
+     *
      * @return
      */
     public List<WBBACompanySearchDTO> selectProgressList(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception {
 
         return wbbbCompanyMapper.selectProgressList(wbbaCompanySearchDTO);
     }
-    
+
     /**
      * 연도 상세 조회
+     *
      * @return
      */
     public List<WBBACompanySearchDTO> selectYearDtl(WBBACompanySearchDTO wbbaCompanySearchDTO) throws Exception {
@@ -218,7 +222,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 wbbbCompanyMapper.insertApplyDtl(wbbApplyDtlDTO);
 
                 //신청파일 넣기
-                for (int i = 0; i < wbbaApplyMstDTO.getFileList().size() ; i++) {
+                for (int i = 0; i < wbbaApplyMstDTO.getFileList().size(); i++) {
 
                     List<COFileDTO> fileList = new ArrayList();
                     fileList.add(wbbaApplyMstDTO.getFileList().get(i));
@@ -247,7 +251,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
                     int index = 1;
 
-                    for(int t=0; t<wbbaCompanyDTO.getSqInfoList().size();t++) {
+                    for (int t = 0; t < wbbaCompanyDTO.getSqInfoList().size(); t++) {
                         seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
 
                         wbbaCompanyDTO.setYear(wbbaCompanyDTO.getSqInfoList().get(t).getYear());
@@ -322,7 +326,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     wbbbCompanyMapper.deleteFileInfo(wbbApplyDtlDTO);
 
                     //신청파일 넣기
-                    for (int i = 0; i < wbbaApplyMstDTO.getFileList().size() ; i++) {
+                    for (int i = 0; i < wbbaApplyMstDTO.getFileList().size(); i++) {
                         List<COFileDTO> fileList = new ArrayList();
                         COFileDTO fileDto = new COFileDTO();
 
@@ -352,7 +356,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
                 if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                     //적합(PRO_TYPE04_1_6), 선정(PRO_TYPE04_1_8)의 경우 다음단계 생성
-                    if("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                    if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_7");
                     } else if ("PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_9");
@@ -362,7 +366,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     //다음 스텝 생성
                     if (wbbaApplyMstDTO.getMaxStage() > wbbApplyDtlDTO.getRsumeOrd()) {
                         wbbApplyDtlDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
-                        wbbApplyDtlDTO.setRsumeOrd(wbbApplyDtlDTO.getRsumeOrd()+1);
+                        wbbApplyDtlDTO.setRsumeOrd(wbbApplyDtlDTO.getRsumeOrd() + 1);
                         wbbApplyDtlDTO.setRsumeSttsCd(wbbaApplyMstDTO.getNextStageNm());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_1");
                         wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_1");
@@ -373,14 +377,14 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     }
 
                 } else if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())
-                || "PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                        || "PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                     //사용자취소(PRO_TYPE04_1_4), 부적합(PRO_TYPE04_1_5), 미선정(PRO_TYPE04_1_7) 의 경우 종료
-                    if("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                    if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_5");
                     } else if ("PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_6");
-                    } else if("PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                    } else if ("PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_8");
                     }
@@ -424,7 +428,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
                     int index = 1;
 
-                    for(int t=0; t<wbbaCompanyDTO.getSqInfoList().size();t++) {
+                    for (int t = 0; t < wbbaCompanyDTO.getSqInfoList().size(); t++) {
                         seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
 
 
@@ -472,11 +476,11 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         rtnCnt = wbbbCompanyMapper.deleteApplyMst(wbbaCompanySearchDTO);
 
         if (rtnCnt > 0) {
-            for (int i=0; i < wbbaCompanySearchDTO.getDelValueList().size(); i++) {
+            for (int i = 0; i < wbbaCompanySearchDTO.getDelValueList().size(); i++) {
                 wbbaCompanySearchDTO.setDetailsKey(wbbaCompanySearchDTO.getDelValueList().get(i));
                 List<WBBAApplyDtlDTO> deleteDtlList = wbbbCompanyMapper.selectApplyDtlList(wbbaCompanySearchDTO);
 
-                for (int j=0; j < deleteDtlList.size(); j++) {
+                for (int j = 0; j < deleteDtlList.size(); j++) {
                     wbbaCompanySearchDTO.setRsumeSeq(deleteDtlList.get(j).getRsumeSeq());
                     wbbbCompanyMapper.deleteOptnDtl(wbbaCompanySearchDTO);
                 }
@@ -633,7 +637,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         int maxOrd = 0;
         int length = 0;
 
-        for (int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             row = sheet.createRow(rowNum++);
 
             length = list.size();
@@ -671,7 +675,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             //사업장번호
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getBsnmNo().substring(0,3)+"-"+list.get(i).getBsnmNo().substring(3,5)+"-"+list.get(i).getBsnmNo().substring(5));
+            cell.setCellValue(list.get(i).getBsnmNo().substring(0, 3) + "-" + list.get(i).getBsnmNo().substring(3, 5) + "-" + list.get(i).getBsnmNo().substring(5));
             cell.setCellStyle(style_body);
 
             //구분
@@ -686,7 +690,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             //신청자(아이디)
             cell = row.createCell(9);
-            cell.setCellValue(list.get(i).getRegName()+"("+list.get(i).getId()+")");
+            cell.setCellValue(list.get(i).getRegName() + "(" + list.get(i).getId() + ")");
             cell.setCellStyle(style_body);
 
             //휴대폰번호
@@ -731,17 +735,17 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             //매출액
             cell = row.createCell(18);
-            cell.setCellValue(list.get(i).getSlsPmt()+"억("+list.get(i).getSlsYear()+"년)");
+            cell.setCellValue(list.get(i).getSlsPmt() + "억(" + list.get(i).getSlsYear() + "년)");
             cell.setCellStyle(style_body);
 
             //직원수
             cell = row.createCell(19);
-            cell.setCellValue(list.get(i).getMpleCnt()+"명");
+            cell.setCellValue(list.get(i).getMpleCnt() + "명");
             cell.setCellStyle(style_body);
 
             //주요상품
             cell = row.createCell(20);
-            cell.setCellValue(list.get(i).getMjrPrdct1()+"/"+list.get(i).getMjrPrdct2()+"/"+list.get(i).getMjrPrdct3());
+            cell.setCellValue(list.get(i).getMjrPrdct1() + "/" + list.get(i).getMjrPrdct2() + "/" + list.get(i).getMjrPrdct3());
             cell.setCellStyle(style_body);
 
         }
@@ -750,7 +754,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_신청부품사관리_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("KAP_신청부품사관리_", "UTF-8") + timeStamp + ".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());
@@ -816,7 +820,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         Map.Entry<String, MultipartFile> entry = itr.next();
                         file = entry.getValue();
 
-                        if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                        if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
                             atchFileCnt++;
                         }
                     }
@@ -824,7 +828,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     if (!files.isEmpty()) {
                         rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-                        for (int i = 0; i < rtnList.size() ; i++) {
+                        for (int i = 0; i < rtnList.size(); i++) {
 
                             List<COFileDTO> fileList = new ArrayList();
                             rtnList.get(i).setStatus("success");
@@ -893,7 +897,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 Map.Entry<String, MultipartFile> entry = itr.next();
                 file = entry.getValue();
 
-                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
                     atchFileCnt++;
                 }
             }
@@ -909,7 +913,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     wbbaCompanySearchDTO.setBsnCd(wbbaApplyDtlDTO.getBsnCd());
                     List<WBBAApplyDtlDTO> stepDtlList = wbbbCompanyMapper.selectStepDtlList(wbbaCompanySearchDTO);
 
-                    for (WBBAApplyDtlDTO dtlDTO :  stepDtlList) {
+                    for (WBBAApplyDtlDTO dtlDTO : stepDtlList) {
                         if (dtlDTO.getStageOrd() == wbbaApplyDtlDTO.getRsumeOrd()) {
                             stageSeq = dtlDTO.getStageSeq();
                         }
@@ -917,7 +921,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     optinList = wbbbCompanyMapper.selectOptnList(stageSeq);
                 }
 
-                for (int i = 0; i < rtnList.size() ; i++) {
+                for (int i = 0; i < rtnList.size(); i++) {
                     List<COFileDTO> fileList = new ArrayList();
 
                     if ("99".equals(rtnList.get(i).getRespCd())) {
@@ -949,7 +953,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 wbbaApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2");
                 wbbbCompanyMapper.updateApplyStatus(wbbaApplyDtlDTO);
             }
-            
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -966,6 +970,20 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         respCnt = wbbbCompanyMapper.getBsnmNoCnt(wBBAApplyMstDTO);
 
         wBBAApplyMstDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * Edit Page
+     * 관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBBACompanySearchDTO wBBACompanySearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wbbbCompanyMapper.updAdmMemo(wBBACompanySearchDTO);
 
         return respCnt;
     }

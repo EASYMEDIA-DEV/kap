@@ -4,6 +4,7 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -17,12 +18,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -402,5 +402,27 @@ public class WBIBSupplyCompanyController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBIBSupplyDTO updAdmMemo(@Valid @RequestBody WBIBSupplyDTO wBIBSupplyDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+
+            wBIBSupplyDTO.setRespCnt(wBIBSupplyCompanyService.updAdmMemo(wBIBSupplyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBIBSupplyDTO;
     }
 }

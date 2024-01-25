@@ -76,6 +76,9 @@ public class WBEBCarbonCompanyMstInsertDTO extends BaseDTO {
     @Schema(title = "관리자 메모", example = "")
     private String admMemo;
 
+    @Schema(title = "관리자 메모", example = "")
+    private String admMemoModDtm;
+
     @Schema(title = "현재 진행 정렬", example = "")
     private int maxRsumeOrd;
 
