@@ -9,16 +9,18 @@
                 <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
                     <c:forEach var="item" items="${rtnInfo.applyList}" varStatus="status">
                         <c:choose>
-                            <c:when test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_5' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_6'
-                                     || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_8' || item.applyDtl.appctnSttsCd eq '탈락'}">
+                            <c:when test="${item.applyDtl.appctnSttsNm eq '접수전'}">
+                                <c:set var="classType" value="waiting" />
+                            </c:when>
+                            <c:when test="${item.applyDtl.appctnSttsNm eq '접수완료' || item.applyDtl.appctnSttsNm eq '보완완료' || item.applyDtl.appctnSttsNm eq '적합' || item.applyDtl.appctnSttsNm eq '선정'}">
+                                <c:set var="classType" value="accepting" />
+                            </c:when>
+                            <c:when test="${item.applyDtl.appctnSttsNm eq '보완요청' || item.applyDtl.appctnSttsNm eq '부적합' || item.applyDtl.appctnSttsNm eq '미선정'}">
                                 <c:set var="classType" value="arr" />
                             </c:when>
-                            <c:when test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1'}">
-                                <c:set var="classType"/>
+                            <c:when test="${item.applyDtl.appctnSttsNm eq '사용자취소'}">
+                                <c:set var="classType" value="end" />
                             </c:when>
-                            <c:otherwise>
-                                <c:set var="classType" value="accepting" />
-                            </c:otherwise>
                         </c:choose>
                         <div class="list-item <c:if test="${rtnInfo.stageOrd eq item.applyDtl.rsumeOrd}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                             <form name="frmData${status.index}" id="frmData${status.index}">

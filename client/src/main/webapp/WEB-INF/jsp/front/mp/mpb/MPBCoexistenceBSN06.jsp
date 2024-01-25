@@ -22,21 +22,25 @@
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[0].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[0].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[0].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[0].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label ${classType}">
-                                <span>${rsumeTaskDtl[0].appctnSttsCdNm}</span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[0].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '접수완료' || rsumeTaskDtl[0].appctnSttsCdNm eq '보완완료' || rsumeTaskDtl[0].appctnSttsCdNm eq '선정'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[0].appctnSttsCdNm eq '미선정'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[0].appctnSttsCdNm eq '사용자취소'}">
+                                        <c:set var="classType" value="end" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[0].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
@@ -264,24 +268,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[1].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[1].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[1].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[1].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[1]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[1]}">${rsumeTaskDtl[1].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[1].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '접수완료' || rsumeTaskDtl[1].appctnSttsCdNm eq '보완완료' || rsumeTaskDtl[1].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[1].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[1].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[1].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
@@ -372,24 +374,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최초점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[2].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[2].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[2].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[2].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[2]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[2]}">${rsumeTaskDtl[2].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[2].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[2].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[2].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02004'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -397,24 +397,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">중간점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[3].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[3].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[3].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[3].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[3]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[3]}">${rsumeTaskDtl[3].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[3].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[3].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[3].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02005'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -422,24 +420,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">원가계산</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[4].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[4].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[4].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[4].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[4]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[4]}">${rsumeTaskDtl[4].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[4].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[4].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02006'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -447,24 +443,19 @@
                             <div class="txt-box">
                                 <p class="tit f-head">협약</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[5].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[5].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[5].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[5].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[5]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[5]}">${rsumeTaskDtl[5].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[5].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '협약완료'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[5].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02007'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -472,24 +463,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최종점검</p>
                             </div>
-                            <c:choose>
-                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '부적합' || rsumeTaskDtl[6].appctnSttsCdNm eq '미선정' || rsumeTaskDtl[6].appctnSttsCdNm eq '사용자취소'
-                                     || rsumeTaskDtl[6].appctnSttsCdNm eq '보완요청' || rsumeTaskDtl[6].appctnSttsCdNm eq '탈락'}">
-                                    <c:set var="classType" value="arr" />
-                                </c:when>
-                                <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '접수전'}">
-                                    <c:set var="classType"/>
-                                </c:when>
-                                <c:otherwise>
-                                    <c:set var="classType" value="accepting" />
-                                </c:otherwise>
-                            </c:choose>
-                            <p class="box-label bigger ${classType}">
-                                <span>
-                                    <c:if test="${empty rsumeTaskDtl[6]}">접수전</c:if>
-                                    <c:if test="${not empty rsumeTaskDtl[6]}">${rsumeTaskDtl[6].appctnSttsCdNm}</c:if>
-                                </span>
-                            </p>
+                            <c:if test="${not empty rsumeTaskDtl[6].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[6].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[6].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                 </div>

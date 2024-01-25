@@ -23,16 +23,18 @@
                             <p class="f-title3">${rtnBsnData.title}</p><!-- 2023-12-22 텍스트 수정 -->
                         </div>
                         <c:choose>
-                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '부적합' || rtnBsnData.appctnSttsCdNm eq '미선정' || rtnBsnData.appctnSttsCdNm eq '사용자취소'
-                                     || rtnBsnData.appctnSttsCdNm eq '보완요청' || rtnBsnData.appctnSttsCdNm eq '탈락'}">
-                                <c:set var="classType" value="arr" />
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전' || rtnBsnData.appctnSttsCdNm eq '대기' || rtnBsnData.appctnSttsCdNm eq '결과대기'}">
+                                <c:set var="classType" value="waiting"/>
                             </c:when>
-                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전'}">
-                                <c:set var="classType"/>
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수완료' || rtnBsnData.appctnSttsCdNm eq '적합' || rtnBsnData.appctnSttsCdNm eq '선정' }">
+                                <c:set var="classType" value="accepting"/>
                             </c:when>
-                            <c:otherwise>
-                                <c:set var="classType" value="accepting" />
-                            </c:otherwise>
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '사용자취소'}">
+                                <c:set var="classType" value="end"/>
+                            </c:when>
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '보완요청' || rtnBsnData.appctnSttsCdNm eq '부적합'}">
+                                <c:set var="classType" value="arr"/>
+                            </c:when>
                         </c:choose>
                         <div class="sec-con-area">
                             <div class="gray-bg-sec">
