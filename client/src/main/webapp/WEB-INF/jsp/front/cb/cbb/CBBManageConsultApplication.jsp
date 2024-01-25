@@ -1,5 +1,14 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            location.href = "/";
+        }
+    }
+</script>
 <div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultApplicationCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
@@ -99,7 +108,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -187,7 +196,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>

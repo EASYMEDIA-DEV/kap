@@ -89,6 +89,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String cbsnCd;
     @Schema(title = "컨설팅 코드")
     private String cnstgCd;
+    @Schema(title = "컨설팅 코드 명칭")
+    private String cnstgNm;
     @Schema(title = "기타명")
     private String etcNm;
     @Schema(title = "구분")
@@ -286,6 +288,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String typeNm;
     @Schema(title = "신청분야코드")
     private String appctnFldCd;
+    @Schema(title = "신청분야코드이름")
+    private String appctnFldNm;
 
     @Schema(title = "진행상태코드")
     private String rsumeSttsCd;

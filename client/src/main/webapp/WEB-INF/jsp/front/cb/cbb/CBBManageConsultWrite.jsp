@@ -1,4 +1,13 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            location.href = "/";
+        }
+    }
+</script>
 <c:set var="csList" value="${rtnDto.list}"/>
 <%
   String bsnmNo = request.getParameter("bsnmNo");
@@ -107,7 +116,7 @@
                                                             <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="비율(%) 입력">
+                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="비율(%) 입력" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -131,7 +140,7 @@
                                                             <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate">
+                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
