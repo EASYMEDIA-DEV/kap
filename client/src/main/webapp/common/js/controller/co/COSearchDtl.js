@@ -12,7 +12,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var menuType = $formObj.find("input[name=menuType]").val();
 
     // 목록 조회
-    var search = function (page){
+    var search = function (page, cnt, url){
         //data로 치환해주어야한다.
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
@@ -20,9 +20,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#letterTabContainer").html(respObj);
+            ctrl.obj.find("#tabContainer").html(respObj);
             //전체 갯수
-            var totCnt = $("#letterCnt").val();
+            var totCnt = cnt;
             //총 건수
             if(totCnt <= 10 ){
                 $(".btn-wrap.add-load.align-center").remove();
@@ -42,12 +42,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             $(".article-total-count.f-body2").find("span").text(totCnt);
 
-            $(".item-count").text();
-
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "letterTabContainer", "pagingContainer");
-        }, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html");
+            cmmCtrl.listPaging(totCnt, $formObj, "tabContainer", "pagingContainer");
+        }, url, $formObj, "GET", "html");
 
     }
 
@@ -61,8 +59,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         //페이징 이동
+                        if(menuType == "newsletter"){
+                            var cnt = $("#letterCnt").val();
+                            var url = "/foundation/board/newsletter/search/newsletter";
+                        }
+                        else if(menuType == "education"){
+                            var cnt = $("#episdCnt").val();
+                            var url = "/education/apply/select/education";
+                        }
                         var pageIndex = $formObj.find("input[name=pageIndex]").val();
-                        search(++pageIndex);
+                        search(++pageIndex,cnt,url);
 
                     }
                 }
@@ -82,7 +88,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         immediately : function() {
 
             cmmCtrl.setFormData($formObj);
-            search();
+            if(menuType == "newsletter"){
+                var cnt = $("#letterCnt").val();
+                var url = "/foundation/board/newsletter/search/newsletter";
+            }
+            else if(menuType == "education"){
+                var cnt = $("#episdCnt").val();
+                var url = "/education/apply/select/education";
+            }
+            search(1,cnt,url);
 
             $("#headerSrchFrm").find("input[name=q]").val( q );
             // 유효성 검사
@@ -113,11 +127,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             //통합검색 탭
             if(menuType !=null && menuType != "" && menuType != 'menu') {
                 //통합검색 뉴스레터 클릭
-                if(menuType == 'newsletter')
+                if(menuType == 'newsletter'){
+                    console.log("메뉴타입뉴스 : " + menuType);
                     cmmCtrl.listFrmAjax(function(respObj) {
-                        $("#letterTabContainer").html(respObj);
+                        $("#tabContainer").html(respObj);
                         //링크연결 여기서
                     }, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html", false, false);
+                }
+                else if(menuType == 'education'){
+                    console.log("메뉴타입에듀 : " + menuType);
+                    cmmCtrl.listFrmAjax(function(respObj) {
+                        $("#tabContainer").html(respObj);
+                        //링크연결 여기서
+                    }, "/education/apply/select/education", $formObj, "GET", "html", false, false);
+                }
+
             }
         }
     };

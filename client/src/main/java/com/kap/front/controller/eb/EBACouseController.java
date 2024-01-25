@@ -459,6 +459,33 @@ public class EBACouseController {
         return vwUrl;
     }
 
+    /**
+     * 통합검색 탭 교육/세미나 목록 조회
+     */
+    @RequestMapping(value = "/apply/select/{menuType:education}")
+    public String getCouseTabPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            eBBEpisdDTO.setApplyListYn("Y");
+//            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
+            modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
+            modelMap.addAttribute("episdCnt", eBBEpisdService.selectEpisdListCnt(eBBEpisdDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/eb/eba/EBACouseListAjax";
+    }
+
+
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/education")
