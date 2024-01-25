@@ -41,7 +41,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         var memId = rtnData['id'];
         var memName = rtnData['name'];
 
-        $('#mem').val(memId+'('+memName+')');
+        $('#mem').val(memName+'('+memId+')');
 
         $("#befeCtgryCd").val(rtnData['ctgryCd']);
 
