@@ -213,17 +213,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         cmssrType = "전문위원";
                                     }
 
+
                                     $(".memberDetailsPopup #cmssrType").text(cmssrType);
                                     $(".memberDetailsPopup #name").text(rtnData.name);
                                     $(".memberDetailsPopup #email").text(rtnData.email);
                                     $(".memberDetailsPopup #cmssrCbsnCdNm span").text(rtnData.cmssrCbsnCdNm);
-                                    $(".memberDetailsPopup #cmssrMjrCarerCntn").text(rtnData.cmssrMjrCarerCntn);
-                                    $(".memberDetailsPopup #cmssrCnstgFldCntn").text(rtnData.cmssrCnstgFldCntn);
+                                    if (rtnData.cmssrMjrCarerExpsYn == 'Y'){
+                                        $(".memberDetailsPopup #cmssrMjrCarerCntn").html(rtnData.cmssrMjrCarerCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                        $(".memberDetailsPopup #cmssrCnstgFldCntn").html(rtnData.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                    }else{
+                                        $(".memberDetailsPopup #cmssrMjrCarerCntn").text("-");
+                                        $(".memberDetailsPopup #cmssrCnstgFldCntn").text("-");
+                                    }
                                     // $(".memberDetailsPopup #goQa span").text("/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
                                     $(".memberDetailsPopup #goQa").attr("href", "/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
 
-                                    $(".memberDetailsPopup").css("display", "block");
-                                    $(".dimd").css("display", "block");
+                                    openPopup('memberDetailsPopup');
+                                    // $(".memberDetailsPopup").css("display", "block");
+                                    // $(".dimd").css("display", "block");
                                 }
                             },
                             error: function (xhr, ajaxSettings, thrownError) {

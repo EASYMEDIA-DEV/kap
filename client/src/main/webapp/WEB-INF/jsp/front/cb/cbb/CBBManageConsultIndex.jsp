@@ -93,13 +93,13 @@
                                     <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
                                         <a class="list-item popOpen" title="팝업 열기">
                                             <div class="bg">
-                                                <img src="/common/images/@img-foundation-group-member.png" alt="">
+                                                <img src="${csList.webPath}" alt="">
                                             </div>
                                             <input type="hidden" class="memSeq" value="${csList.memSeq}">
                                             <div class="txt-box">
                                                 <div class="names">
                                                     <p class="name f-title3">${csList.name}</p>
-                                                    <p class="position f-sub-head">전문위원</p>
+                                                    <p class="position f-sub-head">${csList.cmssrTypeCdNm}</p>
                                                 </div>
                                                 <div class="labels">
                                                     <p class="box-label cmssrCbsnCdNm"><span>${csList.cmssrCbsnCdNm}</span></p>

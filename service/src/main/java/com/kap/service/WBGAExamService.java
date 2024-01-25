@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
@@ -127,4 +128,10 @@ public interface WBGAExamService {
      * @return
      */
     public int updateInfo(WBGAApplyDtlDTO wbgaApplyDtlDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
 }

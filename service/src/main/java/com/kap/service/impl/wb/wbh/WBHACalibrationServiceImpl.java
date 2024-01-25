@@ -9,6 +9,7 @@ import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -1368,5 +1369,19 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
         }
 
         return rsultCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wbhaCalibrationMapper.updAdmMemo(wbhaCalibrationSearchDTO);
+
+        return respCnt;
     }
 }

@@ -3,6 +3,7 @@ package com.kap.service.dao.wb.wbg;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
@@ -291,4 +292,9 @@ public interface WBGAExamMapper {
      */
     public int updateMsEuipment(WBGAMsEuipmentDTO wbgaMsEuipmentDTO) throws Exception;
 
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception;
 }

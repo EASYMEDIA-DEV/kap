@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller.wb.wbh;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.service.COCodeService;
 import com.kap.service.WBHACalibrationService;
@@ -293,5 +294,26 @@ public class WBHACalibrationController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBHACalibrationSearchDTO updAdmMemo(@Valid @RequestBody WBHACalibrationSearchDTO wbhaCalibrationSearchDTO, HttpServletRequest request) throws Exception
+    {
+        try {
+            wbhaCalibrationSearchDTO.setRespCnt(wbhaCalibrationService.updAdmMemo(wbhaCalibrationSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wbhaCalibrationSearchDTO;
     }
 }

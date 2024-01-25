@@ -262,7 +262,7 @@
 
             <div class="clearfix">
                 <div class="pull-left">
-                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-param="${strPam}">목록</button>
+                    <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                 </div>
                 <div style="float:right">
                     <button type="submit" class="btn btn-sm btn-success dtl-tab" id="btnSave" >저장</button>

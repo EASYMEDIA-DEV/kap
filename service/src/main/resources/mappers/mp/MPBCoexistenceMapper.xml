@@ -9,7 +9,7 @@
         2024.01.08  김태훈     최초 생성
     -->
     <select id="selectApplyList" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
-        SELECT /*WBBBCompanyMapper.getRegisterCompanyList*/ *
+        SELECT /*MPBCoexistenceMapper.getRegisterCompanyList*/ *
         FROM (
             SELECT  INFO.*,
                (CASE WHEN appctn_stts_chng_dtm >= mng_stts_chng_dtm THEN appctn_stts_chng_dtm
@@ -19,8 +19,8 @@
                 ELSE NULL END ) AS chngDtm,
                 (CASE
                     WHEN bsn_end_dtm > NOW() AND bsn_cd NOT IN ('BSN07','BSN08','BSN09') THEN 1
-                    WHEN appctn_stts_cd = '사용자취소' THEN 5
-                    WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
+                    WHEN appctn_stts_cd_nm = '사용자취소' THEN 5
+                    WHEN appctn_stts_cd_nm IN ('미선정','부적합','탈락') THEN 4
                     WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
                 ELSE 3 END ) bsnStatus
             FROM ( SELECT
@@ -33,8 +33,8 @@
                         FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_Cd_Nm,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
                     ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
-                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
-                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd,
+                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd_nm,
+                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd_nm,
                     ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
                     ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
                     ( SELECT rtrn_rsn_cntn FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rtrn_rsn_cntn,
@@ -82,7 +82,7 @@
         2024.01.08  김태훈     최초 생성
     -->
     <select id="selectApplyCount" parameterType="mpbBsnSearchDTO" resultType="java.lang.Integer">
-        SELECT /*WBBBCompanyMapper.selectApplyCount*/ count(*)
+        SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
         FROM (
                 SELECT  INFO.*,
                      ( CASE

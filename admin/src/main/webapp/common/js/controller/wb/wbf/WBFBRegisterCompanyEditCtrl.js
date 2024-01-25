@@ -302,13 +302,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             btnUpdAdmMemo : {
                 event : {
                     click : function() {
-                        if($('#offerBsnmNo').val() != '') {
-                            var wBFBRegisterDTO = {}
+                        let appctnSeq = $basicData.find('input[type=hidden][name=appctnSeq]').val();
+                        if(appctnSeq != '') {
+                            let wBFBRegisterDTO = {}
                             wBFBRegisterDTO.admMemo = $('#admMemo').val();
+                            wBFBRegisterDTO.appctnSeq = appctnSeq
 
                             cmmCtrl.jsonAjax(function(respObj) {
                                 var rtnData = JSON.parse(respObj);
-                                location.replace("./list");
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
                             }, "/mngwserc/wb/wbfb/updAdmMemo", wBFBRegisterDTO, "text")
                         }
                     }

@@ -112,7 +112,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -308,7 +308,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -318,7 +318,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>취소</span></a>
+                        <a class="btn-solid small gray-bg" href="./content"><span>취소</span></a>
                     </div>
                     <div class="btn-set">
                         <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episd}"><span>다음</span></a>

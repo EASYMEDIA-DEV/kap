@@ -2,6 +2,7 @@ package com.kap.service.dao.wb.wbb;
 
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -199,5 +200,11 @@ public interface WBBBCompanyMapper {
      * 사업자번호 매핑 여부 확인
      */
     public int getBsnmNoCnt(WBBAApplyMstDTO wBBAApplyMstDTO) throws Exception;
+
+    /**
+     *  Edit Page
+     *  등록 부품사 수정 - 관리자 메모 수정
+     */
+    public int updAdmMemo(WBBACompanySearchDTO wBBACompanySearchDTO) throws Exception;
 
 }

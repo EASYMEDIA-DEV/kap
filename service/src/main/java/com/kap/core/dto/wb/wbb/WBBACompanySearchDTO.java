@@ -107,6 +107,8 @@ public class WBBACompanySearchDTO extends BaseDTO {
     private String mngSttsChngDtm;
     @Schema(title = "관리자메모", example = "")
     private String admMemo;
+    @Schema(title = "관리자메모 수정시간", example = "")
+    private String admMemoModDtm;
     @Schema(title = "수정ID", example = "")
     private String modId;
     @Schema(title = "수정일시", example = "yyyy-MM-dd")

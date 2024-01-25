@@ -93,7 +93,7 @@
                                             <div class="txt-box">
                                                 <div class="names">
                                                     <p class="name f-title3">${csList.name}</p>
-                                                    <p class="position f-sub-head">전문위원</p>
+                                                    <p class="position f-sub-head">${csList.cmssrTypeCdNm}</p>
                                                 </div>
                                                 <div class="labels">
                                                     <p class="box-label cmssrCbsnCdNm"><span>${csList.cmssrCbsnCdNm}</span></p>

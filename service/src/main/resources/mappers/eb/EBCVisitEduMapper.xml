@@ -1319,8 +1319,8 @@
 					</when>
 					<when test="f == 6">
 						AND (
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						A.MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0)
 						)
 					</when>
 					<otherwise>
@@ -1330,8 +1330,8 @@
 						B.name LIKE CONCAT('%', #{q}, '%') OR
 						B.hp_no LIKE CONCAT('%', #{q}, '%') OR
 						B.email LIKE CONCAT('%', #{q}, '%') OR
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						A.MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0)
 						)
 					</otherwise>
 				</choose>

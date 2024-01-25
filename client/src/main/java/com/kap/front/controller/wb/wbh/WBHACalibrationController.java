@@ -116,7 +116,7 @@ public class WBHACalibrationController {
                 cdDtlList.add("MEM_CD"); // 신청 진행상태
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
-                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().setAttribute("step1Auth", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -141,7 +141,7 @@ public class WBHACalibrationController {
                 vwUrl = "redirect:./content";
             } else {
                 modelMap.addAttribute("rtnData", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
-                RequestContextHolder.getRequestAttributes().setAttribute("step12uth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {

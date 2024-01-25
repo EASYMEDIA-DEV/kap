@@ -48,16 +48,25 @@
                             <div class="txt-box">
                                 <p class="tit f-head">신청</p>
                             </div>
-                            <p class="box-label bigger"><span>
-                            <c:choose>
-                                <c:when test="${empty rtnDtl[0]}">
-                                    접수전
-                                </c:when>
-                                <c:otherwise>
-                                    ${rtnDtl[0].appctnSttsNm}
-                                </c:otherwise>
-                            </c:choose>
-                            </span></p>
+                            <c:if test="${not empty rtnDtl[0].appctnSttsNm}">
+                                <c:choose>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '접수완료' || rtnDtl[0].appctnSttsNm eq '보완완료' || rtnDtl[0].appctnSttsNm eq '선정'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '보완요청' || rtnDtl[0].appctnSttsNm eq '미선정'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[0].appctnSttsNm eq '사용자취소'}">
+                                        <c:set var="classType" value="end" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[0].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[0].rtrnRsnCntn }">
@@ -175,16 +184,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">사업계획</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[1].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[1]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[1].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '접수완료' || rtnDtl[1].appctnSttsNm eq '보완완료' || rtnDtl[1].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[1].appctnSttsNm eq '보완요청' || rtnDtl[1].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                    ${rtnDtl[1].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[1].rtrnRsnCntn }">
@@ -276,16 +291,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최초점검</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[2].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[2]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[2].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[2].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[2].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
 
@@ -312,16 +333,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">완료보고</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[3].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[3]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '접수전'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[3].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '접수완료' || rtnDtl[3].appctnSttsNm eq '보완완료' || rtnDtl[3].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[3].appctnSttsNm eq '보완요청' || rtnDtl[3].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[3].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <c:if test="${not empty rtnDtl[3].rtrnRsnCntn }">
@@ -376,16 +403,22 @@
                             <div class="txt-box">
                                 <p class="tit f-head">최종점검</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+                            <c:if test="${not empty rtnDtl[4].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[4]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[4].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[4].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[4].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
 
@@ -394,16 +427,23 @@
                             <div class="txt-box">
                                 <p class="tit f-head">검수보고</p>
                             </div>
-                            <p class="box-label bigger bigger"><span>
+
+                            <c:if test="${not empty rtnDtl[5].appctnSttsNm}">
                                 <c:choose>
-                                    <c:when test="${empty rtnDtl[5]}">
-                                        접수전
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:otherwise>
-                                        ${rtnDtl[5].appctnSttsNm}
-                                    </c:otherwise>
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
                                 </c:choose>
-                            </span></p>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rtnDtl[5].appctnSttsNm}
+                                </span></p>
+                            </c:if>
                         </a>
                     </div>
                 </div>

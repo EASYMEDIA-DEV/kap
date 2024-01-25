@@ -12,7 +12,7 @@
                 <td class="text-center">${ kl:emptyHypen(list.wdcrmCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.seoryuCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(list.firstCdNm)}</td>
-                <td class="text-center">${ kl:emptyHypen(list.endCd)}</td>
+                <td class="text-center">${ kl:emptyHypen(list.endCdNm)}</td>
                 <td class="text-center">${ kl:emptyHypen(kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
             </tr>
         </c:forEach>

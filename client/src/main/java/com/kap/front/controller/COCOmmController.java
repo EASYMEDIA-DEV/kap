@@ -151,6 +151,8 @@ public class COCOmmController {
         modelMap.put("menuType", menuType);
         String rtnUrl = "/front/co/COSearch.front";
         if(menuType != null){
+            BaseDTO baseDTO = new BaseDTO();
+            modelMap.put("rtnData", baseDTO);
             rtnUrl = "/front/co/COSearchDtl.front";
         }
         return rtnUrl;

@@ -31,11 +31,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             file = obj.files[0];
 
             var fileExtn = file.name.split(".").pop();
+            var fileName = file.name.split(".")[0];
 
             if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
                 //파일확장자 체크
                 $('#'+fileId).val("");
-                $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').empty();
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
                 isFile = false;
            } else {
@@ -48,7 +50,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     if (fileSize > maxFileSize)
                     {
                         $('#'+fileId).val("");
-                        $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').empty();
                         alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
                         isFile = false;
                     }
@@ -57,7 +60,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             
             if (isFile) {
                 fileInput = jQuery(obj).clone(true);
-                $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
+                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
+                fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
             }
         }
     };
@@ -204,6 +211,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                            fnSleep(3000); //각 파일별 시간 텀을 준다
 
                         });
+                    }
+                }
+            },
+            fileDelete : {
+                event : {
+                    click : function() {
+                        $(this).closest(".form-group").find("input[type=file]").val("");
+                        $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $(this).closest(".form-group").find('.file-list').remove();
                     }
                 }
             }

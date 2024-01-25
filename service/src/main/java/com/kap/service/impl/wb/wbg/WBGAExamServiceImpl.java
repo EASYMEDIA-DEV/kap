@@ -8,6 +8,7 @@ import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
@@ -1380,5 +1381,19 @@ public class WBGAExamServiceImpl implements WBGAExamService {
         }
 
         return rsultCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBGAExamSearchDTO wBGAExamSearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBGAExamMapper.updAdmMemo(wBGAExamSearchDTO);
+
+        return respCnt;
     }
 }
