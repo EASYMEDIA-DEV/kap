@@ -270,8 +270,8 @@
 
                                         <div class="pc btn-wrap">
                                             <div class="btn-set">
-                                                <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
-                                                <a class="btn-solid small white-bg" href="javascript:"><span>1:1 문의</span></a>
+                                                <a class="btn-solid small white-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
+                                                <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
 
@@ -280,8 +280,8 @@
 								</c:if>
                                 <div class="mob btn-wrap">
                                     <div class="btn-set">
-                                        <a class="btn-solid small gray-bg" href="javascript:"><span>증명서 발급</span></a>
-                                        <a class="btn-solid small gray-bg" href="javascript:"><span>1:1 문의</span></a>
+                                        <a class="btn-solid small gray-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
+                                        <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                     </div>
                                 </div>
                                 <p class="last-date f-caption2"><span>최근접속일</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</span></p>
