@@ -75,8 +75,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             contact : {
                 event : {
                     click : function(){
-                        var cmssrCbsnCd = $(".cmssrCbsnCd").text()
-                        location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;
+                        console.log();
+                       /* var cmssrCbsnCd = $(".cmssrCbsnCd").text()
+                        location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;*/
                     }
                 }
             }

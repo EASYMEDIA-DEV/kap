@@ -5,6 +5,7 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
             location.href = "/";
         }
     }
@@ -74,6 +75,7 @@
                             <div class="table-sec">
                                 <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                     <table class="basic-table">
+                                        <input type="hidden" class="memSeq" value="${loginMap.seq}">
                                         <caption>신청자 기본 정보</caption>
                                         <colgroup>
                                             <col style="width: 273rem;">
@@ -98,11 +100,11 @@
                                         </tr>
                                         <tr>
                                             <th>부서</th>
-                                            <td>${loginMap.deptNm}</td>
+                                            <td class="deptCd"></td>
                                         </tr>
                                         <tr>
                                             <th>직급</th>
-                                            <td>${loginMap.pstnCdNm}</td>
+                                            <td>${loginMap.pstnCdNm}(${loginMap.pstnNm})</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -133,7 +135,7 @@
                                         <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td>${loginMap.bsnmNo}</td>
+                                            <td>${kl:bsnmNoConvert(loginMap.bsnmNo)}</td>
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>

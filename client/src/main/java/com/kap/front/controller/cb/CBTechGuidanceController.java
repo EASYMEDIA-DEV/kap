@@ -77,7 +77,7 @@ public class CBTechGuidanceController {
     public String getMnagementIndex(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request, @PathVariable("type") String type) throws Exception {
         String url = "";
        /* try {*/
-
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
             cBATechGuidanceInsertDTO.setFirstIndex(0);
             cBATechGuidanceInsertDTO.setRecordCountPerPage(3);
 
@@ -103,6 +103,8 @@ public class CBTechGuidanceController {
             cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
             modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
+            System.err.println("cOLoginUserDTO:::"+cOLoginUserDTO);
+            modelMap.addAttribute("loginMap", cOLoginUserDTO);
 
             RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
 
@@ -209,6 +211,7 @@ public class CBTechGuidanceController {
                 pCBBManageConsultInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
                 pCBBManageConsultInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
                 pCBBManageConsultInsertDTO.setRsumeSttsCd("MNGCNSLT_STATUS01");
+                System.err.println("pCBBManageConsultInsertDTO:::"+pCBBManageConsultInsertDTO);
                 modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
                 pCBBManageConsultInsertDTO.setDetailsKey(String.valueOf(pCBBManageConsultInsertDTO.getCnstgSeq()));
                 pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);

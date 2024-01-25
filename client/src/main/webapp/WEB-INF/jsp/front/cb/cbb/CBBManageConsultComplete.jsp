@@ -4,6 +4,7 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
             location.href = "/";
         }
     }
@@ -97,7 +98,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap align-center for-motion">
                     <div class="btn-set">
-                        <a class="btn-solid small black-bg" href="./my-page/consulting/list"><span>신청내역 보기</span></a>
+                        <a class="btn-solid small black-bg" href="/my-page/consulting/list"><span>신청내역 보기</span></a>
                     </div>
                 </div>
             </div>

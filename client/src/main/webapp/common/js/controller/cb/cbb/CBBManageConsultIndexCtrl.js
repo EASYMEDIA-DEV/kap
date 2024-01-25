@@ -15,7 +15,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
-
+            goContact : {
+                event : {
+                    click : function(){
+                        var loginYn = $("#goContact").data("seq");
+                        if(loginYn){
+                            location.href="/foundation/cs/qa/index?inqFir=INQ03&inqSec=경영컨설팅"
+                        }else{
+                            if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
+                                location.href="/login?rtnUrl=/foundation/cs/qa/index?inqFir=INQ03\t%26inqSec=경영컨설팅";
+                            }
+                        }
+                    }
+                }
+            }
         },
         classname : {
             //검색 레이어에서 선택시 호출

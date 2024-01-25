@@ -4,6 +4,7 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
             location.href = "/";
         }
     }
@@ -325,11 +326,13 @@
                                             <div class="data-line-w">
                                                 <div class="data-line">
                                                     <div class="opt-group total-check-w"><!-- 전체 체크박스 있는 경우 total-check-w class 추가 -->
-                                                        <div class="form-checkbox total-check">
-                                                            <input type="checkbox" id="requestChk1" name="appctnTypeCd">
-                                                            <label for="requestChk1">전체</label>
-                                                        </div>
                                                         <c:forEach var="appctnCdList" items="${cdDtlList.TEC_GUIDE_APPCTN}" varStatus="status">
+                                                            <c:if test="${appctnCdList.cd eq 'TEC_GUIDE_APPCTN00'}">
+                                                                <div class="form-checkbox total-check">
+                                                                    <input type="checkbox" id="requestChk1" value="${appctnCdList.cd}" name="appctnTypeCd">
+                                                                    <label for="requestChk1">전체</label>
+                                                                </div>
+                                                            </c:if>
                                                             <c:if test="${appctnCdList.cd ne 'TEC_GUIDE_APPCTN00'}">
                                                                 <div class="form-checkbox">
                                                                    <input type="checkbox" id="${appctnCdList.cd}" value="${appctnCdList.cd}" name="appctnTypeCd">

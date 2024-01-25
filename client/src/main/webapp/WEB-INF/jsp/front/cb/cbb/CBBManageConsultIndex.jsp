@@ -75,7 +75,7 @@
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ03&inqSec=경영컨설팅"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" data-seq="${loginMap.seq}" id="goContact"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
