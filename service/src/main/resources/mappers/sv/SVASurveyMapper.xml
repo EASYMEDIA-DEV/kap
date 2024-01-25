@@ -113,7 +113,6 @@
 				</foreach>
 				)
 			</if>
-R
 
 			<if test="q != null and q != ''">
 				<choose>

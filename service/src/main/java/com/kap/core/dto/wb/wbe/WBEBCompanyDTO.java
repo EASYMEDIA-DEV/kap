@@ -90,16 +90,22 @@ public class WBEBCompanyDTO extends BaseDTO {
     private String qlty5starCd;
     @Schema(title = "품질5스타년도", example = "")
     private Integer qlty5starYear;
+    @Schema(title = "품질5스타값")
+    private String qlty5starNm;
 
     @Schema(title = "납입5스타코드", example = "")
     private String pay5starCd;
     @Schema(title = "납입5스타년도", example = "")
     private Integer pay5starYear;
+    @Schema(title = "납입5스타값")
+    private String pay5starNm;
 
     @Schema(title = "기술5스타코드", example = "")
     private String tchlg5starCd;
     @Schema(title = "기술5스타년도", example = "")
     private Integer tchlg5starYear;
+    @Schema(title = "기술5스타값")
+    private String tchlg5starNm;
 
     @Schema(title = "회차 순번", example = "")
     private Integer episdSeq;
