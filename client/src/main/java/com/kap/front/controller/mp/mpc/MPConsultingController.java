@@ -11,6 +11,7 @@ import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
+import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -69,6 +70,7 @@ public class MPConsultingController {
         {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
+            System.err.println("cBATechGuidanceInsertDTO"+cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
             modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
         }
@@ -77,6 +79,25 @@ public class MPConsultingController {
             throw new Exception(e.getMessage());
         }
         return "front/mp/mpc/MPConsultingList.front";
+    }
+
+    /**
+     * 마이페이지 상생 사업 필터
+     */
+    @RequestMapping(value = "/listAjax")
+    public String listAjax(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
+            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/mp/mpc/MPConsultingListAjax";
     }
 
     /**
@@ -161,8 +182,9 @@ public class MPConsultingController {
     public class MPConsultingRestController {
 
         private final CBATechGuidanceMapper cBATechGuidanceMapper;
+        private final CBBManageConsultMapper cBBManageConsultMapper;
         /**
-         *  지역 정보로 서브 지역 정보 찾기
+         *  신청 분야 상세
          */
         @PostMapping(value = "/appctnType")
         @ResponseBody
@@ -170,9 +192,11 @@ public class MPConsultingController {
             List<CBATechGuidanceInsertDTO> detailList = new ArrayList<>();
             String temp = "";
             try {
-                int cnstgSeq = cBATechGuidanceInsertDTO.getCnstgSeq();
+            int cnstgSeq = cBATechGuidanceInsertDTO.getCnstgSeq();
+            String cnstgCd = cBATechGuidanceInsertDTO.getCnstgCd();
+            if(cnstgCd.equals("CONSULT_GB01")){
                 detailList = cBATechGuidanceMapper.selectCnstgAppctnType(cnstgSeq);
-
+            }
                 for(int i = 0; i<detailList.size(); i++){
                     temp += "/"+detailList.get(i).getAppctnTypeNm();
                 }
