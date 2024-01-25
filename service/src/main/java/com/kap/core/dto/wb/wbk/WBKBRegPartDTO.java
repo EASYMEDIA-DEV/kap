@@ -48,4 +48,7 @@ public class WBKBRegPartDTO extends BaseDTO {
     @Schema(title = "참여자 학년코드", example = "")
     private String grdCd;
 
+    @Schema(title = "참여자 학년코드", example = "")
+    private String grdCdNm;
+
 }

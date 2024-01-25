@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<c:set var="partList" value="${ not empty rtnData.partList ? rtnData.partList : rtnData}" />
 <div class="cont-wrap" data-controller="controller/mp/mpb/MPBCoexistenceCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
@@ -36,6 +37,7 @@
                                 <c:set var="classType" value="arr"/>
                             </c:when>
                         </c:choose>
+
                         <div class="sec-con-area">
                             <div class="gray-bg-sec">
                                 <div class="flex">
@@ -87,6 +89,181 @@
                         </div>
                     </div>
                 </div>
+<c:choose>
+    <c:when test="${rtnBsnData.bsnCd eq 'BSN11'}">
+        <div class="cont-sec no-border scroll-motion">
+            <div class="for-motion">
+                <div class="sec-tit-area">
+                    <p class="f-title3">신청자 기본정보</p>
+                </div>
+                <div class="sec-con-area">
+                    <div class="table-sec">
+                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                            <table class="basic-table">
+                                <caption>신청자 기본 정보</caption>
+                                <colgroup>
+                                    <col style="width: 273rem;">
+                                    <col style="width: 820rem;">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>성명</th>
+                                    <td>${coUser.name}</td>
+                                </tr>
+                                <tr>
+                                    <th>휴대폰번호</th>
+                                    <td>${coUser.hpNo}</td>
+                                </tr>
+                                <tr>
+                                    <th>이메일</th>
+                                    <td>${coUser.email}</td>
+                                </tr>
+                                <tr>
+                                    <th>일반 전화번호</th>
+                                    <td>${coUser.telNo}</td>
+                                </tr>
+                                <tr>
+                                    <th>성별</th>
+                                    <td>${coUser.gndr =='1' ? '남' : '여'}</td>
+                                </tr>
+                                <tr>
+                                    <th>생년월일</th>
+                                    <td>${coUser.birth}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="cont-sec no-border scroll-motion">
+            <div class="for-motion">
+                <div class="sec-tit-area">
+                    <p class="f-title3">사업신청 정보</p>
+                </div>
+
+                <div class="sec-con-area">
+                    <div class="gray-bg-sec">
+                        <div class="data-view-w">
+                            <p class="data-view-tit f-head">팀장 정보</p>
+                            <div class="data-view-form">
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">이름</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.rdName}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">이메일</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.rdEmail}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">학교</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.rdSchlNm}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">학년</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.rdGrd} / ${rtnData.rdGrdCdNm}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">참여구분</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.ptcptTypeNm}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">주제</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.themeCdNm}</p>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="th">
+                                        <p class="title f-body2">세부 내용</p>
+                                    </div>
+                                    <div class="td">
+                                        <p class="txt f-body1">${rtnData.dtlCntn}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="data-view-w">
+                            <c:if test="${ partList != null }">
+                            <p class="data-view-tit f-head">팀원 정보</p>
+                                <c:forEach var="partList" items="${partList}" varStatus="qstnStatus">
+                                    <div class="data-view-form">
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">이름</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${partList.name}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">휴대폰번호</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${partList.hpNo}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">이메일</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${partList.email}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">학교</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${partList.schlNm}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">학년</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${partList.grd} / ${partList.grdCdNm}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <br>
+                                </c:forEach>
+                            </c:if>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </c:when>
+    <c:otherwise>
                 <div class="cont-sec no-border scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
@@ -295,6 +472,8 @@
                         </div>
                     </div>
                 </div>
+                </c:otherwise>
+            </c:choose>
                 <c:choose>
                     <c:when test="${businessYn eq 'Y'}">
                         <jsp:include page="MPBCoexistence.jsp"/>

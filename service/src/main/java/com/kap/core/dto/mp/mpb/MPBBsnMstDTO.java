@@ -9,6 +9,7 @@ import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
+import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -68,6 +69,9 @@ public class MPBBsnMstDTO extends BaseDTO {
 
     @Schema(title = "스마트공장", example = "")
     private WBFBRegisterDTO wBFBRegisterDTO;
+
+    @Schema(title = "미래차공모전", example = "")
+    private WBKBRegisterDTO wBKBRegisterDTO;
 
     @Schema(title = "파일리스트", example = "")
     private List<Integer> fileSeqList;

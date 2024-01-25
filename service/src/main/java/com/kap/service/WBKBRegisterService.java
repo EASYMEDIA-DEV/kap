@@ -63,6 +63,11 @@ public interface WBKBRegisterService {
     public int updRsumeStep(WBKBRegisterDTO wBKBRegisterDTO) throws Exception;
 
     /**
+     *   미래차 공모전 사용자 update
+     */
+    public int furecarUserUpd(WBKBRegisterDTO wBKBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+
+    /**
      *   미래차 공모전 신청 삭제
      */
     public int deleteRegFutureCarContest(WBKBRegisterDTO wBKBRegisterDTO) throws Exception;

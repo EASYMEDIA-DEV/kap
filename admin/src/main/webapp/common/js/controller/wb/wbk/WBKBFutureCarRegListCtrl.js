@@ -15,7 +15,6 @@ define(["ezCtrl"], function(ezCtrl) {
     var $excelObj = ctrl.obj.parent().find(".excel-down");
 
     var callbackAjaxDelete = function(data){
-        console.log("콜백 진입 data" + data)
         if (parseInt(data.respCnt, 10) > 0)
         {
             alert(msgCtrl.getMsg("success.del.target.none"));
@@ -134,8 +133,6 @@ define(["ezCtrl"], function(ezCtrl) {
         //data로 치환해주어야한다.
         //cmmCtrl.setFormData($formObj);
 
-        console.log($formObj);
-
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
         }
@@ -143,7 +140,6 @@ define(["ezCtrl"], function(ezCtrl) {
         cmmCtrl.listFrmAjax(function(respObj) {
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
-            console.log(respObj)
             ctrl.obj.find("#listContainer").html(respObj);
             //전체 갯수
             var totCnt = $(respObj).eq(0).data("totalCount");

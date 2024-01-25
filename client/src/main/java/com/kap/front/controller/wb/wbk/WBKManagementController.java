@@ -3,12 +3,14 @@ package com.kap.front.controller.wb.wbk;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
 import com.kap.service.*;
 import com.kap.service.dao.COGCntsMapper;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -52,7 +54,7 @@ public class WBKManagementController {
     public final WBKBRegisterService wBKBRegisterService;
     public final COGCntsService pCOGCntsService;
     public final COCodeService cOCodeService;
-
+    private final MPAUserService mpaUserService;
 
     public final WBBARoundService wbbaRoundService;
 
@@ -106,7 +108,17 @@ public class WBKManagementController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            MPAUserDto mpaUserDto = new MPAUserDto();
+            mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
             //wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+            if (!"".equals(mpaUserDto.getDetailsKey())) {
+                MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
+                String[] split = mpaUserDtos.getEmail().split("@");
+                mpaUserDtos.setEmailName(split[0]);
+                mpaUserDtos.setEmailAddr(split[1]);
+                modelMap.addAttribute("rtnDtl", mpaUserDtos);
+            }
 
             modelMap.addAttribute("episdSeq", wbbaCompanySearchDTO.getEpisdSeq());
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
@@ -169,7 +181,7 @@ public class WBKManagementController {
             System.err.println("공모전 신청 완료!");
 
             /* 신청자 최초 상태값 - 접수완료 */
-            wBKBRegisterDTO.setBsnCd("BNS11");
+            wBKBRegisterDTO.setBsnCd("BSN11");
             wBKBRegisterDTO.setRsumeOrd(1);
             wBKBRegisterDTO.setAppctnSttsCd("WBKB_REG_FRT001");
 

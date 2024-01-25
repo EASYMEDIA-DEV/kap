@@ -252,7 +252,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $('#rsumeFrm input[name="mngSttsCd"]').val("WBKB_REG_LRT001")
                             $(".rqWdcrmCd").show();
                         }else if($("#mngSttsCd3").val() == "WBKB_REG_LRT004"){//사용자 취소
-                            $('#rsumeFrm input[name="appctnSttsCd"]').val("WBKB_REG_FRT003")
+                            $('#rsumeFrm input[name="appctnSttsCd"]').val("WBKB_REG_FRT004")
                             $('#rsumeFrm input[name="mngSttsCd"]').val("WBKB_REG_LRT004")
                         }else {
                             $('select[name="wdcrmCd"]').prop("disabled", true);
@@ -276,10 +276,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
          },
         immediately : function() {
 
+            //사용자 취소 확인
+            if( $("#userCancel").text().includes('사용자취소') ) {
+                $('#mngSttsCd1').hide();
+                $('#mngSttsCd1').after('사용자취소');
+            }
             //서류 진행 상태 확인
              var laststep = !($(".lastStep").data("laststep") === undefined || $(".lastStep").data("laststep") == '') ? $(".lastStep").data("laststep") : 1;
+
             $("#addLow"+laststep).addClass("in");
             $("#rsumeFrm  [name='rsumeOrd']").val(laststep);
+            $("#rsumeFrm  [name='appctnSttsCd']").val($("#mngSttsCd"+laststep).val());
+            $("#rsumeFrm  [name='mngSttsCd']").val($("#mngSttsCd"+laststep).val());
 
             //panel-body에 cursor 이벤트 , pointer-events 이벤트
            $('.panel-body')

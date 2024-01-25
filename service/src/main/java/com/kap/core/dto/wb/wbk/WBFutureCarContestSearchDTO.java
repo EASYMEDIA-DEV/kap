@@ -62,6 +62,9 @@ public class WBFutureCarContestSearchDTO extends BaseDTO {
     @Schema(title = "진행상태 코드 리스트")
     private List carbonCdList;
 
+    @Schema(title = "구분 코드 리스트")
+    private List ctgryCdList;
+
     @Schema(title = "노출 여부")
     private String expsYn;
 

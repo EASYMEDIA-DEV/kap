@@ -57,6 +57,7 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
 
             if (isFile) {
                 fileInput = jQuery(obj).clone(true);
+                $('#'+fileId).closest(".form-group").find('.empty-txt').toggleClass("file-name")
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
             }
         }
@@ -126,7 +127,7 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                                 alert('위원회원은 해당 서비스를 이용할 수 없습니다.');
                             } else if (data.resultCode == 300) {
                                 if (confirm("이미 신청한 공모전입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                    location.href = "/my-page/main";
+                                    location.href = "/my-page/coexistence/list";
                                 }
                             } else if (data.resultCode == 200) {
                                 location.href = "./step1?episdSeq="+episdSeq;
@@ -204,6 +205,23 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                     }
                 }
             },
+            fileDelete : {
+                event : {
+                    click : function() {
+                        $(this).closest(".form-group").find("input[type=file]").val("");
+                        $(this).closest(".form-group").find('.file-list').empty();
+                    }
+                }
+            },
+            ptcptType : {
+                event : {
+                    click : function () {
+                        if( $(this).val() == "WBK_PTN02" ){
+                            $("#ptcptBox").remove();
+                        }
+                    }
+                }
+            }
         },
         immediately : function(){
             $formObj.validation({
