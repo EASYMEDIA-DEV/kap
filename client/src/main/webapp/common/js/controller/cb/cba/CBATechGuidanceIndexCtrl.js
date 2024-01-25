@@ -57,13 +57,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         cssInfo.detailsKey = memSeq;
                         cmmCtrl.jsonAjax(function (data) {
                             var info = JSON.parse(data);
+                            if (info.cmssrMjrCarerExpsYn == 'Y'){
+                                $(".cmssrMjrCarerCntn").html(info.cmssrMjrCarerCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                $(".cmssrCnstgFldCntn").html(info.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                            }else{
+                                $(".cmssrMjrCarerCntn").text("-");
+                                $(".cmssrCnstgFldCntn").text("-");
+                            }
                             $(".cmssrName").text(info.name);
                             $(".email").text(info.email);
                             $(".cmssrCbsnCd").text(cmssrCbsnCdNm);
-                            var expsYn = info.cmssrMjrCarerExpsYn;
-                            if(expsYn == 'Y'){
-                                $(".cmssrMjrCarerCntn").text(info.cmssrMjrCarerCntn);
-                            }
                         }, './selectDtlInfo', cssInfo, "text");
                         openPopup('memberDetailsPopup');
                     }
