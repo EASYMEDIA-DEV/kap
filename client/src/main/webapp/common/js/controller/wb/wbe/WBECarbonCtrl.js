@@ -129,7 +129,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if ($('#agreeChk').is(':checked')) {
                             cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
-                                location.replace("./complet");
+                                location.replace("./complete");
                             }, "./insert", $formObj, "json");
                         } else {
                             alert('약관에 동의해주세요.')
