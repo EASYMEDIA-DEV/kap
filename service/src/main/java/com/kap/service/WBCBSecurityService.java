@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -90,4 +91,9 @@ public interface WBCBSecurityService {
      */
     public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(WBCBSecuritySearchDTO wBCBSecuritySearchDTO) throws Exception;
 }

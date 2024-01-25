@@ -247,6 +247,8 @@ var exports = {
     immediately : function() {
         //리스트 조회
         //폼 데이터 처리
+        $formObj.find("input[name=listRowSize]").val("10");
+        $(".listRowSizeContainer").val("10");
         cmmCtrl.setFormData($formObj);
         search();
 

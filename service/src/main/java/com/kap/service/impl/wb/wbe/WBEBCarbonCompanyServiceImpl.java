@@ -5,6 +5,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.wbe.*;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -17,6 +18,7 @@ import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
@@ -283,7 +285,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
         {
             int firstAppctnTrnsfDtlSeqIdgen = cxAppctnTrnsfDtlIdgen.getNextIntegerId();
             WBEBCarbonCompanyTrnsfDTO wBEBCarbonCompanyTrnsfDTO = new WBEBCarbonCompanyTrnsfDTO();
@@ -1270,7 +1272,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
         {
             respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
         }
@@ -1292,11 +1294,25 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
-        if(wBEBTrnsfDTO.getMemSeq() != wBEBCarbonCompanyMstInsertDTO.getMemSeq())
+        if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
         {
             respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
         }
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBEBCarbonCompanyMapper.updAdmMemo(wBEBCarbonCompanySearchDTO);
 
         return respCnt;
     }

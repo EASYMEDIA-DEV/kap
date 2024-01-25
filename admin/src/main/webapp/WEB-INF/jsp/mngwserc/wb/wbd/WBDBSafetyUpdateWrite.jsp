@@ -1009,7 +1009,14 @@
                                         <label class="col-sm-1 control-label">관리자메모</label>
                                         <div class="col-sm-5">
                                             <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" value="${rtnData.admMemo}" title="관리자메모"  placeholder="관리자 메모를 입력해주세요." maxlength="500">${rtnData.admMemo}</textarea>
-                                            <p class="form-control-static">저장 시간 : ${rtnData.modDtm}</p>
+                                            <div class="pull-right">
+                                                <div class="pull-right">
+                                                    <p class="form-control-static">${ kl:convertDate(rtnData.admMemoModDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                                                </div>
+                                                <div>
+                                                    <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1077,7 +1084,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">사업비</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control notRequired" id="bsnPmt" name="pbsnDtlList[0].bsnPmt" value="${rtnPbsn[0].bsnPmt}" title="사업비" maxlength="50" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="bsnPmt" name="pbsnDtlList[0].bsnPmt" value="${rtnPbsn[0].bsnPmt}" title="사업비" maxlength="50" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1109,7 +1116,7 @@
                                                 </c:choose>
                                                 <input type="hidden" class="notRequired" value="${rtnDtl[0].appctnSttsCd}" name="rsumeDtlList[0].appctnSttsCd" />
                                             </div>
-                                            <div class="col-sm-10" style="margin-left: -15px">
+                                            <div class="col-sm-10" >
                                                 <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn1" name="rsumeDtlList[0].rtrnRsnCntn" value="${rtnDtl[0].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
                                             </div>
                                         </div>
@@ -1183,7 +1190,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">지원금(①)</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control notRequired" id="spprtPmt" name="pbsnDtlList[1].spprtPmt" value="${rtnPbsn[1].spprtPmt}" title="지원금" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="spprtPmt" name="pbsnDtlList[1].spprtPmt" value="${rtnPbsn[1].spprtPmt}" title="지원금" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1191,7 +1198,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">자부담(②)</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control notRequired" id="phswPmt" name="pbsnDtlList[1].phswPmt" value="${rtnPbsn[1].phswPmt}" title="신청자" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="phswPmt" name="pbsnDtlList[1].phswPmt" value="${rtnPbsn[1].phswPmt}" title="신청자" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1200,7 +1207,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">총금액(①+②)</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control notRequired" id="sum" value="${rtnPbsn[1].ttlPmt}" maxlength="50" disabled/>
+                                            <input type="text" class="form-control comma notRequired" id="sum" value="${rtnPbsn[1].ttlPmt}" maxlength="50" disabled/>
                                             <input type="hidden" class="notRequired" id="ttlPmt" name="pbsnDtlList[1].ttlPmt" value="${rtnPbsn[1].ttlPmt}"/>
                                         </div>
                                     </div>

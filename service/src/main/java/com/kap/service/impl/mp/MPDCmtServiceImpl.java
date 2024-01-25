@@ -689,6 +689,11 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
         }
 
+        // 열 너비 설정
+        for(int i =0; i < 32; i++){
+            sheet.autoSizeColumn(i);
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 1200));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
@@ -1006,10 +1011,10 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         }
     }
         // 열 너비 설정
-       /* for(int i =0; i < 8; i++){
+        for(int i =0; i < 18; i++){
             sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
+            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 1200));
+        }
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 

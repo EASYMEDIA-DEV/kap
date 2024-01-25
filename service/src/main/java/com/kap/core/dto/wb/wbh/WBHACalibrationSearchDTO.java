@@ -149,6 +149,8 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     private String giveDt;
     @Schema(title = "관리자 메모", example = "")
     private String admMemo;
+    @Schema(title = "관리자 메모 수정 시간", example = "")
+    private String admMemoModDtm;
     @Schema(title = "담당 위원 명", example = "")
     private String picCmssrNm;
     @Schema(title = "사업시작일시", example = "yyyy-MM-dd hh:mm:ss")

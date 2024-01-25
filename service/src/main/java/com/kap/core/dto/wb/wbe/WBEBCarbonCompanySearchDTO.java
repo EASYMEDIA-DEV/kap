@@ -136,6 +136,8 @@ public class WBEBCarbonCompanySearchDTO extends BaseDTO {
 
     @Schema(title = "관리자 메모", example = "")
     private String admMemo;
+    @Schema(title = "관리자 메모 수정 시간", example = "")
+    private String admMemoModDtm;
 
 
 

@@ -2,6 +2,7 @@ package com.kap.mngwserc.controller.wb.wbg;
 
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.service.COCodeService;
 import com.kap.service.WBGAExamService;
@@ -294,5 +295,25 @@ public class WBGAExamController {
         return "jsonView";
     }
 
+    /**
+     * Edit 페이지 - 부품사 등록 사업자등록번호 인증
+     */
+    @PostMapping(value = "/updAdmMemo")
+    @ResponseBody
+    public WBGAExamSearchDTO updAdmMemo(@Valid @RequestBody WBGAExamSearchDTO wBGAExamSearchDTO, HttpServletRequest request) throws Exception
+    {
+        try {
 
+            wBGAExamSearchDTO.setRespCnt(wBGAExamService.updAdmMemo(wBGAExamSearchDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return wBGAExamSearchDTO;
+    }
 }

@@ -352,14 +352,14 @@
                     </when>
                     <when test="f == 7">8
                         AND (
-                        INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        A.REG_ID LIKE CONCAT('%', #{q}, '%') OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0)
                         )
                     </when>
                     <when test="f == 8">
                         AND (
-                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        A.MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0)
                         )
                     </when>
                     <otherwise>
@@ -370,10 +370,10 @@
                         PSTN_NM LIKE CONCAT('%', #{q}, '%') OR
                         HP_NO LIKE CONCAT('%', #{q}, '%') OR
                         EMAIL LIKE CONCAT('%', #{q}, '%') OR
-                        INSTR(#{q}, REG_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
-                        INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+                        A.REG_ID LIKE CONCAT('%', #{q}, '%') OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0) OR
+                        A.MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+                        EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0)
                         )
                     </otherwise>
                 </choose>

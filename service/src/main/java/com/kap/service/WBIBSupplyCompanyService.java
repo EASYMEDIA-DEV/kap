@@ -6,6 +6,7 @@ import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -111,4 +112,10 @@ public interface WBIBSupplyCompanyService {
      * 사업자번호 매핑 여부 확인
      */
     public int getBsnmNoCnt(WBIBSupplyMstDTO wBIBSupplyMstDTO) throws Exception;
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(WBIBSupplyDTO wBIBSupplyDTO) throws Exception;
 }

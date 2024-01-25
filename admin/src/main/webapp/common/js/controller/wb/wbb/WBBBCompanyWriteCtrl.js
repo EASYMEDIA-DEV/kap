@@ -135,6 +135,26 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     // set model
     ctrl.model = {
         id : {
+            btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        let appctnSeq = $formObj.find('input[type=hidden][name=appctnSeq]').val();
+                        if(appctnSeq != '') {
+                            let wBBACompanySearchDto = {}
+                            wBBACompanySearchDto.admMemo = $('#admMemoUpd').val();
+                            wBBACompanySearchDto.appctnSeq = appctnSeq
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
+                            }, "./updAdmMemo", wBBACompanySearchDto, "text")
+                        }
+                    }
+                }
+            },
             ctgryCd : {
                 event : {
                     change : function() {

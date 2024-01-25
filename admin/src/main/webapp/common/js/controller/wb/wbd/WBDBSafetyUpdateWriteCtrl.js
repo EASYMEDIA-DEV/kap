@@ -118,6 +118,26 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // set model
     ctrl.model = {
         id : {
+            btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        let appctnSeq = $formObj.find('input[type=hidden][name=appctnSeq]').val();
+                        if(appctnSeq != '') {
+                            let wBDBSafetySearchDTO = {}
+                            wBDBSafetySearchDTO.admMemo = $('#admMemo').val();
+                            wBDBSafetySearchDTO.appctnSeq = appctnSeq
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
+                            }, "/mngwserc/wb/wbdb/updAdmMemo", wBDBSafetySearchDTO, "text")
+                        }
+                    }
+                }
+            },
             searchPostCode : {
                 event : {
                     click : function() {
@@ -584,6 +604,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 $(this).next().val("PRO_TYPE03002_01_005");
                             }
                         });
+
+                        for(var i = 0 ; i < $(".comma").length; i++){
+                            $(".comma").eq(i).val($(".comma").eq(i).val().replaceAll(",",""));
+                        }
 
 
                         cmmCtrl.fileFrmAjax(function(data){

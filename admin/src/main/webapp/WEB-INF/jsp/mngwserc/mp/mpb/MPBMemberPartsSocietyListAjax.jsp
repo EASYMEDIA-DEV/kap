@@ -33,7 +33,7 @@
         <td class="text-center">${list.ctgryCdNm}</td>
         <td class="text-center">${list.sizeCdNm}</td>
         <td class="text-center">${list.deptCdNm} ${list.deptDtlNm == '' ? '' : '('+=list.deptDtlNm+=')'} </td>
-        <td class="text-center">${list.pstnCdNm}</td>
+        <td class="text-center">${list.pstnCdNm} ${list.pstnCdNm == '기타' ? '('+=list.pstnNm+=')' : '' }</td>
 
         <c:if test="${rtnData.srchLayer eq 'Y'}">
           <td class="text-center">${list.hpNo}</td>

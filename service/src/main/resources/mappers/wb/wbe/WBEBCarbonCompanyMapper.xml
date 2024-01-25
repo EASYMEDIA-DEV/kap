@@ -35,6 +35,7 @@
         ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NM
         ,B.MOD_DTM
         ,B.ADM_MEMO
+        ,B.ADM_MEMO_MOD_DTM
         ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = PIC_CMSSR_SEQ) AS PIC_CMSSR_NM
         ,(SELECT ACNT_NO FROM CX_APPCTN_SPPRT_DTL WHERE APPCTN_SEQ = B.APPCTN_SEQ AND GIVE_TYPE = 'PRO_TYPE03002') AS ACNT_NO
         ,(SELECT BANK_NM FROM CX_APPCTN_SPPRT_DTL WHERE APPCTN_SEQ = B.APPCTN_SEQ AND GIVE_TYPE = 'PRO_TYPE03002') AS BANK_NM
@@ -398,6 +399,7 @@
              ,A.PMNDV_PMT_YN
              ,A.PIC_CMSSR_SEQ
              ,A.ADM_MEMO
+             ,A.ADM_MEMO_MOD_DTM
              ,A.MOD_DTM
              ,YEAR(B.YEAR) AS YEAR
              ,B.EPISD
@@ -544,11 +546,11 @@
              ,A.PBSN_BSC_ADDR
              ,A.PBSN_DTL_ADDR
              ,A.CHK_CMSSR_SEQ
-             ,A.BSN_PMT
+             ,FORMAT(A.BSN_PMT,0) AS BSN_PMT
              ,A.BSN_PLAN_DT
-             ,A.SPPRT_PMT
-             ,A.PHSW_PMT
-             ,A.TTL_PMT
+             ,FORMAT(A.SPPRT_PMT,0) AS SPPRT_PMT
+             ,FORMAT(A.PHSW_PMT,0) AS PHSW_PMT
+             ,FORMAT(A.TTL_PMT,0) AS TTL_PMT
              ,A.CHK_DT
              ,A.EXAM_SCORE
              ,A.PAY_DT
@@ -634,7 +636,6 @@
             ,APPCTN_BSNM_NO = #{appctnBsnmNo}
             ,PIC_CMSSR_SEQ = #{picCmssrSeq}
             ,PMNDV_PMT_YN =  #{pmndvPmtYn}
-            ,ADM_MEMO =  #{admMemo}
         </if>
         ,SBRDN_BSNM_NO = #{sbrdnBsnmNo}
         ,MOD_ID = #{modId}
@@ -1363,6 +1364,20 @@
           AND APPCTN_BSNM_NO = #{bsnmNo}
     </select>
 
+    <!--
+         쿼리명 : WBEBCarbonCompanyMapper.updAppctnMst
+         설  명 : 상생신청진행상세 수정
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.16  김동현     최초 생성
+    -->
+    <update id="updAdmMemo" parameterType="WBEBCarbonCompanySearchDTO">
+        UPDATE cx_appctn_mst /*WBEBCarbonCompanyMapper.updAppctnMst*/
+        SET
+            adm_memo = #{admMemo}
+          ,adm_memo_mod_dtm = now()
+        WHERE appctn_seq = #{appctnSeq}
+    </update>
 </mapper>
 
 
