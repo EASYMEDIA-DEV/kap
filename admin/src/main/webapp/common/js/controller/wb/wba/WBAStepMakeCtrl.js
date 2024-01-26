@@ -36,10 +36,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(this).closest(".stepList").after(stepInitHtml);
                             ctrl.obj.find(".stepList").each(function(index, row){
                                 $(this).find(".stepNm").text("단계 " + (index+1));
-                                if(index != 0) {
-                                    $(this).find('.stepName').empty().append('<input type="text" class="form-control input-s notRequired" name="stageNm" placeholder="단계명" title="단계명">');
-                                }
-                            })
+                            });
 
                             var trgtObj = $(this).closest(".stepList").next().find(".dropzone");
 
