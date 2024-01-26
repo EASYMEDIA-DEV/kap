@@ -52,15 +52,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            moveView : {
-                event : {
-                    click : function() {
-                        var bsnCd = $(this).data("bsnCd");
-                        var appctnSeq = $(this).data("appctnSeq");
-                        location.href = "./view?bsnCd="+bsnCd+"&appctnSeq="+appctnSeq;
-                    }
-                }
-            },
             cancel : {
                 event : {
                     click : function() {
