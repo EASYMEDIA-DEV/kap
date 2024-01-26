@@ -104,8 +104,7 @@
                                                 <c:choose>
                                                     <c:when test="${stepStatus.index == 0}">
                                                         <div class="col-sm-3 stepName">
-                                                            신청
-                                                            <input type="hidden" class="notRequired" name="stageNm" value="신청"/>
+                                                            <input type="text" class="form-control input-sm notRequired stageNm" name="stageNm" value="신청" readonly="readonly"/>
                                                         </div>
                                                     </c:when>
                                                     <c:otherwise>

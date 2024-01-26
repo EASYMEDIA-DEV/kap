@@ -158,6 +158,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 var writeHtml = ctrl.obj.append(stepInitHtml);
                 writeHtml.find(".stepNm").text("단계 " + $(".stepList").size());
                 writeHtml.find(".btnStepDelete").remove();
+                writeHtml.find(".stageNm").val("신청");
+                writeHtml.find(".stageNm").attr("readonly",true);
+
             }
             ctrl.obj.show();
 
