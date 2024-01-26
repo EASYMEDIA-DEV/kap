@@ -124,6 +124,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             var cnt = $("#newsCnt").val();
                             var url = "/foundation/board/company-news/tab/list";
                         }
+                        else if(menuType == "notice"){
+                            var cnt = $("#noticeCnt").val();
+                            var url = "/foundation/board/notice/tab/list";
+                        }
                         var pageIndex = $formObj.find("input[name=pageIndex]").val();
                         search(++pageIndex,cnt,url);
 
@@ -148,6 +152,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
                         var url = "/foundation/board/company-news/view?detailsKey=" + detailsKey;
+                        location.href = url;
+                    }
+                }
+            },
+            //공지 상세보기
+            noticeListView: {
+                event: {
+                    click: function () {
+                        //상세보기
+                        var detailsKey = $(this).data("detailsKey");
+                        var url = "/foundation/board/notice/view?detailsKey=" + detailsKey;
                         location.href = url;
                     }
                 }
@@ -184,6 +199,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 else if (menuType == "foundation") {
                     var cnt = $("#newsCnt").val();
                     var url = "/foundation/board/company-news/tab/list";
+                }
+                //공지사항 탭 클릭
+                else if (menuType == "notice") {
+                    var cnt = $("#noticeCnt").val();
+                    var url = "/foundation/board/notice/select";
                 }
                 search(1,cnt,url);
             }

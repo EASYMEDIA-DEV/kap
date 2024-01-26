@@ -18,6 +18,7 @@
             <input type="hidden" name="menuType" value="${menuType}"/>
             <input type="hidden" name="letterCnt" id="letterCnt" value="${letterCnt}"/>
             <input type="hidden" name="episdCnt" id="episdCnt" value="${episdCnt}"/>
+            <input type="hidden" name="noticeCnt" id="noticeCnt" value="${noticeCnt}"/>
             <input type="hidden" name="newsCnt" id="newsCnt" value="${newsCnt}"/>
             <input type="hidden" name="menuCnt" id="menuCnt" value="${menuCnt}"/>
             <input type="hidden" name="menuAddPage" id="menuAddPage" value="${menuAddPage}"/>
@@ -173,6 +174,10 @@
                             <c:when test="${menuType == 'foundation'}">
                                 <c:set var="cnt" value="${newsCnt}"/>
                                 <c:set var="tabName" value="재단교육"/>
+                            </c:when>
+                            <c:when test="${menuType == 'notice'}">
+                                <c:set var="cnt" value="${noticeCnt}"/>
+                                <c:set var="tabName" value="공지"/>
                             </c:when>
                         </c:choose>
 

@@ -109,10 +109,10 @@ public class BDBCompanyNewsController {
     }
 
     /**
-     * 재단소식 목록 페이지
+     * 통합검색 재단소식 목록
      */
     @GetMapping(value="/select")
-    public String getCompanyNewsList(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
+    public String getTotalCompanyNewsList(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
     {
         try
         {

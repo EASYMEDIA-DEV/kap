@@ -47,7 +47,7 @@
                         <a class="swiper-slide txt-tab-btn" href="/search/education?q=${q}">
                             <p class="txt"><span class="menu-name">교육/세미나</span>&#40;<span class="item-count">${ episdCnt }</span>&#41;</p>
                         </a>
-                        <a class="swiper-slide txt-tab-btn" href="javascript:">
+                        <a class="swiper-slide txt-tab-btn" href="/search/notice?q=${q}">
                             <p class="txt"><span class="menu-name">공지사항</span>&#40;<span class="item-count">${ noticeCnt }</span>&#41;</p>
                         </a>
                         <a class="swiper-slide txt-tab-btn" href="/search/foundation?q=${q}">
@@ -119,11 +119,33 @@
                 </div>
             </div>
 
+            <div class="tab-section scroll-motion " id="noticeList" data-cnt="${ noticeCnt }">
+                <div class="for-motion">
+                    <div class="section-tit-area">
+                        <p class="tit f-title2"><span class="menu-name">공지</span> (<span class="item-count">${noticeCnt}</span>)</p>
+                        <c:if test="${ noticeCnt > 0}">
+                            <div class="btn-wrap">
+                                <a class="btn-text-icon black-arrow" href="/search/notice?q=${q}"  title="전체보기"><span>전체 보기</span></a>
+                            </div>
+                        </c:if>
+                    </div>
+                    <div class="tab-con-area" id="noticeContainer">
+                        <c:if test="${ noticeCnt eq 0 }">
+                            <div class="no-data-area">
+                                <div class="txt-box">
+                                    <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                </div>
+                            </div>
+                        </c:if>
+                    </div>
+                </div>
+            </div>
+
             <div class="tab-section scroll-motion " id="foundationList" data-cnt="${ newsCnt }">
                 <div class="for-motion">
                     <div class="section-tit-area">
                         <p class="tit f-title2"><span class="menu-name">재단소식</span> (<span class="item-count">${newsCnt}</span>)</p>
-                        <c:if test="${ letterCnt > 0}">
+                        <c:if test="${ newsCnt > 0}">
                             <div class="btn-wrap">
                                 <a class="btn-text-icon black-arrow" href="/search/foundation?q=${q}"  title="전체보기"><span>전체 보기</span></a>
                             </div>

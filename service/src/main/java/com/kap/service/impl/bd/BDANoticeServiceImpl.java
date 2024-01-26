@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bda.BDANoticeDTO;
+import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.service.BDANoticeService;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -75,6 +76,20 @@ public class BDANoticeServiceImpl implements BDANoticeService {
         pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
+
+    /**
+     * 통합검색 공지사항 탭 조회
+     */
+    public BDANoticeDTO selectNoticeTabList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
+
+        int recordCountPerPage = (pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize() >= pBDANoticeDTO.getTotalCount()) ? pBDANoticeDTO.getTotalCount() : pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize();
+        pBDANoticeDTO.setRecordCountPerPage(recordCountPerPage);
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
+        return pBDANoticeDTO;
+    }
+
+
 
     /**
      * 공지사항 조회 갯수(통합검색)

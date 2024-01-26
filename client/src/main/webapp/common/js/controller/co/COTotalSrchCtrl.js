@@ -39,6 +39,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			//간략화 해야함
 			//뉴스레터 상세보기
 			nwslttrListView: {
 				event: {
@@ -61,6 +62,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			//공지 상세보기
+			noticeListView: {
+				event: {
+					click: function () {
+						//상세보기
+						var detailsKey = $(this).data("detailsKey");
+						var url = "/foundation/board/notice/view?detailsKey=" + detailsKey;
+						location.href = url;
+					}
+				}
+			},
+
 		},
 		immediately : function() {
 
@@ -97,6 +110,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					$("#episdContainer").html(respObj);
 					//링크연결 여기서
 				}, "/education/apply/select", $formObj, "GET", "html", false, false);
+			}
+			//공지 조회
+			if( parseInt($("#noticeList").data("cnt")) > 0){
+				cmmCtrl.listFrmAjax(function(respObj) {
+					$("#noticeContainer").html(respObj);
+					//링크연결 여기서
+				}, "/foundation/board/notice/select", $formObj, "GET", "html", false, false);
 			}
 			//재단뉴스
 			if( parseInt($("#foundationList").data("cnt")) > 0) {
