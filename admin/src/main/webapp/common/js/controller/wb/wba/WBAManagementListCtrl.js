@@ -35,7 +35,7 @@ define(["ezCtrl"], function(ezCtrl) {
             btn_delete : {
                 event: {
                     click: function () {
-                        var frmDataObj    = $(this).closest("form");
+                        var frmDataObj = $(this).closest("form");
                         var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
                         if(confirm("삭제 처리하겠습니끼?"))
                         {
