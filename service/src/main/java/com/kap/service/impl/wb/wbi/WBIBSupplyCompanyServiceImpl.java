@@ -4,14 +4,7 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
-import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
-import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -213,7 +206,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         /* 상생신청 상세 */
         int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
         wBIBSupplyDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
-        /* 스마트 신청 상태 코드 */
+        /* 공급망 신청 상태 코드 */
         respCnt *= wBIBSupplyCompanyMapper.putAppctnRsumeDtl(wBIBSupplyDTO);
         /* 상생신청파일 상세 */
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());

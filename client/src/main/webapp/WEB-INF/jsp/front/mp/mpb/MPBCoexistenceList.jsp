@@ -150,10 +150,9 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="trainings-list-w">
                                     <c:choose>
-                                        <c:when test="${not empty rtnData}">
+                                        <c:when test="${not empty rtnData.list}">
                                             <c:forEach var="item" items="${rtnData.list}" varStatus="status">
                                                 <c:choose>
                                                     <c:when test="${item.appctnSttsCdNm eq '접수전' || item.appctnSttsCdNm eq '대기' || item.appctnSttsCdNm eq '결과대기'}">

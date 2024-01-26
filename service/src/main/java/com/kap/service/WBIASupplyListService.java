@@ -1,7 +1,6 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 

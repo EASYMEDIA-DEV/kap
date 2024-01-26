@@ -1,14 +1,9 @@
 package com.kap.service.impl.wb.wbi;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
-import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManageInsertDTO;
-import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
 import com.kap.service.WBIASupplyListService;
 import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbi.WBIASupplyListMapper;
@@ -22,6 +17,24 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * <pre>
+ * 공급망안정화기금 > 신청업체관리를 위한 ServiceImpl
+ * </pre>
+ *
+ * @ClassName		: WBFBRegisterCompanyServiceImpl.java
+ * @Description		: 신청업체관리를 위한 ServiceImpl
+ * @author 오병호
+ * @since 2023.11.17
+ * @version 1.0
+ * @see
+ * @Modification Information
+ * <pre>
+ * 		since			author				  description
+ *    ==========    ==============    =============================
+ *    2023.11.17		오병호				   최초 생성
+ * </pre>
+ */
 @Slf4j
 @Service
 @RequiredArgsConstructor

@@ -96,6 +96,7 @@ public class COCOmmController {
     @GetMapping(value={"/search", "/search/{menuType:menu|education|notice|foundation|newsletter}"})
     public String getTotalSearc(@Valid COSearchDTO cOSearchDTO, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request, @PathVariable(required = false) String menuType) throws Exception
     {
+        int menuAddCnt = 0;
         //메뉴는 인터셉터 조회
         String[] titleList = new String[3];
         List<COMenuDTO> qMenuList = new ArrayList<COMenuDTO>();
@@ -125,7 +126,9 @@ public class COCOmmController {
             }
         }
         modelMap.put("menuCnt", qMenuList.size());
+        modelMap.put("menuAddCnt", menuAddCnt);
         modelMap.put("qMenuList", qMenuList);
+        modelMap.put("menuAddPage", 1);
         //교육
         EBBEpisdDTO eBBEpisdDTO = new EBBEpisdDTO();
         eBBEpisdDTO.setQ( cOSearchDTO.getQ() );
@@ -156,6 +159,55 @@ public class COCOmmController {
             rtnUrl = "/front/co/COSearchDtl.front";
         }
         return rtnUrl;
+    }
+
+
+    /**
+     * 통합 검색 메뉴 탭 더보기 버튼
+     */
+    @Operation(summary = "메뉴 탭 더보기", tags = "", description = "")
+    @GetMapping(value={"/search/{menuType:menu}/tab"})
+    public String getTotalSearcMenuAdd(@Valid COSearchDTO cOSearchDTO, @RequestParam("menuAddCnt") int menuAddCnt, @RequestParam("menuFirstIndex") int menuFirstIndex, @RequestParam("menuAddPage") int menuAddPage, ModelMap modelMap, HttpServletResponse response, HttpServletRequest request, @PathVariable(required = false) String menuType) throws Exception
+    {
+        //메뉴는 인터셉터 조회
+        String[] titleList = new String[3];
+        List<COMenuDTO> qMenuList = new ArrayList<COMenuDTO>();
+        List<COMenuDTO> tabMenuList = new ArrayList<COMenuDTO>();
+        List<COMenuDTO> menuList = (List)RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
+        for (int i = 0, size = menuList.size(); i < size; i++)
+        {
+            if(menuList.get(i).getDpth()-3 == 0){
+                titleList = new String[3];
+            }
+            titleList[menuList.get(i).getDpth()-3] = menuList.get(i).getMenuNm();
+            if(menuList.get(i).getMenuNm().indexOf(cOSearchDTO.getQ()) > -1 && !"".equals(COStringUtil.nullConvert(menuList.get(i).getUserUrl()))){
+                COMenuDTO  cOMenuDTO = new COMenuDTO();
+                cOMenuDTO.setUserUrl( menuList.get(i).getUserUrl() );
+                String menuNm = "";
+                for(String val : titleList){
+                    if(val != null){
+                        if(!"".equals(menuNm)){
+                            menuNm += "__" +  val;
+                        }else{
+                            menuNm += val;
+                        }
+                    }
+                }
+                cOMenuDTO.setMenuNm( menuNm );
+                qMenuList.add( cOMenuDTO );
+            }
+        }
+        if(menuAddCnt > 0 && qMenuList.size() > 0){
+            for(int i = menuFirstIndex; i < menuAddCnt; i++) {
+                tabMenuList.add(qMenuList.get(i));
+            }
+            modelMap.put("tabMenuList", tabMenuList);
+        }
+        modelMap.put("menuCnt", qMenuList.size());
+        modelMap.put("menuAddPage", menuAddPage);
+
+
+        return "/front/co/COSearchDtlMenuAjax";
     }
 
     /**

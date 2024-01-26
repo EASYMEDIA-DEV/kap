@@ -11,6 +11,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var q = $.trim($formObj.find("input[name=q]").val());
     var menuType = $formObj.find("input[name=menuType]").val();
 
+
+    //메뉴탭 더보기를 누르면 visibleMenuCnt개의 게시물이 추가됨
+    var visibleMenuCnt = 1;
+    //메뉴의 총 갯수
+    var menuCnt = $formObj.find("input[name=menuCnt]").val();
+    //n개부터 m개까지의 게시물이 추가될때
+    //n == menuFirstIndex, m == menuAddCnt
+    var menuAddCnt = visibleMenuCnt;
+    var menuFirstIndex = menuAddCnt;
+    //더보기 버튼 x/y에서 x를 받아옴
+    var menuAddPage = $formObj.find("input[name=menuAddPage]").val();
+
+
+
     // 목록 조회
     var search = function (page, cnt, url){
         //data로 치환해주어야한다.
@@ -31,10 +45,50 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                 var rtnPage = 0;
 
-                if((tempPage * 10)>totCnt){
+                if((tempPage * 10)>=totCnt){
                     $(".btn-wrap.add-load.align-center").remove();
                 }else{
                     rtnPage = (tempPage * 10);
+                }
+
+                $(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+            }
+
+
+            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            //페이징 처리
+            cmmCtrl.listPaging(totCnt, $formObj, "tabContainer", "pagingContainer");
+        }, url, $formObj, "GET", "html");
+
+    }
+
+    var menuSearch = function (menuAddPage, cnt, menuAddCnt, menuFirstIndex){
+        //data로 치환해주어야한다.
+        if(menuAddPage != undefined){
+            $formObj.find("#pageIndex").val(menuAddPage);
+        }
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+            //CALLBACK 처리
+            var $menuTabContainer = ctrl.obj.find("#menuAddContainer");
+            $menuTabContainer.append(respObj);
+
+            menuFirstIndex = menuFirstIndex +1;
+            //전체 갯수
+            var totCnt = cnt;
+            //총 건수
+            if(totCnt <= 1 ){
+                $(".btn-wrap.add-load.align-center").remove();
+            }else{
+                var tempPage = (menuAddPage === undefined || menuAddPage == "") ? 1 : menuAddPage;
+                var rtnPage = 0;
+
+                if((tempPage * visibleMenuCnt)>=totCnt){
+                    $(".btn-wrap.add-load.align-center").remove();
+                }else{
+
+                    rtnPage = (tempPage * visibleMenuCnt);
+
                 }
 
                 $(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
@@ -44,14 +98,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "tabContainer", "pagingContainer");
-        }, url, $formObj, "GET", "html");
+            cmmCtrl.listPaging(totCnt, $formObj, "menuAddContainer", "pagingContainer");
+        },"/search/menu/tab?menuAddCnt="+menuAddCnt+"&menuFirstIndex="+menuFirstIndex+"&menuAddPage="+menuAddPage, $formObj, "GET", "html");
 
     }
 
     ctrl.model = {
         id : {
-
         },
         classname : {
             //페이징 처리
@@ -84,19 +137,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            menuAdd : {
+                event: {
+                    click: function () {
+                        ++menuAddPage;
+                        menuFirstIndex = menuAddCnt;
+                        menuAddCnt = menuAddCnt + visibleMenuCnt;
+                        if(menuAddCnt > menuCnt){
+                            menuSearch(menuAddPage, menuCnt, menuCnt, menuFirstIndex);
+                        }else{
+                            menuSearch(menuAddPage, menuCnt, menuAddCnt, menuFirstIndex);
+                        }
+                    }
+                }
+            }
         },
         immediately : function() {
-
-            cmmCtrl.setFormData($formObj);
-            if(menuType == "newsletter"){
-                var cnt = $("#letterCnt").val();
-                var url = "/foundation/board/newsletter/search/newsletter";
+            if(menuType !== "menu"){
+                cmmCtrl.setFormData($formObj);
+                if(menuType == "newsletter"){
+                    var cnt = $("#letterCnt").val();
+                    var url = "/foundation/board/newsletter/search/newsletter";
+                }
+                else if(menuType == "education"){
+                    var cnt = $("#episdCnt").val();
+                    var url = "/education/apply/select/education";
+                }
+                search(1,cnt,url);
             }
-            else if(menuType == "education"){
-                var cnt = $("#episdCnt").val();
-                var url = "/education/apply/select/education";
+            else{
+                var menuFirstIndex = 0;
+                var menuAddPage = 1;
+                menuSearch(menuAddPage, menuCnt, visibleMenuCnt, menuFirstIndex);
             }
-            search(1,cnt,url);
 
             $("#headerSrchFrm").find("input[name=q]").val( q );
             // 유효성 검사
@@ -124,25 +197,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             });
 
-            //통합검색 탭
-            if(menuType !=null && menuType != "" && menuType != 'menu') {
-                //통합검색 뉴스레터 클릭
-                if(menuType == 'newsletter'){
-                    console.log("메뉴타입뉴스 : " + menuType);
-                    cmmCtrl.listFrmAjax(function(respObj) {
-                        $("#tabContainer").html(respObj);
-                        //링크연결 여기서
-                    }, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html", false, false);
-                }
-                else if(menuType == 'education'){
-                    console.log("메뉴타입에듀 : " + menuType);
-                    cmmCtrl.listFrmAjax(function(respObj) {
-                        $("#tabContainer").html(respObj);
-                        //링크연결 여기서
-                    }, "/education/apply/select/education", $formObj, "GET", "html", false, false);
-                }
-
-            }
         }
     };
 

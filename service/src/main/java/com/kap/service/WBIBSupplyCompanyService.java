@@ -1,12 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
-import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
-import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -18,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * 공급망 > 신청업체관리 Service
+ * 공급망안정화기금 > 신청업체관리 Service
  *
  * <pre>
  * << 개정이력(Modification Information) >>
