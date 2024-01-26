@@ -7,9 +7,6 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
-import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
-import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
-import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.service.*;
@@ -29,18 +26,18 @@ import java.util.List;
 
 /**
  * <pre>
- * 공통사업 Controller
+ * 자동차부품산업대상 Controller
  * </pre>
  *
- * @author 박준희
+ * @author 오병호
  * @version 1.0
- * @ClassName : WBBManagementController.java
- * @Description : 공통사업 Controller
+ * @ClassName : WBJAutoMotiveController.java
+ * @Description : 자동차부품산업대상 Controller
  * @Modification Information
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.12.20		김태훈				   최초 생성
+ *    2023.12.20		오병호				   최초 생성
  * </pre>
  * @see
  * @since 2023.12.20

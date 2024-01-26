@@ -3,7 +3,6 @@ package com.kap.service;
 
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbj.WBJBAcomChangeDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomDTO;

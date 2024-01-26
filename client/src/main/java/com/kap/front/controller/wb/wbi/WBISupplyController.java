@@ -1,6 +1,5 @@
 package com.kap.front.controller.wb.wbi;
 
-import com.kap.common.utility.CONetworkUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
@@ -25,18 +24,18 @@ import java.util.List;
 
 /**
  * <pre>
- * 공통사업 Controller
+ * 공급망안정화기금 Controller
  * </pre>
  *
- * @author 박준희
+ * @author 오병호
  * @version 1.0
- * @ClassName : WBBManagementController.java
- * @Description : 공통사업 Controller
+ * @ClassName : WBISupplyController.java
+ * @Description : 공급망안정화기금 Controller
  * @Modification Information
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2023.12.20		김태훈				   최초 생성
+ *    2023.12.20		오병호				   최초 생성
  * </pre>
  * @see
  * @since 2023.12.20
@@ -200,17 +199,17 @@ public class WBISupplyController {
                 wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
 
                 COCodeDTO cOCodeDTO = new COCodeDTO();
-                /* 스마트 공장 구축 - 신청 코드 값*/
+                /* 공급망 안정화 기금 - 신청 코드 값*/
                 cOCodeDTO.setCd("PRO_TYPE06");
                 String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
                 wBIBSupplyDTO.setRsumeSttsCd(rsumeSttsCd);
 
-                /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
+                /* 공급망 안정화 기금 신청 신청자 최초 상태값 - 접수완료 */
                 cOCodeDTO.setCd(rsumeSttsCd + "_01");
                 List<COCodeDTO> getCode = cOCodeService.getCdIdList(cOCodeDTO);
                 wBIBSupplyDTO.setAppctnSttsCd(getCode.get(0).getCd());
 
-                /* 스마트 신청 관리자 최초 상태값 - 미확인 */
+                /* 공급망 안정화 기금 신청 관리자 최초 상태값 - 미확인 */
                 cOCodeDTO.setCd(rsumeSttsCd + "_02");
                 getCode = cOCodeService.getCdIdList(cOCodeDTO);
                 wBIBSupplyDTO.setMngSttsCd(getCode.get(0).getCd());

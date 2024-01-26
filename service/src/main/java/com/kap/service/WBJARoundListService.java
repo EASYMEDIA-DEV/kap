@@ -1,11 +1,8 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.COGCntsDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
