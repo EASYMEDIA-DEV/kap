@@ -18,6 +18,7 @@
             <input type="hidden" name="menuType" value="${menuType}"/>
             <input type="hidden" name="letterCnt" id="letterCnt" value="${letterCnt}"/>
             <input type="hidden" name="episdCnt" id="episdCnt" value="${episdCnt}"/>
+            <input type="hidden" name="newsCnt" id="newsCnt" value="${newsCnt}"/>
             <input type="hidden" name="menuCnt" id="menuCnt" value="${menuCnt}"/>
             <input type="hidden" name="menuAddPage" id="menuAddPage" value="${menuAddPage}"/>
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}"/>
@@ -158,7 +159,6 @@
                             </div>
                         </div>
                     </c:when>
-
                     <c:otherwise>
                         <!-- menuType이 menu가 아닌 경우 -->
                         <c:choose>
@@ -169,6 +169,10 @@
                             <c:when test="${menuType == 'education'}">
                                 <c:set var="cnt" value="${episdCnt}"/>
                                 <c:set var="tabName" value="교육/세미나"/>
+                            </c:when>
+                            <c:when test="${menuType == 'foundation'}">
+                                <c:set var="cnt" value="${newsCnt}"/>
+                                <c:set var="tabName" value="재단교육"/>
                             </c:when>
                         </c:choose>
 

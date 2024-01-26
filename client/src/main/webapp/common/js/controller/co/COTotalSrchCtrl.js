@@ -39,13 +39,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
-			//상세보기
+			//뉴스레터 상세보기
 			nwslttrListView: {
 				event: {
 					click: function () {
 						//상세보기
 						var detailsKey = $(this).data("detailsKey");
 						var url = "/foundation/board/newsletter/view?detailsKey=" + detailsKey;
+						location.href = url;
+					}
+				}
+			},
+			//재단뉴스 상세보기
+			foundationListView: {
+				event: {
+					click: function () {
+						//상세보기
+						var detailsKey = $(this).data("detailsKey");
+						var url = "/foundation/board/company-news/view?detailsKey=" + detailsKey;
 						location.href = url;
 					}
 				}
@@ -87,17 +98,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					//링크연결 여기서
 				}, "/education/apply/select", $formObj, "GET", "html", false, false);
 			}
-			//뉴스레터 
-			/**
-			if( parseInt($("#letterList").data("cnt")) > 0){
-				cmmCtrl.listFrmAjax(function(respObj) {
-					$("#letterContainer").html(respObj);
+			//재단뉴스
+			if( parseInt($("#foundationList").data("cnt")) > 0) {
+				cmmCtrl.listFrmAjax(function (respObj) {
+					$("#foundationContainer").html(respObj);
 					//링크연결 여기서
-				}, "/foundation/board/newsletter/list", $formObj, "GET", "html", false, false);
+				}, "/foundation/board/company-news/select", $formObj, "GET", "html", false, false);
 			}
-			**/
-
-			//뉴스레터 원본(위에 뉴스레터)에서 url 수정
+			//뉴스레터
 			if( parseInt($("#letterList").data("cnt")) > 0) {
 				cmmCtrl.listFrmAjax(function (respObj) {
 					$("#letterContainer").html(respObj);

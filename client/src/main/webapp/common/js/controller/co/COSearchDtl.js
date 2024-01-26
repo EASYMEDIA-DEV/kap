@@ -12,15 +12,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var menuType = $formObj.find("input[name=menuType]").val();
 
 
-    //메뉴탭 더보기를 누르면 visibleMenuCnt개의 게시물이 추가됨
+    // 메뉴탭 더보기를 누르면 visibleMenuCnt개의 게시물이 추가됨
     var visibleMenuCnt = 1;
-    //메뉴의 총 갯수
+    // 메뉴의 총 갯수
     var menuCnt = $formObj.find("input[name=menuCnt]").val();
-    //n개부터 m개까지의 게시물이 추가될때
-    //n == menuFirstIndex, m == menuAddCnt
+    // n개부터 m개까지의 게시물이 추가될때
+    // n == menuFirstIndex, m == menuAddCnt
     var menuAddCnt = visibleMenuCnt;
     var menuFirstIndex = menuAddCnt;
-    //더보기 버튼 x/y에서 x를 받아옴
+    // 더보기 버튼 x/y에서 x를 받아옴
     var menuAddPage = $formObj.find("input[name=menuAddPage]").val();
 
 
@@ -120,6 +120,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             var cnt = $("#episdCnt").val();
                             var url = "/education/apply/select/education";
                         }
+                        else if(menuType == "foundation"){
+                            var cnt = $("#newsCnt").val();
+                            var url = "/foundation/board/company-news/tab/list";
+                        }
                         var pageIndex = $formObj.find("input[name=pageIndex]").val();
                         search(++pageIndex,cnt,url);
 
@@ -155,13 +159,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         immediately : function() {
             if(menuType !== "menu"){
                 cmmCtrl.setFormData($formObj);
-                if(menuType == "newsletter"){
+                // 뉴스레터 탭 클릭
+                if (menuType == "newsletter") {
                     var cnt = $("#letterCnt").val();
                     var url = "/foundation/board/newsletter/search/newsletter";
                 }
-                else if(menuType == "education"){
+                // 교육/세미나 탭 클릭
+                else if (menuType == "education") {
                     var cnt = $("#episdCnt").val();
                     var url = "/education/apply/select/education";
+                }
+                // 재단소식 탭 클릭
+                else if (menuType == "foundation") {
+                    var cnt = $("#newsCnt").val();
+                    var url = "/foundation/board/company-news/tab/list";
                 }
                 search(1,cnt,url);
             }

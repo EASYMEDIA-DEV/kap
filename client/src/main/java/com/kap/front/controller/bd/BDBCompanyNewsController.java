@@ -86,4 +86,48 @@ public class BDBCompanyNewsController {
         return "front/bd/bdb/BDBCompanyNewsView.front";
     }
 
+    /**
+     * 통합검색 탭 재단소식 목록
+     */
+    @GetMapping(value="/tab/list")
+    public String getCompanyNewsTabListPage(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsTabList(pBDBCompanyNewsDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bdb/BDBCompanyNewsTabListAjax";
+    }
+
+    /**
+     * 재단소식 목록 페이지
+     */
+    @GetMapping(value="/select")
+    public String getCompanyNewsList(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bdb/BDBCompanyNewsListAjax";
+    }
+
 }

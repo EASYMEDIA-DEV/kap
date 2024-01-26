@@ -24,7 +24,11 @@ public interface BDBCompanyNewsService {
      * 재단소식 조회
     */
     public BDBCompanyNewsDTO selectCompanyNewsList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception;
-
+    /**
+     * 통합검색 재단소식 탭 조회
+     */
+    public BDBCompanyNewsDTO selectCompanyNewsTabList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception;
+    
     /**
      * 재단소식 조회 갯수(통합검색)
      */

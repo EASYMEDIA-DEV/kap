@@ -72,7 +72,6 @@ public class BDDNewsletterController {
     public String selectNewsletterListAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception {
         try {
             modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
-            log.info("rtnData : {}", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
