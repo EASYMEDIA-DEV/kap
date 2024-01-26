@@ -44,7 +44,10 @@ public class BDANoticeController {
     {
         try
         {
+
             modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
+            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostList(pBDANoticeDTO));
+
         }
         catch (Exception e)
         {

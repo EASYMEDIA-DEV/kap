@@ -68,7 +68,7 @@ public class BDANoticeServiceImpl implements BDANoticeService {
         // 사용자 메인 노출 갯수 조건문 추가
         if (pBDANoticeDTO.getMainYn().equals("Y")) {
             pBDANoticeDTO.setRecordCountPerPage(3);
-        }else{
+        }else {
             pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
         }
 
@@ -201,5 +201,13 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      */
     public BDANoticeDTO selectNextAndPrevSeqVal(BDANoticeDTO pBDANoticeDTO) throws Exception{
         return bDANoticeMapper.selectNextAndPrevSeqVal(pBDANoticeDTO);
+    }
+
+    /**
+     * 공지사항 조회
+     */
+    public BDANoticeDTO selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        pBDANoticeDTO.setList(bDANoticeMapper.selectMainPostList(pBDANoticeDTO));
+        return pBDANoticeDTO;
     }
 }

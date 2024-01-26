@@ -64,8 +64,8 @@
                                     </div>
                                 </div>
 
-                                <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                                <div class="btn-wrap add-load align-center moreBtn" id="pagingContainer">
+                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count cntText"></span></a>
                                 </div>
                             </div>
                         </div>

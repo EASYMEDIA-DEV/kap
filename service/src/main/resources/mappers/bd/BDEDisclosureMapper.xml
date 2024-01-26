@@ -25,11 +25,9 @@
             BD_MNGDSCLSR_MST A
         WHERE 1=1
           <include refid="selectDisclosureListwhereSql" />
-        <choose>
-            <when test="siteGubun == 'admin'">
-                LIMIT #{firstIndex}, #{recordCountPerPage}
-            </when>
-        </choose>
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

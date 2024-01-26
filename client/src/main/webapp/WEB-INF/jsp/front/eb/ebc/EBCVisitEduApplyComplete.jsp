@@ -1,4 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다.");
+            location.href="/";
+
+        }
+    }
+</script>
 <div id="wrap" data-controller="controller/eb/ebc/EBCVisitEduCtrl">
     <div class="cont-wrap">
         <div class="sub-top-vis-area apply-page consult-biz">

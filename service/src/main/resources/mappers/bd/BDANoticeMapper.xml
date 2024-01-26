@@ -16,6 +16,8 @@
             , READ_CNT
             , REG_DTM
             , NTFY_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
             <if test='siteGubun != "front"'>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -30,7 +32,9 @@
             BD_NTFY_MST A
         WHERE 1=1
           <include refid="selectNoticeListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--
@@ -224,6 +228,27 @@
                 ORDER BY
                     NTFY_SEQ
             ) TB
+    </select>
+
+    <!--
+         쿼리명 : BDANoticeMapper.selectMainPostList
+         설  명 : [사용자] 공지사항 중요공지 목록을 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.26   구은희       최초생성
+    -->
+    <select id="selectMainPostList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectMainPostList */
+            NTFY_SEQ
+             , TITL
+             , READ_CNT
+             , REG_DTM
+             , NTFY_YN
+        FROM
+            BD_NTFY_MST A
+        WHERE 1=1
+          AND NTFY_YN = 'Y'
+          AND (exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute))
     </select>
 
     <!--

@@ -190,6 +190,14 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             return false;
                         }
 
+                        var appctnTypeCdListChecked = $("#appctnTypeCdList").prop("checked");
+                        if($(!appctnTypeCdListChecked)) {
+                            alert(msgCtrl.getMsg("fail.eb.input.al_004"));
+                            $("#appctnTypeCdList").focus();
+                            return false;
+                        }
+
+
                         if($("#appctnThemeCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_005"));
                             $("#appctnThemeCntn").focus();

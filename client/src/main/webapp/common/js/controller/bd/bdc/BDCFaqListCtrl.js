@@ -9,7 +9,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    var chilCnt = $("#infoCard").children("a").length; // 게시물 수
+    var chilCnt = $("#listContainerTotCnt").text(); // 게시물 수
     var pageCnt = 1; // 페이지 카운트
     var page = (chilCnt / 9); // 더보기 페이지
     var detailsKey = "";
@@ -30,6 +30,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 totCnt = 0;
             }
             //총 건수
+            chilCnt = totCnt;
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
             ctrl.obj.find("#ctgryCd").addClass("active");
 
@@ -40,8 +41,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             if(detailsKey == ctgryCd) {
                 $(this).addClass("active");
             }
-            //페이징 처리
-            cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
         }, "./select", $formObj, "GET", "html");
     }
 
@@ -72,7 +71,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             moreBtn : {
                 event : {
                     click : function () {
-
+                        pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
+                        var openCnt = $("#listContainer").find(".open").length; // 보이는 게시물
+                        if(pageCnt <= page){
+                            $("#listContainer").children("a").slice(openCnt+1,openCnt+10).show();
+                            $("#listContainer").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
+                            $("#listContainer").children("a").slice(openCnt+1,openCnt+10).addClass("open");
+                            $(".cntText").text(openCnt+9 +"/"+ chilCnt);
+                        }else{
+                            $("#listContainer").find(".close").show();
+                            $(".moreBtn").hide();
+                        }
                     }
                 }
             },
@@ -87,7 +96,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         immediately : function() {
             search();
-
+            if(chilCnt > 9){
+                $("#listContainer").children("a").slice(9,chilCnt).hide();
+                $("#listContainer").children("a").slice(9,chilCnt).removeClass("open");
+                $("#listContainer").children("a").slice(9,chilCnt).addClass("close");
+                var openCnt = $("#listContainer").find(".open").length; // 보이는 게시물
+                $(".cntText").text(openCnt +"/"+ chilCnt);
+            }else{
+                $(".moreBtn").hide();
+            }
         }
     };
 

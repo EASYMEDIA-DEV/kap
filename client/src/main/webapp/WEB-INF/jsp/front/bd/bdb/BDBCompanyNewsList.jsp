@@ -44,10 +44,10 @@
                                                         <div class="img-box">
                                                             <c:choose>
                                                                 <c:when test="${ not empty list.webPath }">
-                                                                    <img src="${ list.webPath }" alt="">
+                                                                    <img src="${ list.webPath }" alt="${ list.fileDsc }">
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <img src="/common/images/@img-news-foundation-01.jpg" alt="">
+                                                                    <img src="" alt="">
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </div>

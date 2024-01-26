@@ -41,7 +41,15 @@
             BD_FNDN_NEWS_MST A
         WHERE 1=1
           <include refid="selectCompanyNewsListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='siteGubun == "front"'>
+            <if test='mainYn == "Y"'>
+                LIMIT #{firstIndex}, #{recordCountPerPage}
+            </if>
+        </if>
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
+
     </select>
 
     <!--

@@ -4,10 +4,14 @@ import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.service.BDBCompanyNewsService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * <pre>
@@ -40,10 +44,16 @@ public class BDBCompanyNewsController {
      * 재단소식 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getCompanyNewsListPage(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
+    public String getCompanyNewsListPage(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDBCompanyNewsDTO.setDeviceGubun("pc");
+            } else {
+                pBDBCompanyNewsDTO.setDeviceGubun("mobile");
+            }
             modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
         }
         catch (Exception e)

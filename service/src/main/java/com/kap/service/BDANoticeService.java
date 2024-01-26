@@ -70,4 +70,10 @@ public interface BDANoticeService {
      */
     public BDANoticeDTO selectNextAndPrevSeqVal(BDANoticeDTO pBDANoticeDTO) throws Exception;
 
+    /**
+     * 공지사항 중요공지 목록을 조회
+     */
+    public BDANoticeDTO selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+
 }
