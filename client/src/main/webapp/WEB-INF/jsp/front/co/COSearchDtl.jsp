@@ -18,6 +18,8 @@
             <input type="hidden" name="menuType" value="${menuType}"/>
             <input type="hidden" name="letterCnt" id="letterCnt" value="${letterCnt}"/>
             <input type="hidden" name="episdCnt" id="episdCnt" value="${episdCnt}"/>
+            <input type="hidden" name="menuCnt" id="menuCnt" value="${menuCnt}"/>
+            <input type="hidden" name="menuAddPage" id="menuAddPage" value="${menuAddPage}"/>
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="srch-wrap scroll-motion">
                 <div class="form-input srch-input for-motion">
@@ -147,63 +149,45 @@
                                     <p class="tit f-title2"><span class="menu-name">메뉴</span> (<span
                                             class="item-count">${ menuCnt }</span>)</p>
                                 </div>
-                                <div class="tab-con-area">
-                                    <c:choose>
-                                        <c:when test="${menuCnt > 0}">
-                                            <div class="menu-depth-info" id="menuDepthInfo">
-                                                <c:forEach var="list" items="${qMenuList}" varStatus="status" begin="0"
-                                                           end="0">
-                                                    <a class="menu-link" id="menuLink" href="${list.userUrl}">
-                                                        <c:set var="menuNmList" value="${fn:split(list.menuNm, '__')}"/>
-                                                        <c:forEach var="menuNm" items="${menuNmList}"
-                                                                   varStatus="status">
-                                                            <p class="menu f-head">${menuNm}</p>
-                                                        </c:forEach>
-                                                    </a>
-                                                </c:forEach>
-                                            </div>
-                                            <div class="btn-wrap align-center">
-                                                <a class="btn-solid small black-line" id="menuAddBtn"
-                                                   href="javascript:void(0);"><span>더보기</span><span
-                                                        class="item-count"></span></a>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <div class="no-data-area">
-                                                <div class="txt-box">
-                                                    <p class="txt f-body1">조회된 데이터가 없습니다.</p>
-                                                </div>
-                                            </div>
-                                        </c:otherwise>
-                                    </c:choose>
+                                <div class="tab-con-area" id="menuAddContainer">
+                                </div>
+                                <div class="btn-wrap add-load align-center">
+                                    <a class="btn-solid small black-line menuAdd"
+                                       href="javascript:"><span>더보기</span><span class="item-count"></span></a>
                                 </div>
                             </div>
                         </div>
                     </c:when>
-                    <c:when test="${menuType == 'newsletter'}">
-                        <c:set var="cnt" value="${letterCnt}"/>
-                        <c:set var="tabName" value="뉴스레터"/>
-                    </c:when>
-                    <c:when test="${menuType == 'education'}">
-                        <c:set var="cnt" value="${episdCnt}"/>
-                        <c:set var="tabName" value="교육/세미나"/>
-                    </c:when>
-                </c:choose>
 
-                <div class="tab-section scroll-motion " id="letterList" data-cnt="${ cnt }">
-                    <div class="for-motion">
-                        <div class="section-tit-area">
-                            <p class="tit f-title2"><span class="menu-name">${tabName}</span> (<span
-                                    class="item-count">${cnt}</span>)</p>
+                    <c:otherwise>
+                        <!-- menuType이 menu가 아닌 경우 -->
+                        <c:choose>
+                            <c:when test="${menuType == 'newsletter'}">
+                                <c:set var="cnt" value="${letterCnt}"/>
+                                <c:set var="tabName" value="뉴스레터"/>
+                            </c:when>
+                            <c:when test="${menuType == 'education'}">
+                                <c:set var="cnt" value="${episdCnt}"/>
+                                <c:set var="tabName" value="교육/세미나"/>
+                            </c:when>
+                        </c:choose>
+
+                        <div class="tab-section scroll-motion " data-cnt="${ cnt }">
+                            <div class="for-motion">
+                                <div class="section-tit-area">
+                                    <p class="tit f-title2"><span class="menu-name">${tabName}</span> (<span
+                                            class="item-count">${cnt}</span>)</p>
+                                </div>
+                                <div class="tab-con-area" id="tabContainer">
+                                </div>
+                                <div class="btn-wrap add-load align-center">
+                                    <a class="btn-solid small black-line pageSet"
+                                       href="javascript:"><span>더보기</span><span class="item-count"></span></a>
+                                </div>
+                            </div>
                         </div>
-                        <div class="tab-con-area" id="tabContainer">
-                        </div>
-                        <div class="btn-wrap add-load align-center">
-                            <a class="btn-solid small black-line pageSet"
-                               href="javascript:"><span>더보기</span><span class="item-count"></span></a>
-                        </div>
-                    </div>
-                </div>
+                    </c:otherwise>
+                </c:choose>
             </div>
         </form>
     </div>
