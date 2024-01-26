@@ -155,18 +155,21 @@ public class CBATechGuidanceController {
      */
     @RequestMapping(value = "/insert", method= RequestMethod.POST)
     public String insertTechGuidance(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
-        /*try {*/
+        try {
             COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+            String rsumeSttsCd = cBATechGuidanceInsertDTO.getRsumeSttsCd();
+            if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
 
+            }
             modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }

@@ -1788,7 +1788,7 @@ function anchorVisibleFn() {
 // 프린트 관련 함수
 function printFn(){
   // method 1 (새 윈도우 창 열어서 프린트 후 닫기)
-  var popUrl = "FO-PC-MYP-02-013.html";
+  var popUrl = "/my-page/edu-apply/cmPtm?detailsKey=28&episdYear=2024&episdOrd=4&ptcptSeq=137";
   var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
   var myWindow = window.open(popUrl, popOption);
   myWindow.document.close();

@@ -46,7 +46,7 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
     private final EgovIdGnrService disclosureSeqIdgen;
 
     /**
-     * 공지사항 조회
+     * 경영공시 조회
      */
     public BDEDisclosureDTO selectDisclosureList(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception {
         COPaginationUtil page = new COPaginationUtil();
@@ -65,14 +65,14 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
     }
 
     /**
-     * 공지사항 상세
+     * 경영공시 상세
      */
     public BDEDisclosureDTO selectDisclosureDtl(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception{
         return bDADisclosureMapper.selectDisclosureDtl(pBDEDisclosureDTO);
     }
 
     /**
-     * 공지사항 등록
+     * 경영공시 등록
      */
     public int insertDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception {
         //작성자
@@ -96,7 +96,7 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
     }
 
     /**
-     * 공지사항 수정
+     * 경영공시 수정
      */
     public int updateDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception{
         //수정자
@@ -118,10 +118,17 @@ public class BDEDisclosureServiceImpl implements BDEDisclosureService {
     }
 
     /**
-     * 공지사항 삭제
+     * 경영공시 삭제
      */
     public int deleteDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception{
-
         return bDADisclosureMapper.deleteDisclosure(pBDEDisclosureDTO);
+    }
+
+    /**
+     * 경영공시 첨부파일 목록 조회
+     */
+    public BDEDisclosureDTO selectDisclosureFileList(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception {
+        pBDEDisclosureDTO.setList(bDADisclosureMapper.selectDisclosureFileList(pBDEDisclosureDTO));
+        return pBDEDisclosureDTO;
     }
 }

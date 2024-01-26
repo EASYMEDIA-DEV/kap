@@ -57,7 +57,7 @@ var msgCtrl = (function(){
 		},
 		fail : {
 			act : "문제가 발생하여 진행이 중단됩니다. 잠시 후 다시 시도 바랍니다.",
-			target : "대상을 선택하세요.",
+			target : "대상을 선택해주세요.",
 			notFileRequired: "첨부파일을 등록해주세요.",
 			http : {
 				status : {
@@ -66,7 +66,7 @@ var msgCtrl = (function(){
 					"C406" : "해당 IP로는 접근이 불가합니다.\n관리자에게 문의해주세요."
 				}
 			},
-			del : "삭제할 게시물을 선택하세요.",
+			del : "삭제할 게시물을 선택해주세요.",
 			co : {
 				login : {
 					notExist : "사용자 정보를 찾을 수 없습니다.",
@@ -87,11 +87,11 @@ var msgCtrl = (function(){
 						previous_notMatch : "기존비밀번호가 일치하지 않습니다."
 					},
 					find : {
-						year : "년도를 정확히 입력하세요.",
-						month : "월을 정확히 입력하세요.",
-						day : "일을 정확히 입력하세요.",
-						hp : "휴대폰번호를 정확히 입력하세요.",
-						email : "이메일을 정확히 입력하세요.",
+						year : "년도를 정확히 입력해주세요.",
+						month : "월을 정확히 입력해주세요.",
+						day : "일을 정확히 입력해주세요.",
+						hp : "휴대폰번호를 정확히 입력해주세요.",
+						email : "이메일을 정확히 입력해주세요.",
 
 					}
 				},
@@ -163,7 +163,7 @@ var msgCtrl = (function(){
 			}
 			,newsletter : {
 				agree : "소식 및 관련 정보 수신을 동의해주세요.",
-				notEmail : "이메일을 입력하세요.",
+				notEmail : "이메일을 입력해주세요.",
 				emailCheck : "이메일 형태를 확인해주세요.",
 				registeredEmail : "이미 구독중인 이메일주소입니다."
 			}

@@ -76,7 +76,7 @@ public class WBKBFutureCarContestRegListController {
         cOCodeDTO.setCd("WBKB_REG_LRT");
         modelMap.addAttribute("wbkbRegLrt",  cOCodeService.getCdIdList(cOCodeDTO));
 
-        wBKBRegisterSearchDTO.setBsnCd("BNS11");
+        wBKBRegisterSearchDTO.setBsnCd("BSN11");
         //modelMap.addAttribute("rtnYear", wbkaFutureCarContestListService.selectYearDtl(wBFutureCarContestSearchDTO));
         modelMap.addAttribute("optYearList", wBKBRegisterService.getOptYearList(wBKBRegisterSearchDTO));
         modelMap.addAttribute("rtnData", wBKBRegisterSearchDTO);
@@ -94,9 +94,8 @@ public class WBKBFutureCarContestRegListController {
     {
         try
         {
-            wBKBRegisterSearchDTO.setBsnCd("BNS11");
+            wBKBRegisterSearchDTO.setBsnCd("BSN11");
             modelMap.addAttribute("rtnData", wBKBRegisterService.getRegisterList(wBKBRegisterSearchDTO));
-            System.out.println("rtnData==" + modelMap.getAttribute("rtnData"));
         }
         catch (Exception e)
         {
@@ -140,7 +139,7 @@ public class WBKBFutureCarContestRegListController {
             cOCodeDTO.setCd("WBKB_REG_LRT");
             modelMap.addAttribute("adminStateCd",  cOCodeService.getCdIdList(cOCodeDTO));
 
-            wBKBRegisterSearchDTO.setBsnCd("BNS11");
+            wBKBRegisterSearchDTO.setBsnCd("BSN11");
             //modelMap.addAttribute("rtnYear", wbkaFutureCarContestListService.selectYearDtl(wBFutureCarContestSearchDTO));
             modelMap.addAttribute("optYearList", wBKBRegisterService.getOptYearList(wBKBRegisterSearchDTO));
 
@@ -172,7 +171,7 @@ public class WBKBFutureCarContestRegListController {
     public String getEpisdListAjax(WBKBRegisterSearchDTO wBKBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBKBRegisterSearchDTO.setBsnCd("BNS11");
+            wBKBRegisterSearchDTO.setBsnCd("BSN11");
             modelMap.addAttribute("optEpisdList", wBKBRegisterService.getOptEpisdList(wBKBRegisterSearchDTO));
         }
         catch (Exception e)
@@ -194,7 +193,7 @@ public class WBKBFutureCarContestRegListController {
     public String getOptnListAjax(WBKBRegisterSearchDTO wBKBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBKBRegisterSearchDTO.setBsnCd("BNS11");
+            wBKBRegisterSearchDTO.setBsnCd("BSN11");
             // 공통코드 배열 셋팅
             modelMap.addAttribute("episdSeqList", wBKBRegisterService.getEpisdSeq(wBKBRegisterSearchDTO));
         }
@@ -223,8 +222,8 @@ public class WBKBFutureCarContestRegListController {
             wBKBRegisterDTO.setModId( coaAdmDTO.getId() );
             wBKBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBKBRegisterDTO.setBsnCd("BNS11"); /* 미래차공모전 */
-            //wBKBRegisterDTO.setRegUserSame("BNS11"); /* 미래차공모전 */
+            wBKBRegisterDTO.setBsnCd("BSN11"); /* 미래차공모전 */
+            //wBKBRegisterDTO.setRegUserSame("BSN11"); /* 미래차공모전 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
 
@@ -298,7 +297,7 @@ public class WBKBFutureCarContestRegListController {
             wBKBRegisterDTO.setModId( coaAdmDTO.getId() );
             wBKBRegisterDTO.setModIp( coaAdmDTO.getLoginIp() );
 
-            wBKBRegisterDTO.setBsnCd("BNS11"); /* 미래차공모전 */
+            wBKBRegisterDTO.setBsnCd("BSN11"); /* 미래차공모전 */
 
             if(wBKBRegisterDTO.getPartName() != null && !wBKBRegisterDTO.getPartName().isEmpty()) {
 
@@ -400,7 +399,7 @@ public class WBKBFutureCarContestRegListController {
         {
 
             wBKBRegisterSearchDTO.setExcelYn("Y");
-            wBKBRegisterSearchDTO.setBsnCd("BNS11");
+            wBKBRegisterSearchDTO.setBsnCd("BSN11");
             WBKBRegisterSearchDTO excelDataList = wBKBRegisterService.getRegisterList(wBKBRegisterSearchDTO);
 
             //엑셀 생성

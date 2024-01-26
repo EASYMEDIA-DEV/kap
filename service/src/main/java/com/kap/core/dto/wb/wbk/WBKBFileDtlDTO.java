@@ -36,6 +36,12 @@ public class WBKBFileDtlDTO extends BaseDTO {
     @Schema(title = "파일순번", example = "숫자")
     private Integer lastFileSeq;
 
+    @Schema(title = "파일순서", example = "숫자")
+    private Integer fileOrd;
+    @Schema(title = "파일면", example = "숫자")
+    private String orgFileNm;
+
+
     @Schema(title = "스텝 파일 리스트")
     private List<WBKBFileDtlDTO> FileDtlList;
 }

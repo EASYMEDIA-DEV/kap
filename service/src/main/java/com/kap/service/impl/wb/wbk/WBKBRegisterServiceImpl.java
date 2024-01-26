@@ -243,9 +243,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         /* 신청 상세 Update */
         respCnt *= wBKBRegisterMapper.updAppctnRsumeTaskDtl(wBKBRegisterDTO);
 
-        System.out.println("업데이트 wBKBRegisterDTO == " + wBKBRegisterDTO.getRsumeSeq());
-        /* 파일 업데이트 */
-
         /* 팀원 Update */
         if(wBKBRegisterDTO.getPartList() != null && !wBKBRegisterDTO.getPartList().isEmpty()) {
             respCnt *= wBKBRegisterMapper.delPartDtl(wBKBRegisterDTO);
@@ -300,19 +297,21 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         if(wBKBRegisterDTO.getFileList() != null && !wBKBRegisterDTO.getFileList().isEmpty()) {
             wBKBRsumeDTO.setFileList(wBKBRegisterDTO.getFileList());
             HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBKBRsumeDTO.getFileList());
-            System.err.println("fileSeqMap :: " + fileSeqMap);
 
             if (wBKBRsumeDTO.getRsumeOrd() == 1) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("appctnFileSeq"));
             else if (wBKBRsumeDTO.getRsumeOrd() == 2) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("firstFileSeq"));
             else if (wBKBRsumeDTO.getRsumeOrd() == 3) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("lastFileSeq"));
 
             if (wBKBRegisterDTO.getFileList().get(0).getFileDsc() != null && !wBKBRegisterDTO.getFileList().get(0).getFileDsc().isEmpty())
-            respCnt *= wBKBRegisterMapper.putDtlFileDtl(wBKBRsumeDTO);
+                respCnt *= wBKBRegisterMapper.putDtlFileDtl(wBKBRsumeDTO);
         }
 
        //if(wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT002")  && wBKBRegisterDTO.getRsumeOrd() < 4){ // 통과 시
-        if(wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT003") || wBKBRegisterDTO.getMngSttsCd().isEmpty() && wBKBRsumeDTO.getRsumeOrd() < 4){ // 탈락 시
+        if(wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT003") || wBKBRegisterDTO.getMngSttsCd().equals("WBKB_REG_LRT004") || wBKBRegisterDTO.getMngSttsCd().isEmpty() && wBKBRsumeDTO.getRsumeOrd() < 4){ // 사용자 취소,탈락,미확인 시
             /* 해당 상태 수정 */
+            if(wBKBRsumeDTO.getMngSttsCd().equals("") || wBKBRsumeDTO.getMngSttsCd().isEmpty()){
+                wBKBRsumeDTO.setAppctnSttsCd("WBKB_REG_FRT001");
+            }
             wBKBRegisterMapper.updRsumeStep(wBKBRsumeDTO);
             /* 다음 스텝 있으면 삭제*/
             if(wBKBRegisterDTO.getRsumeOrd()+1 < 4 ) {
@@ -320,7 +319,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
             }
 
         }else if(wBKBRegisterDTO.getRsumeOrd() < 4){ // 통과,수상,참여자 취소 시
-
             /* 기존 스텝 상태 변경 및 다음 스텝 추가 */
             wBKBRegisterMapper.updRsumeStep(wBKBRsumeDTO); // 기존 스텝 상태변경
 
@@ -330,6 +328,62 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
             }
 
         }
+
+        return respCnt;
+
+    }
+
+    public int furecarUserUpd(WBKBRegisterDTO wBKBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+
+        int respCnt = 1;
+        COUserDetailsDTO coaAdmDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        wBKBRegisterDTO.setModId(coaAdmDTO.getId());
+        wBKBRegisterDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        // DTO set
+        WBKBRsumeDTO wBKBRsumeDTO = new WBKBRsumeDTO();
+
+        wBKBRsumeDTO.setRsumeSeq(wBKBRegisterDTO.getRsumeSeq());
+        wBKBRsumeDTO.setRsumeOrd(wBKBRegisterDTO.getRsumeOrd());
+        wBKBRsumeDTO.setFileCd(wBKBRegisterDTO.getFileCd());
+
+        // 파일 업데이트
+        respCnt *= wBKBRegisterMapper.delDtlFile(wBKBRsumeDTO);
+
+        //신청파일 넣기
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                atchFileCnt++;
+            }
+        }
+
+        if (!files.isEmpty()) {
+            rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+            for (int i = 0; i < rtnList.size() ; i++) {
+
+                List<COFileDTO> fileList = new ArrayList();
+                rtnList.get(i).setStatus("success");
+                rtnList.get(i).setFieldNm("fileSeq");
+                fileList.add(rtnList.get(i));
+
+                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                wBKBRegisterDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+
+                wBKBRegisterMapper.putAppctnFileDtl(wBKBRegisterDTO);
+            }
+        }
+
 
         return respCnt;
 
@@ -354,15 +408,12 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         CheckStepZero += wBKBRegisterMapper.checkAppctnRsumeDtl(wBKBRegisterDTO);
 
 
-        if(CheckStepZero != 0 && detailsKey.length == CheckStepZero) { //삭제 시작
+        //if(CheckStepZero != 0 && detailsKey.length == CheckStepZero) { //삭제 시작
             for (String detailKey : detailsKey) {
                 wBKBRegisterDTO.setDetailsKey(detailKey);
                 //  rsumeSeq 체크
                 rsumeSeq = wBKBRegisterMapper.checkAppctnRsumeSeq(wBKBRegisterDTO);
                 wBKBRegisterDTO.setRsumeSeq(rsumeSeq);
-                System.err.println("CheckStepZero ==" + CheckStepZero);
-                System.err.println("CheckStepZero ==" + rsumeSeq);
-
 
                 respCnt = wBKBRegisterMapper.deleteCarRegAppctnMst(wBKBRegisterDTO); // 신청 마스터
                 wBKBRegisterMapper.deleteCarRegAppctnRsumeDtl(wBKBRegisterDTO); // 진행상태
@@ -370,7 +421,7 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
                 wBKBRegisterMapper.deleteCarRegAppctnDtl(wBKBRegisterDTO); //공모전 상세
                 wBKBRegisterMapper.deleteCarRegAppctnTmmbrDtl(wBKBRegisterDTO); //팀원 상세
             }
-        }
+        //}
 
 
 
@@ -476,7 +527,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
 
         // Body
         List<WBKBRegisterSearchDTO> list = wBKBRegisterSearchDTO.getList();
-        System.err.println("list ===" + list );
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
 
@@ -651,7 +701,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
                 wBKBRegisterDTO.setRegIp( regIp );
 
                 rtnCnt = wBKBRegisterMapper.putAppctnMst(wBKBRegisterDTO);
-                System.err.println("사용자 신청 신청 마스터 카운트" + rtnCnt);
                 if (rtnCnt > 0) {
 
                     /* 상생신청 상세 */

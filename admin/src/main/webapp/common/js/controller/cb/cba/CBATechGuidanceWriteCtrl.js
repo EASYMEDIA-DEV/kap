@@ -931,6 +931,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }
         },
         immediately: function () {
+
+            var appctnCheck = $('input:checkbox[name="appctnTypeCd"]:checked').length;
+            if(appctnCheck == 10){
+
+            }
+
+
             changeStts(); // 진행상태 변경
             questionSet();
             /* Editor Setting */

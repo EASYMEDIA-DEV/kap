@@ -49,9 +49,14 @@ public class BDEDisclosureDTO extends BaseDTO {
     @Schema(title = "파일순번")
     private Integer fileSeq;
 
+    @Schema(title = "파일정렬값")
+    private Integer fileOrd;
+
+    @Schema(title = "파일명")
+    private String fileName;
+
     @Schema(title = "노출여부")
     private String expsYn;
-
 
     @Schema(title = "노출여부 리스트")
     @Hidden

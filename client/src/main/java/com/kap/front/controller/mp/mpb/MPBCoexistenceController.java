@@ -1,12 +1,13 @@
 package com.kap.front.controller.mp.mpb;
 
-import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpb.MPBBsnMstDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
 import com.kap.core.dto.wb.WBSpprtDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyDtlDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
@@ -25,7 +26,11 @@ import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.core.utility.COFileUtil;
+import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
+import com.kap.core.dto.wb.wbk.WBKBRegisterSearchDTO;
+import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
 import com.kap.service.*;
+import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -33,6 +38,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
@@ -83,6 +89,9 @@ public class MPBCoexistenceController {
     public final WBDBSafetyService wBDBSafetyService;
     public final WBEBCarbonCompanyService wBEBCarbonCompanyService;
     public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
+    private final MPAUserService mpaUserService;
+    public final WBKBRegisterService wBKBRegisterService;
+
     private final COFileUtil cOFileUtil;
 
     /**
@@ -139,6 +148,15 @@ public class MPBCoexistenceController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            MPAUserDto mpaUserDto = new MPAUserDto();
+            mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
+
+            if (!"".equals(mpaUserDto.getDetailsKey())) {
+                MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
+                modelMap.addAttribute("coUser", mpaUserDtos);
+            }
+
             mpbBsnSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
             mpbBsnSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
@@ -210,14 +228,39 @@ public class MPBCoexistenceController {
 
                     modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
                     modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
+                } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
+                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
+                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //보안환경구축
+                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
+                } else if ("BSN11".equals(mpbBsnSearchDTO.getBsnCd())) {
+                    //미래차공모전
+                    WBKBRegisterSearchDTO wBKBRegisterSearchDTO = new WBKBRegisterSearchDTO();
+                    wBKBRegisterSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                    modelMap.addAttribute("rtnData", wBKBRegisterService.selectFutureCarConRegDtl(wBKBRegisterSearchDTO));
+                    System.err.println("rtnUser ==" + modelMap.getAttribute("rtnData"));
                 }
             }
 
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("businessYn", businessYn);
             modelMap.addAttribute("rtnBsnData", mpbCoexistenceService.getBsnDetail(mpbBsnSearchDTO));
-            modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
+            //modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
             modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+            if( !"BSN11".equals(mpbBsnSearchDTO.getBsnCd())){
+                modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
+            }
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -296,7 +339,6 @@ public class MPBCoexistenceController {
                     wbbApplyDtlDTO.setRsumeOrd(mpbBsnSearchDTO.getRsumeOrd());
                     wbbApplyDtlDTO.setAppctnSttsCd(mpbBsnSearchDTO.getAppctnSttsCd());
                     wbbApplyDtlDTO.setAppctnSeq(mpbBsnMstDTO.getAppctnSeq());
-                    wbbApplyDtlDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                     respCnt = wbbbCompanyService.updateInfo(wbbApplyDtlDTO, multiRequest, request);
 
@@ -358,6 +400,26 @@ public class MPBCoexistenceController {
                         wBIBSupplyDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
 
                         respCnt = wBIBSupplyCompanyService.updateInfo(wBIBSupplyDTO, multiRequest, request);
+                    } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
+
+                        respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
+                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //안전설비구축
+                        WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = mpbBsnMstDTO.getWBDBSafetyMstInsertDTO();
+
+                        respCnt = wBDBSafetyService.carbonUserUpdate(wBDBSafetyMstInsertDTO, multiRequest, request);
+                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //탄소배출저감
+                        WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = mpbBsnMstDTO.getWBEBCarbonCompanyMstInsertDTO();
+
+                        respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
+                    } else if ("BSN11".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //미래차공모전
+                        WBKBRegisterDTO wBKBRegisterDTO = mpbBsnMstDTO.getWBKBRegisterDTO();
+
+                        respCnt = wBKBRegisterService.furecarUserUpd(wBKBRegisterDTO, multiRequest, request);
                     }
                 }
             }

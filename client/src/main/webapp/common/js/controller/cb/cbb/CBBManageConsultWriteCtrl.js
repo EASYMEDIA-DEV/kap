@@ -192,7 +192,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var cmpnAddrYn = $("#cmpnAddrSameYn").val();
 
                         if(cmpnAddrYn == 'N'){
-                            $("cmpnAddrSameYn").val('Y');
+                            $("#cmpnAddrSameYn").val('Y');
                             cmpnMst.bsnmNo = $(".bsnmNo").val().replaceAll("-", "");
                             cmmCtrl.jsonAjax(function (data) {
                                 var info = JSON.parse(data)
@@ -219,7 +219,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }, rqstCntn : {
                 event : {
                     input : function(){
-                        console.log("!");
+                        var textLength = $(this).val().length;
+                        $(".current-byte").text(textLength);
                     }
                 }
             }
@@ -421,7 +422,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                                 return false;
                                                             }else{
                                                                 if(!appctnRsnCd){
-                                                                    alert("신청사유를 선택하세요.");
+                                                                    alert("신청사유를 선택해주세요.");
                                                                     $("input[name='appctnRsnCd']").focus();
                                                                     return false;
                                                                 }else{

@@ -31,8 +31,9 @@ define(["ezCtrl"], function(ezCtrl) {
 			//총 건수
 
 			if(totCnt <= 10 ){
-				$(".btn-wrap.add-load.align-center").remove();
+				$(".btn-wrap.add-load.align-center").hide();
 			}else{
+				$(".btn-wrap.add-load.align-center").show();
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
@@ -42,16 +43,13 @@ define(["ezCtrl"], function(ezCtrl) {
 				}else{
 					rtnPage = (tempPage * 10);
 				}
-				//debugger
-
 
 				if(rtnPage == totCnt){
-					$(".btn-wrap.add-load.align-center").remove();
+					$(".btn-wrap.add-load.align-center").hide();
 				}else{
+					$(".btn-wrap.add-load.align-center").show();
 					$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 				}
-
-
 
 			}
 
@@ -201,9 +199,10 @@ define(["ezCtrl"], function(ezCtrl) {
 						var edctnSeq = $(this).data("edctnseq");
 						var episdYear = $(this).data("episdyear");
 						var episdOrd = $(this).data("episdord");
+						var ptcptSeq = $(this).data("ptcptseq");
 						$(this).data("episdord");
 
-						location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 					}
 				}
 			},

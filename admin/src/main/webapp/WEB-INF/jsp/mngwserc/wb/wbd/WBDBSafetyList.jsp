@@ -115,7 +115,7 @@
                         <th class="text-center">신청자<br>(아이디)</th>
                         <th class="text-center">휴대폰번호</th>
                         <th class="text-center">이메일</th>
-                        <th class="text-center">등록일시</th>
+                        <th class="text-center">신청일시</th>
                         <th class="text-center">사용자 수정일</th>
                         <th class="text-center">최종 수정자<br>(아이디)</th>
                         <th class="text-center">최종 수정일시</th>

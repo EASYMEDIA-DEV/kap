@@ -344,6 +344,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "수료여부", example = "텍스트")
     private String cmptnYn;
 
+    @Schema(title = "수료일", example = "yyyy-mm-dd HH:mm:ss")
+    private String cmptnDtm;
+
     @Schema(title = "참여자의 교육상태", example = "텍스트")
     private String eduStat;
 
@@ -374,6 +377,43 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "양도전 회원번호", example = "숫자")
     private Integer bfreMemSeq;
+
+    @Schema(title = "설문참여여부", example = "Y/N")
+    private String srvYn;
+
+    @Schema(title = "설문 참여한 날짜", example = "yyyy-mm-dd HH:mm:ss")
+    private String srvDtm;
+
+    @Schema(title = "참여자 시험참여번호", example = "Y/N")
+    private String examPtcptSeq;
+
+    @Schema(title = "참여자 시험참여날짜", example = "yyyy-mm-dd HH:mm:ss")
+    private String examPtcptDtm;
+
+    @Schema(title = "수료기준코드명", example = "텍스트")
+    private String cmptnStndCdNm;
+
+    @Schema(title = "수료평가코드명", example = "텍스트")
+    private String cmptnJdgmtCdNm;
+
+    @Schema(title = "출석률", example = "텍스트")
+    private Integer atndcInfo;
+
+    @Schema(title = "참여자강의 진도율", example = "텍스트")
+    private Integer ptcptInfo;
+
+    @Schema(title = "과정강의개수", example = "텍스트")
+    private Integer lcrtInfo;
+
+    @Schema(title = "참여자의 수료여부", example = "텍스트")
+    private String ptcptCmtnYn;
+
+    @Schema(title = "자격증 연계코드", example = "텍스트")
+    private String lcnsCnnctCd;
+
+    @Schema(title = "수료증번호", example = "텍스트")
+    private String crtfctNo;
+
 
 
 
@@ -423,6 +463,10 @@ public class EBBEpisdDTO extends BaseDTO {
 
     @Schema(title = "마이페이지 교육신청내역 교육/방문교육 구분자 교육과정:E, 방문교육:V", example = "E/V")
     private String eduGubun;
+
+    @Schema(title = "관리자-차수관리 출석부팝업에서 사용하는 조건절, 양도된 목록은 제외하기 위함", example = "Y/N")
+    @Builder.Default
+    private String atndcYn = "N";
 
 
     private String srchLayer;

@@ -297,8 +297,15 @@
                 </otherwise>
             </choose>
         </if>
-        ORDER BY
+        <if test='siteGubun != "front"'>
+            ORDER BY
             REG_DTM DESC
+        </if>
+        <if test='siteGubun == "front"'>
+            ORDER BY
+            NTFY_YN DESC, REG_DTM DESC
+        </if>
+
     </sql>
 </mapper>
 

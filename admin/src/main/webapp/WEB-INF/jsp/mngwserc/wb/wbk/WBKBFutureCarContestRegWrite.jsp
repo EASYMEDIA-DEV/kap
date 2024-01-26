@@ -357,12 +357,13 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">
+                                                <p class="form-control-static" id="userCancel">
                                                     <c:choose>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT001'}">접수완료</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT003'}">탈락</c:when>
+                                                            <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT004'}">사용자취소</c:when>
                                                             <c:otherwise>접수완료</c:otherwise>
                                                     </c:choose>
                                                 </p>

@@ -39,7 +39,7 @@
     <div class="right-con-area">
       <div class="cont-sec-w">
         <div class="cont-sec no-border scroll-motion">
-          <div class="for-motion">
+          <div class="for-motion" >
             <div class="sec-tit-area">
               <p class="f-title3">신청 팀장 정보 및 신청정보를 입력해주세요</p>
               <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
@@ -164,7 +164,7 @@
                     <div class="data-line-w">
                       <div class="data-line">
                         <div class="form-select">
-                          <select name="ptcptType" title="참여구분 선택">
+                          <select class="ptcptType" name="ptcptType" title="참여구분 선택">
                             <option value="" selected="">선택</option>
                             <c:forEach var="cdDtlList" items="${cdDtlList.WBK_PTN}" varStatus="status">
                               <option value="${cdDtlList.cd}">${cdDtlList.cdNm}</option>
@@ -373,7 +373,10 @@
                         <p class="data-title f-body1">신청서</p>
                         <div class="form-group">
                           <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                            <p class="empty-txt">선택된 파일 없음</p>
+                            <div class="file-list">
+                              <p class="empty-txt">선택된 파일 없음</p>
+                              <button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>
+                            </div>
                           </div>
                           <div class="file-btn-area">
                             <%--<input type="file" id="searchFile">

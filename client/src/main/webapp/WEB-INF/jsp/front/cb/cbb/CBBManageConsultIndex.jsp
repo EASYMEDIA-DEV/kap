@@ -75,7 +75,7 @@
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ03&inqSec=경영컨설팅"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" data-seq="${loginMap.seq}" id="goContact"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +141,7 @@
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
+                                    <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>

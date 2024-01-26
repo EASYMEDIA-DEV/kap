@@ -27,7 +27,7 @@
         FROM
             (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'BNS11'
+            WHERE bsn_cd = 'BSN11'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN(
                 SELECT
@@ -70,6 +70,8 @@
             E.birth,
             B.appctn_seq, B.reg_id, B.reg_dtm , B.mod_id, B.mod_dtm,
             (SELECT cd_nm FROM co_code_mst WHERE cd = D.theme_cd) as theme_cd_nm,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.ptcpt_type) as ptcpt_type_nm,
+            (SELECT cd_nm FROM co_code_mst WHERE cd = D.grd_cd) as rd_grd_cd_Nm,
             C.rsume_ord, -- 서류 단계
             -- C.rsume_stts_cd, -- 서류 상
             C.appctn_stts_cd, -- 신청자 신청 상태값
@@ -99,7 +101,7 @@
         FROM
             (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'BNS11'
+            WHERE bsn_cd = 'BSN11'
             ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
             INNER JOIN cx_appctn_rsume_dtl C on C.appctn_seq = B.appctn_seq
             INNER JOIN cx_appctn_rsume_prize_car_dtl D on D.rsume_seq = C.rsume_seq
@@ -117,8 +119,9 @@
     -->
 
     <select id="selectFutureCarPartDtl" parameterType="wBKBRegisterDTO" resultType="WBKBRegPartDTO">
-        select *    /*WBKBRegisterMapper.selectFutureCarPartDtl*/
-        from cx_appctn_rsume_prize_car_tmmbr_dtl
+        select a.*    /*WBKBRegisterMapper.selectFutureCarPartDtl*/
+        ,(SELECT cd_nm FROM co_code_mst WHERE cd = a.grd_cd) as grd_cd_nm
+        from cx_appctn_rsume_prize_car_tmmbr_dtl a
         where rsume_seq=#{rsumeSeq};
     </select>
 
@@ -144,14 +147,26 @@
         ==========  ======  ==============
         2023.11.16  민윤기     최초 생성
     -->
-
-    <select id="selectFutureCarFileDtl" parameterType="wBKBRegisterDTO" resultType="WBKBFileDtlDTO">
+    <!--<select id="selectFutureCarFileDtl" parameterType="wBKBRegisterDTO" resultType="WBKBFileDtlDTO">
         SELECT /*WBKBRegisterMapper.selectFutureCarFileDtl*/
             RSUME_SEQ , RSUME_ORD , FILE_CD , FILE_SEQ , REG_ID , REG_IP , REG_DTM
         FROM cx_appctn_rsume_file_dtl
         WHERE RSUME_SEQ = #{rsumeSeq}
         ORDER BY RSUME_ORD ASC;
+    </select>-->
+    <select id="selectFutureCarFileDtl" parameterType="wBKBRegisterDTO" resultType="WBKBFileDtlDTO">
+        SELECT A.*
+            ,(SELECT file_ord FROM co_file_dtl B WHERE B.file_seq = A.file_seq and USE_YN = 'Y') as FILE_ORD
+            ,(SELECT orgn_file_nm FROM co_file_dtl B WHERE B.file_seq = A.file_seq and USE_YN = 'Y') as ORG_FILE_NM
+        FROM (
+            SELECT /*WBKBRegisterMapper.selectFutureCarFileDtl*/
+            RSUME_SEQ , RSUME_ORD , FILE_CD , FILE_SEQ , REG_ID , REG_IP , REG_DTM
+            FROM cx_appctn_rsume_file_dtl
+            WHERE RSUME_SEQ =#{rsumeSeq}
+            ORDER BY RSUME_ORD ASC
+        ) A;
     </select>
+
 
     <!--
          쿼리명 : WBFBRegisterCompanyMapper.getRegisterCompanyCount
@@ -176,7 +191,7 @@
         FROM
         (
             SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = 'BNS11'
+            WHERE bsn_cd = 'BSN11'
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
         INNER JOIN(
             SELECT
@@ -394,7 +409,7 @@
         2023.11.16  민윤기     최초 생성
     -->
     <insert id="putAppctnFileDtl" parameterType="wBKBRegisterDTO" >
-        INSERT /*WBKBRegisterMapper.selectFutureCarRegDtl*/ INTO cx_appctn_rsume_file_dtl
+        INSERT /*WBKBRegisterMapper.putAppctnFileDtl*/ INTO cx_appctn_rsume_file_dtl
         (
             rsume_seq,
             rsume_ord,
@@ -970,7 +985,7 @@
             MEM_SEQ,
             APPCTN_BSNM_NO,
             REG_DTM,
-            (select name from co_mem_mst where mem_seq = 57 ) NAME
+            (select name from co_mem_mst where mem_seq = #{memSeq} ) NAME
         FROM CX_APPCTN_MST A
         WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
     </select>
@@ -1030,7 +1045,7 @@
             D.DTL_CNTN
         FROM  (
                   SELECT * FROM CX_EPISD_MST
-                  WHERE BSN_CD = 'BNS11'
+                  WHERE BSN_CD = 'BSN11'
               ) A
                   INNER JOIN CX_APPCTN_MST B ON B.EPISD_SEQ = A.EPISD_SEQ
                   INNER JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ

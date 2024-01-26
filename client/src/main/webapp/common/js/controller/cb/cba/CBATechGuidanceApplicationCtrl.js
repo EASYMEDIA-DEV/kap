@@ -26,8 +26,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $(".sqInfo").show();
                 for(var i=0; i <coInfo.list.length; i++){
                     if(coInfo.list[i].nm){
-                    document.getElementById("sqInfo").innerHTML +=
-                    "<p>"+coInfo.list[i].nm+' /'+coInfo.list[i].score+' /'+coInfo.list[i].year+' /'+coInfo.list[i].crtfnCmpnNm+"</p>";
+                        var html = "<p>"+coInfo.list[i].nm+' /'+coInfo.list[i].score+' /'+coInfo.list[i].year+' /'+coInfo.list[i].crtfnCmpnNm+"</p>";
+                        var replaceHtml = html.replaceAll("undefined", "-")
+                    document.getElementById("sqInfo").innerHTML +=replaceHtml
+
                     }
                 }
             }else if(ctgryCd == "COMPANY01001"){
@@ -59,7 +61,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             $("#stbsmDt").text(coInfo.list[0].stbsmDt);
             $("#telNo").text(coInfo.list[0].telNo);
-            $("#dtlAddr").text("("+coInfo.list[0].zipcode+")"+coInfo.list[0].dtlAddr);
+            $("#dtlAddr").text("("+coInfo.list[0].zipcode+")"+coInfo.list[0].bscAddr+coInfo.list[0].dtlAddr);
             $("#slsPmt").text(coInfo.list[0].slsPmt+"억 원"+" ("+coInfo.list[0].slsYear+"년)");
             $("#mpleCnt").text(coInfo.list[0].mpleCnt+"명");
 
@@ -76,6 +78,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         }, './checkPartsCompany', info, "text");
     }
+
+    var memberSearch = function(data){
+        var memInfo = {};
+        memInfo.detailsKey = data;
+        cmmCtrl.jsonAjax(function (data) {
+            console.log(data.deptCdNm);
+            var memInfo = JSON.parse(data)
+            console.log(memInfo);
+            $(".deptCd").text(memInfo.deptCdNm+"("+memInfo.deptDtlNm+")");
+         }, './selectDtlInfo', memInfo, "text");
+    };
+
 
     // set model
     ctrl.model = {
@@ -104,6 +118,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         immediately : function() {
             bsnmNoSearch($("#bsnmNo").val())
+            memberSearch($(".memSeq").val())
         }
     };
 

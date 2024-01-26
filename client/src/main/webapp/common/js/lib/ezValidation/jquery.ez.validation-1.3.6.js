@@ -100,8 +100,8 @@
 						
 					}
 				},
-				idChk : "6~12자 이내 영문, 영문&숫자 조합으로 입력하세요.",
-				passChk : "8~15자 이내 영문+특수문자+숫자 조합으로 입력하세요.",
+				idChk : "6~12자 이내 영문, 영문&숫자 조합으로 입력해주세요.",
+				passChk : "8~15자 이내 영문+특수문자+숫자 조합으로 입력해주세요.",
 				passEqualChk : "비밀번호가 일치하지 않습니다.",
 				emailChk : "이메일 주소를 확인해주세요.",
 				numberChk : "숫자만 입력가능합니다.",
@@ -433,7 +433,7 @@
 								}
 								else
 								{
-									var tempMsg = "값을 입력하세요.";
+									var tempMsg = "값을 입력해주세요.";
 									var trgtTit = textboxObj.prop("title");
 									var tagLengthValue = textboxObj.attr("maxLength");
 
@@ -442,7 +442,7 @@
 										var lastChar = trgtTit.charAt(trgtTit.length - 1);
 										var josa = (lastChar.charCodeAt(0) - 44032) % 28 ? "을" : "를";
 
-										tempMsg = trgtTit + josa + " 입력하세요.";
+										tempMsg = trgtTit + josa + " 입력해주세요.";
 
 										if(typeof tagLengthValue != "undefined") {
 											tempMsg += " (최대 " + tagLengthValue + "자까지 입력 가능합니다.)";
@@ -488,7 +488,7 @@
 						{
 							if (!obj.data("state"))
 							{
-								var trgtMsg = "중복 확인을 하세요.";
+								var trgtMsg = "중복 확인을 해주세요.";
 								var trgtType = this.confirmList[index].type;
 
 								if (trgtType == "id")

@@ -282,17 +282,17 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                         return false;
                                     }else{
                                         if(!rprsntApprvYn){
-                                            alert("대표자 승인여부를 선택하세요.");
+                                            alert("대표자 승인여부를 선택해주세요.");
                                             $("input[name='rprsntApprvYn']").focus();
                                             return false;
                                         }else{
                                             if(!appctnRsnCd){
-                                                alert("신청사유를 선택하세요.");
+                                                alert("신청사유를 선택해주세요.");
                                                 $("input[name='appctnRsnCd']").focus();
                                                 return false;
                                             }else{
                                                 if(!cbsnCd){
-                                                    alert("업종을 선택하세요.");
+                                                    alert("업종을 선택해주세요.");
                                                     $("input[name='cbsnCd']").focus();
                                                     return false;
                                                 }else if(cbsnCd == 'TEC_GUIDE_INDUS01'){
@@ -301,7 +301,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                                     return false;
                                                 }else{
                                                     if(!appctnTypeCd){
-                                                        alert("신청사항을 선택하세요.");
+                                                        alert("신청사항을 선택해주세요.");
                                                         $("input[name='appctnTypeCd']").focus();
                                                         return false;
                                                     }else{

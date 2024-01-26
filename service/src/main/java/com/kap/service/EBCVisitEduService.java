@@ -98,4 +98,9 @@ public interface EBCVisitEduService {
      */
     public EBCVisitEduDTO selectApplicantInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
+    /**
+     * 신청한 방문교육을 교육취소로 변경
+     */
+    public void updateVisitEduApplyCancel(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+
 }

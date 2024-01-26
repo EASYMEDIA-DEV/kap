@@ -1,5 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
+            location.href = "/";
+        }
+    }
+</script>
 <div class="cont-wrap" data-controller="controller/cb/cba/CBATechGuidanceApplicationCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
@@ -65,6 +75,7 @@
                             <div class="table-sec">
                                 <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                     <table class="basic-table">
+                                        <input type="hidden" class="memSeq" value="${loginMap.seq}">
                                         <caption>신청자 기본 정보</caption>
                                         <colgroup>
                                             <col style="width: 273rem;">
@@ -89,17 +100,17 @@
                                         </tr>
                                         <tr>
                                             <th>부서</th>
-                                            <td>${loginMap.deptNm}</td>
+                                            <td class="deptCd"></td>
                                         </tr>
                                         <tr>
                                             <th>직급</th>
-                                            <td>${loginMap.pstnCdNm}</td>
+                                            <td>${loginMap.pstnCdNm}(${loginMap.pstnNm})</td>
                                         </tr>
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +135,7 @@
                                         <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td>${loginMap.bsnmNo}</td>
+                                            <td>${kl:bsnmNoConvert(loginMap.bsnmNo)}</td>
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>
@@ -187,7 +198,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>

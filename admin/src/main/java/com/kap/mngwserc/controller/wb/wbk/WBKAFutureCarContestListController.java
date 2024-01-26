@@ -68,8 +68,6 @@ public class WBKAFutureCarContestListController {
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
         modelMap.addAttribute("rtnData", wbkaFutureCarContestListService.selectFutureCarContestList(wBFutureCarContestSearchDTO));
 
-        System.out.println("rtnData ===" + modelMap.getAttribute("rtnData") );
-
         return "mngwserc/wb/wbk/WBKAFutureCarContestList.admin";
     }
 
@@ -144,7 +142,7 @@ public class WBKAFutureCarContestListController {
     public String getEpisdListAjax(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, ModelMap modelMap) throws Exception
     {
         try {
-            wBFBRegisterSearchDTO.setBsnCd("BNS11");
+            wBFBRegisterSearchDTO.setBsnCd("BSN11");
             modelMap.addAttribute("optEpisdList", wBFBRegisterCompanyService.getOptEpisdList(wBFBRegisterSearchDTO));
         }
         catch (Exception e)

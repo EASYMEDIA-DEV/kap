@@ -68,6 +68,9 @@ public class EBMMypageController
     /** 방문교육 서비스 **/
     public final EBCVisitEduService ebcVisitEduService;
 
+    public final EBDSqCertiReqService eBDSqCertiReqService;
+
+
     /**
      * 교육/세미나 사업 신청내역 목록/my-page/edu-apply/list
      */
@@ -155,7 +158,7 @@ public class EBMMypageController
     {
 
         String vwUrl = "";
-        System.out.println(" ");
+
         if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
             //QR 이미지 타고 들어옴
             //로직 처리
@@ -267,6 +270,65 @@ public class EBMMypageController
     }
 
     /**
+     * 교육/세미나 사업 수료증 출력
+     */
+    @GetMapping("/my-page/edu-apply/cmPtm")
+    public String getCmptnPop(EBBEpisdDTO eBBEpisdDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+
+        String vwUrl = "front/eb/ebm/EBMCmptnPop";
+        try{
+
+            eBBEpisdDTO.setMypageYn("Y");
+            eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+            HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+            EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+
+
+            //사용자 출석정보 호출
+
+            if(rtnDto != null){
+
+                if("Y".equals(rtnDto.getCmptnYn())){
+
+                    System.out.println("@@@ rtnDto= " + rtnDto);
+                    modelMap.addAttribute("rtnData", rtnDto);
+
+                }else{
+                    System.out.println("@@@ 여긴가1");
+                    modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                    modelMap.addAttribute("url", "/");
+                    vwUrl = "front/COBlank.error";
+                }
+
+
+
+            }else{
+                System.out.println("@@@ 여긴가2");
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+
+
+
+
+        return vwUrl;
+    }
+
+    /**
      * 방문교육 신청내역 상세 /my-page/edu-apply/visit-edu-detail
      */
     @GetMapping("/my-page/edu-apply/visit-edu-detail")
@@ -305,7 +367,7 @@ public class EBMMypageController
     }
 
     /**
-     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     * 교육/세미나 사업 교육양도 상세/my-page/edu-apply/detail
      */
     @GetMapping("/my-page/edu-apply/transfer")
     public String getTrnsfDetail(EBBEpisdDTO eBBEpisdDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -501,6 +563,14 @@ public class EBMMypageController
 
                 vwUrl = "front/eb/ebm/EBMEduApplyOnlineStep2.front";
 
+                //수료여부 체크
+                EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
+                System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
+                if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+                    System.out.println("@@@ SQ 갱신");
+                    eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
+                }
+
             } else {
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
                 modelMap.addAttribute("url", "/");
@@ -521,7 +591,6 @@ public class EBMMypageController
     {
         try
         {
-
             EBBLctrDTO ttt = eBBEpisdService.selectLctrDtlList(eBBLctrDTO);
 
             EBBPtcptDTO setDto = new EBBPtcptDTO();
@@ -529,15 +598,27 @@ public class EBMMypageController
             setDto.setPtcptSeq(ebbPtcptDTO.getPtcptSeq());
             setDto.setLctrSeq(eBBLctrDTO.getNowLctrSeq());
 
-            setDto.setEdctnSeq(ebbPtcptDTO.getPtcptSeq());
+            setDto.setEdctnSeq(ebbPtcptDTO.getEdctnSeq());
             setDto.setEpisdOrd(ebbPtcptDTO.getEpisdOrd());
             setDto.setEpisdYear(ebbPtcptDTO.getEpisdYear());
             setDto.setEpisdSeq(ebbPtcptDTO.getEpisdSeq());
 
-
-
-            System.out.println("@@@ setDto = " + setDto);
             eBBEpisdService.setOnlinePtcptInfo(setDto);
+
+            EBBEpisdDTO rtnDto = new EBBEpisdDTO();
+            COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+            rtnDto.setPtcptSeq(ebbPtcptDTO.getPtcptSeq());
+            rtnDto.setMemSeq(cOLoginUserDTO.getSeq());
+            rtnDto.setEpisdYear(ebbPtcptDTO.getEpisdYear());
+            rtnDto.setEdctnSeq(ebbPtcptDTO.getEdctnSeq());
+            //수료여부 체크
+            EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
+            System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
+            if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+                System.out.println("@@@ SQ 갱신");
+                eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
+            }
+
 
             modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
             modelMap.addAttribute("nowLctrSeq", eBBLctrDTO.getNowLctrSeq());
@@ -770,6 +851,23 @@ public class EBMMypageController
             {
                 if(eBBPtcptDTO.getPtcptSeq() != null){
                     eBBEpisdService.updateAtndcInfo(eBBPtcptDTO);
+
+                    EBBEpisdDTO rtnDto = new EBBEpisdDTO();
+                    COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+                    rtnDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+                    rtnDto.setMemSeq(cOLoginUserDTO.getSeq());
+                    rtnDto.setEpisdYear(eBBPtcptDTO.getEpisdYear());
+                    rtnDto.setEdctnSeq(eBBPtcptDTO.getEdctnSeq());
+
+                    //수료여부 체크
+                    EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
+                    System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
+                    if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+                        System.out.println("@@@ SQ 갱신");
+                        eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
+                    }
+
+
                     rtnStr = "Y";
                 }else{
                     rtnStr = "N";
@@ -811,7 +909,6 @@ public class EBMMypageController
             return rtnStr;
         }
 
-
         @Operation(summary = "마이페이지 교육 양도", tags = "교육차수 신청자 등록", description = "")
         @PostMapping(value="/edu-apply/setTrnsf")
         public EBBPtcptDTO setTrnsf(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
@@ -835,10 +932,6 @@ public class EBMMypageController
 
             return temoDto;
         }
-
-
-
-
 
         /**
          * 교육신청 취소
@@ -871,8 +964,32 @@ public class EBMMypageController
             String rtnStr = "";
             try
             {
-                modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
+                ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO);
 
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
+
+        /**
+         * 마이페이지 > 교육신청 내역 > 방문교육 상세 > 교육신청 취소
+         */
+        @PostMapping(value = "/edu-apply/visitEduApplyCancel")
+        public String updateVisitEduApplyCancel(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+                ebcVisitEduDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+                ebcVisitEduDTO.setModIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
+                ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02004");
+                ebcVisitEduService.updateVisitEduApplyCancel(ebcVisitEduDTO);
+                rtnStr = "Y";
             }
             catch (Exception e)
             {

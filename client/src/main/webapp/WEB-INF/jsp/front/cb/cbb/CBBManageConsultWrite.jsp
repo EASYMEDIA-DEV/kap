@@ -1,4 +1,14 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
+            location.href = "/";
+        }
+    }
+</script>
 <c:set var="csList" value="${rtnDto.list}"/>
 <%
   String bsnmNo = request.getParameter("bsnmNo");
@@ -97,10 +107,10 @@
                                                 <div class="data-inner-line tempRow" id="dlvryRow">
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력">
+                                                            <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력" maxlength="50">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="비율(%) 입력">
+                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="비율(%) 입력" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -121,10 +131,10 @@
                                                 <div class="data-inner-line dpTempRow" id="dpndnRow">
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm">
+                                                            <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm" maxlength="50">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate">
+                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -145,7 +155,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="frgnDpndnRate" number="frgnDpndnRate" placeholder="의존율(%) 입력">
+                                                            <input type="number" class="frgnDpndnRate" name="frgnDpndnRate" placeholder="의존율(%) 입력" maxlength="3">
                                                             <p class="unit-txt">%</p>
                                                         </div>
                                                     </div>
@@ -162,7 +172,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="dmstcSlsPmt" name="dmstcSlsPmt" placeholder="매출액 입력">
+                                                            <input type="number" class="dmstcSlsPmt" name="dmstcSlsPmt" placeholder="매출액 입력" maxlength="3">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -179,7 +189,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="frgnSlsPmt" name="frgnSlsPmt" placeholder="매출액 입력">
+                                                            <input type="number" class="frgnSlsPmt" name="frgnSlsPmt" placeholder="매출액 입력" maxlength="3">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -196,7 +206,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="ttlSlsPmt" name="ttlSlsPmt" placeholder="매출액 입력">
+                                                            <input type="number" class="ttlSlsPmt" name="ttlSlsPmt" placeholder="매출액 입력" maxlength="3">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -213,7 +223,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="carPartSlsPmt" placeholder="매출액 입력">
+                                                            <input type="number" class="carPartSlsPmt" name="carPartSlsPmt" placeholder="매출액 입력" maxlength="3">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -230,7 +240,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="carPartXcludSlsPmt" placeholder="매출액 입력">
+                                                            <input type="number" class="carPartXcludSlsPmt" name="carPartXcludSlsPmt" placeholder="매출액 입력" maxlength="3">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -266,7 +276,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-input w-longest">
-                                                                    <input type="text" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="">
+                                                                    <input type="text" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="" maxlength="50">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -312,7 +322,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" name="hmpgeUrl" placeholder="홈페이지 주소 입력">
+                                                            <input type="text" name="hmpgeUrl" placeholder="홈페이지 주소 입력" maxlength="50">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -329,7 +339,7 @@
                                                     <div class="opt-group">
                                                         <c:forEach var="appctnRsnCd" items="${cdDtlList.APPCTN_RSN_CD}" varStatus="status">
                                                             <div class="form-radio">
-                                                                <input type="radio" id="${appctnRsnCd.cd}" name="appctnRsnCd">
+                                                                <input type="radio" id="${appctnRsnCd.cd}" value="${appctnRsnCd.cd}" name="appctnRsnCd">
                                                                 <label for="${appctnRsnCd.cd}">${appctnRsnCd.cdNm}</label>
                                                             </div>
                                                         </c:forEach>
@@ -347,7 +357,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="qltyPicCnt" name="qltyPicCnt" placeholder="인원수 입력">
+                                                            <input type="number" class="qltyPicCnt" name="qltyPicCnt" placeholder="인원수 입력" maxlength="3">
                                                             <p class="unit-txt">명</p>
                                                         </div>
                                                     </div>
@@ -397,7 +407,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-textarea">
-                                                            <textarea name="rqstCntn" id="rqstCntn" oninput="getTextLength(this);" cols="" rows="" placeholder="세부내용 입력"></textarea>
+                                                            <textarea name="rqstCntn" id="rqstCntn" cols="" rows="" placeholder="세부내용 입력" maxlength="500"></textarea>
                                                             <div class="check-byte">
                                                                 <p class="txt"><span class="current-byte">0</span>자</p>
                                                                 <p class="txt"><span class="max-byte">500</span>자</p>

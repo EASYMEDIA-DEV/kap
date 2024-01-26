@@ -248,7 +248,7 @@
                             <div class="loginfo-wrap">
 								<c:if test="${ loginMap.authCd ne 'CS'}">
                                 <div class="loginfo-box">
-                                    <p class="info-tit f-title3">신청내역</p>
+                                    <p class="info-tit f-title3">사업 신청내역</p>
 									<span class="f-caption2">최근 1년 기준</span>
                                     <div class="info-cont">
 

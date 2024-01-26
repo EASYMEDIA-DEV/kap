@@ -63,7 +63,9 @@ public class IMAQaController {
             return "/front/im/ima/IMAQaWrite.front";
         }
         else {
-            return "redirect:/login?rtnUrl=/foundation/cs/qa/index";
+            String uri = request.getRequestURI();
+            String queryString = request.getQueryString();
+            return "redirect:/login?rtnUrl=" + uri + "?" + queryString;
         }
     }
 

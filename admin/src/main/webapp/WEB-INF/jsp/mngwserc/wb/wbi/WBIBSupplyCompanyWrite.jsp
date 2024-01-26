@@ -195,7 +195,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-6" style="margin-left: -15px">
-                            <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control telNumber" id="compTel" name="compTel" value="" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
 

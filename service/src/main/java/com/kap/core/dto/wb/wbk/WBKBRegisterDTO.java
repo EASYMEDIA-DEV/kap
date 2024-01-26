@@ -80,6 +80,10 @@ public class WBKBRegisterDTO extends BaseDTO {
     private String appctnSttsCd;
     @Schema(title = "진행상태값", example = "")
     private String appctnSttsCdNm;
+    @Schema(title = "미래차 주제", example = "")
+    private String themeCdNm;
+    @Schema(title = "신청팀 참여구분", example = "")
+    private String ptcptTypeNm;
     @Schema(title = "신청상태변경일시", example = "")
     private String appctnSttsChngDtm;
     @Schema(title = "관리자상태값코드", example = "")
@@ -105,6 +109,8 @@ public class WBKBRegisterDTO extends BaseDTO {
     private String dtlCntn;
     @Schema(title = "시상식코드", example = "")
     private String wdcrmCd;
+    @Schema(title = "시상부문 명")
+    private String wdcrmNm;
     @Schema(title = "역대수상자여부", example = "")
     private String hghstWinerYn;
     @Schema(title = "참여구분", example = "")
@@ -123,6 +129,9 @@ public class WBKBRegisterDTO extends BaseDTO {
     private Integer rdGrd;
     @Schema(title = "팀장  학년코드", example = "")
     private String rdGrdCd;
+    @Schema(title = "팀장  학년코드", example = "")
+    private String rdGrdCdNm;
+
 
     @Schema(title = "팀원순번", example = "숫자")
     private Integer tmmbrSeq;
@@ -138,6 +147,8 @@ public class WBKBRegisterDTO extends BaseDTO {
     private String partGrd;
     @Schema(title = "참여자 학년코드", example = "")
     private String partGrdCd;
+    @Schema(title = "참여자 학년코드", example = "")
+    private String partGrdCdNm;
 
     @Schema(title = "미래차 공모전 참여자 리스트")
     private List<WBKBRegPartDTO> partList;
