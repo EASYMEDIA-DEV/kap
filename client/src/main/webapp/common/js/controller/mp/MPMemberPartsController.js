@@ -128,6 +128,7 @@ define(["ezCtrl"], function(ezCtrl) {
             return false;
         }
         if(!bsnmOldNewChk) {
+
             if ($("#ctgryCd").val().trim() == '' || $("#ctgryCd").val() == undefined ) {
                 alert(msgCtrl.getMsg("fail.mp.join.al_027"));
                 $("#ctgryCd").focus();
@@ -166,6 +167,76 @@ define(["ezCtrl"], function(ezCtrl) {
                 event.preventDefault();
                 return false;
             }
+            if($("#ctgryCd").val()=='COMPANY01001') {
+
+                if($("#qlty5StarCd").val() == ''  && $("#qlty5StarYear").val() !='') {
+                    alert("품질5스타를 선택해주세요.");
+                    $("#qlty5StarCd").focus();
+                    event.preventDefault();
+                    return false;
+                }
+                if($("#qlty5StarCd").val() != ''  && $("#qlty5StarYear").val() =='') {
+                    alert("품질5스타 연도를 선택해주세요.");
+                    $("#qlty5StarYear").focus();
+                    event.preventDefault();
+                    return false;
+                }
+                if($("#pay5StarCd").val() == ''  && $("#pay5StarYear").val() !='') {
+                    alert("납입5스타를 선택해주세요.");
+                    $("#pay5StarCd").focus();
+                    event.preventDefault();
+                    return false;
+                }
+                if($("#pay5StarCd").val() != ''  && $("#pay5StarYear").val() =='') {
+                    alert("납입5스타 연도를 선택해주세요.");
+                    $("#pay5StarYear").focus();
+                    event.preventDefault();
+                    return false;
+                }
+                if($("#tchlg5StarCd").val() == ''  && $("#tchlg5StarYear").val() !='') {
+                    alert("기술5스타를 선택해주세요.");
+                    $("#tchlg5StarCd").focus();
+                    event.preventDefault();
+                    return false;
+                }
+                if($("#tchlg5StarCd").val() != ''  && $("#tchlg5StarYear").val() =='') {
+                    alert("기술5스타 연도를 선택해주세요.");
+                    $("#tchlg5StarYear").focus();
+                    event.preventDefault();
+                    return false;
+                }
+            }
+            if($("#ctgryCd").val()=='COMPANY01002') {
+                for(var i = 1 ; i <= 3 ; i++) {
+                    if(($("#nm"+i).val()=="") &&($("#score"+i).val()!=""|| $("#crtfnCmpnNm"+i).val()!="" || $("#year"+i).val()!="") ) {
+                        alert("SQ 업종을 입력해주세요.");
+                        $("#nm"+i).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                    if(($("#year"+i).val()=="") &&($("#score"+i).val()!=""|| $("#crtfnCmpnNm"+i).val()!="" || $("#nm"+i).val()!="") ) {
+                        alert("SQ연도를 선택해주세요.");
+                        $("#year"+i).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                    if(($("#score"+i).val()=="") &&($("#score"+i).val()!=""|| $("#crtfnCmpnNm"+i).val()!="" || $("#nm"+i).val()!="") ) {
+                        alert("SQ점수를 입력해주세요.");
+                        $("#score"+i).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                    if(($("#crtfnCmpnNm"+i).val()=="") &&($("#score"+i).val()!=""|| $("#crtfnCmpnNm"+i).val()!="" || $("#nm"+i).val()!="") ) {
+                        alert("SQ인증주관사를 입력해주세요.");
+                        $("#crtfnCmpnNm"+i).focus();
+                        event.preventDefault();
+                        return false;
+                    }
+                }
+
+
+            }
+
         }
         var list1 = [];
         list1.push("");
@@ -225,9 +296,12 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".gubunOne").show();
                                 $(".gubunTwo").hide();
                         } else if($(this).val() == 'COMPANY01002'){
+                            startInit();
                                 $(".gubunOne").hide();
                                 $(".gubunTwo").show();
                         } else {
+                            btnSqInit();
+                            startInit();
                             $(".gubunOne").hide();
                             $(".gubunTwo").hide();
                         }
@@ -670,6 +744,7 @@ define(["ezCtrl"], function(ezCtrl) {
         immediately : function() {
             init();
             btnSqInit();
+            startInit();
         }
 
     };
@@ -688,6 +763,15 @@ define(["ezCtrl"], function(ezCtrl) {
         $(".data-line"+clickIndex).show();
         $(".lastBtnIndex"+clickIndex).append('<button class="btn-text-icon delete btnSqInfoMinus" type="button"><span>삭제</span></button>');
         $(".lastBtnIndex"+clickIndex).append('<button class="btn-solid small gray-bg btn-add-line btnSqInfoPlus" type="button"><span>SQ 정보 추가</span></button>');
+    }
+
+    function startInit() {
+        $("#qlty5StarCd").val("");
+        $("#qlty5StarYear").val("");
+        $("#pay5StarCd").val("");
+        $("#pay5StarYear").val("");
+        $("#tchlg5StarCd").val("");
+        $("#tchlg5StarYear").val("");
     }
 
     ctrl.exec();
