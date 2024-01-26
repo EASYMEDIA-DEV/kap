@@ -15,6 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
@@ -336,14 +337,14 @@ public class EBINonMemberController {
 
     @Operation(summary = "비회원 교육 신청자 등록", tags = "비회원 교육 신청자 등록", description = "")
     @PostMapping(value="/ptcpt/setPtcptInfo")
-    public String setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO, ModelMap modelMap) throws Exception
+    public String setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         //비회원 교육 신청자를 등록, 등록할 때 이미 회원이 있으면 취소
 
         EBINonMemberDTO temoDto = new EBINonMemberDTO();
 
         try {
-            temoDto = eBINonMemberService.setPtcptInfo(pEBINonMemberDTO);
+            temoDto = eBINonMemberService.setPtcptInfo(pEBINonMemberDTO, request);
 
             modelMap.addAttribute("rtnData", temoDto);
         }
@@ -490,11 +491,11 @@ public class EBINonMemberController {
 
         @Operation(summary = "비회원 교육 과정 신청자 신청 취소", tags = "비회원 교육 과정 신청자 신청 취소", description = "")
         @PostMapping(value="/updatePtcpt")
-        public EBINonMemberDTO updatePtcpt(@RequestBody EBINonMemberDTO pEBINonMemberDTO) throws Exception
+        public EBINonMemberDTO updatePtcpt(@RequestBody EBINonMemberDTO pEBINonMemberDTO, HttpServletRequest request) throws Exception
         {
             try {
 
-                pEBINonMemberDTO.setRespCnt(eBINonMemberService.updatePtcpt(pEBINonMemberDTO));
+                pEBINonMemberDTO.setRespCnt(eBINonMemberService.updatePtcpt(pEBINonMemberDTO, request));
 
             }
             catch (Exception e)

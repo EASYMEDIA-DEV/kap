@@ -21,10 +21,13 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -381,31 +384,63 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	 * 비회원 교육 과정 신청자 등록
 	 */
 	@Transactional
-	public EBINonMemberDTO setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO) throws Exception
+	public EBINonMemberDTO setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO, HttpServletRequest request) throws Exception
 	{
 		EBINonMemberDTO tempDto = new EBINonMemberDTO();
+		EBINonMemberDTO tempDto2 = new EBINonMemberDTO();
+		EBINonMemberDTO tempDto3 = new EBINonMemberDTO();
 
 		tempDto = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
+		tempDto2 = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
-		//이미 등록된 회원
-		if(tempDto != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
-			pEBINonMemberDTO.setRegStat("F");
-		//없어서 새로 추가함
-		}else{
-			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-			pEBINonMemberDTO.setRegId( cOUserDetailsDTO.getId() );
-			pEBINonMemberDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
-			pEBINonMemberDTO.setModId( cOUserDetailsDTO.getId() );
-			pEBINonMemberDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+		//해당 과정이 존재할 경우
+		if(tempDto2.getAccsStatusNm().contains("접수중")) {
+			boolean modYn = false;
+			if(pEBINonMemberDTO.getApplyDateTime() != null && !pEBINonMemberDTO.getApplyDateTime().isEmpty() && tempDto2.getModDtm() != null && !tempDto2.getModDtm().isEmpty()) {
+				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+				LocalDateTime applyDateTime = LocalDateTime.parse(pEBINonMemberDTO.getApplyDateTime(), formatter);
+				LocalDateTime modDtm = LocalDateTime.parse(tempDto2.getModDtm(), formatter);
+				if(applyDateTime.compareTo(modDtm) < 0) {
+					modYn = true;
+				}
+			}
 
-			int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
-			pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
-
-			eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);
-
-			pEBINonMemberDTO.setRegStat("S");
+			//해당 과정이 신청 작성 중에 수정 됐을 경우
+			if(modYn) {
+				pEBINonMemberDTO.setRegStat("N");
+			}
+			//이미 등록된 신청자 (중복)
+			else if(tempDto != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
+				pEBINonMemberDTO.setRegStat("F");
+			}
+			//등록
+			else{
+				if("admin".equals(pEBINonMemberDTO.getSiteGubun())) {
+					COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+					pEBINonMemberDTO.setRegId(cOUserDetailsDTO.getId());
+					pEBINonMemberDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+					pEBINonMemberDTO.setModId(cOUserDetailsDTO.getId());
+					pEBINonMemberDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+				}
+				else if("front".equals(pEBINonMemberDTO.getSiteGubun())) {
+					pEBINonMemberDTO.setRegId(pEBINonMemberDTO.getName());
+					pEBINonMemberDTO.setRegIp(request.getRemoteAddr());
+					pEBINonMemberDTO.setModId(pEBINonMemberDTO.getName());
+					pEBINonMemberDTO.setModIp(request.getRemoteAddr());
+				}
+				pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
+				int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
+				pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
+				eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);
+				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
+				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
+				pEBINonMemberDTO.setRegStat("S");
+			}
 		}
-
+		//해당 과정이 삭제된 경우
+		else {
+			pEBINonMemberDTO.setRegStat("N");
+		}
 
 		return pEBINonMemberDTO;
 
@@ -430,13 +465,17 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	 * 비회원 교육 과정 신청자 신청 취소
 	 */
 	@Transactional
-	public int updatePtcpt(EBINonMemberDTO pEBINonMemberDTO) throws Exception
+	public int updatePtcpt(EBINonMemberDTO pEBINonMemberDTO, HttpServletRequest request) throws Exception
 	{
-		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-		pEBINonMemberDTO.setRegId( cOUserDetailsDTO.getId() );
-		pEBINonMemberDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
-		pEBINonMemberDTO.setModId( cOUserDetailsDTO.getId() );
-		pEBINonMemberDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+		if("admin".equals(pEBINonMemberDTO.getSiteGubun())) {
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			pEBINonMemberDTO.setModId(cOUserDetailsDTO.getId());
+			pEBINonMemberDTO.setModIp(cOUserDetailsDTO.getLoginIp());
+		}
+		else if("front".equals(pEBINonMemberDTO.getSiteGubun())) {
+			pEBINonMemberDTO.setModId(pEBINonMemberDTO.getName());
+			pEBINonMemberDTO.setModIp(request.getRemoteAddr());
+		}
 
 		return eBINonMemberMapper.updatePtcpt(pEBINonMemberDTO);
 	}
@@ -966,6 +1005,54 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
 		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
 		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+	}
+
+
+
+
+
+
+	/**
+	 * 사용자 - 비회원 교육 과정 신청 개수 조회
+	 */
+	@Transactional
+	public int searchPtcptCnt(EBINonMemberDTO pEBINonMemberDTO) throws Exception
+	{
+		pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
+
+		return eBINonMemberMapper.searchPtcptCnt(pEBINonMemberDTO);
+	}
+
+	/**
+	 *  사용자 - 비회원 교육 신청한 과정 목록 조회
+	 */
+	public EBINonMemberDTO selectNonMemberApplyList(EBINonMemberDTO pEBINonMemberDTO) throws Exception
+	{
+		pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
+
+		COPaginationUtil page = new COPaginationUtil();
+
+		page.setCurrentPageNo(pEBINonMemberDTO.getPageIndex());
+		page.setRecordCountPerPage(pEBINonMemberDTO.getListRowSize());
+
+		page.setPageSize(pEBINonMemberDTO.getPageRowSize());
+
+		pEBINonMemberDTO.setFirstIndex( page.getFirstRecordIndex() );
+		pEBINonMemberDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
+
+		pEBINonMemberDTO.setList( eBINonMemberMapper.selectNonMemberApplyList(pEBINonMemberDTO) );
+		pEBINonMemberDTO.setTotalCount( eBINonMemberMapper.searchPtcptCnt(pEBINonMemberDTO) );
+
+		return pEBINonMemberDTO;
+	}
+
+	/**
+	 * 사용자 - 비회원 교육 신청 페이지 정보 상세
+	 */
+	@Transactional
+	public EBINonMemberDTO selectNonMemberApplyPtcptDtl(EBINonMemberDTO pEBINonMemberDTO) throws Exception
+	{
+		return eBINonMemberMapper.selectNonMemberApplyPtcptDtl(pEBINonMemberDTO);
 	}
 
 }

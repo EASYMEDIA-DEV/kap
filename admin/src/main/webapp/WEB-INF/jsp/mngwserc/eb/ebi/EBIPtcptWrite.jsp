@@ -193,7 +193,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">핸드폰번호<span class="star"> *</span></label>
                     <div class="col-sm-9" style="margin-left: -15px">
-                        <input type="text" class="form-control input-sm" value="${rtnDto.hpNo}" id="hpNo" name="hpNo" title="핸드폰번호" maxlength="50" />
+                        <input type="text" class="form-control input-sm" value="${rtnDto.hpNo}" id="hpNo" name="hpNo" title="핸드폰번호" maxlength="13" />
                     </div>
                 </div>
             </fieldset>

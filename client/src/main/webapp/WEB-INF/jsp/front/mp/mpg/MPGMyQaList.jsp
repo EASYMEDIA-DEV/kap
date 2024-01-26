@@ -148,7 +148,7 @@
                                     </div>
                                     <c:if test="${ rtnData.pageIndex * rtnData.listRowSize < rtnData.totalCount }">
                                     <div class="btn-wrap add-load align-center" id="divMore">
-                                        <a class="btn-solid small black-line" href="javascript:" id="btnMore" data-page-index="${rtnData.pageIndex + 1}"><span>더보기</span><span class="item-count" id="pagingVal">(${rtnData.pageIndex * rtnData.listRowSize > rtnData.totalCount ? rtnData.totalCount : rtnData.pageIndex * rtnData.listRowSize}/${rtnData.totalCount})</span></a>
+                                        <a class="btn-solid small black-line" href="javascript:" id="btnMore" data-page-index="${rtnData.pageIndex + 1}"><span>더보기</span><span class="item-count" id="pagingVal">(${rtnData.pageIndex * rtnData.listRowSize >= rtnData.totalCount ? rtnData.totalCount : rtnData.pageIndex * rtnData.listRowSize}/${rtnData.totalCount})</span></a>
                                     </div>
                                     </c:if>
                                 </c:when>

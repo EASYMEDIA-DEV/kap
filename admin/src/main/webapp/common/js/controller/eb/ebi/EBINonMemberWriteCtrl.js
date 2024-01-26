@@ -1139,6 +1139,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return $(this).val();
 						}).get();
 						actForm.targetCdList = targetCdList; //학습대상
+						actForm.etcNm = $("#etcNm").val(); //학습대상 - 기타
 
 						actForm.stduyDdCd = $("#stduyDdCd").val();//학습일
 						actForm.stduyTimeCd = $("#stduyTimeCd").val();//학습시간
