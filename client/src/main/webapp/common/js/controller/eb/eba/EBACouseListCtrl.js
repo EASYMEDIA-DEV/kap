@@ -41,6 +41,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 				if((tempPage * 9)>totCnt){
 					rtnPage = totCnt
+					$('.divide-con-area .pageSet').hide();
 				}else{
 					rtnPage = (tempPage * 9);
 				}
