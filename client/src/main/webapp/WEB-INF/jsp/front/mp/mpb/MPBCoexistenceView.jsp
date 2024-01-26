@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<c:set var="partList" value="${ not empty rtnData.partList ? rtnData.partList : rtnData}" />
+<c:if test="${rtnBsnData.bsnCd eq 'BSN11'}">
+    <c:set var="partList" value="${ not empty rtnData.partList ? rtnData.partList : rtnData}" />
+</c:if>
 <div class="cont-wrap" data-controller="controller/mp/mpb/MPBCoexistenceCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
