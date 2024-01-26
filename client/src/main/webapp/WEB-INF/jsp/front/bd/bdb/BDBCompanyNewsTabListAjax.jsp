@@ -4,7 +4,7 @@
         <c:when test="${ not empty rtnData.list }">
             <div class="article-list-w card-list" id="infoCard"><!-- card-list: 썸네일 있는 경우 -->
                 <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-                    <a class="list-item open listView" href="javascript:" title="링크 이동" data-details-key="${list.fndnNewsSeq}">
+                    <a class="list-item open foundationListView" href="javascript:" title="링크 이동" data-details-key="${list.fndnNewsSeq}">
                         <div class="img-box">
                             <c:choose>
                                 <c:when test="${ not empty list.webPath }">

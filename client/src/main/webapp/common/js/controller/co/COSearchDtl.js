@@ -130,13 +130,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }
                 }
             },
-            //상세보기
+            //뉴스레터 상세보기
             nwslttrListView: {
                 event: {
                     click: function () {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
                         var url = "/foundation/board/newsletter/view?detailsKey=" + detailsKey;
+                        location.href = url;
+                    }
+                }
+            },
+            //재단소식 상세보기
+            foundationListView: {
+                event: {
+                    click: function () {
+                        //상세보기
+                        var detailsKey = $(this).data("detailsKey");
+                        var url = "/foundation/board/company-news/view?detailsKey=" + detailsKey;
                         location.href = url;
                     }
                 }
