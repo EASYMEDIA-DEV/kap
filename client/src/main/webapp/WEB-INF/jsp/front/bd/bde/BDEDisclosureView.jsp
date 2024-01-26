@@ -4,10 +4,6 @@
         <input type="hidden" class="notRequired" id="dsclsrSeq" name="dsclsrSeq" value="" />
     </form>
     <div class="cont-wrap">
-        <!--
-          신청 페이지: apply-page 클래스 추가
-          그 외 페이지: basic-page 클래스 추가
-        -->
         <div class="sub-top-vis-area basic-page">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">경영공시</span></p>
@@ -46,8 +42,8 @@
                                     <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                         <div class="cntnArea"></div>
                                     </div>
-                                    <div class="btn-wrap align-right">
-                                        <a class="btn-text-icon download" href="javascript:" download=""><span>2022년도 결산서 다운로드</span></a>
+                                    <div class="fileArea">
+
                                     </div>
                                 </div>
                             </div>

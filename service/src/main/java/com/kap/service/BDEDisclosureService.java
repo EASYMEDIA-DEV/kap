@@ -45,4 +45,10 @@ public interface BDEDisclosureService {
      */
     public int deleteDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception;
 
+    /**
+     * 경영공시 첨부파일 목록 조회
+     */
+    public BDEDisclosureDTO selectDisclosureFileList(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception;
+
+
 }

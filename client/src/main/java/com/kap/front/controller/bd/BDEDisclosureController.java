@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -40,7 +41,7 @@ public class BDEDisclosureController {
     /**
      * 경영공시 목록 페이지
      */
-    @GetMapping(value="/view")
+    @GetMapping(value="/index")
     public String getDisclosureListPage(BDEDisclosureDTO pBDEDisclosureDTO, ModelMap modelMap) throws Exception
     {
         try
@@ -63,12 +64,12 @@ public class BDEDisclosureController {
      * 셀렉트 박스로 선택한 상세 페이지
      */
     @PostMapping(value = "/search")
-    public String searchDisclosureViewPage(BDEDisclosureDTO pBDEDisclosureDTO, ModelMap modelMap) throws Exception
+    public String searchDisclosureViewPage(@RequestBody BDEDisclosureDTO pBDEDisclosureDTO, ModelMap modelMap) throws Exception
     {
         try
         {
-            // 다시 작업예정 pBDEDisclosureDTO.setDetailsKey(pBDEDisclosureDTO.getDsclsrSeq());
             modelMap.addAttribute("rtnDtl", bDEDisclosureService.selectDisclosureDtl(pBDEDisclosureDTO));
+            modelMap.addAttribute("fileList", bDEDisclosureService.selectDisclosureFileList(pBDEDisclosureDTO).getList());
         }
         catch (Exception e)
         {
