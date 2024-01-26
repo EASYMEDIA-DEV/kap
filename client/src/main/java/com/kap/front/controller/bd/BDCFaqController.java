@@ -76,7 +76,7 @@ public class BDCFaqController {
         try
         {
             pBDCFaqDTO.setCtgryCd(pBDCFaqDTO.getDetailsKey());
-            modelMap.addAttribute("fileList", bDCFaqService.selectFaqFileList(pBDCFaqDTO));
+            modelMap.addAttribute("fileList", bDCFaqService.selectFaqFileList(pBDCFaqDTO).getList());
             modelMap.addAttribute("rtnData", bDCFaqService.selectFaqList(pBDCFaqDTO));
         }
         catch (Exception e)
