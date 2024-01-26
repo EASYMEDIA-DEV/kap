@@ -377,6 +377,8 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         Sheet sheet = workbook.createSheet();
         workbook.setSheetName(0,mpdKenDto.getMonthpicker());
 
+
+
         YearMonth yearMonth = YearMonth.of(year, month);
         int lastDayOfMonth = yearMonth.lengthOfMonth();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
@@ -700,7 +702,7 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원_월_근태_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원_월_근태_", "UTF-8") + mpdKenDto.getMonthpicker().split("-")[0] + mpdKenDto.getMonthpicker().split("-")[1] +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());
@@ -745,11 +747,15 @@ public class MPDCmtServiceImpl implements MPDCmtService {
         int etc = 0; //기타
         int home = 0; //재택
         String outputDateStr="";
+        String titleFormat = "";
         try {
             SimpleDateFormat sdfInput = new SimpleDateFormat("yyyy-MM-dd");
+            SimpleDateFormat titleSdf = new SimpleDateFormat("yyyyMMdd");
+
             Date date = sdfInput.parse(mpdKenDto.getMonthpicker());
             SimpleDateFormat sdfOutput = new SimpleDateFormat("yyyy-MM-dd EEE", Locale.KOREAN);
             outputDateStr = sdfOutput.format(date);
+            titleFormat = titleSdf.format(date);
 
         } catch (ParseException e) {
             e.printStackTrace();
@@ -1034,13 +1040,14 @@ public class MPDCmtServiceImpl implements MPDCmtService {
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
-        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원_일일_근태_", "UTF-8") + timeStamp +".xlsx");
+        response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_위원_일일_근태_", "UTF-8") + titleFormat +".xlsx");
 
         // Excel File Output
         workbook.write(response.getOutputStream());
         workbook.close();
 
         //다운로드 사유 입력
+
         COUserDetailsDTO cOUserDetailsDTO =COUserDetailsHelperService.getAuthenticatedUser();
         COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
         pCoSystemLogDTO.setTrgtMenuNm("위원 관리 > 일일 근태");
