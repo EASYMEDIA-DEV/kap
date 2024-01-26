@@ -161,14 +161,27 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".qlty5StarArea").show();
                             $(".pay5StarArea").show();
                             $(".tchlg5StarArea").show();
+                            $(".secondNd").val("");
+                            $(".secondNd").removeClass("notRequired");
+                            $(".secondNd").addClass("notRequired");
                        }
                         else if (ctgryCd == "COMPANY01002") {
+                            $(".firstSt").val("");
+                            $(".firstSt").removeClass("notRequired");
+                            $(".firstSt").addClass("notRequired");
+
                             $(".sqInfoArea").show();
                             $(".qlty5StarArea").hide();
                             $(".pay5StarArea").hide();
                             $(".tchlg5StarArea").hide();
 
                         } else {
+                            $(".firstSt").val("");
+                            $(".firstSt").removeClass("notRequired");
+                            $(".firstSt").addClass("notRequired");
+                            $(".secondNd").val("");
+                            $(".secondNd").removeClass("notRequired");
+                            $(".secondNd").addClass("notRequired");
                             $(".sqInfoArea").hide();
                             $(".qlty5StarArea").hide();
                             $(".pay5StarArea").hide();
@@ -177,6 +190,94 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     }
                 }
             },
+            qlty5StarCd : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#qlty5StarYear").val() =="") {
+                            $("#qlty5StarYear").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#qlty5StarYear").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#qlty5StarYear").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#qlty5StarYear").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+            qlty5StarYear : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#qlty5StarCd").val() =="") {
+                            $("#qlty5StarCd").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#qlty5StarCd").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#qlty5StarCd").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#qlty5StarCd").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+
+
+            pay5StarCd : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#pay5StarYear").val() =="") {
+                            $("#pay5StarYear").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#pay5StarYear").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#pay5StarYear").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#pay5StarYear").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+            pay5StarYear : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#pay5StarCd").val() =="") {
+                            $("#pay5StarCd").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#pay5StarCd").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#pay5StarCd").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#pay5StarCd").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+
+            tchlg5StarCd : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#tchlg5StarYear").val() =="") {
+                            $("#tchlg5StarYear").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#tchlg5StarYear").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#tchlg5StarYear").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#tchlg5StarYear").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+            tchlg5StarYear : {
+                event : {
+                    change : function () {
+                        if($(this).val()!="" && $("#tchlg5StarCd").val() =="") {
+                            $("#tchlg5StarCd").removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#tchlg5StarCd").val() !="") {
+                            $(this).removeClass("notRequired");
+                        } else if($(this).val() =="" && $("#tchlg5StarCd").val() =="") {
+                            $(this).addClass("notRequired");
+                            $("#tchlg5StarCd").addClass("notRequired");
+                        }
+                    }
+                }
+            },
+
             bsnmNo : {
                 event : {
                     input : function() {
@@ -196,9 +297,45 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }
                     }
                 }
+            },
+            secondNd : {
+                event : {
+                    input : function (e) {
+                        let sqOne = $(this).parent().children().eq(1).val();
+                        let sqTwo = $(this).parent().children().eq(2).val();
+                        let sqThree = $(this).parent().children().eq(3).val();
+                        let sqFour = $(this).parent().children().eq(4).val();
+                        if (sqOne == "" && (sqTwo != "" || sqThree != "" || sqFour != "")) {
+                            $(this).parent().children().eq(1).removeClass("notRequired");
+                        }
+                        if (sqTwo == "" && (sqOne != "" || sqThree != "" || sqFour != "")) {
+                            $(this).parent().children().eq(2).removeClass("notRequired");
+                        }
+                        if (sqThree == "" && (sqTwo != "" || sqOne != "" || sqFour != "")) {
+                            $(this).parent().children().eq(3).removeClass("notRequired");
+                        }
+                        if (sqFour == "" && (sqTwo != "" || sqThree != "" || sqOne != "")) {
+                            $(this).parent().children().eq(4).removeClass("notRequired");
+                        }
+                        if (sqOne == "" && sqTwo == "" && sqThree == "" && sqFour == "") {
+                            $(this).parent().children().eq(1).addClass("notRequired");
+                            $(this).parent().children().eq(2).addClass("notRequired");
+                            $(this).parent().children().eq(3).addClass("notRequired");
+                            $(this).parent().children().eq(4).addClass("notRequired");
+                        }
+                        if (sqOne != "" && sqTwo != "" && sqThree != "" && sqFour != "") {
+                            $(this).parent().children().eq(1).addClass("notRequired");
+                            $(this).parent().children().eq(2).addClass("notRequired");
+                            $(this).parent().children().eq(3).addClass("notRequired");
+                            $(this).parent().children().eq(4).addClass("notRequired");
+                        }
+                    }
+                }
             }
         },
         immediately : function(){
+
+
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
             tabTwo();
