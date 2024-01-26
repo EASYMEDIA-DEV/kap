@@ -175,7 +175,7 @@
                                                                     <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
                                                                     <div class="input-btn-wrap">
                                                                         <button class="delete-btn" title="지우기" type="button"></button>
-                                                                        <button class="srch-btn" title="검색"></button>
+                                                                        <button class="srch-btn btnBindSearch" type="button" title="검색"></button>
                                                                     </div>
                                                                 </div>
                                                             </div>

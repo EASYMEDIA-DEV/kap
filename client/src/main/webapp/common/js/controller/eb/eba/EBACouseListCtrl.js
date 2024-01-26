@@ -496,12 +496,26 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			btnBindSearch : {
+				event : {
+					click : function() {
+						$formObj.find("#btnSearch").click();
+					}
+				}
+			},
+
 		},
 		immediately : function() {
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
+
+			$formObj.find('#q').on('keypress', function(e){
+				if (e.keyCode == 13){
+					$formObj.find("#btnSearch").click();
+				}
+			});
 
 			$(".classTypeLayer:first").trigger("click");
 		}
