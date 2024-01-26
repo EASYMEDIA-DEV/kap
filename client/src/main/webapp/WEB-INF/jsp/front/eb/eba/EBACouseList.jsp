@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="right">
                                     <a class="filter-open-btn" href="javascript:" title="필터 열기">
-                                        <span>필터<b class="filter-count">(7)</b></span>
+                                        <span>필터</span>
                                     </a>
                                 </div>
                             </div>
