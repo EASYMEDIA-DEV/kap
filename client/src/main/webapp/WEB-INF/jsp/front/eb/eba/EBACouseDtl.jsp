@@ -332,7 +332,7 @@
                                             <c:otherwise>
                                                 <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
                                                     <div class="txt-box">
-                                                        <p class="txt f-body1">등록된 선수과목이 없습니다.</p>
+                                                        <p class="txt f-body1">등록된 선수과정이 없습니다.</p>
                                                     </div>
                                                 </div>
                                             </c:otherwise>
