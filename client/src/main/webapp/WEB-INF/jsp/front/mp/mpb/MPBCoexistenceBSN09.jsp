@@ -30,7 +30,7 @@
                             </a>
                             <div class="acco-hide-area">
                                 <p class="exclamation-txt f-body1">
-                                    <c:if test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_002' or rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_004'}">
+                                    <c:if test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_002' or rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_005'}">
                                         ${rtnData.rtrnRsnCntn}
                                     </c:if>
                                 </p>
