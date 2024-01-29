@@ -29,7 +29,8 @@
                             <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전' || rtnBsnData.appctnSttsCdNm eq '대기' || rtnBsnData.appctnSttsCdNm eq '결과대기'}">
                                 <c:set var="classType" value="waiting"/>
                             </c:when>
-                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수완료' || rtnBsnData.appctnSttsCdNm eq '적합' || rtnBsnData.appctnSttsCdNm eq '선정' }">
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수완료' || rtnBsnData.appctnSttsCdNm eq '적합' || rtnBsnData.appctnSttsCdNm eq '선정' ||
+                             rtnBsnData.appctnSttsCdNm eq '보완완료' || rtnBsnData.appctnSttsCdNm eq '지급완료'}">
                                 <c:set var="classType" value="accepting"/>
                             </c:when>
                             <c:when test="${rtnBsnData.appctnSttsCdNm eq '사용자취소'}">
