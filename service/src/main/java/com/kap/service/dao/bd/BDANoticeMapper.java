@@ -30,6 +30,16 @@ public interface BDANoticeMapper {
    */
     public List<BDANoticeDTO> selectNoticeList(BDANoticeDTO pBDANoticeDTO);
     /**
+     * 통합검색 공지사항 조회
+   */
+    public List<BDANoticeDTO> selectNoticeTotalList(BDANoticeDTO pBDANoticeDTO);
+
+    /**
+     * 통합검색 공지사항 중요공지 목록을 조회
+     */
+
+    public List<BDANoticeDTO> selectMainPostTotalList(BDANoticeDTO pBDANoticeDTO) throws Exception;
+    /**
      * 공지사항 전체 개수
      */
     public int getNoticeListTotCnt(BDANoticeDTO pBDANoticeDTO);
@@ -66,5 +76,7 @@ public interface BDANoticeMapper {
      * 공지사항 중요공지 목록을 조회
      */
     public List<BDANoticeDTO> selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+
 
 }

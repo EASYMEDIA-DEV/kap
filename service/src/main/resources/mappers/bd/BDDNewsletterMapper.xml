@@ -48,6 +48,37 @@
     </select>
 
     <!--
+     쿼리명 : BDDNewsletterMapper.selectNewsletterTotalList
+     설  명 : 통합검색 뉴스레터 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.01.29  강인국     최초 생성
+    -->
+    <select id="selectNewsletterTotalList" parameterType="BDDNewsletterDTO" resultType="BDDNewsletterDTO">
+        SELECT /* BDDNewsletterMapper.selectNewsletterTotalList */
+        NWSLT_SEQ
+        , TITL
+        , READ_CNT
+        , EXPS_YN
+        <if test='siteGubun == "front"'>
+            , (SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.PC_THNL_SEQ ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
+        </if>
+        , REG_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+        , REG_IP
+        , REG_DTM
+        , MOD_ID
+        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+        , MOD_IP
+        , MOD_DTM
+        FROM
+        BD_NWSLT_MST A
+        WHERE 1=1
+        <include refid="selectNewsletterListwhereSql" />
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
     쿼리명 : BDDNewsletterMapper.getNewsletterListCnt
     설  명 : 뉴스레터 목록 개수 카운
       수정일      수정자       수정내용
