@@ -1193,6 +1193,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			});
 
+			$("#picEmail").keyup(function(event){
+				if ($(this).val() != "")
+				{
+
+					var check  = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+					if(check.test($(this).val() )) {
+						alert("한글입력은 불가능합니다.");
+						$(this).val("");
+						return false;
+					}
+
+				}
+			});
 
 			$excelObj.find("button.down").on('click', function(){
 				var rsn = $excelObj.find("#rsn").val().trim();
@@ -1446,6 +1460,88 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						return false
 					}
 
+					//정원
+					var fxnumImpsbYn= $("input[name='fxnumImpsbYn']").is(":checked");//제한없음 체크여부
+					if(!fxnumImpsbYn){
+						if($("#fxnumCnt").val() ==""){
+							alert("정원수를 입력해주세요.");
+							return false
+						}
+					}
+
+					//모집방식
+
+					if($("input[name='rcrmtMthdCd']:checked").length == 0){
+						alert("담당자명을 입력해주세요.");
+						return false
+					}
+
+					//문읨담당자
+					if($("#picNm").val() == ""){
+						alert("담당자명을 입력해주세요.");
+						return false
+					}
+					//담당자이메일
+					if($("#picEmail").val() == ""){
+						alert("담당자이메일을 입력해주세요.");
+						return false
+					}
+
+					var email = $("#picEmail").val();
+					var temp2 = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net)/;
+					var emailTest2 = temp2.test(email);
+
+					if(!emailTest2){
+						alert("이메일 양식에 맞게 입력 해주세요");
+						return false;
+					}
+
+
+					if($("#picTelNo").val() == ""){
+						alert("담당자전화번호를 입력해주세요.");
+						return false
+					}
+
+
+					//교육장소
+					if($("#placeSeq").val() == ""){
+						alert("교육장소를 입력해주세요.");
+						return false
+					}
+
+					//만족도조사
+					if($("#srvSeq").val() == "") {
+						alert("만족도조사를 선택해주세요");
+						return false;
+					}
+
+					if($("#srvStrtDtm").val() == "") {
+						alert("만족도조사 시작일시를 입력해주세요");
+						return false;
+					}
+
+
+					if($("#srvEndDtm").val() == "") {
+						alert("만족도조사 종료일시를 입력해주세요");
+						return false;
+					}
+
+					//평가
+					if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						alert("평가를 선택해주세요");
+						return false;
+					}
+
+					if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						alert("평가 시작일시를 선택해주세요");
+						return false;
+					}
+
+					if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+						alert("평가 종료일시를 선택해주세요");
+						return false;
+					}
+
 
 
 				},
@@ -1601,13 +1697,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 
 						if($("#srvStrtDtm").val() == "") {
-							alert("설문시작일시를 입력해주세요");
+							alert("만족도조사 시작일시를 입력해주세요");
 							return false;
 						}
 
 
 						if($("#srvEndDtm").val() == "") {
-							alert("설문종료일시를 입력해주세요");
+							alert("만족도조사 종료일시를 입력해주세요");
 							return false;
 						}
 
@@ -1617,12 +1713,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 
 						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-							alert("시험시작일시를 선택해주세요");
+							alert("평가 시작일시를 선택해주세요");
 							return false;
 						}
 
 						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-							alert("시험종료일시를 선택해주세요");
+							alert("평가 종료일시를 선택해주세요");
 							return false;
 						}
 

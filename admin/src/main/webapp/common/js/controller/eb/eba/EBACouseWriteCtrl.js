@@ -323,8 +323,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				});
 			});
 
-			//pcStduyCntn
-
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
 			/* File Dropzone Setting */
@@ -410,12 +408,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
 
-						debugger;
 						if($("#gpcIsttrId").val() == "" || $("#gpcIsttrId").val() === undefined){
 							$("#gpcIsttrId").val(null);
 						}
-
-
 
 						if($formObj.find(".dropzone").size() > 0)
 						{
