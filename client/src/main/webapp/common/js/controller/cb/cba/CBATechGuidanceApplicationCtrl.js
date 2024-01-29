@@ -28,8 +28,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     if(coInfo.list[i].nm){
                         var html = "<p>"+coInfo.list[i].nm+' /'+coInfo.list[i].score+' /'+coInfo.list[i].year+' /'+coInfo.list[i].crtfnCmpnNm+"</p>";
                         var replaceHtml = html.replaceAll("undefined", "-")
-                    document.getElementById("sqInfo").innerHTML +=replaceHtml
-
+                        document.getElementById("sqInfo").innerHTML +=replaceHtml
                     }
                 }
             }else if(ctgryCd == "COMPANY01001"){
@@ -61,20 +60,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             $("#stbsmDt").text(coInfo.list[0].stbsmDt);
             $("#telNo").text(coInfo.list[0].telNo);
-            $("#dtlAddr").text("("+coInfo.list[0].zipcode+")"+coInfo.list[0].bscAddr+coInfo.list[0].dtlAddr);
+            $("#dtlAddr").text("("+coInfo.list[0].zipcode+") "+coInfo.list[0].bscAddr+" "+coInfo.list[0].dtlAddr);
             $("#slsPmt").text(coInfo.list[0].slsPmt+"억 원"+" ("+coInfo.list[0].slsYear+"년)");
             $("#mpleCnt").text(coInfo.list[0].mpleCnt+"명");
 
-            if(coInfo.list[0].mjrPrdct1 != '' || coInfo.list[0].mjrPrdct1 != null){
-
+            if(coInfo.list[0].mjrPrdct1){
+                console.log(coInfo.list[0].mjrPrdct1);
                 $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1);
-
                 if(coInfo.list[0].mjrPrdct2){
                     $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2);
                     if(coInfo.list[0].mjrPrdct3){
                         $("#mjrPrdct").text("① "+coInfo.list[0].mjrPrdct1+" ② "+coInfo.list[0].mjrPrdct2+" ③ "+coInfo.list[0].mjrPrdct3);
                     }
                 }
+            }else{
+                $("#mjrPrdct").text("-");
             }
         }, './checkPartsCompany', info, "text");
     }
@@ -83,9 +83,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         var memInfo = {};
         memInfo.detailsKey = data;
         cmmCtrl.jsonAjax(function (data) {
-            console.log(data.deptCdNm);
             var memInfo = JSON.parse(data)
-            console.log(memInfo);
             $(".deptCd").text(memInfo.deptCdNm+"("+memInfo.deptDtlNm+")");
          }, './selectDtlInfo', memInfo, "text");
     };

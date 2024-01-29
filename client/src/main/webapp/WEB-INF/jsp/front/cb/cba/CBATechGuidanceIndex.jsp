@@ -69,7 +69,7 @@
                                         <p class="txt f-head">기술지도 신청 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다. <br>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ03&inqSec=기술지도"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -197,7 +197,7 @@
                     </div>
                     <div class="bot-fix-btn-area">
                         <div class="btn-wrap align-right">
-                            <a class="btn-solid small black-bg contact" href="javascript:"><span>위원 문의</span></a>
+                            <a class="btn-solid small black-bg" data-seq="${loginMap.seq}" href="javascript:" id="goQa"><span>위원 문의</span></a>
                         </div>
                     </div>
                     <div class="user-opt-area">

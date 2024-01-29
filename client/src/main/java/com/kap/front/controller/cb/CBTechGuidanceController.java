@@ -103,7 +103,6 @@ public class CBTechGuidanceController {
             cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
             modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
             modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
-            System.err.println("cOLoginUserDTO:::"+cOLoginUserDTO);
             modelMap.addAttribute("loginMap", cOLoginUserDTO);
 
             RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
@@ -211,7 +210,6 @@ public class CBTechGuidanceController {
                 pCBBManageConsultInsertDTO.setRegIp(cOLoginUserDTO.getLoginIp());
                 pCBBManageConsultInsertDTO.setMemSeq(String.valueOf(cOLoginUserDTO.getSeq()));
                 pCBBManageConsultInsertDTO.setRsumeSttsCd("MNGCNSLT_STATUS01");
-                System.err.println("pCBBManageConsultInsertDTO:::"+pCBBManageConsultInsertDTO);
                 modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
                 pCBBManageConsultInsertDTO.setDetailsKey(String.valueOf(pCBBManageConsultInsertDTO.getCnstgSeq()));
                 pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
@@ -245,7 +243,7 @@ public class CBTechGuidanceController {
         return "jsonView";
     }
     @GetMapping("/consInfoAppl")
-    public String getConsultInfoApplicationPage(ModelMap modelMap, @PathVariable("type") String type) throws Exception {
+    public String getConsultInfoApplicationPage(ModelMap modelMap, CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, @PathVariable("type") String type) throws Exception {
         String url = "";
 
         try {
@@ -266,6 +264,8 @@ public class CBTechGuidanceController {
                 cdDtlList.add("COMPANY_TYPE"); //부품사 구분 코드
                 cdDtlList.add("MNGCNSLT_APP_AREA"); // 신청 분야 코드
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
+                modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
 
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");

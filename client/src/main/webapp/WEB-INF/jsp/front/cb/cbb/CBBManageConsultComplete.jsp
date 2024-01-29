@@ -26,7 +26,7 @@
     -->
     <div class="sub-top-vis-area apply-page consult-biz">
         <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move">경영컨설팅 신청</span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">경영컨설팅신청</span></p>
             <div class="apply-step-w">
                 <div class="for-move">
                     <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
