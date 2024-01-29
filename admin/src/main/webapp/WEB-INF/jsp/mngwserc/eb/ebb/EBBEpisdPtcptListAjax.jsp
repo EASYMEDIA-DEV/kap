@@ -97,7 +97,7 @@
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="15" class="text-center">
+      <td colspan="17" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

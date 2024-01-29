@@ -160,25 +160,12 @@
                                             <c:otherwise>
                                                 <c:if test="${list.stduyMthdCd ne 'STDUY_MTHD02'}"><p class="box-label bigger"><span>${list.placeNm}</span></p></c:if>
                                                 <c:if test="${list.stduyMthdCd eq 'STDUY_MTHD02'}"><p class="box-label bigger"><span>온라인</span></p></c:if>
-                                                <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                <p class="box-label bigger ${accsStatusOrderClass}"><span>${list.accsStatusNm}</span></p>
                                             </c:otherwise>
                                         </c:choose>
                                     </div>
                                     <div class="btn-wrap">
                                         <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                        <%--<c:choose>
-                                            <c:when test="${ list.nonMemberCd eq 'N' }">
-                                                <div class="btn-solid small black-bg nonMemberDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                            </c:when>
-                                            <c:otherwise>
-                                                <c:if test="${list.accsStatusOrder eq 3}">
-                                                    <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                                </c:if>
-                                                <c:if test="${list.accsStatusOrder ne 3}">
-                                                    <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                                </c:if>
-                                            </c:otherwise>
-                                        </c:choose>--%>
                                     </div>
                                 </div>
                             </div>
