@@ -160,9 +160,6 @@ public class CBATechGuidanceController {
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             String rsumeSttsCd = cBATechGuidanceInsertDTO.getRsumeSttsCd();
-            if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
-
-            }
             modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
