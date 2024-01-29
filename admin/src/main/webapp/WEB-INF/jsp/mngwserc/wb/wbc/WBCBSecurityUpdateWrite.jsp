@@ -1085,7 +1085,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">사업비</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control comma" maxlength="50" id="bsnPmt" name="pbsnDtlList[0].bsnPmt" value="${rtnPbsn[0].bsnPmt}" title="사업비"<c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if> />
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="bsnPmt" name="pbsnDtlList[0].bsnPmt" value="${rtnPbsn[0].bsnPmt}" title="사업비"<c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if> />
                                         </div>
                                     </div>
                                 </fieldset>
