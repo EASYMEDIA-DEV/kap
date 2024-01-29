@@ -243,7 +243,7 @@
           and m1.mem_seq=#{detailsKey}
            and m2.wthdrw_yn='Y'
            and m2.cmssr_work_cd = 'MEM_CD04001'
-        group by mem_Seq
+        group by m2.mem_Seq
          order by m2.name asc
     </select>
 

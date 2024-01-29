@@ -55,7 +55,17 @@
         return str;
     }
 %>
-
+<script>
+    window.onpageshow = function (event) {
+        console.log(event);
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다.");
+            location.href = "/";
+        }
+    }
+</script>
 <div id="wrap" class="member"  data-controller="controller/mp/MPUserController"><!-- 로그인, 회원가입 페이지 member 클래스 추가 -->
   <form name="formSuccess" id="formSuccess" method="post" action="/member/join-success">
       <input type="hidden" id="joinId" name="id"  />

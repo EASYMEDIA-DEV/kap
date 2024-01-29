@@ -468,6 +468,15 @@ public class EBBEpisdDTO extends BaseDTO {
     @Builder.Default
     private String atndcYn = "N";
 
+    @Schema(title = "관리자-과정관리 상세의 회차목록여부", example = "Y/N")
+    @Builder.Default
+    private String couseEpisdYn = "N";
+
+    @Schema(title = "마이페이지 교육신청내역 방문교육 목록 조회용 교육희망일", example = "E/V")
+    private String hopeDt;
+
+    @Schema(title = "마이페이지 교육신청내역 방문교육 목록 조회용 교육인원")
+    private Integer ptcptCnt;
 
     private String srchLayer;
     private List<EBBPtcptDTO> ptcptList;//참여자 목록
