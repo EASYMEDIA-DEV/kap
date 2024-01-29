@@ -54,7 +54,7 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
 
-                                <c:if test="${not empty rsumeTaskDtl[0].rtrnRsnCntn && rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002'}">
+                                <c:if test="${rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_002' || rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_004'}">
                                     <p class="exclamation-txt f-body1">${rsumeTaskDtl[0].rtrnRsnCntn}</p>
                                 </c:if>
 
