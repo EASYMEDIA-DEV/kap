@@ -60,8 +60,10 @@ public class COGpcReceiveRestController {
         //응답할 데이터
         log.error("getApi cOSampleDTO : {}", emfMap);
         COAAdmDTO cOAAdmDTO = new COAAdmDTO();
-        cOAAdmDTO.setDetailsKey(emfMap.getString("detailsKey"));
-        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmDtl(cOAAdmDTO);
+        //cOAAdmDTO.setDetailsKey(emfMap.getString("detailsKey"));
+        cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        //COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmDtl(cOAAdmDTO);
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
         return rtnCOAAdmDTO;
     }
 
