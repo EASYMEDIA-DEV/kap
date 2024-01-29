@@ -15,6 +15,10 @@
             , TITL
             , READ_CNT
             , REG_DTM
+            , CASE
+                WHEN DATE_ADD(REG_DTM, INTERVAL 3 DAY) <![CDATA[ >= ]]> now() THEN 'Y'
+                ELSE 'N'
+              END AS NEW_POST_YN
             , NTFY_YN
             , EXPS_STRT_DTM
             , EXPS_END_DTM
@@ -322,15 +326,8 @@
                 </otherwise>
             </choose>
         </if>
-        <if test='siteGubun != "front"'>
             ORDER BY
             REG_DTM DESC
-        </if>
-        <if test='siteGubun == "front"'>
-            ORDER BY
-            NTFY_YN DESC, REG_DTM DESC
-        </if>
-
     </sql>
 </mapper>
 

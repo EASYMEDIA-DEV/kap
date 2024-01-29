@@ -1,6 +1,5 @@
 package com.kap.service.impl;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.service.COUserDetailsService;
 import org.springframework.web.context.request.RequestAttributes;

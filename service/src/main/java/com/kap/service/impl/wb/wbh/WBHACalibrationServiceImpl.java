@@ -6,10 +6,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
-import com.kap.core.dto.wb.wbb.*;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
+import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -25,7 +22,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartFile;
@@ -693,6 +689,8 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
             wbhaApplyMstDTO.setModId(modId);
             wbhaApplyMstDTO.setModIp(modIp);
 
+            wbhaCalibrationMapper.deletePartsComSQInfo(wbhaCompanyDTO);
+
             rtnCnt = wbhaCalibrationMapper.updateApply(wbhaApplyMstDTO);
 
             if (rtnCnt > 0) {
@@ -777,13 +775,9 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                         wbhaCompanyDTO.setPay5starYear(null);
                         wbhaCompanyDTO.setQlty5starYear(null);
 
-                        if (!"null".equals(seq)) {
-                            wbhaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                            wbhaCalibrationMapper.updatePartsComSQInfo(wbhaCompanyDTO);
-                        } else {
-                            wbhaCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                            wbhaCalibrationMapper.insertPartsComSQInfo(wbhaCompanyDTO);
-                        }
+                        wbhaCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wbhaCalibrationMapper.insertPartsComSQInfo(wbhaCompanyDTO);
+
                         index += 1;
                     }
                 } else if (wbhaCompanyDTO.getCtgryCd().equals("COMPANY01001")) {

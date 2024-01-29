@@ -7,10 +7,7 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
-import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -702,6 +699,8 @@ public class WBGAExamServiceImpl implements WBGAExamService {
             wBGAApplyMstDTO.setModId(modId);
             wBGAApplyMstDTO.setModIp(modIp);
 
+            wBGAExamMapper.deletePartsComSQInfo(wBGACompanyDTO);
+
             rtnCnt = wBGAExamMapper.updateApply(wBGAApplyMstDTO);
 
             if (rtnCnt > 0) {
@@ -786,13 +785,9 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                         wBGACompanyDTO.setPay5starYear(null);
                         wBGACompanyDTO.setQlty5starYear(null);
 
-                        if (!"null".equals(seq)) {
-                            wBGACompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                            wBGAExamMapper.updatePartsComSQInfo(wBGACompanyDTO);
-                        } else {
-                            wBGACompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                            wBGAExamMapper.insertPartsComSQInfo(wBGACompanyDTO);
-                        }
+                        wBGACompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                        wBGAExamMapper.insertPartsComSQInfo(wBGACompanyDTO);
+
                         index += 1;
                     }
                 } else if (wBGACompanyDTO.getCtgryCd().equals("COMPANY01001")) {

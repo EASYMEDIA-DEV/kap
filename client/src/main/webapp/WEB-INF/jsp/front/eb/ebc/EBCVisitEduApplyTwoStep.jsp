@@ -144,7 +144,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-textarea">
-                                                                <textarea name="" id="appctnThemeCntn" name="appctnThemeCntn" placeholder="신청주제 입력" maxlength="500"></textarea>
+                                                                <textarea id="appctnThemeCntn" name="appctnThemeCntn" placeholder="신청주제 입력" maxlength="500"></textarea>
                                                                 <div class="check-byte">
                                                                     <p class="txt" id="appctnThemeCntnTextCnt"><span class="current-byte">0</span>자</p>
                                                                     <p class="txt"><span class="max-byte">500</span>자</p>

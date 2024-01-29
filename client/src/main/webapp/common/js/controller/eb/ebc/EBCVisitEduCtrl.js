@@ -190,13 +190,16 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             return false;
                         }
 
-                        var appctnTypeCdListChecked = $("#appctnTypeCdList").prop("checked");
-                        if($(!appctnTypeCdListChecked)) {
+                        var checkedCnt = 0;
+                        $(".checkBoxArea input[name='appctnTypeCdList']:checked").each(function(){
+                            checkedCnt++;
+                        });
+
+                        if (checkedCnt == 0) {
                             alert(msgCtrl.getMsg("fail.eb.input.al_004"));
                             $("#appctnTypeCdList").focus();
                             return false;
                         }
-
 
                         if($("#appctnThemeCntn").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.input.al_005"));

@@ -2,7 +2,6 @@
 <div id="wrap" data-controller="controller/eb/ebm/EBMVisitEduApplyDtlCtrl">
     <input type="hidden" class="notRequired" id="vstSeq" name="vstSeq" value="${visitEduApplyList.vstSeq}" />
     <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${visitEduApplyList.memSeq}" />
-    <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <!-- content 영역 start -->
     <div class="cont-wrap">
         <div class="sub-top-vis-area">
@@ -12,34 +11,9 @@
         </div>
 
         <div class="divide-con-area">
-            <div class="lnb-area">
-                <div class="for-motion">
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu active" href="javascript:"><span>교육 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>컨설팅 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>상생 사업 신청내역</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>SQ평가원 자격증</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>근태 체크</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>나의 1:1 문의</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>정보 수정</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>회원탈퇴</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                </div>
-            </div>
+            <!--LNB 시작-->
+            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+            <!--LNB 종료-->
 
             <div class="right-con-area">
                 <div class="cont-sec-w">
@@ -310,10 +284,10 @@
                                                             <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
                                                                 <p>
                                                                         ${status.count}.
-                                                                        ${list.nm}/
-                                                                        ${list.score}/
-                                                                        ${list.year} 년/
-                                                                        ${list.crtfnCmpnNm}
+                                                                        ${not empty list.nm ? list.nm : "-"}/
+                                                                        ${not empty list.score ? list.score : "-"}/
+                                                                        ${not empty list.year ? list.year : "-"} 년/
+                                                                        ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
                                                                 </p>
                                                             </c:forEach>
                                                         </td>
@@ -616,7 +590,7 @@
                 </div>
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion align-right">
-                        <a class="btn-solid small black-bg" href="javascript:"><span>목록</span></a>
+                        <a class="btn-solid small black-bg" id="listBtn" href="javascript:"><span>목록</span></a>
                     </div>
                 </div>
             </div>

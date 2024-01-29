@@ -83,6 +83,9 @@ public class BDBCompanyNewsDTO extends BaseDTO {
     @Schema(title = "이전 글 제목")
     private String prevTitl;
 
+    @Schema(title = "최신글 여부", example = "Y")
+    private String newPostYn;
+
     @Schema(title = "노출여부 리스트")
     @Hidden
     private List<String> expsYnList;

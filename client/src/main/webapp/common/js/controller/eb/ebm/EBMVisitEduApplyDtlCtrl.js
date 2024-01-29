@@ -29,15 +29,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							seqObj.memSeq = memSeq;
 							seqObj.vstSeq = vstSeq;
 
-							alert(memSeq);
-							alert(vstSeq);
 							cmmCtrl.jsonAjax(function(data){
-								if(data == "Y"){
-									alert("교육 신청이 취소되었습니다.");
-									location.reload();
-								}
+								alert("교육 신청이 취소되었습니다.");
+								location.reload();
 							}, "/my-page/edu-apply/visitEduApplyCancel", seqObj, "text")
 						}
+					}
+				}
+			},
+			listBtn : {
+				event : {
+					click : function () {
+						location.href="/my-page/edu-apply/list";
 					}
 				}
 			}

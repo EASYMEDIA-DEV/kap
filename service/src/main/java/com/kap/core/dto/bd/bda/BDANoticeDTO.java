@@ -88,6 +88,9 @@ public class BDANoticeDTO extends BaseDTO {
     @Schema(title = "사용자 검색값")
     private String srchVal;
 
+    @Schema(title = "최신글 여부", example = "Y")
+    private String newPostYn;
+
     @Schema(title = "노출여부 리스트")
     @Hidden
     private List<String> expsYnList;
@@ -95,6 +98,10 @@ public class BDANoticeDTO extends BaseDTO {
     @Schema(title = "조회 리스트")
     @Hidden
     private List<BDANoticeDTO> list;
+
+    @Schema(title = "중요공지 조회 리스트")
+    @Hidden
+    private List<BDANoticeDTO> mainPostList;
 
     @Schema(title = "사용자 메인여부", example = "Y/N")
     @Builder.Default

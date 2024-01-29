@@ -56,6 +56,9 @@ public class BDDNewsletterDTO extends BaseDTO {
     @Schema(title = "파일명")
     private String fileName;
 
+    @Schema(title = "파일설명")
+    private String fileDsc;
+
     @Schema(title = "PC 썸네일 이미지 순번")
     private Integer pcThnlSeq;
 
@@ -85,6 +88,12 @@ public class BDDNewsletterDTO extends BaseDTO {
 
     @Schema(title = "이전 글 제목")
     private String prevTitl;
+
+    @Schema(title = "최신글 여부", example = "Y")
+    private String newPostYn;
+
+    @Schema(title = "디바이스구분")
+    private String deviceGubun;
 
     @Schema(title = "노출여부 리스트")
     @Hidden

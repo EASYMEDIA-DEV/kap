@@ -329,7 +329,7 @@ public class EBMMypageController
     }
 
     /**
-     * 방문교육 신청내역 상세 /my-page/edu-apply/visit-edu-detail
+     * 방문교육 신청내역 상세
      */
     @GetMapping("/my-page/edu-apply/visit-edu-detail")
     public String getVisitEduApplyDetail(EBCVisitEduDTO ebcVisitEduDTO, EBCVisitEduExcelDTO ebcVisitEduExcelDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -829,9 +829,28 @@ public class EBMMypageController
     }
 
 
+    /**
+     * 마이페이지 > 교육신청 내역 > 방문교육 상세 > 교육신청 취소
+     */
+    @PostMapping(value = "/my-page/edu-apply/visitEduApplyCancel")
+    public String updateVisitEduApplyCancel(@RequestBody EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
 
-
-
+        try
+        {
+            ebcVisitEduDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+            ebcVisitEduDTO.setModIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
+            ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02004");
+            ebcVisitEduService.updateVisitEduApplyCancel(ebcVisitEduDTO);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 
 
     @RestController
@@ -966,30 +985,6 @@ public class EBMMypageController
             {
                 ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO);
 
-            }
-            catch (Exception e)
-            {
-                if (log.isDebugEnabled()) {
-                    log.debug(e.getMessage());
-                }
-                throw new Exception(e.getMessage());
-            }
-            return rtnStr;
-        }
-
-        /**
-         * 마이페이지 > 교육신청 내역 > 방문교육 상세 > 교육신청 취소
-         */
-        @PostMapping(value = "/edu-apply/visitEduApplyCancel")
-        public String updateVisitEduApplyCancel(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-            String rtnStr = "";
-            try
-            {
-                ebcVisitEduDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
-                ebcVisitEduDTO.setModIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
-                ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02004");
-                ebcVisitEduService.updateVisitEduApplyCancel(ebcVisitEduDTO);
-                rtnStr = "Y";
             }
             catch (Exception e)
             {

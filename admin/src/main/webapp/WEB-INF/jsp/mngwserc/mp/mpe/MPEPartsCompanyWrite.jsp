@@ -27,7 +27,7 @@
                         <fieldset>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
-                                <div class="col-sm-5">
+                                <div class="col-sm-8">
                                     <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" title="사업자번호등록번호" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g, '')" placeholder="사업자등록번호 입력" <c:if test="${not empty rtnInfo.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
                                     <button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button> <span>※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
                                 </div>
@@ -253,46 +253,47 @@
                         <fieldset class="sqInfoArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01001' or rtnInfo.ctgryCd eq 'COMPANY01003' or rtnInfo.ctgryCd eq 'COMPANY01004'}">style="display:none;"</c:if>>
                             <div class="form-group text-sm form-inline">
                                 <label class="col-sm-1 control-label">SQ 정보</label>
-                                <div class="col-sm-5">
-                                    <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
-                                        <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
-                                            <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
-                                            <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
+                                <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
+                                    <label class="col-sm-1 control-label"></label>
+                                    <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
+                                        <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
+                                        <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
                                                                             and empty list.nm
                                                                             and( not empty list.score
                                                                             or not empty list.year
                                                                             or not empty list.crtfnCmpnNm)
                                      ? '' : 'notRequired'}  secondNd" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
-                                            <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
+                                        <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
                                                                             and empty list.score
                                                                             and( not empty list.nm
                                                                             or not empty list.year
                                                                             or not empty list.crtfnCmpnNm)
                                      ? '' : 'notRequired'} secondNd" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="SQ 점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                                            <select class="form-control  input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
+                                        <select class="form-control  input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
                                                                             and empty list.year
                                                                             and( not empty list.nm
                                                                             or not empty list.score
                                                                             or not empty list.crtfnCmpnNm)
                                      ? '' : 'notRequired'} secondNd" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도">
-                                                <option value="">선택</option>
-                                                <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                                    <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
-                                                            ${cdList.cdNm}
-                                                    </option>
-                                                </c:forEach>
-                                            </select>
-                                            <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
+                                            <option value="">선택</option>
+                                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm ${ rtnInfo.ctgryCd eq 'COMPANY01002'
                                                                             and empty list.crtfnCmpnNm
                                                                             and( not empty list.nm
                                                                             or not empty list.year
                                                                             or not empty list.score)
                                      ? '' : 'notRequired'}" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="${list.crtfnCmpnNm}" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
-                                        </div>
-                                    </c:forEach>
-                                    <c:choose>
-                                        <c:when test="${sqInfoListCnt == 0}">
-                                            <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
+                                    </div>
+                                </c:forEach>
+                                <c:choose>
+                                    <c:when test="${sqInfoListCnt == 0}">
+                                        <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
+                                            <label class="col-sm-1 control-label"></label>
                                             <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
                                                 <input type="hidden" class="notRequired" id="cbsnSeq${ status.count}" name="sqInfoList${status.count}" value=""/>
                                                 <input type="text" class="form-control input-sm notRequired secondNd" id="nm${status.count}" name="sqInfoList${status.count}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
@@ -307,10 +308,10 @@
                                                 </select>
                                                 <input type="text" class="form-control input-sm notRequired secondNd" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
                                             </div>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:when test="${sqInfoListCnt != 3 and sqInfoListCnt > 0}">
-                                            <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:when test="${sqInfoListCnt != 3 and sqInfoListCnt > 0}">
+                                        <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
                                             <label class="col-sm-1 control-label"></label>
                                             <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
                                                 <input type="hidden" class="notRequired" id="cbsnSeq${status.count + 1}" name="sqInfoList${status.count + 1}" value=""/>
@@ -326,10 +327,10 @@
                                                 </select>
                                                 <input type="text" class="form-control input-sm notRequired secondNd" id="crtfnCmpnNm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="SQ 인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
                                             </div>
-                                            </c:forEach>
-                                        </c:when>
-                                        <c:when test="${sqInfoListCnt == 3}">
-                                            <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:when test="${sqInfoListCnt == 3}">
+                                        <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
                                             <label class="col-sm-1 control-label"></label>
                                             <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
                                                 <input type="hidden" class="notRequired" id="cbsnSeq${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value=""/>
@@ -345,10 +346,9 @@
                                                 </select>
                                                 <input type="text" class="form-control input-sm notRequired secondNd" id="crtfnCmpnNm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="인증주관사명" placeholder="SQ 인증주관사 입력" maxlength="50"/>
                                             </div>
-                                            </c:forEach>
-                                        </c:when>
-                                    </c:choose>
-                                </div>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
                             </div>
                         </fieldset>
                         <fieldset>
@@ -439,6 +439,7 @@
                             <tr>
                                 <th class="text-center">구분</th>
                                 <th class="text-center">누계</th>
+                                <th class="text-center">2024년</th>
                                 <th class="text-center">2023년</th>
                                 <th class="text-center">2022년</th>
                                 <th class="text-center">2021년</th>

@@ -126,7 +126,16 @@
                                             <p class="training-name f-title1">${list.nm}</p>
                                         </div>
                                         <div class="status-info-w">
-                                            <p class="box-label bigger"><span>${list.eduStat}</span></p>
+                                            <p class="box-label bigger">
+                                                <c:choose>
+                                                    <c:when test="${list.trnsfYn eq 'N'}">
+                                                        <span>${list.eduStat}</span>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <span>이관</span>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -144,11 +153,11 @@
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육인원</p>
-                                                    <p class="txt f-body2">00명</p>
+                                                    <p class="txt f-body2">${list.ptcptCnt}명</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육희망일</p>
-                                                    <p class="txt f-body2">2023.02.01</p>
+                                                    <p class="txt f-body2">${ empty list.hopeDt ? '-' : kl:convertDate(list.hopeDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육시간</p>

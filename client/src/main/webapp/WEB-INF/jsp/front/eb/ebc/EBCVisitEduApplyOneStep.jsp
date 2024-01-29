@@ -225,25 +225,12 @@
                                                         <c:when test="${not empty rtnInfo.mjrPrdct1}">
                                                             ① ${rtnInfo.mjrPrdct1}
                                                         </c:when>
-                                                        <c:otherwise>
-                                                            ① -
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <c:choose>
                                                         <c:when test="${not empty rtnInfo.mjrPrdct2}">
                                                             ② ${rtnInfo.mjrPrdct2}
                                                         </c:when>
-                                                        <c:otherwise>
-                                                            ② -
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <c:choose>
                                                         <c:when test="${not empty rtnInfo.mjrPrdct3}">
                                                             ③ ${rtnInfo.mjrPrdct3}
                                                         </c:when>
-                                                        <c:otherwise>
-                                                            ③ -
-                                                        </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
@@ -255,10 +242,10 @@
                                                             <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
                                                                 <p>
                                                                    ${status.count}.
-                                                                       ${list.nm}/
-                                                                       ${list.score}/
-                                                                       ${list.year} 년/
-                                                                       ${list.crtfnCmpnNm}
+                                                                   ${not empty list.nm ? list.nm : "-"}/
+                                                                   ${not empty list.score ? list.score : "-"}/
+                                                                   ${not empty list.year ? list.year : "-"} 년/
+                                                                   ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
                                                                  </p>
                                                             </c:forEach>
                                                         </td>

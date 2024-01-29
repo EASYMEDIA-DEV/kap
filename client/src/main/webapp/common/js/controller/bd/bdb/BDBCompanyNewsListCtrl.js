@@ -64,7 +64,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
-
+            alert(chilCnt)
             if(chilCnt > 9){
                 $("#infoCard").children("a").slice(9,chilCnt).hide();
                 $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");

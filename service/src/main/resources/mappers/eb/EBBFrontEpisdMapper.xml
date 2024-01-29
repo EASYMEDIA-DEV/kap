@@ -466,9 +466,8 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
-		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		SELECT /*EBBEpisdMapper.selectMypageEduCnt*/
 			COUNT(*)
-
 		FROM (SELECT
 				  b.edctn_seq
 				   , a.episd_seq
@@ -554,7 +553,7 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduList" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		SELECT /*EBBEpisdMapper.selectMypageEduList*/
 		edu_gubun
 		, edctn_seq
 		, episd_seq
@@ -631,7 +630,6 @@
 		, mod_dtm
 		, exps_yn
 		, edctn_cmpltn_yn
-
 		, stts_cd
 		, CASE STTS_CD
 			WHEN 'EDU_STTS_CD01' THEN '선발'
@@ -663,6 +661,8 @@
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
+		, hope_dt -- 방문교육 교육희망일
+		, ptcpt_cnt  -- 방문교육 교육인원
 		FROM (SELECT
 					'E' as edu_gubun
 					, b.edctn_seq
@@ -697,7 +697,6 @@
 					, a.pic_tel_no
 					, a.edctn_ntctn_file_seq
 					, a.place_seq
-
 					, c.nm as place_nm
 					, c.bsc_addr
 					, c.dtl_addr
@@ -722,6 +721,8 @@
 		      		, bfre_mem_seq
 					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		      		, ptcpt_seq
+					, "" AS hope_dt
+					, "" AS ptcpt_cnt
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
@@ -817,6 +818,8 @@
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
+		, hope_dt
+		, ptcpt_cnt
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -931,7 +934,14 @@
 		,  null AS cmptn_dtm
 		,  null AS ptcpt_dtm
 		,  null AS web_path
-		, "N" AS TRNSF_YN
+		, CASE
+			WHEN (SELECT COUNT(*)
+			FROM ev_edctn_trnsf_dtl
+			WHERE mem_seq = A.mem_seq
+			AND bfre_mem_seq = A.mem_seq
+			AND vst_seq = A.vst_seq) > 0 THEN 'Y'
+			ELSE 'N'
+		  END AS TRNSF_YN
 		, 0 AS bfre_mem_seq
 		, null AS ptcpt_seq
 		FROM
@@ -1187,7 +1197,7 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduListCnt" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectEpisdList*/
+		SELECT /*EBBEpisdMapper.selectMypageEduListCnt*/
 	  	edu_gubun
 		, edctn_seq
 		, episd_seq

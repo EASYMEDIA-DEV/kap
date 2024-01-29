@@ -330,7 +330,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         var checkedCount = $(".checkbox:checked").length;
 
                                         if (checkedCount >= 6) {
-                                            alert("6개 이상의 체크박스가 선택되었습니다!");
+                                            alert("6개 이상의 체크박스가 선택되었습니다.");
                                         }
                                     });
                                 }

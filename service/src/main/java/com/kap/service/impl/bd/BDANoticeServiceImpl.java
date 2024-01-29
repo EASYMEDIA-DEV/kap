@@ -4,7 +4,6 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bda.BDANoticeDTO;
-import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.service.BDANoticeService;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -207,7 +206,7 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      * 공지사항 조회
      */
     public BDANoticeDTO selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception {
-        pBDANoticeDTO.setList(bDANoticeMapper.selectMainPostList(pBDANoticeDTO));
+        pBDANoticeDTO.setMainPostList(bDANoticeMapper.selectMainPostList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
 }

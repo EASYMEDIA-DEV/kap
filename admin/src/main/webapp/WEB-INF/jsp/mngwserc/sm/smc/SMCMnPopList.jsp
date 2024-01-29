@@ -20,8 +20,8 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="게시기간" />
                 <jsp:param name="useOdtmYn" value="Y" />
-                <jsp:param name="startId" value="ptupSrchStrDt" />
-                <jsp:param name="endId" value="ptupSrchEndDt" />
+                <jsp:param name="startId" value="dStrDt" />
+                <jsp:param name="endId" value="dEndDt" />
                 <jsp:param name="strtDtVal" value="${rtnData.ptupSrchStrDt}" />
                 <jsp:param name="endDtVal" value="${rtnData.ptupSrchEndDt}" />
             </jsp:include>

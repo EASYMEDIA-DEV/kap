@@ -15,15 +15,17 @@
                     <p class="txt f-sub-head">
                             ${list.cntn}
                     </p>
-                    <div class="attatched-file-area">
-                        <c:forEach var="fileList" items="${fileList}" varStatus="status">
-                            <c:if test="${not empty fileList.fileSeq}">
-                                <c:if test="${list.faqSeq eq fileList.faqSeq}">
-                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${fileList.fileSeq}&fileOrd=${fileList.fileOrd}" title="파일 다운로드" download><span>${fileList.fileName}</span></a>
+                    <c:if test="${not empty list.fileSeq}">
+                        <div class="attatched-file-area">
+                            <c:forEach var="fileList" items="${fileList}" varStatus="status">
+                                <c:if test="${not empty fileList.fileSeq}">
+                                    <c:if test="${list.faqSeq eq fileList.faqSeq}">
+                                        <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${fileList.fileSeq}&fileOrd=${fileList.fileOrd}" title="파일 다운로드" download><span>${fileList.fileName}</span></a>
+                                    </c:if>
                                 </c:if>
-                            </c:if>
-                        </c:forEach>
-                    </div>
+                            </c:forEach>
+                        </div>
+                    </c:if>
                 </div>
             </div>
         </c:forEach>

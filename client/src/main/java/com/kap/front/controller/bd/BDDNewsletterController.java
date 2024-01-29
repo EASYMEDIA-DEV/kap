@@ -6,6 +6,8 @@ import com.kap.service.BDDNewsletterService;
 import com.kap.service.MPHNewsLetterService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.mobile.device.Device;
+import org.springframework.mobile.device.DeviceUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -47,10 +49,16 @@ public class BDDNewsletterController {
      * 뉴스레터 목록 페이지
      */
     @GetMapping(value="/list")
-    public String getNewsletterListPage(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception
+    public String getNewsletterListPage(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDDNewsletterDTO.setDeviceGubun("pc");
+            } else {
+                pBDDNewsletterDTO.setDeviceGubun("mobile");
+            }
             modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
         }
         catch (Exception e)

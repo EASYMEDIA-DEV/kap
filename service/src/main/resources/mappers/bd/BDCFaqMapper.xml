@@ -18,6 +18,7 @@
             , CNTN
             , READ_CNT
             , EXPS_YN
+            , FILE_SEQ
             <if test='siteGubun != "front"'>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME

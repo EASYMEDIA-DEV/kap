@@ -29,13 +29,13 @@
                     <div class="tab-btn-area scroll-motion">
                         <div class="txt-tab-swiper for-motion">
                             <div class="swiper-container">
-                                <div class="swiper-wrapper">
-                                    <a class="swiper-slide txt-tab-btn active" id="ctgryCd" href="javascript:">
+                                <div class="swiper-wrapper btnArea">
+                                    <a class="swiper-slide txt-tab-btn" id="ctgryCd" href="javascript:">
                                         <p class="txt"><span class="menu-name">전체</span></p>
                                     </a>
                                     <c:forEach var="cdList" items="${cdDtlList.BOARD_TYPE_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'FAQ0')}">
-                                            <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.ctgryCd eq cdList.cd}">active</c:if>" id="ctgryCd" data-ctgry-cd="${cdList.cd}" href="javascript:">
+                                            <a class="swiper-slide txt-tab-btn" id="ctgryCd" data-ctgry-cd="${cdList.cd}" href="javascript:">
                                                 <p class="txt"><span class="menu-name">${cdList.cdNm}</span></p>
                                             </a>
                                         </c:if>

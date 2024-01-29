@@ -1024,7 +1024,6 @@
 							 when D.rslt_end_yn = 'C' then '교육취소'
 					end) AS rslt_end_yn_nm -- 실적마감여부명
 					 , D.cnfrmd_theme -- 확정주제
-					 -- 신청인원?
 					 , D.cmptn_cnt -- 수료인원
 					 , D.ptcpt_rate -- 참석률
 					 , D.edctn_place -- 교육장소

@@ -52,7 +52,12 @@
                                                             </c:choose>
                                                         </div>
                                                         <div class="txt-box">
-                                                            <p class="tit f-head"><span class="new-icon" aria-label="새로운 항목"></span>${list.titl}</p>
+                                                            <p class="tit f-head">
+                                                                <c:if test="${list.newPostYn eq 'Y'}">
+                                                                    <span class="new-icon" aria-label="새로운 항목"></span>
+                                                                </c:if>
+                                                                    ${list.titl}
+                                                            </p>
                                                             <span class="sub-txt f-body2">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</span>
                                                         </div>
                                                     </a>

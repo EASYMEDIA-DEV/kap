@@ -9,10 +9,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    var chilCnt = $("#infoCard").children("a").length; // 게시물 수
-    var mainPostCnt  = $(".mainPost").children("a").length; // 중요공지 수
+    var chilCnt = $("#infoCard").children("a.normalPost").length; // 게시물 수
+    var mainPostCnt = $("#infoCard").children("a.mainPost").length; // 중요공지수
     var pageCnt = 1; // 페이지 카운트
-    var page = (chilCnt / 9); // 더보기 페이지
+    var page = (chilCnt / 10); // 더보기 페이지
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
@@ -36,10 +36,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
                         var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
                         if(pageCnt <= page){
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).show();
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).addClass("open");
-                            $(".cntText").text(openCnt+9 +"/"+ chilCnt);
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt).show();
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt).removeClass("open");
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt).addClass("open");
+                            $(".cntText").text(openCnt+10 +"/"+ chilCnt);
                         }else{
                             $("#infoCard").find(".close").show();
                             $(".moreBtn").hide();
@@ -66,11 +66,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         immediately : function() {
 
-            if(chilCnt > 9){
-                $("#infoCard").children("a").slice(9,chilCnt).hide();
-                $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");
-                $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
-                var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
+            if(chilCnt > 10){
+                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).hide();
+                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).removeClass("open");
+                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).addClass("close");
+                var openCnt = $("#infoCard").find(".open").length - mainPostCnt; // 보이는 게시물
                 $(".cntText").text(openCnt +"/"+ chilCnt);
             }else{
                 $(".moreBtn").hide();
