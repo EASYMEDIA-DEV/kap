@@ -287,7 +287,7 @@
                                                                             and( not empty list.nm
                                                                             or not empty list.year
                                                                             or not empty list.score)
-                                     ? '' : 'notRequired'}" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="${list.crtfnCmpnNm}" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
+                                     ? '' : 'notRequired'} secondNd" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="${list.crtfnCmpnNm}" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
                                     </div>
                                 </c:forEach>
                                 <c:choose>
