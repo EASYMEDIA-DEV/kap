@@ -156,7 +156,6 @@
         </div>
     </div>
 </div>
-</div>
 <!-- content 영역 end -->
 <div class="layer-popup memberDetailsPopup">
     <div class="for-center">
@@ -213,4 +212,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

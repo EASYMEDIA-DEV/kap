@@ -893,7 +893,9 @@
                                             <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 322px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT03'}">
+                                                        <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                    </c:if>
                                                 </c:forEach>
                                             </select>
                                         </div>
@@ -931,7 +933,7 @@
                                         <label class="col-sm-1 control-label">킥오프일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" value="" name="guideKickfDt" value="" title="킥오프일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt guideKickfDt" value="" name="guideKickfDt" value="" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>

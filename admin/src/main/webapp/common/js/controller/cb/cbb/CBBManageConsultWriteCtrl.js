@@ -205,8 +205,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var bfGbDt = (gbDt-today)/(24*60*60*1000);
         var vstDtFormat = (vstDtFormat - today)/(24*60*60*1000);
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
+        var cmssrName = $("input[name='cmssrName']").val(); //위원
 
-        if(vstDtFormat <= 0) {
+        if(cmssrName != '' && bfGbDt <= 0) {
             $(".rsumeSttsNm").text("지도중");
             $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
 
@@ -243,9 +244,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
                     $(".rsumeSttsNm").text("지도불가");
                     $(".rsumeSttsCd").val("MNGCNSLT_STATUS08");
-                }else if((vstDtFormat == 0 || vstDtFormat < 0) && initVstOpnnCntn == ''){
-                    $(".rsumeSttsNm").text("초도방문");
-                    $(".rsumeSttsCd").val("MNGCNSLT_STATUS06");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT04'){
                     $(".rsumeSttsNm").text("봉사단이관");
                     $(".rsumeSttsCd").val("MNGCNSLT_STATUS05");
@@ -357,21 +355,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            cnstgCmpltnSchdlDt : {
-                event : {
-                    change : function(){
-                        var bfCmplDt = $("#cnstgCmpltnSchdlDt").val().split("-");
-                        var bfRegDt = $("#regDtm").val().split("-");
-
-                        var afCmplDt = new Date(bfCmplDt[0], bfCmplDt[1], bfCmplDt[2]);
-                        var afRegDt = new Date(bfRegDt[0], bfRegDt[1], bfRegDt[2]);
-                        var difDt =  afCmplDt - afRegDt;
-                        var cDay = 24*60*60*1000;
-                        var cMonth = cDay*30;
-                        $(".cnstgTerm").val(parseInt(difDt/cMonth));
-                    }
-                }
-            },
             bfJdgmtRslt : {
                 event : {
                     change : function(){
@@ -393,10 +376,21 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            cnstgPscndCd : {
+            cnstgPscndDt : {
                 event : {
-                    click : function(){
+                    change : function(){
                         changeStts();
+                        var bfCmplDt = $("#cnstgPscndDt").val().split("-");
+                        var guideKickfDt = $(".guideKickfDt").val().split("-");
+                        var cnstgPscndCd = $("#cnstgPscndCd").val();
+                        if(cnstgPscndCd == "CNSTG_PSCND03"){
+                            var afCmplDt = new Date(bfCmplDt[0], bfCmplDt[1], bfCmplDt[2]);
+                            var afRegDt = new Date(guideKickfDt[0], guideKickfDt[1], guideKickfDt[2]);
+                            var difDt =  afCmplDt - afRegDt;
+                            var cDay = 24*60*60*1000;
+                            var cMonth = cDay*30;
+                            $(".cnstgTerm").val(parseInt(difDt/cMonth));
+                        }
                     }
                 }
             },
