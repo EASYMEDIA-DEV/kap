@@ -293,8 +293,8 @@
              , etc
         from co_cmssr_atndc_mst ccam
          inner join co_mem_mst m2
-        ccam.mem_seq = m2.mem_seq
-         where mem_seq=#{detailsKey}
+          on ccam.mem_seq = m2.mem_seq
+         where ccam.mem_seq=#{detailsKey}
           and year =#{year}
           and mnth=#{mnth}
           and dd=#{dd}
