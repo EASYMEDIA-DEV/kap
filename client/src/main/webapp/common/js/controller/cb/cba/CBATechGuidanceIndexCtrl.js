@@ -87,7 +87,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             var info = JSON.parse(data);
                             if (info.cmssrMjrCarerExpsYn == 'Y'){
                                 $(".cmssrMjrCarerCntn").html(info.cmssrMjrCarerCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
-                                $(".cmssrCnstgFldCntn").html(info.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                if(info.cmssrCnstgFldCntn) {
+                                    $(".cmssrCnstgFldCntn").html(info.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                }
+                                else {
+                                    $(".cmssrCnstgFldCntn").text("-");
+                                }
                             }else{
                                 $(".cmssrMjrCarerCntn").text("-");
                                 $(".cmssrCnstgFldCntn").text("-");
