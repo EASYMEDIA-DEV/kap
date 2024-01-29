@@ -705,15 +705,23 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[0].mngSttsCd" title="관리자 상태값/결과">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[0].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${spprtDtl[0].mngSttsCd eq 'PRO_TYPE03001_02_004'}">
+                                                        <p class="form-control-static">${spprtDtl[0].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired"  name="spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[0].mngSttsCd" title="관리자 상태값/결과">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE03001_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${spprtDtl[0].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -925,15 +933,23 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[1].mngSttsCd" title="관리자 상태값/결과">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[1].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${spprtDtl[1].mngSttsCd eq 'PRO_TYPE03002_02_004'}">
+                                                        <p class="form-control-static">${spprtDtl[1].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired"  name="spprtDtlList[1].mngSttsCd" value="${spprtDtl[1].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[1].mngSttsCd" title="관리자 상태값/결과">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE03002_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${spprtDtl[1].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1096,16 +1112,23 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[2].mngSttsCd" title="관리자 상태값/결과">
-
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${spprtDtl[2].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${spprtDtl[2].mngSttsCd eq 'PRO_TYPE03003_02_004'}">
+                                                        <p class="form-control-static">${spprtDtl[2].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired"  name="spprtDtlList[2].mngSttsCd" value="${spprtDtl[2].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="spprtDtlList[2].mngSttsCd" title="관리자 상태값/결과">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE03003_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${spprtDtl[2].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1259,15 +1282,26 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_004'
+                                                        or rsumeTaskDtl[0].mngSttsCd eq 'PRO_TYPE02001_02_005'
+                                                        or rsumeTaskDtl[0].appctnSttsCdNm eq 'PRO_TYPE02001_01_004'}"
+                                                    >
+                                                        <p class="form-control-static">${rsumeTaskDtl[0].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                                 <input type="text" class="form-control input-sm notRequired rtrnRsnCntn" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
@@ -1485,15 +1519,25 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cdNm}">selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_004'
+                                                        or rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_005'}"
+                                                    >
+                                                        <p class="form-control-static">${rsumeTaskDtl[1].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cdNm}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1600,15 +1644,25 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[2].mngSttsCd eq 'PRO_TYPE02003_02_002'
+                                                        or rsumeTaskDtl[2].mngSttsCd eq 'PRO_TYPE02003_02_003'}"
+                                                    >
+                                                        <p class="form-control-static">${rsumeTaskDtl[2].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[2].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1706,15 +1760,25 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02004_02_002'
+                                                        or rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02004_02_003'}"
+                                                    >
+                                                        <p class="form-control-static">${rsumeTaskDtl[3].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[3].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1848,15 +1912,25 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[4].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[4].mngSttsCd eq 'PRO_TYPE02005_02_002'
+                                                        or rsumeTaskDtl[4].mngSttsCd eq 'PRO_TYPE02005_02_003'}"
+                                                    >
+                                                        <p class="form-control-static">${rsumeTaskDtl[4].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[4].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[4].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1941,15 +2015,23 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[5].mngSttsCd eq 'PRO_TYPE02006_02_001'}">
+                                                        <p class="form-control-static">${rsumeTaskDtl[5].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[5].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2063,15 +2145,23 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
-                                                    <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].mngSttsCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02007_02_002' or rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02007_02_003'}">
+                                                        <p class="form-control-static">${rsumeTaskDtl[6].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[6].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </div>
                                         </div>
                                     </fieldset>

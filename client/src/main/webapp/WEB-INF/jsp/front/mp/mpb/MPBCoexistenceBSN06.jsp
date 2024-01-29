@@ -14,7 +14,7 @@
         <c:set var="rsumeLeng" value="${fn:length(rtnRegisterData.rsumeTaskDtl)-1}"/>
         <c:set var="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}"/>
 
-        <div class="sec-con-area">
+        <div class="sec-con-area" id="contArea">
             <div class="article-sec">
                 <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02001'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
@@ -49,7 +49,7 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}" />
+                                <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}" />
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[0].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[0].rsumeOrd}" />
@@ -291,7 +291,7 @@
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[1].appctnSttsCd}" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}" />
+                                <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}" />
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[1].rsumeSttsCd}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[1].rsumeSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[1].rsumeOrd}" />
@@ -361,7 +361,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_003'}">
+                                <c:if test="${rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_001' or rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_003'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
@@ -500,14 +500,14 @@
                                 <div class="swiper-container">
                                     <div class="swiper-wrapper">
                                         <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}">
-                                            <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].appctnSttsCd}" href="javascript:">
+                                            <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].mngSttsCd}" href="javascript:">
                                                 <p class="txt"><span class="menu-name">선급금</span></p>
                                             </a>
                                         </c:if>
-                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[1].giveType}" data-stts-cd="${spprtDtl[1].appctnSttsCd}" href="javascript:">
+                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[1].giveType}" data-stts-cd="${spprtDtl[1].mngSttsCd}" href="javascript:">
                                             <p class="txt"><span class="menu-name">지원금</span></p>
                                         </a>
-                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[2].giveType}" data-stts-cd="${spprtDtl[2].appctnSttsCd}" href="javascript:">
+                                        <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[2].giveType}" data-stts-cd="${spprtDtl[2].mngSttsCd}" href="javascript:">
                                             <p class="txt"><span class="menu-name">기술임치</span></p>
                                         </a>
                                     </div>
@@ -526,7 +526,7 @@
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[0].appctnSpprtSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[0].appctnSeq}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[0].appctnSttsCd}"/>
-                                                    <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}"/>
+                                                    <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[0].mngSttsCd}"/>
                                                     <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[0].giveType}"/>
                                                     <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[0].gvmntSpprtPmt ? 'update' : 'insert'}"/>
 
@@ -763,7 +763,7 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[1].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[1].appctnSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[1].appctnSttsCd}"/>
-                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[1].mngSttsCd}"/>
+                                                <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[1].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[1].giveType}"/>
                                                 <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[1].gvmntSpprtPmt ? 'update' : 'insert'}"/>
 
@@ -998,7 +998,7 @@
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSpprtSeq" value="${spprtDtl[2].appctnSpprtSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSeq" value="${spprtDtl[2].appctnSeq}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].appctnSttsCd" value="${spprtDtl[2].appctnSttsCd}"/>
-                                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[2].mngSttsCd}"/>
+                                                <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.spprtDtlList[0].mngSttsCd" value="${spprtDtl[2].mngSttsCd}"/>
                                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.spprtDtlList[0].giveType" value="${spprtDtl[2].giveType}"/>
                                                 <input type="hidden" class="notRequired tabFlag" value="${not empty spprtDtl[2].cmssnPmt ? 'update' : 'insert'}"/>
 

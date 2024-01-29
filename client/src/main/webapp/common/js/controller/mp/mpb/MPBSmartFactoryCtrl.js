@@ -97,13 +97,32 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     }
 
     let btnSpprtUpdateShow = function(sttsCd){
-        let passCd = ['PRO_TYPE03001_01_001', 'PRO_TYPE03001_01_003','PRO_TYPE03002_01_001','PRO_TYPE03002_01_003','PRO_TYPE03003_01_001','PRO_TYPE03003_01_003']
+        let passCd = ['PRO_TYPE03001_02_001', 'PRO_TYPE03001_02_003','PRO_TYPE03002_02_001','PRO_TYPE03002_02_003','PRO_TYPE03003_02_001','PRO_TYPE03003_02_003'];
 
         if(passCd.includes(sttsCd)) {
             $('.paymentInfoManagPopup').find('.btnSpprtUpdate').show();
         } else {
             $('.paymentInfoManagPopup').find('.btnSpprtUpdate').hide();
         }
+    }
+
+    let setDistable = function() {
+        let rsumeBlockCd = ['PRO_TYPE02001_02_002', 'PRO_TYPE02002_02_001', 'PRO_TYPE02002_02_003'];
+        let spprtBlockCd = ['PRO_TYPE03001_02_001', 'PRO_TYPE03001_02_003','PRO_TYPE03002_02_001','PRO_TYPE03002_02_003','PRO_TYPE03003_02_001','PRO_TYPE03003_02_003'];
+
+        $('#contArea').find('.acco-hide-area').each(function(idx, el) {
+            let mngCd = $(el).find('.mngSttsCd').val();
+            if(!rsumeBlockCd.includes(mngCd)) {
+                $(el).find('input, select, button').not('input[type=hidden]').attr('disabled', true);
+            }
+        });
+
+        $('.paymentInfoManagPopup .tab-con').each(function(idx, el) {
+            let mngCd = $(el).find('.mngSttsCd').val();
+            if(spprtBlockCd != '' && !spprtBlockCd.includes(mngCd)) {
+                $(el).find('input, select, button').not('input[type=hidden]').attr('disabled', true);
+            }
+        });
     }
 
     // set model
@@ -399,6 +418,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         immediately : function(){
             cmmCtrl.setCalendar()
             $('.btnSpprtTab').eq(0).click();
+
+            setDistable();
         }
     };
 

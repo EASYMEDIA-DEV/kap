@@ -143,7 +143,7 @@
              , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.QLTY_5_STAR_CD,'')) AS QLTY_5_STAR_CD_NM
              , A.QLTY_5_STAR_YEAR
              , A.PAY_5_STAR_CD
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.PAY_5_STAR_CD,''))) AS PAY_5_STAR_CD_NM
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.PAY_5_STAR_CD,'')) AS PAY_5_STAR_CD_NM
              , A.PAY_5_STAR_YEAR
              , A.TCHLG_5_STAR_CD
              , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.TCHLG_5_STAR_CD,'')) AS TCHLG_5_STAR_CD_NM
@@ -216,9 +216,10 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getSpprtDtlList" parameterType="WBFBRegisterSearchDTO" >
-        SELECT INFO.*
+        SELECT INFO.* /*WBFBRegisterCompanyMapper.getSpprtDtlList*/
             ,(SELECT give_ord FROM cx_episd_give_dtl WHERE give_seq = INFO.give_seq) as give_ord
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = INFO.appctn_stts_cd) as appctn_stts_cd_nm
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = INFO.mng_stts_cd) as mng_stts_cd_nm
             ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.spprt_appctn_file_seq AND A.use_yn ='Y') as spprt_appctn_file_nm
             ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.acnt_file_seq AND A.use_yn ='Y') as acnt_file_nm
             ,(SELECT orgn_file_nm FROM co_file_dtl A WHERE A.file_seq = INFO.bnkbk_file_seq AND A.use_yn ='Y') as bnkbk_file_nm
@@ -227,10 +228,10 @@
             ,DATE_FORMAT(INFO.accs_dt, '%m/%d') AS accs_dt_fmt
             ,DATE_FORMAT(INFO.give_dt, '%m/%d') AS give_dt_fmt
         FROM(
-            SELECT /*WBFBRegisterCompanyMapper.getSpprtDtlList*/
+            SELECT
                 appctn_spprt_seq,appctn_seq,give_type,accs_dt,gvmnt_spprt_pmt,mjcmn_aprnc_pmt,cmssn_pmt,ttl_pmt,bank_nm,acnt_no
-                 ,dpsit_nm, appctn_stts_cd,appctn_stts_chng_dtm,give_dt,give_seq,mng_stts_cd,mng_stts_chng_dtm,spprt_appctn_file_seq,acnt_file_seq,bnkbk_file_seq
-                 ,tchlg_lse_file_seq, lse_pay_file_seq
+                ,dpsit_nm, appctn_stts_cd,appctn_stts_chng_dtm,give_dt,give_seq,mng_stts_cd,mng_stts_chng_dtm,spprt_appctn_file_seq,acnt_file_seq,bnkbk_file_seq
+                ,tchlg_lse_file_seq, lse_pay_file_seq
             FROM cx_appctn_spprt_dtl
             WHERE appctn_seq = #{appctnSeq}
         ) INFO
@@ -249,12 +250,7 @@
             A.*
             ,B.task_cd,B.bsn_type_cd,B.smtfn_prsnt_cd,B.smtfn_trgt_cd,B.aprnc_cmpn_cd,B.offer_cmpn_nm,B.offer_bsnm_no,B.offer_pic_nm,B.offer_pic_hp_no,B.offer_pic_email
             ,B.ttl_bsn_pmt,B.task_no,B.chk_cmssr_seq,B.chk_plan_dt,B.chk_implmn_dt,B.exam_score,B.smtfn_lvl_chk_cd,B.prmcst_clcltn_instt,B.rqst_dt,B.rply_dt
-            ,B.gvmnt_spprt_pmt
-            ,B.mjcmn_aprnc_pmt
-            ,B.ntdcn_cmpn_brdn_pmt
-            ,B.ttl_pmt
-            ,B.ttl_bsn_pmt
-            ,B.agrmt_dt,B.agrmt_term_dt,B.pmndv_pmt_yn,B.accs_dt,B.bank_nm,B.acnt_no,B.dpsit_nm,B.give_dt,B.give_seq,B.cmssn_pmt
+            ,B.gvmnt_spprt_pmt,B.mjcmn_aprnc_pmt,B.ntdcn_cmpn_brdn_pmt,B.ttl_pmt,B.ttl_bsn_pmt,B.agrmt_dt,B.agrmt_term_dt,B.pmndv_pmt_yn,B.accs_dt,B.bank_nm,B.acnt_no,B.dpsit_nm,B.give_dt,B.give_seq,B.cmssn_pmt
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.appctn_stts_cd) as appctn_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.mng_stts_cd) as mng_stts_cd_nm

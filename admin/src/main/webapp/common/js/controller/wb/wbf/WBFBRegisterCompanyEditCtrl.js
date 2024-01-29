@@ -169,7 +169,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         let paint = function(panel) {
             $(panel).find('.panel-body')
                 .css('pointer-events', 'none')
-                .css('cursor', 'default')
+                .css('cursor', 'default');
         }
         let disPaint = function(panel) {
             $(panel).find('.panel-body').attr('style', '');
