@@ -220,7 +220,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     $(".memberDetailsPopup #cmssrCbsnCdNm span").text(rtnData.cmssrCbsnCdNm);
                                     if (rtnData.cmssrMjrCarerExpsYn == 'Y'){
                                         $(".memberDetailsPopup #cmssrMjrCarerCntn").html(rtnData.cmssrMjrCarerCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
-                                        $(".memberDetailsPopup #cmssrCnstgFldCntn").html(rtnData.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                        if(rtnData.cmssrCnstgFldCntn) {
+                                            $(".memberDetailsPopup #cmssrCnstgFldCntn").html(rtnData.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                        }
+                                        else {
+                                            $(".memberDetailsPopup #cmssrCnstgFldCntn").text("-");
+                                        }
                                     }else{
                                         $(".memberDetailsPopup #cmssrMjrCarerCntn").text("-");
                                         $(".memberDetailsPopup #cmssrCnstgFldCntn").text("-");
