@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:if test="${rtnBsnData.bsnCd eq 'BSN11'}">
-    <c:set var="partList" value="${ not empty rtnData.partList ? rtnData.partList : rtnData}" />
+    <c:set var="partList" value="${ rtnData.partList }" />
 </c:if>
 <div class="cont-wrap" data-controller="controller/mp/mpb/MPBCoexistenceCtrl">
     <!--
@@ -29,7 +29,8 @@
                             <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수전' || rtnBsnData.appctnSttsCdNm eq '대기' || rtnBsnData.appctnSttsCdNm eq '결과대기'}">
                                 <c:set var="classType" value="waiting"/>
                             </c:when>
-                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수완료' || rtnBsnData.appctnSttsCdNm eq '적합' || rtnBsnData.appctnSttsCdNm eq '선정' }">
+                            <c:when test="${rtnBsnData.appctnSttsCdNm eq '접수완료' || rtnBsnData.appctnSttsCdNm eq '적합' || rtnBsnData.appctnSttsCdNm eq '선정' ||
+                             rtnBsnData.appctnSttsCdNm eq '보완완료' || rtnBsnData.appctnSttsCdNm eq '지급완료'}">
                                 <c:set var="classType" value="accepting"/>
                             </c:when>
                             <c:when test="${rtnBsnData.appctnSttsCdNm eq '사용자취소'}">
@@ -209,54 +210,55 @@
                             </div>
                         </div>
                         <div class="data-view-w">
-                            <c:if test="${ partList != null }">
-                            <p class="data-view-tit f-head">팀원 정보</p>
-                                <c:forEach var="partList" items="${partList}" varStatus="qstnStatus">
-                                    <div class="data-view-form">
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-body2">이름</p>
+
+                         <c:if test="${not empty partList }">
+                                <p class="data-view-tit f-head">팀원 정보</p>
+                                    <c:forEach var="partList" items="${partList}" varStatus="qstnStatus">
+                                        <div class="data-view-form">
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-body2">이름</p>
+                                                </div>
+                                                <div class="td">
+                                                    <p class="txt f-body1">${partList.name}</p>
+                                                </div>
                                             </div>
-                                            <div class="td">
-                                                <p class="txt f-body1">${partList.name}</p>
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-body2">휴대폰번호</p>
+                                                </div>
+                                                <div class="td">
+                                                    <p class="txt f-body1">${partList.hpNo}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-body2">이메일</p>
+                                                </div>
+                                                <div class="td">
+                                                    <p class="txt f-body1">${partList.email}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-body2">학교</p>
+                                                </div>
+                                                <div class="td">
+                                                    <p class="txt f-body1">${partList.schlNm}</p>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="th">
+                                                    <p class="title f-body2">학년</p>
+                                                </div>
+                                                <div class="td">
+                                                    <p class="txt f-body1">${partList.grd} / ${partList.grdCdNm}</p>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-body2">휴대폰번호</p>
-                                            </div>
-                                            <div class="td">
-                                                <p class="txt f-body1">${partList.hpNo}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-body2">이메일</p>
-                                            </div>
-                                            <div class="td">
-                                                <p class="txt f-body1">${partList.email}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-body2">학교</p>
-                                            </div>
-                                            <div class="td">
-                                                <p class="txt f-body1">${partList.schlNm}</p>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="th">
-                                                <p class="title f-body2">학년</p>
-                                            </div>
-                                            <div class="td">
-                                                <p class="txt f-body1">${partList.grd} / ${partList.grdCdNm}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <br>
-                                    <br>
-                                    <br>
+                                        <br>
+                                        <br>
+                                        <br>
                                 </c:forEach>
                             </c:if>
                         </div>

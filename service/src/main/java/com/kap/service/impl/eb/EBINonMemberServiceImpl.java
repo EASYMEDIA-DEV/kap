@@ -128,6 +128,12 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 
 		EBINonMemberDTO ebbDto = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
+		//교육 신청 페이지 진입 시간
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		String formattedDateTime = currentDateTime.format(formatter);
+		ebbDto.setApplyDateTime(formattedDateTime);
+
 		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 
 		if(ebbDto !=null && ebbDto.getPlaceSeq() !=null){
@@ -396,10 +402,14 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		//해당 과정이 존재할 경우
 		if(tempDto2.getAccsStatusNm().contains("접수중")) {
 			boolean modYn = false;
-			if(pEBINonMemberDTO.getApplyDateTime() != null && !pEBINonMemberDTO.getApplyDateTime().isEmpty() && tempDto2.getModDtm() != null && !tempDto2.getModDtm().isEmpty()) {
+			String tempADT = pEBINonMemberDTO.getApplyDateTime();
+			String tempMOD = tempDto2.getModDtm();
+			tempADT = tempADT.substring(0, 19);
+			tempMOD = tempMOD.substring(0, 19);
+			if(!tempADT.isEmpty() && !tempMOD.isEmpty()) {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-				LocalDateTime applyDateTime = LocalDateTime.parse(pEBINonMemberDTO.getApplyDateTime(), formatter);
-				LocalDateTime modDtm = LocalDateTime.parse(tempDto2.getModDtm(), formatter);
+				LocalDateTime applyDateTime = LocalDateTime.parse(tempADT, formatter);
+				LocalDateTime modDtm = LocalDateTime.parse(tempMOD, formatter);
 				if(applyDateTime.compareTo(modDtm) < 0) {
 					modYn = true;
 				}

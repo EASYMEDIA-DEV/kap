@@ -10,7 +10,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
 
-    //팀원 폼
+    //팀원 전체 폼
+    var initPartHtml = '';
+    //팀원 추가 폼
     var partHtml = '';
 
     var partCtnFunction = function() {
@@ -24,6 +26,18 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         id : {
         },
         classname : {
+            ptcptType :{
+                event : {
+                    change : function () {
+                       if($(".ptcptType").val() == "WBK_PTN01"){
+                           $(".partForm ").empty()
+                           $(".partForm").append(initPartHtml);
+                       }else if($(".ptcptType").val() == "WBK_PTN02"){
+                           $(".partForm ").empty()
+                       }else {}
+                    }
+                }
+            },
             addBtn : {
                 event : {
                     click : function() {
@@ -89,8 +103,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
+            initPartHtml = $('.initPartHtml').html();
             partHtml = $('.addPart').html();
             $('.delete').remove();
+//            $('.initPartHtml').remove();
         }
     };
 

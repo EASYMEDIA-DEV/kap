@@ -188,11 +188,11 @@ public class CBTechGuidanceController {
                 pCBATechGuidanceInsertDTO.setDetailsKey(String.valueOf(pCBATechGuidanceInsertDTO.getCnstgSeq()));
                 pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
                 //이메일
-                receiverDto.setEmail(pCBATechGuidanceInsertDTO.getEmail());
+                receiverDto.setEmail(cOLoginUserDTO.getEmail());
                 //이름
-                receiverDto.setName(pCBATechGuidanceInsertDTO.getName());
+                receiverDto.setName(cOLoginUserDTO.getName());
                 //사업명(치환문자1)
-                receiverDto.setNote1(pCBATechGuidanceInsertDTO.getBsnYear()+pCBATechGuidanceInsertDTO.getCnstgNm());
+                receiverDto.setNote1("2024 상주기술지도");
                 //신청분야(치환문자2)
                 String cbsnCdNm = "";
                 if(pCBATechGuidanceInsertDTO.getCbsnCd().contains("METAL")){
@@ -215,13 +215,12 @@ public class CBTechGuidanceController {
                 pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
 
                 //이메일
-                receiverDto.setEmail(pCBBManageConsultInsertDTO.getEmail());
+                receiverDto.setEmail(cOLoginUserDTO.getEmail());
                 //이름
-                receiverDto.setName(pCBBManageConsultInsertDTO.getName());
+                receiverDto.setName(cOLoginUserDTO.getName());
                 //사업명(치환문자1)
-                receiverDto.setNote1(pCBBManageConsultInsertDTO.getBsnYear()+pCBBManageConsultInsertDTO.getCnstgNm());
+                receiverDto.setNote1("2024 상주경영컨설팅");
                 //신청분야(치환문자2)
-                String cbsnCdNm = "";
                 receiverDto.setNote2(pCBBManageConsultInsertDTO.getAppctnFldNm());
                 //부품사명(치환문자3)
                 receiverDto.setNote3(pCBATechGuidanceInsertDTO.getCmpnNm());
@@ -232,7 +231,7 @@ public class CBTechGuidanceController {
             receiverDto.setNote4(field2);
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
-            cOMessageService.sendMail(cOMailDTO, "EDM-01-015.html");
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceEmail.html");
 
         /*}catch(Exception e){
             if (log.isErrorEnabled()) {

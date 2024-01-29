@@ -197,7 +197,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
 
                         if (checkedCnt == 0) {
                             alert(msgCtrl.getMsg("fail.eb.input.al_004"));
-                            $("#appctnTypeCdList").focus();
+                            $(".checkBoxArea input[name='appctnTypeCdList']:first").focus();
                             return false;
                         }
 

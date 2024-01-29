@@ -128,6 +128,8 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
             searchPostCode: {
                 event: {
                     click: function () {
+                        $("#cmpnAddrSameYn").val('N');
+                        $("#cmpnAddrSameYn").attr("checked", false);
                         var idVal = $(this).attr('id');
                         if (idVal == "hqAddr") {
                             cmmCtrl.searchPostCode(width, height, "hqZipcode", "hqBscAddr", "hqDtlAddr");
@@ -237,11 +239,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                 alert("업체명을 입력해주세요.");
                                 $(".dlvryCmpnNm").eq(i).focus();
                                 return false;
-                            }
-                        }
-                        var dlvryRateSize = $(".dlvryRate").length;
-                        for(var i =0; i<dlvryRateSize; i++){
-                            if(!$(".dlvryRate").eq(i).val()){
+                            }if(!$(".dlvryRate").eq(i).val()){
                                 alert("매출비중을 입력해주세요.");
                                 $(".dlvryRate").eq(i).focus();
                                 return false;
@@ -254,11 +252,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                 alert("업체명을 입력해주세요.");
                                 $(".dpndnCmpnNm").eq(i).focus();
                                 return false;
-                            }
-                        }
-                        var dpndnRateSize = $(".dpndnRate").length;
-                        for(var i =0; i<dpndnRateSize; i++){
-                            if(!$(".dpndnRate").eq(i).val()){
+                            }if(!$(".dpndnRate").eq(i).val()){
                                 alert("의존율을 입력해주세요.");
                                 $(".dpndnRate").eq(i).focus();
                                 return false;
@@ -336,14 +330,13 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                             $("#agreeChk").focus();
                             return false;
                         }else{
-                            if(e){
-                                if(confirm("사업을 신청하시겠습니까?")){
-                                    cmmCtrl.fileFrm(function(data){
-                                        var cnstgSeq = $(".cnstgSeq").val();
-                                        //콜백함수. 페이지 이동
-                                        location.replace("./complete?cnstgSeq="+cnstgSeq);
-                                    }, "./insert", $formObj, "json");
-                                }
+                            if(confirm("사업을 신청하시겠습니까?")){
+                                cmmCtrl.fileFrm(function(data){
+                                    console.log();
+                                    var cnstgSeq = data.actCnt;
+                                    //콜백함수. 페이지 이동
+                                    location.replace("./complete?cnstgSeq="+cnstgSeq);
+                                }, "./insert", $formObj, "json");
                             }
                         }
                     }
