@@ -11,6 +11,8 @@
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="prntCd" name="prntCd" value="${rtnDto.prntCd}" />
             <input type="hidden" class="notRequired" id="copyYn" name="copyYn" value="${rtnDto.copyYn}" />
+            <input type="hidden" class="notRequired" id="couseEpisdYn" name="couseEpisdYn" value="Y" />
+
 
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="thnlFileSeq" name="thnlFileSeq" value="${rtnDto.thnlFileSeq}" />
@@ -34,7 +36,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자격증연계<span class="star"> *</span></label>
-                    <div class="col-sm-2" style="margin-left: -15px">
+                    <div class="col-sm-5">
                         <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm" name="lcnsCnnctCd" id="lcnsCnnctCd" title="자격증연계">
                                 <option value="">선택</option>
@@ -59,6 +61,125 @@
                 </div>
 
             </fieldset>
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">GPC 교육유형</label>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm wd-sm" name="gpcEdctnType" id="gpcEdctnType" title="GPC 교육유형">
+                            <option value="">선택</option>
+                            <option value="T" <c:if test="${rtnDto.gpcEdctnType eq 'T'}">selected</c:if> >집체교육</option>
+                            <option value="UB" <c:if test="${rtnDto.gpcEdctnType eq 'UB'}">selected</c:if> >비대면B타입</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">GPC 레벨</label>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm wd-sm" name="gpcLvl" id="gpcLvl" title="GPC 레벨">
+                            <option value="">선택</option>
+                            <option value="LVEL_CD01" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD01'}">selected</c:if> >실무자</option>
+                            <option value="LVEL_CD02" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD02'}">selected</c:if> >관리자</option>
+                            <option value="LVEL_CD03" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD03'}">selected</c:if> >리더</option>
+                            <option value="LVEL_CD04" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD04'}">selected</c:if> >실무자/관리자</option>
+                            <option value="LVEL_CD05" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD05'}">selected</c:if> >관리자/리더</option>
+                            <option value="LVEL_CD06" <c:if test="${rtnDto.gpcLvl eq 'LVEL_CD06'}">selected</c:if> >공통</option>
+                        </select>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">GPC 카테고리</label>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm wd-sm" name="gpcParntCtgry" id="gpcParntCtgry" title="GPC 카테고리">
+                            <option value="">선택</option>
+                            <option value="HMGRT_CD" <c:if test="${rtnDto.gpcParntCtgry eq 'HMGRT_CD'}">selected</c:if>>HMG핵심과제</option>
+                            <option value="GOLCAP_CD" <c:if test="${rtnDto.gpcParntCtgry eq 'GOLCAP_CD'}">selected</c:if>>글로벌역량</option>
+                            <option value="LEAD_CD" <c:if test="${rtnDto.gpcParntCtgry eq 'LEAD_CD'}">selected</c:if>>리더쉽</option>
+                            <option value="HMGSPEC_CD" <c:if test="${rtnDto.gpcParntCtgry eq 'HMGSPEC_CD'}">selected</c:if>>HMG특화</option>
+                            <option value="NORJB_CD" <c:if test="${rtnDto.gpcParntCtgry eq 'NORJB_CD'}">selected</c:if>>일반직무</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">GPC 트랙</label>
+                    <div class="col-sm-5">
+
+                        <div id="selectGroup0" style="display:none;">
+                            <option value="">선택</option>
+                        </div>
+
+                        <div id="selectGroup1" style="display:none;">
+                            <option value="">선택</option>
+                            <option value="HMGRT_CD01" <c:if test="${rtnDto.gpcCtgry eq 'HMGRT_CD01'}">selected</c:if>>HMG핵심과제</option>
+                            <option value="HMGRT_CD02" <c:if test="${rtnDto.gpcCtgry eq 'HMGRT_CD02'}">selected</c:if>>미래기술트렌드</option>
+                        </div>
+                        <div id="selectGroup2" style="display:none;">
+                            <option value="">선택</option>
+                            <option value="GOLCAP_CD01" <c:if test="${rtnDto.gpcCtgry eq 'GOLCAP_CD01'}">selected</c:if>>해외현지인육성</option>
+                            <option value="GOLCAP_CD02" <c:if test="${rtnDto.gpcCtgry eq 'GOLCAP_CD02'}">selected</c:if>>글로벌리더육성</option>
+                            <option value="GOLCAP_CD03" <c:if test="${rtnDto.gpcCtgry eq 'GOLCAP_CD03'}">selected</c:if>>지역전문가육성</option>
+                        </div>
+                        <div id="selectGroup3" style="display:none;">
+                            <option value="">선택</option>
+                            <option value="LEAD_CD01" <c:if test="${rtnDto.gpcCtgry eq 'LEAD_CD01'}">selected</c:if>>Basic</option>
+                            <option value="LEAD_CD02" <c:if test="${rtnDto.gpcCtgry eq 'LEAD_CD02'}">selected</c:if>>Biz</option>
+                            <option value="LEAD_CD03" <c:if test="${rtnDto.gpcCtgry eq 'LEAD_CD03'}">selected</c:if>>People</option>
+                        </div>
+                        <div id="selectGroup4" style="display:none;">
+                            <option value="">선택</option>
+                            <option value="HMGSPEC_CD01" <c:if test="${rtnDto.gpcCtgry eq 'HMGSPEC_CD01'}">selected</c:if>>공통분야</option>
+                            <option value="HMGSPEC_CD02" <c:if test="${rtnDto.gpcCtgry eq 'HMGSPEC_CD02'}">selected</c:if>>구매분야</option>
+                            <option value="HMGSPEC_CD03" <c:if test="${rtnDto.gpcCtgry eq 'HMGSPEC_CD03'}">selected</c:if>>품질분야</option>
+                            <option value="HMGSPEC_CD04" <c:if test="${rtnDto.gpcCtgry eq 'HMGSPEC_CD04'}">selected</c:if>>생기분야</option>
+                            <option value="HMGSPEC_CD05" <c:if test="${rtnDto.gpcCtgry eq 'HMGSPEC_CD05'}">selected</c:if>>R&D분야</option>
+                        </div>
+
+                        <div id="selectGroup5" style="display:none;">
+                            <option value="">선택</option>
+                            <option value="NORJB_CD01" <c:if test="${rtnDto.gpcCtgry eq 'NORJB_CD01'}">selected</c:if>>인적자원관리</option>
+                            <option value="NORJB_CD02" <c:if test="${rtnDto.gpcCtgry eq 'NORJB_CD02'}">selected</c:if>>환경/안전</option>
+                            <option value="NORJB_CD03" <c:if test="${rtnDto.gpcCtgry eq 'NORJB_CD03'}">selected</c:if>>자동차입문</option>
+                            <option value="NORJB_CD04" <c:if test="${rtnDto.gpcCtgry eq 'NORJB_CD04'}">selected</c:if>>공급망관리</option>
+                            <option value="NORJB_CD05" <c:if test="${rtnDto.gpcCtgry eq 'NORJB_CD05'}">selected</c:if>>비지니스스킬</option>
+                        </div>
+
+                        <select class="form-control input-sm wd-sm" name="gpcCtgry" id="gpcCtgry" title="GPC 트랙" disabled>
+                            <option value="">선택</option>
+                        </select>
+                    </div>
+
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">GPC 환급과정</label>
+                    <div class="col-sm-5">
+                        <select class="form-control input-sm wd-sm" name="gpcRfnPrcs" id="gpcRfnPrcs" title="GPC 환급과정">
+                            <option value="">선택</option>
+                            <option value="N" <c:if test="${rtnDto.gpcRfnPrcs eq 'N'}">selected</c:if>>비환급</option>
+                            <option value="R" <c:if test="${rtnDto.gpcRfnPrcs eq 'R'}">selected</c:if>>환급</option>
+                        </select>
+                    </div>
+                    <label class="col-sm-1 control-label">GPC 강사 ID</label>
+                    <div class="col-sm-5">
+                        <input type="text" class="form-control input-sm notRequired" id="gpcIsttrId" name="gpcIsttrId" value="${rtnDto.gpcIsttrId}" title="GPC 강사 ID" maxlength="20" placeholder="GPC 강사 ID 입력" style="max-width: 150px;"/>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">GPC 정원수</label>
+                    <div class="col-sm-11">
+                        <label class="input_line form-inline">
+                            <input type="text" class="form-control input-sm numberChk" id="gpcFxnumCnt" name="gpcFxnumCnt" value="${rtnDto.gpcFxnumCnt}" title="GPC 정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/> 명
+                        </label>
+
+                    </div>
+                </div>
+            </fieldset>
+
 
 
 
@@ -172,23 +293,29 @@
                 <div class="col-sm-11" style="margin-left: -80px;">
                         <label class="col-sm-1 control-label">출석/수강</label>
                         <div class="col-sm-1">
-                            <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강">
-                                <option value="">선택</option>
-                                <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}%</option>
-                                </c:forEach>
-                            </select>
+                            <label class="input_line form-inline">
+                                <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강" style="margin-right: 5px;">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>%
+                            </label>
+
                         </div>
 
                     <label class="col-sm-1 control-label">평가</label>
                     <div class="col-sm-4 ">
                         <div class="pull-left">
-                            <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가">
-                                <option value="">선택</option>
-                                <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}점</option>
-                                </c:forEach>
-                            </select>
+                            <label class="input_line form-inline">
+                                <select class="form-control input-sm wd-sm" name="cmptnJdgmtCd" id="cmptnJdgmtCd" title="평가" style="margin-right: 5px;">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${studyCdList.CMPTN_JDGMT}" varStatus="status">
+                                        <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnJdgmtCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>점
+                            </label>
+
                         </div>
                         <div class="pull-left ml-lg">
                             <label class="checkbox-inline c-checkbox">
@@ -207,22 +334,26 @@
                 <div class="col-sm-11"  style="margin-left: -80px;">
                     <label class="col-sm-1 control-label">학습일</label>
                     <div class="col-sm-1">
-                        <select class="form-control input-sm wd-sm" name="stduyDdCd" id="stduyDdCd" title="학습일">
-                            <option value="">선택</option>
-                            <c:forEach var="cdList" items="${studyCdList.STDUY_DD}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}일</option>
-                            </c:forEach>
-                        </select>
+                        <label class="input_line form-inline">
+                            <select class="form-control input-sm wd-sm" name="stduyDdCd" id="stduyDdCd" title="학습일" style="margin-right: 5px;">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${studyCdList.STDUY_DD}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>일
+                        </label>
                     </div>
 
                     <label class="col-sm-1 control-label">학습시간</label>
                     <div class="col-sm-1">
-                        <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간">
-                            <option value="">선택</option>
-                            <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
-                                <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}시간</option>
-                            </c:forEach>
-                        </select>
+                        <label class="input_line form-inline">
+                            <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간" style="margin-right: 5px;">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>시간
+                        </label>
                     </div>
                 </div>
             </div>
@@ -265,7 +396,7 @@
 
 
                         <div class="row" style="margin-bottom: 20px;">
-                            <label class="col-sm-1 control-label">필수과목</label>
+                            <label class="col-sm-1 control-label">필수과정</label>
                             <div class="col-sm-10 relForm3">
                                 <c:forEach var="relList" items="${relList}" varStatus="status">
                                     <c:if test="${relList.cnnctCd eq 'EDCTN_REL03'}">
@@ -424,7 +555,6 @@
                     <table class="table table-hover table-striped" >
                         <thead>
                         <tr>
-                            <th class="text-center" rowspan="2"></th>
                             <th class="text-center" rowspan="2">번호</th>
                             <th class="text-center" rowspan="2">과정분류</th>
                             <th class="text-center" rowspan="2">과정명</th>

@@ -28,7 +28,7 @@
               <input type="time" class="form-control input-sm" id="lvgrmDtm" name="lvgrmDtm" value="${kl:convertDate(atndcList.lvgrmDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '-')}" title="퇴실" data-orglvgrmHour="${kl:convertDate(atndcList.lvgrmDtm, 'yyyy-MM-dd HH:mm', 'HH:mm', '-')}" data-edctnDt="${atndcList.edctnDt}" data-lvgrmDt="${kl:convertDate(atndcList.lvgrmDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd', '-')}" maxlength="50" placeholder="" style="min-width: 150px;"/>
 
             </td><!--퇴실-->
-            <td class="text-center">
+            <td class="text-center">${atndcList.edctnDt}
               <input type="text" class="form-control input-sm notRequired" id="etcNm" name="etcNm" value="${atndcList.etcNm}" data-edctnDt="${atndcList.edctnDt}" data-orgEtcNm="${atndcList.etcNm}" title="비고"maxlength="50" placeholder="" style="min-width: 150px;"/>
             </td><!--비고-->
 

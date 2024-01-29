@@ -298,6 +298,13 @@ public interface EBBEpisdMapper {
 	 */
 	public void updatePtcptCmptnInfo(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 *  관리자 차수관리 -> 차수변경동작중 이미 등록된 회원이 있다면 숫자 반환처리
+	 */
+	public int selectPtcptDupleChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+
+
 
 
 

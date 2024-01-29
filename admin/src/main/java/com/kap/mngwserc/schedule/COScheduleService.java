@@ -83,5 +83,18 @@ public class COScheduleService {
         log.info("EP_EDCTN_PTCPT_STTS_CRTFN Schedule End");
     }
 
+    /**
+     *  퇴실 안한사람 자동 퇴실처리
+     */
+    @Scheduled(cron = "0 30 2 * * ?") // 초(0~59) 분(0~59) 시(0~23) 일(1~31) 월(1~12) 요일(1~7, 일요일 : 1) 연도(생략가능)
+    @SchedulerLock(name = "EP_EDCTN_PTCPT_STTS_ATNDC", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
+    public void updatAtndcInfo() throws Exception {
+        log.info("uEP_EDCTN_PTCPT_STTS_ATNDC Schedule Start");
+
+        cOScheduleMapper.updatAtndcInfo();
+
+        log.info("EP_EDCTN_PTCPT_STTS_ATNDC Schedule End");
+    }
+
 
 }

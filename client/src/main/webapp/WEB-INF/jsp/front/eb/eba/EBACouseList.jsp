@@ -73,7 +73,7 @@
                                 </div>
                                 <div class="right">
                                     <a class="filter-open-btn" href="javascript:" title="필터 열기">
-                                        <span>필터<b class="filter-count">(7)</b></span>
+                                        <span>필터<%--<b class="filter-count">(7)</b>--%></span>
                                     </a>
                                 </div>
                             </div>
@@ -175,7 +175,7 @@
                                                                     <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
                                                                     <div class="input-btn-wrap">
                                                                         <button class="delete-btn" title="지우기" type="button"></button>
-                                                                        <button class="srch-btn" title="검색"></button>
+                                                                        <button class="srch-btn" onclick='$("#btnSearch").click()' title="검색" type="button"></button>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -192,11 +192,11 @@
                                                                 <div class="middle-line">
                                                                     <div class="opt-group">
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType1" name="srchDateType" value="1" checked>
+                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="1" checked>
                                                                             <label for="srchDateType1">교육기간</label>
                                                                         </div>
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType2" name="srchDateType" value="2">
+                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="2">
                                                                             <label for="srchDateType2">접수기간</label>
                                                                         </div>
                                                                     </div>
@@ -215,31 +215,13 @@
                                                                         </div>
                                                                         <div class="form-input calendar">
                                                                             <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${kl:addDay(today, '+90')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>
                                                                                 </button>
                                                                             </span>
                                                                         </div>
-
-                                                                        <%--<div class="input-group">
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" data-name="expsStrtDtm" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" name="expsStrtDtm" data-name="expsStrtDtm" value="${not empty rtnDto.expsStrtDtm ? kl:convertDate(rtnDto.expsStrtDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="중요공지 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                            <span class="input-group-addon bg-white b0">~</span>
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" data-name="expsEndDtm" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" name="expsEndDtm" data-name="expsEndDtm" value="${not empty rtnDto.expsEndDtm ? kl:convertDate(rtnDto.expsEndDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : kl:convertDate(kl:addDay(today, '+7'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="중요공지 종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                        </div>--%>
                                                                     </div>
                                                                     <!-- // 2023-12-07 수정 -->
                                                                 </div>

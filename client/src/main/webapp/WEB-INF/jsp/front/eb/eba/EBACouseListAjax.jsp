@@ -21,7 +21,24 @@
                             </c:otherwise>
                         </c:choose>
 
-                        <a class="swiper-slide marquee_item1 ${accsStatusOrderClass}" href="javascript:">
+
+                        <c:set var="dtlClass" value=""/>
+                        <c:choose>
+                            <c:when test="${ list.nonMemberCd eq 'N' }">
+                                <c:set var="dtlClass" value="nonMemberDtl"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${list.accsStatusOrder eq 3}">
+                                </c:if>
+                                <c:if test="${list.accsStatusOrder ne 3}">
+                                    <c:set var="dtlClass" value="episdDtl"/>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+
+
+
+                        <a class="swiper-slide marquee_item1 ${dtlClass} ${accsStatusOrderClass}" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                             <!--
                               접수중: accepting
                               접수대기: waiting
@@ -148,7 +165,8 @@
                                         </c:choose>
                                     </div>
                                     <div class="btn-wrap">
-                                        <c:choose>
+                                        <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
+                                        <%--<c:choose>
                                             <c:when test="${ list.nonMemberCd eq 'N' }">
                                                 <div class="btn-solid small black-bg nonMemberDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
                                             </c:when>
@@ -160,7 +178,7 @@
                                                     <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
                                                 </c:if>
                                             </c:otherwise>
-                                        </c:choose>
+                                        </c:choose>--%>
                                     </div>
                                 </div>
                             </div>

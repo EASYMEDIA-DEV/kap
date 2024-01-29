@@ -102,7 +102,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <div class="col-sm-11">
-                        <h6 class="mt0"><em class="ion-play mr-sm"></em>과정정보${modifyYn}</h6>
+                        <h6 class="mt0"><em class="ion-play mr-sm"></em>과정정보</h6>
                     </div>
                     <!-- 수정시에는 미출력 -->
                     <c:if test="${empty rtnDto}">
@@ -164,7 +164,7 @@
 
                 <div class="pull-right">
                     <c:choose>
-                        <c:when test="${ not empty rtnDto}">
+                        <c:when test="${ not empty rtnDto && rtnDto.copyYn eq 'N'}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_end_edu">강제종강</button>
                         </c:when>
                     </c:choose>

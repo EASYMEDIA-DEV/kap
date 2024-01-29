@@ -126,7 +126,66 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						search(1);
 					}
 				}
-			}
+			},
+
+
+			gpcYn : {
+				event: {
+					change: function () {
+
+						var gpcYn = $(this).val();
+
+						if(gpcYn == "Y"){
+							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs").removeClass("notRequired");
+						}else{
+							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs").addClass("notRequired");
+
+							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs, #gpcIsttrId").val(null);
+						}
+
+					}
+				}
+			},
+
+			gpcParntCtgry : {
+				event : {
+					change : function() {
+						//GPC 카테고리 선택시 값에따라 GPC트랙 셀렉트박스 세팅
+						var tempHtml = "";
+
+						if($(this).val() == ""){
+							tempHtml= $("#selectGroup0").html();
+							$("#gpcCtgry").prop("disabled", true);
+						}else{
+							$("#gpcCtgry").prop("disabled", false);
+
+							if($(this).val() == "HMGRT_CD"){
+								tempHtml= $("#selectGroup1").html();
+								$("#gpcCtgry").prop("disabled", false);
+							}else if($(this).val() == "GOLCAP_CD"){
+								tempHtml= $("#selectGroup2").html();
+								$("#gpcCtgry").prop("disabled", false);
+							}else if($(this).val() == "LEAD_CD"){
+								tempHtml= $("#selectGroup3").html();
+								$("#gpcCtgry").prop("disabled", false);
+							}else if($(this).val() == "HMGSPEC_CD"){
+								tempHtml= $("#selectGroup4").html();
+								$("#gpcCtgry").prop("disabled", false);
+							}else if($(this).val() == "NORJB_CD"){
+								tempHtml= $("#selectGroup5").html();
+								$("#gpcCtgry").prop("disabled", false);
+							}
+
+
+						}
+
+						$("#gpcCtgry").html(tempHtml);
+
+
+					}
+				}
+			},
+
 		},
 		classname : {
 
@@ -246,6 +305,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//cmmCtrl.setFormData($formObj);
 			search();
 
+			$("#gpcYn").trigger("change");
+			$("#gpcParntCtgry").trigger("change");//GPC 카테고리 이벤트 실행
+
 			$(".jdgmtYn").trigger("change");//평가 관련 셀렉트박스 세팅
 
 			$(".classType").trigger("change");
@@ -348,7 +410,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
 
-
+						debugger;
+						if($("#gpcIsttrId").val() == "" || $("#gpcIsttrId").val() === undefined){
+							$("#gpcIsttrId").val(null);
+						}
 
 
 

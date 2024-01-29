@@ -59,6 +59,58 @@ define(["ezCtrl"], function(ezCtrl) {
 	}
 
 
+	//교육상세에서 비로그인->신청하기 눌렀을경우 여기서 일부 신청조건 체크
+	var chkInfo = function() {
+
+		var authCd = $("#authCd").val();
+
+		var seqObj = {};
+		seqObj.edctnSeq = $("#edctnSeq").val();
+		seqObj.detailsKey = $("#edctnSeq").val();
+		seqObj.episdYear = $("#episdYear").val();
+		seqObj.episdOrd = $("#episdOrd").val();
+		seqObj.episdSeq = $("#episdSeq").val();
+
+		seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
+		//부품사 회원이 아닌경우
+		if(authCd == "CO"){
+			alert("교육신청은 부품사 회원만 신청 가능합니다.");
+			location.href="./detail?detailsKey="+$("#edctnSeq").val();
+		}else if(authCd == "CS"){
+			alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
+			location.href="./detail?detailsKey="+$("#edctnSeq").val();
+		}
+
+		//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
+		cmmCtrl.jsonAjax(function(data){
+
+			if(data != "A"){
+				alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
+				location.href="./detail?detailsKey="+$("#edctnSeq").val();
+			}
+
+			return false;
+
+		}, "/education/apply/EpisdChk", seqObj, "text")
+
+
+		//정원수 체크
+		cmmCtrl.jsonAjax(function(data){
+			if(data !=""){
+				var rtn = JSON.parse(data);
+				//정원여유
+				if(rtn.fxnumStta == "S"){
+				}else{
+					alert("교육 가능한 인원이 초과되었습니다. ");
+					location.href="./detail?detailsKey="+$("#edctnSeq").val();
+				}
+			}
+
+		}, "/education/apply/fxnumChk", seqObj, "text")
+
+	}
+
 	var setPtcptInfo = function(){
 
 
@@ -114,9 +166,11 @@ define(["ezCtrl"], function(ezCtrl) {
 							alert("필수과목 수료후 신청 가능합니다.");
 
 						}else if(rtnData.regStat == "S"){
-							//신청 진행
-							location.href="/education/apply/step2?detailsKey="+seqObj.edctnSeq+"&episdSeq="+seqObj.episdSeq+"&episdYear="+seqObj.episdYear+"&episdOrd="+seqObj.episdOrd;
 
+							if(confirm("위 정보로 교육을 신청하시겠습니까?")){
+								//신청 진행
+								location.href="/education/apply/step2?detailsKey="+seqObj.edctnSeq+"&episdSeq="+seqObj.episdSeq+"&episdYear="+seqObj.episdYear+"&episdOrd="+seqObj.episdOrd;
+							}
 						}
 
 					}, "./setPtcptInfo", $formObj, "post", "json");
@@ -154,13 +208,29 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function(e){
 
-						if(confirm("교육 취소 시 입력된 정보는 저장되지 않습니다. \n 교육 신청을 취소하시겠습니까?")){
+						if(confirm("교육 취소 시 입력된 정보는 저장되지 않습니다. \n교육 신청을 취소하시겠습니까?")){
 							location.href="/education/apply/detail?detailsKey="+$("#edctnSeq").val();
 						}
 
 					}
 				}
 			},
+
+			applyInfo : {
+				event : {
+					click : function(e){
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+						var ptcptSeq = $("#ptcptSeq").val();
+
+						location.href="/my-page/edu-apply/detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+
+					}
+				}
+			},
+
+
 
 
 			//GPC 아이디 인증 API
@@ -375,6 +445,9 @@ define(["ezCtrl"], function(ezCtrl) {
 			//리스트 조회
 			//폼 데이터 처리
 			//cmmCtrl.setFormData($formObj);
+
+
+			chkInfo();
 		}
 	};
 

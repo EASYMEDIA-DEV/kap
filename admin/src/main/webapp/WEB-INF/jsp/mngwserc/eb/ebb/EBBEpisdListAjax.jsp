@@ -3,12 +3,17 @@
   <c:when test="${ not empty rtnData.list}">
     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
       <tr data-total-count="${rtnData.totalCount}">
-        <td class="text-center">
-          <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${list.edctnSeq}" name="delValueList" class="checkboxSingle notRequired" data-edctn_seq="${list.edctnSeq}" data-episdseq="${list.episdSeq}"  />
-            <span class="ion-checkmark-round"></span>
-          </label>
-        </td>
+        <c:choose>
+          <c:when test="${eBBEpisdDTO.couseEpisdYn eq 'N'}">
+            <td class="text-center">
+              <label class="checkbox-inline c-checkbox">
+                <input type="checkbox" value="${list.edctnSeq}" name="delValueList" class="checkboxSingle notRequired" data-edctn_seq="${list.edctnSeq}" data-episdseq="${list.episdSeq}"  />
+                <span class="ion-checkmark-round"></span>
+              </label>
+            </td>
+          </c:when>
+        </c:choose>
+
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">${list.prntCdNm} > ${list.ctgryCdNm}</td><!--과정분류-->
         <td class="text-center">${list.nm}</td><!--과정명-->
@@ -50,8 +55,18 @@
     </c:forEach>
   </c:when>
   <c:otherwise>
+
+    <c:set var="colspanVal" value="27"/>
+    <c:choose>
+      <c:when test="${eBBEpisdDTO.couseEpisdYn eq 'Y'}">
+        <c:set var="colspanVal" value="26"/>
+      </c:when>
+    </c:choose>
+
+
+
     <tr data-total-count="0">
-      <td colspan="26" class="text-center">
+      <td colspan="${colspanVal}" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

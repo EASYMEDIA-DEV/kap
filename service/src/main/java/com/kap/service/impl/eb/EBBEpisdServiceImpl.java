@@ -366,20 +366,25 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			List<EBBPtcptDTO> ptcptAtndcList = new ArrayList();
 			ptcptAtndcList = eBBEpisdMapper.selectPtcptAtndcList(dto);
 
+			EBBPtcptDTO tempDto = new EBBPtcptDTO();
+
+
 			for(EBBPtcptDTO orgDto: ptcptList){
 				List<EBBPtcptDTO> tempList = new ArrayList();
 				System.out.println("@@orgDto.getPtcptSeq() = " +orgDto.getPtcptSeq());
+
 				for(EBBPtcptDTO atndcDto : ptcptAtndcList){
 					//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
 					System.out.println("@@@ atndcDto.getPtcptSeq() = " + atndcDto.getPtcptSeq());
-					if(atndcDto.getPtcptSeq() == orgDto.getPtcptSeq()){
+					if(orgDto.getPtcptSeq().equals(atndcDto.getPtcptSeq()) ){
 						tempList.add(atndcDto);
 					}
 				}
+
 				orgDto.setAtndcList(tempList);
+
 			}
 			dto.setPtcptList(ptcptList);
-
 
 		}
 
@@ -811,9 +816,20 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		int rtnCnt = 0;
 
 
-			//전달받은 회원번호로 반복문 돌림
-			//상태값이 F인경우 반환중지함?
-			List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
+		//전달받은 회원번호로 반복문 돌림
+		//상태값이 F인경우 반환중지함?
+		List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
+
+
+		//등록전에 이미 해당 차수에 등록된 회원인지 체크한다 만일 반환된 숫자가 0이 아닐경우 모든 반복문을 취소하고 중지처리한다.
+
+		int dupleChk = eBBEpisdMapper.selectPtcptDupleChk(eBBEpisdDTO);
+		for(EBBPtcptDTO tmo : ptcptList){
+			System.out.println("@tmo.getMemSeq() = " + tmo.getMemSeq());
+		}
+		System.out.println("@@ dupleChk=  " + dupleChk);
+
+		if(dupleChk == 0){
 
 			for(EBBPtcptDTO ptcptDto : ptcptList){
 				//변경전 정보를 받아온다
@@ -867,11 +883,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				ptcptDto.setModId( cOUserDetailsDTO.getId() );
 				ptcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
 				eBBEpisdMapper.updatePtcptStatusInfo(ptcptDto);
+				rtnCnt++;
 
 			}
 
+		}
 
-		return rtnCnt;
+
+
+
+		return dupleChk;
 	}
 
 

@@ -199,6 +199,13 @@
 				  , (select cd_nm from co_code_mst where cd=a.lcns_cnnct_cd) as lcns_cnnct_cd_nm
 				  , thnl_file_seq
 				  , gpc_yn
+				  , gpc_edctn_type
+				  , gpc_parnt_ctgry
+				  , gpc_ctgry
+				  , gpc_lvl
+				  , gpc_fxnum_cnt
+				  , gpc_rfn_prcs
+				  , gpc_isttr_id
 				  , reg_id
 				  , (select name from co_adm_mst where id = a.reg_id) as reg_name
 				  , reg_dtm
@@ -281,6 +288,28 @@
 			, lcns_cnnct_cd
 			, thnl_file_seq
 			, gpc_yn
+
+			<if test='gpcYn =="Y" '>
+				, gpc_edctn_type
+				, gpc_parnt_ctgry
+				, gpc_ctgry
+				, gpc_lvl
+				, gpc_fxnum_cnt
+				, gpc_rfn_prcs
+				<if test='gpcIsttrId !="" and gpcIsttrId !=null '>
+					, gpc_isttr_id
+				</if>
+
+			</if>
+
+			, gpc_edctn_type
+			, gpc_parnt_ctgry
+			, gpc_ctgry
+			, gpc_lvl
+			, gpc_fxnum_cnt
+			, gpc_rfn_prcs
+			, gpc_isttr_id
+
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -316,6 +345,26 @@
 		, #{lcnsCnnctCd}
 		, #{thnlFileSeq}
 		, #{gpcYn}
+
+		<if test='gpcYn =="Y" '>
+			, #{gpcEdctnType}
+			, #{gpcParntCtgry}
+			, #{gpcCtgry}
+			, #{gpcLvl}
+			, #{gpcFxnumCnt}
+			, #{gpcRfnPrcs}
+			<if test='gpcIsttrId !="" and gpcIsttrId !=null '>
+				, #{gpcIsttrId}
+			</if>
+		</if>
+
+		, #{gpcEdctnType}
+		, #{gpcParntCtgry}
+		, #{gpcCtgry}
+		, #{gpcLvl}
+		, #{gpcFxnumCnt}
+		, #{gpcRfnPrcs}
+		, #{gpcIsttrId}
 		, #{expsYn}
 		, #{regId}
 		, #{regIp}
@@ -344,6 +393,35 @@
 			, stduy_mthd_cd = #{stduyMthdCd}
 			, cmptn_stnd_cd = #{cmptnStndCd}
 			, gpc_yn = #{gpcYn}
+			<if test='gpcYn =="Y" '>
+				, gpc_edctn_type = #{gpcEdctnType}
+				, gpc_parnt_ctgry = #{gpcParntCtgry}
+				, gpc_ctgry = #{gpcCtgry}
+				, gpc_lvl = #{gpcLvl}
+				, gpc_fxnum_cnt = #{gpcFxnumCnt}
+				, gpc_rfn_prcs = #{gpcRfnPrcs}
+				<if test='gpcIsttrId =="" or gpcIsttrId ==null '>
+					, gpc_isttr_id = null
+				</if>
+				<if test='gpcIsttrId !="" and gpcIsttrId != null '>
+					, gpc_isttr_id = #{gpcIsttrId}
+				</if>
+			</if>
+
+			<if test='gpcYn !="Y" '>
+				, gpc_edctn_type = null
+				, gpc_parnt_ctgry = null
+				, gpc_ctgry = null
+				, gpc_lvl = null
+				, gpc_fxnum_cnt = null
+				, gpc_rfn_prcs = null
+
+				<if test='gpcIsttrId =="" or gpcIsttrId ==null '>
+					, gpc_isttr_id = null
+				</if>
+
+			</if>
+
 
 			<if test='jdgmtYn =="Y" '>
 				, cmptn_Jdgmt_Cd = #{cmptnJdgmtCd}

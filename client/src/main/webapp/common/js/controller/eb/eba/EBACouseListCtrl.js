@@ -469,7 +469,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			episdDtl : {
 				event : {
 					click : function(e){
-						var edctnseq = $(e.target).closest("div").data("edctnseq");
+						var edctnseq = $(this).data("edctnseq");
 						location.href="/education/apply/detail?detailsKey="+edctnseq;
 					}
 				}
@@ -497,12 +497,26 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		},
 		immediately : function() {
+
+			cmmCtrl.setCalendar();
+
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
 
 			$(".classTypeLayer:first").trigger("click");
+
+			$('#q').on('keydown', function(event) {
+				// 눌린 키가 Enter 키인지 확인
+				if (event.which === 13) {
+					// 다른 이벤트 중지
+					event.preventDefault();
+
+					search(1);
+					return false;
+				}
+			});
 		}
 	};
 	

@@ -4,7 +4,6 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
-            alert("비정상 접근으로 메인보냄");
             location.href="/";
 
         }
@@ -170,7 +169,7 @@
                                                                 </div>
                                                                 <div class="btn-wrap">
                                                                     <div class="btn-set">
-                                                                        <c:if test="${not empty list.edctnNtctnFileSeq}">
+                                                                        <c:if test="${not empty episdDto.edctnNtctnFileSeq}">
                                                                             <a class="btn-text-icon download" href="/file/view?fileSeq=${episdDto.edctnNtctnFileSeq}&fileOrd=${episdDto.fileOrd}"><span>안내문</span></a>
                                                                         </c:if>
                                                                     </div>
@@ -211,18 +210,21 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">접수일자</p>
-                                                                    <p class="txt f-body2">${kl:convertDate(episdDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} ~ ${kl:convertDate(episdDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</p>
+                                                                    <p class="txt f-body2">${kl:convertDate(episdDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} ~<br/> ${kl:convertDate(episdDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</p>
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육일자</p>
-                                                                    <p class="txt f-body2">${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${episdDto.stduyDdCdNm}일간)</p>
+                                                                    <p class="txt f-body2">${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~<br/> ${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${episdDto.stduyDdCdNm}일간)</p>
                                                                     <input type="hidden" name="edctnStrtDtm" id="edctnStrtDtm" value="${kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                                                     <input type="hidden" name="edctnEndDtm" id="edctnEndDtm" value="${kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                                                 </div>
                                                             </div>
                                                             <div class="btn-wrap">
                                                                 <button class="btn-text-icon black-arrow popupPicPrevSet" type="button" data-picNm="${episdDto.picNm}" data-picEmail="${episdDto.picEmail}" data-picTelNo="${episdDto.picTelNo}"><span>회차 담당자 문의</span></button>
-                                                                <button class="btn-text-icon black-arrow popupLctrPrevSet" type="button" data-episdYear="${episdDto.episdYear}" data-episdOrd="${episdDto.episdOrd}"><span>온라인 강의목차</span></button>
+
+                                                                <c:if test="${episdDto.stduyMthdCd ne 'STDUY_MTHD01'}">
+                                                                    <button class="btn-text-icon black-arrow popupLctrPrevSet" type="button" data-episdYear="${episdDto.episdYear}" data-episdOrd="${episdDto.episdOrd}"><span>온라인 강의목차</span></button>
+                                                                </c:if>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -299,7 +301,7 @@
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-text-icon black-circle" href="javascript:"><span>회원 기본정보 수정</span></a>
+                                            <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>회원 기본정보 수정</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -321,37 +323,38 @@
                                                 </colgroup>
                                                 <tbody>
 
+
+                                                <tr>
+                                                    <th>사업자등록번호</th>
+                                                    <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
+                                                </tr>
                                                 <tr>
                                                     <th>부품사명</th>
                                                     <td>${rtnInfo.cmpnNm}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>구분</th>
-                                                    <td>${rtnInfo.ctgryNm}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>대표자명</th>
                                                     <td>${rtnInfo.rprsntNm}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>설립일자</th>
-                                                    <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>전화번호</th>
-                                                    <td>${rtnInfo.telNo}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>사업자등록번호</th>
-                                                    <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>본사주소</th>
-                                                    <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
+                                                    <th>구분</th>
+                                                    <td>${rtnInfo.ctgryNm}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>규모</th>
                                                     <td>${rtnInfo.sizeNm}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>설립일자</th>
+                                                    <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>회사 전화번호</th>
+                                                    <td>${rtnInfo.telNo}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>본사주소</th>
+                                                    <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>매출액</th>
@@ -378,36 +381,71 @@
                                                     </td>
                                                 </tr>
                                                 <c:choose>
-                                                <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
-                                                <tr>
-                                                    <th>SQ정보</th>
-                                                    <td>
-                                                        <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
-                                                            <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
-                                                        </c:forEach>
-                                                    </td>
-                                                </tr>
-                                                </c:when>
-                                                <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
-                                                <tr>
-                                                    <th>품질5스타</th>
-                                                    <td>${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>납입5스타</th>
-                                                    <td>${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>기술5스타</th>
-                                                    <td>${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년</td>
-                                                </tr>
-                                                </c:when>
+                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
+                                                        <tr>
+                                                            <th>품질5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.qlty5StarCdNm}">
+                                                                        ${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>납입5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.pay5StarCdNm}">
+                                                                        ${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>기술5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.tchlg5StarCdNm}">
+                                                                        ${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
+                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
+                                                        <tr>
+                                                            <th>SQ정보</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test=" ${fn:length(sqInfoList.list)>0}">
+                                                                        <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
+                                                                            <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
+                                                                        </c:forEach>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
                                                 </c:choose>
                                                 </tbody>
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                            <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>부품사 기본정보 수정</span></a>
                                         </div>
                                     </div>
                                 </div>

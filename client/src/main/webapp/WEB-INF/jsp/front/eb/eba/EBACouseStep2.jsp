@@ -7,11 +7,11 @@
         <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
         <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-        <input type="hidden" id="episdSeq" name="episdSeq" value="" />
 
-        <input type="hidden" id="episdYear" name="episdYear" value="" />
-        <input type="hidden" id="episdOrd" name="episdOrd" value="" />
-        <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnData.edctnSeq}" />
+        <input type="hidden" id="episdYear" name="episdYear" value="${rtnPtcptDto.episdYear}" />
+        <input type="hidden" id="episdOrd" name="episdOrd" value="${rtnPtcptDto.episdOrd}" />
+        <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnPtcptDto.edctnSeq}" />
+        <input type="hidden" id="ptcptSeq" name="ptcptSeq" value="${rtnPtcptDto.ptcptSeq}" />
 
         <div class="cont-wrap">
             <!--
@@ -74,7 +74,7 @@
                     <div class="page-bot-btn-sec">
                         <div class="btn-wrap for-motion">
                             <div class="btn-set">
-                                <a class="btn-solid small gray-bg" href="javascript:"><span>신청내역 보기</span></a>
+                                <a class="btn-solid small gray-bg applyInfo" href="javascript:"><span>신청내역 보기</span></a>
                             </div>
                             <div class="btn-set">
                                 <a class="btn-solid small black-bg" href="/education/apply/detail?detailsKey=${rtnData.edctnSeq}"><span>확인</span></a>

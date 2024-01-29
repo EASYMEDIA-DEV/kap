@@ -17,7 +17,7 @@
                                         <p class="label"><span>${list.prntCdNm}</span></p>
                                         <p class="label"><span>${list.ctgryCdNm}</span></p>
                                     </div>
-                                    <p class="training-name f-title1">${list.nm}</p>
+                                    <p class="training-name f-title3"><a href="javascript:">${list.nm}</a></p>
                                 </div>
                                 <div class="group">
                                     <p class="index-num f-head">${list.episdOrd}회차</p>
