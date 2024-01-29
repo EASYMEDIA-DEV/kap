@@ -263,7 +263,19 @@
 
 
 			<!-- 기간검색 -->
-
+			<!--교육기간/접수기간-->
+			<if test="strtDt != null and strtDt != ''">
+				<choose>
+					<when test="srchDate == 1">
+						AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						AND edctn_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+					</when>
+					<when test="srchDate == 2">
+						AND accs_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						AND accs_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+					</when>
+				</choose>
+			</if>
 		</where>
 	</sql>
 
@@ -281,6 +293,7 @@
 			 , a.cd as prnt_target_cd
 			 , a.cd_nm as prnt_target_cd_nm
 			 , ifnull(case when a.cd = b.target_cd then b.target_nm end, '없음') as target_cd_nm
+			, etc_nm
 		from co_code_mst a
 				 LEFT JOIN(
 			SELECT
@@ -288,6 +301,7 @@
 				 , CD
 				 , LEFT(CD, 11) AS target_cd
 				 , GROUP_CONCAT((select cd_nm from co_code_mst where cd=a.cd) SEPARATOR ', ') AS target_nm
+				 , etc_nm
 			FROM ed_edctn_trgt_dtl a
 			WHERE edctn_seq = #{detailsKey}
 			GROUP BY target_cd
@@ -295,6 +309,8 @@
 		WHERE 1=1
 		  AND A.CD_ID = 'ED_TARGET'
 		  AND A.DPTH = 2
+
+		ORDER BY a.cd ASC
 
 	</select>
 
@@ -1044,23 +1060,23 @@
 			<when test="srchOrder == 1">
 				<!-- 신청 마감순-->
 				/*ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc*/
-				ORDER BY stts_cd asc, trnsf_yn asc, ptcpt_dtm asc
+				ORDER BY trnsf_yn asc, stts_cd asc, ptcpt_dtm asc
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
-				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, edctn_strt_dtm asc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, edctn_strt_dtm asc
 			</when>
 			<when test="srchOrder == 3">
 				<!--학습시간 짧은순-->
-				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, stduy_dd_cd_nm asc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm asc
 			</when>
 			<when test="srchOrder == 4">
 				<!--학습시간 긴순-->
-				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, stduy_dd_cd_nm desc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm desc
 			</when>
 			<otherwise>
 				<!-- 신청 마감순-->
-				ORDER BY stts_cd asc, trnsf_yn asc, accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
+				ORDER BY trnsf_yn asc, stts_cd asc,accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
 			</otherwise>
 		</choose>
 

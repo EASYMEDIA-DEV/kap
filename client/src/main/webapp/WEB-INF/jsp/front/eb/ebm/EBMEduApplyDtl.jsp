@@ -509,37 +509,38 @@
                                                 </colgroup>
                                                 <tbody>
 
+
+                                                <tr>
+                                                    <th>사업자등록번호</th>
+                                                    <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
+                                                </tr>
                                                 <tr>
                                                     <th>부품사명</th>
                                                     <td>${rtnInfo.cmpnNm}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>구분</th>
-                                                    <td>${rtnInfo.ctgryNm}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>대표자명</th>
                                                     <td>${rtnInfo.rprsntNm}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>설립일자</th>
-                                                    <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>전화번호</th>
-                                                    <td>${rtnInfo.telNo}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>사업자등록번호</th>
-                                                    <td>${kl:bsnmNoConvert(rtnInfo.bsnmNo)}</td>
-                                                </tr>
-                                                <tr>
-                                                    <th>본사주소</th>
-                                                    <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
+                                                    <th>구분</th>
+                                                    <td>${rtnInfo.ctgryNm}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>규모</th>
                                                     <td>${rtnInfo.sizeNm}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>설립일자</th>
+                                                    <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>회사 전화번호</th>
+                                                    <td>${rtnInfo.telNo}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>본사주소</th>
+                                                    <td>(${rtnInfo.zipcode}) ${rtnInfo.bscAddr} ${rtnInfo.dtlAddr}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>매출액</th>
@@ -566,28 +567,63 @@
                                                     </td>
                                                 </tr>
                                                 <c:choose>
+                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
+                                                        <tr>
+                                                            <th>품질5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.qlty5StarCdNm}">
+                                                                        ${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>납입5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.pay5StarCdNm}">
+                                                                        ${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <th>기술5스타</th>
+                                                            <td>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty rtnInfo.tchlg5StarCdNm}">
+                                                                        ${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
+
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
                                                     <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
                                                         <tr>
                                                             <th>SQ정보</th>
                                                             <td>
-                                                                <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
-                                                                    <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
-                                                                </c:forEach>
+                                                                <c:choose>
+                                                                    <c:when test=" ${fn:length(sqInfoList.list)>0}">
+                                                                        <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
+                                                                            <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
+                                                                        </c:forEach>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </td>
-                                                        </tr>
-                                                    </c:when>
-                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
-                                                        <tr>
-                                                            <th>품질5스타</th>
-                                                            <td>${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>납입5스타</th>
-                                                            <td>${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>기술5스타</th>
-                                                            <td>${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년</td>
                                                         </tr>
                                                     </c:when>
                                                 </c:choose>

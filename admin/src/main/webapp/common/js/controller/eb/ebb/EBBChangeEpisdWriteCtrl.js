@@ -163,12 +163,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 
-						debugger;
 						if(resultFlag){
 
 							cmmCtrl.jsonAjax(function(data){
-								alert("저장되었습니다.");
-								location.href = "./list";
+
+								var rtnData = JSON.parse(data);
+								var respCnt  = rtnData.respCnt;
+
+								if(respCnt == 0){
+									alert("저장되었습니다.");
+									location.href = "./list";
+								}else{
+									alert("이미 해당 회차에 신청한 회원입니다.");
+									return false;
+								}
+
 							}, "./changeEpisd", actionForm, "text");
 						}
 

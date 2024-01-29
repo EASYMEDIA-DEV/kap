@@ -28,5 +28,11 @@ public interface COScheduleMapper {
      */
     public int updateStrtEduPtcptStts();
 
+    /**
+     * 퇴실 안한사람 자동 퇴실처리
+     */
+    public int updatAtndcInfo();
+
+
 
 }

@@ -551,7 +551,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var episdOrd = $("#episdOrd").val();
 
 						if(edctnSeq == ""){
-							alert("과정을 먼저 선택해주세요.");
+							alert("과정을 선택해주세요.");
 							return false;
 						}
 
@@ -1231,38 +1231,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//추가로 이 경우에는 강사, 만족도조사, 평가, 노출여부만 수정 가능하다.
 			//교육이 시작했을경우 노출여부만 수정 가능하다. eduIng =Y
 
+			var copyYn = $("#copyYn").val();
 
-			var modifyYn = $("#modifyYn").val();
-			var eduIng = false;
-			//교육 시작일 이전에 수정가능한 목록 제어
-			var updateEdDt = $("#edctnStrtDt").val();
-			if(updateEdDt != ""){
-				var eduDate = new Date(updateEdDt);//교육 시작일
-				var nowDate = new Date();//현재날짜
+			if(copyYn == "N"){
+				var modifyYn = $("#modifyYn").val();
+				var eduIng = false;
+				//교육 시작일 이전에 수정가능한 목록 제어
+				var updateEdDt = $("#edctnStrtDt").val();
+				if(updateEdDt != ""){
+					var eduDate = new Date(updateEdDt);//교육 시작일
+					var nowDate = new Date();//현재날짜
 
-				//현재 날짜가 교육시작일 이후 = 교육중
-				if(nowDate>=eduDate){
+					//현재 날짜가 교육시작일 이후 = 교육중
+					if(nowDate>=eduDate){
 
-					$(".eduIsttrSearch").attr("disabled", true);//강사 추가버튼 사용 불가
-					$(".btnOneTrRemove").attr("disabled", true);//강사 삭제버튼 사용불가
-					$(".eduSrvSearch").attr("disabled", true);//만족도조사 추가버튼 사용불가
-					$(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가
-					$(".eduExamSearch").attr("disabled", true);//평가버튼 사용 불가
-					$(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
+						$(".eduIsttrSearch").attr("disabled", true);//강사 추가버튼 사용 불가
+						$(".btnOneTrRemove").attr("disabled", true);//강사 삭제버튼 사용불가
+						$(".eduSrvSearch").attr("disabled", true);//만족도조사 추가버튼 사용불가
+						$(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가
+						$(".eduExamSearch").attr("disabled", true);//평가버튼 사용 불가
+						$(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
 
-					//설문, 시험 달력 사용불가
-					$("#srvStrtDtm, #srvEndDtm, #examStrtDtm, #examEndDtm").attr("disabled", true);
+						//설문, 시험 달력 사용불가
+						$("#srvStrtDtm, #srvEndDtm, #examStrtDtm, #examEndDtm").attr("disabled", true);
 
-					$(".jdgmtYn").find("input").each(function(e){
-						$(this).click(function(e){
+						$(".jdgmtYn").find("input").each(function(e){
+							$(this).click(function(e){
 
-							e.stopImmediatePropagation();
+								e.stopImmediatePropagation();
+							});
+
 						});
-
-					});
-					eduIng = true;
+						eduIng = true;
+					}
 				}
 			}
+
+
+
 
 
 
@@ -1324,57 +1330,62 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				})
 			});
 
-			//신청자가 존재하는 단계 이 단계에서는 강사, 만족도 조사, 평가, 노출여부만 수정 가능하다(신청자가 존재하는 상태)
-			if($("#modifyYn").val() == "N"){
 
-				$("#episdYear").prop("disabled", true);//회차 년도
-				$("#episdOrd").prop("disabled", true);//회차
+			if(copyYn == "N"){
+				//신청자가 존재하는 단계 이 단계에서는 강사, 만족도 조사, 평가, 노출여부만 수정 가능하다(신청자가 존재하는 상태)
+				if($("#modifyYn").val() == "N"){
 
-				$("#accsStrtDt").prop("disabled", true);//접수 시작일
-				$("#accsStrtHour").prop("disabled", true);//접수 시작시간
-				$("#accsEndDt").prop("disabled", true);//접수 종료일
-				$("#accsEndHour").prop("disabled", true);//접수 종료시간
+					$("#episdYear").prop("disabled", true);//회차 년도
+					$("#episdOrd").prop("disabled", true);//회차
 
-				$("#edctnStrtDt").prop("disabled", true);//교육 시작일
-				$("#edctnStrtHour").prop("disabled", true);//교육 시작시간
-				$("#edctnEndDt").prop("disabled", true);//교육 종료일
-				$("#edctnEndHour").prop("disabled", true);//교육 종료시간
+					$("#accsStrtDt").prop("disabled", true);//접수 시작일
+					$("#accsStrtHour").prop("disabled", true);//접수 시작시간
+					$("#accsEndDt").prop("disabled", true);//접수 종료일
+					$("#accsEndHour").prop("disabled", true);//접수 종료시간
 
-				$("#fxnumCnt").prop("disabled", true);//정원수
-				$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스
-				$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식
-				$("input[name='cmptnAutoYn']").prop("disabled", true);//수료 자동화 여부
+					$("#edctnStrtDt").prop("disabled", true);//교육 시작일
+					$("#edctnStrtHour").prop("disabled", true);//교육 시작시간
+					$("#edctnEndDt").prop("disabled", true);//교육 종료일
+					$("#edctnEndHour").prop("disabled", true);//교육 종료시간
 
-				$("#picNm").prop("disabled", true);//문의 담당자명
-				$("#picEmail").prop("disabled", true);//문의 담당자 이메일
-				$("#picTelNo").prop("disabled", true);//문의 담당자 전화번호
+					$("#fxnumCnt").prop("disabled", true);//정원수
+					$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스
+					$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식
+					$("input[name='cmptnAutoYn']").prop("disabled", true);//수료 자동화 여부
 
-				$("button.cprtnInsttSearch").prop("disabled", true);//협력기관 검색버튼
-				$("button.eduRoomSearch").prop("disabled", true);//교육장소 검색버튼
+					$("#picNm").prop("disabled", true);//문의 담당자명
+					$("#picEmail").prop("disabled", true);//문의 담당자 이메일
+					$("#picTelNo").prop("disabled", true);//문의 담당자 전화번호
 
-				//온라인강의 수정 불가처리
-				$("#onlineList").find("input:text").prop("disabled", true);
-				$("#onlineList").find("button").prop("disabled", true);
+					$("button.cprtnInsttSearch").prop("disabled", true);//협력기관 검색버튼
+					$("button.eduRoomSearch").prop("disabled", true);//교육장소 검색버튼
 
-				$("#onlineList").find("tr").each(function(){
-					$(this).find(".dz-hidden-input").prop("disabled",true).css("cursor", "not-allowed");
-					$(this).find(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
-					$(this).find(".dz-default.dz-message").hide().css("cursor", "not-allowed");
-				});
+					//온라인강의 수정 불가처리
+					$("#onlineList").find("input:text").prop("disabled", true);
+					$("#onlineList").find("button").prop("disabled", true);
 
+					$("#onlineList").find("tr").each(function(){
+						$(this).find(".dz-hidden-input").prop("disabled",true).css("cursor", "not-allowed");
+						$(this).find(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
+						$(this).find(".dz-default.dz-message").hide().css("cursor", "not-allowed");
+					});
+
+				}
+
+				//교육이 시작된 상태에서는 노출여부를 제외하고 전부 사용 불가능
+				if($("#eduIng").val() == "Y"){
+
+				}
 			}
 
-			//교육이 시작된 상태에서는 노출여부를 제외하고 전부 사용 불가능
-			if($("#eduIng").val() == "Y"){
 
-			}
 			// 유효성 검사
 			$formObj.validation({
 
 				before : function(e) {
 
 					if($("#edctnSeq").val() == ""){
-						alert("과정을 먼저 선택해주세요");
+						alert("과정을 선택해주세요");
 						return  false;
 					}
 
@@ -1486,7 +1497,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$("#episdOrd").trigger("change");
 
 						/*if($("#edctnSeq").val() == ""){
-							alert("과정을 먼저 선택해주세요");
+							alert("과정을 선택해주세요");
 							return  false;
 						}*/
 

@@ -775,7 +775,7 @@ public class EBBEpisdController {
             try {
 
                 rtnCnt = eBBEpisdService.changeEpisd(eBBEpisdDTO);
-
+                temoDto.setRespCnt(rtnCnt);
             }
             catch (Exception e)
             {

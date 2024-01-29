@@ -185,6 +185,29 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "GPC여부", example = "Y/N")
     private String gpcYn;
 
+    @Schema(title = "GPC교육유형", example = "텍스트")
+    private String gpcEdctnType;
+
+    @Schema(title = "GPC부모카테고리", example = "텍스트")
+    private String gpcParntCtgry;
+
+    @Schema(title = "GPC카테고리", example = "텍스트")
+    private String gpcCtgry;
+
+    @Schema(title = "GPC레벨", example = "텍스트")
+    private String gpcLvl;
+
+    @Schema(title = "GPC정원수", example = "텍스트")
+    private Integer gpcFxnumCnt;
+
+    @Schema(title = "GPC환불과정", example = "텍스트")
+    private String gpcRfnPrcs;
+
+    @Schema(title = "GPC강사ID", example = "텍스트")
+    @Builder.Default
+    private String gpcIsttrId = null;
+
+
 
     //로그인세션ID
     private String lgnSsnId;

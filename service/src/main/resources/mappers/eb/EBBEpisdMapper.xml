@@ -644,6 +644,7 @@
 			 , edctn_end_dtm
 		     , edctn_stts_cd
 			 , edctn_ntctn_file_seq
+			 , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = aa.edctn_ntctn_file_seq) AS file_ord
 			 , case
 				   when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 				   when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
@@ -2911,6 +2912,32 @@
 			, mod_dtm = now()
 		where ptcpt_seq = #{ptcptSeq}
 	</update>
+
+
+
+	<!--
+          쿼리명 : EBBEpisdMapper.selectPtcptDupleChk
+          설  명 : 차수관리 > 차수변경 진행중 이미 등록된 회원인지 중복체크
+           수정일     수정자       수정내용
+         ==========   ======    ==============
+         2024.01.24   김학규       최초생성
+	 -->
+	<select id="selectPtcptDupleChk" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /* EBBEpisdMapper.selectPtcptDupleChk */
+			COUNT(*)
+		from ep_edctn_ptcpt_mst
+		WHERE 1=1
+
+		AND edctn_Seq = #{edctnSeq}
+		AND episd_Year = #{episdYear}
+		AND episd_Ord = #{episdOrd}
+		AND mem_SEQ IN (
+										SELECT MEM_SEQ FROM ep_edctn_ptcpt_mst WHERE PTCPT_SEQ IN
+																												<foreach collection="ptcptList" item="ptcptList" index="index" separator=", " open="(" close=")">
+																													#{ptcptList.ptcptSeq}
+																												</foreach>
+									)
+	</select>
 </mapper>
 
 

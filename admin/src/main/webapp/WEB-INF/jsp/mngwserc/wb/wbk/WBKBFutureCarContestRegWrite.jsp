@@ -357,13 +357,12 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">사용자 상태값</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" id="userCancel">
+                                                <p class="form-control-static">
                                                     <c:choose>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT001'}">접수완료</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                                             <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT003'}">탈락</c:when>
-                                                            <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT004'}">사용자취소</c:when>
                                                             <c:otherwise>접수완료</c:otherwise>
                                                     </c:choose>
                                                 </p>
@@ -377,7 +376,7 @@
                                                 <p class="form-control-static">
                                                     <c:choose>
                                                         <c:when test="${rsumeList[0].appctnSttsChngDtm != null}">
-                                                            ${kl:convertDate(rsumeList[0].appctnSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                            ${kl:convertDate(rsumeList[0].appctnSttsChngDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
                                                         </c:when>
                                                         <c:otherwise>
                                                             -
@@ -411,7 +410,7 @@
                                                 <p class="form-control-static">
                                                     <c:choose>
                                                         <c:when test="${rsumeList[0].mngSttsChngDtm != null}">
-                                                            ${ kl:convertDate(rsumeList[0].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                            ${rsumeList[0].mngSttsChngDtm}
                                                         </c:when>
                                                         <c:otherwise>
                                                             -
@@ -476,7 +475,7 @@
                                                     <p class="form-control-static">
                                                         <c:choose>
                                                             <c:when test="${rsumeList[1].mngSttsChngDtm != null}">
-                                                                ${ kl:convertDate(rsumeList[1].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                                ${rsumeList[1].mngSttsChngDtm}
                                                             </c:when>
                                                             <c:otherwise>
                                                                 -
@@ -511,7 +510,7 @@
                                                     <p class="form-control-static">
                                                         <c:choose>
                                                             <c:when test="${rsumeList[1].mngSttsChngDtm != null}">
-                                                                ${ kl:convertDate(rsumeList[1].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                                ${rsumeList[1].mngSttsChngDtm}
                                                             </c:when>
                                                             <c:otherwise>
                                                                 -
@@ -577,7 +576,7 @@
                                                     <p class="form-control-static">
                                                         <c:choose>
                                                             <c:when test="${rsumeList[2].mngSttsChngDtm != null}">
-                                                                ${ kl:convertDate(rsumeList[2].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                                ${rsumeList[2].mngSttsChngDtm}
                                                             </c:when>
                                                             <c:otherwise>
                                                                 -
@@ -626,7 +625,7 @@
                                                     <p class="form-control-static">
                                                         <c:choose>
                                                             <c:when test="${rsumeList[2].mngSttsChngDtm != null}">
-                                                                ${ kl:convertDate(rsumeList[2].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                                ${rsumeList[1].mngSttsChngDtm}
                                                             </c:when>
                                                             <c:otherwise>
                                                                 -
@@ -722,7 +721,7 @@
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
                                     </c:when>
                                     <c:otherwise>
                                         -

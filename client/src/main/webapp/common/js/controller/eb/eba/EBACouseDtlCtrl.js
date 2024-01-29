@@ -269,7 +269,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
-
+			episdDtl : {
+				event : {
+					click : function(e){
+						var edctnseq = $(this).data("edctnseq");
+						location.href="/education/apply/detail?detailsKey="+edctnseq;
+					}
+				}
+			},
 
 			//교육장 안내 팝업
 			mapBtn : {
@@ -341,11 +348,12 @@ define(["ezCtrl"], function(ezCtrl) {
 					click: function (e) {
 
 						var edpisdSeq = $(this).closest(".list-item").data("episdseq");
-
 						var edctnSeq = $("#edctnSeq").val();
+						var memSeq = $("#memSeq").val();
 
 						var episdYear =$(this).closest(".list-item").data("episdyear");
 						var episdOrd = $(this).closest(".list-item").data("episdord");
+
 						var authCd = $("#authCd").val();
 						var seqObj = {};
 						seqObj.edctnSeq = edctnSeq
@@ -355,6 +363,13 @@ define(["ezCtrl"], function(ezCtrl) {
 						seqObj.episdSeq = $("#episdSeq").val();
 
 						seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+
+
+						if(memSeq =="" || memSeq ===undefined){
+							if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
+								location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+							}
+						}
 
 						//부품사 회원이 아닌경우
 						if(authCd == "CO"){
@@ -393,7 +408,7 @@ define(["ezCtrl"], function(ezCtrl) {
 									cmmCtrl.frmAjax(function(resultData){
 
 										var rtnData = resultData.rtnData;
-										debugger
+
 										if(rtnData.regStat == "F"){
 											alert("이미 해당 회차에 신청한 회원입니다.");
 											if(confirm("이미 신청한 교육입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다. \n마이페이지로 이동하시겠습니까?")){

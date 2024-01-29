@@ -20,6 +20,41 @@
             AND EPISD_SEQ IN (SELECT EPISD_SEQ FROM ED_EDCTN_EPISD_MST WHERE EDCTN_STRT_DTM <![CDATA[ < ]]> NOW());
     </update>
 
+    <!--
+        쿼리명 : COScheduleMapper.updateStrtEduPtctpStts
+        설  명 : 교육 시작 후 해당 교육의 선발대기 상태인 신청자 상태 미선발로 변경
+         수정일	 수정자     수정내용
+        ==========   ======   =============
+        2024.01.24   장두석     최초생성
+    -->
+    <update id="updatAtndcInfo">
+        UPDATE /* COScheduleMapper.updatAtndcInfo */
+        EP_EDCTN_ATNDC_DTL A, (
+            SELECT
+                PTCPT_SEQ
+                , EDCTN_DT
+                , ATNDC_DTM
+                , LVGRM_DTM
+                , CONCAT(EDCTN_DT, ' 18:00:00') AS UPDATE_LVGRM_DTM
+            FROM EP_EDCTN_ATNDC_DTL
+            WHERE 1=1
+                AND EDCTN_DT <![CDATA[<]]> DATE_FORMAT(NOW(), '%Y-%m-%d')
+                AND ATNDC_DTM IS NOT NULL
+                AND LVGRM_DTM IS NULL
+        ) B
+        SET A.LVGRM_DTM = B.UPDATE_LVGRM_DTM
+        , A.MOD_ID = 'schedule'
+        , A.MOD_IP = '127.0.0.1'
+        , A.MOD_DTM = NOW()
+        WHERE 1=1
+            /*AND A.PTCPT_SEQ  = 117*/
+            AND A.ATNDC_DTM IS NOT NULL
+            AND A.PTCPT_SEQ = B.PTCPT_SEQ
+            AND A.EDCTN_DT = B.EDCTN_DT
+    </update>
+
+
+
 
 
 </mapper>

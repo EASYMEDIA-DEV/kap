@@ -71,29 +71,29 @@
                                                 <td>${rtnUser.email}</td>
                                             </tr>
                                             <tr>
-                                                <th>일반전화번호</th>
-                                               <c:choose>
-                                                    <c:when test="${rtnDtl.telNo ne null}">
-                                                        <td>${rtnDtl.telNo}</td>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <td> - </td>
-                                                    </c:otherwise>
-                                                </c:choose>
+                                                <th>일반 전화번호</th>
+                                                <td>
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnUser.memTelNo}">
+                                                            ${rtnUser.memTelNo}
+                                                        </c:when>
+                                                        <c:otherwise>-</c:otherwise>
+                                                    </c:choose>
+                                                </td>
                                             </tr>
                                             <tr>
                                                 <th>성별</th>
-                                                <td>${rtnDtl.gndr =='1' ? '남' : '여'}</td>
+                                                <td>${rtnUser.gender}</td>
                                             </tr>
                                             <tr>
                                                 <th>생년월일</th>
-                                                <td>${rtnDtl.birth}</td>
+                                                <td>${rtnUser.birthdate}</td>
                                             </tr>
                                             </tbody>
                                         </table>
                                     </div>
                                     <div class="btn-wrap align-right">
-                                        <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>신청자 기본정보 수정</span></a>
+                                        <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
                                     </div>
                                 </div>
                             </div>

@@ -5,7 +5,14 @@
       <tr  data-total-count="${rtnData.totalCount}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}"/>
+
+            <c:choose>
+            <c:when test="${ptcptList.eduStat ne '교육대기'}">
+              <c:set var="disabledChk" value="disabled"/>
+
+            </c:when>
+            </c:choose>
+            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}" ${disabledChk} />
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
