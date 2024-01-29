@@ -39,6 +39,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             $('.equiment').last().find(".tchlgNm").attr("name","euipmentList["+ equipLength +"].tchlgNm");
                             $('.equiment').last().find(".tchlgCnt").attr("name","euipmentList["+ equipLength +"].tchlgCnt");
                             equidChagneFunction();
+
+                            $('.equiment').each(function(index) {
+                                if(index > 0 ){
+                                    $('.addEquiment').find(".addBtn").eq(index).remove();
+                                }
+                            });
                         }
                     }
                 }
