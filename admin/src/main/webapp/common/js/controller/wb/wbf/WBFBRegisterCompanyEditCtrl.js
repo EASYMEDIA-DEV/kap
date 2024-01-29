@@ -519,7 +519,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             /* 직급 값에 따른 show/hide */
             fnpstnNmShow($('#pstnCd').val());
             /* 반려사유 show/hide */
-            rtrnRsnCntnShow($('#mngCd').val());
+            rtrnRsnCntnShow($('.mngCd').val());
 
             $formObj.validation({
                 after : function() {
