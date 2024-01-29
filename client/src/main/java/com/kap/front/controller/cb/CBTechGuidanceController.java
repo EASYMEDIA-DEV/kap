@@ -203,6 +203,7 @@ public class CBTechGuidanceController {
                     cbsnCdNm = "기타"+"/"+pCBATechGuidanceInsertDTO.getEtcNm();
                 }
                 receiverDto.setNote2(cbsnCdNm);
+                System.err.println("pCBATechGuidanceInsertDTO::"+pCBATechGuidanceInsertDTO);
                 //부품사명(치환문자3)
                 receiverDto.setNote3(pCBATechGuidanceInsertDTO.getCmpnNm());
             }else{
@@ -213,6 +214,7 @@ public class CBTechGuidanceController {
                 modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
                 pCBBManageConsultInsertDTO.setDetailsKey(String.valueOf(pCBBManageConsultInsertDTO.getCnstgSeq()));
                 pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
+                pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
 
                 //이메일
                 receiverDto.setEmail(cOLoginUserDTO.getEmail());
