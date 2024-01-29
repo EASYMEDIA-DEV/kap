@@ -356,6 +356,12 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
 
     @Schema(title = "사용자 메뉴 시퀀스")
     private String UserMenuSeq;
+    @Schema(title = "마이페이지에서 사업 종류")
+    private String statusChk;
+    @Schema(title = "마이페이지에서 날짜")
+    private String dateType;
+    @Schema(title = "정렬 기준")
+    private String ordFlag;
 
     
 

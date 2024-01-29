@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div id="wrap" data-controller="controller/bd/bdc/BDCFaqListCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="get">
-        <!-- 상세로 이동시 시퀀스 -->
+        <!-- 카테고리별 화면으로 이동시 시퀀스 -->
         <input type="hidden" id="detailsKey" name="detailsKey" value="" />
         <div class="cont-wrap">
             <!--
@@ -35,8 +35,8 @@
                                     </a>
                                     <c:forEach var="cdList" items="${cdDtlList.BOARD_TYPE_CD}" varStatus="status">
                                         <c:if test="${fn:contains(cdList.cd, 'FAQ0')}">
-                                            <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.ctgryCd eq cdList.cd}">active</c:if>" id="ctgryCd" href="./list?ctgryCd=${cdList.cd}">
-                                                <p class="txt"><span class="menu-name" data-ctgry-cd="${cdList.cd}">${cdList.cdNm}</span></p>
+                                            <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.ctgryCd eq cdList.cd}">active</c:if>" id="ctgryCd" data-ctgry-cd="${cdList.cd}" href="javascript:">
+                                                <p class="txt"><span class="menu-name">${cdList.cdNm}</span></p>
                                             </a>
                                         </c:if>
                                     </c:forEach>
@@ -49,7 +49,7 @@
                         <div class="cont-sec no-border scroll-motion">
                             <div class="for-motion">
                                 <div class="info-head">
-                                    <p class="article-total-count f-body2">총 <span>${rtnData.totalCount}</span>건</p>
+                                    <p class="article-total-count f-body2">총 <span id="listContainerTotCnt">${rtnData.totalCount}</span>건</p>
                                     <div class="form-input srch-input">
                                         <input type="text" id="srchVal" name="srchVal" value="${rtnData.srchVal}" placeholder="검색어를 입력해 주세요.">
                                         <div class="input-btn-wrap">
@@ -64,8 +64,8 @@
                                     </div>
                                 </div>
 
-                                <div class="btn-wrap add-load align-center">
-                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
+                                <div class="btn-wrap add-load align-center moreBtn" id="pagingContainer">
+                                    <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count cntText"></span></a>
                                 </div>
                             </div>
                         </div>

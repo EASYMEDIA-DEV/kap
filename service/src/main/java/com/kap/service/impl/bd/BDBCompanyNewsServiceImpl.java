@@ -179,4 +179,17 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
     public BDBCompanyNewsDTO selectNextAndPrevSeqVal(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception{
         return bDBCompanyNewsMapper.selectNextAndPrevSeqVal(pBDBCompanyNewsDTO);
     }
+
+    /**
+     * 통합검색 재단소식 탭 조회
+     */
+    public BDBCompanyNewsDTO selectCompanyNewsTabList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
+
+        pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
+
+        int recordCountPerPage = (pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize() >= pBDBCompanyNewsDTO.getTotalCount()) ? pBDBCompanyNewsDTO.getTotalCount() : pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize();
+        pBDBCompanyNewsDTO.setRecordCountPerPage(recordCountPerPage);
+        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsList(pBDBCompanyNewsDTO));
+        return pBDBCompanyNewsDTO;
+    }
 }

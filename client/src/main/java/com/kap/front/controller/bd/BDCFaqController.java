@@ -53,7 +53,7 @@ public class BDCFaqController {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             cdDtlList.add("BOARD_TYPE_CD");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
+            modelMap.addAttribute("rtnData", bDCFaqService.selectFaqList(pBDCFaqDTO));
         }
         catch (Exception e)
         {
@@ -75,7 +75,8 @@ public class BDCFaqController {
     {
         try
         {
-            modelMap.addAttribute("fileList", bDCFaqService.selectFaqFileList(pBDCFaqDTO));
+            pBDCFaqDTO.setCtgryCd(pBDCFaqDTO.getDetailsKey());
+            modelMap.addAttribute("fileList", bDCFaqService.selectFaqFileList(pBDCFaqDTO).getList());
             modelMap.addAttribute("rtnData", bDCFaqService.selectFaqList(pBDCFaqDTO));
         }
         catch (Exception e)

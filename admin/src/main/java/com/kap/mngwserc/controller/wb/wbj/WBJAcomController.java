@@ -3,7 +3,6 @@ package com.kap.mngwserc.controller.wb.wbj;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBPartCompanyDTO;
-import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbj.WBJBAcomChangeDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomDTO;

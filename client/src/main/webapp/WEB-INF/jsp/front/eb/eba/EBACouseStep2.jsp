@@ -62,7 +62,7 @@
                                 <div class="guide-info-area scroll-motion active">
                                     <div class="for-motion">
                                         <div class="divide-box">
-                                            <p class="exclamation-txt f-body1">교육 신청 후에는 수정이 불가능하며, 교육 신청 취소 후.</p>
+                                            <p class="exclamation-txt f-body1">교육 신청 후에는 수정이 불가능하며, 교육 신청 취소 후 다시 접수해야 합니다.</p>
                                             <p class="exclamation-txt f-body1">교육 신청 취소는 마이페이지 > 교육/세미나 신청내역에서 가능합니다.</p>
                                         </div>
                                         <div class="divide-box"></div>

@@ -26,7 +26,7 @@ public interface COScheduleMapper {
     /**
      * 교육 시작 후 해당 교육의 선발대기 상태인 신청자 상태 미선발로 변경
      */
-    public int updateStrtEduPtctpStts();
+    public int updateStrtEduPtcptStts();
 
     /**
      * 퇴실 안한사람 자동 퇴실처리

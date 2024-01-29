@@ -75,10 +75,10 @@ public class COScheduleService {
      */
     @Scheduled(cron = "0 0 2 * * ?") // 초(0~59) 분(0~59) 시(0~23) 일(1~31) 월(1~12) 요일(1~7, 일요일 : 1) 연도(생략가능)
     @SchedulerLock(name = "EP_EDCTN_PTCPT_STTS_CRTFN", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
-    public void updateStrtEduPtctpSttsCrtfn() throws Exception {
+    public void updateStrtEduPtcptSttsCrtfn() throws Exception {
         log.info("EP_EDCTN_PTCPT_STTS_CRTFN Schedule Start");
 
-        cOScheduleMapper.updateStrtEduPtctpStts();
+        cOScheduleMapper.updateStrtEduPtcptStts();
 
         log.info("EP_EDCTN_PTCPT_STTS_CRTFN Schedule End");
     }

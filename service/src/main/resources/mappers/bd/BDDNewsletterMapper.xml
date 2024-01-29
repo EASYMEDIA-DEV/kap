@@ -29,7 +29,9 @@
             BD_NWSLT_MST A
         WHERE 1=1
           <include refid="selectNewsletterListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

@@ -26,6 +26,11 @@ public interface BDANoticeService {
     public BDANoticeDTO selectNoticeList(BDANoticeDTO pBDANoticeDTO) throws Exception;
 
     /**
+     * 공지사항 탭 조회
+     */
+    public BDANoticeDTO selectNoticeTabList(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+    /**
      * 공지사항 조회 갯수(통합검색용)
      */
     public int selectNoticeListCnt(BDANoticeDTO pBDANoticeDTO) throws Exception;
@@ -64,5 +69,11 @@ public interface BDANoticeService {
      * 공지사항 이전, 다음 글 SEQ 조회
      */
     public BDANoticeDTO selectNextAndPrevSeqVal(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+    /**
+     * 공지사항 중요공지 목록을 조회
+     */
+    public BDANoticeDTO selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
 
 }

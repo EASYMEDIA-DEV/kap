@@ -129,6 +129,7 @@ public class BDCFaqServiceImpl implements BDCFaqService {
         return bDCFaqMapper.updateFaq(pBDCFaqDTO);
     }
 
+
     /**
      * FAQ 삭제
      */

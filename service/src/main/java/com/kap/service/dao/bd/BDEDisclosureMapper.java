@@ -49,5 +49,9 @@ public interface BDEDisclosureMapper {
      * 경영공시 삭제
      */
     public int deleteDisclosure(BDEDisclosureDTO pBDEDisclosureDTO) throws Exception;
+    /**
+     * 경영공시 첨부파일 목록 조회
+     */
+    public List<BDEDisclosureDTO> selectDisclosureFileList(BDEDisclosureDTO pBDEDisclosureDTO);
 
 }

@@ -1,20 +1,13 @@
 package com.kap.service.impl.wb.wbj;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
-import com.kap.service.COFileService;
-import com.kap.service.WBEACarbonListService;
 import com.kap.service.WBJARoundListService;
-import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.COGCntsMapper;
-import com.kap.service.dao.wb.wbe.WBEACarbonListMapper;
 import com.kap.service.dao.wb.wbj.WBJARoundListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -104,13 +104,12 @@
                                                 <c:choose>
                                                     <c:when test="${stepStatus.index == 0}">
                                                         <div class="col-sm-3 stepName">
-                                                            신청
-                                                            <input type="hidden" class="notRequired" name="stageNm" value="신청"/>
+                                                            <input type="text" class="form-control input-sm notRequired stageNm" name="stageNm" value="신청" readonly="readonly"/>
                                                         </div>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <div class="col-sm-3 stepName">
-                                                            <input type="text" class="notRequired" name="stageNm" value="${stepList.stageNm}"/>
+                                                            <input type="text" class="form-control input-sm notRequired stageNm" name="stageNm" value="${stepList.stageNm}"/>
                                                         </div>
                                                     </c:otherwise>
                                                 </c:choose>
@@ -229,8 +228,7 @@
                                     <div>
                                         <label class="col-sm-2 control-label">단계명<span class="star"> *</span></label>
                                         <div class="col-sm-3 stepName">
-                                            신청
-                                            <input type="hidden" class="notRequired" name="stageNm" value="신청"/>
+                                            <input type="text" class="form-control input-sm notRequired stageNm" name="stageNm"/>
                                         </div>
                                         <div class="col-sm-2 pl0">
                                             <button type="button" class="btn btn-sm btn-inverse btnStepWrite">단계추가</button>

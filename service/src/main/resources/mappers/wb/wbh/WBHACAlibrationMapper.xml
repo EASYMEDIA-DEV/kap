@@ -1421,41 +1421,130 @@
        2023.11.24  김태훈     최초 생성
    -->
     <select id="getApplyCompanyCnt" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        <![CDATA[
         SELECT /* WBHACalibrationMapper.getApplyCompanyCnt */ COUNT(*)
-        FROM (
-                SELECT A.CNSTG_SEQ
-                FROM   cp_cnstg_appctn_mst A,cp_cnstg_rsume_mst B
-                WHERE  a.cnstg_seq = b.cnstg_seq AND    a.cnstg_cd = 'CONSULT_GB01'
-                AND    a.rsume_stts_cd IN ('MNGTECH_STATUS_08', 'MNGTECH_STATUS_09', 'MNGTECH_STATUS_13')
-                AND    (Year(b.guide_bgn_dt) = Year(Now()) OR (Year(Now()) -1))
-                AND    b.guide_type_cd = 'GUIDE_TYPE_CD02'
-                AND    (( SELECT cd
-                          FROM   cp_cnstg_cbsn_dtl
-                          WHERE  cnstg_seq = a.cnstg_seq) IN (
-                         <choose>
-                             <when test="validDtlDTOList != null and validDtlDTOList.size() > 0">
-                                 <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" separator=",">
-                                     #{validDtlDTO.optnCd}
-                                 </foreach>
-                             </when>
-                              <otherwise>
-                                  ' '
-                              </otherwise>
-                         </choose>))
-                AND appctn_bsnm_no = #{bsnmNo}
-                UNION ALL
-                SELECT A.CNSTG_SEQ
-                FROM   cp_cnstg_appctn_mst a, cp_cnstg_rsume_mst b
-                WHERE  a.cnstg_seq = b.cnstg_seq AND (a.cnstg_cd = 'CONSULT_GB02'
-                AND    a.rsume_stts_cd IN ('MNGCNSLT_STATUS09','MNGCNSLT_STATUS12')
-                AND    (year(b.guide_kickf_dt) = year(now()) OR (year(now()) -1)))
-                AND    a.appctn_fld_cd IN (
-                        <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" separator=",">
-                            #{validDtlDTO.optnCd}
-                        </foreach>
-                    )
-                AND    appctn_bsnm_no = #{bsnmNo}
-        ) TMP
+        FROM   (
+        SELECT a.appctn_bsnm_no,
+        (CASE
+        WHEN a.rsume_stts_cd = 'MNGTECH_STATUS_06'
+        AND    (
+        (
+        SELECT ifnull(guide_bgn_dt, Curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()
+        AND
+        (
+        SELECT ifnull(guide_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) > curdate()) THEN 'MNGTECH_STATUS_08'
+        WHEN (
+        a.rsume_stts_cd = 'MNGTECH_STATUS_06'
+        OR     a.rsume_stts_cd = 'MNGTECH_STATUS_08' )
+        AND    (
+        (
+        SELECT ifnull(guide_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()) THEN 'MNGTECH_STATUS_09'
+        ELSE a.rsume_stts_cd
+        END) rsume_stts_cd,
+        (
+        SELECT cd_nm
+        FROM   co_code_mst
+        WHERE  cd = (
+        CASE
+        WHEN a.rsume_stts_cd = 'MNGTECH_STATUS_06'
+        AND    (
+        (
+        SELECT ifnull(guide_bgn_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()
+        AND
+        (
+        SELECT ifnull(guide_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) > curdate()) THEN 'MNGTECH_STATUS_08'
+        WHEN (
+        a.rsume_stts_cd = 'MNGTECH_STATUS_06'
+        OR     a.rsume_stts_cd = 'MNGTECH_STATUS_08' )
+        AND    (
+        (
+        SELECT ifnull(guide_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()) THEN 'MNGTECH_STATUS_09'
+        ELSE a.rsume_stts_cd
+        END)
+        AND    cd_id = 'MNGTECH_STATUS') rsume_stts_nm
+        , (select cd from CP_CNSTG_CBSN_DTL where cnstg_seq = a.cnstg_seq) as appctn_Fld_Cd
+        FROM   cp_cnstg_appctn_mst a,
+        cp_cnstg_rsume_mst b
+        WHERE  a.cnstg_seq = b.cnstg_seq
+        AND    a.cnstg_cd = 'CONSULT_GB01'
+        AND    a.rsume_stts_cd IN ('MNGTECH_STATUS_08',
+        'MNGTECH_STATUS_09',
+        'MNGTECH_STATUS_13')
+        AND    (
+        year(b.guide_bgn_dt) = year(now())
+        OR     (
+        year(now()) -1))
+        AND    b.guide_type_cd = 'GUIDE_TYPE_CD02'
+        UNION ALL
+        SELECT a.appctn_bsnm_no, (
+        CASE
+        WHEN a.rsume_stts_cd = 'MNGCNSLT_STATUS03'
+        AND
+        (
+        SELECT ifnull(vst_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate() THEN 'MNGCNSLT_STATUS06'
+        WHEN (
+        a.rsume_stts_cd = 'MNGCNSLT_STATUS07')
+        AND    (
+        (
+        SELECT ifnull(cnstg_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()) THEN 'MNGCNSLT_STATUS09'
+        ELSE a.rsume_stts_cd
+        END) rsume_stts_cd,
+        (
+        SELECT cd_nm
+        FROM   co_code_mst
+        WHERE  cd = (
+        CASE
+        WHEN a.rsume_stts_cd = 'MNGCNSLT_STATUS03'
+        AND
+        (
+        SELECT ifnull(vst_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate() THEN 'MNGCNSLT_STATUS06'
+        WHEN (
+        a.rsume_stts_cd = 'MNGCNSLT_STATUS07')
+        AND    (
+        (
+        SELECT ifnull(cnstg_kickf_dt, curdate() + interval 1 day)
+        FROM   cp_cnstg_rsume_mst
+        WHERE  cnstg_seq = a.cnstg_seq ) <= curdate()) THEN 'MNGCNSLT_STATUS09'
+        ELSE a.rsume_stts_cd
+        END)
+        AND    cd_id = 'MNGCNSLT_STATUS') rsume_stts_nm
+        , a.appctn_Fld_Cd
+        FROM   cp_cnstg_appctn_mst a,
+        cp_cnstg_rsume_mst b
+        WHERE  a.cnstg_seq = b.cnstg_seq
+        AND    (
+        a.cnstg_cd = 'CONSULT_GB02'
+        AND    a.rsume_stts_cd IN ('MNGCNSLT_STATUS09',
+        'MNGCNSLT_STATUS12')
+        AND    (
+        year(b.guide_kickf_dt) = year(now())
+        OR     (
+        year(now()) -1)) )) tmp
+        ]]>
+        WHERE  tmp.appctn_bsnm_no = #{bsnmNo}
+        AND    tmp.appctn_fld_cd IN (
+                <foreach collection="validDtlDTOList" item="validDtlDTO" index="index" separator=",">
+                    #{validDtlDTO.optnCd}
+                </foreach>
+            )
     </select>
 
     <!--

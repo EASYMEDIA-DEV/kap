@@ -48,7 +48,7 @@ public class WBIASupplyListController {
     public final COCodeService cOCodeService;
 
     /**
-     *  탄소배출저감 회차 목록으로 이동한다.
+     *  공급망안정화기금 회차 목록으로 이동한다.
      */
     @GetMapping(value="/list")
     public String getSupplyList(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -67,7 +67,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 탄소배출저감 회차 목록을 조회한다.
+     * 공급망안정화기금 회차 목록을 조회한다.
      */
     @RequestMapping(value = "/select")
     public String getSupplyListPageAjax(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -88,7 +88,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 탄소배출저감 회차 상세 페이지
+     * 공급망안정화기금 회차 상세 페이지
      */
     @RequestMapping(value = "/write")
     public String getSupplyWritePage(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap
@@ -123,7 +123,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 탄소배출저감 회차 등록
+     * 공급망안정화기금 회차 등록
      */
     @PostMapping(value="/insert")
     @ResponseBody
@@ -149,7 +149,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 탄소배출저감 회차 수정
+     * 공급망안정화기금 회차 수정
      */
     @PostMapping(value="/update")
     @ResponseBody
@@ -176,7 +176,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 탄소배출저감 회차 삭제
+     * 공급망안정화기금 회차 삭제
      */
     @PostMapping(value="/delete")
     public String SupplyDelete(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -202,7 +202,7 @@ public class WBIASupplyListController {
     }
 
     /**
-     * 회차 리스트 삭제
+     * 공급망안정화기금 회차 리스트 삭제
      */
     @PostMapping(value="/deleteList")
     public String SupplyDeleteList(WBRoundMstDTO wBRoundMstDTO, ModelMap modelMap, HttpServletRequest request) throws Exception

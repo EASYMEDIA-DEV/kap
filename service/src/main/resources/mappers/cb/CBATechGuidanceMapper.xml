@@ -263,7 +263,9 @@
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtl */
             A.CNSTG_SEQ,
             A.APPCTN_BSNM_NO AS BSNM_NO,
+            (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
             A.APPCTN_MEM_SEQ,
+            (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) EMAIL,
             A.CNSTG_CD,
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
             A.RSUME_STTS_CD,
@@ -1464,20 +1466,53 @@
         2024.01.02   임서화       최초생성
     -->
     <select id="selectMemSeqAppctnMst" parameterType="CBATechGuidanceInsertDTO">
-        SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
-            CNSTG_SEQ,
-            CNSTG_CD,
-            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
-            RSUME_STTS_CD,
-            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) RSUME_STTS_NM,
-            (SELECT BFRE_JDGMT_RSLT_CNTN FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ) RSLT_CNTN,
-            APPCTN_DT,
-            BSN_YEAR,
-            (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
-            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM
-        FROM CP_CNSTG_APPCTN_MST A WHERE APPCTN_MEM_SEQ = #{memSeq}
+        SELECT * FROM (
+            SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
+                CNSTG_SEQ,
+                CNSTG_CD,
+                APPCTN_MEM_SEQ,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
+                RSUME_STTS_CD,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) RSUME_STTS_NM,
+                (SELECT BFRE_JDGMT_RSLT_CNTN FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ) RSLT_CNTN,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM,
+                APPCTN_DT,
+                BSN_YEAR,
+                (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
+                REG_DTM
+            FROM CP_CNSTG_APPCTN_MST A
+        ) TMP
+        WHERE TMP.APPCTN_MEM_SEQ = #{memSeq}
+        <if test="statusChk != null and statusChk != ''.toString() ">
+            AND TMP.CNSTG_CD IN
+                <choose>
+                    <when test="statusChk =='CONSULT_GB01'">
+                        ("CONSULT_GB01")
+                    </when>
+                    <when test="statusChk =='CONSULT_GB02'">
+                        ("CONSULT_GB02")
+                    </when>
+                    <otherwise>
+                        ("CONSULT_GB01", "CONSULT_GB02")
+                    </otherwise>
+                </choose>
+        </if>
+        <if test="dateType != null and dateType != ''.toString() ">
+            AND TMP.APPCTN_DT BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y.%m.%d'), INTERVAL 1 DAY)
+        </if>
+        <if test="q != null and q != ''.toString()">
+           AND TMP.CNSTG_NM LIKE CONCAT('%', #{q}, '%') OR TMP.BSN_YEAR LIKE CONCAT('%', #{q}, '%')
+        </if>
+        <choose>
+            <when test="ordFlag == 1">
+                ORDER BY TMP.REG_DTM DESC
+            </when>
+            <when test="ordFlag == 2">
+                ORDER BY TMP.APPCTN_DT DESC
+            </when>
+        </choose>
     </select>
-
 
     <!--
          쿼리명 : CBATechGuidanceMapper.selectTechGuidanceDtlCheck
@@ -1535,7 +1570,7 @@
     -->
     <select id="selectCompleteInfo" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /*CBATechGuidanceMapper.selectCompleteInfo*/
-            DATE_FORMAT(REG_DTM, '%Y-%m-%d %h:%m') REG_DTM,
+            DATE_FORMAT(REG_DTM, '%Y-%m-%d %H:%I') REG_DTM,
             (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) NAME,
             (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
             APPCTN_MEM_SEQ,

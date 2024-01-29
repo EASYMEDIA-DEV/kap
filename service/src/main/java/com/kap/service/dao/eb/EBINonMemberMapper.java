@@ -153,4 +153,23 @@ public interface EBINonMemberMapper {
 	 */
 	public int updatePtcpt(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
 
+
+
+
+
+	/**
+	 * 사용자 - 비회원 교육 과정 신청 개수 조회
+	 */
+	public int searchPtcptCnt(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+
+	/**
+	 * 사용자 - 비회원 교육 과정 신청 목록 조회
+	 */
+	public List<EBINonMemberDTO> selectNonMemberApplyList(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+
+	/**
+	 * 사용자 - 비회원 교육 신청 페이지 정보 상세
+	 */
+	public EBINonMemberDTO selectNonMemberApplyPtcptDtl(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+
 }

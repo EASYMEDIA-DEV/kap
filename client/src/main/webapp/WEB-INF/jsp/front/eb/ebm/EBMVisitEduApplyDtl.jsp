@@ -1,5 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div id="wrap" data-controller="controller/eb/ebm/EBMVisitEduApplyDtlCtrl">
+    <input type="hidden" class="notRequired" id="vstSeq" name="vstSeq" value="${visitEduApplyList.vstSeq}" />
+    <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${visitEduApplyList.memSeq}" />
+    <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <!-- content 영역 start -->
     <div class="cont-wrap">
         <div class="sub-top-vis-area">
@@ -101,13 +104,16 @@
                                         </div>
                                         <div class="group">
                                             <div class="status-info-w">
-                                                <p class="box-label bigger"><span>신청</span></p>
+                                                <p class="box-label bigger"><span>${visitEduApplyList.edctnSttsName}</span></p>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="btn-wrap">
-                                        <a class="btn-solid small black-bg" href="javascript:"><span>신청취소</span></a>
-                                    </div>
+
+                                    <c:if test="${visitEduApplyList.edctnSttsCd eq 'EBC_VISIT_CD02001'}" >
+                                        <div class="btn-wrap">
+                                            <a class="btn-solid small black-bg" id="visitEduCancelBtn" href="javascript:"><span>신청취소</span></a>
+                                        </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>

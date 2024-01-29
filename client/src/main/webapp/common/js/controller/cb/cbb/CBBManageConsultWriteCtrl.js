@@ -192,7 +192,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var cmpnAddrYn = $("#cmpnAddrSameYn").val();
 
                         if(cmpnAddrYn == 'N'){
-                            $("cmpnAddrSameYn").val('Y');
+                            $("#cmpnAddrSameYn").val('Y');
                             cmpnMst.bsnmNo = $(".bsnmNo").val().replaceAll("-", "");
                             cmmCtrl.jsonAjax(function (data) {
                                 var info = JSON.parse(data)
@@ -219,7 +219,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }, rqstCntn : {
                 event : {
                     input : function(){
-                        console.log("!");
+                        var textLength = $(this).val().length;
+                        $(".current-byte").text(textLength);
                     }
                 }
             }

@@ -33,7 +33,7 @@
                         FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_Cd_Nm,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
                     ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
-                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd_nm,
+                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(mng_stts_cd,'')) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd_nm,
                     ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd_nm,
                     ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
                     ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
@@ -53,7 +53,7 @@
                     SELECT * FROM cx_episd_mst
                     WHERE EXPS_YN = 'Y'
                 ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
-                INNER JOIN
+                LEFT JOIN
                 (
                     SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
                     ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
@@ -108,7 +108,7 @@
                                 (
                                     SELECT * FROM cx_episd_mst WHERE EXPS_YN = 'Y'
                                 ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
-                                INNER JOIN
+                                LEFT JOIN
                                 (
                                     SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
                                     ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3

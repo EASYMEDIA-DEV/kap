@@ -72,6 +72,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             target.find('#year').val(compList['year']);
             target.find('#crtfnCmpnNm').val(compList['crtfnCmpnNm']);
         });
+
+        consultingSearch(1,dataBsnmNo);
     }
 
     /* 회차 검색 Ajax */

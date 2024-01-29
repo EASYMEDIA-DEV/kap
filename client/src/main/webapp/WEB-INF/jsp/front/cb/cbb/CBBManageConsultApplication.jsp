@@ -1,5 +1,15 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
+            location.href = "/";
+        }
+    }
+</script>
 <div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultApplicationCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
@@ -99,7 +109,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>신청자 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>신청자 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -124,7 +134,7 @@
                                         <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td>${loginMap.bsnmNo}</td>
+                                            <td>${kl:bsnmNoConvert(loginMap.bsnmNo)}</td>
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>
@@ -187,7 +197,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="javascript:"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/modify-page"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>
@@ -232,7 +242,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="cmssrHpNo" name="cmssrHpNo" placeholder="휴대폰번호 입력" title="휴대폰 번호">
+                                                        <input type="text" class="cmssrHpNo telRex" name="cmssrHpNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="13" placeholder="휴대폰번호 입력" title="휴대폰 번호">
                                                     </div>
                                                 </div>
                                             </div>
@@ -249,11 +259,11 @@
                                                 <div class="form-group form-email">
                                                     <input type="hidden" class="picEmail" name="picEmail" value=""/>
                                                     <div class="form-input">
-                                                        <input type="text" class="id" name="picEmail" oninput="this.value = this.value.replace(/^[ㄱ-ㅎ|가-힣]/g, '').replace(/(\..*)\./g, '$1');" placeholder="이메일 입력" title="이메일">
+                                                        <input type="text" class="id" name="picEmail" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" placeholder="이메일 입력" title="이메일">
                                                     </div>
                                                     @
                                                     <div class="form-input">
-                                                        <input type="text" name="picEmail" class="address" placeholder="직접입력" title="이메일">
+                                                        <input type="text" name="picEmail" class="address" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" placeholder="직접입력" title="이메일">
                                                     </div>
                                                     <div class="form-select">
                                                         <select id="addressSelect" title="메일 선택">

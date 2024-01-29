@@ -10,6 +10,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     var chilCnt = $("#infoCard").children("a").length; // 게시물 수
+    var mainPostCnt  = $(".mainPost").children("a").length; // 중요공지 수
     var pageCnt = 1; // 페이지 카운트
     var page = (chilCnt / 9); // 더보기 페이지
 
@@ -35,9 +36,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
                         var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
                         if(pageCnt <= page){
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).show();
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).removeClass("open");
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10+mainPostCnt).addClass("open");
                             $(".cntText").text(openCnt+9 +"/"+ chilCnt);
                         }else{
                             $("#infoCard").find(".close").show();

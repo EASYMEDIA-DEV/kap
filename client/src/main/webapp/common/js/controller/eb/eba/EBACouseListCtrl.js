@@ -41,6 +41,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 				if((tempPage * 9)>totCnt){
 					rtnPage = totCnt
+					$('.divide-con-area .pageSet').hide();
 				}else{
 					rtnPage = (tempPage * 9);
 				}
@@ -475,14 +476,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
-			/*nonMemberDtl : {
+			nonMemberDtl : {
 				event : {
 					click : function(e){
 						var edctnseq = $(e.target).closest("div").data("edctnseq");
-						location.href="/education/apply/detail?detailsKey="+edctnseq;
+						location.href="/education/apply/non-member/detail?detailsKey="+edctnseq;
 					}
 				}
-			},*/
+			},
 
 			//회차 담당자문의 팝업
 			eduTotCal : {
@@ -491,6 +492,14 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						//openPopup('allTrainingSchedulePopup', e);
 
+					}
+				}
+			},
+
+			btnBindSearch : {
+				event : {
+					click : function() {
+						$formObj.find("#btnSearch").click();
 					}
 				}
 			},
@@ -504,6 +513,12 @@ define(["ezCtrl"], function(ezCtrl) {
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
+
+			$formObj.find('#q').on('keypress', function(e){
+				if (e.keyCode == 13){
+					$formObj.find("#btnSearch").click();
+				}
+			});
 
 			$(".classTypeLayer:first").trigger("click");
 

@@ -25,7 +25,9 @@
             BD_MNGDSCLSR_MST A
         WHERE 1=1
           <include refid="selectDisclosureListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--
@@ -61,8 +63,16 @@
             , MOD_DTM
         FROM
             BD_MNGDSCLSR_MST A
-        WHERE
-            DSCLSR_SEQ = #{detailsKey}
+        WHERE 1=1
+        <choose>
+            <when test="siteGubun != 'front'">
+                AND DSCLSR_SEQ = #{detailsKey}
+            </when>
+            <when test="siteGubun == 'front'">
+                AND DSCLSR_SEQ = #{dsclsrSeq}
+                AND EXPS_YN = "Y"
+            </when>
+        </choose>
     </select>
 
     <insert id="insertDisclosure" parameterType="BDEDisclosureDTO">
@@ -139,6 +149,23 @@
     </delete>
 
     <!--
+         쿼리명 : BDEDisclosureMapper.selectDisclosureFileList
+         설  명 : [사용자] 경영공시 결산서 첨부파일 목록 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.26  구은희       최초생성
+    -->
+    <select id="selectDisclosureFileList" parameterType="BDEDisclosureDTO">
+        SELECT /* BDEDisclosureMapper.selectDisclosureFileList */
+            FILE_ORD
+             , FILE_SEQ
+             , ORGN_FILE_NM AS FILE_NAME
+        FROM CO_FILE_DTL
+        WHERE USE_YN = 'Y'
+          AND FILE_SEQ = (SELECT FILE_SEQ FROM BD_MNGDSCLSR_MST where DSCLSR_SEQ = #{dsclsrSeq})
+    </select>
+
+    <!--
     쿼리명 : selectDisclosureListwhereSql
     설  명 : 경영공시 관리 where Sql
       수정일      수정자       수정내용
@@ -146,6 +173,9 @@
     2023.11.22    장두석       최초생성
     -->
     <sql id="selectDisclosureListwhereSql">
+        <if test='siteGubun == "front"'>
+            AND EXPS_YN = 'Y'
+        </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">

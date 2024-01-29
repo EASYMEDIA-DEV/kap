@@ -77,8 +77,11 @@ public class EBINonMemberDTO extends BaseDTO {
     @Schema(title = "담당자전화번호", example = "xxx-xxxx-xxxx")
     private String picTelNo;
 
-    @Schema(title = "교육안내문", example = "숫자")
+    @Schema(title = "교육안내문 파일 순서", example = "숫자")
     private Integer edctnNtctnFileSeq;
+
+    @Schema(title = "교육안내문 파일명", example = "")
+    private String orgnFileNm;
 
     @Schema(title = "교육장소순번", example = "숫자")
     private Integer placeSeq;
@@ -97,6 +100,9 @@ public class EBINonMemberDTO extends BaseDTO {
 
     @Schema(title = "학습대상 코드", example = "텍스트")
     private String targetCd;
+
+    @Schema(title = "학습대상 코드명", example = "텍스트")
+    private String targetCdNm;
 
     @Schema(title = "학습대상 코드 - 기타", example = "텍스트")
     private String etcNm;
@@ -511,5 +517,24 @@ public class EBINonMemberDTO extends BaseDTO {
 
     @Schema(title = "변경사유", example = "이유")
     private String rsn;
+
+    //사용자 비회원 교육 신청 내역 조회 이메일 인자값
+    private String emailSrt;
+    private String emailEnd;
+
+    //교육 방식명 (집체교육)
+    private String stduyMthdCdNm;
+
+    //해당 교육의 강사들 이름 그룹 (이름1, 이름2, 이름3, ...) 형태
+    private String isttrGroupName;
+
+    //사용자에서 과정 신청 페이지 넘어갈 때의 일시
+    private String applyDateTime;
+
+    //사용자 비회원 교육 신청 내역 페이지에서 order by 검색 값
+    private String ordData;
+
+    //썸네일 파일 경로
+    private String webPath;
 
 }

@@ -32,7 +32,9 @@
             BD_FAQ_MST A
         WHERE 1=1
           <include refid="selectFaqListwhereSql" />
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='siteGubun == "admin"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

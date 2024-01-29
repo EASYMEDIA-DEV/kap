@@ -3,14 +3,14 @@
 <mapper namespace="com.kap.service.dao.COScheduleMapper">
 
     <!--
-        쿼리명 : COScheduleMapper.updateStrtEduPtctpStts
+        쿼리명 : COScheduleMapper.updateStrtEduPtcptStts
         설  명 : 교육 시작 후 해당 교육의 선발대기 상태인 신청자 상태 미선발로 변경
          수정일	 수정자     수정내용
         ==========   ======   =============
         2024.01.24   장두석     최초생성
     -->
-    <update id="updateStrtEduPtctpStts">
-        UPDATE /*EBHEduApplicantMapper.updateStrtEduPtctpStts*/
+    <update id="updateStrtEduPtcptStts">
+        UPDATE /*EBHEduApplicantMapper.updateStrtEduPtcptStts*/
             EP_EDCTN_PTCPT_MST
         SET
             STTS_CD = 'EDU_STTS_CD05'

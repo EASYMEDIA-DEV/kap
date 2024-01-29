@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
     <c:when test="${ not empty rtnData.list }">
-        <div class="article-list-w card-list" id="infoCard"><!-- card-list: 썸네일 있는 경우 -->
+        <div class="article-list-w card-list"><!-- card-list: 썸네일 있는 경우 -->
             <c:forEach var="list" items="${rtnData.list}" varStatus="status">
                 <a class="list-item open nwslttrListView" href="javascript:" title="링크 이동" data-details-key="${list.nwsltSeq}">
                     <div class="img-box">

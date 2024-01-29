@@ -32,7 +32,14 @@
 												</c:if>
 											</c:if>
 											<c:if test="${menu.data ne '마이페이지'}">
-												<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+												<c:choose>
+													<c:when test="${ fn:contains(servletPath, '/non-member/') }">
+														<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ fn:contains(menu2.attr.link, '/education/apply/list') ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+													</c:when>
+													<c:otherwise>
+														<a class="btn-two-depth ${fn:length(menu2.children) eq 0 || childrenGnbYn eq 'N' ? ' single-menu ' : ''} ${ parntMenuList[1].menuSeq eq menu2.attr.treeid ? 'active' : ''}" href="${ empty menu2.attr.link or fn:length(menu2.children) > 0 ? 'javascript:' : menu2.attr.link }"><span>${ menu2.data}</span></a>
+													</c:otherwise>
+												</c:choose>
 											</c:if>
 											<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
 												<div class="three-depth-wrap">

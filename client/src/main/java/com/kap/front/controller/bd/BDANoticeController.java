@@ -44,7 +44,10 @@ public class BDANoticeController {
     {
         try
         {
+
             modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
+            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostList(pBDANoticeDTO));
+
         }
         catch (Exception e)
         {
@@ -85,5 +88,51 @@ public class BDANoticeController {
 
         return "front/bd/bda/BDANoticeView.front";
     }
+
+    /**
+     * 통합검색 공지사항 조회
+     */
+    @GetMapping(value="/select")
+    public String getTotalSearchNoticeListPage(BDANoticeDTO pBDANoticeDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bda/BDANoticeListAjax";
+    }
+
+    /**
+     * 통합검색 공지사항 탭 조회
+     */
+    @GetMapping(value="/tab/list")
+    public String getTotalSearchNoticeTabListPage(BDANoticeDTO pBDANoticeDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeTabList(pBDANoticeDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bda/BDANoticeListAjax";
+    }
+
+
 
 }

@@ -1,4 +1,14 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<script>
+    window.onpageshow = function(event) {
+        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다");
+            location.href = "/";
+        }
+    }
+</script>
 <c:set var="csList" value="${rtnDto.list}"/>
 <c:set var="today" value="<%=new java.util.Date()%>" />
 <c:set var="date"><fmt:formatDate value="${today}" pattern="yyyy-MM-dd hh:mm:ss" /></c:set>
@@ -78,7 +88,7 @@
                                                             <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="매출비중(%) 입력">
+                                                            <input type="number" class="dlvryRate" name="dlvryRate" placeholder="매출비중(%) 입력" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -102,7 +112,7 @@
                                                             <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm">
                                                         </div>
                                                         <div class="form-input">
-                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate">
+                                                            <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate" maxlength="3">
                                                         </div>
                                                         <!-- 업체 추가 버튼은 마지막 추가된 리스트에 표시됩니다 -->
                                                         <div class="btn-wrap">
@@ -316,11 +326,13 @@
                                             <div class="data-line-w">
                                                 <div class="data-line">
                                                     <div class="opt-group total-check-w"><!-- 전체 체크박스 있는 경우 total-check-w class 추가 -->
-                                                        <div class="form-checkbox total-check">
-                                                            <input type="checkbox" id="requestChk1" name="appctnTypeCd">
-                                                            <label for="requestChk1">전체</label>
-                                                        </div>
                                                         <c:forEach var="appctnCdList" items="${cdDtlList.TEC_GUIDE_APPCTN}" varStatus="status">
+                                                            <c:if test="${appctnCdList.cd eq 'TEC_GUIDE_APPCTN00'}">
+                                                                <div class="form-checkbox total-check">
+                                                                    <input type="checkbox" id="requestChk1" value="${appctnCdList.cd}" name="appctnTypeCd">
+                                                                    <label for="requestChk1">전체</label>
+                                                                </div>
+                                                            </c:if>
                                                             <c:if test="${appctnCdList.cd ne 'TEC_GUIDE_APPCTN00'}">
                                                                 <div class="form-checkbox">
                                                                    <input type="checkbox" id="${appctnCdList.cd}" value="${appctnCdList.cd}" name="appctnTypeCd">

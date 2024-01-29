@@ -54,7 +54,7 @@
 
                             </div>
                             <div class="btn-wrap align-center add-load">
-                                <a class="btn-solid small black-bg" id="listBtn" href="javascript:" data-str-pam="${strPam}"><span>목록으로</span></a>
+                                <a class="btn-solid small black-bg" id="listBtn" href="javascript:" data-str-pam="${strPam}"><span>목록</span></a>
                             </div>
                         </div>
                     </div>

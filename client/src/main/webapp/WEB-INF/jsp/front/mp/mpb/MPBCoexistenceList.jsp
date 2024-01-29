@@ -150,10 +150,9 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="trainings-list-w">
                                     <c:choose>
-                                        <c:when test="${not empty rtnData}">
+                                        <c:when test="${not empty rtnData.list}">
                                             <c:forEach var="item" items="${rtnData.list}" varStatus="status">
                                                 <c:choose>
                                                     <c:when test="${item.appctnSttsCdNm eq '접수전' || item.appctnSttsCdNm eq '대기' || item.appctnSttsCdNm eq '결과대기'}">
@@ -185,7 +184,8 @@
                                                                                 </span>
                                                                             </p>
                                                                         </div>
-                                                                        <p class="training-name f-title3 moveView" data-bsn-cd="${item.bsnCd}" data-appctn-seq="${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}
+                                                                        <p class="training-name f-title3">
+                                                                            <a href="./view?bsnCd=${item.bsnCd}&appctnSeq=${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
                                                                         </p>
                                                                     </div>
                                                                     <div class="group">

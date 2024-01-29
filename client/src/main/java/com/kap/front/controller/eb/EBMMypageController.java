@@ -909,7 +909,6 @@ public class EBMMypageController
             return rtnStr;
         }
 
-
         @Operation(summary = "마이페이지 교육 양도", tags = "교육차수 신청자 등록", description = "")
         @PostMapping(value="/edu-apply/setTrnsf")
         public EBBPtcptDTO setTrnsf(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap) throws Exception
@@ -933,10 +932,6 @@ public class EBMMypageController
 
             return temoDto;
         }
-
-
-
-
 
         /**
          * 교육신청 취소
@@ -969,8 +964,32 @@ public class EBMMypageController
             String rtnStr = "";
             try
             {
-                modelMap.addAttribute("appctnTypeList", ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO));
+                ebcVisitEduService.selectAppctnTypeList(ebcVisitEduDTO);
 
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return rtnStr;
+        }
+
+        /**
+         * 마이페이지 > 교육신청 내역 > 방문교육 상세 > 교육신청 취소
+         */
+        @PostMapping(value = "/edu-apply/visitEduApplyCancel")
+        public String updateVisitEduApplyCancel(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+            String rtnStr = "";
+            try
+            {
+                ebcVisitEduDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+                ebcVisitEduDTO.setModIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
+                ebcVisitEduDTO.setEdctnSttsCd("EBC_VISIT_CD02004");
+                ebcVisitEduService.updateVisitEduApplyCancel(ebcVisitEduDTO);
+                rtnStr = "Y";
             }
             catch (Exception e)
             {

@@ -31,7 +31,7 @@
                                     </div>
 
                                     <div class="form-input">
-                                        <input type="text" id="email" name="email" placeholder="이메일 주소" oninput="this.value = this.value.replace(/[^a-zA-Z@.]/g, '');">
+                                        <input type="text" id="email" name="email" placeholder="이메일 주소" oninput="this.value = this.value.replace(/[^\x00-\x7F]/g, '');">
                                     </div>
                                     <div class="form-checkbox newsletter-agree">
                                         <input type="checkbox" id="consentChk" name="consentChk">
@@ -65,7 +65,6 @@
                                                                     <img src="${ list.webPath }" alt="">
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <img src="/common/images/@img-news-foundation-01.jpg" alt="">
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </div>

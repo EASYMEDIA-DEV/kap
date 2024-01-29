@@ -2,6 +2,7 @@ package com.kap.service;
 
 import com.kap.core.dto.eb.ebi.EBINonMemberDTO;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 
@@ -83,7 +84,7 @@ public interface EBINonMemberService {
 	/**
 	 * 비회원 교육 과정 신청자 등록
 	 */
-	public EBINonMemberDTO setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+	public EBINonMemberDTO setPtcptInfo(EBINonMemberDTO pEBINonMemberDTO, HttpServletRequest request) throws Exception;
 
 	/**
 	 * 비회원 교육 과정 신청자 목록 신청 취소
@@ -93,7 +94,27 @@ public interface EBINonMemberService {
 	/**
 	 * 비회원 교육 과정 신청자 신청 취소
 	 */
-	public int updatePtcpt(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+	public int updatePtcpt(EBINonMemberDTO pEBINonMemberDTO, HttpServletRequest request) throws Exception;
+
+
+
+
+
+
+	/**
+	 * 사용자 - 비회원 교육 과정 신청 개수 조회
+	 */
+	public int searchPtcptCnt(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+
+	/**
+	 * 사용자 - 비회원 교육 신청한 과정 목록 조회
+	 */
+	public EBINonMemberDTO selectNonMemberApplyList(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+
+	/**
+	 * 사용자 - 비회원 교육 과정 신청 상세
+	 */
+	public EBINonMemberDTO selectNonMemberApplyPtcptDtl(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
 
 }
 
