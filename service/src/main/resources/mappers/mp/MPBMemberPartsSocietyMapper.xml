@@ -405,21 +405,12 @@
         select m1.cnstg_seq  -- 순번  /*MPBMemberPartsSocietyMapper.selectBusList*/
               ,m1.bsn_year -- 사업년도
               , (select cd_nm from co_code_mst where  cd=m1.cnstg_cd  ) as cnstg_cd_nm -- 사업구분
-              , case when (select count(*) from cp_cnstg_rsume_mst where cnstg_seq = m1.cnstg_seq )=0 then '신청'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' then '사전심사선정'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT02' then '사전심사탈락'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT03' then '지원단이관'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT04' then '봉사단이관'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT05' then '사용자취소'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01'  then '지도승인'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT02'  then '지도불가'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now()  then '지도투입'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_bgn_dt > now() and now()> guide_pscnd_dt  then '지도중'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND01' then '지도연기'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND02' then '제단취소'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND03' then '부품사취소'
-                     when m3.bfre_jdgmt_rslt_cd ='BF_JDGMT_RSLT01' and m3.init_vst_rslt_cd='INIT_VST_RSLT01' and guide_pscnd_cd ='GUIDE_PSCND04' then '지도완료'
-                        end as status_nm -- 진행상태
+              , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN m1.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = m1.CNSTG_SEQ )   <![CDATA[<=]]>   CURDATE()
+                AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = m1.CNSTG_SEQ )   <![CDATA[>]]>   CURDATE())	then 'MNGTECH_STATUS_08'
+                WHEN (m1.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR m1.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = m1.CNSTG_SEQ )   <![CDATA[<=]]>   CURDATE()) then 'MNGTECH_STATUS_09'
+                ELSE m1.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') status_nm -- 진행상태
                , m2.cmpn_nm-- 부품사명
                , (select cd_nm from co_code_mst where  cd=m2.ctgry_cd ) as ctgry_cd_nm -- 구분
                , (select cd_nm from co_code_mst where  cd=m1.cmpn_size_cd ) as cmpn_size_cd_nm-- 규모

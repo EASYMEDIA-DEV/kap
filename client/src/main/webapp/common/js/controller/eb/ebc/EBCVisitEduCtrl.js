@@ -247,7 +247,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             cmmCtrl.fileFrm(function(data){
                                 //콜백함수. 페이지 이동
                                 location.href = "./complete";
-                            }, "./insert", $formObj, "json");
+                            }, "./insert", $formObj, "json", true);
                         }
                     }
                 }

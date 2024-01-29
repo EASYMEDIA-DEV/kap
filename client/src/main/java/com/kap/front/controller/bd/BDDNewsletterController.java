@@ -79,7 +79,7 @@ public class BDDNewsletterController {
     @GetMapping(value = "/select")
     public String selectNewsletterListAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception {
         try {
-            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
+            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterTotalList(pBDDNewsletterDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
@@ -104,7 +104,7 @@ public class BDDNewsletterController {
             }
             throw new Exception(e.getMessage());
         }
-        return "front/bd/bdd/BDDNewsletterTabAjax";
+        return "front/bd/bdd/BDDNewsletterListAjax";
     }
 
     /**

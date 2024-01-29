@@ -84,11 +84,42 @@ public class BDANoticeServiceImpl implements BDANoticeService {
 
         int recordCountPerPage = (pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize() >= pBDANoticeDTO.getTotalCount()) ? pBDANoticeDTO.getTotalCount() : pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize();
         pBDANoticeDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeTotalList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
 
+    /**
+     * 톻합검색 공지사항 조회
+     */
+    public BDANoticeDTO selectNoticeTotalList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
 
+        page.setCurrentPageNo(pBDANoticeDTO.getPageIndex());
+        page.setRecordCountPerPage(pBDANoticeDTO.getListRowSize());
+
+        page.setPageSize(pBDANoticeDTO.getPageRowSize());
+
+        pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+
+        // 사용자 메인 노출 갯수 조건문 추가
+        if (pBDANoticeDTO.getMainYn().equals("Y")) {
+            pBDANoticeDTO.setRecordCountPerPage(3);
+        }else {
+            pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
+
+        pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeTotalList(pBDANoticeDTO));
+        return pBDANoticeDTO;
+    }
+
+    /**
+     * 통합검색 중요 공지사항 조회
+     */
+    public BDANoticeDTO selectMainPostTotalList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+        pBDANoticeDTO.setMainPostList(bDANoticeMapper.selectMainPostTotalList(pBDANoticeDTO));
+        return pBDANoticeDTO;
+    }
 
     /**
      * 공지사항 조회 갯수(통합검색)

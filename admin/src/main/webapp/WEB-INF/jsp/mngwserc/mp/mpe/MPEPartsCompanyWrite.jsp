@@ -375,7 +375,9 @@
                                     <tbody>
                                     <tr>
                                         <th>최초 등록자</th>
-                                        <td>${ rtnDto.regName }(${ rtnDto.regId })</td>
+                                        <td>
+                                            ${ empty rtnDto.regUserName ? rtnDto.regName : rtnDto.regUserName }(${ rtnDto.regId })
+                                        </td>
                                         <th>최초 등록일시</th>
                                         <td>${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                                     </tr>
@@ -383,8 +385,8 @@
                                         <th>최종 수정자</th>
                                         <td>
                                             <c:choose>
-                                                <c:when test="${ not empty rtnDto.modName }">
-                                                    ${ rtnDto.modName }(${ rtnDto.modId })
+                                                <c:when test="${ not empty rtnDto.modId }">
+                                                    ${ empty rtnDto.modUserName ? rtnDto.modName : rtnDto.modUserName }(${ rtnDto.modId })
                                                 </c:when>
                                                 <c:otherwise>-</c:otherwise>
                                             </c:choose>

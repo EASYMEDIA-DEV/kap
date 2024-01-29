@@ -128,6 +128,12 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 
 		EBINonMemberDTO ebbDto = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
+		//교육 신청 페이지 진입 시간
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		String formattedDateTime = currentDateTime.format(formatter);
+		ebbDto.setApplyDateTime(formattedDateTime);
+
 		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 
 		if(ebbDto !=null && ebbDto.getPlaceSeq() !=null){

@@ -14,7 +14,7 @@
                         <div class="scroll-area">
                             <div class="p-cont-sec" style="height: 500px;">
                                 <div class="sec-con-area" id="eduRoom" style="height: 500px;">
-                                    @ 카카오 api
+
                                 </div>
                             </div>
                             <div class="p-cont-sec">

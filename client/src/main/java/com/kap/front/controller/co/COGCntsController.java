@@ -72,7 +72,7 @@ public class COGCntsController {
             }
             throw new Exception(e.getMessage());
         }
-        return "/front/co/COGCntsView.front";
+        return "front/co/COGCntsView.front";
     }
 
 }

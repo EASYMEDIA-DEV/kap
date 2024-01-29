@@ -74,9 +74,9 @@ public class COMypageController
             //1년간 컨설팅 내역
             CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
             pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq()));
-            cBATechGuidanceService.countConsultingApplication(pCBATechGuidanceInsertDTO);
 
-            modelMap.addAttribute("consultingYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
+
+            modelMap.addAttribute("consultingYearCnt", cBATechGuidanceService.countConsultingApplication(pCBATechGuidanceInsertDTO));
 
 
             //나의 1:1문의 호출

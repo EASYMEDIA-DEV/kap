@@ -2510,9 +2510,10 @@ footer .copy-area span:last-child:after {display: none;}
 .lnb-area .lnb-list .three-depth-wrap {display:none;}
 .mypage .lnb-area .lnb-list .btn-two-depth span {font-size: max(19rem, 17px);} /* 마이페이지 쪽은 lnb 크기 다름 */
 
-.lnb-link-area {width: 233rem; height: 233rem; margin-top: 64rem; padding: 20rem; background: url() center center / 233rem no-repeat; border-radius: 2px; overflow: hidden;}
+.lnb-link-area {width: 233rem; height: 233rem; margin-top: 64rem; background: url() center center / 233rem no-repeat; border-radius: 2px; overflow: hidden;}
 .lnb-link-area.winner {background-image: url("/common/images/bg-winner.jpg");}
 .lnb-link-area.nonmember {background-image: url("/common/images/bg-nonmember-history.jpg");}
+.lnb-link-area .btn-text-icon{display:block; padding:20rem; width:100%; height:100%;}
 .lnb-link-area .btn-text-icon span {flex-wrap: wrap;}
 .right-con-area .lnb-link-area {display: none;}
 .right-con-area img {max-width: 100%;}
@@ -3286,6 +3287,7 @@ footer .copy-area span:last-child:after {display: none;}
 
         /* 텍스트 카드 리스트형 */
 .article-list-w.txt-card-list {display: grid; gap: 40rem; grid-template-columns: repeat(3, 1fr);}
+.article-list-w.txt-card-list:has(.no-data-area) {display:block;}
 .article-list-w.txt-card-list .list-item {min-height: 296rem; padding: 32rem; border: 1px solid #ECEEEF; border-radius: 2px; overflow: hidden;}
 .article-list-w.txt-card-list .list-item .txt-box .names .name {margin-bottom: 8rem;}
 .article-list-w.txt-card-list .list-item .txt-box .infos {margin-top: 32rem}

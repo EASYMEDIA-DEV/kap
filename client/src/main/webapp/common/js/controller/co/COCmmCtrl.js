@@ -631,6 +631,7 @@ var cmmCtrl = (function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
 						$(".dimd").stop().fadeIn(100);
+						jQuery(".loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr) {

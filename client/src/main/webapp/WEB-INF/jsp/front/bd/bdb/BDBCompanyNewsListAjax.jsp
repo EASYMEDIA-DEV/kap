@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<div class="board-list">
 <c:choose>
     <c:when test="${ not empty rtnData.list }">
         <div class="article-list-w card-list"><!-- card-list: 썸네일 있는 경우 -->
@@ -30,3 +31,4 @@
         </div>
     </c:otherwise>
 </c:choose>
+</div>

@@ -57,6 +57,48 @@
     </select>
 
     <!--
+     쿼리명 : BDBCompanyNewsMapper.selectCompanyNewsTotalList
+     설  명 : 통합검색 재단소식 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.01.29  강인국     최초 생성
+    -->
+    <select id="selectCompanyNewsTotalList" parameterType="BDBCompanyNewsDTO" resultType="BDBCompanyNewsDTO">
+        SELECT /* BDBCompanyNewsMapper.selectCompanyNewsTotalList */
+        FNDN_NEWS_SEQ
+        , TITL
+        , READ_CNT
+        , EXPS_YN
+        , REG_DTM
+        <if test='siteGubun == "front"'>
+            <if test='deviceGubun == "pc"'>
+                ,(SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.pc_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
+                ,(SELECT FILE_EXTN FROM CO_FILE_DTL  WHERE FILE_SEQ = A.pc_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_EXTN
+                ,(SELECT file_dsc FROM CO_FILE_DTL  WHERE FILE_SEQ = A.pc_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_DSC
+            </if>
+            <if test='deviceGubun == "mobile"'>
+                ,(SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.mbl_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
+                ,(SELECT FILE_EXTN FROM CO_FILE_DTL  WHERE FILE_SEQ = A.mbl_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_EXTN
+                ,(SELECT file_dsc FROM CO_FILE_DTL  WHERE FILE_SEQ = A.mbl_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_DSC
+            </if>
+        </if>
+        <if test='siteGubun != "front"'>
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        </if>
+        FROM
+        BD_FNDN_NEWS_MST A
+        WHERE 1=1
+        <include refid="selectCompanyNewsListwhereSql" />
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
     쿼리명 : BDBCompanyNewsMapper.getCompanyNewsListCnt
     설  명 : 재단소식 목록 개수 카운
       수정일      수정자       수정내용

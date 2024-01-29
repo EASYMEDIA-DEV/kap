@@ -130,6 +130,7 @@
 			, tmp_pwd_yn = 'N'
 			, last_lgn_dtm = now()
 		    , chng_xtnsn_cnt = 0
+		    , lgn_fail_cnt = 0
 		WHERE
 			mem_seq = #{memSeq}
 	</update>
@@ -147,6 +148,7 @@
 		   pwd_chng_dtm = DATE_SUB(NOW(), INTERVAL 2 MONTH)
 		  , last_lgn_dtm = now()
 		  , chng_xtnsn_cnt = ifnull(lgn_fail_cnt, 0) + 1
+		  , lgn_fail_cnt = 0
 		WHERE
 			mem_seq = #{memSeq}
 	</update>

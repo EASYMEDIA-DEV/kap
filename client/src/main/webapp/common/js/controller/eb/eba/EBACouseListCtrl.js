@@ -479,7 +479,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			nonMemberDtl : {
 				event : {
 					click : function(e){
-						var edctnseq = $(e.target).closest("div").data("edctnseq");
+						var edctnseq = $(this).data("edctnseq");
 						location.href="/education/apply/non-member/detail?detailsKey="+edctnseq;
 					}
 				}

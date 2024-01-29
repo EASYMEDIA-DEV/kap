@@ -742,6 +742,7 @@ define(["ezCtrl"], function(ezCtrl) {
             },
         },
         immediately : function() {
+            cmmCtrl.setCalendar();
             init();
             btnSqInit();
             startInit();

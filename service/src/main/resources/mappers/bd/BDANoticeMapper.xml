@@ -42,6 +42,62 @@
     </select>
 
     <!--
+     쿼리명 : BDANoticeMapper.selectNoticeTotalList
+     설  명 : 통합검색 공지사항 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.01.29   강인국    최초 생성
+    -->
+    <select id="selectNoticeTotalList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectNoticeTotalList */
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        <if test='siteGubun != "front"'>
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        </if>
+        , EXPS_YN
+        FROM
+        BD_NTFY_MST A
+        WHERE 1=1
+        <include refid="selectNoticeListwhereSql" />
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+         쿼리명 : BDANoticeMapper.selectMainPostTotalList
+         설  명 : [사용자] 통합검색 공지사항 중요공지 목록을 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.29   강인국       최초생성
+    -->
+    <select id="selectMainPostTotalList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectMainPostTotalList */
+            NTFY_SEQ
+             , TITL
+             , READ_CNT
+             , REG_DTM
+             , NTFY_YN
+        FROM
+            BD_NTFY_MST A
+        WHERE 1=1
+          AND NTFY_YN = 'Y'
+          AND ((exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR odtm_yn ='Y')
+          AND EXPS_YN = 'Y'
+
+    </select>
+
+    <!--
     쿼리명 : BDANoticeMapper.getNoticeListCnt
     설  명 : 공지사항 목록 개수 카운
       수정일      수정자       수정내용

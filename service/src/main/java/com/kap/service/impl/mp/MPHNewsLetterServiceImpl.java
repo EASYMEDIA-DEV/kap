@@ -2,10 +2,12 @@ package com.kap.service.impl.mp;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
+import com.kap.service.COMessageService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPHNewsLetterService;
@@ -15,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -22,6 +25,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -55,6 +60,12 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
 
     //로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
+
+    // 이메일 서비스
+    private final COMessageService cOMessageService;
+
+    @Value("${app.site.name}")
+    private String siteName;
     
     /**
      * 강사 목록을 조회한다.
@@ -203,6 +214,30 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
         int respCnt = 0;
         String regIp = CONetworkUtil.getMyIPaddress(request);
         mphNewsLetterDTO.setRegIp(regIp);
+
+        /* 메일에 표기될 문의 접수일 날짜 셋팅 */
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+
+        /* 문의 작성자에게 보내는 메일 처리 */
+        COMailDTO cOMailDTO = new COMailDTO();
+        cOMailDTO.setSubject("["+siteName+"] 뉴스레터 구독신청이 완료되었습니다.");
+        //수신자 정보
+        COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
+        //이메일
+        userReceiverDto.setEmail(mphNewsLetterDTO.getEmail());
+        //이름
+        userReceiverDto.setName(mphNewsLetterDTO.getEmail());
+        //치환문자1
+        userReceiverDto.setNote1(mphNewsLetterDTO.getEmail());
+        //치환문자2
+        userReceiverDto.setNote2(formattedDate);
+        //수신자 정보 등록
+        cOMailDTO.getReceiver().add(userReceiverDto);
+        //메일 발송
+        cOMessageService.sendMail(cOMailDTO, "BDDNewsletterEmailEDM.html");
+        
         respCnt = mphNewsLetterMapper.insertNewsletter(mphNewsLetterDTO);
         mphNewsLetterDTO.setRespCnt(respCnt);
 
