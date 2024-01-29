@@ -231,7 +231,7 @@ public class CBTechGuidanceController {
             receiverDto.setNote4(field2);
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
-            cOMessageService.sendMail(cOMailDTO, "EDM-01-015.html");
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceEmail.html");
 
         /*}catch(Exception e){
             if (log.isErrorEnabled()) {
