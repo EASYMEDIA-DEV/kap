@@ -22,7 +22,7 @@
     -->
     <div class="sub-top-vis-area apply-page consult-biz">
         <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move">기술지도신청</span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">경영컨설팅신청</span></p>
             <div class="apply-step-w">
                 <div class="for-move">
                     <div class="step-list ongoing"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
@@ -58,11 +58,11 @@
                     <div class="divide-box">
                         <p class="exclamation-txt f-sub-head">회원가입시 등록된 부품사 및 정보를 기본으로 신청합니다. 변경 사항이 있으면 수정 후 신청 바랍니다.<br>정확한 신청을 위해 각 항목을 확인하시고 현재 정보를 정확히 입력해 주십시오.</p>
                     </div>
-                    <div class="divide-box">
+                    <%--<div class="divide-box">
                         <div class="btn-wrap">
                             <a class="btn-text-icon download" href="javascript:" title="신청서 작성예시 파일 다운로드" download><span>신청서 작성예시</span></a>
                         </div>
-                    </div>
+                    </div>--%>
                 </div>
             </div>
             <div class="cont-sec-w">
@@ -75,6 +75,7 @@
                             <div class="table-sec">
                                 <div class="table-box"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
                                     <table class="basic-table">
+                                        <input type="hidden" class="memSeq" value="${loginMap.seq}">
                                         <caption>신청자 기본 정보</caption>
                                         <colgroup>
                                             <col style="width: 273rem;">
@@ -99,11 +100,11 @@
                                         </tr>
                                         <tr>
                                             <th>부서</th>
-                                            <td class="appDeptNm">${loginMap.deptNm}</td>
+                                            <td class="appDeptNm"></td>
                                         </tr>
                                         <tr>
                                             <th>직급</th>
-                                            <td class="appPstnCdNm">${loginMap.pstnCdNm}</td>
+                                            <td class="appPstnCdNm">${loginMap.pstnCdNm}<c:if test="${loginMap.pstnCd eq 'MEM_CD01007'}">(${loginMap.pstnNm})</c:if></td>
                                         </tr>
                                         </tbody>
                                     </table>

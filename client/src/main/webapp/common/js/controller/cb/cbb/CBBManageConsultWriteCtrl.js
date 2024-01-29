@@ -202,6 +202,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }, './bsnmNoSearch', cmpnMst, "text");
                         }else{
                             $("#cmpnAddrSameYn").val('N');
+                            $("#hqZipcode").val("");
+                            $("#hqBscAddr").val("");
+                            $("#hqDtlAddr").val("");
                         }
                     }
                 }
@@ -416,7 +419,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                             $("#mainAddr").focus();
                                                             return false;
                                                         }else{
-                                                            if(subAddr == "선택"){
+                                                            if(subAddr == ""){
                                                                 alert("소재 지역을 선택해주세요.");
                                                                 $("#subAddr").val();
                                                                 return false;
@@ -443,13 +446,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                                             }else{
                                                                                 var searchFile = $("#searchFile").val();
                                                                                 if(!searchFile) {
-                                                                                    alert("첨부파일을 등록해주세요.");
+                                                                                    alert("회사소개서를 등록해주세요.");
                                                                                     $("#searchFile").focus();
                                                                                     return false;
                                                                                 }else{
                                                                                     var searchFile1 = $("#searchFile1").val();
                                                                                     if(!searchFile1) {
-                                                                                        alert("첨부파일을 등록해주세요.");
+                                                                                        alert("개선활동 추진계획서를 등록해주세요.");
                                                                                         $("#searchFile1").focus();
                                                                                         return false;
                                                                                     }
@@ -474,11 +477,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#agreeChk").focus();
                             return false;
                         }else{
-                            cmmCtrl.fileFrm(function(data){
-                                var cnstgSeq = $(".cnstgSeq").val();
-                                //콜백함수. 페이지 이동
-                                location.replace("./complete?cnstgSeq="+cnstgSeq);
-                            }, "./insert", $formObj, "json");
+                            if(e){
+                                if(confirm("사업을 신청하시겠습니까?")){
+                                    cmmCtrl.fileFrm(function(data){
+                                        var cnstgSeq = $(".cnstgSeq").val();
+                                        //콜백함수. 페이지 이동
+                                        location.replace("./complete?cnstgSeq="+cnstgSeq);
+                                    }, "./insert", $formObj, "json");
+                                }
+                            }
                         }
                     }
                 }
@@ -498,6 +505,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 location.href="./content";
                             }
                         }
+                    }
+                }
+            },
+            addr : {
+                event : {
+                    change : function(){
+                        $("#cmpnAddrSameYn").val('N');
+                        $("#cmpnAddrSameYn").attr("checked", false);
                     }
                 }
             }

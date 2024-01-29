@@ -28,6 +28,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
                     }
                 }
+            },
+            goQa : {
+                event : {
+                    click : function(){
+                        var loginYn = $(this).data("seq");
+                        var cmssrCbsnCd = $(".cmssrCbsnCd").text();
+                        if(!loginYn){
+                            if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
+                                location.href="/login?rtnUrl=/foundation/cs/qa/index?inqSec="+cmssrCbsnCdNm;
+                            }else{
+                                location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCdNm;
+                            }
+                        }
+                    }
+                }
             }
         },
         classname : {
@@ -55,7 +70,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function(e){
                         if(e){
                             if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
-                                location.href="/login?rtnUrl=/consulting/manage/content";
+                                location.href="/login?rtnUrl=/consulting/manage/application";
                             }
                         }
                     }
@@ -78,11 +93,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 $(".cmssrMjrCarerCntn").text("-");
                                 $(".cmssrCnstgFldCntn").text("-");
                             }
-
                             $(".cmssrName").text(info.name);
                             $(".email").text(info.email);
                             $(".cmssrCbsnCd").text(cmssrCbsnCdNm);
-                            $("#goQa").attr("href", "/foundation/cs/qa/index?inqSec=" + info.cmssrCbsnCdNm);
                         }, './selectDtlInfo', cssInfo, "text");
                         openPopup('memberDetailsPopup');
                     }

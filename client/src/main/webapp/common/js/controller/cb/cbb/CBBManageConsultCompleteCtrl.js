@@ -29,12 +29,10 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 var appctnMemSeq = completeInfo.appctnMemSeq;
                 var etcNm = completeInfo.etcNm;
                 var cbsnCd = completeInfo.cbsnCd
-
-                $(".regDtm").text(regDtm);
+                $(".regDtm").text(regDtm.slice(0,-3));
                 $(".name").text(name);
                 $(".cmpnNm").text(cmpnNm);
                 $(".appctnFldNm").text(appctnFldNm);
-                console.log(appctnMemSeq)
 
             }, './completeInfo', info, "text");
         }

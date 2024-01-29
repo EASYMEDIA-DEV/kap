@@ -30,7 +30,7 @@
     -->
     <div class="sub-top-vis-area apply-page consult-biz">
         <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move"></span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">경영컨설팅신청</span></p>
             <div class="apply-step-w">
                 <div class="for-move">
                     <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
@@ -467,7 +467,7 @@
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
                                                             <div class="btn-wrap btn-down-wrap">
-                                                                <a class="btn-text-icon download" href="javascript:" download><span>양식 다운로드</span></a>
+                                                                <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>양식 다운로드</span></a>
                                                             </div>
                                                         </div>
                                                     </div>

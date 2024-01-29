@@ -1570,7 +1570,7 @@
     -->
     <select id="selectCompleteInfo" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /*CBATechGuidanceMapper.selectCompleteInfo*/
-            DATE_FORMAT(REG_DTM, '%Y-%m-%d %H:%I') REG_DTM,
+            REG_DTM,
             (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) NAME,
             (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
             APPCTN_MEM_SEQ,
