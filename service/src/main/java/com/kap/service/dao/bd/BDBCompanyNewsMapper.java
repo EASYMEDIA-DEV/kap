@@ -30,6 +30,10 @@ public interface BDBCompanyNewsMapper {
    */
     public List<BDBCompanyNewsDTO> selectCompanyNewsList(BDBCompanyNewsDTO pBDBCompanyNewsDTO);
     /**
+     * 재단소식 통합검색 조회
+   */
+    public List<BDBCompanyNewsDTO> selectCompanyNewsTotalList(BDBCompanyNewsDTO pBDBCompanyNewsDTO);
+    /**
      * 재단소식 전체 개수
      */
     public int getCompanyNewsListTotCnt(BDBCompanyNewsDTO pBDBCompanyNewsDTO);

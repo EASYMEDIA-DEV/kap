@@ -83,7 +83,7 @@
                                                         <div class="txt-box">
                                                             <div class="names">
                                                                 <p class="name f-title3">${ list.name }</p>
-                                                                <p class="position f-sub-head">전문위원</p>
+                                                                <%--<p class="position f-sub-head">전문위원</p>--%>
                                                             </div>
                                                             <div class="labels">
                                                                 <p class="box-label"><span>${ list.cmssrCbsnCdNm }</span></p>
@@ -95,10 +95,19 @@
                                                     </a>
                                                 </c:forEach>
                                             </c:if>
+                                            <!-- 2024-01-26 추가 -->
+                                            <c:if test="${ empty rtnProData.list}">
+                                            <div class="no-data-area">
+                                                <div class="txt-box">
+                                                    <p class="txt f-body1">등록된 데이터가 없습니다.</p>
+                                                </div>
+                                            </div>
+                                            </c:if>
+                                            <!-- // 2024-01-26 추가 -->
                                         </div>
                                         <c:if test="${ rtnProData.totalCount > rtnProData.listRowSize }">
                                             <div class="btn-wrap add-load align-center" id="proPage">
-                                                <a class="btn-solid small black-line btnMore" href="javascript:" data-cmssr-type-cd="MEM_CD03001" data-cmssr-cbsn-cd="${ rtnProData.cmssrCbsnCd }" data-page-index="${ rtnProData.pageIndex }"><span>더보기</span><span class="item-count">(${ rtnProData.pageIndex }/${ fn:substringBefore(((rtnProData.totalCount-1)/rtnProData.listRowSize) + 1, '.') })</span></a>
+                                                <a class="btn-solid small black-line btnMore" href="javascript:" data-cmssr-type-cd="MEM_CD03001" data-cmssr-cbsn-cd="${ rtnProData.cmssrCbsnCd }" data-page-index="${ rtnProData.pageIndex }"><span>더보기</span><span class="item-count">(${rtnProData.pageIndex * rtnProData.listRowSize >= rtnProData.totalCount ? rtnProData.totalCount : rtnProData.pageIndex * rtnProData.listRowSize}/${ rtnProData.totalCount })</span></a>
                                             </div>
                                         </c:if>
                                     </div>
@@ -145,7 +154,7 @@
                                                         <div class="txt-box">
                                                             <div class="names">
                                                                 <p class="name f-title3">${ list.name }</p>
-                                                                <p class="position f-sub-head">자문위원</p>
+                                                                <%--<p class="position f-sub-head">자문위원</p>--%>
                                                             </div>
                                                             <div class="labels">
                                                                 <p class="box-label"><span>${ list.cmssrCbsnCdNm }</span></p>
@@ -157,10 +166,19 @@
                                                     </a>
                                                 </c:forEach>
                                             </c:if>
+                                            <!-- 2024-01-26 추가 -->
+                                            <c:if test="${ empty rtnAdvData.list}">
+                                                <div class="no-data-area">
+                                                    <div class="txt-box">
+                                                        <p class="txt f-body1">등록된 데이터가 없습니다.</p>
+                                                    </div>
+                                                </div>
+                                            </c:if>
+                                            <!-- // 2024-01-26 추가 -->
                                         </div>
                                         <c:if test="${ rtnAdvData.totalCount > rtnAdvData.listRowSize }">
                                             <div class="btn-wrap add-load align-center" id="advPage">
-                                                <a class="btn-solid small black-line btnMore" href="javascript:" data-cmssr-type-cd="MEM_CD03003" data-cmssr-cbsn-cd="${ rtnAdvData.cmssrCbsnCd }" data-page-index="${ rtnAdvData.pageIndex }"><span>더보기</span><span class="item-count">(${ rtnAdvData.pageIndex }/${ fn:substringBefore(((rtnAdvData.totalCount-1)/rtnAdvData.listRowSize) + 1, '.') })</span></a>
+                                                <a class="btn-solid small black-line btnMore" href="javascript:" data-cmssr-type-cd="MEM_CD03003" data-cmssr-cbsn-cd="${ rtnAdvData.cmssrCbsnCd }" data-page-index="${ rtnAdvData.pageIndex }"><span>더보기</span><span class="item-count">(${rtnAdvData.pageIndex * rtnAdvData.listRowSize >= rtnAdvData.totalCount ? rtnAdvData.totalCount : rtnAdvData.pageIndex * rtnAdvData.listRowSize}/${ rtnAdvData.totalCount })</span></a>
                                             </div>
                                         </c:if>
                                     </div>

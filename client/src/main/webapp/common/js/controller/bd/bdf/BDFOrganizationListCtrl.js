@@ -12,17 +12,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // function
     function makeList(listData, typeId, cntId, pageId, moreYn) {
-        if(listData.list) {
+        if(listData.list.length > 0) {
             if(moreYn != 'Y') {
                 $("#" + typeId).empty();
-            }
-
-            var cmssrType = "";
-            if(typeId == "advList") {
-                cmssrType = "자문위원";
-            }
-            else {
-                cmssrType = "전문위원";
             }
 
             if(listData.totalCount < 1 || listData.totalCount == null) {
@@ -32,13 +24,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#" + cntId).text(listData.totalCount);
             }
 
-            if(listData.totalCount <= listData.listRowSize || listData.pageIndex == (Math.ceil((listData.totalCount-1)/listData.listRowSize) + 1)) {
+            if((listData.pageIndex * listData.listRowSize) >= listData.totalCount) {
                 $("#" + pageId).css("display", "none");
             }
             else {
                 $("#" + pageId).css("display", "flex");
-                $("#" + pageId + " a span.item-count").text("(" + listData.pageIndex + "/" + (Math.ceil((listData.totalCount-1)/listData.listRowSize) + 1) + ")");
+                $("#" + pageId + " a span.item-count").text("(" + (listData.pageIndex * listData.listRowSize) >= listData.totalCount ? listData.totalCount : (listData.pageIndex * listData.listRowSize) + "/" + listData.totalCount + ")");
                 $("#" + pageId + " a").data("pageIndex", listData.pageIndex);
+                $("#" + pageId + " a").data("cmssrCbsnCd", listData.cmssrCbsnCd);
             }
 
             var filePath = "";
@@ -60,7 +53,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     "                <div class=\"txt-box\">\n" +
                     "                    <div class=\"names\">\n" +
                     "                        <p class=\"name f-title3\">" + data.name + "</p>\n" +
-                    "                        <p class=\"position f-sub-head\">" + cmssrType + "</p>\n" +
                     "                    </div>\n" +
                     "                    <div class=\"labels\">\n" +
                     "                        <p class=\"box-label\"><span>" + data.cmssrCbsnCdNm  + "</span></p>\n" +
@@ -71,15 +63,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     "                </div>\n" +
                     "            </a>";
                 $("#" + typeId).append(value);
-                $("#" + pageId + " a").data("pageIndex", listData.pageIndex);
-                $("#" + pageId + " a").data("cmssrCbsnCd", listData.cmssrCbsnCd);
                 value="";
             });
         }
         else {
+            value = "";
+
             if(moreYn != 'Y') {
                 $("#" + typeId).empty();
             }
+            $("#" + cntId).text(0);
+            $("#" + pageId).css("display", "none");
+            $("#" + pageId + " a").data("pageIndex", listData.pageIndex);
+            $("#" + pageId + " a").data("cmssrCbsnCd", listData.cmssrCbsnCd);
+
+            value =
+                "<div class=\"no-data-area\">" +
+                "    <div class=\"txt-box\">" +
+                "        <p class=\"txt f-body1\">등록된 데이터가 없습니다.</p>" +
+                "    </div>" +
+                "</div>"
+
+            $("#" + typeId).append(value);
+            value="";
         }
     }
 

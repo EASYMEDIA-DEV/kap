@@ -202,6 +202,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }, './bsnmNoSearch', cmpnMst, "text");
                         }else{
                             $("#cmpnAddrSameYn").val('N');
+                            $("#hqZipcode").val("");
+                            $("#hqBscAddr").val("");
+                            $("#hqDtlAddr").val("");
                         }
                     }
                 }
@@ -229,6 +232,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             searchPostCode: {
                 event: {
                     click: function () {
+                        $("#cmpnAddrSameYn").val('N');
+                        $("#cmpnAddrSameYn").attr("checked", false);
                         var idVal = $(this).attr('id');
                         if (idVal == "hqAddr") {
                             cmmCtrl.searchPostCode(width, height, "hqZipcode", "hqBscAddr", "hqDtlAddr");
@@ -349,16 +354,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     alert("업체명을 입력해주세요.");
                                     $(".dlvryCmpnNm").eq(i).focus();
                                     return false;
+                                }else{
+                                    if(!$(".dlvryRate").eq(i).val()){
+                                        alert("매출비중을 입력해주세요.");
+                                        $(".dlvryRate").eq(i).focus();
+                                        return false;
+                                    }
                                 }
                             }
-                            var dlvryRateSize = $(".dlvryRate").length;
-                            for(var i =0; i<dlvryRateSize; i++){
-                                if(!$(".dlvryRate").eq(i).val()){
-                                    alert("매출비중을 입력해주세요.");
-                                    $(".dlvryRate").eq(i).focus();
-                                    return false;
-                                }
-                            }
+
                             //완성차 의존율
                             var dpndnSize = $(".dpndnCmpnNm").length;
                             for(var i =0; i<dpndnSize; i++){
@@ -366,11 +370,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     alert("업체명을 입력해주세요.");
                                     $(".dpndnCmpnNm").eq(i).focus();
                                     return false;
-                                }
-                            }
-                            var dpndnRateSize = $(".dpndnRate").length;
-                            for(var i =0; i<dpndnRateSize; i++){
-                                if(!$(".dpndnRate").eq(i).val()){
+                                }else if(!$(".dpndnRate").eq(i).val()){
                                     alert("의존율을 입력해주세요.");
                                     $(".dpndnRate").eq(i).focus();
                                     return false;
@@ -416,7 +416,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                             $("#mainAddr").focus();
                                                             return false;
                                                         }else{
-                                                            if(subAddr == "선택"){
+                                                            if(subAddr == ""){
                                                                 alert("소재 지역을 선택해주세요.");
                                                                 $("#subAddr").val();
                                                                 return false;
@@ -443,13 +443,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                                             }else{
                                                                                 var searchFile = $("#searchFile").val();
                                                                                 if(!searchFile) {
-                                                                                    alert("첨부파일을 등록해주세요.");
+                                                                                    alert("회사소개서를 등록해주세요.");
                                                                                     $("#searchFile").focus();
                                                                                     return false;
                                                                                 }else{
                                                                                     var searchFile1 = $("#searchFile1").val();
                                                                                     if(!searchFile1) {
-                                                                                        alert("첨부파일을 등록해주세요.");
+                                                                                        alert("개선활동 추진계획서를 등록해주세요.");
                                                                                         $("#searchFile1").focus();
                                                                                         return false;
                                                                                     }
@@ -474,11 +474,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#agreeChk").focus();
                             return false;
                         }else{
-                            cmmCtrl.fileFrm(function(data){
-                                var cnstgSeq = $(".cnstgSeq").val();
-                                //콜백함수. 페이지 이동
-                                location.replace("./complete?cnstgSeq="+cnstgSeq);
-                            }, "./insert", $formObj, "json");
+                            if(confirm("사업을 신청하시겠습니까?")){
+                                cmmCtrl.fileFrm(function(data){
+                                    var cnstgSeq = $(".cnstgSeq").val();
+                                    //콜백함수. 페이지 이동
+                                    location.replace("./complete?cnstgSeq="+cnstgSeq);
+                                }, "./insert", $formObj, "json");
+                            }
                         }
                     }
                 }
@@ -498,6 +500,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 location.href="./content";
                             }
                         }
+                    }
+                }
+            },
+            addr : {
+                event : {
+                    change : function(){
+                        $("#cmpnAddrSameYn").val('N');
+                        $("#cmpnAddrSameYn").attr("checked", false);
                     }
                 }
             }

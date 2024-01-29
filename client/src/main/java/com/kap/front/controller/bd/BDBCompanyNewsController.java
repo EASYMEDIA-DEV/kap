@@ -115,7 +115,7 @@ public class BDBCompanyNewsController {
             throw new Exception(e.getMessage());
         }
 
-        return "front/bd/bdb/BDBCompanyNewsTabListAjax";
+        return "front/bd/bdb/BDBCompanyNewsListAjax";
     }
 
     /**
@@ -126,7 +126,7 @@ public class BDBCompanyNewsController {
     {
         try
         {
-            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
+            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsTotalList(pBDBCompanyNewsDTO));
         }
         catch (Exception e)
         {

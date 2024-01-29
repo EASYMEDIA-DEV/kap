@@ -182,7 +182,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
         /* 상생신청 상세 */
         int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
         wBKBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
-        /* 스마트 신청 상태 코드 */
         wBKBRegisterDTO.setAppctnSttsCd("WBKB_REG_FRT001");
         respCnt *= wBKBRegisterMapper.putAppctnRsumeDtl(wBKBRegisterDTO);
 
@@ -301,8 +300,7 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
             if (wBKBRsumeDTO.getRsumeOrd() == 1) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("appctnFileSeq"));
             else if (wBKBRsumeDTO.getRsumeOrd() == 2) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("firstFileSeq"));
             else if (wBKBRsumeDTO.getRsumeOrd() == 3) wBKBRsumeDTO.setFileSeq(fileSeqMap.get("lastFileSeq"));
-
-            if (wBKBRegisterDTO.getFileList().get(0).getFileDsc() != null && !wBKBRegisterDTO.getFileList().get(0).getFileDsc().isEmpty())
+            if (wBKBRegisterDTO.getFileSeq() != null && !wBKBRegisterDTO.getFileSeq().equals(""))
                 respCnt *= wBKBRegisterMapper.putDtlFileDtl(wBKBRsumeDTO);
         }
 
@@ -706,7 +704,6 @@ public class WBKBRegisterServiceImpl implements WBKBRegisterService {
                     /* 상생신청 상세 */
                     int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
                     wBKBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
-                    /* 스마트 신청 상태 코드 */
                     wBKBRegisterDTO.setAppctnSttsCd("WBKB_REG_FRT001");
                     rtnCnt *= wBKBRegisterMapper.putAppctnRsumeDtl(wBKBRegisterDTO);
 

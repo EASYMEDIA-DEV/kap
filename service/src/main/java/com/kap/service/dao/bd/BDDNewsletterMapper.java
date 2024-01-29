@@ -30,6 +30,10 @@ public interface BDDNewsletterMapper {
    */
     public List<BDDNewsletterDTO> selectNewsletterList(BDDNewsletterDTO pBDDNewsletterDTO);
     /**
+     * 뉴스레터 통합검색 조회
+     */
+    public List<BDDNewsletterDTO> selectNewsletterTotalList(BDDNewsletterDTO pBDDNewsletterDTO);
+    /**
      * 뉴스레터 전체 개수
      */
     public int getNewsletterListTotCnt(BDDNewsletterDTO pBDDNewsletterDTO);

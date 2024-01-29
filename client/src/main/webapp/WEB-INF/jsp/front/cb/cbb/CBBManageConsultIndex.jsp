@@ -75,7 +75,7 @@
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" data-seq="${loginMap.seq}" id="goContact"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -156,7 +156,6 @@
         </div>
     </div>
 </div>
-</div>
 <!-- content 영역 end -->
 <div class="layer-popup memberDetailsPopup">
     <div class="for-center">
@@ -204,7 +203,7 @@
                 </div>
                 <div class="bot-fix-btn-area">
                     <div class="btn-wrap align-right">
-                        <a class="btn-solid small black-bg" href="javascript:" id="goQa"><span>위원 문의</span></a>
+                        <a class="btn-solid small black-bg" href="javascript:" data-seq="${loginMap.seq}" id="goQa"><span>위원 문의</span></a>
                     </div>
                 </div>
                 <div class="user-opt-area">
@@ -213,4 +212,5 @@
             </div>
         </div>
     </div>
+</div>
 </div>

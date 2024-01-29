@@ -302,7 +302,7 @@
 												<c:if test="${menu.data eq '마이페이지' && loginMap.authCd ne 'CS'}">
 													<li>
 														<div class="for-move">
-															<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link}">${ menu.data}</a>
+															<a class="two-depth" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link}">${ menu.data}</a>
 														</div>
 													</li>
 
@@ -327,6 +327,7 @@
 														</c:if>
 													<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'  }">
 														<li>
+
 															<div class="for-move">
 																<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
 																<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
@@ -343,6 +344,7 @@
 													</c:if>
 														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' }">
 															<li>
+
 																<div class="for-move">
 																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
 																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">

@@ -29,7 +29,7 @@
     -->
     <div class="sub-top-vis-area apply-page consult-biz">
         <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move"></span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">기술지도신청</span></p>
             <div class="apply-step-w">
                 <div class="for-move">
                     <div class="step-list completed"><!-- 완료: completed, 진행 중: ongoing 클래스 추가 -->
@@ -174,10 +174,10 @@
                                                         <div class="form-address">
                                                             <div class="form-group">
                                                                 <div class="form-input">
-                                                                    <input type="text" placeholder="우편번호" id="hqZipcode" name="fctryZipcode" value="" readonly>
+                                                                    <input type="text" class="addr" placeholder="우편번호" id="hqZipcode" name="fctryZipcode" value="" readonly>
                                                                 </div>
                                                                 <div class="form-input w-longer">
-                                                                    <input type="text" placeholder="주소" id="hqBscAddr" name="fctryBscAddr" value="" readonly>
+                                                                    <input type="text" class="addr" placeholder="주소" id="hqBscAddr" name="fctryBscAddr" value="" readonly>
                                                                 </div>
                                                                 <div class="btn-wrap">
                                                                     <button class="btn-solid small gray-bg searchPostCode" id="hqAddr" type="button"><span>우편번호 찾기</span></button>
@@ -185,7 +185,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-input w-longest">
-                                                                    <input type="text" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="">
+                                                                    <input type="text" class="addr" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -303,7 +303,7 @@
                                                                 <c:if test="${!fn:contains(cdList.cd,'NON') && !fn:contains(cdList.cd,'META')}">
                                                                     <div class="form-radio">
                                                                         <input type="radio" id="${cdList.cd}" class="cbsnCd" name="cbsnCd" value="${cdList.cd}" title="업종" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">checked</c:if>/>
-                                                                        <label for="${cdList.cd}">${cdList.cdNm}</label>
+                                                                        <label for="${cdList.cd}">업종 직접 입력</label>
                                                                     </div>
                                                                 </c:if>
                                                             </c:forEach>
@@ -382,7 +382,7 @@
                                                                 <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             </div>
                                                             <div class="btn-wrap btn-down-wrap">
-                                                                <a class="btn-text-icon download" href="javascript:" download><span>양식 다운로드</span></a>
+                                                                <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>양식 다운로드</span></a>
                                                             </div>
                                                         </div>
                                                     </div>

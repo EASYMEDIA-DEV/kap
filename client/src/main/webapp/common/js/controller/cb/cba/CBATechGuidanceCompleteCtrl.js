@@ -28,12 +28,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 var etcNm = completeInfo.etcNm;
                 var cbsnCd = completeInfo.cbsnCd
 
-                $(".regDtm").text(regDtm);
+                $(".regDtm").text(regDtm.slice(0,-3));
                 $(".name").text(name);
                 $(".cmpnNm").text(cmpnNm);
-                console.log(cbsnCd);
-                console.log(cbsnCd.indexOf("METAL"));
-                console.log(cbsnCd.indexOf("NON"));
                 if(cbsnCd.indexOf("METAL")>0){
                     $(".appctnFldNm").text("금속분야-"+appctnFldNm);
                 }else if(cbsnCd.indexOf("NON")>0){

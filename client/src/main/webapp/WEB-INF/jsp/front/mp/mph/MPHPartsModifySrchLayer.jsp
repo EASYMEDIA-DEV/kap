@@ -137,7 +137,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input calendar" >
-                                                                <input id="stbsmDt" class="stbsmDt cleanInit" name="stbsmDt" type="date" placeholder="2022.07.15">
+                                                                <input id="stbsmDt" type="text" name="stbsmDt" class="datetimepicker_strtDt stbsmDt cleanInit" onclick="cmmCtrl.initCalendar(this);" readonly  style="color:#06161E;">
                                                             </div>
                                                         </div>
                                                     </div>
@@ -585,28 +585,3 @@
     </div>
 
 </div>
-
-<style>
-    input[type="date"]::-webkit-calendar-picker-indicator,
-    input[type="date"]::-webkit-inner-spin-button {
-        display: none;
-        appearance: none;
-    }
-
-    input[type="date"]::-webkit-calendar-picker-indicator {
-        color: rgba(0, 0, 0, 0); //숨긴다
-    opacity: 1;
-        display: block;
-        padding-right: 36rem;
-        background: url('/common/images/icon-calendar.svg') no-repeat 98% 50%; // 대체할 아이콘
-    width: 30px;
-        height: 25px;
-        border-width: thin;
-    }
-
-    .form-input.calendar {
-        background : no-repeat;
-        padding-right: 1rem;
-    }
-
-</style>

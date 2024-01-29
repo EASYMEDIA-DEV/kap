@@ -97,7 +97,8 @@ public class BDANoticeController {
     {
         try
         {
-            modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
+            modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeTotalList(pBDANoticeDTO));
+            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostTotalList(pBDANoticeDTO));
         }
         catch (Exception e)
         {
@@ -120,6 +121,7 @@ public class BDANoticeController {
         try
         {
             modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeTabList(pBDANoticeDTO));
+            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostTotalList(pBDANoticeDTO));
         }
         catch (Exception e)
         {
@@ -130,7 +132,7 @@ public class BDANoticeController {
             throw new Exception(e.getMessage());
         }
 
-        return "front/bd/bda/BDANoticeListAjax";
+        return "front/bd/bda/BDANoticeTabAjax";
     }
 
 

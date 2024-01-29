@@ -134,7 +134,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                             location.href = "/my-page/coexistence/list";
                                         }
                                     } else {
-                                        location.href = "./complete";
+                                        if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
+                                            location.href = "./complete";
+                                        }
                                     }
                                 }, "./insert", $formObj, "json");
                             } else {
@@ -154,7 +156,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     location.href = "/my-page/coexistence/list";
                                 }
                             } else {
-                                location.href = "./complete?episdSeq="+$('input[name=episdSeq]').val();
+                                if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
+                                    location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
+                                }
                             }
                         }, "./insert", $formObj, "json");
                     }

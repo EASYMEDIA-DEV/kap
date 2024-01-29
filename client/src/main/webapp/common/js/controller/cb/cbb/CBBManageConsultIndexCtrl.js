@@ -28,6 +28,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         }
                     }
                 }
+            },
+            goQa : {
+                event : {
+                    click : function(){
+                        var loginYn = $(this).data("seq");
+                        var cmssrCbsnCd = $(".cmssrCbsnCd").text();
+                        if(!loginYn){
+                            if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
+                                location.href="/login?rtnUrl=/foundation/cs/qa/index?inqSec="+cmssrCbsnCdNm;
+                            }else{
+                                location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCdNm;
+                            }
+                        }
+                    }
+                }
             }
         },
         classname : {
@@ -36,7 +51,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function(){
                         pageCnt = pageCnt+1; // 더보기 누를 때마다 1씩 증가
-                        var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
+                        var openCnt = (".popOpen").length // 보이는 게시물
                         var closeCnt = $("#infoCard").find(".close").length; // 숨겨진 게시물
                         if(pageCnt <= page){
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
@@ -55,7 +70,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function(e){
                         if(e){
                             if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
-                                location.href="/login?rtnUrl=/consulting/manage/content";
+                                location.href="/login?rtnUrl=/consulting/manage/application";
                             }
                         }
                     }
@@ -73,16 +88,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                             if (info.cmssrMjrCarerExpsYn == 'Y'){
                                 $(".cmssrMjrCarerCntn").html(info.cmssrMjrCarerCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
-                                $(".cmssrCnstgFldCntn").html(info.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                if(info.cmssrCnstgFldCntn) {
+                                    $(".cmssrCnstgFldCntn").html(info.cmssrCnstgFldCntn.replaceAll(/(\n|\r\n)/g, "<br>"));
+                                }
+                                else {
+                                    $(".cmssrCnstgFldCntn").text("-");
+                                }
                             }else{
                                 $(".cmssrMjrCarerCntn").text("-");
                                 $(".cmssrCnstgFldCntn").text("-");
                             }
-
                             $(".cmssrName").text(info.name);
                             $(".email").text(info.email);
                             $(".cmssrCbsnCd").text(cmssrCbsnCdNm);
-                            $("#goQa").attr("href", "/foundation/cs/qa/index?inqSec=" + info.cmssrCbsnCdNm);
                         }, './selectDtlInfo', cssInfo, "text");
                         openPopup('memberDetailsPopup');
                     }
@@ -92,9 +110,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         immediately : function() {
             if(chilCnt > 9){
                 $("#infoCard").children("a").slice(9,chilCnt).hide();
-                $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");
+                $("#infoCard").children("a").slice(9,chilCnt).removeClass("popOpen");
                 $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
-                var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
+                var openCnt = $("#infoCard").find(".popOpen").length // 보이는 게시물
                 var closeCnt = $("#infoCard").find(".close").length; // 숨겨진 게시물
                 $(".cntText").text(openCnt +"/"+ chilCnt);
             }else{

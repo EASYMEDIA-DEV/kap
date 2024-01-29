@@ -189,7 +189,31 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
 
         int recordCountPerPage = (pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize() >= pBDBCompanyNewsDTO.getTotalCount()) ? pBDBCompanyNewsDTO.getTotalCount() : pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize();
         pBDBCompanyNewsDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsList(pBDBCompanyNewsDTO));
+        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsTotalList(pBDBCompanyNewsDTO));
+        return pBDBCompanyNewsDTO;
+    }
+
+    /**
+     * 통합검색 재단소식 조회
+     */
+    public BDBCompanyNewsDTO selectCompanyNewsTotalList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pBDBCompanyNewsDTO.getPageIndex());
+        page.setRecordCountPerPage(pBDBCompanyNewsDTO.getListRowSize());
+
+        page.setPageSize(pBDBCompanyNewsDTO.getPageRowSize());
+
+        pBDBCompanyNewsDTO.setFirstIndex(page.getFirstRecordIndex());
+        // 사용자 메인 노출 갯수 조건문 추가
+        if(pBDBCompanyNewsDTO.getMainYn().equals("Y")) {
+            pBDBCompanyNewsDTO.setRecordCountPerPage(1);
+        }else{
+            pBDBCompanyNewsDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
+
+        pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
+        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsTotalList(pBDBCompanyNewsDTO));
         return pBDBCompanyNewsDTO;
     }
 }

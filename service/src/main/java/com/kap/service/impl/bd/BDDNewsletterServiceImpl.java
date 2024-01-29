@@ -72,7 +72,26 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
 
         int recordCountPerPage = (pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize() >= pBDDNewsletterDTO.getTotalCount()) ? pBDDNewsletterDTO.getTotalCount() : pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize();
         pBDDNewsletterDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterList(pBDDNewsletterDTO));
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterTotalList(pBDDNewsletterDTO));
+        return pBDDNewsletterDTO;
+    }
+
+    /**
+     * 통합검색 뉴스레터 조회
+     */
+    public BDDNewsletterDTO selectNewsletterTotalList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pBDDNewsletterDTO.getPageIndex());
+        page.setRecordCountPerPage(pBDDNewsletterDTO.getListRowSize());
+
+        page.setPageSize(pBDDNewsletterDTO.getPageRowSize());
+
+        pBDDNewsletterDTO.setFirstIndex(page.getFirstRecordIndex());
+        pBDDNewsletterDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        pBDDNewsletterDTO.setTotalCount(bDDNewsletterMapper.getNewsletterListTotCnt(pBDDNewsletterDTO));
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterTotalList(pBDDNewsletterDTO));
         return pBDDNewsletterDTO;
     }
 

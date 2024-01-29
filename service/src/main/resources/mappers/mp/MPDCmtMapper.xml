@@ -255,23 +255,37 @@
         2023.11.23    양현우       최초생성
     -->
     <select id="selectKenCmpnList" parameterType="MPDKenDto" resultType="MPDKenDto">
-    select cmpn_mst.cmpn_nm /* MPDCmtMapper.selectKenCmpnList */
-         , appctn_mst.appctn_bsnm_no
-         ,  (select cd_nm from co_code_mst where  cd=appctn_mst.first_rgns_cd ) as first_rgns_cd_nm
-         , appctn_mst.first_rgns_cd
-         ,  (select cd_nm from co_code_mst where  cd=appctn_mst.scnd_rgns_cd ) as scnd_rgns_cd_nm
-         , appctn_mst.scnd_rgns_cd
-         , rsume_mst.cnstg_seq
-      from cp_cnstg_appctn_mst appctn_mst
-       inner join cp_cnstg_rsume_mst rsume_mst
-        on appctn_mst.cnstg_seq = rsume_mst.cnstg_seq
-       inner join cp_cmpn_mst cmpn_mst
-        on appctn_mst.appctn_bsnm_no =  cmpn_mst.bsnm_no
-         where init_vst_rslt_cd ='BF_JDGMT_RSLT01'
-          and rsume_mst.cmssr_seq =#{detailsKey}
-           and ( nullif(rsume_mst.guide_pscnd_cd, '') is  null or
-                 nullif(rsume_mst.cnstg_pscnd_cd, '') is null )
-          order by appctn_mst.cnstg_seq
+        select cmpn_nm /* MPDCmtMapper.selectKenCmpnList */
+             , appctn_bsnm_no
+             , first_rgns_cd_nm
+             , first_rgns_cd
+             , scnd_rgns_cd_nm
+             , scnd_rgns_cd
+             , cnstg_seq
+             , status_nm
+        from (
+                 select cmpn_mst.cmpn_nm
+                      , appctn_mst.appctn_bsnm_no
+                      ,  (select cd_nm from co_code_mst where  cd=appctn_mst.first_rgns_cd ) as first_rgns_cd_nm
+                      , appctn_mst.first_rgns_cd
+                      ,  (select cd_nm from co_code_mst where  cd=appctn_mst.scnd_rgns_cd ) as scnd_rgns_cd_nm
+                      , appctn_mst.scnd_rgns_cd
+                      , rsume_mst.cnstg_seq
+                      , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN appctn_mst.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                     AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = appctn_mst.CNSTG_SEQ )    <![CDATA[<=]]>   CURDATE()
+                         AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = appctn_mst.CNSTG_SEQ )  <![CDATA[>]]>   CURDATE())	then 'MNGTECH_STATUS_08'
+                                                                         WHEN (appctn_mst.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR appctn_mst.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                                                             AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = appctn_mst.CNSTG_SEQ )  <![CDATA[<=]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                                                         ELSE appctn_mst.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') status_nm -- 진행상태
+                 from cp_cnstg_appctn_mst appctn_mst
+                          inner join cp_cnstg_rsume_mst rsume_mst
+                                     on appctn_mst.cnstg_seq = rsume_mst.cnstg_seq
+                          inner join cp_cmpn_mst cmpn_mst
+                                     on appctn_mst.appctn_bsnm_no =  cmpn_mst.bsnm_no
+                 where 1=1
+                   and rsume_mst.cmssr_seq =#{detailsKey}
+                 order by appctn_mst.cnstg_seq ) as tt
+        where status_nm in('지도중','지도착수','지도승인')
     </select>
 
     <!--
@@ -293,8 +307,8 @@
              , etc
         from co_cmssr_atndc_mst ccam
          inner join co_mem_mst m2
-        ccam.mem_seq = m2.mem_seq
-         where mem_seq=#{detailsKey}
+          on ccam.mem_seq = m2.mem_seq
+         where ccam.mem_seq=#{detailsKey}
           and year =#{year}
           and mnth=#{mnth}
           and dd=#{dd}

@@ -65,7 +65,7 @@
                                         <c:forEach var="cdList" items="${rtnData.prizeList}" varStatus="status">
                                             <c:if test="${rtnData.prizeCd eq cdList.prizeCd}">
                                                 ${cdList.prizeCdNm}
-                                            </c:if>>
+                                            </c:if>
                                         </c:forEach>
                                     </p>
                                 </div>

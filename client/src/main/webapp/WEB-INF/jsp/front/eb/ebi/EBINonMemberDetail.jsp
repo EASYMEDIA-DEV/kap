@@ -247,17 +247,16 @@
                                                     <th>기타</th>
                                                     <td>
                                                         <c:forEach var="target" items="${ rtnTrgtData }" varStatus="status">
-                                                            <c:if test="${ fn:contains(target.targetCd, 'ED_TARGET05') }">
-                                                                <c:choose>
-                                                                    <c:when test="${ not empty target.etcNm }">
-                                                                        ${ target.etcNm }
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        -
-                                                                    </c:otherwise>
-                                                                </c:choose>
-                                                            </c:if>
+                                                            <c:choose>
+                                                                <c:when test="${ fn:contains(target.targetCd, 'ED_TARGET05') }">
+                                                                    ${ target.etcNm }
+                                                                    <c:set var="count" value="${ count + 1}" />
+                                                                </c:when>
+                                                            </c:choose>
                                                         </c:forEach>
+                                                        <c:if test="${ count eq 0 }">
+                                                            -
+                                                        </c:if>
                                                     </td>
                                                 </tr>
                                                 </tbody>
