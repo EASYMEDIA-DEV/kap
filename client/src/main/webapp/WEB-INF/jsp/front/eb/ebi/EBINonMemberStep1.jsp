@@ -125,7 +125,7 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">정원</p>
-                                                                    <p class="txt f-body2">${ rtnData.fxnumImpsbYn eq 'N' ? '제한없음' : rtnData.fxnumCnt +='명' }(모집 후 선발)</p>
+                                                                    <p class="txt f-body2">${ rtnData.fxnumImpsbYn eq 'N' ? '제한없음' : rtnData.fxnumCnt +='명' }(선착순 마감)</p>
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육장소</p>
