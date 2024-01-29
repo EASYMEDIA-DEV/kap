@@ -218,8 +218,8 @@
             </div>
           </div>
         </div>
-        <div class="cont-sec no-border scroll-motion">
-          <div class="for-motion">
+        <div class="cont-sec no-border scroll-motion partForm">
+          <div class="for-motion initPartHtml">
             <div class="sec-tit-area">
               <p class="f-head">팀원 정보</p>
               <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>

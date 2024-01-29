@@ -63,6 +63,37 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
         }
     };
 
+    // 이메일 체크
+    var emailChk = function(email){
+        var mailPattern = /^(?!.*\.{2,})([^@&'=+,<>\s]+)@([^@&'=+,<>\s]+)\.([^@&'=+,<>\s]+)([a-zA-Z가-힣]+)$/;
+
+        if (!mailPattern.test(email)) {
+            alert("이메일 형태를 확인해주세요.");
+            return false;
+        }
+        return true;
+    };
+
+    var schlChk = function(SchlNm){
+        var emptyPattern = /^\s*$/;
+
+        if(emptyPattern.test(SchlNm)){
+            alert("학교를 입력해주세요.");
+            return false;
+        }
+        return true;
+    };
+
+    var grdChk = function (grd){
+        var grdPattern = /^[1-9]$/;
+
+        if(!grdPattern.test(grd)){
+            alert("학년을 입력해주세요.");
+            return false;
+        }
+        return true;
+    };
+
     // set model
     ctrl.model = {
         id : {
@@ -139,20 +170,10 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
             insert : {
                 event : {
                     click : function() {
-                        var file = $('input[type=file]');
-                        var valid = true;
-
+                        
                         //팀장 이메일 셋
                         var rdEmail = $("#rdEmailId").val() + '@' + $("#rdEmaildomain").val();
                         $(':input[name="rdEmail"]').val(rdEmail);
-
-                        file.each(function(i) {
-                            if (!$(this).val()) {
-                                alert('신청서류를 등록해주세요.');
-                                valid = false;
-                                return false;
-                            }
-                        });
 
                         // 팀원 이메일 셋
                         var partEmailIds = $('.partEmailId').map(function() {
@@ -163,11 +184,137 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                             return $(this).val();
                         }).get();
 
-                        $('.Participant').each(function(index) {
-                            var partEmail = partEmailIds[index] + '@' + partEmailDomains[index];
-                            $('[name="partList[' + index + '].email"]').val(partEmail);
-                        });
+                        // $('.Participant').each(function(index) {
+                        //     var partEmail = partEmailIds[index] + '@' + partEmailDomains[index];
+                        //     $('[name="partList[' + index + '].email"]').val(partEmail);
+                        // });
 
+                        // 유효성 체크
+                        var valid = true;
+                        var rdName = $("#rdName").val();
+                        var rdHpNo = $("#rdHpNo").val();
+                        var rdGrd = $(':input[name="rdGrd"]').val();
+                        var rdSchlNm = $(':input[name="rdSchlNm"]').val();
+                        var ptcptType = $(':input[name="ptcptType"]').val();
+                        var themeCd =  $(":input:radio[name='themeCd']").is(":checked");
+                        var dtlCntn = $("textarea").val();
+
+                        var nmRegExp = /^[a-zA-Z가-힣]+$/;
+                        var phNoRegExp = /^([0]{1}[0-9]{1,2})-([1-9]{1}[0-9]{2,3})-([0-9]{4})|(15|16|18)(00|70|44|66|77|88)-[0-9]{4}$/;
+
+                        if( valid ) {
+                            if (!nmRegExp.test(rdName)) {
+                                alert("이름을 입력해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if (!phNoRegExp.test(rdHpNo)) {
+                                alert("휴대번호를 입력해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!emailChk(rdEmail)){
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!schlChk(rdSchlNm)){
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!grdChk(rdGrd)){
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!ptcptType){
+                                alert("참여구분을 선택해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!themeCd){
+                                alert("주제를 선택해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if(!dtlCntn){
+                                alert("세부 내용을 입력해주세요.");
+                                valid = false;
+                                return false;
+                            }
+                        }
+
+                        if( valid ) {
+                            if($(".Participant").length>0){
+
+                                $('.Participant').each(function(index) {
+
+                                    var partNm = $(".name").eq(index).val();
+                                    if (!nmRegExp.test(partNm)) {
+                                        alert("팀원 이름을 입력해주세요.");
+                                        valid = false;
+                                        return false;
+                                    }
+
+                                    var partPhNo = $(".hpNo").eq(index).val();
+                                    if(!phNoRegExp.test(partPhNo)){
+                                        alert("팀원 휴대번호를 입력해주세요.")
+                                        valid = false;
+                                        return false;
+                                    }
+
+                                    var partEmail = partEmailIds[index] + '@' + partEmailDomains[index];
+                                    $('[name="partList[' + index + '].email"]').val(partEmail);
+                                    if(!emailChk(partEmail)){
+                                        valid = false;
+                                        return false;
+                                    }
+
+                                    var partSchlNm = $(".schlNm").eq(index).val();
+                                    if(!schlChk(partSchlNm)){
+                                        valid = false;
+                                        return false;
+                                    }
+
+                                    var grd = $(".grd").eq(index).val();
+                                    if(!grdChk(grd)){
+                                        valid = false;
+                                        return false;
+                                    }
+                                })
+                            }
+                        }
+
+                        var file = $('input[type=file]');
+
+                        if ( valid ){
+                            file.each(function(i) {
+                                if (!$(this).val()) {
+                                    alert('신청서류를 등록해주세요.');
+                                    valid = false;
+                                    return false;
+                                }
+                            });
+                        }
 
                         if (valid) {
                             //이용약관 체크여부
