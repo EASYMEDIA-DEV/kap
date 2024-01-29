@@ -84,50 +84,38 @@
                                             <tr>
                                                 <th>휴대폰번호</th>
                                                 <td>
-                                                    <c:choose>
-                                                        <c:when test="${not empty applicantInfo.hpNo}">
-                                                            ${applicantInfo.hpNo}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    ${not empty applicantInfo.hpNo ? applicantInfo.hpNo : "-"}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>이메일</th>
                                                 <td>
-                                                    <c:choose>
-                                                        <c:when test="${not empty applicantInfo.email}">
-                                                            ${applicantInfo.email}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-                                                    </c:choose>
+                                                    ${not empty applicantInfo.email ? applicantInfo.email : "-"}
                                                 </td>
                                             </tr>
                                             <tr>
                                                 <th>일반 전화번호</th>
                                                 <td>
+                                                    ${not empty applicantInfo.telNo ? applicantInfo.telNo : "-"}
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>부서</th>
+                                                <td>${not empty applicantInfo.deptCdNm ? applicantInfo.deptCdNm : "-"}
                                                     <c:choose>
-                                                        <c:when test="${not empty applicantInfo.telNo}">
-                                                            ${applicantInfo.telNo}
+                                                        <c:when test="${not empty applicantInfo.deptCdNm}">
+                                                            (${applicantInfo.deptDtlNm})
                                                         </c:when>
                                                         <c:otherwise>
-                                                            -
+
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>부서</th>
-                                                <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
-                                            </tr>
-                                            <tr>
                                                 <th>직급</th>
                                                 <td>
-                                                    ${applicantInfo.pstnCdNm}
+                                                    ${not empty applicantInfo.pstnCdNm ? applicantInfo.pstnCdNm : "-"}
                                                     <c:if test="${applicantInfo.pstnCd eq 'MEM_CD01007'}" >
                                                         (${applicantInfo.pstnNm})
                                                     </c:if>
@@ -164,11 +152,11 @@
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>
-                                                <td>${rtnInfo.cmpnNm}</td>
+                                                <td>${not empty rtnInfo.cmpnNm ? rtnInfo.cmpnNm : "-"}</td>
                                             </tr>
                                             <tr>
                                                 <th>대표자명</th>
-                                                <td>${rtnInfo.rprsntNm}</td>
+                                                <td>${not empty rtnInfo.rprsntNm ? rtnInfo.rprsntNm : "-"}</td>
                                             </tr>
                                             <tr>
                                                 <th>구분</th>
@@ -176,24 +164,15 @@
                                             </tr>
                                             <tr>
                                                 <th>규모</th>
-                                                <td>${rtnInfo.sizeNm}</td>
+                                                <td>${not empty rtnInfo.sizeNm ? rtnInfo.sizeNm : "-"}</td>
                                             </tr>
                                             <tr>
                                                 <th>설립일자</th>
-                                                <td>${kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</td>
+                                                <td>${not empty rtnInfo.stbsmDt ? kl:convertDate(rtnInfo.stbsmDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : "-"}</td>
                                             </tr>
                                             <tr>
                                                 <th>회사 전화번호</th>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${not empty rtnInfo.telNo}">
-                                                            ${rtnInfo.telNo}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </td>
+                                                <td>${not empty rtnInfo.telNo ? rtnInfo.telNo : "-"}</td>
                                             </tr>
 
                                             <tr>
@@ -203,25 +182,19 @@
 
                                             <tr>
                                                 <th>매출액</th>
-                                                <td>${rtnInfo.slsPmt}억 원(${rtnInfo.slsYear}년)</td>
+                                                <td>${not empty rtnInfo.slsPmt ? rtnInfo.slsPmt : "-"}억 원(${not empty rtnInfo.slsYear ? rtnInfo.slsYear : "-"}년)</td>
                                             </tr>
                                             <tr>
                                                 <th>직원수</th>
-                                                <td>
-                                                    <c:choose>
-                                                        <c:when test="${not empty rtnInfo.mpleCnt}">
-                                                            ${rtnInfo.mpleCnt}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            -
-                                                        </c:otherwise>
-                                                    </c:choose> 명
-                                                </td>
+                                                <td>${not empty rtnInfo.mpleCnt ? rtnInfo.mpleCnt : "-"}명</td>
                                             </tr>
                                             <tr>
                                                 <th>주생산품</th>
                                                 <td>
                                                     <c:choose>
+                                                        <c:when test="${empty rtnInfo.mjrPrdct1 and empty rtnInfo.mjrPrdct2 and empty rtnInfo.mjrPrdct3}">
+                                                            -
+                                                        </c:when>
                                                         <c:when test="${not empty rtnInfo.mjrPrdct1}">
                                                             ① ${rtnInfo.mjrPrdct1}
                                                         </c:when>
@@ -239,30 +212,37 @@
                                                     <tr>
                                                         <th>SQ정보</th>
                                                         <td>
-                                                            <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
-                                                                <p>
-                                                                   ${status.count}.
-                                                                   ${not empty list.nm ? list.nm : "-"}/
-                                                                   ${not empty list.score ? list.score : "-"}/
-                                                                   ${not empty list.year ? list.year : "-"} 년/
-                                                                   ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
-                                                                 </p>
-                                                            </c:forEach>
+                                                            <c:choose>
+                                                                <c:when test="${not empty sqInfoList.list}">
+                                                                    <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                        <p>
+                                                                            ${status.count}.
+                                                                            ${not empty list.nm ? list.nm : "-"}/
+                                                                            ${not empty list.score ? list.score : "-"}/
+                                                                            ${not empty list.year ? list.year : "-"} 년/
+                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                        </p>
+                                                                    </c:forEach>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
                                                     </tr>
                                                 </c:when>
                                                 <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
                                                     <tr>
                                                         <th>품질5스타</th>
-                                                        <td>${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년</td>
+                                                        <td>${not empty rtnInfo.qlty5StarCdNm ? rtnInfo.qlty5StarCdNm : "-"} / ${not empty rtnInfo.qlty5StarYear ? rtnInfo.qlty5StarYear : "-"}년</td>
                                                     </tr>
                                                     <tr>
                                                         <th>납입5스타</th>
-                                                        <td>${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년</td>
+                                                        <td>${not empty rtnInfo.pay5StarCdNm ? rtnInfo.pay5StarCdNm : "-"} / ${not empty rtnInfo.pay5StarYear ? rtnInfo.pay5StarYear : "-"}년</td>
                                                     </tr>
                                                     <tr>
                                                         <th>기술5스타</th>
-                                                        <td>${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년</td>
+                                                        <td>${not empty rtnInfo.tchlg5StarCdNm ? rtnInfo.tchlg5StarCdNm : "-"} / ${not empty rtnInfo.tchlg5StarYear ? rtnInfo.tchlg5StarYear : "-"}년</td>
                                                     </tr>
                                                 </c:when>
                                             </c:choose>

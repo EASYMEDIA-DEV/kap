@@ -4,6 +4,7 @@
 <div id="wrap" data-controller="controller/bd/bdd/BDDNewsletterViewCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
         <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.nwsltSeq}" />
+        <input type="hidden" id="srchVal" name="srchVal" value="${rtnDto.srchVal}" />
         <div class="cont-wrap">
             <div class="inner">
                 <div class="cont-sec-w">

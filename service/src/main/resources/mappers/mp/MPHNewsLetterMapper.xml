@@ -56,11 +56,7 @@
                 </choose>
             </if>
             <if test="q != null and q != ''">
-                <choose>
-                    <when test="f == 1">
-                        AND EMAIL LIKE CONCAT('%', #{q}, '%')
-                    </when>
-                </choose>
+                AND EMAIL LIKE CONCAT('%', #{q}, '%')
             </if>
         </where>
     </sql>
