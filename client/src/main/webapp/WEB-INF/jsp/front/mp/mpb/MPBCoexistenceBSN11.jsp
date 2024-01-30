@@ -32,6 +32,7 @@
                                         <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                         <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                         <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT003'}">탈락</c:when>
+                                        <c:when test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT004'}">사용자취소</c:when>
                                         <c:otherwise>접수전</c:otherwise>
                                     </c:choose>
                                     </span>
@@ -169,7 +170,7 @@
                                 <div class="txt-box">
                                     <p class="tit f-head">최종 심사</p>
                                 </div>
-                                <p class="box-label bigger waiting">
+                                <p class="box-label bigger rsumeColor">
                                     <span>
                                         <c:choose>
                                             <c:when test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT001'}">접수완료</c:when>

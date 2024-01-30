@@ -33,16 +33,17 @@ define(["ezCtrl"], function(ezCtrl) {
 			//총 건수
 
 			if(totCnt <= 9 ){
-				$(".btn-wrap.add-load.align-center").remove();
+				$(".btn-wrap.add-load.align-center").hide();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
 
 				if((tempPage * 9)>totCnt){
+					$(".btn-wrap.add-load.align-center").hide();
 					rtnPage = totCnt
-					$('.divide-con-area .pageSet').hide();
 				}else{
+					$(".btn-wrap.add-load.align-center").show();
 					rtnPage = (tempPage * 9);
 				}
 
@@ -514,22 +515,21 @@ define(["ezCtrl"], function(ezCtrl) {
 			cmmCtrl.setFormData($formObj);
 			search();
 
-			$formObj.find('#q').on('keypress', function(e){
-				if (e.keyCode == 13){
-					$formObj.find("#btnSearch").click();
-				}
-			});
 
 			$(".classTypeLayer:first").trigger("click");
 
-			$('#q').on('keydown', function(event) {
-				// 눌린 키가 Enter 키인지 확인
-				if (event.which === 13) {
-					// 다른 이벤트 중지
-					event.preventDefault();
+			$(document).on('keydown', function(event) {
+				// 필터 검색 인지 확인
+				if($('.all-srch').css('display') !== 'block') {
 
-					search(1);
-					return false;
+					// 눌린 키가 Enter 키인지 확인
+					if (event.which === 13) {
+						// 다른 이벤트 중지
+						event.preventDefault();
+						cmmCtrl.setFormData($formObj);
+						search(1);
+						return false;
+					}
 				}
 			});
 		}

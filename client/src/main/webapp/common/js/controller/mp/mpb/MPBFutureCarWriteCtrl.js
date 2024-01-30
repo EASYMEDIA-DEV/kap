@@ -98,6 +98,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             if(confirm("저장 후 내용을 수정할 수 없습니다.\n저장하시겠습니까?")) {
                                  cmmCtrl.fileFrm(function (data) {
+                                     console.log(data)
                                     if (data.respCnt > 0) {
                                          location.href = "/my-page/coexistence/list";
                                      }
@@ -117,7 +118,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     $(this).closest('p.box-label.bigger').addClass("accepting");
                 }else if( rsumeText == "탈락"){
                     $(this).closest('p.box-label.bigger').addClass("arr");
-                }else {
+                }else if ( rsumeText == "사용자취소"){
+                    $(this).closest('p.box-label.bigger').addClass("end");
+                }else{
                     $(this).closest('p.box-label.bigger').addClass("waiting");
                 }
             });

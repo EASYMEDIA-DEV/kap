@@ -1288,10 +1288,10 @@
                                                         or rsumeTaskDtl[0].appctnSttsCdNm eq 'PRO_TYPE02001_01_004'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[0].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" id="mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02001_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >

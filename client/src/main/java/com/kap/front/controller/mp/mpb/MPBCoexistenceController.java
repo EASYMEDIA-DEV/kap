@@ -248,7 +248,6 @@ public class MPBCoexistenceController {
                     WBKBRegisterSearchDTO wBKBRegisterSearchDTO = new WBKBRegisterSearchDTO();
                     wBKBRegisterSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
                     modelMap.addAttribute("rtnData", wBKBRegisterService.selectFutureCarConRegDtl(wBKBRegisterSearchDTO));
-                    System.err.println("rtnUser ==" + modelMap.getAttribute("rtnData"));
                 }
             }
 

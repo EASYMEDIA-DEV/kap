@@ -223,23 +223,6 @@
                                                                             </span>
                                                                         </div>
 
-                                                                        <%--<div class="input-group">
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" data-name="expsStrtDtm" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" name="expsStrtDtm" data-name="expsStrtDtm" value="${not empty rtnDto.expsStrtDtm ? kl:convertDate(rtnDto.expsStrtDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="중요공지 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                            <span class="input-group-addon bg-white b0">~</span>
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" data-name="expsEndDtm" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" name="expsEndDtm" data-name="expsEndDtm" value="${not empty rtnDto.expsEndDtm ? kl:convertDate(rtnDto.expsEndDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : kl:convertDate(kl:addDay(today, '+7'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="중요공지 종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                        </div>--%>
                                                                     </div>
                                                                     <!-- // 2023-12-07 수정 -->
                                                                 </div>

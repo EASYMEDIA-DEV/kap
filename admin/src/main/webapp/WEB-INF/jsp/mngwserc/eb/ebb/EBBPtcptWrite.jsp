@@ -26,7 +26,7 @@
                 </c:otherwise>
             </c:choose>
             <input type="hidden" class="notRequired"id="gpcPass" name="gpcPass" value="${gpcPass}" />
-            <input type="hidden" class="notRequired"id="memSeq" name="memSeq" value="${loginMap.seq}" />
+            <input type="hidden" class="notRequired"id="memSeq" name="memSeq" value="" />
             <input type="hidden" class="notRequired"id="memId" name="memId" value="${applicantInfo.id}" /><!--로그인 한 사람의 id -->
             <c:set var="gndr" value="${applicantInfo.gndr eq 1 ? 'M' : 'F'}" />
             <input type="hidden" class="notRequired"id="gndr" name="gndr" value="${gndr}" /><!--로그인 한 사람의 성별 -->

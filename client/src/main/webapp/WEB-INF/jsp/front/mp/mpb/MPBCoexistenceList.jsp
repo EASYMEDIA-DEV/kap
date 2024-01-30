@@ -158,7 +158,8 @@
                                                     <c:when test="${item.appctnSttsCdNm eq '접수전' || item.appctnSttsCdNm eq '대기' || item.appctnSttsCdNm eq '결과대기'}">
                                                         <c:set var="classType" value="waiting"/>
                                                     </c:when>
-                                                    <c:when test="${item.appctnSttsCdNm eq '접수완료' || item.appctnSttsCdNm eq '적합' || item.appctnSttsCdNm eq '선정' }">
+                                                    <c:when test="${item.appctnSttsCdNm eq '접수완료' || item.appctnSttsCdNm eq '적합' || item.appctnSttsCdNm eq '선정' ||
+                                                                    item.appctnSttsCdNm eq '보완완료' || item.appctnSttsCdNm eq '지급완료'}">
                                                         <c:set var="classType" value="accepting"/>
                                                     </c:when>
                                                     <c:when test="${item.appctnSttsCdNm eq '사용자취소'}">
