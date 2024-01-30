@@ -5,7 +5,6 @@ import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.mp.mpb.MPBBsnSearchDTO;
@@ -68,6 +67,21 @@ public class COViewInterceptor implements HandlerInterceptor{
             }
         }
         request.setAttribute("strPam", strPam);
+
+        //요청 디바이스 구분
+        String userAgent = request.getHeader("User-Agent");
+        String device = "";
+        if (userAgent != null) {
+            userAgent = userAgent.toLowerCase();
+            if (userAgent.contains("mobile") || userAgent.contains("android") || userAgent.contains("iphone")) {
+                device = "MO";
+            }
+            else {
+                device = "PC";
+            }
+        }
+        request.setAttribute("device", device);
+
         // 메뉴 목록
         List<COMenuDTO> menuList = null;
         int userMenuSeq = 612;
