@@ -273,7 +273,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
                     if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
                         jQuery.ajax({
-                            url : "./getBsnmNoCnt",
+                            url : "./getInsertBsnmNoCnt",
                             type : "POST",
                             timeout: 30000,
                             data : $formObj.serializeArray(),
@@ -290,7 +290,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         });
                     }else{
                         jQuery.ajax({
-                            url : "./getSbrdnBsnmNoCnt",
+                            url : "./getInsertSbrdnBsnmNoCnt",
                             type : "POST",
                             timeout: 30000,
                             data : $formObj.serializeArray(),

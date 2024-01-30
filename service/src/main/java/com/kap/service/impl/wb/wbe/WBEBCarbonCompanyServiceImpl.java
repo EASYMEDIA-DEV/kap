@@ -1260,7 +1260,42 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
     }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    public int getInsertBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+
+        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+
+        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    public int getInsertSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+        respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+
+        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     public int getBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception {
 
@@ -1283,7 +1318,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
     }
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     public int getSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO) throws Exception {
 

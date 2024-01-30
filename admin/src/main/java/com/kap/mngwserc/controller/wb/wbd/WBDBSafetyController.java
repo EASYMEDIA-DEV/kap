@@ -326,7 +326,49 @@ public class WBDBSafetyController {
     }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertBsnmNoCnt")
+    public String getInsertBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBDBSafetyService.getInsertBsnmNoCnt(wBDBSafetyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertSbrdnBsnmNoCnt")
+    public String getInsertSbrdnBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBDBSafetyService.getInsertSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getBsnmNoCnt")
     public String getBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -347,7 +389,7 @@ public class WBDBSafetyController {
     }
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getSbrdnBsnmNoCnt")
     public String getSbrdnBsnmNoCnt(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception

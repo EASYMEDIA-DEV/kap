@@ -82,12 +82,22 @@ public interface WBCBSecurityService {
     public int carbonUserUpdate(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    public int getInsertBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
+
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    public int getInsertSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     public int getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 

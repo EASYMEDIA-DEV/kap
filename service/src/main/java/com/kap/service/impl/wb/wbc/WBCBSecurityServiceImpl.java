@@ -1256,9 +1256,44 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         return respCnt;
     }
 
+    /**
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    public int getInsertBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    public int getInsertSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+
+        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+        respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
+
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     public int getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
 
@@ -1280,7 +1315,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
     }
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception {
 
