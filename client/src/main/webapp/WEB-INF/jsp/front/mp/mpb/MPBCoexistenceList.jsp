@@ -93,10 +93,10 @@
                                                             <div class="data-line-w">
                                                                 <div class="data-line">
                                                                     <div class="form-input srch-input w-longer">
-                                                                        <input type="text" name="q" placeholder="사업명 입력">
+                                                                        <input type="text" name="q"  value="" placeholder="사업명 입력">
                                                                         <div class="input-btn-wrap">
                                                                             <button class="delete-btn" title="지우기" type="button"></button>
-                                                                            <button class="srch-btn searchBtn" title="검색"></button>
+                                                                            <button class="srch-btn searchBtn" title="검색" type="button"></button>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -140,11 +140,11 @@
                                             </div>
                                             <div class="btn-wrap">
                                                 <div class="btn-set">
-                                                    <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span>
+                                                    <button type="button" class="btn-solid small gray-bg btn-role-close"><span>닫기</span>
                                                     </button></div>
                                                 <div class="btn-set">
-                                                    <button class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
-                                                    <button class="btn-solid small black-bg searchBtn"><span>적용</span></button>
+                                                    <button type="button" class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
+                                                    <button type="button" class="btn-solid small black-bg searchBtn"><span>적용</span></button>
                                                 </div>
                                             </div>
                                         </div>
