@@ -101,6 +101,7 @@ public class CBTechGuidanceController {
             }
             mpaUserDto.setCmssrTypeList(typeList);
             cBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectConsultingFilePath(cBATechGuidanceInsertDTO);
+            mpaUserDto.setExcelYn("Y");
             modelMap.addAttribute("rtnDto", mPAUserService.selectUserList(mpaUserDto));
             modelMap.addAttribute("fileData", cBATechGuidanceInsertDTO);
             modelMap.addAttribute("loginMap", cOLoginUserDTO);

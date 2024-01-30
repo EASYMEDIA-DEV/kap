@@ -850,7 +850,6 @@
             RQST_CNTN = #{rqstCntn},
             ITRDC_FILE_SEQ = #{itrdcFileSeq},
             IMPVM_FILE_SEQ = #{impvmFileSeq},
-            ADM_MEMO = #{admMemo},
             MOD_DTM = now(),
             MOD_ID = #{regId},
             MOD_IP = #{regIp}
@@ -1191,6 +1190,7 @@
                 AND ((SELECT IFNULL(CNSTG_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
                 ELSE A.RSUME_STTS_CD END) AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM,
             A.ADM_MEMO,
+            A.ADM_MEMO_MOD_DTM,
             A.REG_DTM,
             A.REG_ID,
             CASE
@@ -1486,5 +1486,4 @@
             </choose>
         </where>
     </delete>
-
 </mapper>

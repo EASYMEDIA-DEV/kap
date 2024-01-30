@@ -320,6 +320,7 @@
             ELSE A.RSUME_STTS_CD END)
              AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM,
             A.ADM_MEMO,
+            A.ADM_MEMO_MOD_DTM,
             A.REG_DTM,
             A.REG_ID,
             CASE
@@ -466,7 +467,6 @@
             RQST_CNTN = #{rqstCntn},
             ITRDC_FILE_SEQ = #{itrdcFileSeq},
             IMPVM_FILE_SEQ = #{impvmFileSeq},
-            ADM_MEMO = #{admMemo},
             MOD_DTM = now(),
             MOD_ID = #{regId},
             MOD_IP = #{regIp}
@@ -1642,4 +1642,19 @@
             SM_STY_MST A
         WHERE TYPE_CD = 'BUSINESS01'
     </select>
+
+    <!--
+     쿼리명 : CBATechGuidanceMapper.updAdmMemo
+     설  명 : 관리자 메모 시간 및 내용 저장
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.01.30   임서화    최초 생성
+    -->
+    <update id="updAdmMemo" parameterType="CBATechGuidanceInsertDTO">
+        UPDATE CP_CNSTG_APPCTN_MST /*CBATechGuidanceMapper.updAdmMemo*/
+        SET
+           ADM_MEMO = #{admMemo}
+          ,ADM_MEMO_MOD_DTM = NOW()
+        WHERE CNSTG_SEQ = #{detailsKey}
+    </update>
 </mapper>

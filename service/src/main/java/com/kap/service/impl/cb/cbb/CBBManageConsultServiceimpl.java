@@ -1,9 +1,8 @@
 package com.kap.service.impl.cb.cbb;
 
+import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COFileDTO;
-import com.kap.core.dto.COSystemLogDTO;
-import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
@@ -20,6 +19,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -71,10 +71,15 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
     private final MPAUserMapper mpaUserMapper;
+    //이메일 발송
+    private final COMessageService cOMessageService;
 
 
     /*로그 서비스*/
     private final COSystemLogService cOSystemLogService;
+
+    @Value("${app.site.name}")
+    private String siteName;
 
     /**
      * 리스트 조회
@@ -324,9 +329,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
         cBBManageConsultSearchDTO.setBsnmNo(mPEPartsCompanyDTO.getBsnmNo());
-        String ctgryCd = pCBBManageConsultInsertDTO.getCtgryCd();
-
-        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
+        String ctgryCd = mPEPartsCompanyDTO.getList().get(0).getCtgryCd();
 
         // 1차사 - 5스타
         if(ctgryCd.equals("COMPANY01001")){
@@ -339,29 +342,29 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         } else if(ctgryCd.equals("COMPANY01002")){ // 2차사 - SQ 정보
             mpePartsCompanyMapper.deletePartsComSQInfo(mPEPartsCompanyDTO);
             for(int i=1; i < 4; i++) {
-                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
-                mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
-                mpePartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
+                mPEPartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                mPEPartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegId());
+                mPEPartsCompanyDTO.setRegId(pCBBManageConsultInsertDTO.getRegIp());
                 if(i==1){
-                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm1());
-                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore1());
-                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear1());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm1());
-                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm1());
+                    mPEPartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore1());
+                    mPEPartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear1());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm1());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
                 }else if(i==2){
-                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm2());
-                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore2());
-                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear2());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm2());
-                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm2());
+                    mPEPartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore2());
+                    mPEPartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear2());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm2());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
                 }else{
-                    mpePartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm3());
-                    mpePartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore3());
-                    mpePartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear3());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm3());
-                    mpePartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBBManageConsultInsertDTO.getNm3());
+                    mPEPartsCompanyDTO.setScore(pCBBManageConsultInsertDTO.getScore3());
+                    mPEPartsCompanyDTO.setYear(pCBBManageConsultInsertDTO.getYear3());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBBManageConsultInsertDTO.getCrtfnCmpnNm3());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBBManageConsultInsertDTO.getBsnmNo());
                 }
-                mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                mpePartsCompanyMapper.insertPartsComSQInfo(mPEPartsCompanyDTO);
             }
         }
         mPEPartsCompanyDTO.setModId(pCBBManageConsultInsertDTO.getRegId());
@@ -509,6 +512,49 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             cBBManageConsultMapper.updateManageConsultRsume(pCBBManageConsultUpdateDTO);
         }else if(totCnt == 0){
             cBBManageConsultMapper.insertManageConsultRsume(pCBBManageConsultUpdateDTO);
+        }
+
+        String rsumeSttsCd = pCBBManageConsultInsertDTO.getRsumeSttsCd();
+
+        // MNGCNSLT_STATUS04  MNGCNSLT_STATUS08 - 탈락 코드
+        if(rsumeSttsCd.equals("MNGCNSLT_STATUS04") || rsumeSttsCd.equals("MNGCNSLT_STATUS08")){
+
+            //이메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
+            //수신자 정보
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            CBBManageConsultInsertDTO tempDto = new CBBManageConsultInsertDTO();
+            tempDto.setRegId(pCBBManageConsultInsertDTO.getRegId());
+            tempDto.setRegIp(pCBBManageConsultInsertDTO.getRegIp());
+            tempDto.setMemSeq(String.valueOf(pCBBManageConsultInsertDTO.getMemSeq()));
+            tempDto.setRsumeSttsCd("MNGCNSLT_STATUS01");
+            tempDto.getDetailsKey();
+            tempDto = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
+            //탈락 사유(치환문자2)
+            if(rsumeSttsCd.equals("MNGCNSLT_STATUS04")){
+                receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("사전심사결과");
+            }else if(rsumeSttsCd.equals("MNGCNSLT_STATUS08")){
+                receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("초도방문결과");
+            }
+
+            //이메일
+            receiverDto.setEmail(tempDto.getEmail());
+            //이름
+            receiverDto.setName(tempDto.getName());
+            //사업명(치환문자1)
+            receiverDto.setNote1("2024 상주경영컨설팅");
+            //부품사명(치환문자3)
+            receiverDto.setNote3(tempDto.getCmpnNm());
+            //신청일
+            String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
+            //수신자 정보 등록
+            cOMailDTO.getReceiver().add(receiverDto);
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
         }
 
         String bfreMemSeq = pCBBManageConsultInsertDTO.getBfreMemSeq();
@@ -1062,5 +1108,4 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
         return trsfDto;
     }
-
 }

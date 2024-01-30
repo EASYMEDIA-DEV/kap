@@ -79,4 +79,5 @@ public interface CBBManageConsultService {
      * 컨설팅사업 등록 사용자
      */
     public int insertUserManageCmssrInfoConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO) throws Exception;
+
 }

@@ -328,6 +328,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
                     }
                 }
+            },btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        let detailsKey = $("#detailsKey").val();
+                        if(detailsKey != '') {
+                            let cBATechGuidanceInsertDTO = {}
+                            cBATechGuidanceInsertDTO.admMemo = $('#admMemo').val();
+                            cBATechGuidanceInsertDTO.detailsKey = detailsKey;
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
+                            }, "/mngwserc/cb/cba/updAdmMemo", cBATechGuidanceInsertDTO, "text")
+                        }
+                    }
+                }
             },
             pstnCdSelect: {
                 event: {
@@ -576,7 +595,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
                         if(confirm("저장하시겠습니까?")){
                             if ($formObj.find(".dropzone").size() > 0) {
-                                console.log($formObj);
                                 cmmCtrl.fileFrmAjax(function (data) {
                                     //콜백함수. 페이지 이동
                                     if (data.respCnt > 0) {

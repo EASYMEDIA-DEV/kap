@@ -327,7 +327,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             submit : {
                 event : {
                     click : function(){
-                        var cpSize = $(".cpSize").val();
+                        var cpSize = $('input[name=cpSize]:checked').val();
                         var frgnDpndnRate = $(".frgnDpndnRate").val();
                         var dmstcSlsPmt = $(".dmstcSlsPmt").val();
                         var frgnSlsPmt = $(".frgnSlsPmt").val();
@@ -418,7 +418,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                         }else{
                                                             if(subAddr == ""){
                                                                 alert("소재 지역을 선택해주세요.");
-                                                                $("#subAddr").val();
+                                                                $("#subAddr").focus();
                                                                 return false;
                                                             }else{
                                                                 if(!appctnRsnCd){

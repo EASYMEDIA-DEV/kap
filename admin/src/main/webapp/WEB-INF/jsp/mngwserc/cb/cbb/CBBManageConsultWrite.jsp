@@ -804,7 +804,7 @@
                         <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
                         <div class="pull-right">
                             <div class="pull-right">
-                                <p class="form-control-static"><c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></p>
+                                <p class="form-control-static"><c:if test="${ not empty rtnDto.admMemoModDtm }">${kl:convertDate(rtnDto.admMemoModDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.admMemoModDtm}">-</c:if></p>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>

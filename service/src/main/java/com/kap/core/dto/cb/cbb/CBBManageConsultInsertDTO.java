@@ -242,6 +242,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
 
     @Schema(title = "관리자 메모")
     private String admMemo;
+    @Schema(title = "관리자 메모 저장 시간")
+    private String admMemoModDtm;
     @Schema(title = "컨설팅 현황 코드")
     private String cnstgPscndCd;
     @Schema(title = "소개파일순번")
