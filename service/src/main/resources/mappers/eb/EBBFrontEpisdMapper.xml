@@ -748,7 +748,7 @@
 					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		      		, ptcpt_seq
 					, "" AS hope_dt
-					, "" AS ptcpt_cnt
+					, 0 AS ptcpt_cnt
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
