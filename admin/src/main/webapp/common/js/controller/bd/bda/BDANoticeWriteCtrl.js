@@ -1,4 +1,4 @@
-define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, ezVald, CodeMirror) {
+define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     "use strict";
 

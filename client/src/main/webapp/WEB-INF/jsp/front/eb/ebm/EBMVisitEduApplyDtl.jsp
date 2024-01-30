@@ -61,7 +61,7 @@
                                                         <c:when test="${not empty visitEduApplyList.edctnStrtDtm}">
                                                             ${kl:convertDate(visitEduApplyList.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
                                                             ~ ${kl:convertDate(visitEduApplyList.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
-                                                            (n일간)
+                                                            (${visitEduApplyList.edctnDay}일간)
                                                         </c:when>
                                                         <c:otherwise>
                                                             -
@@ -251,27 +251,19 @@
                                                 <th>주생산품</th>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct1}">
-                                                            ① ${rtnInfo.mjrPrdct1}
+                                                        <c:when test="${empty rtnInfo.mjrPrdct1 and empty rtnInfo.mjrPrdct2 and empty rtnInfo.mjrPrdct3}">
+                                                            -
                                                         </c:when>
                                                         <c:otherwise>
-                                                            ① -
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <c:choose>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct2}">
-                                                            ② ${rtnInfo.mjrPrdct2}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ② -
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                    <c:choose>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct3}">
-                                                            ③ ${rtnInfo.mjrPrdct3}
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            ③ -
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct1}">
+                                                                ① ${rtnInfo.mjrPrdct1}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct2}">
+                                                                ② ${rtnInfo.mjrPrdct2}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct3}">
+                                                                ③ ${rtnInfo.mjrPrdct3}
+                                                            </c:if>
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </td>

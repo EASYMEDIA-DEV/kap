@@ -1074,15 +1074,15 @@
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, edctn_strt_dtm asc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, edctn_strt_dtm asc, hope_dt asc
 			</when>
 			<when test="srchOrder == 3">
 				<!--학습시간 짧은순-->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm asc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm asc, stduy_time_cd_nm asc
 			</when>
 			<when test="srchOrder == 4">
 				<!--학습시간 긴순-->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm desc
+				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm desc, stduy_time_cd_nm desc
 			</when>
 			<otherwise>
 				<!-- 신청 마감순-->

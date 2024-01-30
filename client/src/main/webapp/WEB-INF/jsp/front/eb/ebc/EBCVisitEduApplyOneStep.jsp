@@ -185,15 +185,17 @@
                                                         <c:when test="${empty rtnInfo.mjrPrdct1 and empty rtnInfo.mjrPrdct2 and empty rtnInfo.mjrPrdct3}">
                                                             -
                                                         </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct1}">
-                                                            ① ${rtnInfo.mjrPrdct1}
-                                                        </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct2}">
-                                                            ② ${rtnInfo.mjrPrdct2}
-                                                        </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct3}">
-                                                            ③ ${rtnInfo.mjrPrdct3}
-                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct1}">
+                                                                ① ${rtnInfo.mjrPrdct1}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct2}">
+                                                                ② ${rtnInfo.mjrPrdct2}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct3}">
+                                                                ③ ${rtnInfo.mjrPrdct3}
+                                                            </c:if>
+                                                        </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
