@@ -32,16 +32,16 @@ import java.util.Map;
  * </pre>
  *
  * @ClassName		: COGpcRestController.java
- * @Description		: 관리자 관리를 위한 Controller
- * @author 허진영
- * @since 2020.10.22
+ * @Description		: GPC 호출에 따른 KAP 응답 인터페이스 관련
+ * @author 이옥정
+ * @since 2024.01.25
  * @version 1.0
  * @see
  * @Modification Information
  * <pre>
  * 		since			author				  description
  *    ==========    ==============    =============================
- *    2020.10.22		허진영				   최초 생성
+ *    2024.01.25		이옥정				   최초 생성
  * </pre>
  */
 @Slf4j
@@ -66,6 +66,98 @@ public class COGpcReceiveRestController {
         COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
         return rtnCOAAdmDTO;
     }
+
+    /**
+     * GPC KAP 인터페이스 교육 과정 응답 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduMaster")
+    public COAAdmDTO getApiEduMaster(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 날짜값을 받음 어제 날짜 예시 ( 2024-01-29 )
+        //cOAAdmDTO.setDetailsKey(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+    /**
+     * GPC KAP 인터페이스 교육 회차 응답 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduEpisdList")
+    public COAAdmDTO getApiEduEpisdList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 kapSeq <== 과정순번을 받음
+        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+    /**
+     * GPC KAP 인터페이스 교육 회차에 따른 신청자 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduPtctpList")
+    public COAAdmDTO getApiEduPtctpList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 kapSchdSeq <== 회차순번을 받음
+        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+    /**
+     * GPC KAP 인터페이스 교육 회차에 따른 신청자 교육 완료 평가 정보 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduPtctpCmpltList")
+    public COAAdmDTO getApiEduPtctpCmpltList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 kapSchdSeq <== 회차순번을 받음
+        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+    /**
+     * GPC KAP 인터페이스 설문 문항 데이터 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduSrvyList")
+    public COAAdmDTO getApiEduSrvyList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 kapSeq <== 과정순번을 받음
+        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+    /**
+     * GPC KAP 인터페이스 설문 참여 데이터 관련(Interceptor에서 처리)
+     */
+    @PostMapping(value="/eduSrvyPtctpList")
+    public COAAdmDTO getApiEduSrvyPtctpList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    {
+        //응답할 데이터
+        log.error("getApi cOSampleDTO : {}", emfMap);
+        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
+        // 명세서의 내용대로 kapSchdSeq <== 회차순번을 받음
+        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
+        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
+        return rtnCOAAdmDTO;
+    }
+
+
 
 
 }
