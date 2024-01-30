@@ -528,15 +528,28 @@
                                                     <p class="txt floatingStduyDdCdNm">2일/14시간
                                                     </p>
                                                 </div>
+
+                                                <!-- 2024-01-24 첨부파일 영역 추가 -->
+                                                <div class="list floatingFileForm">
+                                                    <p class="tit">첨부파일</p>
+                                                    <div class="txt">
+                                                        <div class="btn-wrap">
+                                                            <a class="btn-text-icon download" href="javascript:" download><span class="floatingedctnNtctnFileNm">㈜이지미디어_회사소개서_최신본.pdf</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // 2024-01-24 첨부파일 영역 추가 -->
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="btn-wrap">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon tel floatingPop" data-popType="1" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>
-                                            <a class="btn-solid small gray-bg has-icon lecture floatingPop"data-popType="2" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>
-                                            <a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>
+                                            <!-- 2024-01-24 버튼 삭제-->
+                                            <%--<a class="btn-solid small gray-bg has-icon tel floatingPop" data-popType="1" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>--%>
+                                            <%--<a class="btn-solid small gray-bg has-icon lecture floatingPop"data-popType="2" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>--%>
+                                            <%--<a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>--%>
+                                            <!-- // 2024-01-24 버튼 삭제-->
                                         </div>
                                         <div class="btn-set">
                                             <a class="btn-solid small black-bg applyBtn" href="javascript:" style="display:none;"><span>신청하기</span></a>

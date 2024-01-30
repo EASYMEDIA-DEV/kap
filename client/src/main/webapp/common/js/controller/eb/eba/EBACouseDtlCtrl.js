@@ -87,6 +87,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				$(".floatingStduyMthdCdNm").text($("#floatingStduyMthdCdNm").val());
 				$(".floatingStduyDdCdNm").text($("#floatingStduyDdCdNm").val());
 
+				var fileNm = $("#floatingedctnNtctnFileNm").val();
+				if(fileNm != "" && !(fileNm === undefined)) {
+			 		$(".floatingedctnNtctnFileNm").text(fileNm);
+				}
+				else {
+					$(".floatingFileForm").css("display", "none");
+				}
+
 				//학습방식 집체교육이면 온라인교육목차 숨김
 				if($("#floatingStduyMthdCd").val() == "STDUY_MTHD01"){
 					$(".lecture.floatingPop").hide();
@@ -165,6 +173,16 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		},
 		classname : {
+
+			floatingedctnNtctnFileNm : {
+				event : {
+					click : function() {
+						/*$(".cont-area .download").click();*/
+						$(this).parent().attr("href", "/file/download?fileSeq=" + $("#floatingedctnNtctnFileSeq").val() + "&fileOrd=0");
+						$(this).parent().click();
+					}
+				}
+			},
 
 			//페이징 처리
 			pageSet : {

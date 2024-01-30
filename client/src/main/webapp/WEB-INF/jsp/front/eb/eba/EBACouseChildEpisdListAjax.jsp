@@ -32,6 +32,7 @@
                 <input type="hidden" name="floatingStduyMthdCd" id="floatingStduyMthdCd" value="${list.stduyMthdCd}"/>
                 <input type="hidden" name="floatingStduyDdCdNm" id="floatingStduyDdCdNm" value="${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)"/>
                 <input type="hidden" name="floatingedctnNtctnFileSeq" id="floatingedctnNtctnFileSeq" value="${list.edctnNtctnFileSeq}"/>
+                <input type="hidden" name="floatingedctnNtctnFileNm" id="floatingedctnNtctnFileNm" value="${list.edctnNtctnFileNm}"/>
 
                 <c:set var="floatingYn" value="Y"/>
             </div>
@@ -147,7 +148,8 @@
                         <div class="btn-wrap">
                             <div class="btn-set">
                                 <c:if test="${not empty list.edctnNtctnFileSeq}">
-                                    <a class="btn-text-icon download" href="/file/view?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
+                                    <%--<a class="btn-text-icon download" href="/file/view?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>--%>
+                                    <a class="btn-text-icon download" href="/file/download?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
                                 </c:if>
                             </div>
                             <div class="btn-set">
