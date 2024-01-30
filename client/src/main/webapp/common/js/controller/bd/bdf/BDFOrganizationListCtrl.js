@@ -252,14 +252,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             },
 
-            btnClose : {
+            /*btnClose : {
                 event : {
                     click : function() {
                         $(".memberDetailsPopup").css("display", "none");
                         $(".dimd").css("display", "none");
                     }
                 }
-            },
+            },*/
 
         },
         immediately : function() {
