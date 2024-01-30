@@ -144,7 +144,7 @@ public class EBINonMemberController {
     /**
      *  비회원 교육 과정 신청 step1
      */
-    @PostMapping(value="/step1")
+    @GetMapping(value="/step1")
     public String getNonMemberStep1(EBINonMemberDTO pEBINonMemberDTO, COMenuDTO pCOMenuDTO, ModelMap modelMap) throws Exception
     {
         pCOMenuDTO.setMenuSeq(613);
@@ -167,14 +167,17 @@ public class EBINonMemberController {
     /**
      *  비회원 교육 과정 신청 step2 (완료)
      */
-    @PostMapping(value="/step2")
+    @GetMapping(value="/step2")
     public String getNonMemberStep2(EBINonMemberDTO pEBINonMemberDTO, COMenuDTO pCOMenuDTO, ModelMap modelMap) throws Exception
     {
         pCOMenuDTO.setMenuSeq(613);
 
         modelMap.addAttribute("parntMenuList", cOBUserMenuService.getMenuList(pCOMenuDTO));
 
-        modelMap.addAttribute("rtnData", pEBINonMemberDTO);
+        pEBINonMemberDTO.setDetailsKey(pEBINonMemberDTO.getEdctnSeq().toString());
+
+        modelMap.addAttribute("rtnData", eBINonMemberService.selectNonMemberChk(pEBINonMemberDTO));
+        modelMap.addAttribute("ptcptData", eBINonMemberService.selectNonMemberApplyPtcptDtl(pEBINonMemberDTO));
 
         return "front/eb/ebi/EBINonMemberStep2.front";
     }
