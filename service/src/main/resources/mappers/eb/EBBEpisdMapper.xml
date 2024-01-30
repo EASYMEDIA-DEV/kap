@@ -330,6 +330,7 @@
 			1=1
 
 			<if test="siteGubun == 'front'.toString() ">
+				AND EXPS_YN = 'Y'
 				<!--사용자는 교육 시작일 이전만 출력-->
 				/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
 			</if>
@@ -846,6 +847,10 @@
 			and episd_year = #{episdYear}
 		    and episd_ord = #{episdOrd}
 
+		<if test="siteGubun == 'front'.toString() ">
+		  and exps_yn = 'Y'
+		</if>
+
 			<if test='mypageYn == "Y".toString() '>
 				AND (MEM_SEQ = #{memSeq} OR bfre_mem_seq = #{memSeq})
 
@@ -868,6 +873,9 @@
 		edctn_seq = #{edctnSeq}
 		and episd_year = #{episdYear}
 		and episd_ord = #{episdOrd}
+		<if test="siteGubun == 'front'.toString() ">
+			and exps_yn = 'Y'
+		</if>
 	</select>
 
 	<!--
@@ -2850,6 +2858,10 @@
 				, EPISD_ORD
 				, cmptn_auto_yn
 			FROM ed_edctn_episd_mst
+			where 1=1
+			<if test="siteGubun == 'front'.toString() ">
+				and exps_yn = 'Y'
+			</if>
 		) B ON B.EPISD_SEQ = A.EPISD_SEQ
 
 		LEFT JOIN(
@@ -2861,10 +2873,21 @@
 				, stduy_mthd_cd
 				, lcns_cnnct_cd
 			from ed_edctn_prcs_mst tbl
+			where 1=1
+
+			<if test="siteGubun == 'front'.toString() ">
+				and exps_yn = 'Y'
+			</if>
+
 		) c ON c.edctn_seq = b.edctn_seq
 
 		WHERE MEM_SEQ = #{memSeq}
-		AND PTCPT_SEQ = #{ptcptSeq}) A
+		AND PTCPT_SEQ = #{ptcptSeq}
+		<if test="siteGubun == 'front'.toString() ">
+			and exps_yn = 'Y'
+		</if>
+
+		) A
 	</select>
 
 	<!--

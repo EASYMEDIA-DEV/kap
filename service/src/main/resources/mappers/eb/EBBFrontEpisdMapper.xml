@@ -89,7 +89,12 @@
 												, b.rcrmt_mthd_cd
 												, (select cd_nm from co_code_mst where cd=b.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
 											from ed_edctn_episd_mst b
+
+											WHERE b.exps_yn = 'Y'
+
 									) bb, (SELECT @rownum:=0) TMP
+
+
 
 						ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
 						GROUP BY edctn_seq
@@ -192,8 +197,13 @@
 				, place_seq
 				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = b.place_seq) as place_nm
 				, (SELECT web_path FROM co_file_dtl WHERE file_seq = 1 AND file_ord = 0) AS web_path
+				, b.exps_yn
 			from ed_edctn_episd_mst b
+			where  exps_yn = 'Y'
+
 			) bb, (SELECT @rownum:=0) TMP
+
+
 
 			ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
 			GROUP BY edctn_seq
@@ -218,12 +228,8 @@
     -->
 	<sql id="selectFrontEpisdListwhereSql">
 		<where>
-
 			1=1
-			/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
-			/*((NOW()  <![CDATA[<]]>  edctn_strt_dtm) OR (edctn_strt_dtm IS NULL))*/
 
-			/*AND episd_year IS NOT NULL*/
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
 
@@ -472,9 +478,11 @@
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
 
+		WHERE a.exps_yn = 'Y'
 		) AA
 
 		where 1=1
+
 		and edctn_seq = #{edctnSeq}
 		and episd_year = #{episdYear}
 
@@ -563,9 +571,12 @@
 									   , cmptn_dtm
 									   , reg_dtm as ptcpt_dtm
 								  FROM ep_edctn_ptcpt_mst) d ON d.episd_seq = a.episd_seq
+
+			  WHERE a.exps_yn = 'Y'
 			 ) AA
 
 		WHERE  MEM_SEQ = #{memSeq}
+
 		AND STTS_CD != 'EDU_STTS_CD02'
 		AND PTCPT_DTM > date_add(now(), INTERVAL -12 month)
 
@@ -764,6 +775,8 @@
 							, cmptn_dtm
 							, reg_dtm as ptcpt_dtm
 						FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
+
+		WHERE a.exps_yn = 'Y'
 		) AA
 
 		<include refid="selectMypageEduListWhereSql" />
@@ -1404,6 +1417,8 @@
 		, cmptn_dtm
 		, reg_dtm as ptcpt_dtm
 		FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
+
+		WHERE a.exps_yn = 'Y'
 		) AA
 
 		<include refid="selectMypageEduListWhereSql" />
@@ -1790,8 +1805,8 @@
 			) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
 			LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 		WHERE 1=1
-		/*AND MEM.wthdrw_yn = 'Y'
-		AND MEM.MEM_CD = 'CP'*/
+		AND MEM.wthdrw_yn = 'Y'
+		AND MEM.MEM_CD = 'CP'
 		AND CMPN_MST.BSNM_NO = #{workBsnmNo}
 		) A
 		WHERE 1=1
@@ -1872,7 +1887,10 @@
 					  d.*
 					   , (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = d.edctn_seq AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
 				  from
-					  nmb_edctn_prcs_mst d) dd
+					  nmb_edctn_prcs_mst d
+				  	where exps_yn = 'Y'
+				  ) dd
+
 			) a
 	</sql>
 
@@ -1930,7 +1948,9 @@
 					  d.*
 					   , (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = d.edctn_seq AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
 				  from
-					  nmb_edctn_prcs_mst d) dd
+					  nmb_edctn_prcs_mst d
+				  		where exps_yn = 'Y'
+				  ) dd
 			) a
 	</sql>
 
