@@ -1504,9 +1504,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 					//교육장소
-					if($("#placeSeq").val() == ""){
-						alert("교육장소를 입력해주세요.");
-						return false
+					var stduyMthdCd = $("#stduyMthdCd").val();
+
+					if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
+						alert("교육장소를 선택해주세요");
+						return false;
 					}
 
 					//만족도조사

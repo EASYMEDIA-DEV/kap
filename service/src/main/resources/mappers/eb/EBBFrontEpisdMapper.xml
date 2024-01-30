@@ -219,8 +219,9 @@
 	<sql id="selectFrontEpisdListwhereSql">
 		<where>
 
+			1=1
 			/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
-			((NOW()  <![CDATA[<]]>  edctn_strt_dtm) OR (edctn_strt_dtm IS NULL))
+			/*((NOW()  <![CDATA[<]]>  edctn_strt_dtm) OR (edctn_strt_dtm IS NULL))*/
 
 			/*AND episd_year IS NOT NULL*/
 
