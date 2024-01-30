@@ -170,7 +170,7 @@
                                 </c:if>
                             </c:forEach>
                         </select>
-                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" style="width: 200px; display: none;" />
+                        <input type="text" class="form-control input-sm notRequired" value="${rtnDto.pstnNm}" id="pstnNm" name="pstnNm" title="직급 상세" maxlength="50" style="width: 200px; <c:if test="${ not fn:contains(rtnData.pstnCd, 'MEM_CD01007') }">display: none;</c:if>" />
                     </div>
                 </div>
             </fieldset>
@@ -405,6 +405,7 @@
                 </div>
             </fieldset>
 
+            <c:if test="${ rtnDto.gpcYn eq 'Y' }">
             <br />
             <br />
             <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm"></em>GPC 아이디</h7>
@@ -417,6 +418,7 @@
                     </div>
                 </div>
             </fieldset>
+            </c:if>
 
             <br />
             <br />
@@ -455,9 +457,6 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </c:when>
-                                    <c:otherwise>
-                                        <option value="" selected>알 수 없음</option>
-                                    </c:otherwise>
                                 </c:choose>
                             </c:forEach>
                         </select>
