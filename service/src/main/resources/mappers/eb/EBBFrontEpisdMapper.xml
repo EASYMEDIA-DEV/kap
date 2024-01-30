@@ -969,7 +969,7 @@
 			ELSE 'N'
 		  END AS TRNSF_YN
 		, 0 AS bfre_mem_seq
-		, null AS ptcpt_seq
+		, 0 AS ptcpt_seq
 		FROM
 		(
 		SELECT vst_seq
@@ -1600,7 +1600,7 @@
 		,  null AS web_path
 		, 0 AS bfre_mem_seq
 		, "N" AS TRNSF_YN
-		, null AS ptcpt_seq
+		, 0 AS ptcpt_seq
 		FROM
 		(
 		SELECT vst_seq
