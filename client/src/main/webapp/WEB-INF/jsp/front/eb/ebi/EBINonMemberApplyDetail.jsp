@@ -87,7 +87,7 @@
                                                         <div class="class-property-w ">
                                                             <div class="property-list non-member"><!-- non-member: 비회원 가능 -->
                                                                 <p class="txt">
-                                                                    <span>비회원 가능</span>
+                                                                    <span>비회원 신청 가능</span><!-- 2024-01-29 문구 변경 -->
                                                                 </p>
                                                             </div>
                                                             <div class="property-list offline"><!-- offline: 집체교육 -->

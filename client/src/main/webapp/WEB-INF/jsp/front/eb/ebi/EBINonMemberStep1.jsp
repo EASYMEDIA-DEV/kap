@@ -91,9 +91,9 @@
                                                             <p class="training-explain-txt">${ rtnData.smmryNm }</p>
                                                         </div>
                                                         <div class="class-property-w">
-                                                            <div class="property-list offline"><!-- non-member: 비회원 가능 -->
+                                                            <div class="property-list non-member"><!-- non-member: 비회원 가능 --><!-- 2024-01-29 non-member 클래스 변경 -->
                                                                 <p class="txt">
-                                                                    <span>비회원 가능</span>
+                                                                    <span>비회원 신청 가능</span><!-- 2024-01-29 문구 변경 -->
                                                                 </p>
                                                             </div>
                                                             <div class="property-list offline"><!-- offline: 집체교육 -->
