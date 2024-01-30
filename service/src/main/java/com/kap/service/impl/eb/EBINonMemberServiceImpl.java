@@ -364,11 +364,11 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	@Transactional
 	public EBINonMemberDTO selectNonMemberChk(EBINonMemberDTO pEBINonMemberDTO) throws Exception
 	{
-		int actCnt = 0;
-		EBINonMemberDTO tempDto = new EBINonMemberDTO();
-		tempDto = eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
+//		int actCnt = 0;
+//		EBINonMemberDTO tempDto = new EBINonMemberDTO();
+//		tempDto = eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
 
-		return tempDto;
+		return eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
 	}
 
 
@@ -442,8 +442,8 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 				int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
 				pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 				eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);
-				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
-				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
+//				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
+//				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
 				pEBINonMemberDTO.setRegStat("S");
 			}
 		}
