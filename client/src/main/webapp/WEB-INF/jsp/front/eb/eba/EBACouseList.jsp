@@ -24,16 +24,18 @@
           컨실팅 사업: consult-biz
           상생 사업: coexisting-biz
         -->
-        <div class="sub-top-vis-area basic-page">
+        <div class="sub-top-vis-area <c:if test="${ device eq 'PC' }">basic-page</c:if>">
             <div class="page-tit-area">
-                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
+                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm } ${ device }</span></p>
             </div>
+            <c:if test="${ device eq 'PC' }">
             <div class="img-area">
                 <div class="img">
                     <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
                     <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
                 </div>
             </div>
+            </c:if>
         </div>
 
         <div class="divide-con-area">
@@ -54,7 +56,7 @@
                             </div>
 
                             <div class="lnb-link-area nonmember">
-                                <a class="btn-text-icon black-arrow" href="javascript:"><span>비회원 신청내역 조회111</span></a>
+                                <a class="btn-text-icon black-arrow" href="/education/apply/non-member/auth"><span>비회원 신청내역 조회</span></a>
                             </div>
 
                             <div class="info-head">
