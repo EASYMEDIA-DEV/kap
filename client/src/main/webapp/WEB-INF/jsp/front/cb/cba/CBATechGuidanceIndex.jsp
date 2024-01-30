@@ -129,14 +129,26 @@
                             <div class="tit-area">
                                 <p class="f-title1"><c:out value="${sysYear}" /> 상주기술지도 접수중 (상시접수중)</p>
                             </div>
-                            <!-- <div class="con-area">
-                              <div class="scroll-area">
-                              </div>
-                            </div> -->
+                            <!-- 2024-01-24 첨부파일 영역 추가 -->
+                            <div class="con-area">
+                                <div class="scroll-area">
+                                    <div class="info-line-list-w">
+                                        <div class="list">
+                                            <p class="tit">첨부파일</p>
+                                            <div class="txt">
+                                                <div class="btn-wrap">
+                                                    <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // 2024-01-24 첨부파일 영역 추가 -->
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
+                                   <%-- <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>--%>
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
