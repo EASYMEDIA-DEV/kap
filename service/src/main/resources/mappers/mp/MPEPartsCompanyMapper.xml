@@ -1069,7 +1069,7 @@
                         AND CMPN_CD LIKE CONCAT('%', #{q}, '%')
                     </when>
                     <when test="f == 5">
-                        AND BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                        AND BSNM_NO LIKE CONCAT('%', replace(#{q},'-',''), '%')
                     </when>
                     <when test="f == 6">
                         AND TEL_NO LIKE CONCAT('%', #{q}, '%')
@@ -1092,7 +1092,7 @@
                         CMPN_NM LIKE CONCAT('%', #{q}, '%') OR
                         BSC_ADDR LIKE CONCAT('%', #{q}, '%') OR
                         CMPN_CD LIKE CONCAT('%', #{q}, '%') OR
-                        BSNM_NO LIKE CONCAT('%', #{q}, '%') OR
+                        BSNM_NO LIKE CONCAT('%', replace(#{q},'-',''), '%') OR
                         TEL_NO LIKE CONCAT('%', #{q}, '%') OR
                         A.REG_ID LIKE CONCAT('%', #{q}, '%') OR
                         EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%') <![CDATA[>]]> 0) OR
