@@ -334,7 +334,7 @@
             </if>
             <if test="srchLayer == 'Y'.toString() "> /* 회원검색 레이어일 경우 특정 부품사의 회원들만 조회되도록 */
                 <if test="workBsnmNo != null and workBsnmNo != ''.toString() ">
-                    and ma.work_bsnm_no = #{workBsnmNo}
+                    and ma.work_bsnm_no = replace(#{workBsnmNo},'-','')
                 </if>
             </if>
 
@@ -367,7 +367,7 @@
                         and (ma.cmpn_nm like concat('%', #{q}, '%') )
                     </when>
                     <when test="f == 7">
-                        and (ma.work_bsnm_no like concat('%', #{q}, '%') )
+                        and (ma.work_bsnm_no like concat('%', replace(#{q},'-',''), '%') )
                     </when>
                     <when test="f == 8">
                         and (ma.cmt_mod_name like concat('%', #{q}, '%') )
@@ -391,7 +391,7 @@
                         or
                         ma.cmpn_nm like concat('%', #{q}, '%')
                         or
-                        ma.work_bsnm_no like concat('%', #{q}, '%')
+                        ma.work_bsnm_no like concat('%', replace(#{q},'-',''), '%')
                         or
                         ma.cmt_mod_name like concat('%', #{q}, '%')
                         or
