@@ -1651,6 +1651,10 @@ var cmmCtrl = (function(){
 			$(".ebbEpisdCouseSrchLayer").find("#btnRefresh").click();
 			$(".ebbEpisdCouseSrchLayer").find("#btnSearch").click();
 		}).one('hidden.bs.modal', function() {
+
+			var param = {};
+			param.choiceCnt = -1;
+			$(this).trigger("choice", param)
 			// Remove class for soft backdrop (if not will affect future modals)
 		}).one('choice', function(data, param) {
 			// Remove class for soft backdrop (if not will affect future modals)

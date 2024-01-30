@@ -681,13 +681,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public EBBPtcptDTO setPtcptInfoCheck(EBBPtcptDTO eBBPtcptDTO) throws Exception
 	{
 		EBBPtcptDTO tempDto = new EBBPtcptDTO();
-
+		System.out.println("@@ eBBPtcptDTO= " + eBBPtcptDTO);
 		tempDto = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
 
 		//이미 등록된 회원
 		if(tempDto !=null){
 
 			eBBPtcptDTO.setRegStat("F");
+			eBBPtcptDTO.setPtcptSeq(tempDto.getPtcptSeq());
 
 			//없어서 새로 추가함
 		}else{

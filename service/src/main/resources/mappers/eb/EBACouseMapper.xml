@@ -302,14 +302,6 @@
 
 			</if>
 
-			, gpc_edctn_type
-			, gpc_parnt_ctgry
-			, gpc_ctgry
-			, gpc_lvl
-			, gpc_fxnum_cnt
-			, gpc_rfn_prcs
-			, gpc_isttr_id
-
 			, exps_yn
 			, reg_id
 			, reg_ip
@@ -358,13 +350,6 @@
 			</if>
 		</if>
 
-		, #{gpcEdctnType}
-		, #{gpcParntCtgry}
-		, #{gpcCtgry}
-		, #{gpcLvl}
-		, #{gpcFxnumCnt}
-		, #{gpcRfnPrcs}
-		, #{gpcIsttrId}
 		, #{expsYn}
 		, #{regId}
 		, #{regIp}

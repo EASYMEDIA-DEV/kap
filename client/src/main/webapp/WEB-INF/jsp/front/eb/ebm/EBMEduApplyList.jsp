@@ -20,7 +20,7 @@
         -->
             <div class="sub-top-vis-area">
                 <div class="page-tit-area">
-                    <p class="page-tit f-xlarge-title"><span class="for-move">교육 사업 신청내역</span></p>
+                    <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
                 </div>
             </div>
 

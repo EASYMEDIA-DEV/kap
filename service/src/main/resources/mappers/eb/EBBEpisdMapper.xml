@@ -327,10 +327,11 @@
     -->
 	<sql id="selectEpisdListwhereSql">
 		<where>
+			1=1
 
 			<if test="siteGubun == 'front'.toString() ">
 				<!--사용자는 교육 시작일 이전만 출력-->
-				AND NOW()  <![CDATA[<]]>  edctn_strt_dtm
+				/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
 			</if>
 
 			<if test='mypageYn == "Y".toString() '>

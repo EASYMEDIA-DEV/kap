@@ -54,7 +54,7 @@
                 </c:otherwise>
             </c:choose>
             <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}" data-episdYear="${list.episdYear}" data-episdOrd="${list.episdOrd}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
-                <c:if test="${accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
+                <c:if test="${list.accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
                     <p class="available-label">
                         <span>신청 가능한 회차</span>
                     </p>
@@ -63,7 +63,7 @@
                     <div class="top-area">
                         <div class="left">
                             <div class="group">
-                                <p class="index-num f-title3">${list.episdOrd}회차</p>
+                                <p class="index-num f-title3">${list.episdOrd}회차 ${accsStatusOrder}</p>
                                 <div class="status-info-w">
                                     <c:if test="${not empty episdDto.cbsnCdNm}">
                                         <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>

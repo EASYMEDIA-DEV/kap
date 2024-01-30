@@ -4,8 +4,8 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다.");
             location.href="/";
-
         }
     }
 </script>
@@ -368,19 +368,40 @@
                                                     <th>주생산품</th>
                                                     <td>
                                                         <c:choose>
-                                                            <c:when test="${not empty rtnInfo.mjrPrdct1}">
-                                                                ① ${rtnInfo.mjrPrdct1}
+                                                            <c:when test="${empty rtnInfo.mjrPrdct1 and empty rtnInfo.mjrPrdct2 and empty rtnInfo.mjrPrdct3}">
+                                                                -
                                                             </c:when>
-                                                            <c:when test="${not empty rtnInfo.mjrPrdct2}">
-                                                                ② ${rtnInfo.mjrPrdct2}
-                                                            </c:when>
-                                                            <c:when test="${not empty rtnInfo.mjrPrdct3}">
-                                                                ③ ${rtnInfo.mjrPrdct3}
-                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <c:if test="${not empty rtnInfo.mjrPrdct1}">
+                                                                    ① ${rtnInfo.mjrPrdct1}
+                                                                </c:if>
+                                                                <c:if test="${not empty rtnInfo.mjrPrdct2}">
+                                                                    ② ${rtnInfo.mjrPrdct2}
+                                                                </c:if>
+                                                                <c:if test="${not empty rtnInfo.mjrPrdct3}">
+                                                                    ③ ${rtnInfo.mjrPrdct3}
+                                                                </c:if>
+                                                            </c:otherwise>
                                                         </c:choose>
                                                     </td>
                                                 </tr>
                                                 <c:choose>
+                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
+                                                        <tr>
+                                                            <th>SQ정보</th>
+                                                            <td>
+                                                                <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                    <p>
+                                                                            ${status.count}.
+                                                                            ${not empty list.nm ? list.nm : "-"}/
+                                                                            ${not empty list.score ? list.score : "-"}/
+                                                                            ${not empty list.year ? list.year : "-"} 년/
+                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                    </p>
+                                                                </c:forEach>
+                                                            </td>
+                                                        </tr>
+                                                    </c:when>
                                                     <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
                                                         <tr>
                                                             <th>품질5스타</th>
@@ -420,23 +441,6 @@
                                                                     </c:otherwise>
                                                                 </c:choose>
 
-                                                            </td>
-                                                        </tr>
-                                                    </c:when>
-                                                    <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
-                                                        <tr>
-                                                            <th>SQ정보</th>
-                                                            <td>
-                                                                <c:choose>
-                                                                    <c:when test=" ${fn:length(sqInfoList.list)>0}">
-                                                                        <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">
-                                                                            <p>${status.count}. ${list.nm} / ${list.score} / ${list.year} 년 / ${list.crtfnCmpnNm}</p>
-                                                                        </c:forEach>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        -
-                                                                    </c:otherwise>
-                                                                </c:choose>
                                                             </td>
                                                         </tr>
                                                     </c:when>

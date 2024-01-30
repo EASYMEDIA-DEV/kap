@@ -62,7 +62,15 @@
                                                 <p class="training-explain-txt">${rtnData.smmryNm}</p>
                                             </div>
                                             <div class="class-property-w">
-                                                <div class="property-list<c:if test="${rtnData.stduyMthdCd eq 'STDUY_MTHD01'}">offline</c:if>"><!-- offline: 집체교육 -->
+
+                                                <c:set var="propertyClass" value=""/>
+                                                <c:choose>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD01'}"><c:set var="propertyClass" value="offline"/></c:when>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD02'}"><c:set var="propertyClass" value="online"/></c:when>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD03'}"><c:set var="propertyClass" value="onoffline"/></c:when>
+                                                </c:choose>
+
+                                                <div class="property-list ${propertyClass}"><!-- offline: 집체교육 -->
                                                     <p class="txt">
                                                         <span>${rtnData.stduyMthdCdNm}</span>
                                                     </p>
@@ -452,7 +460,7 @@
                                             <c:otherwise>
                                                 <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
                                                     <div class="txt-box">
-                                                        <p class="txt f-body1">등록된 후속과목이 없습니다.</p>
+                                                        <p class="txt f-body1">등록된 후속과정이 없습니다.</p>
                                                     </div>
                                                 </div>
                                             </c:otherwise>

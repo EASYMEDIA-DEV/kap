@@ -67,7 +67,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			//플로팅 배너 처리
 			if(!($("#floatingEpisdSeq").val() === undefined)){
-				//$(".accepting-fixed-area").css("display", "");
+				$(".accepting-fixed-area").css("display", "");
 				$(".applyBtn").css("display", "");
 
 
@@ -96,6 +96,8 @@ define(["ezCtrl"], function(ezCtrl) {
 				if($("#floatingedctnNtctnFileSeq").val() == ""){
 					$(".download.floatingPop").hide();
 				}
+			}else{
+				$(".accepting-fixed-area").css("display", "none");
 			}
 
 
@@ -397,8 +399,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 
+						$("#episdYear").val(episdYear);
+						$("#episdOrd").val(episdOrd);
 						//정원수 체크
 						cmmCtrl.jsonAjax(function(data){
+
 							if(data !=""){
 								var rtn = JSON.parse(data);
 								//정원여유
@@ -406,13 +411,14 @@ define(["ezCtrl"], function(ezCtrl) {
 									//alert("등록시작");
 
 									cmmCtrl.frmAjax(function(resultData){
-
+										$("#episdYear").val(null);
+										$("#episdOrd").val(null);
 										var rtnData = resultData.rtnData;
 
 										if(rtnData.regStat == "F"){
-											alert("이미 해당 회차에 신청한 회원입니다.");
+
 											if(confirm("이미 신청한 교육입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다. \n마이페이지로 이동하시겠습니까?")){
-												location.href="/my-page/edu-apply/list";
+												location.href="/my-page/edu-apply/detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+rtnData.ptcptSeq;
 											}
 
 										}else if(rtnData.regStat == "R"){
@@ -433,6 +439,8 @@ define(["ezCtrl"], function(ezCtrl) {
 							}
 
 						}, "/education/apply/fxnumChk", seqObj, "text")
+
+
 
 
 					}

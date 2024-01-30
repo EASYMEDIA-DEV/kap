@@ -36,7 +36,7 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자격증연계<span class="star"> *</span></label>
-                    <div class="col-sm-5">
+                    <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm" name="lcnsCnnctCd" id="lcnsCnnctCd" title="자격증연계">
                                 <option value="">선택</option>
@@ -47,8 +47,8 @@
                         </div>
                     </div>
 
-                    <label class="col-sm-1 control-label">GPC 교육여부<span class="star"> *</span></label>
-                    <div class="col-sm-2" style="margin-left: -15px">
+                    <label class="col-sm-1 control-label" style="margin-left: 15px">GPC 교육여부<span class="star"> *</span></label>
+                    <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-1">
                             <select class="form-control input-sm wd-sm" name="gpcYn" id="gpcYn" title="GPC 교육여부">
                                 <option value="">선택</option>
@@ -62,9 +62,11 @@
 
             </fieldset>
 
-            <fieldset>
+            <c:set var="gpcYn" value="${ not empty rtnDto.gpcYn ? rtnDto.gpcYn : 'N'}"/>
+
+            <fieldset class="gpcYn" <c:if test="${gpcYn eq 'N'}">style="display: none;"</c:if>>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">GPC 교육유형</label>
+                    <label class="col-sm-1 control-label">GPC 교육유형<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <select class="form-control input-sm wd-sm" name="gpcEdctnType" id="gpcEdctnType" title="GPC 교육유형">
                             <option value="">선택</option>
@@ -72,7 +74,7 @@
                             <option value="UB" <c:if test="${rtnDto.gpcEdctnType eq 'UB'}">selected</c:if> >비대면B타입</option>
                         </select>
                     </div>
-                    <label class="col-sm-1 control-label">GPC 레벨</label>
+                    <label class="col-sm-1 control-label">GPC 레벨<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <select class="form-control input-sm wd-sm" name="gpcLvl" id="gpcLvl" title="GPC 레벨">
                             <option value="">선택</option>
@@ -88,9 +90,9 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="gpcYn" <c:if test="${gpcYn eq 'N'}">style="display: none;"</c:if>>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">GPC 카테고리</label>
+                    <label class="col-sm-1 control-label">GPC 카테고리<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <select class="form-control input-sm wd-sm" name="gpcParntCtgry" id="gpcParntCtgry" title="GPC 카테고리">
                             <option value="">선택</option>
@@ -151,9 +153,9 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="gpcYn" <c:if test="${gpcYn eq 'N'}">style="display: none;"</c:if>>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">GPC 환급과정</label>
+                    <label class="col-sm-1 control-label">GPC 환급과정<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <select class="form-control input-sm wd-sm" name="gpcRfnPrcs" id="gpcRfnPrcs" title="GPC 환급과정">
                             <option value="">선택</option>
@@ -168,9 +170,9 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset class="gpcYn" <c:if test="${gpcYn eq 'N'}">style="display: none;"</c:if>>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">GPC 정원수</label>
+                    <label class="col-sm-1 control-label">GPC 정원수<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <label class="input_line form-inline">
                             <input type="text" class="form-control input-sm numberChk" id="gpcFxnumCnt" name="gpcFxnumCnt" value="${rtnDto.gpcFxnumCnt}" title="GPC 정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/> 명
@@ -528,7 +530,7 @@
                                 <td>
                                     <c:choose>
                                         <c:when test="${ not empty rtnDto.modName }">
-                                            ${ rtnDto.modName }
+                                            ${ rtnDto.modName }(${rtnDto.modId})
                                         </c:when>
                                         <c:otherwise>-</c:otherwise>
                                     </c:choose>
