@@ -637,38 +637,55 @@
             CNSTG_SEQ					/* 컨설팅순번 */
              , CNSTG_CD                  /* 컨설팅코드 */
              , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
-             , CBSN_NM                   /* 신청 업종 */
-             , CBSN_CD                   /* 신청 업종 코드 */
-             , CMSSR_SEQ					/* 위원순번 */
+             , CBSN_NM                  /* 신청 업종 */
+             , CBSN_CD                  /* 신청 업종 코드 */
+             , CMSSR_SEQ				/* 위원순번 */
              , CMSSR_NM					/* 위원이름 */
              , GUIDE_KICKF_DT			/* 킥오프시작일 */
              , KICKF_FILE_SEQ			/* 킥오프파일순번 */
-             , KICKF_FILE_ORD            /* 킥오프파일ORD */
-             , GUIDE_BGN_DT              /* 지도착수일 */
+             , KICKF_FILE_ORD           /* 킥오프파일ORD */
+             , GUIDE_BGN_DT             /* 지도착수일 */
              , LVLUP_FILE_SEQ			/* 렙업파일순번 */
              , LVLUP_FILE_ORD			/* 렙업파일ORD */
-             , init_vst_file_seq         /* 초도방문자료순번 */
-             , init_vst_file_ORD         /* 초도방문자료ORD */
-             , itrdc_file_seq            /* 회사소개서파일일순번 */
-             , itrdc_file_ORD            /* 회사소개서ORD */
-             , flty_impvm_rate           /* 개선율 */
+             , init_vst_file_seq        /* 초도방문자료순번 */
+             , init_vst_file_ORD        /* 초도방문자료ORD */
+             , itrdc_file_seq           /* 회사소개서파일일순번 */
+             , itrdc_file_ORD           /* 회사소개서ORD */
+             , flty_impvm_rate          /* 개선율 */
+             , RSUME_STTS_CD			/* 진행상태코드 */
+             , RSUME_STTS_NM			/* 진행상태코드명 */
         FROM(
             SELECT
                 CP_MST.CNSTG_SEQ
                  , CP_MST.CNSTG_CD
-                 , CP_MST.BSN_YEAR
-                 , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
-                AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
-                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
-                         WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
-                             AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
-                         ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
-                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
-                AND ((SELECT IFNULL(GUIDE_BGN_DT, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
-                    AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
-                                                                    WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
-                                                                        AND ((SELECT IFNULL(guide_kickf_dt, 0) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
-                                                                    ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                <if test="cnstgCd != null and cnstgCd != ''.toString() ">
+                     <if test='cnstgCd == "CONSULT_GB01"'>
+                         , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                            AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                            AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                                 WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                     AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                 ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD =  (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06'
+                            AND ((SELECT IFNULL(GUIDE_BGN_DT, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()
+                            AND (SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ > ]]> CURDATE())	then 'MNGTECH_STATUS_08'
+                                WHEN (CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_06' OR CP_MST.RSUME_STTS_CD = 'MNGTECH_STATUS_08' )
+                                    AND ((SELECT IFNULL(guide_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGTECH_STATUS_09'
+                                ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGTECH_STATUS') RSUME_STTS_NM
+                     </if>
+                     <if test='cnstgCd == "CONSULT_GB02"'>
+                         , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS03'
+                                AND (SELECT IFNULL(vst_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE() then 'MNGCNSLT_STATUS06'
+                                 WHEN (CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS07')
+                                     AND ((SELECT IFNULL(cnstg_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGCNSLT_STATUS09'
+                                 ELSE CP_MST.RSUME_STTS_CD END) RSUME_STTS_CD
+                         , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS03'
+                            AND (SELECT IFNULL(vst_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE() then 'MNGCNSLT_STATUS06'
+                                   WHEN (CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS07')
+                                       AND ((SELECT IFNULL(cnstg_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGCNSLT_STATUS09'
+                                   ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
+                     </if>
+                 </if>
                  , CMPN_MST.CMPN_NM
                  , CMPN_MST.CTGRY_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CMPN_MST.CTGRY_CD AND CD_ID = 'COMPANY_TYPE') CTGRY_NM
@@ -685,35 +702,31 @@
                  , CP_MST.SCND_RGNS_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.SCND_RGNS_CD AND CD_ID = 'ADDR_CD') SCND_RGNS_NM
                  , (SELECT CRTFN_CMPN_NM FROM CP_CMPN_CBSN_DTL CMPNDTL WHERE BSNM_NO = CP_MST.APPCTN_BSNM_NO ORDER BY CMPNDTL.YEAR DESC, CMPNDTL.REG_DTM DESC LIMIT 1) CRTFN_CMPN_NM
-           , (SELECT CMPN_NM FROM CP_CNSTG_DLVRY_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ORDER BY RATE DESC LIMIT 1) MN_CMPN_NM
-           , CPR_MST.VST_DT
-           , CPR_MST.CMSSR_SEQ
-           , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
-           , (SELECT COUNT(*) FROM CO_CMSSR_ATNDC_MST WHERE CNSTG_SEQ_1 = CP_MST.CNSTG_SEQ OR CNSTG_SEQ_2 = CP_MST.CNSTG_SEQ) VST_CNT
-           , (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_CBSN_CD
-           , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'MEM_CD' AND CD = (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ))) CMSSR_CBSN_NM
-           , CPR_MST.GUIDE_KICKF_DT
-           , CPR_MST.KICKF_FILE_SEQ
-           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.KICKF_FILE_SEQ AND USE_YN = 'Y') KICKF_FILE_ORD
-           , CPR_MST.CNSTG_PSCND_CD
-           , CPR_MST.GUIDE_PSCND_DT
-           , CPR_MST.GUIDE_BGN_DT
-           , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.CNSTG_PSCND_CD AND CD_ID = 'CNSTG_PSCND') CNSTG_PSCND_NM
-           , CPR_MST.CNSTG_PSCND_DT
-           , CPR_MST.LVLUP_FILE_SEQ
-           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
-           , CPR_MST.init_vst_file_seq
-           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
-           , CP_MST.itrdc_file_seq
-           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
-           , CP_MST.APPCTN_DT
-           , CPR_MST.flty_impvm_rate
-           , CP_MST.REG_ID
-           , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
-           , CP_MST.REG_DTM
-           , CP_MST.MOD_ID
-           , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
-           , CPR_MST.MOD_DTM
+                 , (SELECT CMPN_NM FROM CP_CNSTG_DLVRY_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ORDER BY RATE DESC LIMIT 1) MN_CMPN_NM
+                 , CPR_MST.CMSSR_SEQ
+                 , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM
+                 , (SELECT COUNT(*) FROM CO_CMSSR_ATNDC_MST WHERE CNSTG_SEQ_1 = CP_MST.CNSTG_SEQ OR CNSTG_SEQ_2 = CP_MST.CNSTG_SEQ) VST_CNT
+                 , (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_CBSN_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'MEM_CD' AND CD = (SELECT CMSSR_CBSN_CD FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ))) CMSSR_CBSN_NM
+                 , CPR_MST.GUIDE_KICKF_DT
+                 , CPR_MST.KICKF_FILE_SEQ
+                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.KICKF_FILE_SEQ AND USE_YN = 'Y') KICKF_FILE_ORD
+                 , CPR_MST.GUIDE_BGN_DT
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.CNSTG_PSCND_CD AND CD_ID = 'CNSTG_PSCND') CNSTG_PSCND_NM
+                 , CPR_MST.LVLUP_FILE_SEQ
+                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.LVLUP_FILE_SEQ AND USE_YN = 'Y') LVLUP_FILE_ORD
+                 , CPR_MST.init_vst_file_seq
+                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
+                 , CP_MST.itrdc_file_seq
+                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
+                 , CP_MST.APPCTN_DT
+                 , CPR_MST.flty_impvm_rate
+                 , CP_MST.REG_ID
+                 , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
+                 , CP_MST.REG_DTM
+                 , CP_MST.MOD_ID
+                 , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
+                 , CP_MST.MOD_DTM
             FROM
                 CP_CNSTG_APPCTN_MST CP_MST
             JOIN CO_MEM_MST MEM_MST
@@ -761,6 +774,8 @@
                      , itrdc_file_seq            /* 회사소개서파일일순번 */
                      , itrdc_file_ORD            /* 회사소개서ORD */
                      , flty_impvm_rate           /* 개선율 */
+                     , RSUME_STTS_CD			    /* 진행상태코드 */
+                     , RSUME_STTS_NM			    /* 진행상태코드명 */
                 FROM(
                     SELECT
                         CP_MST.CNSTG_SEQ
