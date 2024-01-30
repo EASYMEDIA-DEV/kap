@@ -35,7 +35,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
                 //파일확장자 체크
                 $('#'+fileId).val("");
-                $('#'+fileId).closest(".form-group").find('.empty-txt').text("");
+                $('#'+fileId).closest(".form-group").find('.empty-txt').text("선택된 파일 없음");
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
 
                 isFile = false;
