@@ -96,11 +96,13 @@
 
 		) bb ON a.edctn_seq = bb.edctn_seq
 
+		<include refid="selectFrontEpisdListwhereSql" />
+
 		<if test="applyListYn == 'Y'.toString()">
 		<include refid="selectFrontCouseListNonMemberUnionSql" />
-		</if>
 
 		<include refid="selectFrontEpisdListwhereSql" />
+		</if>
 
 		<if test="siteGubun == 'front'.toString() ">
 
@@ -139,9 +141,11 @@
         2023.12.22    김학규       최초생성
     -->
 	<select id="selectFrontCouseListCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
-
+		SELECT SUM(abc.cnt)
+		FROM
+		(
 		SELECT /*EBBFrontEpisdMapper.selectFrontCouseListCnt*/
-			count(*)
+			count(*) cnt
 		FROM ed_edctn_prcs_mst a
 		LEFT JOIN (
 			SELECT
@@ -195,8 +199,14 @@
 			GROUP BY edctn_seq
 		) bb ON a.edctn_seq = bb.edctn_seq
 
-
 		<include refid="selectFrontEpisdListwhereSql" />
+
+		<if test="applyListYn == 'Y'.toString()">
+			<include refid="selectFrontCouseListNonMemberCntUnionSql" />
+
+			<include refid="selectFrontEpisdListwhereSql" />
+		</if>
+		) abc
 	</select>
 
 	<!--
@@ -1818,6 +1828,64 @@
 		UNION ALL /*EBBFrontEpisdMapper.selectFrontCouseListNonMemberUnionSql*/
 		select
 			a.*
+		from
+			(select
+				 edctn_seq
+				  , null as episd_year
+				  , null as episd_ord
+				  , null as episd_seq
+				  , (select parnt_seq from co_code_mst WHERE cd = dd.ctgry_cd) as parnt_seq
+				  , (SELECT cd_nm FROM co_code_mst WHERE lft_val  <![CDATA[<=]]>  (SELECT lft_val FROM co_code_mst WHERE cd = dd.ctgry_cd) AND rht_val >= (SELECT rht_val FROM co_code_mst WHERE cd = dd.ctgry_cd) AND dpth = 2) prnt_cd_nm
+				  , ctgry_cd
+				  , (select cd_nm from co_code_mst WHERE cd = dd.ctgry_cd) as ctgry_cd_nm
+				  , nm
+				  , "STDUY_MTHD01" as stduy_mthd_cd
+				  , "집체교육" as stduy_mthd_cd_nm
+				  , (select cd_nm from co_code_mst where cd = dd.stduy_dd_cd) as stduy_dd_cd_nm
+				  , (select cd_nm from co_code_mst where cd = dd.stduy_time_cd) as stduy_time_cd_nm
+				  , accs_strt_dtm
+				  , accs_end_dtm
+				  , DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+				  , edctn_strt_dtm
+				  , edctn_end_dtm
+				  , case
+						when NOW()   <![CDATA[<]]>  accs_strt_dtm then '접수대기'
+						when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '접수중'
+						when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '접수마감'
+					END  AS accs_status_nm
+				  , case
+						when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2' /*접수대기*/
+						when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1' /*접수중*/
+						when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3' /*접수마감*/
+					END  AS accs_status_order
+				  , fxnum_cnt
+				  , fxnum_impsb_yn
+				  , "RCRMT_MTHD02" as rcrmt_mthd_cd
+				  , "모집 후 선발" as rcrmt_mthd_cd_nm
+				  , place_seq
+				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
+				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
+				  , "N" as non_member_cd
+			 from
+				 (SELECT
+					  d.*
+					   , (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = d.edctn_seq AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt
+				  from
+					  nmb_edctn_prcs_mst d) dd
+			) a
+	</sql>
+
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectFrontCouseListNonMemberCntUnionSql
+		설  명 : 교육신청 비회원 과정 목록 조회하여 과정 목록 조회에 유니온
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.01.22    장두석       최초생성
+    -->
+	<sql id="selectFrontCouseListNonMemberCntUnionSql">
+		UNION ALL /*EBBFrontEpisdMapper.selectFrontCouseListNonMemberCntUnionSql*/
+		select
+			COUNT(*) cnt
 		from
 			(select
 				 edctn_seq
