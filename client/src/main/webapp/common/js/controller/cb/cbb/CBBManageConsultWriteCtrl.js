@@ -474,7 +474,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#agreeChk").focus();
                             return false;
                         }else{
-                            if(confirm("사업을 신청하시겠습니까?")){
+                            if(confirm("위 정보로 사업을 신청하시겠습니까?")){
                                 cmmCtrl.fileFrm(function(data){
                                     var cnstgSeq = $(".cnstgSeq").val();
                                     //콜백함수. 페이지 이동
