@@ -203,7 +203,6 @@ public class CBTechGuidanceController {
                     cbsnCdNm = "기타"+"/"+pCBATechGuidanceInsertDTO.getEtcNm();
                 }
                 receiverDto.setNote2(cbsnCdNm);
-                System.err.println("pCBATechGuidanceInsertDTO::"+pCBATechGuidanceInsertDTO);
                 //부품사명(치환문자3)
                 receiverDto.setNote3(pCBATechGuidanceInsertDTO.getCmpnNm());
             }else{
@@ -214,7 +213,6 @@ public class CBTechGuidanceController {
                 modelMap.addAttribute("cnstgSeq", cBBManageConsultService.insertUserManageConsult(pCBBManageConsultInsertDTO, multiRequest));
                 pCBBManageConsultInsertDTO.setDetailsKey(String.valueOf(pCBBManageConsultInsertDTO.getCnstgSeq()));
                 pCBBManageConsultInsertDTO = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
-                pCBATechGuidanceInsertDTO = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
 
                 //이메일
                 receiverDto.setEmail(cOLoginUserDTO.getEmail());
@@ -225,7 +223,7 @@ public class CBTechGuidanceController {
                 //신청분야(치환문자2)
                 receiverDto.setNote2(pCBBManageConsultInsertDTO.getAppctnFldNm());
                 //부품사명(치환문자3)
-                receiverDto.setNote3(pCBATechGuidanceInsertDTO.getCmpnNm());
+                receiverDto.setNote3(pCBBManageConsultInsertDTO.getCmpnNm());
             }
             //신청일
             String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
