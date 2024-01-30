@@ -141,6 +141,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
+
+            if ($('#msg').val()) {
+                alert($('#msg').val());
+                location.href="/";
+            }
+
             $formObj.find("input[type=file]").fileUpload({
                 loading:false,
                 sync:true

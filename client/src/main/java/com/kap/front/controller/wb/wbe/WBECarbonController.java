@@ -167,7 +167,8 @@ public class WBECarbonController {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBEBCarbonCompanySearchDTO.getEpisdSeq()))) {
-                vwUrl = "redirect:/";
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
             }else {
 
                 COUserDetailsDTO cOUserDetailsDTO = null;
@@ -232,7 +233,7 @@ public class WBECarbonController {
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:/";
+                return "redirect:./content";
             } else {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();

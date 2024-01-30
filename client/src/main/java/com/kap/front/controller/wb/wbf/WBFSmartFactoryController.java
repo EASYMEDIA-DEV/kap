@@ -183,7 +183,7 @@ public class WBFSmartFactoryController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbRoundMstSearchDTO.getEpisdSeq()))) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:/";
+                modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
             } else {
                 /* 회차 정보 */
                 wbRoundMstSearchDTO.setBsnCd("BSN06");
@@ -249,7 +249,7 @@ public class WBFSmartFactoryController {
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:/";
+                return "redirect:./content";
             } else {
                 wBFBRegisterSearchDTO.setBsnCd("BSN06");
                 COUserDetailsDTO cOUserDetailsDTO = null;
