@@ -26,7 +26,16 @@
                             <c:set var="url" value="${list.webPath}" />
                         </c:when>
                         <c:otherwise>
-                            <c:set var="url" value="https://img.youtube.com/vi/${fn:substring(list.url, fn:indexOf(list.url,'embed/')+6, fn:length(list.url))}/0.jpg" />
+                            <%--<c:set var="url" value="https://img.youtube.com/vi/${fn:substring(list.url, fn:indexOf(list.url,'embed/')+6, fn:length(list.url))}/0.jpg" />--%>
+                            <%--
+                                썸네일 이미지 크기 조정은 맨 끝의 문구만 바꾸면 됨
+                                120×90: https://i1.ytimg.com/vi/VIDEO-ID/default.jpg
+                                320×180: https://i1.ytimg.com/vi/VIDEO-ID/mqdefault.jpg
+                                480×360: https://i1.ytimg.com/vi/VIDEO-ID/hqdefault.jpg
+                                640×480: https://i1.ytimg.com/vi/VIDEO-ID/sddefault.jpg
+                                1920×1080: https://i1.ytimg.com/vi/VIDEO-ID/maxresdefault.jpg
+                            --%>
+                            <c:set var="url" value="https://i1.ytimg.com/vi/${fn:substring(list.url, fn:indexOf(list.url,'v=')+2, fn:length(list.url))}/default.jpg" />
                         </c:otherwise>
                     </c:choose>
                     <img src="${url}" alt="">

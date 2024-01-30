@@ -370,6 +370,8 @@ define(["ezCtrl"], function(ezCtrl) {
 						if(memSeq =="" || memSeq ===undefined){
 							if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
 								location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+							} else {
+								return false;
 							}
 						}
 
