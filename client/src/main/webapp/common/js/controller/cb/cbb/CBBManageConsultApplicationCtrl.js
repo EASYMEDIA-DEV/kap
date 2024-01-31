@@ -111,6 +111,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $(".address").val(splitMail[1]);
                             $(".picDeptNm").val(appDeptNm);
                             $(".picPstnNm").val(appPstnCdNm);
+                        }else{
+                            $(".picName").val("");
+                            $(".cmssrHpNo").val("");
+                            $(".cmssrCmpnTelNo").val("");
+                            $(".id").val("");
+                            $(".address").val("");
+                            $(".picDeptNm").val("");
+                            $(".picPstnNm").val("");
                         }
                     }
                 }
