@@ -91,7 +91,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
                 $(".rsumeSttsNm").text("사전심사선정");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_03")
-                if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
+                if (initVstRsltCd == 'BF_JDGMT_RSLT03') {
                     $(".rsumeSttsNm").text("지원단이관");
                     $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
@@ -107,6 +107,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
                 $(".rsumeSttsNm").text("사전심사탈락");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_04");
+            }else if(bfJdgmtRslt == 'BF_JDGMT_RSLT03'){
+                $(".rsumeSttsNm").text("지원단이관");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }
         }
     }
