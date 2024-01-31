@@ -207,6 +207,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
         var cmssrName = $("input[name='cmssrName']").val(); //위원
 
+        // 담당 임원이 없고, 킥오프일이 안 지났을 때
         if(cmssrName != '' && bfGbDt <= 0) {
             $(".rsumeSttsNm").text("지도중");
             $(".rsumeSttsCd").val("MNGCNSLT_STATUS09");
