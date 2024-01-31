@@ -43,7 +43,41 @@
 
         <c:forEach var="list" items="${lctrList}" >
             <c:if test="${nowLctrSeq eq list.lctrSeq}">
-                <c:set var="url" value="${list.url}?&autoplay=1&loop=0&modestbranding=1&rel=0" />
+
+                <c:set var="urlkey" value=""/>
+                <c:choose>
+
+                    <c:when test="${list.url.indexOf('www.youtube.com') > -1}">
+
+                        <c:choose>
+
+                            <c:when test="${list.url.indexOf('/watch?v=') > -1}">
+                                <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('/watch?v=')+9, fn:length(list.url))}"/>
+                            </c:when>
+                            <c:when test="${list.url.lastIndexOf('embed/') > -1}">
+                                <c:set var="urlkey" value="${fn:substring(list.url, list.url.lastIndexOf('embed/')+6, fn:length(list.url))}"/>
+                            </c:when>
+
+                        </c:choose>
+
+                    </c:when>
+
+                    <c:when test="${list.url.indexOf('youtu.be') > -1}">
+                        <c:choose>
+                            <c:when test="${list.url.indexOf('si=') > -1}">
+
+                                <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('be/')+3, list.url.indexOf('si=')-1  )   }"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('be/')+3, fn:length(list.url)  )   }"/>
+                            </c:otherwise>
+                        </c:choose>
+                    </c:when>
+                </c:choose>
+
+
+
+                <c:set var="url" value="https://www.youtube.com/embed/${urlkey}?&autoplay=1&loop=0&modestbranding=1&rel=0" />
                 <div class="iframe-area">
                     <iframe width="100%" height="100%" src="${url}" title="" allowfullscreen></iframe>
                 </div>

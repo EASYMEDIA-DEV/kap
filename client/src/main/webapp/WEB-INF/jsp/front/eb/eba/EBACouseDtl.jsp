@@ -244,7 +244,9 @@
                                                     <div class="swiper-wrapper marquee_wrapper1">
 
                                                         <c:forEach var="list" items="${relList1.list}" varStatus="status">
-                                                            <a class="swiper-slide marquee_item1 waiting" href="javascript:">
+
+
+                                                            <a class="swiper-slide marquee_item1 waiting episdDtl" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                                                                 <!--
                                                                   접수중: accepting
                                                                   접수대기: waiting
@@ -254,9 +256,6 @@
                                                                     <img src="${list.webPath}" alt="">
                                                                 </div>
                                                                 <div class="txt-area">
-                                                                    <div class="top-label-area">
-                                                                        <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
-                                                                    </div>
 
                                                                     <div class="sort-label-area">
                                                                         <p class="label"><span>${list.prntCdNm}</span></p>
@@ -328,12 +327,13 @@
                                                                             <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
                                                                         </div>
                                                                         <div class="btn-wrap">
-                                                                            <c:if test="${list.accsStatusOrder eq 3}">
+                                                                            <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
+                                                                            <%--<c:if test="${list.accsStatusOrder eq 3}">
                                                                                 <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
                                                                             </c:if>
                                                                             <c:if test="${list.accsStatusOrder ne 3}">
                                                                                 <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                                                            </c:if>
+                                                                            </c:if>--%>
 
                                                                         </div>
                                                                     </div>
@@ -364,7 +364,7 @@
                                                     <div class="swiper-wrapper marquee_wrapper1">
 
                                                         <c:forEach var="list" items="${relList2.list}" varStatus="status">
-                                                            <a class="swiper-slide marquee_item1 waiting" href="javascript:">
+                                                            <a class="swiper-slide marquee_item1 waiting episdDtl" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                                                                 <!--
                                                                   접수중: accepting
                                                                   접수대기: waiting
@@ -374,9 +374,6 @@
                                                                     <img src="${list.webPath}" alt="">
                                                                 </div>
                                                                 <div class="txt-area">
-                                                                    <div class="top-label-area">
-                                                                        <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
-                                                                    </div>
 
                                                                     <div class="sort-label-area">
                                                                         <p class="label"><span>${list.prntCdNm}</span></p>
@@ -488,7 +485,7 @@
                     </div>
 
                     <!-- 접수중 하단 플로팅 영역 -->
-                    <div class="accepting-fixed-area">
+                    <div class="accepting-fixed-area" style="display:none;">
                         <div class="for-position">
                             <button class="open-click-area" type="button">
                                 <p class="tit floatingEpisdOrd"><span class="status">접수중</span></p>

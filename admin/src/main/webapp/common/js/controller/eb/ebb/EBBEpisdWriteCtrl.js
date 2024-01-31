@@ -330,13 +330,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$(".onlineSet").find("input:text").each(function(){
 
 				if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
-					$(this).removeClass("notRequired");
+					//$(this).removeClass("notRequired");
 				}
 
 			});
 			$(".onlineSet").find("div.dropzone").each(function(){
 				if($(this).closest("tr").attr("class") !="examTr"){
-					$(this).removeClass("notRequired");
+					//$(this).removeClass("notRequired");
 				}
 			});
 
@@ -1014,10 +1014,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			btnAdd : {
 				event : {
 					click : function(){
-						onlineHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
+						onlineHtml.css("display", "").removeClass("examTr");/*.removeClass("notRequired");*/
 						onlineFileHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
 						$("#onlineList").append("<tr>"+onlineHtml.html()+"</tr><tr>"+onlineFileHtml.html()+"</tr>");
-						onlineHtml.css("display", "none").addClass("examTr").addClass("notRequired");
+						onlineHtml.css("display", "none").addClass("examTr");/*.addClass("notRequired");*/
 						onlineFileHtml.css("display", "none").addClass("examTr").addClass("notRequired");
 
 						//onlineHtml.find("input[name='onlineTime']").addClass("notRequired");
@@ -1502,6 +1502,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						return false
 					}
 
+					//집체교육이면 안넣음
+
+					var stduyMthdCd = $("#stduyMthdCd").val();
+					var onlineChk = true;
+					if(stduyMthdCd != "STDUY_MTHD01"){
+
+						$("#onlineList > tr").each(function(){
+
+							var onlineNm = $(this).find("[name='onlineNm']").val();
+
+							if(!(onlineNm === undefined) && $(this).attr("class") != "examTr"){
+								var onlinePack = {};
+								var onlineUrl = $(this).find("[name='onlineUrl']").val();
+								var onlineTime = $(this).find("[name='onlineTime']").val();
+
+
+								/*onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
+
+								onlinePack.edctnSeq = actForm.edctnSeq;
+								onlinePack.episdOrd = actForm.episdOrd;
+								onlinePack.episdYear = actForm.episdYear;
+								onlinePack.nm = onlineNm;
+								onlinePack.url = onlineUrl;*/
+
+								if(onlineUrl ===undefined || onlineUrl =="" && onlineChk == true){
+									alert("유튜브 URL을 입력해 주세요");
+									onlineChk = false;
+								}
+							}
+						});
+
+					}
+
 
 					//교육장소
 					var stduyMthdCd = $("#stduyMthdCd").val();
@@ -1826,10 +1859,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										onlinePack.url = onlineUrl;
 
 
-										if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
+										/*if(onlineNm ===undefined || onlineNm =="" && resultFlag == true){
 											alert("강의명을 입력해 주세요");
 											resultFlag = false;
-										}
+										}*/
 
 										if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
 											alert("유튜브 URL을 입력해 주세요");

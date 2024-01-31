@@ -2860,9 +2860,7 @@
 				, cmptn_auto_yn
 			FROM ed_edctn_episd_mst
 			where 1=1
-			<if test="siteGubun == 'front'.toString() ">
-				and exps_yn = 'Y'
-			</if>
+
 		) B ON B.EPISD_SEQ = A.EPISD_SEQ
 
 		LEFT JOIN(
@@ -2876,17 +2874,12 @@
 			from ed_edctn_prcs_mst tbl
 			where 1=1
 
-			<if test="siteGubun == 'front'.toString() ">
-				and exps_yn = 'Y'
-			</if>
+
 
 		) c ON c.edctn_seq = b.edctn_seq
 
 		WHERE MEM_SEQ = #{memSeq}
 		AND PTCPT_SEQ = #{ptcptSeq}
-		<if test="siteGubun == 'front'.toString() ">
-			and exps_yn = 'Y'
-		</if>
 
 		) A
 	</select>

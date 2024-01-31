@@ -123,7 +123,11 @@
                                                                 <div class="group">
                                                                     <p class="index-num f-title3">${rtnData.episdOrd}회차</p>
                                                                     <div class="status-info-w">
-                                                                        <p class="box-label bigger"><span>${rtnData.cbsnCdNm}</span></p>
+                                                                        <p class="box-label bigger">
+                                                                            <span>
+                                                                            ${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}
+                                                                             </span>
+                                                                        </p>
                                                                     </div>
                                                                 </div>
                                                                 <div class="btn-wrap">

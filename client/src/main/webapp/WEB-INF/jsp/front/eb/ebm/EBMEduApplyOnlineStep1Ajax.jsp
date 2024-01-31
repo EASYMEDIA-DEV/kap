@@ -10,7 +10,38 @@
                     <p class="num f-sub-head">${status.count}</p>
                     <div class="training">
                         <div class="dl">
-                            <div class="dt f-body2 urlKey" data-urlkey="${fn:substring(list.url, list.url.lastIndexOf('embed/')+6, fn:length(list.url))}">강의명</div>
+                            <c:set var="urlkey" value=""/>
+                            <c:choose>
+
+                                <c:when test="${list.url.indexOf('www.youtube.com') > -1}">
+
+                                    <c:choose>
+
+                                        <c:when test="${list.url.indexOf('/watch?v=') > -1}">
+                                            <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('/watch?v=')+9, fn:length(list.url))}"/>
+                                        </c:when>
+                                        <c:when test="${list.url.lastIndexOf('embed/') > -1}">
+                                            <c:set var="urlkey" value="${fn:substring(list.url, list.url.lastIndexOf('embed/')+6, fn:length(list.url))}"/>
+                                        </c:when>
+
+                                    </c:choose>
+
+                                </c:when>
+
+                                <c:when test="${list.url.indexOf('youtu.be') > -1}">
+                                    <c:choose>
+                                        <c:when test="${list.url.indexOf('si=') > -1}">
+
+                                            <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('be/')+3, list.url.indexOf('si=')-1  )   }"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:set var="urlkey" value="${fn:substring(list.url, list.url.indexOf('be/')+3, fn:length(list.url)  )   }"/>
+                                        </c:otherwise>
+                                    </c:choose>
+                                </c:when>
+                            </c:choose>
+
+                            <div class="dt f-body2 urlKey" data-urlkey="${urlkey}">강의명</div>
                             <div class="dd f-body2 urlName">
                                     ${list.nm}
                             </div>
@@ -31,7 +62,7 @@
                             <c:set var="url" value="${list.webPath}" />
                         </c:when>
                         <c:otherwise>
-                            <c:set var="url" value="https://img.youtube.com/vi/${fn:substring(list.url, fn:indexOf(list.url,'embed/')+6, fn:length(list.url))}/0.jpg" />
+                            <c:set var="url" value="https://img.youtube.com/vi/${urlkey}/0.jpg" />
                         </c:otherwise>
                     </c:choose>
                     <img src="${url}" alt="">

@@ -332,6 +332,34 @@ define(["ezCtrl"], function(ezCtrl) {
 			}
 		},
 		immediately : function() {
+
+			//교육차수고나리 과정분류 체크박스 컨트롤
+			$("input[name='ctgryCd']").click(function(){
+
+				var closestClass = $(this).closest(".cdListContainer").attr("class");
+
+				var ctryClass = closestClass.substring(closestClass.indexOf("CLASS"), closestClass.length);
+
+				//클래스명을 받아온다
+				//해당 클래스명으로 된 영역의 모든 체크박스가 해제되면 부모레벨의 모든 체크박스도 해제시킴
+
+				if($(this).closest(".cdListContainer").find("input:checkbox:checked").length == 0){
+					//$("input[name='prntCd']").prop("checked", false);
+
+					$("input:checkbox."+ctryClass).prop("checked", false);
+
+				}else{
+					$("input:checkbox."+ctryClass).prop("checked", true);
+				}
+
+				//전부 다 해제 했을경우 전체도 해제
+				if($("input[name='ctgryCd']:checked").length == 0){
+					$(".classType").find(".checkboxAll").prop("checked", false);
+				}
+
+
+			});
+
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);

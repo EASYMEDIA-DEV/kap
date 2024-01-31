@@ -55,7 +55,7 @@
                 </c:otherwise>
             </c:choose>
             <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}" data-episdYear="${list.episdYear}" data-episdOrd="${list.episdOrd}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
-                <c:if test="${list.accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
+                <c:if test="${list.accsStatusOrder eq 1}"><!-- 접수대기와 접수중만 출력-->
                     <p class="available-label">
                         <span>신청 가능한 회차</span>
                     </p>

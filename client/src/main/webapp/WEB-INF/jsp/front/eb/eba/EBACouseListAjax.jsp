@@ -29,6 +29,7 @@
                             </c:when>
                             <c:otherwise>
                                 <c:if test="${list.accsStatusOrder eq 3}">
+                                    <c:set var="dtlClass" value="episdDtl"/>
                                 </c:if>
                                 <c:if test="${list.accsStatusOrder ne 3}">
                                     <c:set var="dtlClass" value="episdDtl"/>

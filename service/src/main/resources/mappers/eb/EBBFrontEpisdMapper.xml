@@ -309,7 +309,7 @@
 			a.cd_id
 			 , a.cd as prnt_target_cd
 			 , a.cd_nm as prnt_target_cd_nm
-			 , ifnull(case when a.cd = b.target_cd then b.target_nm end, '없음') as target_cd_nm
+			 , ifnull(case when a.cd = b.target_cd then b.target_nm end, '-') as target_cd_nm
 			, etc_nm
 		from co_code_mst a
 				 LEFT JOIN(

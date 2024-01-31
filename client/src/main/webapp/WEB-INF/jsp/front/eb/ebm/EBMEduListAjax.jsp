@@ -28,7 +28,7 @@
                                                     <c:when test="${list.trnsfYn eq 'N'}">
                                                         <p class="box-label bigger waiting"><span>
                                                             <c:choose>
-                                                                <c:when test="${list.eduStat eq '신청대기'}">교육대기</c:when>
+                                                                <c:when test="${list.eduStat eq '신청대기'}">선발대기</c:when>
                                                                 <c:otherwise>${list.eduStat}</c:otherwise>
                                                             </c:choose>
 
