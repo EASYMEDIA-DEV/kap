@@ -20,12 +20,11 @@
 			, gpc_lvl as lvl
 			, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as edu_dd_cnt
 			, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as edu_time
-			, gpc_fxnum_cnt
+			, gpc_fxnum_cnt as max_cnt
 			, gpc_rfn_prcs as rfnd_prcs
 			, gpc_isttr_id as adm_seq
 			, pc_stduy_cntn as edu_cntn
 			, itrdc_cntn as edu_dtl
-			, kap_send_dd
 			, date_format(now(), '%Y-%m-%d') as kap_send_dd
 		from ed_edctn_prcs_mst a
 		WHERE exps_yn = 'Y'
