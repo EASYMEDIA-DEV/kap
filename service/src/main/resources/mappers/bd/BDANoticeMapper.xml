@@ -39,6 +39,11 @@
         <if test='siteGubun == "admin"'>
             LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>
+        <if test='siteGubun == "front"'>
+            <if test='mainYn == "Y"'>
+                LIMIT #{firstIndex}, #{recordCountPerPage}
+            </if>
+        </if>
     </select>
 
     <!--
