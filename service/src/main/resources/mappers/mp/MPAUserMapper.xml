@@ -510,6 +510,7 @@
                     else '' end as dept_cd_nm
              , mem.dept_dtl_nm
              , mem.pstn_cd
+             , (select cd_nm from co_code_mst where  cd = mem.pstn_cd ) as pstn_cd_nm
              , mem.reg_dtm
              , case when cmpn_mst.ctgry_cd != '' then  (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd )
                        else '' end as ctgry_cd_nm

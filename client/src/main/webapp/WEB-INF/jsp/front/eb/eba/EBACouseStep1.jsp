@@ -295,7 +295,16 @@
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>
-                                                    <td>${applicantInfo.pstnNm}</td>
+                                                    <td>
+                                                        <c:choose>
+                                                            <c:when test="${applicantInfo.pstnCdNm ne '기타'}">
+                                                                ${applicantInfo.pstnCdNm}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${applicantInfo.pstnCdNm}(${applicantInfo.pstnNm})
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
                                                 </tr>
                                                 </tbody>
                                             </table>
