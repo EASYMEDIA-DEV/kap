@@ -283,7 +283,7 @@
                             <a class="btn-solid small gray-bg" id="cancelBtn" href="javascript:"><span>취소</span></a>
                         </div>
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" href="/education/visit/apply/step2"><span>다음</span></a>
+                            <a class="btn-solid small black-bg" href="/education/visit/step2"><span>다음</span></a>
                         </div>
                     </div>
                 </div>

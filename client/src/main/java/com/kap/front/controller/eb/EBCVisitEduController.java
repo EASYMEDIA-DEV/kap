@@ -102,7 +102,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 1단계(기본정보) 페이지로 이동한다.
      */
-    @RequestMapping(value="/apply/step1")
+    @RequestMapping(value="/step1")
     public String getVisitEduApplyOneStepPage(MPEPartsCompanyDTO mpePartsCompanyDTO, EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "/front/eb/ebc/EBCVisitEduApplyOneStep.front";
@@ -140,7 +140,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 2단계(신청내용입력) 페이지로 이동한다.
      */
-    @RequestMapping(value="/apply/step2")
+    @RequestMapping(value="/step2")
     public String getVisitEduApplyTwoStepPage(EBCVisitEduDTO ebcVisitEduDTO, MPEPartsCompanyDTO mpePartsCompanyDTO, MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception
     {
         String vwUrl = "/front/eb/ebc/EBCVisitEduApplyTwoStep.front";
@@ -194,7 +194,7 @@ public class EBCVisitEduController {
      * 방문교육 정보를 수정한다.
      *
      */
-    @PostMapping(value="/apply/insert")
+    @PostMapping(value="/insert")
     public String applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception
     {
         try{
@@ -223,7 +223,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 완료 페이지로 이동한다.
      */
-    @RequestMapping(value="/apply/complete")
+    @RequestMapping(value="/complete")
     public String getVisitEduApplyCompletePage(EBCVisitEduDTO ebcVisitEduDTO, MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "/front/eb/ebc/EBCVisitEduApplyComplete.front";
@@ -267,7 +267,7 @@ public class EBCVisitEduController {
     /**
      * 신청분야별 체크박스값 호출
      */
-    @PostMapping(value = "/apply/step2/changeAppctnFldCd")
+    @PostMapping(value = "/step2/changeAppctnFldCd")
     public String changeAppctnFldCd(@RequestBody EBCVisitEduDTO ebcVisitEduDTO, COCodeDTO cOCodeDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         List<COCodeDTO> detailList = null;
         try

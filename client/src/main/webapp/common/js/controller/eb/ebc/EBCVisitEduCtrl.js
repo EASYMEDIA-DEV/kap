@@ -142,7 +142,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                     click : function () {
                         var url = "./index";
                         if($("#memCd").val() == "CP") {
-                            location.href = "./apply/step1";
+                            location.href = "./step1";
                         } else if($("#memCd").val() == "CS") {
                             alert("위원회원은 해당 서비스를 이용할 수 없습니다.");
                             location.href = url;
@@ -151,7 +151,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                             location.href = url;
                         } else if($("#memCd").val() == "") {
                             if (confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
-                                location.href = "/login?rtnUrl=%2Feducation%2Fvisit%2Fapply%2Fstep1";
+                                location.href = "/login?rtnUrl=%2Feducation%2Fvisit%2Fstep1";
                             }
                         }
                     }
@@ -270,7 +270,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             var originPartsBscAddr = $("input[name=bscAddr]").val();
             var originPartsDtlAddr = $("input[name=dtlAddr]").val();
 
-            $("#samePlaceBtn").change(function() {
+            $("#samePlaceBtn").click(function() {
                 // 체크된 경우
                 if ($(this).is(":checked")) {
                     $("input[name=placeZipcode]").val(originPartsZipCode);
