@@ -364,7 +364,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">학습 준비물<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="stduySuplsNm" name="stduySuplsNm" value="${rtnDto.stduySuplsNm}" title="학습 준비물" maxlength="200" placeholder="학습 준비물 입력" />
+                        <input type="text" class="form-control input-sm" id="stduySuplsNm" name="stduySuplsNm" value="${rtnDto.stduySuplsNm}" title="학습 준비물" maxlength="50" placeholder="학습 준비물 입력" />
                     </div>
                 </div>
             </fieldset>
