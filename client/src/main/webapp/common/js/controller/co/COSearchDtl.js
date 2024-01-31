@@ -107,6 +107,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         id : {
         },
         classname : {
+            //추천키워드 클릭시 검색
+            frontTotalKeyword : {
+                event : {
+                    click : function() {
+                        location.href="/search?q=" + $(this).text();
+                    }
+                }
+            },
             //페이징 처리
             pageSet : {
                 event : {
