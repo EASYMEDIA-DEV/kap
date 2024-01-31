@@ -772,7 +772,7 @@
                     <div class="sec-tit-area">
                         <p class="sec-tit f-title3">공지사항</p>
                         <div class="btn-wrap">
-                            <a class="btn-text-icon black-arrow" href="/board/notice" title="링크 이동"><span>전체 보기</span></a>
+                            <a class="btn-text-icon black-arrow" href="/foundation/board/notice/list" title="링크 이동"><span>전체 보기</span></a>
                         </div>
                     </div>
                     <div class="article-list-w txt-list">
@@ -794,7 +794,7 @@
                     <div class="sec-tit-area">
                         <p class="sec-tit f-title3">FAQ</p>
                         <div class="btn-wrap">
-                            <a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>전체 보기</span></a>
+                            <a class="btn-text-icon black-arrow" href="/foundation/board/faq/list" title="링크 이동"><span>전체 보기</span></a>
                         </div>
                     </div>
                     <div class="article-list-w txt-list">
