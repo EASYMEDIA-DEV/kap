@@ -521,6 +521,8 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //이메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
+            //SMS 발송
+            COSmsDTO smsDto = new COSmsDTO();
             cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
@@ -541,7 +543,8 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("초도방문결과");
             }
-
+            //수신자 번호
+            receiverDto.setMobile(tempDto.getHpNo());
             //이메일
             receiverDto.setEmail(tempDto.getEmail());
             //이름
@@ -554,7 +557,13 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
+
+            //문자 발송
+            smsDto.setTitle("컨설팅사업 탈락 안내");
+            smsDto.getReceiver().add(receiverDto);
+
             cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
+            cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
 
         String bfreMemSeq = pCBBManageConsultInsertDTO.getBfreMemSeq();

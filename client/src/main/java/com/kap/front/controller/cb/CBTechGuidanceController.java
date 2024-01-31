@@ -177,6 +177,7 @@ public class CBTechGuidanceController {
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
             //이메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
+            //SMS 발송
             COSmsDTO smsDto = new COSmsDTO();
                 cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
                 //수신자 정보
@@ -243,7 +244,6 @@ public class CBTechGuidanceController {
             smsDto.setTitle("컨설팅사업 신청 완료 안내");
             smsDto.getReceiver().add(receiverDto);
 
-            //return cOMessageService.sendSms(smsDto, "SMSSample.txt");
             cOMessageService.sendSms(smsDto, "ConsultingSms.txt");
 
 
