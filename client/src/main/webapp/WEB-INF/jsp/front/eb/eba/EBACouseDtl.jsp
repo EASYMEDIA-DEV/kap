@@ -186,7 +186,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>수료기준</th>
-                                                    <td>출석 ${rtnData.cmptnStndCdNm}% 이상, 평가 ${rtnData.cmptnJdgmtCdNm}점 이상</td>
+                                                    <td>출석 ${rtnData.cmptnStndCdNm}% 이상<c:if test="${rtnData.jdgmtYn ne 'N'}">, 평가 ${rtnData.cmptnJdgmtCdNm}점 이상</c:if></td>
                                                 </tr>
                                                 <tr>
                                                     <th>학습시간</th>
