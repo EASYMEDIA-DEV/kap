@@ -287,11 +287,21 @@
                                                 </tr>
                                                 <tr>
                                                     <th>전화번호</th>
-                                                    <td>${applicantInfo.telNo}</td>
+                                                    <td>${not empty applicantInfo.telNo ? applicantInfo.telNo : "-"}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>
-                                                    <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
+                                                    <td>
+                                                        ${applicantInfo.deptCdNm}
+                                                        <c:choose>
+                                                            <c:when test="${not empty applicantInfo.deptDtlNm}">
+                                                                (${applicantInfo.deptDtlNm})
+                                                            </c:when>
+                                                            <c:otherwise>
+
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>
@@ -398,16 +408,23 @@
                                                     <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
                                                         <tr>
                                                             <th>SQ정보</th>
-                                                            <td>
-                                                                <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
-                                                                    <p>
-                                                                            ${status.count}.
-                                                                            ${not empty list.nm ? list.nm : "-"}/
-                                                                            ${not empty list.score ? list.score : "-"}/
-                                                                            ${not empty list.year ? list.year : "-"} 년/
-                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
-                                                                    </p>
-                                                                </c:forEach>
+                                                            <td>${fn:length(sqInfoList.list)}
+                                                                <c:choose>
+                                                                    <c:when test="${not empty sqInfoList.list}">
+                                                                        <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                            <p>
+                                                                                ${status.count}.
+                                                                                ${not empty list.nm ? list.nm : "-"}/
+                                                                                ${not empty list.score ? list.score : "-"}/
+                                                                                ${not empty list.year ? list.year : "-"} 년/
+                                                                                ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                            </p>
+                                                                        </c:forEach>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </td>
                                                         </tr>
                                                     </c:when>

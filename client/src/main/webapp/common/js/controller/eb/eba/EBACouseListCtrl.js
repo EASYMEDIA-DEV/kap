@@ -30,28 +30,24 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			//전체 갯수
 			var totCnt = $("#totalCount").val();
-			//총 건수
 
+			//총 건수
 			if(totCnt <= 9 ){
 				$(".btn-wrap.add-load.align-center").hide();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
-
 				var rtnPage = 0;
 
-				if((tempPage * 9)>totCnt){
+				if((tempPage * 9) > totCnt){
 					$(".btn-wrap.add-load.align-center").hide();
 					rtnPage = totCnt
 				}else{
 					$(".btn-wrap.add-load.align-center").show();
 					rtnPage = (tempPage * 9);
 				}
-
 				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 			}
-
 			$(".article-total-count.f-body2").find("span").text(totCnt);
-
 
 			$(".item-count").text();
 

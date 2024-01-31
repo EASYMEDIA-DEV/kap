@@ -347,14 +347,14 @@
                     </div>
 
                     <label class="col-sm-1 control-label">학습시간</label>
-                    <div class="col-sm-1">
+                    <div class="col-sm-2">
                         <label class="input_line form-inline">
                             <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간" style="margin-right: 5px;">
                                 <option value="">선택</option>
                                 <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
                                     <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                 </c:forEach>
-                            </select>시간
+                            </select> 시간
                         </label>
                     </div>
                 </div>

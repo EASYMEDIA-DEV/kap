@@ -55,20 +55,15 @@ define(["ezCtrl"], function(ezCtrl) {
 					rtnPage = (tempPage * 10);
 				}
 
-
 				if(rtnPage == totCnt){
 					$(".btn-wrap.add-load.align-center").hide();
 				}else{
 					$(".btn-wrap.add-load.align-center").show();
 					$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
 				}
-
-
 			}
 
 			$(".article-total-count.f-body2").find("span").text(totCnt);
-
-
 			$(".item-count").text();
 
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
@@ -78,15 +73,8 @@ define(["ezCtrl"], function(ezCtrl) {
 				$(".accepting-fixed-area").css("display", "");
 				$(".applyBtn").css("display", "");
 
-
-
-
-
 				$(".edctnNm").data("episdseq", $("#floatingEpisdSeq").val());
-
-
 				$(".floatingEpisdOrd").html($("#floatingEpisdOrd").val()+"회차 <span className='status'>접수중</span>");
-
 				$(".floatingAccsStrtDtm").text($("#floatingAccsStrtDtm").val());
 				$(".floatingEdctnStrtDtm").text($("#floatingEdctnStrtDtm").val());
 				$(".floatingIsttrGroupName").text($("#floatingIsttrGroupName").val());
@@ -143,18 +131,15 @@ define(["ezCtrl"], function(ezCtrl) {
 				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").remove();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
-				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
 
-				if((tempPage * 10)>totCnt){
+				if((tempPage * 10) > totCnt){
 					rtnPage = totCnt
 				}else{
 					rtnPage = (tempPage * 10);
 				}
-
 				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
-
 			}
 
 			$(".item-count").text();
@@ -197,7 +182,6 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function() {
 						//페이징 이동
-
 						var pageIndex = $formObj.find("input[name=pageIndex]").val();
 						search(++pageIndex);
 					}
@@ -265,7 +249,6 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
-
 			floatingPop : {
 				event : {
 					click : function(e) {
@@ -296,7 +279,6 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
-
 			episdDtl : {
 				event : {
 					click : function(e){
@@ -305,7 +287,6 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
-
 			//교육장 안내 팝업
 			mapBtn : {
 				event: {
@@ -326,7 +307,6 @@ define(["ezCtrl"], function(ezCtrl) {
 							//var addrNm = $(this).prev().attr("addrNm");
 							var addr = bscAddr + " " + dtlAddr; //$(this).prev().attr("addr");
 
-
 							// 주소-좌표 변환 객체를 생성합니다
 							var geocoder = new daum.maps.services.Geocoder();
 
@@ -337,8 +317,6 @@ define(["ezCtrl"], function(ezCtrl) {
 								if (status === daum.maps.services.Status.OK) {
 									console.log(result[0].y);
 									console.log(result[0].x);
-
-
 									var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
 									// 결과값으로 받은 위치를 마커로 표시합니다
@@ -355,8 +333,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 									// 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
 									map.setCenter(coords);
-
-
 								}
 							});
 							//주소세팅 종료
@@ -367,7 +343,6 @@ define(["ezCtrl"], function(ezCtrl) {
 							$(".educCenterInfoPopup").find("table.basic-table").find("tr").eq(1).find("td").text("["+zipcode+"] "+addr);//주소
 							$(".educCenterInfoPopup").find("table.basic-table").find("tr").eq(2).find("td").text(rprsntTelNo);//대표전화
 						}
-
 					}
 				}
 			},
@@ -390,10 +365,9 @@ define(["ezCtrl"], function(ezCtrl) {
 						seqObj.episdOrd = episdOrd
 						seqObj.episdSeq = $("#episdSeq").val();
 
-						seqObj.stduyMthdCd = $("#stduyMthdCd").val();//학습방식, 온라인이면 출석정보 등록 안함
+						seqObj.stduyMthdCd = $("#stduyMthdCd").val(); //학습방식, 온라인이면 출석정보 등록 안함
 
-
-						if(memSeq =="" || memSeq ===undefined){
+						if(memSeq == "" || memSeq === undefined){
 							if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
 								location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
 							} else {
@@ -401,7 +375,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							}
 						}
 
-						//부품사 회원이 아닌경우
+						//부품사 회원이 아닌 경우
 						if(authCd == "CO"){
 							alert("교육신청은 부품사 회원만 신청 가능합니다.");
 							return false;
@@ -412,7 +386,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						//위원인경우
 
-
 						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
 						cmmCtrl.jsonAjax(function(data){
 
@@ -420,12 +393,8 @@ define(["ezCtrl"], function(ezCtrl) {
 								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
 								location.href="./detail?detailsKey="+$("#edctnSeq").val();
 							}
-
 							return false;
-
 						}, "/education/apply/EpisdChk", seqObj, "text")
-
-
 
 						$("#episdYear").val(episdYear);
 						$("#episdOrd").val(episdOrd);
@@ -467,14 +436,9 @@ define(["ezCtrl"], function(ezCtrl) {
 							}
 
 						}, "/education/apply/fxnumChk", seqObj, "text")
-
-
-
-
 					}
 				}
 			},
-
 			applyBtn :{
 				event:{
 					click:function(e)  {
@@ -487,24 +451,12 @@ define(["ezCtrl"], function(ezCtrl) {
 
 							var thisSeq = $(this).data("episdseq");
 							if(thisSeq == episdSeq){
-
-
 								$(this).find(".applyStep").trigger("click");
-
 							}
-
 						})
-
-
-
 					}
 				}
 			}
-
-
-
-
-
 		},
 		immediately : function() {
 			//리스트 조회
