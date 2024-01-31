@@ -427,7 +427,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setTotalCount( totcnt  );
 
-		eBBEpisdDTO.setPageRowSize(9);
+		eBBEpisdDTO.setPageRowSize(10);
 
 		int recordCountPerPage = (eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex()*eBBEpisdDTO.getPageRowSize();
 
