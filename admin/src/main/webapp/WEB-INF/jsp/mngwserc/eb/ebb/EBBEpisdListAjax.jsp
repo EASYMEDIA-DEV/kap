@@ -50,7 +50,7 @@
         <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->
         <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->
         <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최종 수정일시-->
-        <td class="text-center">${ kl:decode(list.expsYn, 'Y', '활성', '비활성') }</td><!--노출여부-->
+        <td class="text-center">${ kl:decode(list.expsYn, 'Y', '노출', '미노출') }</td><!--노출여부-->
       </tr>
     </c:forEach>
   </c:when>
