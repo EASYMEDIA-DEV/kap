@@ -130,9 +130,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                     location.href = "/my-page/coexistence/list";
                                 }
-                            } else if (data.resultCode == 200) {
+                           } else if (data.resultCode == 200) {
                                location.href = "./step1?episdSeq="+episdSeq;
-                            }
+                           }
                         },"./applyChecked",param, "json", false, false, "get");
                     }
                 }
