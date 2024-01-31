@@ -392,50 +392,54 @@ define(["ezCtrl"], function(ezCtrl) {
 							if(data != "A"){
 								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
 								location.href="./detail?detailsKey="+$("#edctnSeq").val();
+								stepFlag = false;
 							}
 							return false;
 						}, "/education/apply/EpisdChk", seqObj, "text")
 
-						$("#episdYear").val(episdYear);
-						$("#episdOrd").val(episdOrd);
-						//정원수 체크
-						cmmCtrl.jsonAjax(function(data){
+						if(stepFlag){
+							$("#episdYear").val(episdYear);
+							$("#episdOrd").val(episdOrd);
+							//정원수 체크
+							cmmCtrl.jsonAjax(function(data){
 
-							if(data !=""){
-								var rtn = JSON.parse(data);
-								//정원여유
-								if(rtn.fxnumStta == "S"){
-									//alert("등록시작");
+								if(data !=""){
+									var rtn = JSON.parse(data);
+									//정원여유
+									if(rtn.fxnumStta == "S"){
+										//alert("등록시작");
 
-									cmmCtrl.frmAjax(function(resultData){
-										$("#episdYear").val(null);
-										$("#episdOrd").val(null);
-										var rtnData = resultData.rtnData;
+										cmmCtrl.frmAjax(function(resultData){
+											$("#episdYear").val(null);
+											$("#episdOrd").val(null);
+											var rtnData = resultData.rtnData;
 
-										if(rtnData.regStat == "F"){
+											if(rtnData.regStat == "F"){
 
-											if(confirm("이미 신청한 교육입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다. \n마이페이지로 이동하시겠습니까?")){
-												location.href="/my-page/edu-apply/detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+rtnData.ptcptSeq;
+												if(confirm("이미 신청한 교육입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다. \n마이페이지로 이동하시겠습니까?")){
+													location.href="/my-page/edu-apply/detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+rtnData.ptcptSeq;
+												}
+
+											}else if(rtnData.regStat == "R"){
+												alert("선수 이수과정 수료 후 신청 가능한 과정입니다.");
+
+											}else if(rtnData.regStat == "S"){
+												//신청 진행
+												location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
 											}
 
-										}else if(rtnData.regStat == "R"){
-											alert("선수 이수과정 수료 후 신청 가능한 과정입니다.");
+										}, "./setPtcptInfoCheck", $formObj, "post", "json");
 
-										}else if(rtnData.regStat == "S"){
-											//신청 진행
-											location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
-										}
-
-									}, "./setPtcptInfoCheck", $formObj, "post", "json");
-
-									//정원초과
-								}else{
-									alert("교육 가능한 인원이 초과되었습니다. ");
-									return false;
+										//정원초과
+									}else{
+										alert("교육 가능한 인원이 초과되었습니다. ");
+										return false;
+									}
 								}
-							}
 
-						}, "/education/apply/fxnumChk", seqObj, "text")
+							}, "/education/apply/fxnumChk", seqObj, "text")
+						}
+
 					}
 				}
 			},
@@ -444,6 +448,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					click:function(e)  {
 						var episdSeq = $(e.target).closest("div.inner-con").find("div:first").find("p.edctnNm").data("episdseq");
 
+						var stepFlag = true;
 
 						var thisSeq = $(this).data("episdseq");
 

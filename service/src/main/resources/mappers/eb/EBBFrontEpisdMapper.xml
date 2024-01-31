@@ -681,7 +681,7 @@
 							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 							when stts_cd = 'EDU_STTS_CD05' then '미선발'
-							when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+							when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 					end
 			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 		end edu_stat
@@ -1170,7 +1170,7 @@
 									end
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 									end
 							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 							END ) IN
@@ -1330,7 +1330,7 @@
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 									when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 							end
 							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 					end edu_stat
@@ -1743,8 +1743,8 @@
 						) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
 		LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 		WHERE 1=1
-		/*AND MEM.wthdrw_yn = 'Y'
-		AND MEM.MEM_CD = 'CP'*/
+		AND MEM.wthdrw_yn = 'Y'
+		AND MEM.MEM_CD = 'CP'
 		AND CMPN_MST.BSNM_NO = #{workBsnmNo}
 		) A
 		WHERE 1=1

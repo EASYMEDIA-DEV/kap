@@ -123,17 +123,20 @@
                                                                 <div class="group">
                                                                     <p class="index-num f-title3">${rtnData.episdOrd}회차</p>
                                                                     <div class="status-info-w">
-                                                                        <p class="box-label bigger">
+                                                                        <c:if test="${not empty rtnData.cbsnCdNm}">
+                                                                            <p class="box-label bigger">
                                                                             <span>
-                                                                            ${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}
-                                                                             </span>
-                                                                        </p>
+                                                                                    ${rtnData.cbsnCdNm}
+                                                                            </span>
+                                                                            </p>
+                                                                        </c:if>
+
                                                                     </div>
                                                                 </div>
                                                                 <div class="btn-wrap">
                                                                     <div class="btn-set">
                                                                         <c:if test="${not empty rtnData.edctnNtctnFileSeq}">
-                                                                            <a class="btn-text-icon download" href="/file/view?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
+                                                                            <a class="btn-text-icon download" href="/file/view?download=${rtnData.edctnNtctnFileSeq}&fileOrd=${rtnData.fileOrd}"><span>안내문</span></a>
                                                                         </c:if>
 
                                                                     </div>
@@ -184,10 +187,15 @@
                                                                     <p class="tit f-caption2">신청일시</p>
                                                                     <p class="txt f-body2">${ empty rtnData.ptcptDtm ? '-' : kl:convertDate(rtnData.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                                 </div>
-                                                                <div class="info-list">
-                                                                    <p class="tit f-caption2">선발여부</p>
-                                                                    <p class="txt f-body2">${rtnData.sttsCdNm}</p>
-                                                                </div>
+                                                                <c:if test="${rtnData.rcrmtMthdCd eq 'RCRMT_MTHD02'}">
+                                                                    <div class="info-list">
+                                                                        <p class="tit f-caption2">선발여부</p>
+                                                                        <p class="txt f-body2">
+                                                                                ${rtnData.sttsCdNm}
+                                                                        </p>
+                                                                    </div>
+                                                                </c:if>
+
                                                             </div>
                                                             <div class="btn-wrap">
                                                                 <button class="btn-text-icon black-arrow popupPicPrevSet" type="button" data-picNm="${rtnData.picNm}" data-picEmail="${rtnData.picEmail}" data-picTelNo="${rtnData.picTelNo}"><span>회차 담당자 문의</span></button>
@@ -211,8 +219,8 @@
                                                     <button class="btn-solid small gray-bg icon btn-print cmptnPop" type="button" <%--onclick="printFn()"--%>><span>수료증 출력</span></button>
                                                 </c:if>
 
-                                                <%--<c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>--%>
-                                                <c:set var="accsEndDt" value="2024.01.21"/>
+                                               <c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
+                                                <%--<c:set var="accsEndDt" value="2024.01.21"/>--%>
                                                 <c:set var="edctnStatDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
                                                 <%--<c:set var="edctnStatDt" value="2024.01.24"/>--%>
 
@@ -238,7 +246,7 @@
                                                                 // 현재 날짜와 시간 가져오기
                                                                 Date currentDate = new Date();
                                                                 EBBEpisdDTO  eBBEpisdDTO= (EBBEpisdDTO)request.getAttribute("rtnData");
-                                                                String dateString = "2024-01-16 16:25:00";//eBBEpisdDTO.getEdctnStrtDtm();//
+                                                                String dateString = eBBEpisdDTO.getEdctnStrtDtm();//"2024-01-16 16:25:00";
                                                                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                                                                 Date convertedDate = sdf.parse(dateString);
 
@@ -470,12 +478,23 @@
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>
-                                                    <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
+                                                    <td>${applicantInfo.deptCdNm}
+                                                        <c:if test="${not empty applicantInfo.deptDtlNm}">
+                                                            (${applicantInfo.deptDtlNm})
+                                                        </c:if>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>
                                                     <td>
-                                                        ${applicantInfo.pstnNm}
+                                                        <c:choose>
+                                                            <c:when test="${applicantInfo.pstnCdNm ne '기타'}">
+                                                                ${applicantInfo.pstnCdNm}
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${applicantInfo.pstnCdNm}(${applicantInfo.pstnNm})
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                 </tr>
                                                 <tr>

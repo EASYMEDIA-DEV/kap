@@ -196,13 +196,22 @@ define(["ezCtrl"], function(ezCtrl) {
 			episdDtl : {
 				event : {
 					click : function() {
-						var edctnSeq = $(this).data("edctnseq");
-						var episdYear = $(this).data("episdyear");
-						var episdOrd = $(this).data("episdord");
-						var ptcptSeq = $(this).data("ptcptseq");
-						$(this).data("episdord");
 
-						location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+						var edustat = $(this).data("edustat");
+						if(edustat != "교육양도"){
+							var edctnSeq = $(this).data("edctnseq");
+							var episdYear = $(this).data("episdyear");
+							var episdOrd = $(this).data("episdord");
+							var ptcptSeq = $(this).data("ptcptseq");
+							$(this).data("episdord");
+
+							location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+						}else{
+							alert("양도된 내역입니다.");
+							return false;
+						}
+
+
 					}
 				}
 			},

@@ -227,7 +227,11 @@
 							</label>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" data-name="edctnStatusList" value="3" name="edctnStatus" <c:if test="${fn:contains(rtnData.edctnStatus, '3')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 마감
+								<span class="ion-checkmark-round"></span> 교육 완료
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="edctnStatusList" value="4" name="edctnStatus" <c:if test="${fn:contains(rtnData.edctnStatus, '4')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 교육취소
 							</label>
 
 						</div>

@@ -234,49 +234,55 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var kapSeq = $("#edctnSeq").val();
 						var kapSchdSeq = $("#episdSeq").val();
 
-						cmmCtrl.jsonAjax(function(data){
+						if(confirm("교육을 양도하시겠습니까?")){
 
-							var rtnData = JSON.parse(data);
+							cmmCtrl.jsonAjax(function(data){
 
-							var actForm = {};
-							actForm.edctnSeq =  $("#edctnSeq").val();
-							actForm.episdYear =  $("#episdYear").val();
-							actForm.episdOrd =  $("#episdOrd").val();
-							actForm.episdSeq =  $("#episdSeq").val();
-							actForm.bfreMemSeq =  $("#memSeq").val(); //변경전 회원 번호
-							actForm.aftrMemSeq =  $("input[name='memListeRadioSet']:checked").val();//변경후 회원번호
-							actForm.ptcptSeq = $("#ptcptSeq").val();
+								var rtnData = JSON.parse(data);
 
-
-							//KAP-> GPC 대참 로직 성공시 KAP 대참로직 진행
-							if(rtnData.actCnt == 1){
-
-								cmmCtrl.jsonAjax(function(data){
-
-									var trnsfData = JSON.parse(data);
-
-									if(trnsfData.regStat == "S"){
-										alert("교육이 양도되었습니다.");
-										location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd+"&ptcptSeq="+actForm.ptcptSeq;
-
-									}else if(trnsfData.regStat == "F"){
-										alert("이미 교육에 신청한 회원입니다.");
-										return false;
-									}else if(trnsfData.regStat == "M"){
-										alert("양도한 이력이 있는 회원은 선택이 불가합니다.");
-										return false;
-									}
+								var actForm = {};
+								actForm.edctnSeq =  $("#edctnSeq").val();
+								actForm.episdYear =  $("#episdYear").val();
+								actForm.episdOrd =  $("#episdOrd").val();
+								actForm.episdSeq =  $("#episdSeq").val();
+								actForm.bfreMemSeq =  $("#memSeq").val(); //변경전 회원 번호
+								actForm.aftrMemSeq =  $("input[name='memListeRadioSet']:checked").val();//변경후 회원번호
+								actForm.ptcptSeq = $("#ptcptSeq").val();
 
 
-								}, "/my-page/edu-apply/setTrnsf", actForm, "text");
+								//KAP-> GPC 대참 로직 성공시 KAP 대참로직 진행
+								if(rtnData.actCnt == 1){
 
-							}else{
+									cmmCtrl.jsonAjax(function(data){
 
-								alert("KAP -> GPC 통신 실패함");
-							}
+										var trnsfData = JSON.parse(data);
+
+										if(trnsfData.regStat == "S"){
+											alert("교육이 양도되었습니다.");
+											location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd+"&ptcptSeq="+actForm.ptcptSeq;
+
+										}else if(trnsfData.regStat == "F"){
+											alert("이미 교육에 신청한 회원입니다.");
+											return false;
+										}else if(trnsfData.regStat == "M"){
+											alert("양도한 이력이 있는 회원은 선택이 불가합니다.");
+											return false;
+										}
 
 
-						}, "/gpc/kapedu/changeEduMem?bfrGpcId="+bfrGpcId+"&aftGpcId="+aftGpcId+"&kapSeq="+kapSeq+"&kapSchdSeq="+kapSchdSeq, seqObj, "text")
+									}, "/my-page/edu-apply/setTrnsf", actForm, "text");
+
+								}else{
+
+									alert("KAP -> GPC 통신 실패함");
+								}
+
+
+							}, "/gpc/kapedu/changeEduMem?bfrGpcId="+bfrGpcId+"&aftGpcId="+aftGpcId+"&kapSeq="+kapSeq+"&kapSchdSeq="+kapSchdSeq, seqObj, "text")
+
+						}
+
+
 
 					}
 				}

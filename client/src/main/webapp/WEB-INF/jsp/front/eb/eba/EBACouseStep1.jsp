@@ -4,13 +4,19 @@
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
+            event.preventDefault();
+            $("#chkYn").val("N");
             alert("정상적인 접근이 아닙니다.");
             location.href="/";
+
         }
     }
 </script>
 <div id="wrap" data-controller="controller/eb/eba/EBACouseStepCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
+
+        <input type="hidden" id="chkYn" name="chkYn" value="Y" />
+
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <!-- 페이징 버튼 사이즈 -->
         <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
@@ -287,21 +293,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th>전화번호</th>
-                                                    <td>${not empty applicantInfo.telNo ? applicantInfo.telNo : "-"}</td>
+                                                    <td>${applicantInfo.telNo}</td>
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>
-                                                    <td>
-                                                        ${applicantInfo.deptCdNm}
-                                                        <c:choose>
-                                                            <c:when test="${not empty applicantInfo.deptDtlNm}">
-                                                                (${applicantInfo.deptDtlNm})
-                                                            </c:when>
-                                                            <c:otherwise>
-
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </td>
+                                                    <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>
@@ -408,23 +404,16 @@
                                                     <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
                                                         <tr>
                                                             <th>SQ정보</th>
-                                                            <td>${fn:length(sqInfoList.list)}
-                                                                <c:choose>
-                                                                    <c:when test="${not empty sqInfoList.list}">
-                                                                        <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
-                                                                            <p>
-                                                                                ${status.count}.
-                                                                                ${not empty list.nm ? list.nm : "-"}/
-                                                                                ${not empty list.score ? list.score : "-"}/
-                                                                                ${not empty list.year ? list.year : "-"} 년/
-                                                                                ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
-                                                                            </p>
-                                                                        </c:forEach>
-                                                                    </c:when>
-                                                                    <c:otherwise>
-                                                                        -
-                                                                    </c:otherwise>
-                                                                </c:choose>
+                                                            <td>
+                                                                <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                    <p>
+                                                                            ${status.count}.
+                                                                            ${not empty list.nm ? list.nm : "-"}/
+                                                                            ${not empty list.score ? list.score : "-"}/
+                                                                            ${not empty list.year ? list.year : "-"} 년/
+                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                    </p>
+                                                                </c:forEach>
                                                             </td>
                                                         </tr>
                                                     </c:when>

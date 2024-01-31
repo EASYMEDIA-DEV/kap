@@ -441,13 +441,16 @@
 					<choose>
 						<when test="edctnStatusList != null">
 							<if test="edctnStatusList == 1"><!--접수대기-->
-								NOW() <![CDATA[<]]> edctn_strt_dtm
+								(NOW() <![CDATA[<]]> edctn_strt_dtm)
 							</if>
 							<if test="edctnStatusList == 2"><!--접수중-->
-								NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm
+								(NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm)
 							</if>
-							<if test="edctnStatusList == 3"><!--마감-->
+							<if test="edctnStatusList == 3"><!--교육완료-->
 								(NOW() <![CDATA[>]]> edctn_end_dtm)
+							</if>
+							<if test="edctnStatusList == 4"><!--교육취소-->
+								(edctn_stts_cd = 'EDCTN_STTS_CD02')
 							</if>
 						</when>
 					</choose>

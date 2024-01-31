@@ -142,15 +142,6 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 
-
-
-				/*cmmCtrl.frmAjax(function(respObj) {
-
-					//respObj
-
-
-				}, "/mngwserc/wb/wbfb/getEplisds", $formObj, "post", "json")*/
-
 			},
 
 			transfer : {

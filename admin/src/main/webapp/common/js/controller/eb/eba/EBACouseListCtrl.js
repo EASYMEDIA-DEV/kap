@@ -308,6 +308,8 @@ define(["ezCtrl"], function(ezCtrl) {
 
 								});
 								clickObj.trObjList = trObjList;
+								clickObj.choiceCnt = choiceCnt;
+
 
 							}else{
 								var edctnSeq =trObj.find("td").eq(0).find("input[name=delValueList]:checked").val();

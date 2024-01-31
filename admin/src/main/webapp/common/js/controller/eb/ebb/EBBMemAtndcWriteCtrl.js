@@ -115,6 +115,102 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			// 유효성 검사
 			$formObj.validation({
+				before : function(){
+
+
+
+					var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
+
+
+					var actionForm = {};
+
+					var resultFlag = true;
+
+					actionForm.edctnSeq = 0;//교육순번
+					actionForm.episdSeq = 0;//회차순번
+					actionForm.episdYear = 0;//연도
+					actionForm.episdOrd = 0;//회차정렬
+
+
+					//출석용 리스트
+					var ptcptAtndcList = new Array();
+
+					$("#memAtndcListLayerContainer").find("tr").each(function(){
+
+						var deleteStack = 0;
+
+
+						var memAtndcForm = {};
+
+						memAtndcForm.ptcptSeq = $("#ptcptSeq").val();
+						memAtndcForm.edctnDt =$(this).find(".edctnDt").text();
+
+
+						var atndcHour = $(this).find(".atndcDtm").find("input[name='atndcDtm']").length == 0 ? $(this).find("td.atndcDtm").data("orgatndchour") :  $(this).find(".atndcDtm").find("input[name='atndcDtm']").val();
+						var lvgrmHour = $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").length == 0 ? $(this).find("td.lvgrmDtm").data("orglvgrmhour") :  $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").val();
+						var orgEtcNm =  $(this).find(".etcNm").data("orgetcnm");
+						var etcNm = $(this).find("#etcNm").val();
+
+						if(atndcHour =="" && lvgrmHour != ""){
+							alert("퇴실시간입력전에 출석 시간을 입력해주세요");
+							resultFlag = false;
+						}
+
+						if(atndcHour !="" && lvgrmHour !=""  && atndcHour > lvgrmHour){
+							alert("퇴실시간은 출석시간 이후로 입력 해주세요.");
+							resultFlag = false;
+						}
+
+						var orgatndcHour = "";
+						var orglvgrmHour = "";
+						if(atndcHour !='' && !(atndcHour === undefined)){
+							orgatndcHour = $(this).find(".atndcDtm").data("orgatndchour");
+						}
+						if(lvgrmHour !='' && !(lvgrmHour === undefined)){
+							orglvgrmHour = $(this).find(".atndcDtm").data("orglvgrmHour");
+						}
+
+						if(orgatndcHour != atndcHour){
+							memAtndcForm.atndcHour = atndcHour;
+						}
+
+						if(orglvgrmHour != lvgrmHour){
+							memAtndcForm.lvgrmHour = lvgrmHour;
+						}
+
+						if(orgEtcNm != etcNm && etcNm !=""){
+							memAtndcForm.etcNm = etcNm;
+						}
+
+
+						//변경점이 없는경우 or 애초에 값이 없는경우
+						if(orgatndcHour == atndcHour || atndcHour == ""){
+							deleteStack++;
+						}
+
+						if(orglvgrmHour == lvgrmHour || lvgrmHour == ""){
+							deleteStack++;
+						}
+
+						if(orgEtcNm == etcNm){
+							deleteStack++
+						}
+
+						if(deleteStack<3){
+							ptcptAtndcList.push(memAtndcForm);
+						}
+
+					});
+
+					actionForm.ptcptList = ptcptAtndcList;
+
+
+					return resultFlag;
+
+
+
+				},
+
 				after : function() {
 					var isValid = true, editorChk = true;
 
@@ -156,10 +252,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							memAtndcForm.edctnDt =$(this).find(".edctnDt").text();
 
 
-							var atndcHour = $(this).find(".atndcDtm").find("input[name='atndcDtm']").length == 0 ? "":  $(this).find(".atndcDtm").find("input[name='atndcDtm']").val();
-							var lvgrmHour = $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").length == 0 ? "" :  $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").val();
+							var atndcHour = $(this).find(".atndcDtm").find("input[name='atndcDtm']").length == 0 ? $(this).find("td.atndcDtm").data("orgatndchour") :  $(this).find(".atndcDtm").find("input[name='atndcDtm']").val();
+							var lvgrmHour = $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").length == 0 ? $(this).find("td.lvgrmDtm").data("orglvgrmhour") :  $(this).find(".lvgrmDtm").find("input[name='lvgrmDtm']").val();
 							var orgEtcNm =  $(this).find(".etcNm").data("orgetcnm");
 							var etcNm = $(this).find("#etcNm").val();
+
 							if(atndcHour =="" && lvgrmHour != ""){
 								alert("퇴실시간입력전에 출석 시간을 입력해주세요");
 								resultFlag = false;
@@ -213,8 +310,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actionForm.ptcptList = ptcptAtndcList;
 
-
-						debugger;
 						if(resultFlag){
 
 							cmmCtrl.jsonAjax(function(data){

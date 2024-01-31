@@ -532,7 +532,9 @@
                                             <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
                                         </td><!--유튜브 URL-->
                                         <td class="text-center">
-                                            <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                            <label class="input_line form-inline">
+                                            <input type="text" class="form-contol input-sm numberChk notRequired" name="onlineTime" value="" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;margin-right: 10px;"/>분
+                                            </label>
                                         </td><!--강의시간-->
                                         <td class="text-center">
                                             <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
@@ -569,7 +571,9 @@
                                                         <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${lctrDtoList.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
                                                     </td><!--유튜브 URL-->
                                                     <td class="text-center">
-                                                        <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${lctrDtoList.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                                        <label class="input_line form-inline">
+                                                            <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${lctrDtoList.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;margin-right: 10px;"/>분
+                                                        </label>
                                                     </td><!--강의시간-->
                                                     <td class="text-center">
                                                         <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
@@ -606,7 +610,10 @@
                                                     <input type="text" class="form-control input-sm notRequired" name="onlineUrl" value="${list.url}" title="유튜브 URL" maxlength="50" placeholder="유튜브 URL" style="max-width: 300px;"/>
                                                 </td><!--유튜브 URL-->
                                                 <td class="text-center">
-                                                    <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;"/>분
+                                                    <label class="input_line form-inline">
+                                                        <input type="text" class="form-control input-sm numberChk notRequired" name="onlineTime" value="${list.time}" title="강의시간" maxlength="50" placeholder="강의시간" style="max-width: 80px;margin-right: 10px;"/>분
+                                                    </label>
+
                                                 </td><!--강의시간-->
                                                 <td class="text-center">
                                                     <button type="button" class="btn btn-inverse btn-sm btnAdd">추가</button>
