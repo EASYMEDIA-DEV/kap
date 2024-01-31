@@ -45,13 +45,17 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function(){
                         pageCnt = pageCnt+1; // 더보기 누를 때마다 1씩 증가
-                        var openCnt = $(".open").length // 보이는 게시물
+                        var openCnt = $(".openCard").length // 보이는 게시물
                         var closeCnt = $(".close").length; // 숨겨진 게시물
                         if(pageCnt <= page){
                             $(".infoCard").slice(openCnt+1,openCnt+10).show();
-                            $(".infoCard").slice(openCnt+1,openCnt+10).removeClass("open");
-                            $(".infoCard").slice(openCnt+1,openCnt+10).addClass("open");
-                            $(".cntText").text(openCnt+2 +"/"+ chilCnt);
+                            $(".infoCard").slice(openCnt+1,openCnt+10).removeClass("close");
+                            $(".infoCard").slice(openCnt+1,openCnt+10).addClass("openCard");
+                            if(closeCnt<9){
+                                $(".moreBtn").hide();
+                            }else{
+                                $(".cntText").text(openCnt+9 +"/"+ chilCnt);
+                            }
                         }else{
                             $(".close").show();
                             $(".moreBtn").hide();
@@ -95,17 +99,6 @@ define(["ezCtrl"], function(ezCtrl) {
             var appctnType = $("#appctnType").text();
             if(appctnType != '' || appctnType != 'undefined'){
                 $("#appctnType").text($("#appctnType").text().slice(0, -1));
-            }
-            // 더보기 버튼
-            if(chilCnt > 3){
-                $(".infoCard").slice(2,chilCnt).hide();
-                $(".infoCard").slice(2,chilCnt).removeClass("open");
-                $(".infoCard").slice(2,chilCnt).addClass("close");
-                var openCnt = $(".open").length // 보이는 게시물
-                var closeCnt = $(".close").length; // 숨겨진 게시물
-                $(".cntText").text(openCnt +"/"+ chilCnt);
-            }else{
-                $(".moreBtn").hide();
             }
         }
     };

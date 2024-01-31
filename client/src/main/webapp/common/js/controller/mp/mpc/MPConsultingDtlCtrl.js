@@ -64,26 +64,15 @@ define(["ezCtrl"], function(ezCtrl) {
                     cmmCtrl.jsonAjax(function(data){
                         var str = data[0].appctnTypeCd;
                         $("."+arr[i]+"appctnCd").text(str.slice(1));
+
                     }, "./appctnType", data, "json")
                 }
+                // 신청내역 확인에서 신청사항에서 마지막 '/' 삭제
+                var appctnType = $("#appctnType").text();
+                if(appctnType != '' || appctnType != 'undefined'){
+                    $("#appctnType").text($("#appctnType").text().slice(0, -1));
+                }
             })
-
-            // 신청내역 확인에서 신청사항에서 마지막 '/' 삭제
-            var appctnType = $("#appctnType").text();
-            if(appctnType != '' || appctnType != 'undefined'){
-                $("#appctnType").text($("#appctnType").text().slice(0, -1));
-            }
-            // 더보기 버튼
-            if(chilCnt > 3){
-                $(".infoCard").slice(2,chilCnt).hide();
-                $(".infoCard").slice(2,chilCnt).removeClass("open");
-                $(".infoCard").slice(2,chilCnt).addClass("close");
-                var openCnt = $(".open").length // 보이는 게시물
-                var closeCnt = $(".close").length; // 숨겨진 게시물
-                $(".cntText").text(openCnt +"/"+ chilCnt);
-            }else{
-                $(".moreBtn").hide();
-            }
         }
     };
 

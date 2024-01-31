@@ -131,7 +131,7 @@
                                 <c:when test="${not empty rtnData }">
                                     <div class="trainings-list-w">
                                         <c:forEach var="appctnList" items="${rtnData}" varStatus="status">
-                                        <div class="training-confirm infoCard open">
+                                        <div class="training-confirm infoCard openCard">
                                             <div class="top-info">
                                                 <div class="training-view-page">
                                                     <div class="training-list">
