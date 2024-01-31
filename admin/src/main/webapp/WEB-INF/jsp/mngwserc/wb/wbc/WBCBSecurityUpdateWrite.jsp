@@ -546,7 +546,7 @@
                             <input type="hidden" class="notRequired" name="spprtList[0].appctnSpprtSeq" value="${rtnSpprt[0].appctnSpprtSeq}" />
                             <input type="hidden" class="notRequired" name="spprtList[0].giveType" value="${rtnSpprt[0].giveType}" />
                         </div>
-                        <div id="ab1" class="panel-collapse collapse <c:if test="${rtnSpprt[0].mngSttsNm eq '미확인'}">in</c:if>" role="tabpanel">
+                        <div id="ab1" class="panel-collapse collapse <c:if test="${rtnData.pmndvPmtYn eq 'Y' && rtnSpprt[0].mngSttsNm eq '미확인'}">in</c:if>" role="tabpanel">
                             <div class="panel-body">
 
                                 <h6 class="mt0">신청자</h6>
