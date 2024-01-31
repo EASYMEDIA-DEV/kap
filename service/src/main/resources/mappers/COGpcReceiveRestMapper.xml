@@ -28,6 +28,7 @@
 			, date_format(now(), '%Y-%m-%d') as kap_send_dd
 		from ed_edctn_prcs_mst a
 		WHERE exps_yn = 'Y'
+		  AND gpc_yn = 'Y'
 		  AND DATE_FORMAT(#{date}, '%Y-%m-%d') <![CDATA[<=]]> mod_dtm
 
 	</select>
@@ -65,6 +66,7 @@
 		from ed_edctn_episd_mst a
 				 left join ed_edctn_prcs_mst b on b.edctn_seq = a.edctn_seq
 		where a.exps_yn = 'Y'
+		  and b.gpc_yn = 'Y'
 		  and a.edctn_seq = #{kapSeq}
 	</select>
 
@@ -103,6 +105,7 @@
 		WHERE 1=1
 		  AND A.EPISD_SEQ = #{kapSchdSeq}
 		  AND a.STTS_CD = 'EDU_STTS_CD01'
+		  and C.gpc_yn = 'Y'
 	</select>
 
 	<!--
@@ -127,6 +130,7 @@
 		WHERE 1=1
 		  AND A.EPISD_SEQ = #{kapSchdSeq}
 		  AND a.STTS_CD = 'EDU_STTS_CD01'
+		  and C.gpc_yn = 'Y'
 	</select>
 
 
