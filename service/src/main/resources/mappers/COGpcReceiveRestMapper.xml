@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.COGpcReceiveRestMapper">
+
+	<!--
+         쿼리명 : COGpcReceiveRestMapper.selectGpcEdctnList
+         설  명 : KAP 등록 된 교육 과정 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.30  김학규     최초 생성
+    -->
+	<select id="selectGpcEdctnList"  resultType="COGpcEdctnDTO" parameterType="COGpcEdctnDTO">
+
+		SELECT /* COGpcReceiveRestMapper.selectGpcEdctnList */
+			edctn_seq as kap_seq
+			, gpc_edctn_type as edu_type
+			, gpc_parnt_ctgry as ctgry
+			, gpc_ctgry as trck
+			, nm as prcs_nm
+			, gpc_lvl as lvl
+			, (select cd_nm from co_code_mst where cd=aa.stduy_dd_cd) as edu_dd_cnt
+			, (select cd_nm from co_code_mst where cd=aa.stduy_time_cd) as edu_time
+			, gpc_fxnum_cnt
+			, gpc_rfn_prcs as rfnd_prcs
+			, gpc_isttr_id as adm_seq
+			, pc_stduy_cntn as edu_cntn
+			, itrdc_cntn as edu_dtl
+			, kap_send_dd
+			, #{date} as kap_send_dd
+		from ed_edctn_prcs_mst
+		WHERE exps_yn = 'Y'
+		  AND DATE_FORMAT(#{date}, '%Y-%m-%d') <![CDATA[<=]]> mod_dtm
+
+	</select>
+
+	<!--
+         쿼리명 : COGpcReceiveRestMapper.selectGpcEpisdList
+         설  명 : KAP 등록 된 교육 과정의 상세 차수 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.30  김학규     최초 생성
+    -->
+	<select id="selectGpcEpisdList"  resultType="COGpcEpisdDTO" parameterType="COGpcEpisdDTO">
+		SELECT /* COGpcReceiveRestMapper.selectGpcEpisdList */
+			a.edctn_seq as kap_seq
+			 , a.episd_seq as kap_schd_seq
+			 , b.gpc_parnt_ctgry as ctgry
+			 , b.gpc_ctgry as trck
+			 , b.nm as prcs_nm
+			 , b.gpc_lvl as lvl
+			 , a.episd_year as edu_year
+			 , a.episd_ord as ord
+			 , date_format(a.edctn_strt_dtm, '%Y-%m-%d') as edu_strt
+			 , date_format(a.edctn_end_dtm, '%Y-%m-%d') as edu_end
+			 , date_format(a.accs_strt_dtm, '%Y-%m-%d') as rqst_strt
+			 , date_format(a.accs_end_dtm, '%Y-%m-%d') as rqst_end
+			 , (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as edu_time
+			 , a.fxnum_cnt as max_cnt
+			 , (select count(mem_seq) from ep_edctn_ptcpt_mst where edctn_seq = a.edctn_seq and episd_year = a.episd_year and episd_ord = a.episd_ord and stts_cd = 'EDU_STTS_CD01') as rqst_cnt
+			 , b.gpc_rfn_prcs as rfnd_prcs
+			 , b.gpc_isttr_id as adm_seq
+			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
+			 , case edctn_stts_cd when 'EDCTN_STTS_CD01' then CASE WHEN edctn_cmpltn_yn = 'Y' then 'Y' ELSE 'N' END
+									WHEN 'EDCTN_STTS_CD02' then 'R'
+				END exam_flag
+		from ed_edctn_episd_mst a
+				 left join ed_edctn_prcs_mst b on b.edctn_seq = a.edctn_seq
+		where a.exps_yn = 'Y'
+		  and a.edctn_seq = #{kapSeq}
+	</select>
+
+	<!--
+         쿼리명 : COGpcReceiveRestMapper.selectGpcPtcptList
+         설  명 : KAP 교육 신청자 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.30  김학규     최초 생성
+    -->
+	<select id="selectGpcPtcptList" resultType="COGpcPtcptDTO" parameterType="COGpcPtcptDTO">
+		SELECT /* COGpcReceiveRestMapper.selectGpcPtcptList */
+			C.EDCTN_SEQ AS kap_Seq
+			 , B.EPISD_SEQ AS kap_Schd_Seq
+			 , D.ID AS kapId
+			 , D.NAME
+			 , CASE D.gndr WHEN 1 THEN 'M' ELSE 'F' END AS gndr_Cd
+			 , E.cmpn_nm
+			 , C.gpc_parnt_ctgry AS ctgry
+			 , C.gpc_ctgry AS trck
+			 , C.NM AS prcsNm
+			 , C.gpc_lvl AS lvl
+			 , B.EPISD_ORD AS ORD
+			 , C.stduy_dd_cd AS EDU_DD_CNT
+			 , date_format(b.edctn_strt_dtm, '%Y-%m-%d') as edu_strt
+			 , date_format(b.edctn_end_dtm, '%Y-%m-%d') as edu_end
+			 , C.gpc_rfn_prcs AS rfnd_Prcs
+			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
+
+		FROM ep_edctn_ptcpt_mst A
+				 LEFT JOIN ed_edctn_episd_mst B ON B.EPISD_SEQ = A.EPISD_SEQ
+				 LEFT JOIN ed_edctn_prcs_mst C ON C.EDCTN_SEQ = B.EDCTN_SEQ
+				 LEFT JOIN co_mem_mst D ON D.mem_seq = A.mem_seq
+				 LEFT JOIN cp_cmpn_mst E ON E.bsnm_no = A.ptcpt_bsnm_no
+
+		WHERE 1=1
+		  AND A.EPISD_SEQ = #{kapSchdSeq}
+		  AND a.STTS_CD = 'EDU_STTS_CD01'
+	</select>
+
+	<!--
+         쿼리명 : COGpcReceiveRestMapper.selectGpcPtcptExamList
+         설  명 : KAP 교육 신청자 정보
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2024.01.30  김학규     최초 생성
+    -->
+	<select id="selectGpcPtcptExamList" resultType="COGpcPtcptDTO" parameterType="COGpcPtcptDTO">
+		SELECT /* COGpcReceiveRestMapper.selectGpcPtcptExamList */
+			c.edctn_seq as kap_seq
+			 , b.episd_seq as kap_schd_seq
+			 , d.id as kap_id
+			 , a.exam_score as tot_score
+			 , a.cmptn_yn
+			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
+		FROM ep_edctn_ptcpt_mst A
+				 LEFT JOIN ed_edctn_episd_mst B ON B.EPISD_SEQ = A.EPISD_SEQ
+				 LEFT JOIN ed_edctn_prcs_mst C ON C.EDCTN_SEQ = B.EDCTN_SEQ
+				 LEFT JOIN co_mem_mst D ON D.mem_seq = A.mem_seq
+		WHERE 1=1
+		  AND A.EPISD_SEQ = #{kapSchdSeq}
+		  AND a.STTS_CD = 'EDU_STTS_CD01'
+	</select>
+
+
+
+
+</mapper>

@@ -32,6 +32,7 @@
                 <input type="hidden" name="floatingStduyMthdCd" id="floatingStduyMthdCd" value="${list.stduyMthdCd}"/>
                 <input type="hidden" name="floatingStduyDdCdNm" id="floatingStduyDdCdNm" value="${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)"/>
                 <input type="hidden" name="floatingedctnNtctnFileSeq" id="floatingedctnNtctnFileSeq" value="${list.edctnNtctnFileSeq}"/>
+                <input type="hidden" name="floatingedctnNtctnFileNm" id="floatingedctnNtctnFileNm" value="${list.edctnNtctnFileNm}"/>
 
                 <c:set var="floatingYn" value="Y"/>
             </div>
@@ -54,7 +55,7 @@
                 </c:otherwise>
             </c:choose>
             <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}" data-episdYear="${list.episdYear}" data-episdOrd="${list.episdOrd}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
-                <c:if test="${accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
+                <c:if test="${list.accsStatusOrder < 3}"><!-- 접수대기와 접수중만 출력-->
                     <p class="available-label">
                         <span>신청 가능한 회차</span>
                     </p>
@@ -63,7 +64,7 @@
                     <div class="top-area">
                         <div class="left">
                             <div class="group">
-                                <p class="index-num f-title3">${list.episdOrd}회차</p>
+                                <p class="index-num f-title3">${list.episdOrd}회차 ${accsStatusOrder}</p>
                                 <div class="status-info-w">
                                     <c:if test="${not empty episdDto.cbsnCdNm}">
                                         <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>
@@ -147,7 +148,8 @@
                         <div class="btn-wrap">
                             <div class="btn-set">
                                 <c:if test="${not empty list.edctnNtctnFileSeq}">
-                                    <a class="btn-text-icon download" href="/file/view?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
+                                    <%--<a class="btn-text-icon download" href="/file/view?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>--%>
+                                    <a class="btn-text-icon download" href="/file/download?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
                                 </c:if>
                             </div>
                             <div class="btn-set">

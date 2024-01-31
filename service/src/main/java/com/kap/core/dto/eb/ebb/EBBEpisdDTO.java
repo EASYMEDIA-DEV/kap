@@ -123,6 +123,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육안내문", example = "숫자")
     private Integer edctnNtctnFileSeq;
 
+    @Schema(title = "교육안내문 실제 파일명", example = "파일명")
+    private String edctnNtctnFileNm;
+
     @Schema(title = "교육안내문 순번", example = "숫자")
     private Integer fileOrd;
 

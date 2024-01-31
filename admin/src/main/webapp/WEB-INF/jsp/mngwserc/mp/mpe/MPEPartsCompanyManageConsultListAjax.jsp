@@ -6,7 +6,16 @@
                 <td class="text-center">${manageConsultList.totalCount - manageConsultList.firstIndex - status.index}</td>
                 <td class="text-center">${list.cbsnNm}</td>
                 <td class="text-center">${list.cmssrNm}</td>
-                <td class="text-center">지도기간</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${list.rsumeSttsNm eq '지도완료'}">
+                            ${ kl:convertDate(list.guideBgnDt, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.guidePscndDt, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                        </c:when>
+                        <c:otherwise>
+                            -
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${empty list.initVstFileSeq}">

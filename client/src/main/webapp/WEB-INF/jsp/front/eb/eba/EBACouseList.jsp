@@ -24,16 +24,18 @@
           컨실팅 사업: consult-biz
           상생 사업: coexisting-biz
         -->
-        <div class="sub-top-vis-area basic-page">
+        <div class="sub-top-vis-area <c:if test="${ device eq 'PC' }">basic-page</c:if>">
             <div class="page-tit-area">
-                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
+                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm } ${ device }</span></p>
             </div>
+            <c:if test="${ device eq 'PC' }">
             <div class="img-area">
                 <div class="img">
                     <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
                     <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
                 </div>
             </div>
+            </c:if>
         </div>
 
         <div class="divide-con-area">
@@ -54,7 +56,7 @@
                             </div>
 
                             <div class="lnb-link-area nonmember">
-                                <a class="btn-text-icon black-arrow" href="javascript:"><span>비회원 신청내역 조회111</span></a>
+                                <a class="btn-text-icon black-arrow" href="/education/apply/non-member/auth"><span>비회원 신청내역 조회</span></a>
                             </div>
 
                             <div class="info-head">
@@ -223,23 +225,6 @@
                                                                             </span>
                                                                         </div>
 
-                                                                        <%--<div class="input-group">
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" data-name="expsStrtDtm" value="${kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="expsStrtDtm" name="expsStrtDtm" data-name="expsStrtDtm" value="${not empty rtnDto.expsStrtDtm ? kl:convertDate(rtnDto.expsStrtDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : today}" title="중요공지 시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                            <span class="input-group-addon bg-white b0">~</span>
-                                                                            &lt;%&ndash;<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" data-name="expsEndDtm" value="${today}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>&ndash;%&gt;
-                                                                            <input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="expsEndDtm" name="expsEndDtm" data-name="expsEndDtm" value="${not empty rtnDto.expsEndDtm ? kl:convertDate(rtnDto.expsEndDtm, 'yyyyMMdd', 'yyyy-MM-dd', '') : kl:convertDate(kl:addDay(today, '+7'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="중요공지 종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
-                                                                            <span class="input-group-btn" style="z-index:0;">
-                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                                                    <em class="ion-calendar"></em>
-                                                                                </button>
-                                                                            </span>
-                                                                        </div>--%>
                                                                     </div>
                                                                     <!-- // 2023-12-07 수정 -->
                                                                 </div>

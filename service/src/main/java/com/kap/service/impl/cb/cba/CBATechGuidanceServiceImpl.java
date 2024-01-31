@@ -1,9 +1,8 @@
 package com.kap.service.impl.cb.cba;
 
+import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COFileDTO;
-import com.kap.core.dto.COSystemLogDTO;
-import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
@@ -76,6 +75,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
     private final MPAUserMapper mpaUserMapper;
+    //이메일 발송
+    private final COMessageService cOMessageService;
 
     // 로그인 상태값 시스템 등록
     private final COSystemLogService cOSystemLogService;
@@ -87,6 +88,9 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     @Value("${app.file.videoExtns}")
     private String videoExtns;
     private CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO;
+
+    @Value("${app.site.name}")
+    private String siteName;
 
     /**
      * 컨설팅 기술 지도 목록 조회
@@ -214,6 +218,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         // 부품사 정보
         updateTechCompanyInfo(pCBATechGuidanceInsertDTO);
 
+
         pCBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceMapper.insertTechGuidance(pCBATechGuidanceInsertDTO));
         return pCBATechGuidanceInsertDTO.getRespCnt();
     }
@@ -300,11 +305,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         MPEPartsCompanyDTO mPEPartsCompanyDTO = new MPEPartsCompanyDTO();
         mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo().replace("-", ""));
         mPEPartsCompanyDTO = mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO);
-
-        String ctgryCd = pCBATechGuidanceInsertDTO.getCtgryCd();
-
-        MPEPartsCompanyDTO mpePartsCompanyDTO = new MPEPartsCompanyDTO();
-
+        String ctgryCd = mPEPartsCompanyDTO.getList().get(0).getCtgryCd();
 
         // 1차사 - 5스타
         if(ctgryCd.equals("COMPANY01001")){
@@ -317,29 +318,29 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         } else if(ctgryCd.equals("COMPANY01002")){ // 2차사 - SQ 정보
             mpePartsCompanyMapper.deletePartsComSQInfo(mPEPartsCompanyDTO);
             for(int i=1; i < 4; i++) {
-                mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
-                mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
-                mpePartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
+                mPEPartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
+                mPEPartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegId());
+                mPEPartsCompanyDTO.setRegId(pCBATechGuidanceInsertDTO.getRegIp());
                 if(i==1){
-                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm1());
-                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore1());
-                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear1());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm1());
-                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm1());
+                    mPEPartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore1());
+                    mPEPartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear1());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm1());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
                 }else if(i==2){
-                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm2());
-                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore2());
-                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear2());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm2());
-                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm2());
+                    mPEPartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore2());
+                    mPEPartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear2());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm2());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
                 }else{
-                    mpePartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm3());
-                    mpePartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore3());
-                    mpePartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear3());
-                    mpePartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm3());
-                    mpePartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
+                    mPEPartsCompanyDTO.setNm(pCBATechGuidanceInsertDTO.getNm3());
+                    mPEPartsCompanyDTO.setScore(pCBATechGuidanceInsertDTO.getScore3());
+                    mPEPartsCompanyDTO.setYear(pCBATechGuidanceInsertDTO.getYear3());
+                    mPEPartsCompanyDTO.setCrtfnCmpnNm(pCBATechGuidanceInsertDTO.getCrtfnCmpnNm3());
+                    mPEPartsCompanyDTO.setBsnmNo(pCBATechGuidanceInsertDTO.getBsnmNo());
                 }
-                mpePartsCompanyMapper.insertPartsComSQInfo(mpePartsCompanyDTO);
+                mpePartsCompanyMapper.insertPartsComSQInfo(mPEPartsCompanyDTO);
             }
         }
         mPEPartsCompanyDTO.setModId(pCBATechGuidanceInsertDTO.getRegId());
@@ -485,6 +486,58 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cBATechGuidanceMapper.updateTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
         }else if(totCnt == 0){
             cBATechGuidanceMapper.insertTechGuidanceRsume(pCBATechGuidanceupUpdateDTO);
+        }
+
+        String rsumeSttsCd = pCBATechGuidanceInsertDTO.getRsumeSttsCd();
+
+        // MNGTECH_STATUS_04  MNGTECH_STATUS_07 - 탈락 코드
+        if(rsumeSttsCd.equals("MNGTECH_STATUS_04") || rsumeSttsCd.equals("MNGTECH_STATUS_07")){
+
+            //이메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            //SMS 발송
+            COSmsDTO smsDto = new COSmsDTO();
+            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
+            //수신자 정보
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            CBATechGuidanceInsertDTO tempDto = new CBATechGuidanceInsertDTO();
+            tempDto.setRegId(pCBATechGuidanceInsertDTO.getRegId());
+            tempDto.setRegIp(pCBATechGuidanceInsertDTO.getRegIp());
+            tempDto.setMemSeq(String.valueOf(pCBATechGuidanceInsertDTO.getMemSeq()));
+            tempDto.setRsumeSttsCd("MNGCNSLT_STATUS01");
+            tempDto.getDetailsKey();
+            tempDto = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
+            //탈락 사유(치환문자2)
+            if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
+                receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("사전심사결과");
+            }else if(rsumeSttsCd.equals("MNGTECH_STATUS_07")){
+                receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getInitVstRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("초도방문결과");
+            }
+            //수신자 번호
+            receiverDto.setMobile(tempDto.getHpNo());
+            //이메일
+            receiverDto.setEmail(tempDto.getEmail());
+            //이름
+            receiverDto.setName(tempDto.getName());
+            //사업명(치환문자1)
+            receiverDto.setNote1("2024 상주기술지도");
+            //부품사명(치환문자3)
+            receiverDto.setNote3(tempDto.getCmpnNm());
+            //신청일
+            String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
+            //수신자 정보 등록
+            cOMailDTO.getReceiver().add(receiverDto);
+
+            //문자 발송
+            smsDto.setTitle("컨설팅사업 탈락 안내");
+            smsDto.getReceiver().add(receiverDto);
+
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
+            cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
 
         String bfreMemSeq = pCBATechGuidanceInsertDTO.getBfreMemSeq();
@@ -867,6 +920,20 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     public CBATechGuidanceInsertDTO selectCompleteInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
 
         return cBATechGuidanceMapper.selectCompleteInfo(pCBATechGuidanceInsertDTO);
+    }
+
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    @Transactional
+    public int updAdmMemo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = cBATechGuidanceMapper.updAdmMemo(pCBATechGuidanceInsertDTO);
+
+        return respCnt;
     }
 }
 

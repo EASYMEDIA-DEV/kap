@@ -134,7 +134,7 @@ public class WBGAEaxmController {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                vwUrl = "redirect:/";
+                modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
             } else {
                 modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);

@@ -229,6 +229,9 @@ public class EBHEduApplicantMstDTO extends BaseDTO {
     private List<MPEPartsCompanyDTO> sqList;
 
 
+    @Schema(title = "GPC 교육 여부", example = "Y/N")
+    private String gpcYn;
+
     @Schema(title = "GPC 아이디")
     private String gpcId;
 

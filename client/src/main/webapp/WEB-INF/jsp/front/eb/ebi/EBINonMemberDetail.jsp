@@ -19,8 +19,7 @@
 </c:choose>
 
 <div id="wrap" data-controller="controller/eb/ebi/EBINonMemberDetailCtrl">
-    <form name="frmGo" method="post" action="" data-del-type="none">
-        <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+    <form name="frmGo" method="GET" action="" data-del-type="none">
         <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnData.edctnSeq}" />
     </form>
 

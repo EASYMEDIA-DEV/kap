@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="user-opt-area">
-                    <button class="btn-close btn-role-close btnClose" title="팝업 닫기" type="button"><span>닫기</span></button>
+                    <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
                 </div>
             </div>
         </div>

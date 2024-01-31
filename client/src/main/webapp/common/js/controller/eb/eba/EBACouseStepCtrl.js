@@ -160,6 +160,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					cmmCtrl.frmAjax(function(resultData){
 
 						var rtnData = resultData.rtnData;
+						debugger;
 						if(rtnData.regStat == "F"){
 							alert("이미 해당 회차에 신청한 회원입니다.");
 						}else if(rtnData.regStat == "R"){

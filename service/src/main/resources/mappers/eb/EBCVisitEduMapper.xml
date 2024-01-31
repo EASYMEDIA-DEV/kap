@@ -194,6 +194,7 @@
 			 , (select orgn_file_nm from co_file_dtl where use_yn = 'y' and file_seq = A.itrdc_file_seq) as itrdc_file_name -- 파일명
 			 , A.edctn_stts_cd -- 교육상태코드
 			 , (select cd_nm from co_code_mst where cd_id = 'EBC_VISIT_CD' and cd = A.edctn_stts_cd) as edctn_stts_name -- 교육상태명
+			 , DATEDIFF(D.edctn_end_dtm, D.edctn_strt_dtm) as edctn_day -- 교육종료일시-교육시작일시(n일)
 		</if>
  			 , A.edctn_stts_cd -- 교육상태코드
 			 , A.reg_dtm -- 방문교육신청일시

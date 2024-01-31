@@ -3,6 +3,7 @@ package com.kap.front.controller.wb.wbe;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.service.*;
@@ -11,6 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -167,7 +169,8 @@ public class WBECarbonController {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBEBCarbonCompanySearchDTO.getEpisdSeq()))) {
-                vwUrl = "redirect:/";
+                RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
+                modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
             }else {
 
                 COUserDetailsDTO cOUserDetailsDTO = null;
@@ -232,7 +235,7 @@ public class WBECarbonController {
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().removeAttribute("complete", RequestAttributes.SCOPE_SESSION);
-                return "redirect:/";
+                return "redirect:./content";
             } else {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -253,5 +256,45 @@ public class WBECarbonController {
 
         return vwUrl;
     }
+    /**
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertBsnmNoCnt")
+    public String getInsertBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getInsertBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertSbrdnBsnmNoCnt")
+    public String getInsertSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getInsertSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
 }

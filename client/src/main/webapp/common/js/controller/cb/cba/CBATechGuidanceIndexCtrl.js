@@ -37,9 +37,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         if(!loginYn){
                             if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
                                 location.href="/login?rtnUrl=/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;
-                            }else{
-                                location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCdNm;
                             }
+                        }else{
+                            location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;
                         }
                     }
                 }

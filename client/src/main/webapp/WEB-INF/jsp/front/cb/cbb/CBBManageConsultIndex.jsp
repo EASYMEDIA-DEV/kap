@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="csList" value="${rtnDto.list}"/>
+<c:set var="now" value="<%=new java.util.Date()%>" />
+<c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>
 <div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultIndexCtrl">
     <!--
       신청 페이지: apply-page 클래스 추가
@@ -10,22 +12,22 @@
       컨실팅 사업: consult-biz
       상생 사업: coexisting-biz
     -->
-    <div class="sub-top-vis-area basic-page">
-        <div class="page-tit-area">
-            <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
-        </div>
-        <div class="img-area">
-            <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-consulting-guide.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-consulting-guide-mobile.jpg" alt="">
+        <div class="sub-top-vis-area basic-page">
+            <div class="page-tit-area">
+                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
+            </div>
+            <div class="img-area">
+                <div class="img">
+                    <img class="only-pc" src="/common/images/img-sub-top-visual-consulting-guide.jpg" alt="">
+                    <img class="only-mobile" src="/common/images/img-sub-top-visual-consulting-guide-mobile.jpg" alt="">
+                </div>
             </div>
         </div>
-    </div>
-    <div class="divide-con-area">
-        <!--LNB 시작-->
-        <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-        <!--LNB 종료-->
-            ${rtnCms.cnts}
+        <div class="divide-con-area">
+            <!--LNB 시작-->
+            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+            <!--LNB 종료-->
+                ${rtnCms.cnts}
 
                                 <div class="box-btn-area">
                                     <div class="bg-area">
@@ -99,7 +101,6 @@
                                             <div class="txt-box">
                                                 <div class="names">
                                                     <p class="name f-title3">${csList.name}</p>
-                                                    <p class="position f-sub-head">${csList.cmssrTypeCdNm}</p>
                                                 </div>
                                                 <div class="labels">
                                                     <p class="box-label cmssrCbsnCdNm"><span>${csList.cmssrCbsnCdNm}</span></p>
@@ -125,23 +126,35 @@
             <div class="accepting-fixed-area">
                 <div class="for-position">
                     <button class="open-click-area" type="button">
-                        <p class="tit">2023 상주경영컨설팅 <span class="status">접수중</span></p>
+                        <p class="tit"><c:out value="${sysYear}" /> 상주경영컨설팅 <span class="status">접수중</span></p>
                         <div class="btn-text-icon plus"><span>더보기</span></div>
                     </button>
 
                     <div class="hide-area">
                         <div class="inner-con">
                             <div class="tit-area">
-                                <p class="f-title1">2023 상주경영컨설팅 접수중 (상시접수중)</p>
+                                <p class="f-title1"><c:out value="${sysYear}" /> 상주경영컨설팅 접수중 (상시접수중)</p>
                             </div>
-                            <!-- <div class="con-area">
-                              <div class="scroll-area">
-                              </div>
-                            </div> -->
+                            <!-- 2024-01-24 첨부파일 영역 추가 -->
+                            <div class="con-area">
+                                <div class="scroll-area">
+                                    <div class="info-line-list-w">
+                                        <div class="list">
+                                            <p class="tit">첨부파일</p>
+                                            <div class="txt">
+                                                <div class="btn-wrap">
+                                                    <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- // 2024-01-24 첨부파일 영역 추가 -->
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>
+                                    <!-- <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a> --><!-- 2024-01-24 다운로드 버튼 삭제-->
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
@@ -155,62 +168,61 @@
             </div>
         </div>
     </div>
-</div>
-<!-- content 영역 end -->
-<div class="layer-popup memberDetailsPopup">
-    <div class="for-center">
-        <div class="pop-wrap">
-            <div class="pop-con-area">
-                <div class="tit-area">
-                    <p class="f-title1">위원 상세</p>
-                </div>
-                <div class="con-area">
-                    <div class="scroll-area">
-                        <div class="p-cont-sec">
-                            <div class="sec-con-area">
-                                <div class="article-list-w txt-list">
-                                    <dl class="list-item">
-                                        <dt class="f-body1">전문위원</dt>
-                                        <dd class="f-body2 cmssrName"></dd>
-                                    </dl>
-                                    <dl class="list-item">
-                                        <dt class="f-body1">이메일</dt>
-                                        <dd class="f-body2 email"></dd>
-                                    </dl>
-                                    <dl class="list-item">
-                                        <dt class="f-body1">업종/분야</dt>
-                                        <dd class="f-body2">
-                                            <p class="box-label cmssrCbsnCd"><span></span></p>
-                                        </dd>
-                                    </dl>
-                                    <dl class="list-item">
-                                        <dt class="f-body1">경력</dt>
-                                        <dd class="f-body2 cmssrMjrCarerCntn">
-                                            <p></p>
-                                        </dd>
-                                    </dl>
-                                    <dl class="list-item">
-                                        <dt class="f-body1">컨설팅 분야</dt>
-                                        <dd class="f-body2 cmssrCnstgFldCntn">
-                                            <p></p>
-                                            <p></p>
-                                        </dd>
-                                    </dl>
+    <!-- content 영역 end -->
+    <div class="layer-popup memberDetailsPopup">
+        <div class="for-center">
+            <div class="pop-wrap">
+                <div class="pop-con-area">
+                    <div class="tit-area">
+                        <p class="f-title1">위원 상세</p>
+                    </div>
+                    <div class="con-area">
+                        <div class="scroll-area">
+                            <div class="p-cont-sec">
+                                <div class="sec-con-area">
+                                    <div class="article-list-w txt-list">
+                                        <dl class="list-item">
+                                            <dt class="f-body1">전문위원</dt>
+                                            <dd class="f-body2 cmssrName"></dd>
+                                        </dl>
+                                        <dl class="list-item">
+                                            <dt class="f-body1">이메일</dt>
+                                            <dd class="f-body2 email"></dd>
+                                        </dl>
+                                        <dl class="list-item">
+                                            <dt class="f-body1">업종/분야</dt>
+                                            <dd class="f-body2">
+                                                <p class="box-label cmssrCbsnCd"><span></span></p>
+                                            </dd>
+                                        </dl>
+                                        <dl class="list-item">
+                                            <dt class="f-body1">경력</dt>
+                                            <dd class="f-body2 cmssrMjrCarerCntn">
+                                                <p></p>
+                                            </dd>
+                                        </dl>
+                                        <dl class="list-item">
+                                            <dt class="f-body1">컨설팅 분야</dt>
+                                            <dd class="f-body2 cmssrCnstgFldCntn">
+                                                <p></p>
+                                                <p></p>
+                                            </dd>
+                                        </dl>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="bot-fix-btn-area">
-                    <div class="btn-wrap align-right">
-                        <a class="btn-solid small black-bg" href="javascript:" data-seq="${loginMap.seq}" id="goQa"><span>위원 문의</span></a>
+                    <div class="bot-fix-btn-area">
+                        <div class="btn-wrap align-right">
+                            <a class="btn-solid small black-bg" href="javascript:" data-seq="${loginMap.seq}" id="goQa"><span>위원 문의</span></a>
+                        </div>
                     </div>
-                </div>
-                <div class="user-opt-area">
-                    <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+                    <div class="user-opt-area">
+                        <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>

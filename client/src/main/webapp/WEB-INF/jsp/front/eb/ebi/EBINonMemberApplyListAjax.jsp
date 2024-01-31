@@ -33,7 +33,6 @@
                                             <p class="label"><span>${ list.prntCdNm }</span></p>
                                             <p class="label"><span>${ list.ctgryCdNm }</span></p>
                                         </div>
-                                        <p class="training-name f-title3"></p><!-- 2024-01-19 폰트 클래스 변경 -->
                                         <p class="training-name f-title3"><a href="javascript:" class="listView" data-details-key="${list.edctnSeq}" data-ptcpt-seq="${list.ptcptSeq}">${ list.nm }</a></p><!-- 2024-01-19 폰트 클래스 변경 --><!-- 2024-01-26 a태그 추가 -->
                                     </div>
                                     <div class="status-info-w">

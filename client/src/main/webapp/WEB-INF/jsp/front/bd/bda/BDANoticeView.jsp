@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
+<c:set var="cntnData" value="${fn:replace(rtnDto.cntn, '&amp;amp;', '&')}" />
 
 <div id="wrap" data-controller="controller/bd/bda/BDANoticeViewCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
@@ -18,7 +19,7 @@
                             </div>
                             <div class="body-area">
                                 <div class="txt-wrap f-body2">
-                                    ${rtnDto.cntn}
+                                    ${cntnData}
                                 </div>
                                 <!-- @ 파일이 없으면 주석처리 -->
                                 <c:choose>

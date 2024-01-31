@@ -281,9 +281,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         }
                                         //신청 완료
                                         else if(rtnData.regStat == "S"){
-                                            $("#regDtm").val(rtnData.regDtm);
-                                            $("#frmGo").attr("action", "./step2");
-                                            $("#frmGo").submit();
+                                            // $("#regDtm").val(rtnData.regDtm);
+                                            /*$("#frmGo").attr("action", "./step2");
+                                            $("#frmGo").submit();*/
+                                            location.href = "./step2?edctnSeq=" + rtnData.edctnSeq + "&ptcptSeq=" + rtnData.ptcptSeq;
                                         }
                                     }, "./setPtcptInfo", $formObj, "post", "json");
                                 }

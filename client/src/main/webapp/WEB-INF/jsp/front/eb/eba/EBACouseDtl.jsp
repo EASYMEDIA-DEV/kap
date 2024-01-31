@@ -62,7 +62,15 @@
                                                 <p class="training-explain-txt">${rtnData.smmryNm}</p>
                                             </div>
                                             <div class="class-property-w">
-                                                <div class="property-list<c:if test="${rtnData.stduyMthdCd eq 'STDUY_MTHD01'}">offline</c:if>"><!-- offline: 집체교육 -->
+
+                                                <c:set var="propertyClass" value=""/>
+                                                <c:choose>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD01'}"><c:set var="propertyClass" value="offline"/></c:when>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD02'}"><c:set var="propertyClass" value="online"/></c:when>
+                                                    <c:when test="${rtnData.stduyMthdCd eq 'STDUY_MTHD03'}"><c:set var="propertyClass" value="onoffline"/></c:when>
+                                                </c:choose>
+
+                                                <div class="property-list ${propertyClass}"><!-- offline: 집체교육 -->
                                                     <p class="txt">
                                                         <span>${rtnData.stduyMthdCdNm}</span>
                                                     </p>
@@ -452,7 +460,7 @@
                                             <c:otherwise>
                                                 <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
                                                     <div class="txt-box">
-                                                        <p class="txt f-body1">등록된 후속과목이 없습니다.</p>
+                                                        <p class="txt f-body1">등록된 후속과정이 없습니다.</p>
                                                     </div>
                                                 </div>
                                             </c:otherwise>
@@ -520,15 +528,28 @@
                                                     <p class="txt floatingStduyDdCdNm">2일/14시간
                                                     </p>
                                                 </div>
+
+                                                <!-- 2024-01-24 첨부파일 영역 추가 -->
+                                                <div class="list floatingFileForm">
+                                                    <p class="tit">첨부파일</p>
+                                                    <div class="txt">
+                                                        <div class="btn-wrap">
+                                                            <a class="btn-text-icon download" href="javascript:" download><span class="floatingedctnNtctnFileNm">㈜이지미디어_회사소개서_최신본.pdf</span></a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- // 2024-01-24 첨부파일 영역 추가 -->
                                             </div>
                                         </div>
                                     </div>
 
                                     <div class="btn-wrap">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon tel floatingPop" data-popType="1" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>
-                                            <a class="btn-solid small gray-bg has-icon lecture floatingPop"data-popType="2" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>
-                                            <a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>
+                                            <!-- 2024-01-24 버튼 삭제-->
+                                            <%--<a class="btn-solid small gray-bg has-icon tel floatingPop" data-popType="1" href="javascript:" title="회차 담당자 문의하기"><span>회차 담당자 문의</span></a>--%>
+                                            <%--<a class="btn-solid small gray-bg has-icon lecture floatingPop"data-popType="2" href="javascript:" title="온라인 강의목차 보기"><span>온라인 강의목차</span></a>--%>
+                                            <%--<a class="btn-solid small gray-bg has-icon download floatingPop" data-popType="3" href="javascript:" title="안내문 다운로드"><span>안내문 다운로드</span></a>--%>
+                                            <!-- // 2024-01-24 버튼 삭제-->
                                         </div>
                                         <div class="btn-set">
                                             <a class="btn-solid small black-bg applyBtn" href="javascript:" style="display:none;"><span>신청하기</span></a>

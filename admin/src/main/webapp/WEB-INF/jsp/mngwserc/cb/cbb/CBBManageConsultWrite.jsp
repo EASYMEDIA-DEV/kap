@@ -804,7 +804,7 @@
                         <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
                         <div class="pull-right">
                             <div class="pull-right">
-                                <p class="form-control-static"><c:if test="${ not empty rtnDto.modDtm }">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.modDtm}">-</c:if></p>
+                                <p class="form-control-static"><c:if test="${ not empty rtnDto.admMemoModDtm }">${kl:convertDate(rtnDto.admMemoModDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.admMemoModDtm}">-</c:if></p>
                             </div>
                             <div>
                                 <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
@@ -850,8 +850,8 @@
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group" style="z-index:0;width: 220px;">
+                                        <div class="col-sm-5">
+                                            <div class="input-group" style="z-index:0;width: 320px;">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="" title="방문일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
@@ -861,8 +861,8 @@
                                             </div>
                                         </div>
                                         <label class="col-sm-1 control-label">컨설팅 완료예정일</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group" style="z-index:0;width: 220px;">
+                                        <div class="col-sm-5">
+                                            <div class="input-group" style="z-index:0;width: 320px;">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="" title="컨설팅 완료예정일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">

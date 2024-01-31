@@ -326,7 +326,49 @@ public class WBCBSecurityController {
     }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertBsnmNoCnt")
+    public String getInsertBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBCBSecurityService.getInsertBsnmNoCnt(wBCBSecurityMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertSbrdnBsnmNoCnt")
+    public String getInsertSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBCBSecurityService.getInsertSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getBsnmNoCnt")
     public String getBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -347,7 +389,7 @@ public class WBCBSecurityController {
     }
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getSbrdnBsnmNoCnt")
     public String getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -366,6 +408,8 @@ public class WBCBSecurityController {
         }
         return "jsonView";
     }
+
+
 
     /**
      * Edit 페이지 - 부품사 등록 사업자등록번호 인증

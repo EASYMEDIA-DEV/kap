@@ -280,6 +280,7 @@
 			, D.TCHLG_5_STAR_CD /* 기술 5스타 코드 */
 			, D.TCHLG_5_STAR_YEAR /* 기술 5스타 년도 */
 
+		    , B.GPC_YN /* gpc 교육 여부 */
 			, A.GPC_ID /* gpc 아이디 */
 			, A.STTS_CD /* 선발 상태 코드 */
 			/*, CASE A.STTS_CD

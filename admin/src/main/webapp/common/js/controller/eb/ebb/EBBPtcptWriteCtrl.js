@@ -147,32 +147,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 			// 유효성 검사
 			$formObj.validation({
-				after : function() {
-					var isValid = true, editorChk = true;
-/*
-					$formObj.find(".ckeditorRequired").each(function() {
-						jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
-						jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
-						jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
-						jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
-						jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
+				before : function(e) {
 
-						var editorVal = jQuery(this).val().length;
+					var isValid = true;
 
-						if (editorVal < 1)
-						{
-							editorChk = false;
+					var gpcYn = $("#gpcYn").val();
+					var gpcPass = $("#gpcPass").val();
 
-							alert(msgCtrl.getMsg("fail.co.cog.cnts"));
-
-							CKEDITOR.instances[jQuery(this).prop("id")].focus();
-
-							// 에디터 최상단으로 스크롤 이동
-							jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
-
-							return false;
-						}
-					});*/
 
 					if($("#memSeq").val() == ""){
 						alert("회원을 선택해주세요.");
@@ -181,7 +162,33 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					}
 
 					//교육장소가 gpc일 경우에만 출력하고 체크함
-					if($("#gpcId").val() == "") {
+					if(gpcYn == "Y" && $("#gpcId").val() == "") {
+						alert("GPC아이디를 입력해주세요.");
+						isValid = false;
+						return false;
+					}
+
+
+
+					if(gpcYn == "Y" && gpcPass == "N"){
+						alert("GPC 아이디를 인증해주세요.");
+						return false;
+					}
+
+					return isValid;
+				},
+				after : function() {
+					var isValid = true, editorChk = true;
+
+
+					if($("#memSeq").val() == ""){
+						alert("회원을 선택해주세요.");
+						isValid = false;
+						return false;
+					}
+
+					//교육장소가 gpc일 경우에만 출력하고 체크함
+					if(gpcYn == "Y" && $("#gpcId").val() == "") {
 						alert("GPC아이디를 입력해주세요.");
 						isValid = false;
 						return false;

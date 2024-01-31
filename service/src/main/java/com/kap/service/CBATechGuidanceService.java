@@ -96,4 +96,9 @@ public interface CBATechGuidanceService {
      */
     public CBATechGuidanceInsertDTO selectCompleteInfo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     *  Edit Page
+     *  관리자 메모 수정
+     */
+    public int updAdmMemo(CBATechGuidanceInsertDTO cBATechGuidanceService) throws Exception;
 }

@@ -91,9 +91,9 @@
                                                             <p class="training-explain-txt">${ rtnData.smmryNm }</p>
                                                         </div>
                                                         <div class="class-property-w">
-                                                            <div class="property-list offline"><!-- non-member: 비회원 가능 -->
+                                                            <div class="property-list non-member"><!-- non-member: 비회원 가능 --><!-- 2024-01-29 non-member 클래스 변경 -->
                                                                 <p class="txt">
-                                                                    <span>비회원 가능</span>
+                                                                    <span>비회원 신청 가능</span><!-- 2024-01-29 문구 변경 -->
                                                                 </p>
                                                             </div>
                                                             <div class="property-list offline"><!-- offline: 집체교육 -->
@@ -406,7 +406,7 @@
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAPicLayer.jsp"></jsp:include><!-- 문의 담당자 팝업 -->
     <jsp:include page="/WEB-INF/jsp/front/eb/eba/EBAEduRoomLayer.jsp"></jsp:include><!-- 교육장 팝업 -->
 
-    <form name="frmGo" id="frmGo" method="post" action="">
+    <%--<form name="frmGo" id="frmGo" method="post" action="">
         <input type="hidden" class="notRequired" id="regDtm" name="regDtm" value="" />
         <input type="hidden" class="notRequired" id="prntCdNm" name="prntCdNm" value="${ rtnData.prntCdNm }" />
         <input type="hidden" class="notRequired" id="ctgryCdNm" name="ctgryCdNm" value="${ rtnData.ctgryCdNm }" />
@@ -414,10 +414,33 @@
         <input type="hidden" class="notRequired" id="smmryNm" name="smmryNm" value="${ rtnData.smmryNm }" />
         <input type="hidden" id="edctnSeq" name="edctnSeq" value="${rtnData.edctnSeq}" />
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-    </form>
+    </form>--%>
 
 </div>
 
 
 
 
+<script>
+    window.onpageshow = function (event) {
+        console.log(event);
+        if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+            // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
+            // 이벤트 추가하는 곳
+            alert("정상적인 접근이 아닙니다.");
+            location.href = "/";
+        }
+    }
+
+    /*history.pushState(null, '', location.href);
+    window.onpopstate = function (event) {
+        console.log(event);
+        history.go(1);
+        this.handleGoback();
+        // 뒤로가기 버튼이 눌렸을 때 실행되는 코드
+        alert("뒤로가기 버튼이 클릭되었습니다.");
+
+        // 여기에 추가적인 동작을 원하는 경우 작성
+        // 예를 들어 특정 페이지로 이동하거나 다른 로직 수행 가능
+    }*/
+</script>

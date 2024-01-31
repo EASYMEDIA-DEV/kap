@@ -327,7 +327,49 @@ public class WBEBCarbonCompanyController {
     }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 등록 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertBsnmNoCnt")
+    public String getInsertBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getInsertBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 등록 종된 사업자번호 매핑 여부 확인
+     */
+    @PostMapping(value="/getInsertSbrdnBsnmNoCnt")
+    public String getInsertSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wBEBCarbonCompanyService.getInsertSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 수정 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getBsnmNoCnt")
     public String getBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -348,7 +390,7 @@ public class WBEBCarbonCompanyController {
     }
 
     /**
-     * 종된 사업자번호 매핑 여부 확인
+     * 수정 종된 사업자번호 매핑 여부 확인
      */
     @PostMapping(value="/getSbrdnBsnmNoCnt")
     public String getSbrdnBsnmNoCnt(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception

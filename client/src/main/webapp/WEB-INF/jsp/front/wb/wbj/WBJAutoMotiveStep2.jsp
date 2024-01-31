@@ -14,6 +14,7 @@
     <input type="hidden" class="notRequired" id="pstnCdNm" value="${rtnUser.pstnCdNm}" />
     <input type="hidden" class="notRequired" id="deptCdNm" value="${rtnUser.deptNm}" />
     <input type="hidden" class="notRequired" id="cmpnNm" value="${rtnUser.cmpnNm}" />
+    <input type="hidden" id="msg" value="${msg}">
   <div class="sub-top-vis-area apply-page consult-biz">
     <div class="page-tit-area">
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>

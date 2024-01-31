@@ -28,7 +28,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 var etcNm = completeInfo.etcNm;
                 var cbsnCd = completeInfo.cbsnCd
 
-                $(".regDtm").text(regDtm.slice(0,-3));
+                $(".regDtm").text(regDtm.slice(0,16));
                 $(".name").text(name);
                 $(".cmpnNm").text(cmpnNm);
                 if(cbsnCd.indexOf("METAL")>0){

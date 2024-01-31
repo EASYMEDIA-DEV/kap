@@ -5,6 +5,7 @@
   <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${param.episdSeq}" />
   <input type="hidden" class="notRequired" id="appctnBsnmNo" name="appctnBsnmNo" value="${param.bsnmNo}" />
   <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${param.memSeq}" />
+  <input type="hidden" id="msg" value="${msg}">
   <div class="sub-top-vis-area apply-page consult-biz">
     <div class="page-tit-area">
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>

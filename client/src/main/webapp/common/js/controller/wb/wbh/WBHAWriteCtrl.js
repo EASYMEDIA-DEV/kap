@@ -138,6 +138,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
+            if ($('#msg').val()) {
+                alert($('#msg').val());
+                location.href="/";
+            }
+
             equidHtml = $('.addEquiment').html();
             $('.delete').remove();
         }

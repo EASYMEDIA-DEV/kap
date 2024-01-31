@@ -31,19 +31,9 @@
         </div>
 
         <div class="divide-con-area">
-            <div class="lnb-area">
-                <div class="for-motion">
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu active" href="javascript:"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                </div>
-            </div>
+            <!--LNB 시작-->
+            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+            <!--LNB 끝-->
 
             <div class="right-con-area">
                 <div class="guide-info-area scroll-motion">
@@ -195,15 +185,17 @@
                                                         <c:when test="${empty rtnInfo.mjrPrdct1 and empty rtnInfo.mjrPrdct2 and empty rtnInfo.mjrPrdct3}">
                                                             -
                                                         </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct1}">
-                                                            ① ${rtnInfo.mjrPrdct1}
-                                                        </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct2}">
-                                                            ② ${rtnInfo.mjrPrdct2}
-                                                        </c:when>
-                                                        <c:when test="${not empty rtnInfo.mjrPrdct3}">
-                                                            ③ ${rtnInfo.mjrPrdct3}
-                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct1}">
+                                                                ① ${rtnInfo.mjrPrdct1}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct2}">
+                                                                ② ${rtnInfo.mjrPrdct2}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnInfo.mjrPrdct3}">
+                                                                ③ ${rtnInfo.mjrPrdct3}
+                                                            </c:if>
+                                                        </c:otherwise>
                                                     </c:choose>
                                                 </td>
                                             </tr>
@@ -234,15 +226,42 @@
                                                 <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01001'}">
                                                     <tr>
                                                         <th>품질5스타</th>
-                                                        <td>${not empty rtnInfo.qlty5StarCdNm ? rtnInfo.qlty5StarCdNm : "-"} / ${not empty rtnInfo.qlty5StarYear ? rtnInfo.qlty5StarYear : "-"}년</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${not empty rtnInfo.qlty5StarCdNm}">
+                                                                    ${rtnInfo.qlty5StarCdNm} / ${rtnInfo.qlty5StarYear}년
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <th>납입5스타</th>
-                                                        <td>${not empty rtnInfo.pay5StarCdNm ? rtnInfo.pay5StarCdNm : "-"} / ${not empty rtnInfo.pay5StarYear ? rtnInfo.pay5StarYear : "-"}년</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${not empty rtnInfo.pay5StarCdNm}">
+                                                                    ${rtnInfo.pay5StarCdNm} / ${rtnInfo.pay5StarYear}년
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                     </tr>
                                                     <tr>
                                                         <th>기술5스타</th>
-                                                        <td>${not empty rtnInfo.tchlg5StarCdNm ? rtnInfo.tchlg5StarCdNm : "-"} / ${not empty rtnInfo.tchlg5StarYear ? rtnInfo.tchlg5StarYear : "-"}년</td>
+                                                        <td>
+                                                            <c:choose>
+                                                                <c:when test="${not empty rtnInfo.tchlg5StarCdNm}">
+                                                                    ${rtnInfo.tchlg5StarCdNm} / ${rtnInfo.tchlg5StarYear}년
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </td>
                                                     </tr>
                                                 </c:when>
                                             </c:choose>

@@ -57,7 +57,7 @@
                                     <div class="def-list-w">
                                         <div class="def-list">
                                             <p class="tit f-head">신청일시</p>
-                                            <p class="txt f-sub-head">${ rtnData.regDtm }</p>
+                                            <p class="txt f-sub-head">${ ptcptData.regDtm }</p>
                                         </div>
                                     </div>
                                 </div>
@@ -91,7 +91,3 @@
     <!-- content 영역 end -->
 
 </div>
-
-
-
-

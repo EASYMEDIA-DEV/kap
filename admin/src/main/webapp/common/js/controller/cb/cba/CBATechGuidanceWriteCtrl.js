@@ -91,7 +91,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT01') {
                 $(".rsumeSttsNm").text("사전심사선정");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_03")
-                if (bfJdgmtRslt == 'BF_JDGMT_RSLT03' || initVstRsltCd == 'BF_JDGMT_RSLT03') {
+                if (initVstRsltCd == 'BF_JDGMT_RSLT03') {
                     $(".rsumeSttsNm").text("지원단이관");
                     $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
@@ -107,6 +107,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }else if (bfJdgmtRslt == 'BF_JDGMT_RSLT02') {
                 $(".rsumeSttsNm").text("사전심사탈락");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_04");
+            }else if(bfJdgmtRslt == 'BF_JDGMT_RSLT03'){
+                $(".rsumeSttsNm").text("지원단이관");
+                $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }
         }
     }
@@ -325,6 +328,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         } else {
                             alert("사업자등록번호를 인증해주세요");
                             return false;
+                        }
+                    }
+                }
+            },btnUpdAdmMemo : {
+                event : {
+                    click : function() {
+                        let detailsKey = $("#detailsKey").val();
+                        if(detailsKey != '') {
+                            let cBATechGuidanceInsertDTO = {}
+                            cBATechGuidanceInsertDTO.admMemo = $('#admMemo').val();
+                            cBATechGuidanceInsertDTO.detailsKey = detailsKey;
+
+                            cmmCtrl.jsonAjax(function(respObj) {
+                                var rtnData = JSON.parse(respObj);
+                                if(rtnData.respCnt > 0) {
+                                    alert(msgCtrl.getMsg("success.upd"));
+                                    location.replace("./list");
+                                }
+                            }, "/mngwserc/cb/cba/updAdmMemo", cBATechGuidanceInsertDTO, "text")
                         }
                     }
                 }
@@ -576,7 +598,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
 
                         if(confirm("저장하시겠습니까?")){
                             if ($formObj.find(".dropzone").size() > 0) {
-                                console.log($formObj);
                                 cmmCtrl.fileFrmAjax(function (data) {
                                     //콜백함수. 페이지 이동
                                     if (data.respCnt > 0) {

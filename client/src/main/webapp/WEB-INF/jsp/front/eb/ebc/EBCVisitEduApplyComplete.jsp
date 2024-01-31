@@ -42,19 +42,9 @@
         </div>
 
         <div class="divide-con-area">
-            <div class="lnb-area">
-                <div class="for-motion">
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>교육사업 소개</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu" href="javascript:"><span>교육신청</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                    <div class="lnb-list">
-                        <a class="btn-two-depth single-menu active" href="/education/visit/index"><span>방문교육</span></a><!-- 하위메뉴 없을 시 single-menu 클래스 추가 -->
-                    </div>
-                </div>
-            </div>
+            <!--LNB 시작-->
+            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+            <!--LNB 끝-->
 
             <div class="right-con-area">
                 <div class="cont-sec-w">
@@ -88,7 +78,7 @@
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap align-center for-motion">
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" href="javascript:"><span>신청내역 보기</span></a>
+                            <a class="btn-solid small black-bg" href="/my-page/edu-apply/list"><span>신청내역 보기</span></a>
                         </div>
                     </div>
                 </div>

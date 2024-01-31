@@ -35,6 +35,7 @@ import java.util.List;
  * 		since			author				   description
  *   ===========    ==============    =============================
  *   2023.12.06			양현우			 		최초생성
+ *   2024.01.31			양현우			 		@login 뒤로가기시 로그인 해제 수정 
  * </pre>
  */
 @Slf4j
@@ -58,12 +59,21 @@ public class COLgnController {
     @GetMapping("/login")
 	public String getLoginPage(HttpServletRequest request, HttpSession session, ModelMap modelMap) throws Exception
     {
+		String returnUrl = "";
     	try
 		{
-			// 보안 처리(로그인 세션 변경)
-			session.invalidate();
-			log.error("request.getAttribute(\"rtnUrl\") : {}", request.getParameter("rtnUrl"));
-			modelMap.addAttribute("rtnUrl", COWebUtil.clearXSSMinimum(COStringUtil.nullConvert(request.getParameter("rtnUrl"))));
+
+		  Object loginMap = RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
+
+		  //로그인 세션이 없을경우 로그인 페이지로 이동
+		  if(loginMap == null) {
+			  session.invalidate();
+			  log.error("request.getAttribute(\"rtnUrl\") : {}", request.getParameter("rtnUrl"));
+			  modelMap.addAttribute("rtnUrl", COWebUtil.clearXSSMinimum(COStringUtil.nullConvert(request.getParameter("rtnUrl"))));
+			  returnUrl = "/front/co/COLgn.front";
+		  } else {
+			  returnUrl = "redirect:/";
+		  }
 		}
     	catch (Exception e)
 		{
@@ -73,7 +83,7 @@ public class COLgnController {
 			}
 			throw new Exception(e.getMessage());
 		}
-    	return "/front/co/COLgn.front";
+		return returnUrl;
 	}
 
 	/**

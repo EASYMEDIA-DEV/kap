@@ -307,6 +307,9 @@ public class EBCVisitEduDTO extends BaseDTO {
     @Schema(title = "교육종료일시", example = "yyyy-MM-dd hh:mm:ss")
     private String edctnEndDtm;
 
+    @Schema(title = "교육종료일시-교육시작일시(n일)", example = "")
+    private String edctnDay;
+
     @Schema(title = "교육장소", example = "")
     private String edctnPlace;
 

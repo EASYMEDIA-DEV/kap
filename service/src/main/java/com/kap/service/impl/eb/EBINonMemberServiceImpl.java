@@ -364,11 +364,11 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	@Transactional
 	public EBINonMemberDTO selectNonMemberChk(EBINonMemberDTO pEBINonMemberDTO) throws Exception
 	{
-		int actCnt = 0;
-		EBINonMemberDTO tempDto = new EBINonMemberDTO();
-		tempDto = eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
+//		int actCnt = 0;
+//		EBINonMemberDTO tempDto = new EBINonMemberDTO();
+//		tempDto = eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
 
-		return tempDto;
+		return eBINonMemberMapper.selectNonMemberChk(pEBINonMemberDTO);
 	}
 
 
@@ -402,10 +402,14 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		//해당 과정이 존재할 경우
 		if(tempDto2.getAccsStatusNm().contains("접수중")) {
 			boolean modYn = false;
-			if(pEBINonMemberDTO.getApplyDateTime() != null && !pEBINonMemberDTO.getApplyDateTime().isEmpty() && tempDto2.getModDtm() != null && !tempDto2.getModDtm().isEmpty()) {
+			String tempADT = pEBINonMemberDTO.getApplyDateTime();
+			String tempMOD = tempDto2.getModDtm();
+			tempADT = tempADT.substring(0, 19);
+			tempMOD = tempMOD.substring(0, 19);
+			if(!tempADT.isEmpty() && !tempMOD.isEmpty()) {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-				LocalDateTime applyDateTime = LocalDateTime.parse(pEBINonMemberDTO.getApplyDateTime(), formatter);
-				LocalDateTime modDtm = LocalDateTime.parse(tempDto2.getModDtm(), formatter);
+				LocalDateTime applyDateTime = LocalDateTime.parse(tempADT, formatter);
+				LocalDateTime modDtm = LocalDateTime.parse(tempMOD, formatter);
 				if(applyDateTime.compareTo(modDtm) < 0) {
 					modYn = true;
 				}
@@ -438,8 +442,8 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 				int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
 				pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 				eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);
-				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
-				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
+//				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
+//				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
 				pEBINonMemberDTO.setRegStat("S");
 			}
 		}

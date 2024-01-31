@@ -372,7 +372,7 @@
                             <label class="col-sm-1 control-label">정원<span class="star text-danger"> *</span></label>
                             <div class="col-sm-2">
                                 <label class="input_line form-inline">
-                                    <input type="text" class="form-control input-sm numberChk" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/> 명
+                                    <input type="text" class="form-control input-sm numberChk notRequired" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"/> 명
                                 </label>
 
                             </div>
@@ -413,13 +413,13 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm koreanCustromChk" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
+                                        <input type="text" class="form-control input-sm koreanCustromChk notRequired" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm emailChk" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자이메일" maxlength="50" placeholder="담당자이메일"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자이메일" maxlength="50" placeholder="담당자이메일"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm mobileChk" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자전화번호" maxlength="50" placeholder="담당자전화번호"/>
+                                        <input type="text" class="form-control input-sm mobileChk notRequired" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자전화번호" maxlength="50" placeholder="담당자전화번호"/>
                                     </td>
                                     </tbody>
                                 </table>

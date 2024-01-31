@@ -717,23 +717,22 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
                     }
                 }
-            },
-            btnUpdAdmMemo : {
-                event : {
-                    click : function() {
-                        let appctnSeq = $basicData.find('input[type=hidden][name=appctnSeq]').val();
-                        if(appctnSeq != '') {
-                            let wBFBRegisterDTO = {}
-                            wBFBRegisterDTO.admMemo = $('#admMemo').val();
-                            wBFBRegisterDTO.appctnSeq = appctnSeq
+            },btnUpdAdmMemo : {
+                event: {
+                    click: function () {
+                        let detailsKey = $("#detailsKey").val();
+                        if (detailsKey != '') {
+                            let cBATechGuidanceInsertDTO = {}
+                            cBATechGuidanceInsertDTO.admMemo = $('#admMemo').val();
+                            cBATechGuidanceInsertDTO.detailsKey = detailsKey;
 
-                            cmmCtrl.jsonAjax(function(respObj) {
+                            cmmCtrl.jsonAjax(function (respObj) {
                                 var rtnData = JSON.parse(respObj);
-                                if(rtnData.respCnt > 0) {
+                                if (rtnData.respCnt > 0) {
                                     alert(msgCtrl.getMsg("success.upd"));
                                     location.replace("./list");
                                 }
-                            }, "/mngwserc/cb/cbb/updAdmMemo", wBFBRegisterDTO, "text")
+                            }, "/mngwserc/cb/cba/updAdmMemo", cBATechGuidanceInsertDTO, "text")
                         }
                     }
                 }

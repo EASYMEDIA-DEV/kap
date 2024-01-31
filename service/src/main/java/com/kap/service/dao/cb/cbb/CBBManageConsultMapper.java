@@ -237,6 +237,4 @@ public interface CBBManageConsultMapper {
      * 컨설팅사업 참여이관로그 테이블 삭제
      */
     public int deleteConsultAppctnTrnsfDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
-
-
 }

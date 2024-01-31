@@ -269,6 +269,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String rqstCntn;
     @Schema(title = "관리자 메모")
     private String admMemo;
+    @Schema(title = "관리자 메모 저장 시간")
+    private String admMemoModDtm;
     @Schema(title = "소개파일순번")
     private Integer itrdcFileSeq;
     @Schema(title = "소개파일ord")

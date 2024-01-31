@@ -95,10 +95,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 alert('위원회원은 해당 서비스를 이용할 수 없습니다.');
                             } else if (data.resultCode == 190) {
                                 alert('1,2차 부품사만 신청가능합니다.');
-                            } else if (data.resultCode == 300) {
-                                if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                    location.href = "/my-page/coexistence/list";
-                                }
                             } else if (data.resultCode == 200) {
                                 location.href = "./step1?episdSeq="+episdSeq;
                             }
@@ -127,11 +123,58 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         //이용약관 체크여부
                         if ($('#agreeChk').is(':checked')) {
-                            if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
-                                cmmCtrl.fileFrmAjax(function (data) {
-                                    //콜백함수. 페이지 이동
-                                    location.replace("./complete");
-                                }, "./insert", $formObj, "json");
+                            var pass = false;
+                            var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+
+                            if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                                jQuery.ajax({
+                                    url : "./getInsertBsnmNoCnt",
+                                    type : "POST",
+                                    timeout: 30000,
+                                    data : $formObj.serializeArray(),
+                                    dataType : "json",
+                                    async: false,
+                                    cache : false,
+                                    success : function(data, status, xhr){
+                                        if(data.respCnt > 0 ){
+                                            if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                                location.href = "/my-page/coexistence/list";
+                                            }
+                                            return;
+                                        }else{
+                                            pass = true;
+                                        }
+                                    }
+                                });
+                            }else{
+                                jQuery.ajax({
+                                    url : "./getInsertSbrdnBsnmNoCnt",
+                                    type : "POST",
+                                    timeout: 30000,
+                                    data : $formObj.serializeArray(),
+                                    dataType : "json",
+                                    async: false,
+                                    cache : false,
+                                    success : function(data, status, xhr){
+                                        if(data.respCnt > 0 ){
+                                            if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                                location.href = "/my-page/coexistence/list";
+                                            }
+                                            return;
+                                        }else{
+                                            pass = true;
+                                        }
+                                    }
+                                });
+                            }
+
+                            if(pass){
+                                if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
+                                    cmmCtrl.fileFrmAjax(function (data) {
+                                        //콜백함수. 페이지 이동
+                                        location.replace("./complete");
+                                    }, "./insert", $formObj, "json");
+                                }
                             }
                         } else {
                             alert('약관에 동의해주세요.')
@@ -141,6 +184,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
+
+            if ($('#msg').val()) {
+                alert($('#msg').val());
+                location.href="/";
+            }
+
             $formObj.find("input[type=file]").fileUpload({
                 loading:false,
                 sync:true

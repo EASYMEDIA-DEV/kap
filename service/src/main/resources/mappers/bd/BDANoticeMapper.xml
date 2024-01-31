@@ -321,7 +321,9 @@
     -->
     <sql id="selectNoticeListwhereSql">
         <if test='siteGubun == "front"'>
-            AND EXPS_YN = 'Y'
+            <if test='mainYn != "N"'>
+                AND EXPS_YN = 'Y'
+            </if>
             <if test="srchVal != null and srchVal != ''">
                 AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
                 CNTN LIKE CONCAT('%', #{srchVal}, '%')

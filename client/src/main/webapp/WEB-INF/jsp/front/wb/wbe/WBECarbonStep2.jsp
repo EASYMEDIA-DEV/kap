@@ -5,6 +5,12 @@
     <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}" />
     <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${rtnUser.seq}" />
     <input type="hidden" class="notRequired" id="appctnBsnmNo" name="appctnBsnmNo" value="${rtnUser.bsnmNo}" />
+
+    <input type="hidden" class="notRequired" id="year" name="year" value="${rtnRoundDtl.year}" />
+    <input type="hidden" class="notRequired" id="episd" name="episd" value="${rtnRoundDtl.episd}" />
+    <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnUser.bsnmNo}" />
+
+    <input type="hidden" id="msg" value="${msg}">
   <div class="sub-top-vis-area apply-page consult-biz">
     <div class="page-tit-area">
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
@@ -57,7 +63,7 @@
                       <div class="data-line">
                         <div class="form-group">
                           <div class="form-input">
-                            <input type="text" name="sbrdnBsnmNo" placeholder="종된사업장번호 입력" maxlength="4">
+                            <input type="text" id="sbrdnBsnmNo" name="sbrdnBsnmNo" placeholder="종된사업장번호 입력" maxlength="4">
                           </div>
                         </div>
                         <div class="noti-txt-w">

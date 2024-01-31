@@ -850,7 +850,6 @@
             RQST_CNTN = #{rqstCntn},
             ITRDC_FILE_SEQ = #{itrdcFileSeq},
             IMPVM_FILE_SEQ = #{impvmFileSeq},
-            ADM_MEMO = #{admMemo},
             MOD_DTM = now(),
             MOD_ID = #{regId},
             MOD_IP = #{regIp}
@@ -1137,6 +1136,7 @@
             (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,
             A.APPCTN_MEM_SEQ,
             (SELECT EMAIL FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) EMAIL,
+            (SELECT HP_NO FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) HP_NO,
             A.CNSTG_CD,
             (SELECT NAME FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
             A.RSUME_STTS_CD,
@@ -1191,6 +1191,7 @@
                 AND ((SELECT IFNULL(CNSTG_KICKF_DT, CURDATE() + INTERVAL 1 DAY) FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ ) <![CDATA[<=]]> CURDATE()) THEN 'MNGCNSLT_STATUS09'
                 ELSE A.RSUME_STTS_CD END) AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM,
             A.ADM_MEMO,
+            A.ADM_MEMO_MOD_DTM,
             A.REG_DTM,
             A.REG_ID,
             CASE
@@ -1486,5 +1487,4 @@
             </choose>
         </where>
     </delete>
-
 </mapper>

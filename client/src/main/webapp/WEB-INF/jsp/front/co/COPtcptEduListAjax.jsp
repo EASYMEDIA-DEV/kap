@@ -48,8 +48,12 @@
                                             <p class="txt f-body2">${list.rcrmtMthdCdNm}</p>
                                         </div>
                                         <div class="info-list">
-                                            <p class="tit f-caption2">선발여부</p>
-                                            <p class="txt f-body2">${list.sttsCdNm}</p>
+                                            <c:choose>
+                                                <c:when test="${list.rcrmtMthdCd eq 'RCRMT_MTHD02'}">
+                                                    <p class="tit f-caption2">선발여부</p>
+                                                    <p class="txt f-body2">${list.sttsCdNm}</p>
+                                                </c:when>
+                                            </c:choose>
                                         </div>
                                         <div class="info-list">
                                             <p class="tit f-caption2">학습시간</p>

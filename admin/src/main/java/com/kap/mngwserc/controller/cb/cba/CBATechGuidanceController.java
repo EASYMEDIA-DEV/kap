@@ -160,9 +160,6 @@ public class CBATechGuidanceController {
             cBATechGuidanceInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBATechGuidanceInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             String rsumeSttsCd = cBATechGuidanceInsertDTO.getRsumeSttsCd();
-            if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
-
-            }
             modelMap.addAttribute("respCnt", cBATechGuidanceService.insertTechGuidance(cBATechGuidanceInsertDTO));
         } catch (Exception e) {
             if (log.isErrorEnabled()) {
@@ -315,6 +312,28 @@ public class CBATechGuidanceController {
                 throw new Exception(e.getMessage());
             }
             return detailList;
+        }
+
+        /**
+         * Edit 페이지 - 관리자 메모, 시간
+         */
+        @PostMapping(value = "/updAdmMemo")
+        @ResponseBody
+        public CBATechGuidanceInsertDTO updAdmMemo(@Valid @RequestBody CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, HttpServletRequest request) throws Exception
+        {
+            try {
+
+                cBATechGuidanceInsertDTO.setRespCnt(cBATechGuidanceService.updAdmMemo(cBATechGuidanceInsertDTO));
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return cBATechGuidanceInsertDTO;
         }
     }
 }

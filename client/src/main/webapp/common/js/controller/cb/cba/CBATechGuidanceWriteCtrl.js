@@ -292,28 +292,43 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                                     alert("업종을 선택해주세요.");
                                                     $("input[name='cbsnCd']").focus();
                                                     return false;
-                                                } else if (cbsnCd == 'TEC_GUIDE_INDUS01') {
+                                                }else if (cbsnCd == 'TEC_GUIDE_INDUS01') {
                                                     if (!$("input[name='etcNm']").val()) {
                                                         alert("업종을 입력해주세요.");
                                                         $("input[name='etcNm']").focus();
                                                         return false;
+                                                    }
+                                                }else {
+                                                    if (!appctnTypeCd) {
+                                                        alert("신청사항을 선택해주세요.");
+                                                        $("input[name='appctnTypeCd']").focus();
+                                                        return false;
                                                     } else {
-                                                        if (!appctnTypeCd) {
-                                                            alert("신청사항을 선택해주세요.");
-                                                            $("input[name='appctnTypeCd']").focus();
+                                                        var searchFile = $("#searchFile").val();
+                                                        if (!searchFile) {
+                                                            alert("회사소개서를 등록해주세요.");
+                                                            $("#searchFile").focus();
                                                             return false;
                                                         } else {
-                                                            var searchFile = $("#searchFile").val();
-                                                            if (!searchFile) {
-                                                                alert("회사소개서를 등록해주세요.");
-                                                                $("#searchFile").focus();
+                                                            var searchFile1 = $("#searchFile1").val();
+                                                            if (!searchFile1) {
+                                                                alert("개선활동 추진계획서를 등록해주세요.");
+                                                                $("#searchFile1").focus();
                                                                 return false;
-                                                            } else {
-                                                                var searchFile1 = $("#searchFile1").val();
-                                                                if (!searchFile1) {
-                                                                    alert("개선활동 추진계획서를 등록해주세요.");
-                                                                    $("#searchFile1").focus();
+                                                            }else{
+                                                                if(agree == "N"){
+                                                                    alert("약관에 동의해주세요");
+                                                                    $("#agreeChk").focus();
                                                                     return false;
+                                                                }else{
+                                                                    if(confirm("위 정보로 사업을 신청하시겠습니까?")){
+                                                                        cmmCtrl.fileFrm(function(data){
+                                                                            console.log();
+                                                                            var cnstgSeq = data.actCnt;
+                                                                            //콜백함수. 페이지 이동
+                                                                            location.replace("./complete?cnstgSeq="+cnstgSeq);
+                                                                        }, "./insert", $formObj, "json");
+                                                                    }
                                                                 }
                                                             }
                                                         }
@@ -323,20 +338,6 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                                         }
                                     }
                                 }
-                            }
-                        }
-                        if(agree == "N"){
-                            alert("약관에 동의해주세요");
-                            $("#agreeChk").focus();
-                            return false;
-                        }else{
-                            if(confirm("사업을 신청하시겠습니까?")){
-                                cmmCtrl.fileFrm(function(data){
-                                    console.log();
-                                    var cnstgSeq = data.actCnt;
-                                    //콜백함수. 페이지 이동
-                                    location.replace("./complete?cnstgSeq="+cnstgSeq);
-                                }, "./insert", $formObj, "json");
                             }
                         }
                     }

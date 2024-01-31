@@ -137,10 +137,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 						if(gpcYn == "Y"){
 							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs").removeClass("notRequired");
+
+							$(".gpcYn").css("display", "");
 						}else{
 							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs").addClass("notRequired");
 
 							$("#gpcEdctnType, #gpcParntCtgry, #gpcCtgry, #gpcLvl, #gpcFxnumCnt, #gpcRfnPrcs, #gpcIsttrId").val(null);
+							$(".gpcYn").css("display", "none");
 						}
 
 					}
@@ -214,6 +217,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 
 						cmmCtrl.getCouseSrchLayerPop(function(data){
+
+							if(data.choiceCnt  == -1){
+								return false;
+							}
 
 							//선택한 교육과정이 여러개 일경우
 							if(data.trObjList != null){
@@ -323,8 +330,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				});
 			});
 
-			//pcStduyCntn
-
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
 			/* File Dropzone Setting */
@@ -339,8 +344,160 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			});
 			// 유효성 검사
 			$formObj.validation({
-				after : function() {
+
+				before : function(e) {
+
+					if($("#cd").val() ==""){
+						alert("1차 과정분류 코드를 선택해주세요.");
+						$("#cd").focus();
+						return false;
+					}
+
+					if($("#ctgryCd").val() ==""){
+						alert("2차 과정분류 코드를 선택해주세요.");
+						$("#ctgryCd").focus();
+						return false;
+					}
+
+					if($("#lcnsCnnctCd").val() ==""){
+						alert("자격증 연계를 선택해주세요");
+						$("#lcnsCnnctCd").focus();
+						return false;
+					}
+
+					if($("#gpcYn").val() ==""){
+						alert("GPC 교육여부를 선택해주세요");
+						$("#gpcYn").focus();
+						return false;
+					}
+
+					if($("#gpcYn").val() == "Y"){
+
+						if($("#gpcEdctnType").val() == ""){
+							alert("GPC 교육유형을 선택해주세요");
+							$("#gpcEdctnType").focus();
+							return false;
+						}
+
+						if($("#gpcLvl").val() == ""){
+							alert("GPC 레벨을 선택해주세요");
+							$("#gpcLvl").focus();
+							return false;
+						}
+
+						if($("#gpcParntCtgry").val() == ""){
+							alert("GPC 카테고리를 선택해주세요");
+							$("#gpcParntCtgry").focus();
+							return false;
+						}
+
+						if($("#gpcCtgry").val() == ""){
+							alert("GPC 트랙을 선택해주세요");
+							$("#gpcCtgry").focus();
+							return false;
+						}
+
+						if($("#gpcRfnPrcs").val() == ""){
+							alert("GPC 환급과정을 선택해주세요");
+							$("#gpcRfnPrcs").focus();
+							return false;
+						}
+
+						if($("#gpcFxnumCnt").val() == ""){
+							alert("GPC 정원수를 선택해주세요");
+							$("#gpcFxnumCnt").focus();
+							return false;
+						}
+					}
+
+					if($("#nm").val() ==""){
+						alert("과정명을 선택해주세요");
+						$("#nm").focus();
+						return false;
+					}
+
+					if($("#smmryNm").val() ==""){
+						alert("과정요약을 선택해주세요");
+						$("#smmryNm").focus();
+						return false;
+					}
+
+					if($("#itrdcCntn").val() ==""){
+						alert("과정소개를 선택해주세요");
+						$("#itrdcCntn").focus();
+						return false;
+					}
+
+					if($("#stduyTrgtCntn").val() ==""){
+						alert("학습 목표를 선택해주세요");
+						$("#stduyTrgtCntn").focus();
+						return false;
+					}
+
+
+
+
+
+
 					var isValid = true, editorChk = true;
+
+					var targetchkLength= $("input[name='targetCd']:checked").length;
+
+					$(".edTargetRow").each(function(){
+
+						var rowTargetLength= $(this).find("input[name='targetCd']:checked").length;
+
+						if(rowTargetLength == 0 && isValid){
+							var cdNm = $(this).find("label:first").data("cdnm");
+							if(cdNm !="기타"){
+								alert("학습 대상("+cdNm+")를 선택해주세요");
+								$("input[name='targetCd']").focus();
+								isValid = false;
+							}
+						}
+					});
+
+
+					if(isValid && $("input[name='stduyMthdCd']:checked").length == 0){
+						alert("학습 방식을 선택해주세요");
+						$("input[name='stduyMthdCd']").focus();
+						return false;
+					}
+
+					if(isValid && $("#cmptnStndCd").val() ==""){
+						alert("출석/수강을 선택해주세요");
+						$("#cmptnStndCd").focus();
+						return false;
+					}
+
+					//평가는 평가없음 체크 안할때만 유효성 체크
+					if(isValid && !$("input[name='jdgmtYn']").is(":checked")){
+						if($("#cmptnJdgmtCd").val() ==""){
+							alert("평가를 선택해주세요");
+							$("#cmptnJdgmtCd").focus();
+							return false;
+						}
+					}
+
+					if(isValid && $("#stduyDdCd").val() ==""){
+						alert("학습일을 선택해주세요");
+						$("#stduyDdCd").focus();
+						return false;
+					}
+
+					if(isValid && $("#stduyTimeCd").val() ==""){
+						alert("학습 시간을 선택해주세요");
+						$("#stduyTimeCd").focus();
+						return false;
+					}
+
+					if(isValid && $("#stduySuplsNm").val() ==""){
+						alert("학습 준비물을 선택해주세요");
+						$("#stduySuplsNm").focus();
+						return false;
+					}
+
+
 
 					$formObj.find(".ckeditorRequired").each(function(e) {
 
@@ -352,15 +509,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 						var editorVal = jQuery(this).val().length;
 
-						if (editorVal < 1)
+						if (editorVal < 1 && isValid)
 						{
 							editorChk = false;
 
 							if($(this).attr("name") == "pcStduyCntn"){
 								alert("PC 학습내용을 입력해주세요.");
+								$(this).focus();
 								isValid = false;
 							}else{
 								alert("모바일 학습내용을 입력해주세요.");
+								$(this).focus();
 								isValid = false;
 							}
 
@@ -374,32 +533,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						}
 					});
 
-					var targetchkLength= $("input[name='targetCd']:checked").length;
-
-					$(".edTargetRow").each(function(){
-
-						var rowTargetLength= $(this).find("input[name='targetCd']:checked").length;
-
-						if(rowTargetLength == 0 && isValid){
-							var cdNm = $(this).find("label:first").data("cdnm");
-							if(cdNm !="기타"){
-								alert("학습 대상("+cdNm+")를 선택해주세요");
-								isValid = false;
-							}
-
-						}
-					});
-
-
-					if(targetchkLength == 0 && isValid){
-						alert("학습 대상을 선택해주세요");
-						return false;
-					}
-
 					if (!editorChk)
 					{
 						isValid = false;
 					}
+
+					return isValid;
+
+				},
+				after : function() {
+					var isValid = true, editorChk = true;
 
 					return isValid;
 				},
@@ -410,12 +553,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						var actionMsg = ( $.trim($formObj.find("input[name=detailsKey]").val()) == "" ? msgCtrl.getMsg("success.ins") : msgCtrl.getMsg("success.upd") );
 
 
-						debugger;
 						if($("#gpcIsttrId").val() == "" || $("#gpcIsttrId").val() === undefined){
 							$("#gpcIsttrId").val(null);
 						}
-
-
 
 						if($formObj.find(".dropzone").size() > 0)
 						{
