@@ -524,7 +524,7 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody id="onlineList">
                                     <tr class="examTr" style="display: none;">
-                                        <td class="text-center" rowspan="2"></td>
+                                        <td class="text-center" rowspan="2">1</td>
                                         <td class="text-center">
                                             <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
                                         </td><!--강의명-->
@@ -602,7 +602,7 @@
                                         </c:when>
                                         <c:otherwise>
                                             <tr>
-                                                <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+                                                <td class="text-center" rowspan="2">${ rtnData.totalCount - rtnData.firstIndex - status.index + 1}</td>
                                                 <td class="text-center">
                                                     <input type="text" class="form-control input-sm notRequired" name="onlineNm" value="${list.url}" title="강의명" maxlength="50" placeholder="강의명" style="max-width: 300px;"/>
                                                 </td><!--강의명-->
@@ -1392,7 +1392,7 @@
                 </div>
             </div>
 
-            <c:if test="${not empty rtnDto}">
+            <c:if test="${not empty rtnDto and rtnDto.copyYn eq 'N'}">
                 <h5 class="ml mb-xl"><em class="ion-play mr-sm"></em>등록/수정이력</h5>
                 <fieldset>
                     <div class="form-group text-sm">

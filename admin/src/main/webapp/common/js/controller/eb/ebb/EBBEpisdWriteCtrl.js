@@ -1024,6 +1024,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function(){
 						onlineHtml.css("display", "").removeClass("examTr");/*.removeClass("notRequired");*/
+						var firstTd = onlineHtml.find("td:first");
+						var currentValue = parseInt(firstTd.text(), 10);
+						firstTd.text(currentValue + 1);
 						onlineFileHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
 						$("#onlineList").append("<tr>"+onlineHtml.html()+"</tr><tr>"+onlineFileHtml.html()+"</tr>");
 						onlineHtml.css("display", "none").addClass("examTr");/*.addClass("notRequired");*/
