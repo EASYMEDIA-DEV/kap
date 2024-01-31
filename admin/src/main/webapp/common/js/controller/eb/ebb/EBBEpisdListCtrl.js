@@ -206,8 +206,12 @@ define(["ezCtrl"], function(ezCtrl) {
 							$("."+checkVal).css("display","block");
 
 							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-							console.log(cdnm);
+							console.log("@@" +checkVal);
 							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
+
+
+
+							$(".cdListContainer."+checkVal).find("input:checkbox").prop("checked", true);
 
 
 						});
@@ -218,12 +222,13 @@ define(["ezCtrl"], function(ezCtrl) {
 							$(".cdListContainer").find("input:checkbox").prop("checked", false);
 						}
 
-						$(".detailCdList").find('input[type=checkbox]').prop("checked",false);
+						/*$(".detailCdList").find('input[type=checkbox]').prop("checked",false);
+
 						if($(".detailCdList").find('input[type=checkbox]').is(":visible")){
 							$(".detailCdList").find('input[type=checkbox]').each(function(){
 								$(this).prop("checked",true);
 							})
-						}
+						}*/
 
 					}
 				}
