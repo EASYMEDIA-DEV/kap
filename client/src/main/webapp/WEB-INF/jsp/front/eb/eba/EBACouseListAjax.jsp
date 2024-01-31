@@ -37,6 +37,15 @@
                             </c:otherwise>
                         </c:choose>
 
+                        <!--교육일수 차이 계산-->
+                        <c:set var="dayVal" value=""/>
+                        <c:choose>
+                            <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                                <c:set var="strtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                <c:set var="endDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                <c:set var="dayVal" value="${kl:getDaysDiff(strtDt, endDt) + 1}"/>
+                            </c:when>
+                        </c:choose>
 
 
                         <a class="swiper-slide marquee_item1 ${dtlClass} ${accsStatusOrderClass}" href="javascript:" data-edctnSeq="${list.edctnSeq}">
@@ -64,6 +73,7 @@
                                     <div class="list">
                                         <p class="txt">교육기간</p>
                                         <p class="date">
+
                                             <c:choose>
                                                 <c:when test="${empty list.edctnStrtDtm}">
                                                     -
@@ -74,7 +84,9 @@
                                                     ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }
                                                 </c:otherwise>
                                             </c:choose>
-                                            (${list.stduyDdCdNm}일간)
+                                            <%--(${list.stduyDdCdNm}일간)--%>
+
+                                            (${dayVal}일간)
                                         </p>
                                     </div>
                                     <div class="list">
@@ -143,7 +155,7 @@
                                                         ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }
                                                     </c:otherwise>
                                                 </c:choose>
-                                                (${list.stduyDdCdNm}일간)
+                                                (${dayVal}일간)
                                             </div>
                                         </div>
                                         <div class="list ">

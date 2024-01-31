@@ -20,15 +20,15 @@
 			, gpc_lvl as lvl
 			, (select cd_nm from co_code_mst where cd=a.stduy_dd_cd) as edu_dd_cnt
 			, (select cd_nm from co_code_mst where cd=a.stduy_time_cd) as edu_time
-			, gpc_fxnum_cnt
+			, gpc_fxnum_cnt as max_cnt
 			, gpc_rfn_prcs as rfnd_prcs
 			, gpc_isttr_id as adm_seq
 			, pc_stduy_cntn as edu_cntn
 			, itrdc_cntn as edu_dtl
-			, kap_send_dd
 			, date_format(now(), '%Y-%m-%d') as kap_send_dd
 		from ed_edctn_prcs_mst a
 		WHERE exps_yn = 'Y'
+		  AND gpc_yn = 'Y'
 		  AND DATE_FORMAT(#{date}, '%Y-%m-%d') <![CDATA[<=]]> mod_dtm
 
 	</select>
@@ -66,6 +66,7 @@
 		from ed_edctn_episd_mst a
 				 left join ed_edctn_prcs_mst b on b.edctn_seq = a.edctn_seq
 		where a.exps_yn = 'Y'
+		  and b.gpc_yn = 'Y'
 		  and a.edctn_seq = #{kapSeq}
 	</select>
 
@@ -104,6 +105,7 @@
 		WHERE 1=1
 		  AND A.EPISD_SEQ = #{kapSchdSeq}
 		  AND a.STTS_CD = 'EDU_STTS_CD01'
+		  and C.gpc_yn = 'Y'
 	</select>
 
 	<!--
@@ -128,6 +130,7 @@
 		WHERE 1=1
 		  AND A.EPISD_SEQ = #{kapSchdSeq}
 		  AND a.STTS_CD = 'EDU_STTS_CD01'
+		  and C.gpc_yn = 'Y'
 	</select>
 
 

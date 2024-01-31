@@ -761,21 +761,23 @@
 		      		, ptcpt_seq
 					, "" AS hope_dt
 					, 0 AS ptcpt_cnt
-		FROM ed_edctn_episd_mst a
+		FROM (SELECT
+			episd_seq
+			, mem_seq
+			, bfre_mem_seq
+			, ptcpt_seq
+			, stts_cd
+			, gpc_id
+			, cmptn_yn
+			, cmptn_dtm
+			, reg_dtm as ptcpt_dtm
+			FROM ep_edctn_ptcpt_mst tbl
+			LEFT JOIN (SELECT bfre_mem_seq, aftr_mem_seq from ep_edctn_trnsf_dtl WHERE bfre_mem_seq = #{memSeq}) lb ON lb.aftr_mem_seq = tbl.mem_seq
+			where tbl.mem_seq = #{memSeq} OR tbl.ptcpt_seq IN((SELECT ptcpt_seq from ep_edctn_trnsf_dtl WHERE bfre_mem_seq = #{memSeq}))
+		) d
+		LEFT JOIN ed_edctn_episd_mst a ON a.episd_seq = d.episd_seq
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
-		LEFT JOIN (SELECT
-							episd_seq
-							, mem_seq
-		                	, ptcpt_seq
-							, stts_cd
-							, gpc_id
-							, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
-							, cmptn_yn
-							, cmptn_dtm
-							, reg_dtm as ptcpt_dtm
-						FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
-
 		WHERE a.exps_yn = 'Y'
 		) AA
 
@@ -1119,7 +1121,8 @@
 	<sql id="selectMypageEduListWhereSql">
 		<where>
 
-			AND (MEM_SEQ = #{memSeq} OR bfre_mem_seq = #{memSeq} )
+			AND (MEM_SEQ = #{memSeq} or bfre_mem_seq = #{memSeq})
+
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
 				AND edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
@@ -1403,21 +1406,23 @@
 	  	, bfre_mem_seq
 		, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 	    , ptcpt_seq
-		FROM ed_edctn_episd_mst a
-		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
-		LEFT JOIN (SELECT
+		FROM (SELECT
 		episd_seq
 		, mem_seq
+		, bfre_mem_seq
 		, ptcpt_seq
 		, stts_cd
 		, gpc_id
-		, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
 		, cmptn_yn
 		, cmptn_dtm
 		, reg_dtm as ptcpt_dtm
-		FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq
-
+		FROM ep_edctn_ptcpt_mst tbl
+		LEFT JOIN (SELECT bfre_mem_seq, aftr_mem_seq from ep_edctn_trnsf_dtl WHERE bfre_mem_seq = #{memSeq}) lb ON lb.aftr_mem_seq = tbl.mem_seq
+		where tbl.mem_seq = #{memSeq} OR tbl.ptcpt_seq IN((SELECT ptcpt_seq from ep_edctn_trnsf_dtl WHERE bfre_mem_seq = #{memSeq}))
+		) d
+		LEFT JOIN ed_edctn_episd_mst a ON a.episd_seq = d.episd_seq
+		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
+		LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
 		WHERE a.exps_yn = 'Y'
 		) AA
 

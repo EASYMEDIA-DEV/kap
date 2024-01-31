@@ -120,7 +120,7 @@
                     var episdYear = $this.episdYear;
 
 
-
+                    console.log("@@accsStrtDt = " + accsStrtDt);
 
 
                     copyEpisdSample.find(".episdOrd").text(episdOrd+"회차");
@@ -160,7 +160,7 @@
     }
 
     var searchEpisdLayer = function (edctnSeq){
-
+        console.log("@@@B");
         var searchForm = {};
 
         var now = new Date();	// 현재 날짜 및 시간
@@ -183,7 +183,7 @@
             $(".stduyDdLayer").text(rtnDto.stduyDdCdNm+"일("+rtnDto.stduyTimeCdNm+"시간)");//교육일자, 시간 변경
 
             var listSize = rtnEpisdList.length;
-
+            console.log("@@ listSize = "+ listSize);
             if(listSize>0){
                 $(".edu-info-div").css("display", "");
                 $(".edu-plan-area").find(".listNotEmpty").find(".round-list").empty();
@@ -193,7 +193,7 @@
                 $(".listEmpty").css("display", "none");
                 $(".total-edu-area").removeClass("no-data");
 
-
+                console.log("@@ rtnEpisdList = "+ rtnEpisdList);
                 $.each(rtnEpisdList, function(){
 
                     var copyEpisdSample = $(".copyEpisdSample").find(".round-div").clone(true);
@@ -217,7 +217,13 @@
 
 
 
+                    if(episdOrd == "4"){
+                        console.log("@@ accsStrtYear = "+ accsStrtYear);
+                        console.log("@@ accsEndYear = "+ accsEndYear);
+                        console.log("@@ accsStrtDt = "+ accsStrtDt);
+                        console.log("@@ accsEndDt = "+ accsEndDt);
 
+                    }
 
                     copyEpisdSample.find(".episdOrd").text(episdOrd+"회차");
                     copyEpisdSample.find(".episdAccsDt").text(accsStrtDt + " ~ " + accsEndDt);
@@ -370,6 +376,7 @@
     //좌측하단 차수목록 호출
     function edctnSearch(edctnSeq){
 
+        console.log("@@@AA");
         //전체 팝업일정에서 과정명 클릭할때 실행
 
         searchEpisdLayer(edctnSeq);

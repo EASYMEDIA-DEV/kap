@@ -21,16 +21,16 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정분류<span class="star"> *</span></label>
                     <div class="col-sm-6 form-inline">
-                            <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
-                                <option value="">선택</option>
-                                <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
-                                    <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                                </c:forEach>
-                            </select>
-                            <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" readonly="true" disabled>
-                                <option value="">선택</option>
-                            </select>
-                </div>
+                        <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
+                            <option value="">선택</option>
+                            <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
+                                <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                            </c:forEach>
+                        </select>
+                        <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-중분류" data-ctgrycd="${rtnDto.ctgryCd}" readonly="true" disabled style="width: 110px;">
+                            <option value="">선택</option>
+                        </select>
+                    </div>
                 </div>
             </fieldset>
             <fieldset>
@@ -203,7 +203,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">과정소개<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control input-sm" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="200" title="과정소개" placeholder="과정 소개를 입력하세요.">${rtnDto.itrdcCntn}</textarea>
+                        <textarea class="form-control input-sm" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="500" title="과정소개" placeholder="과정 소개를 입력하세요.">${rtnDto.itrdcCntn}</textarea>
                     </div>
                 </div>
             </fieldset>
@@ -212,7 +212,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">학습 목표<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control input-sm" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="200" title="학습목표" placeholder="학습목표를 입력하세요.">${rtnDto.stduyTrgtCntn}</textarea>
+                        <textarea class="form-control input-sm" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="500" title="학습목표" placeholder="학습목표를 입력하세요.">${rtnDto.stduyTrgtCntn}</textarea>
 
                     </div>
                 </div>

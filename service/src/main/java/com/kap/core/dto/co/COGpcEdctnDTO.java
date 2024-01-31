@@ -43,7 +43,7 @@ public class COGpcEdctnDTO {
     private Integer eduTime;
 
     @Schema(title = "정원수", example = "숫자")
-    private Integer gpcFxnumCnt;
+    private Integer maxCnt;
 
     @Schema(title = "환급과정", example = "텍스트")
     private String rfndPrcs;
