@@ -147,7 +147,15 @@
                                                 <tbody>
                                                 <c:forEach var="list" items="${rtnTrgtData}">
                                                     <tr>
-                                                        <th>${list.prntTargetCdNm}</th><td>${list.targetCdNm}</td>
+                                                        <th>${list.prntTargetCdNm}</th>
+                                                        <td>
+                                                        <c:choose>
+                                                            <c:when test="${list.prntTargetCd eq 'ED_TARGET05'}">
+                                                                ${empty list.targetCd ? '-' : list.targetCdNm}
+                                                            </c:when>
+                                                            <c:otherwise>${list.targetCdNm}</c:otherwise>
+                                                        </c:choose>
+                                                        </td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>
