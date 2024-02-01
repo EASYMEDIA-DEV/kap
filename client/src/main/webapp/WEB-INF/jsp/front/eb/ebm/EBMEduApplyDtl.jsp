@@ -144,7 +144,7 @@
                                                                 <div class="btn-wrap">
                                                                     <div class="btn-set">
                                                                         <c:if test="${not empty rtnData.edctnNtctnFileSeq}">
-                                                                            <a class="btn-text-icon download" href="/file/view?download=${rtnData.edctnNtctnFileSeq}&fileOrd=${rtnData.fileOrd}"><span>안내문</span></a>
+                                                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${rtnData.edctnNtctnFileSeq}&fileOrd=${rtnData.fileOrd}"><span>안내문</span></a>
                                                                         </c:if>
 
                                                                     </div>
