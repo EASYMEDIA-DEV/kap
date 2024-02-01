@@ -42,6 +42,8 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
 
+        console.log(obj.files);
+
         if (!fileObj)
         {
             isFile = false;
@@ -81,7 +83,8 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
                 $('#'+fileId).closest(".form-group").find('.empty-txt').hide();
                 $('#'+fileId).closest(".form-group").find('.file-list').show();
-                $('#'+fileId).closest(".form-group").find('.name').text(obj.files[0].name);
+                $('#'+fileId).closest(".form-group").find('.name').text(obj.files[0].name.split(".")[0]);
+                $('#'+fileId).closest(".form-group").find('.unit').text("." + obj.files[0].name.split(".").reverse()[0]);
             }
         }
     };
