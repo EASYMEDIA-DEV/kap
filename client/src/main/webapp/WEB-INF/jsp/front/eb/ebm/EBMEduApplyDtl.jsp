@@ -20,7 +20,15 @@
         <input type="hidden" id="srvYn" name="srvYn" value="${rtnData.srvYn}" />
 
 
-
+        <!--교육일수 차이 계산-->
+        <c:set var="dayVal" value=""/>
+        <c:choose>
+            <c:when test="${not empty rtnData.edctnStrtDtm && not empty rtnData.edctnEndDtm}">
+                <c:set var="strtDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                <c:set var="endDt" value="${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                <c:set var="dayVal" value="${kl:getDaysDiff(strtDt, endDt) + 1}"/>
+            </c:when>
+        </c:choose>
 
         <!-- content 영역 start -->
         <div class="cont-wrap">
@@ -180,7 +188,7 @@
                                                                     <p class="txt f-body2">
                                                                         ${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }
                                                                         ~
-                                                                        ${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }(${rtnData.stduyDdCdNm}일간)
+                                                                        ${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }(${dayVal}일간)
                                                                     </p>
                                                                 </div>
                                                                 <div class="info-list">
@@ -409,7 +417,7 @@
                         <c:choose>
                             <c:when test="${not empty rtnData.srvSeq}">
                                 <c:choose>
-                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
+                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01'}">
                                         <div class="cont-sec no-border scroll-motion">
                                             <div class="for-motion">
                                                 <div class="sec-tit-area">

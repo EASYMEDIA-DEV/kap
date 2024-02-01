@@ -1,6 +1,8 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<%@ page import="java.util.Calendar" %>
 <%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <script>
     window.onpageshow = function(event) {
         if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
@@ -197,10 +199,27 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">연도<span class="star text-danger"> *</span></label>
                             <div class="col-sm-6 form-inline">
+
+                                <%
+                                    Date nowDate = new Date();
+                                    pageContext.setAttribute("nowDate", nowDate);//현재 시간
+                                %>
+                                <fmt:formatDate pattern="yyyy" value="${nowDate}" var="nowDate" />
+
+                                <c:set var="beforeYear" value="${nowDate-20}"/>
+                                <c:set var="nowYear" value="${nowDate}"/>
+                                <c:set var="afterYear" value="${nowDate+20}"/>
                                 <select class="form-control input-sm wd-sm notRequired" name="episdYear" id="episdYear" title="년도" style="min-width: 100px;">
                                     <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${episdCdList.CO_YEAR_CD}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${rtnDto.episdYear eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                    <c:forEach var="year" begin="${beforeYear}" end="${afterYear}">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnDto.episdYear}">
+                                                <option value="${year}" <c:if test="${rtnDto.episdYear eq year}">selected</c:if>>${year}년</option>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <option value="${year}" <c:if test="${year eq nowYear}">selected</c:if>>${year}년</option>
+                                            </c:otherwise>
+                                        </c:choose>
                                     </c:forEach>
                                 </select>
 

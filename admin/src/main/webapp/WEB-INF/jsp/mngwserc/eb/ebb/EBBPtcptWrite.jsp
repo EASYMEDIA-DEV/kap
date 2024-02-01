@@ -14,6 +14,7 @@
             <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
             <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="${ rtnDto.stduyMthdCd}" />
             <input type="hidden" class="notRequired" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${rtnDto.rcrmtMthdCd}" />
+            <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>
             <input type="hidden" id="gpcYn" name="gpcYn" value="${rtnDto.gpcYn}" />
             <c:set var="gpcYn" value="${rtnDto.gpcYn}"/>
             <c:set var="gpcPass" value="Y"/>
@@ -240,8 +241,7 @@
                             </button>
                             <span id="gpcIdText"></span>
 
-                            <input type="hidden" class="form-control input-sm notRequired" id="memSeq" name="memSeq" value="" title="회원번호"/>
-                            <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>
+                            <%--<input type="hidden" class="form-control input-sm notRequired" id="memSeq" name="memSeq" value="" title="회원번호"/>--%>
                         </div>
 
                     </div>

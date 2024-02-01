@@ -329,6 +329,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "파일경로", example = "텍스트")
     private String webPath;
 
+    @Schema(title = "파일설명(alt값)", example = "텍스트")
+    private String fileDsc;
+
     @Schema(title = "접수출력순서", example = "숫자")
     private Integer accsStatusOrder;
 

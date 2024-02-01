@@ -55,7 +55,7 @@ public class COGpcPtcptDTO {
     private String eduStrt;
 
     @Schema(title = "교육종료", example = "YYYY-MM-DD")
-    private String edu_end;
+    private String eduEnd;
 
     @Schema(title = "환급과정", example = "숫자")
     private String rfndPrcs;

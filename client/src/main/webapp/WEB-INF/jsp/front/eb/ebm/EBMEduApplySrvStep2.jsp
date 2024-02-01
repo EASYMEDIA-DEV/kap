@@ -47,6 +47,7 @@
                 <input type="hidden" value="${rtnData.episdYear}" name="episdYear">
                 <input type="hidden" value="${rtnData.episdOrd}" name="episdOrd">
                 <input type="hidden" value="${rtnData.edctnSeq}" name="edctnSeq">
+                <input type="hidden" value="${rtnData.ptcptSeq}" name="ptcptSeq">
 
                 <div class="survey-form">
                 <div class="cont-sec-w">
@@ -176,7 +177,7 @@
             <div class="page-bot-btn-sec">
                 <div class="btn-wrap">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>목록</span></a>
+                        <a class="btn-solid small gray-bg" href="./detail?detailsKey=${rtnData.edctnSeq}&episdYear=${rtnData.episdYear}&episdOrd=${rtnData.episdOrd}&ptcptSeq=${rtnData.ptcptSeq}"><span>신청내역 상세</span></a>
                     </div>
                     <div class="btn-set">
                         <a class="btn-solid small black-bg" href="javascript:"  id="btnSubmit"><span>제출하기</span></a>

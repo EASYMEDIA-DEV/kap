@@ -647,13 +647,14 @@
              , GUIDE_BGN_DT             /* 지도착수일 */
              , LVLUP_FILE_SEQ			/* 렙업파일순번 */
              , LVLUP_FILE_ORD			/* 렙업파일ORD */
-             , init_vst_file_seq        /* 초도방문자료순번 */
-             , init_vst_file_ORD        /* 초도방문자료ORD */
-             , itrdc_file_seq           /* 회사소개서파일일순번 */
-             , itrdc_file_ORD           /* 회사소개서ORD */
-             , flty_impvm_rate          /* 개선율 */
+             , INIT_VST_FILE_SEQ        /* 초도방문자료순번 */
+             , INIT_VST_FILE_ORD        /* 초도방문자료ORD */
+             , ITRDC_FILE_SEQ           /* 회사소개서파일일순번 */
+             , ITRDC_FILE_ORD           /* 회사소개서ORD */
+             , FLTY_IMPVM_RATE          /* 개선율 */
              , RSUME_STTS_CD			/* 진행상태코드 */
              , RSUME_STTS_NM			/* 진행상태코드명 */
+             , GUIDE_PSCND_DT           /* 지도완료일 */
         FROM(
             SELECT
                 CP_MST.CNSTG_SEQ
@@ -720,7 +721,8 @@
                  , CP_MST.itrdc_file_seq
                  , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
                  , CP_MST.APPCTN_DT
-                 , CPR_MST.flty_impvm_rate
+                 , CPR_MST.FLTY_IMPVM_RATE
+                 , CPR_MST.GUIDE_PSCND_DT
                  , CP_MST.REG_ID
                  , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                  , CP_MST.REG_DTM

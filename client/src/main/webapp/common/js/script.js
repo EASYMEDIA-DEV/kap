@@ -1708,6 +1708,11 @@ function schedulePopupFn(){
 
     var monthOuterWidth = Math.round($(".total-edu-area .edu-plan-area .month-wrap .month").outerWidth(true))
     var thisYear = $(".total-edu-area .edu-plan-area .month-area .f-head").text().split("년")[0];
+    var thisDate = $(".total-edu-area .edu-plan-area .month-wrap").data("date")
+    var thisDateString = String(thisDate).split(".")[1]
+    
+    $(".month-chk-w").css("left", ((monthOuterWidth * ($(".total-edu-area .edu-plan-area .month-area .month-wrap .month.now").text().split("월")[0])) - $(".total-edu-area .edu-plan-area .month-area .month-wrap .month.now").width()) + ((monthOuterWidth / 31) * parseInt(thisDateString)))
+
 
     $(".total-edu-area .edu-plan-area .round-period .period").each(function(q){
       if(!$(this).closest(".round-period").hasClass("no-this-year")){
@@ -1721,9 +1726,9 @@ function schedulePopupFn(){
         var endDate = parseInt(endPeriod.split(".")[1]) // 종료 날짜
 
         if($(this).data("start-year") < thisYear){
-          $(".period-bar").eq(q).css({"left":0, "width":monthOuterWidth - Math.round((monthOuterWidth / 31) * endDate)})
+          $(".period-bar").eq(q).css({"left":0, "width":Math.round((monthOuterWidth / 31) * endDate)})
         }else if($(this).data("end-year") > thisYear){
-          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":monthOuterWidth - Math.round((monthOuterWidth / 31) * startDate)})
+          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":Math.round(((monthOuterWidth / 31) * 31) - (monthOuterWidth / 31) * (startDate - 1))})
         }else{
           $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":((endMonth - startMonth) * monthOuterWidth) + ((endDate - startDate) * (monthOuterWidth / 31))})
         }
@@ -1745,7 +1750,7 @@ function schedulePopupFn(){
     }
     
     setTimeout(function(){
-      $(".total-edu-area .edu-plan-area .month-area .scroll-div").scrollLeft($(".total-edu-area .edu-plan-area .month-area .month-wrap .month").outerWidth(true) * $(".total-edu-area .edu-plan-area .month-area .month-wrap .month.now").index())
+      $(".total-edu-area .edu-plan-area .month-area .scroll-div").scrollLeft(($(".total-edu-area .edu-plan-area .month-area .month-wrap .month").outerWidth(true) * $(".total-edu-area .edu-plan-area .month-area .month-wrap .month.now").index()) - $(".total-edu-area .edu-plan-area .month-area .month-wrap .month").outerWidth(true))
     }, 100)
     
   }

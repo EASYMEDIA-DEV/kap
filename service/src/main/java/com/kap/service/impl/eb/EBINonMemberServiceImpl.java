@@ -128,13 +128,11 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 
 		EBINonMemberDTO ebbDto = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
-		if("front".equals(pEBINonMemberDTO.getSiteGubun())) {
-			//교육 신청 페이지 진입 시간
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-			LocalDateTime currentDateTime = LocalDateTime.now();
-			String formattedDateTime = currentDateTime.format(formatter);
-			ebbDto.setApplyDateTime(formattedDateTime);
-		}
+		//교육 신청 페이지 진입 시간
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		LocalDateTime currentDateTime = LocalDateTime.now();
+		String formattedDateTime = currentDateTime.format(formatter);
+		ebbDto.setApplyDateTime(formattedDateTime);
 
 		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 
@@ -396,7 +394,6 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	{
 		EBINonMemberDTO tempDto = new EBINonMemberDTO();
 		EBINonMemberDTO tempDto2 = new EBINonMemberDTO();
-		EBINonMemberDTO tempDto3 = new EBINonMemberDTO();
 
 		tempDto = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
 		tempDto2 = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
@@ -406,9 +403,10 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 			boolean modYn = false;
 			String tempADT = pEBINonMemberDTO.getApplyDateTime();
 			String tempMOD = tempDto2.getModDtm();
-			tempADT = tempADT.substring(0, 19);
-			tempMOD = tempMOD.substring(0, 19);
-			if(!tempADT.isEmpty() && !tempMOD.isEmpty()) {
+
+			if(tempMOD != null && !tempMOD.isEmpty() && tempADT != null && !tempADT.isEmpty()) {
+				tempADT = tempADT.substring(0, 19);
+				tempMOD = tempMOD.substring(0, 19);
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime applyDateTime = LocalDateTime.parse(tempADT, formatter);
 				LocalDateTime modDtm = LocalDateTime.parse(tempMOD, formatter);
@@ -416,13 +414,12 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 					modYn = true;
 				}
 			}
-
 			//해당 과정이 신청 작성 중에 수정 됐을 경우
 			if(modYn) {
 				pEBINonMemberDTO.setRegStat("N");
 			}
 			//이미 등록된 신청자 (중복)
-			else if(tempDto != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
+			else if(tempDto.getSttsCd() != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
 				pEBINonMemberDTO.setRegStat("F");
 			}
 			//등록
@@ -440,12 +437,11 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 					pEBINonMemberDTO.setModId(pEBINonMemberDTO.getName());
 					pEBINonMemberDTO.setModIp(request.getRemoteAddr());
 				}
+
 				pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
 				int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
 				pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 				eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);
-//				tempDto3 = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
-//				pEBINonMemberDTO.setRegDtm(tempDto3.getRegDtm());
 				pEBINonMemberDTO.setRegStat("S");
 			}
 		}
@@ -455,7 +451,6 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		}
 
 		return pEBINonMemberDTO;
-
 	}
 
 	/**

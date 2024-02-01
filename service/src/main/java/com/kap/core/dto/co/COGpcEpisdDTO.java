@@ -43,7 +43,7 @@ public class COGpcEpisdDTO {
     private String eduStrt;
 
     @Schema(title = "교육종료", example = "YYYY-MM-DD")
-    private String edu_end;
+    private String eduEnd;
 
     @Schema(title = "신청시작", example = "YYYY-MM-DD")
     private String rqstStrt;
@@ -72,10 +72,6 @@ public class COGpcEpisdDTO {
 
     @Schema(title = "전송일", example = "텍스트")
     private String kapSendDd;
-
-    @Schema(title = "교육차수순번", example = "날짜 YYYY-MM-DD")
-    private String date;
-
 
     private List<COGpcEpisdDTO> list;
 

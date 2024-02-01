@@ -48,7 +48,7 @@
 			 , b.gpc_ctgry as trck
 			 , b.nm as prcs_nm
 			 , b.gpc_lvl as lvl
-			 , a.episd_year as edu_year
+			 , date_format(a.episd_year, '%Y') as edu_year
 			 , a.episd_ord as ord
 			 , date_format(a.edctn_strt_dtm, '%Y-%m-%d') as edu_strt
 			 , date_format(a.edctn_end_dtm, '%Y-%m-%d') as edu_end
@@ -61,7 +61,7 @@
 			 , b.gpc_isttr_id as adm_seq
 			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
 			 , case edctn_stts_cd when 'EDCTN_STTS_CD01' then CASE WHEN edctn_cmpltn_yn = 'Y' then 'Y' ELSE 'N' END
-									WHEN 'EDCTN_STTS_CD02' then 'R'
+									WHEN 'EDCTN_STTS_CD02' then 'X'
 				END exam_flag
 		from ed_edctn_episd_mst a
 				 left join ed_edctn_prcs_mst b on b.edctn_seq = a.edctn_seq

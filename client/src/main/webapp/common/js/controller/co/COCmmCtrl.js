@@ -631,7 +631,6 @@ var cmmCtrl = (function(){
 					formObj.data("submitFlag", "Y");
 					if (loading) {
 						$(".dimd").stop().fadeIn(100);
-						jQuery(".loading-area").stop().fadeIn(200);
 					}
 				},
 				success : function(data, status, xhr) {
@@ -1130,6 +1129,118 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	var fn_calendar = function(){
+		jQuery.datetimepicker.setLocale("ko");
+
+		// 게시기간(일자) Start -----
+		$.each(jQuery(".datetimepicker_strtDt"), function(i, obj){
+			jQuery(obj).datetimepicker({
+				timepicker : false,
+				format : "Y.m.d",
+				defaultDate : "",
+				defaultTime : "00:00",
+				scrollInput : false,
+				scrollMonth : false,
+				scrollTime : false,
+				todayButton: false,
+			}).on('change',function(e){
+				var strtDt   = new Date($(this).val());
+				var endDtObj = jQuery(".datetimepicker_endDt");
+				var endDt	 = new Date(endDtObj.val());
+
+				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+				{
+					endDtObj.val($(this).val());
+				}
+
+				endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
+
+			});
+		});
+
+
+		$.each(jQuery(".datetimepicker_endDt"), function(i, obj){
+			jQuery(obj).datetimepicker({
+				timepicker : false,
+				format : "Y.m.d",
+				defaultDate : "",
+				defaultTime : "00:00",
+				scrollMonth : false,
+				scrollTime : false,
+				todayButton: false,
+				onSelectDate : function(selectedDate, selectedObj) {
+					var endDt     = selectedDate;
+					var strtDtObj = jQuery(".datetimepicker_strtDt");
+					var strtDt    = new Date(strtDtObj.val());
+
+					if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+					{
+						strtDtObj.val(selectedObj.val());
+					}
+
+					strtDtObj.datetimepicker("setOptions", { maxDate : endDt, value : strtDtObj.val() });
+
+					selectedObj.blur();
+				}
+			}).on('change',function(e){
+				var strtDt   = new Date($(this).val());
+				var endDtObj = jQuery(".datetimepicker_endDt");
+				var endDt	 = new Date(endDtObj.val());
+
+				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
+				{
+					endDtObj.val($(this).val());
+				}
+
+				endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
+
+			});
+		});
+
+
+		var date = new Date();
+		var strtObj = jQuery(".datetimepicker_strtDt");
+		strtObj.datetimepicker("setOptions", { value : date_format(6) });
+
+		var endObj = jQuery(".datetimepicker_endDt");
+		endObj.datetimepicker("setOptions", { value : date_format(-6)});
+	}
+
+	var date_format = function(trgtPerid){
+		var today = new Date();
+		var year  = today.getFullYear();
+		var month = today.getMonth() + 1;
+		var day   = today.getDate();
+
+		var tempDay = new Date(year, month - 1, 1);
+
+
+		tempDay.setMonth(tempDay.getMonth() - (trgtPerid - 1));
+		tempDay.setDate(tempDay.getDate() - 1);
+
+		var trgtYear  = tempDay.getFullYear();
+		var trgtMonth = tempDay.getMonth() + 1;
+		var trgtDay   = tempDay.getDate();
+
+		if (trgtMonth < 10)
+		{
+			trgtMonth = "0" + trgtMonth;
+		}
+
+		if (day < trgtDay)
+		{
+			trgtDay = day;
+		}
+
+		if (trgtDay < 10)
+		{
+			trgtDay = "0" + trgtDay;
+		}
+
+		return trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+	}
+
+
 	return {
 		nvl : fn_replace_null,
 		bscAjax : fn_ajax,
@@ -1154,6 +1265,7 @@ var cmmCtrl = (function(){
 		niceCertification : fn_nice_certification,
 		searchPostCode : fn_postData,
 		setCalendar: fn_set_calendar,
+		setCalendarInit : fn_calendar,
 
 		//json형식의 데이터를 문자열로 변환 후 자바 컨트롤러에서 @RequestBody BaseDTO baseDto 로 받는다
 		jsonAjax : fn_json_ajax_data,

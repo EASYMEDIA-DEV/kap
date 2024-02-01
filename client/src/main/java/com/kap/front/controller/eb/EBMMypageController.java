@@ -716,7 +716,7 @@ public class EBMMypageController
             if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
 
                 if (rtnData.getRspnCnt() > 0){
-                    modelMap.addAttribute("msg", "이미 제출한 설문입니다.");
+                    modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
                     modelMap.addAttribute("url", "/");
                     vwUrl = "front/COBlank.error";
                 }else{
@@ -809,6 +809,9 @@ public class EBMMypageController
             EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
             if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
                 vwUrl = "front/eb/ebm/EBMEduApplySrvStep3.front";
+
+                        eBBEpisdDTO.setNm(rtnData.getNm());
+                modelMap.addAttribute("rtnData", eBBEpisdDTO);
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
                 modelMap.addAttribute("url", "/");

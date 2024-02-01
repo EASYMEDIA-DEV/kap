@@ -356,7 +356,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     return false;
                                 }else{
                                     if(!$(".dlvryRate").eq(i).val()){
-                                        alert("매출비중을 입력해주세요.");
+                                        alert("비율을 입력해주세요.");
                                         $(".dlvryRate").eq(i).focus();
                                         return false;
                                     }

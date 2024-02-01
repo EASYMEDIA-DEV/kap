@@ -38,6 +38,7 @@
 			, rcrmt_mthd_cd_nm
 		    , place_seq
 			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
+		    , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS file_dsc
 			, place_nm
 			, non_member_cd
 		FROM ed_edctn_prcs_mst a
@@ -676,7 +677,7 @@
 					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 							case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 									when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-									when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+									when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
 									end
 							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
@@ -843,7 +844,7 @@
 		,  CASE edctn_stts_cd
 		WHEN 'EBC_VISIT_CD02001' THEN '신청'
 		WHEN 'EBC_VISIT_CD02002' THEN '협의중'
-		WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
 		,  ptcpt_dtm
@@ -1325,7 +1326,7 @@
 		case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 		case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 		when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-		when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+		when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
 		end
 		when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 		when stts_cd = 'EDU_STTS_CD04' then '신청대기'
@@ -1492,7 +1493,7 @@
 		,  CASE edctn_stts_cd
 		WHEN 'EBC_VISIT_CD02001' THEN '신청'
 		WHEN 'EBC_VISIT_CD02002' THEN '협의중'
-		WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
 		,  ptcpt_dtm
@@ -1884,10 +1885,11 @@
 					END  AS accs_status_order
 				  , fxnum_cnt
 				  , fxnum_impsb_yn
-				  , "RCRMT_MTHD02" as rcrmt_mthd_cd
-				  , "모집 후 선발" as rcrmt_mthd_cd_nm
+				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
+				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
 				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
+				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
 			 from
@@ -1945,10 +1947,11 @@
 					END  AS accs_status_order
 				  , fxnum_cnt
 				  , fxnum_impsb_yn
-				  , "RCRMT_MTHD02" as rcrmt_mthd_cd
-				  , "모집 후 선발" as rcrmt_mthd_cd_nm
+				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
+				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
 				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
+				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
 			 from

@@ -165,7 +165,7 @@
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
 				, a.reg_dtm
 				, a.mod_id
-				, (select name from co_adm_mst where id = a.reg_id) as mod_name
+				, (select name from co_adm_mst where id = a.mod_id) as mod_name
 				, a.mod_dtm
 			    , a.exps_yn
 				, a.edctn_cmpltn_yn
@@ -1819,7 +1819,7 @@
 						, episd_ord
 						, fxnum_impsb_yn
 						, fxnum_cnt
-						, (SELECT COUNT(*) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord  ) AS cnt
+						, (SELECT COUNT(*) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' ) AS cnt
 			from ed_edctn_episd_mst a
 			WHERE 1=1
 				and edctn_seq = #{edctnSeq}
@@ -2571,11 +2571,13 @@
 			, A.EPISD_ORD
 			, A.EPISD_SEQ
 		    , A.SRV_SEQ
+			, (SELECT NM FROM ED_EDCTN_PRCS_MST WHERE EDCTN_SEQ = A.EDCTN_SEQ) AS NM
 			, (SELECT COUNT(SRV_SEQ) FROM SV_QSTN_DTL WHERE SRV_SEQ = B.SRV_SEQ) AS QSTN_CNT
 			, (SELECT COUNT(SRV_RSPN_SEQ) FROM SV_RSPN_MST WHERE SRV_SEQ = B.SRV_SEQ AND RFNC_SEQ = A.EPISD_SEQ AND RFNC_CD = 'EDU' AND MEM_SEQ = C.MEM_SEQ) AS RSPN_CNT
 			, B.RSPN_MM
 			, B.CNTN
 			, C.MEM_SEQ
+			, C.PTCPT_SEQ
 		FROM  ED_EDCTN_EPISD_MST A
     	LEFT JOIN SV_MST B ON A.SRV_SEQ = B.SRV_SEQ
 		LEFT JOIN EP_EDCTN_PTCPT_MST C ON A.EPISD_SEQ = C.EPISD_SEQ
