@@ -238,6 +238,7 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
                 WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
                 wBEBCarbonCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBEBCarbonCompanySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 WBEBCompanyDTO wBEBCompanyDTO = wBEBCarbonCompanyMapper.getCompanyInfo(wBEBCarbonCompanySearchDTO);
 
@@ -247,10 +248,10 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
                     //신청가능 코드 200
                     rtnCode = 200;
                     RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                } else {
+                    //부품사가 1차 2차가 아닐떄,
+                    rtnCode = 190;
                 }
-            } else {
-                //부품사가 1차 2차가 아닐떄,
-                rtnCode = 190;
             }
         }
 

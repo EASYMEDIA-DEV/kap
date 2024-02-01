@@ -233,6 +233,7 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
                 WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
                 wBDBSafetySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBDBSafetySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 WBDBCompanyDTO wBDBCompanyDTO = wBDBSafetyMapper.getCompanyInfo(wBDBSafetySearchDTO);
 
@@ -242,10 +243,10 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
                     //신청가능 코드 200
                     rtnCode = 200;
                     RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                } else {
+                    //부품사가 1차 2차가 아닐떄,
+                    rtnCode = 190;
                 }
-            } else {
-                //부품사가 1차 2차가 아닐떄,
-                rtnCode = 190;
             }
         }
 

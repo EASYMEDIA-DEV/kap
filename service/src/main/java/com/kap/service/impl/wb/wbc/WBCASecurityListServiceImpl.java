@@ -237,6 +237,7 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
 
                 WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
                 wBCBSecuritySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBCBSecuritySearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 WBCBCompanyDTO wBCBCompanyDTO = wBCBSecurityMapper.getCompanyInfo(wBCBSecuritySearchDTO);
                 if ("COMPANY01001".equals(wBCBCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wBCBCompanyDTO.getCtgryCd())) {
@@ -245,10 +246,10 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
                     //신청가능 코드 200
                     rtnCode = 200;
                     RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                } else {
+                    //부품사가 1차 2차가 아닐떄,
+                    rtnCode = 190;
                 }
-            } else {
-                //부품사가 1차 2차가 아닐떄,
-                rtnCode = 190;
             }
         }
 
