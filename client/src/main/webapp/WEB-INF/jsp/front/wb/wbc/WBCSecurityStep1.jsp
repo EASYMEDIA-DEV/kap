@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSrcurityCtrl">
+<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSecurityCtrl">
     <div class="sub-top-vis-area apply-page consult-biz">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
