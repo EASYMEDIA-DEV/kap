@@ -56,22 +56,12 @@
                         </c:otherwise>
                     </c:choose>
                 </td>
-                <td class="text-center">
-                    <c:choose>
-                        <c:when test="${empty list.fltyImpvmRate or list.fltyImpvmRate eq 0}">
-                            -
-                        </c:when>
-                        <c:otherwise>
-                            ${list.fltyImpvmRate} %
-                        </c:otherwise>
-                    </c:choose>
-                </td>
             </tr>
         </c:forEach>
     </c:when>
     <c:otherwise>
         <tr data-total-count="0">
-            <td colspan="10" class="text-center">
+            <td colspan="9" class="text-center">
                 검색결과가 없습니다.<br>
                 (등록된 데이터가 없습니다.)
             </td>

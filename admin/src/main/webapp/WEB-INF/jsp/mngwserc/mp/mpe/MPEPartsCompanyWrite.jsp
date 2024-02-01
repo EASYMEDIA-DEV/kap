@@ -495,7 +495,6 @@
                                 <th class="text-center">킥오프자료</th>
                                 <th class="text-center">랩업자료</th>
                                 <th class="text-center">회사소개자료</th>
-                                <th class="text-center">공정개선율</th>
                             </tr>
                             </thead>
                             <!-- 리스트 목록 결과 -->

@@ -165,7 +165,7 @@
 				, (select name from co_adm_mst where id = a.reg_id) as reg_name
 				, a.reg_dtm
 				, a.mod_id
-				, (select name from co_adm_mst where id = a.reg_id) as mod_name
+				, (select name from co_adm_mst where id = a.mod_id) as mod_name
 				, a.mod_dtm
 			    , a.exps_yn
 				, a.edctn_cmpltn_yn
