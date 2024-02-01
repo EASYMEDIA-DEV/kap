@@ -172,7 +172,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="dmstcSlsPmt" name="dmstcSlsPmt" placeholder="매출액 입력" maxlength="3">
+                                                            <input type="number" class="dmstcSlsPmt" name="dmstcSlsPmt" placeholder="매출액 입력" maxlength="50">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -189,7 +189,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="frgnSlsPmt" name="frgnSlsPmt" placeholder="매출액 입력" maxlength="3">
+                                                            <input type="number" class="frgnSlsPmt" name="frgnSlsPmt" placeholder="매출액 입력" maxlength="50">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -206,7 +206,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="ttlSlsPmt" name="ttlSlsPmt" placeholder="매출액 입력" maxlength="3">
+                                                            <input type="number" class="ttlSlsPmt" name="ttlSlsPmt" placeholder="매출액 입력" maxlength="50">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -223,7 +223,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="carPartSlsPmt" name="carPartSlsPmt" placeholder="매출액 입력" maxlength="3">
+                                                            <input type="number" class="carPartSlsPmt" name="carPartSlsPmt" placeholder="매출액 입력" maxlength="50">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
@@ -240,7 +240,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="carPartXcludSlsPmt" name="carPartXcludSlsPmt" placeholder="매출액 입력" maxlength="3">
+                                                            <input type="number" class="carPartXcludSlsPmt" name="carPartXcludSlsPmt" placeholder="매출액 입력" maxlength="50">
                                                             <p class="unit-txt">억 원</p>
                                                         </div>
                                                     </div>
