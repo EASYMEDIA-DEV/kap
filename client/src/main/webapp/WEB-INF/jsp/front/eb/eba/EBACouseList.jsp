@@ -128,7 +128,16 @@
                                                                     <c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
                                                                         <div class="form-checkbox">
                                                                             <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if>>
-                                                                            <label for="stduyMthdCd${status.index}">${cdList.cdNm}</label>
+                                                                            <label for="stduyMthdCd${status.index}">
+                                                                                <c:choose>
+                                                                                    <c:when test="${cdList.cd eq 'STDUY_MTHD02'}">
+                                                                                        온라인
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        ${cdList.cdNm}
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </label>
                                                                         </div>
                                                                     </c:forEach>
 

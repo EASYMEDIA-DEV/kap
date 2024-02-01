@@ -120,7 +120,7 @@ public class EBCVisitEduController {
                     modelMap.addAttribute("rtnInfo", originList.getList().get(0));
                 }
                 modelMap.addAttribute("applicantInfo", applicantDto);
-                modelMap.addAttribute("sqInfoList", originList);
+                modelMap.addAttribute("sqInfoList", mpePartsCompanyService.selectPartsComSQInfo(mpePartsCompanyDTO));
             } else {
                 vwUrl = "redirect:../index";
             }
