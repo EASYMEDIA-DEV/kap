@@ -1237,7 +1237,7 @@ var cmmCtrl = (function(){
 			trgtDay = "0" + trgtDay;
 		}
 
-		return trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+		return trgtDay = trgtYear + "." + trgtMonth  + "." + trgtDay;
 	}
 
 
