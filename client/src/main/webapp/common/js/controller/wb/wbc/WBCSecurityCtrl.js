@@ -4,7 +4,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
     // set controller name
     var exports = {
-        controller : "controller/wb/wbc/WBCSrcurityCtrl"
+        controller : "controller/wb/wbc/WBCSecurityCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);

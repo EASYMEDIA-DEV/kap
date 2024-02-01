@@ -1,5 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSrcurityCtrl">
+<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSecurityCtrl">
   <form id="frmData" name="frmData" enctype="multipart/form-data">
   <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}" />

@@ -17,16 +17,7 @@
 
         <% pageContext.setAttribute("newLine", "\n"); %>
         <div class="cont-wrap">
-            <!--
-              신청 페이지: apply-page 클래스 추가
-              그 외 페이지: basic-page 클래스 추가
-            -->
-            <!--
-              교육 사업: edu-biz
-              컨실팅 사업: consult-biz
-              상생 사업: coexisting-biz
-            -->
-            <div class="sub-top-vis-area basic-page">
+            <div class="sub-top-vis-area">
                 <div class="page-tit-area">
                     <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
                 </div>

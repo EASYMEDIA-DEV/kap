@@ -153,7 +153,7 @@
                                                                     <p class="tit f-caption2">정원</p>
                                                                     <p class="txt f-body2">
                                                                         <c:if test="${rtnData.fxnumImpsbYn eq 'Y'}">
-                                                                            정원${rtnData.fxnumCnt}명(${rtnData.rcrmtMthdCdNm})
+                                                                            ${rtnData.fxnumCnt}명(${rtnData.rcrmtMthdCdNm})
                                                                         </c:if>
                                                                         <c:if test="${rtnData.fxnumImpsbYn eq 'N'}">
                                                                             정원제한 없음
@@ -415,8 +415,6 @@
                                                 <div class="sec-tit-area">
                                                     <p class="f-title3">교육 만족도 설문 조사</p>
                                                 </div>
-
-
                                                 <div class="sec-con-area ">
                                                     <div class="graphic-sec">
                                                         <div class="box-btn-area">
@@ -599,15 +597,22 @@
                                                         <tr>
                                                             <th>SQ정보</th>
                                                             <td>
-                                                                <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
-                                                                    <p>
-                                                                            ${status.count}.
-                                                                            ${not empty list.nm ? list.nm : "-"}/
-                                                                            ${not empty list.score ? list.score : "-"}/
-                                                                            ${not empty list.year ? list.year : "-"} 년/
-                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
-                                                                    </p>
-                                                                </c:forEach>
+                                                                <c:choose>
+                                                                    <c:when test="${not empty sqInfoList.list}">
+                                                                        <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
+                                                                            <p>
+                                                                                ${status.count}.
+                                                                                ${not empty list.nm ? list.nm : "-"}/
+                                                                                ${not empty list.score ? list.score : "-"}/
+                                                                                ${not empty list.year ? list.year : "-"} 년/
+                                                                                ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                            </p>
+                                                                        </c:forEach>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        -
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </td>
                                                         </tr>
                                                     </c:when>

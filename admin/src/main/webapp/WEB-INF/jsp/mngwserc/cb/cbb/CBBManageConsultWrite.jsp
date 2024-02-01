@@ -191,7 +191,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control input-sm telRex cmssrCmpnTelNo" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" maxlength="13" placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control input-sm telRex" id="cmpnTelNo" name="cmpnTelNo"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" value="${rtnDto.cmpnTelNo}" maxlength="13" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star">*</span></label>
@@ -420,7 +420,7 @@
                         </div>
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-4">
-                            <input type="text" class="form-control input-sm telRex" name="cmssrCmpnTelNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="13" title="회사전화번호" value="${picInfoLIst.cmssrCmpnTelNo}"  placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control input-sm telRex cmssrCmpnTelNo" name="cmssrCmpnTelNo" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="13" title="회사전화번호" value="${picInfoLIst.cmssrCmpnTelNo}"  placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
                 </fieldset>
@@ -550,11 +550,11 @@
                                     <div class="row tempRow" id="dlvryRow" style="border:solid; border-width:1px; margin-top: 10px;">
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                            <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">납품비율</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="margin-bottom: 10px; margin-top:10px" title="납품비율" maxlength="3" placeholder="비율 입력"/>
+                                            <input type="text" class="form-control input-sm dlvryRate" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="margin-bottom: 10px; margin-top:10px" title="납품비율" maxlength="3" placeholder="비율 입력"/>
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                         <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dlvryCmpnList}">style="display: none"</c:if>>
@@ -567,11 +567,11 @@
                                 <div class="row tempRow" id="dlvryRow" style="border:solid; border-width:1px; margin-top: 10px;">
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="text" class="form-control input-sm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                        <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                     </label>
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">납품비율</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="text" class="form-control input-sm" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" style="margin-bottom: 10px; margin-top:10px" title="납품비율" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="비율 입력"/>
+                                        <input type="text" class="form-control input-sm dlvryRate" data-name="dlvryRateList" name="dlvryRate" value="${dlvryCmpnList.dlvryRate}" style="margin-bottom: 10px; margin-top:10px" title="납품비율" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="비율 입력"/>
                                     </label>
                                     <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                     <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dlvryCmpnList}">style="display: none"</c:if>>
@@ -594,11 +594,11 @@
                                     <div class="row dpTempRow" id="dpndnRow" style="border:solid; border-width:1px; margin-top: 10px">
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm" data-name="dpndnCmpnNmList" name="dpndnCmpnNm" value="${dpndCmpnList.dpndnCmpnNm}" data-dpndnSeq="${dpndCmpnList.dpndnSeq}"style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                            <input type="text" class="form-control input-sm dpndnCmpnNm" data-name="dpndnCmpnNmList" name="dpndnCmpnNm" value="${dpndCmpnList.dpndnCmpnNm}" data-dpndnSeq="${dpndCmpnList.dpndnSeq}"style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">의존율</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="의존율" maxlength="3" placeholder="의존율 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                            <input type="text" class="form-control input-sm dpndnRate" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="의존율" maxlength="3" placeholder="의존율 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                         <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndnRateList}">style="display: none"</c:if>>
@@ -611,11 +611,11 @@
                                 <div class="row dpTempRow" id="dpndnRow" style="border:solid; border-width:1px; margin-top: 10px">
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="text" class="form-control input-sm" data-name="dpndnCmpnNmList" name="dpndnCmpnNm" value="${dpndCmpnList.dpndnCmpnNm}" data-dpndnSeq="${dpndCmpnList.dpndnSeq}"style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                        <input type="text" class="form-control input-sm dpndnCmpnNm" data-name="dpndnCmpnNmList" name="dpndnCmpnNm" value="${dpndCmpnList.dpndnCmpnNm}" data-dpndnSeq="${dpndCmpnList.dpndnSeq}"style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                     </label>
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">의존율</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="text" class="form-control input-sm" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" placeholder="의존율 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
+                                        <input type="text" class="form-control input-sm dpndnRate" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" placeholder="의존율 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" />
                                     </label>
                                     <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                     <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndnRateList}">style="display: none"</c:if>>

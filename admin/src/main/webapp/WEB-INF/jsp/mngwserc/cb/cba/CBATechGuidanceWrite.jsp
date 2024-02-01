@@ -500,7 +500,7 @@
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">의존율</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm dpndnRate" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="매출비중" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="의존율 입력"/>
+                                            <input type="text" class="form-control input-sm dpndnRate" data-name="dpndnRateList" name="dpndnRate" value="${dpndCmpnList.dpndnRate}" style="margin-bottom: 10px; margin-top:10px" title="의존율" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" placeholder="의존율 입력"/>
                                         </label>
                                         <label class="col-sm-1 control-label" style="margin-top: 15px;">%</label>
                                         <label class="col-sm-1 control-label closeLabel" <c:if test="${empty dpndCmpnList}">style="display: none"</c:if>>

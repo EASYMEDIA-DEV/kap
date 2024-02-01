@@ -203,16 +203,18 @@
                                                 <c:when test="${rtnInfo.ctgryCd eq 'COMPANY01002'}">
                                                     <tr>
                                                         <th>SQ정보</th>
-                                                        <td>
+                                                         <td>
                                                             <c:choose>
                                                                 <c:when test="${not empty sqInfoList.list}">
                                                                     <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
                                                                         <p>
-                                                                            ${status.count}.
-                                                                            ${not empty list.nm ? list.nm : "-"}/
-                                                                            ${not empty list.score ? list.score : "-"}/
-                                                                            ${not empty list.year ? list.year : "-"} 년/
-                                                                            ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                            <c:if test="${not empty list.nm and not empty list.score and not empty list.year and not empty list.crtfnCmpnNm}">
+                                                                                ${status.count}.
+                                                                                ${not empty list.nm ? list.nm : "-"}/
+                                                                                ${not empty list.score ? list.score : "-"}/
+                                                                                ${not empty list.year ? list.year : "-"} 년/
+                                                                                ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                            </c:if>
                                                                         </p>
                                                                     </c:forEach>
                                                                 </c:when>

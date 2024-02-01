@@ -40,7 +40,7 @@ import java.util.ArrayList;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/coexistence/environment/srcurity")
+@RequestMapping(value = "/coexistence/environment/security")
 public class WBCSecurityController {
     /**
      * 서비스
@@ -55,7 +55,7 @@ public class WBCSecurityController {
      */
     @GetMapping(value = "/content")
     public String getMnagementIndex(WBRoundMstSearchDTO wBRoundMstSearchDTO, COGCntsDTO pCOGCntsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbc/WBCSrcurityIndex.front";
+        String vwUrl = "front/wb/wbc/WBCSecurityIndex.front";
         try {
             wBRoundMstSearchDTO.setOrdFlag(1);
             wBRoundMstSearchDTO.setExpsYn("Y");
@@ -98,7 +98,7 @@ public class WBCSecurityController {
             }
             throw new Exception(e.getMessage());
         }
-        return "front/wb/wbc/WBCSrcurityIndexAjax";
+        return "front/wb/wbc/WBCSecurityIndexAjax";
     }
 
     /**
@@ -123,7 +123,7 @@ public class WBCSecurityController {
      */
     @RequestMapping(value = "/step1")
     public String getStep1Page(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbc/WBCSrcurityStep1.front";
+        String vwUrl = "front/wb/wbc/WBCSecurityStep1.front";
         try {
 
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("contentAuth", RequestAttributes.SCOPE_SESSION));
@@ -162,7 +162,7 @@ public class WBCSecurityController {
      */
     @RequestMapping(value = "/step2")
     public String getStep2Page(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbc/WBCSrcurityStep2.front";
+        String vwUrl = "front/wb/wbc/WBCSecurityStep2.front";
         try {
 
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
@@ -229,7 +229,7 @@ public class WBCSecurityController {
      */
     @RequestMapping(value = "/complete")
     public String getCompletPage(WBCBSecuritySearchDTO wBCBSecuritySearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        String vwUrl = "front/wb/wbc/WBCSrcurityComplet.front";
+        String vwUrl = "front/wb/wbc/WBCSecurityComplet.front";
         try {
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("complete", RequestAttributes.SCOPE_SESSION) == null) {

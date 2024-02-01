@@ -2,7 +2,7 @@
 <c:set var="date" value="<%=new java.util.Date()%>" />
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm" /></c:set>
 
-<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSafetyCtrl">
+<div class="cont-wrap" data-controller="controller/wb/wbc/WBCSecurityCtrl">
   <form id="frmData" name="frmData" enctype="multipart/form-data">
   <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}" />

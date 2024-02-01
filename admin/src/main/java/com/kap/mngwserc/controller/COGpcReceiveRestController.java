@@ -78,10 +78,8 @@ public class COGpcReceiveRestController {
 
         COGpcEdctnDTO gpcEdctnDto = new COGpcEdctnDTO();
 
-        gpcEdctnDto.setDate(emfMap.getString("date"));
-
         // 명세서의 내용대로 날짜값을 받음 어제 날짜 예시 ( 2024-01-29 )
-        //cOAAdmDTO.setDetailsKey(emfMap.getString("detailsKey"));
+        gpcEdctnDto.setDate(emfMap.getString("date"));
         COGpcEdctnDTO rtnData = cOGpcService.selectGpcEdctnList(gpcEdctnDto);
 
         return rtnData;
@@ -165,7 +163,7 @@ public class COGpcReceiveRestController {
         //응답할 데이터
         log.error("getApi cOSampleDTO : {}", emfMap);
         COAAdmDTO cOAAdmDTO = new COAAdmDTO();
-        // 명세서의 내용대로 kapSchdSeq <== 회차순번을 받음
+        // 명세서의 내용대로 kapSchdSeq, KAPID <== 회차순번을 받음
         //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
         COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
         return rtnCOAAdmDTO;
