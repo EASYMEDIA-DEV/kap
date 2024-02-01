@@ -197,8 +197,9 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function() {
 
-						var edustat = $(this).data("edustat");
-						if(edustat != "교육양도"){
+						var trnsfyn = $(this).data("trnsfyn");
+
+						if(trnsfyn == "N"){
 							var edctnSeq = $(this).data("edctnseq");
 							var episdYear = $(this).data("episdyear");
 							var episdOrd = $(this).data("episdord");

@@ -1076,8 +1076,8 @@
 		<choose>
 			<when test="srchOrder == 1">
 				<!-- 신청 마감순-->
-				/*ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc*/
-				ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc
+				ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+				/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
