@@ -142,7 +142,7 @@
                                                         <td>
                                                         <c:choose>
                                                             <c:when test="${list.prntTargetCd eq 'ED_TARGET05'}">
-                                                                ${empty list.targetCd ? '-' : list.targetCdNm}
+                                                                ${empty list.etcNm ? '-' : list.etcNm}
                                                             </c:when>
                                                             <c:otherwise>${list.targetCdNm}</c:otherwise>
                                                         </c:choose>

@@ -122,30 +122,38 @@
 				<fieldset>
 					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">학습시간</label>
-						<div class="col-sm-4">
+						<div class="col-sm-11">
 							<div class="row">
-								<div class="col-sm-1 pr0" style="width: 46px; margin-top: 7px;">
-									학습일
-								</div>
-								<div class="col-sm-3 pr0">
-									<select class="form-control input-sm" name="stduyDdCd">
-										<option value="">전체</option>
-										<c:forEach var="cdList" items="${classTypeList.STDUY_DD}" varStatus="status">
-											<option value="${cdList.cd}" <c:if test="${rtnData.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-										</c:forEach>
-									</select>
+								<%--<div class="col-sm-1 pr0" style="width: 46px; margin-top: 7px;">
+
+								</div>--%>
+								<div class="col-sm-2 pr0">
+									<label class="input_line form-inline">
+										학습일
+										<select class="form-control input-sm" name="stduyDdCd">
+											<option value="">전체</option>
+											<c:forEach var="cdList" items="${classTypeList.STDUY_DD}" varStatus="status">
+												<option value="${cdList.cd}" <c:if test="${rtnData.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+											</c:forEach>
+										</select>
+									</label>
+
 								</div>
 
-								<div class="col-sm-1 pr0" style="width: 57px; margin-top: 7px;">
+								<%--<div class="col-sm-1 pr0" style="width: 57px; margin-top: 7px;">
 									학습시간
-								</div>
-								<div class="col-sm-3 pr0">
-									<select class="form-control input-sm" name="stduyTimeCd">
-										<option value="">전체</option>
-										<c:forEach var="cdList" items="${classTypeList.STDUY_TIME}" varStatus="status">
-											<option value="${cdList.cd}" <c:if test="${rtnData.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-										</c:forEach>
-									</select>
+								</div>--%>
+								<div class="col-sm-2 pr0">
+									<label class="input_line form-inline">
+										학습시간
+										<select class="form-control input-sm" name="stduyTimeCd">
+											<option value="">전체</option>
+											<c:forEach var="cdList" items="${classTypeList.STDUY_TIME}" varStatus="status">
+												<option value="${cdList.cd}" <c:if test="${rtnData.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+											</c:forEach>
+										</select>
+									</label>
+
 								</div>
 							</div>
 						</div>
