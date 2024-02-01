@@ -559,6 +559,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var emailTxt = $("#emailTxt").text();
                         var rprsntNmTxt = $("#rprsntNmTxt").text();
                         var cbsnCd = $("input[name='cbsnCd']:checked").val();
+                        var etcNm = jQuery("input[name=etcNm]").val();
 
                         var vstDt = $("input[name='vstDt']").val();
                         if (!vstDt) {
@@ -875,7 +876,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var aftrRate = $(".fltyImpvmAftrRate").val();
                         var rslt = (bfreRate - aftrRate)/bfreRate*100;
 
-                        $(".fltyImpvmRate").val(rslt.toFixed(1));
+                        $("input[name=fltyImpvmRate]").val(rslt.toFixed(1));
 
                     }
                 }
@@ -995,6 +996,16 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $("#mainAddr").trigger("click");
                 var subAddrCd = $("#subAddr").data("subaddr");
                 $("#subAddr").val(subAddrCd).prop("selected", true);
+                
+                // 업종 기타 체크 관련
+                var cbsnVal = $("input[name=cbsnCd]:checked").val();
+                if (cbsnVal == "TEC_GUIDE_INDUS01") { // 기타일 때 input 활성화
+                    $("input[name=etcNm]").removeClass("notRequired");
+                    $("input[name=etcNm]").attr("disabled", false);
+                } else {
+                    $("input[name=etcNm]").addClass("notRequired");
+                    $("input[name=etcNm]").attr("disabled", true);
+                }                
 
                 // 신청사항 체크 함수
                 var appctnTypeCd = $(".appctnTypeCd").val();
@@ -1061,6 +1072,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var emailTxt = $("#emailTxt").text();
                         var rprsntNmTxt = $("#rprsntNmTxt").text();
                         var cbsnCd = $("input[name='cbsnCd']:checked").val();
+                        var etcNm = jQuery("input[name=etcNm]").val();
 
                         var vstDt = $("input[name='vstDt']").val();
                         if (!vstDt) {

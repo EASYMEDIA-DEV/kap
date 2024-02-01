@@ -76,7 +76,7 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     @Schema(title = "불량개선이후률")
     private Integer fltyImpvmAftrRate;
     @Schema(title = "불량개선율")
-    private short fltyImpvmRate;
+    private double fltyImpvmRate;
 
     @Schema(title = "초도방문자료")
     private Integer initVstFileSeq;
