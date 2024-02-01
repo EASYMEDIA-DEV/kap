@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -51,6 +54,18 @@ public class MPBCoexistenceServiceImpl implements MPBCoexistenceService {
         page.setPageSize(mpbBnsSearchDTO.getPageRowSize());
 
         if ("init".equals(type)) {
+            mpbBnsSearchDTO.setDateType("1");
+            Date strtDt = new Date();
+            Date endDt = new Date();
+            SimpleDateFormat transFormat = new SimpleDateFormat("yyyy.MM.dd");
+
+            Calendar cal1 = Calendar.getInstance();
+            Calendar cal2 = Calendar.getInstance();
+            cal1.setTime(strtDt); cal1.add(Calendar.MONTH,-6);
+            cal2.setTime(endDt); cal2.add(Calendar.MONTH,6);
+            mpbBnsSearchDTO.setStrtDt(transFormat.format(cal1.getTime()));
+            mpbBnsSearchDTO.setEndDt(transFormat.format(cal2.getTime()));
+
             mpbBnsSearchDTO.setFirstIndex(page.getFirstRecordIndex());
             mpbBnsSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
         }
