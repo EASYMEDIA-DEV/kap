@@ -85,14 +85,10 @@ public class COCOmmController {
         if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
             //QR 이미지 타고 들어옴
             //로직 처리
-            eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-            EBBPtcptDTO ptcptDto = eBBEpisdService.selectQrPtcptDtl(eBBEpisdDTO);
-
-            eBBEpisdDTO.setPtcptSeq(ptcptDto.getPtcptSeq());
 
         }
         RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
-        response.sendRedirect("/my-page/edu-apply/detail?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd()+"&ptcptSeq="+eBBEpisdDTO.getPtcptSeq());
+        response.sendRedirect("/my-page/edu-apply/qrDetail?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd());
     }
 
     /**

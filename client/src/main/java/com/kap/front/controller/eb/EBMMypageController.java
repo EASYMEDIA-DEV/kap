@@ -25,6 +25,7 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -150,6 +151,22 @@ public class EBMMypageController
         return rtnView;
     }
 
+
+    /**
+     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     */
+    @GetMapping("/my-page/edu-apply/qrDetail")
+    public void getApplyDetail(EBBEpisdDTO eBBEpisdDTO, HttpServletResponse response, HttpServletRequest request) throws Exception
+    {
+
+        //QR 이미지 타고 들어옴
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+        EBBPtcptDTO ptcptDto = eBBEpisdService.selectQrPtcptDtl(eBBEpisdDTO);
+        eBBEpisdDTO.setPtcptSeq(ptcptDto.getPtcptSeq());
+
+        RequestContextHolder.getRequestAttributes().setAttribute("episdCheck", "Y", RequestAttributes.SCOPE_SESSION);
+        response.sendRedirect("/my-page/edu-apply/detail?detailsKey="+eBBEpisdDTO.getDetailsKey()+"&episdYear="+eBBEpisdDTO.getEpisdYear()+"&episdOrd=" + eBBEpisdDTO.getEpisdOrd()+"&ptcptSeq="+eBBEpisdDTO.getPtcptSeq());
+    }
     /**
      * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
      */
@@ -160,7 +177,6 @@ public class EBMMypageController
         String vwUrl = "";
         eBBEpisdDTO.setMypageYn("Y");
         eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-
         if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
             //QR 이미지 타고 들어옴
             EBBPtcptDTO ptcptDto = eBBEpisdService.selectQrPtcptDtl(eBBEpisdDTO);
