@@ -229,7 +229,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input calendar" >
-                                                        <input id="stbsmDt" type="text" name="stbsmDt" class="datetimepicker_strtDt stbsmDt cleanInit" onclick="cmmCtrl.initCalendar(this);" readonly  style="color:#06161E;">
+                                                        <input id="stbsmDt" type="text" name="stbsmDt" class="datetimepicker_strtDt stbsmDt cleanInit" onclick="cmmCtrl.initCalendar(this);">
                                                     </div>
                                                 </div>
                                             </div>
