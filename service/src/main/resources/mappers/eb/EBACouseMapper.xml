@@ -194,7 +194,7 @@
 				  , stduy_supls_nm
 				  , pc_stduy_cntn
 				  , mbl_stduy_cntn
-				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
+				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS web_path
 			      , lcns_cnnct_cd
 				  , (select cd_nm from co_code_mst where cd=a.lcns_cnnct_cd) as lcns_cnnct_cd_nm
 				  , thnl_file_seq

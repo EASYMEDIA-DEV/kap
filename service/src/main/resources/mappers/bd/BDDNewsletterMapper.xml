@@ -103,6 +103,9 @@
             , PC_THNL_SEQ
             , MBL_THNL_SEQ
             , EXPS_YN
+        <if test='siteGubun == "front"'>
+            , #{srchVal} AS SRCH_VAL
+        </if>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
@@ -253,8 +256,18 @@
             (
                 SELECT
                     (SELECT COUNT(*) FROM BD_NWSLT_MST B WHERE B.NWSLT_SEQ <![CDATA[<=]]> A.NWSLT_SEQ) AS ROW_NUM
-                     , (SELECT MIN(NWSLT_SEQ) FROM BD_NWSLT_MST C WHERE C.NWSLT_SEQ <![CDATA[>]]> A.NWSLT_SEQ) AS NEXT_SEQ
-                     , (SELECT MAX(NWSLT_SEQ) FROM BD_NWSLT_MST D WHERE D.NWSLT_SEQ <![CDATA[<]]> A.NWSLT_SEQ) AS PREV_SEQ
+                     , (SELECT MIN(NWSLT_SEQ) FROM BD_NWSLT_MST C WHERE C.NWSLT_SEQ <![CDATA[>]]> A.NWSLT_SEQ
+                        <if test="srchVal != null and srchVal != ''">
+                            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                        </if>
+                     ) AS NEXT_SEQ
+                     , (SELECT MAX(NWSLT_SEQ) FROM BD_NWSLT_MST D WHERE D.NWSLT_SEQ <![CDATA[<]]> A.NWSLT_SEQ
+                        <if test="srchVal != null and srchVal != ''">
+                            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                        </if>
+                     ) AS PREV_SEQ
                 FROM
                     BD_NWSLT_MST A
                 WHERE NWSLT_SEQ = #{detailsKey}

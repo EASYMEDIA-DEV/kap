@@ -35,7 +35,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             listBtn : {
                 event : {
                     click : function(){
-                        location.href = "./list?" + $(this).data("strPam");
+                        location.href = "./list?" + $formObj.serialize();
                     }
                 }
             }
