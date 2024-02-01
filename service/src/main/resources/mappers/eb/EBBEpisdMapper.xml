@@ -176,7 +176,7 @@
 				, cmptn_dtm
 			  	, mem_seq
 			    , ptcpt_dtm
-				, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+				, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 				</if>
 				FROM ed_edctn_episd_mst a
 				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -299,7 +299,7 @@
 			, cmptn_yn
 			, cmptn_dtm
 			, mem_seq
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		</if>
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -553,7 +553,7 @@
 			, url
 			, time
 			, thnl_file_seq
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS web_path
 			, reg_id
 			, reg_ip
 			, a.reg_dtm
@@ -818,7 +818,7 @@
 						, cmptn_dtm
 						, mem_seq
 						, ptcpt_dtm
-						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		      			, bfre_mem_seq
 						, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS trnsf_yn
 		      			, exam_score

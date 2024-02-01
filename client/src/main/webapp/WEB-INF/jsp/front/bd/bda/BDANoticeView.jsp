@@ -5,6 +5,7 @@
 <div id="wrap" data-controller="controller/bd/bda/BDANoticeViewCtrl">
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
         <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.ntfySeq}" />
+        <input type="hidden" id="srchVal" name="srchVal" value="${rtnDto.srchVal}" />
         <div class="cont-wrap">
             <div class="inner">
                 <div class="cont-sec-w">
