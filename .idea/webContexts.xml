@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/layout/header.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/layout" />
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/wb/wbj/WBJRoundWrite.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/wb/wbj" />
+        <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbb/WBBManagementIndex.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbb" />
       </map>
     </option>
   </component>
