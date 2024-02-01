@@ -452,6 +452,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("#hqZipcode").focus();
                             return false;
                         }
+                        if(jQuery("#hqDtlAddr").val() == ""){
+                            alert("주소 상세를 입력해주세요.");
+                            jQuery("#hqDtlAddr").focus();
+                            return false;
+                        }
                         // 거래처별 매출
                         var dlvrySize = $(".dlvryCmpnNm").length;
                         for(var i =0; i<dlvrySize; i++){
@@ -496,6 +501,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("#zipcode").focus();
                             return false;
                         }
+                        if (jQuery("input[name=fctryDtlAddr]").val() == "") {
+                            alert("공장주소 상세를 입력해주세요.")
+                            jQuery("input[name=fctryDtlAddr]").val().focus();
+                            return false;
+                        }
                         if(mainAddr == '선택'){
                             alert("소재 지역을 선택해주세요.");
                             $("#mainAddr").focus();
@@ -508,12 +518,12 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }
                         if(!rprsntApprvYn){
                             alert("대표자 승인여부를 선택해주세요.");
-                            $("input[name='rprsntApprvYn']").focus();
+                            $("input[name='rprsntApprvYn']").eq(0).focus();
                             return false;
                         }
                         if(!appctnRsnCd){
                             alert("신청사유를 선택해주세요.");
-                            $("input[name='appctnRsnCd']").focus();
+                            $("input[name='appctnRsnCd']").eq(0).focus();
                             return false;
                         }
                         if(!cbsnCd){
