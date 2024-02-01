@@ -9,7 +9,7 @@
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${list.rsumeSttsNm eq '지도완료'}">
-                            ${ kl:convertDate(list.guideBgnDt, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(list.guidePscndDt, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                            ${ kl:convertDate(list.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }
                         </c:when>
                         <c:otherwise>
                             -
