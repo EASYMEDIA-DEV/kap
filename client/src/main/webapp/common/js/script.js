@@ -284,7 +284,7 @@ var commonScript = (function(){
           gsap.to(item, {
             scrollTrigger: {
               trigger: item,
-              start: `top ${$("#header").height() + 24}`,
+              start: () => `top ${$("#header").height() + 24}`,
               end: 'bottom top',
               // markers: true,
               onEnter: () => {
@@ -1108,19 +1108,20 @@ var commonScript = (function(){
         let kvImageMotion = gsap.timeline({
           scrollTrigger: {
             trigger: $(".sub-top-vis-area.basic-page"),
-            start: "top " + $(".sub-top-vis-area.basic-page").offset().top,
+            start: ()=> "top " + $(".sub-top-vis-area.basic-page").offset().top,
             end:"bottom top",
             toggleClass: {targets: $(".sub-top-vis-area.basic-page"), className: "scroll-down"},
             //markers:true,
           },
         });
+        
 
         // sub 신청하기 페이지 상단 비주얼 영역 graphic 모션
         if($(".sub-top-vis-area.apply-page").length){
           let kvApplyMotion = gsap.timeline({
             scrollTrigger: {
               trigger: $(".sub-top-vis-area.apply-page"),
-              start: "top " + $(".sub-top-vis-area.apply-page").offset().top,
+              start: () => "top " + $(".sub-top-vis-area.apply-page").offset().top,
               end:"top+=40% top",
               scrub: 0.1,
               onUpdate: function (self) {
@@ -1139,7 +1140,7 @@ var commonScript = (function(){
             gsap.to(".sub-top-vis-area.basic-page .f-xlarge-title", {
               scrollTrigger: {
                 trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
-                start: "top " + $(".sub-top-vis-area.basic-page").offset().top,
+                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
                 end:"top top",
                 pin: true,
@@ -1151,7 +1152,7 @@ var commonScript = (function(){
             let kvTitleChangeMotion = gsap.timeline({
               scrollTrigger: {
                 trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
-                start: "top " + $(".sub-top-vis-area.basic-page").offset().top,
+                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
                 //end:"top-=50% top",
                 end:"top top",
@@ -1170,7 +1171,7 @@ var commonScript = (function(){
             gsap.to(".sub-top-vis-area.basic-page", {
               scrollTrigger: {
                 trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
-                start: "top " + $(".sub-top-vis-area.basic-page").offset().top,
+                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page",
                 end:"top-=100rem top",
                 pin: true,
@@ -1182,7 +1183,7 @@ var commonScript = (function(){
             let kvTitleChangeMotion = gsap.timeline({
               scrollTrigger: {
                 trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
-                start: "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
+                start: () => "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
                 //end:"top-=50% top",
                 end:"top top",
@@ -1706,7 +1707,8 @@ function schedulePopupFn(){
   if($(".total-edu-area").size() > 0){
 
     var monthOuterWidth = Math.round($(".total-edu-area .edu-plan-area .month-wrap .month").outerWidth(true))
-  
+    var thisYear = $(".total-edu-area .edu-plan-area .month-area .f-head").text().split("년")[0];
+
     $(".total-edu-area .edu-plan-area .round-period .period").each(function(q){
       if(!$(this).closest(".round-period").hasClass("no-this-year")){
         $(".period-bar").eq(q).find("span").text($(this).text())
@@ -1717,9 +1719,11 @@ function schedulePopupFn(){
         var startDate = parseInt(startPeriod.split(".")[1]) // 시작 날짜
         var endMonth = parseInt(endPeriod.split(".")[0]) // 종료 달
         var endDate = parseInt(endPeriod.split(".")[1]) // 종료 날짜
-    
-        if(endMonth < startMonth){
-          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":"100%"})
+
+        if($(this).data("start-year") < thisYear){
+          $(".period-bar").eq(q).css({"left":0, "width":monthOuterWidth - Math.round((monthOuterWidth / 31) * endDate)})
+        }else if($(this).data("end-year") > thisYear){
+          $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":monthOuterWidth - Math.round((monthOuterWidth / 31) * startDate)})
         }else{
           $(".period-bar").eq(q).css({"left":(Math.round((startMonth - 1) * monthOuterWidth)) + ((monthOuterWidth / 31) * (startDate - 1)), "width":((endMonth - startMonth) * monthOuterWidth) + ((endDate - startDate) * (monthOuterWidth / 31))})
         }
@@ -1788,7 +1792,7 @@ function anchorVisibleFn() {
 // 프린트 관련 함수
 function printFn(){
   // method 1 (새 윈도우 창 열어서 프린트 후 닫기)
-  var popUrl = "/my-page/edu-apply/cmPtm?detailsKey=28&episdYear=2024&episdOrd=4&ptcptSeq=137";
+  var popUrl = "FO-PC-MYP-02-013.html";
   var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
   var myWindow = window.open(popUrl, popOption);
   myWindow.document.close();

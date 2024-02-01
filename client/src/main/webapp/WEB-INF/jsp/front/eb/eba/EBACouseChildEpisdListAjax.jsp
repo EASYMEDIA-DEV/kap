@@ -54,6 +54,18 @@
                     <c:set var="accsStatusOrderClass" value=""/>
                 </c:otherwise>
             </c:choose>
+
+            <!--교육일수 차이 계산-->
+            <c:set var="dayVal" value=""/>
+            <c:choose>
+                <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                    <c:set var="strtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                    <c:set var="endDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                    <c:set var="dayVal" value="${kl:getDaysDiff(strtDt, endDt) + 1}"/>
+                </c:when>
+            </c:choose>
+
+
             <div class="list-item available ${accsStatusOrderClass}" data-episdSeq="${list.episdSeq}" data-episdYear="${list.episdYear}" data-episdOrd="${list.episdOrd}"><!-- available: 신청 가능한 회차 --><!-- accepting: 접수중 -->
                 <c:if test="${list.accsStatusOrder eq 1}"><!-- 접수대기와 접수중만 출력-->
                     <p class="available-label">
@@ -142,7 +154,7 @@
                             </div>
                             <div class="info-list">
                                 <p class="tit f-caption2">교육기간</p>
-                                <p class="txt f-body2">${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${list.stduyDdCdNm}일간)</p>
+                                <p class="txt f-body2">${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${dayVal}일간)</p>
                             </div>
                         </div>
                         <div class="btn-wrap">

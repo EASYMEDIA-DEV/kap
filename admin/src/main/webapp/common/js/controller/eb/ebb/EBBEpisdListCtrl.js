@@ -295,10 +295,10 @@ define(["ezCtrl"], function(ezCtrl) {
 						}
 						console.log($(this).closest("label").attr("class"));
 
-						if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
+						/*if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
 							$(this).closest("div").find(".classType:not(.classType:first)").trigger("click");
 							$(".cdListContainer").find("input:checkbox").prop("checked",true);
-						}
+						}*/
 
 					}
 				}
