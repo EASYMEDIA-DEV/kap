@@ -124,7 +124,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">교육장소<span class="star"> *</span></label>
                     <div class="col-sm-9" style="padding-top: 7px">
-                        ${ rtnDto.placeName }
+                        ${not empty rtnDto.placeName ? rtnDto.placeName : '-'}
                     </div>
                 </div>
             </fieldset>
