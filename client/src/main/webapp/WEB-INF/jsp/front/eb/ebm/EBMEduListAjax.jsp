@@ -37,20 +37,32 @@
                                             <p class="f-head">${list.episdOrd}회차</p>
                                             <div class="status-info-w">
                                                 <c:choose>
-                                                    <c:when test="${list.trnsfYn eq 'N'}">
-                                                        <p class="box-label bigger waiting"><span>
-                                                            <c:choose>
-                                                                <c:when test="${list.eduStat eq '신청대기'}">선발대기</c:when>
-                                                                <c:otherwise>${list.eduStat}</c:otherwise>
-                                                            </c:choose>
-
-                                                        </span></p><!-- 2023-12-18 라벨 값 변경 -->
+                                                    <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육대기' or list.eduStat eq '신청대기' or list.eduStat eq '협의중')}">
+                                                        <p class="box-label bigger waiting">
+                                                            <span>${list.eduStat eq '신청대기' ? '선발대기' : list.eduStat}</span>
+                                                        </p>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        <p class="box-label bigger waiting"><span>교육양도</span></p><!-- 2023-12-18 라벨 값 변경 -->
-                                                    </c:otherwise>
+                                                    <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '신청' or list.eduStat eq '신청취소' or list.eduStat eq '교육양도')}">
+                                                        <p class="box-label bigger">
+                                                            <span>${list.eduStat}</span>
+                                                        </p>
+                                                    </c:when>
+                                                    <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '미선발' or list.eduStat eq '교육취소')}">
+                                                        <p class="box-label bigger arr">
+                                                            <span>${list.eduStat}</span>
+                                                        </p>
+                                                    </c:when>
+                                                    <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육종료' or list.eduStat eq '교육완료')}">
+                                                        <p class="box-label bigger complete">
+                                                            <span>${list.eduStat}</span>
+                                                        </p>
+                                                    </c:when>
+                                                    <c:when test="${list.trnsfYn eq 'Y'}"> <%-- 이관 된 경우 --%>
+                                                        <p class="box-label bigger waiting">
+                                                            <span>교육양도</span>
+                                                        </p>
+                                                    </c:when>
                                                 </c:choose>
-
                                             </div>
                                         </div>
                                     </div>
@@ -142,16 +154,33 @@
                                             <p class="training-name f-title1">${list.nm}</p>
                                         </div>
                                         <div class="status-info-w">
-                                            <p class="box-label bigger">
-                                                <c:choose>
-                                                    <c:when test="${list.trnsfYn eq 'N'}">
+                                            <c:choose>
+                                                <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육대기' or list.eduStat eq '신청대기' or list.eduStat eq '협의중')}">
+                                                    <p class="box-label bigger waiting">
                                                         <span>${list.eduStat}</span>
-                                                    </c:when>
-                                                    <c:otherwise>
+                                                    </p>
+                                                </c:when>
+                                                <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '신청' or list.eduStat eq '신청취소' or list.eduStat eq '교육양도')}">
+                                                    <p class="box-label bigger">
+                                                        <span>${list.eduStat}</span>
+                                                    </p>
+                                                </c:when>
+                                                <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '미선발' or list.eduStat eq '교육취소')}">
+                                                    <p class="box-label bigger arr">
+                                                        <span>${list.eduStat}</span>
+                                                    </p>
+                                                </c:when>
+                                                <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육종료' or list.eduStat eq '교육완료')}">
+                                                    <p class="box-label bigger complete">
+                                                        <span>${list.eduStat}</span>
+                                                    </p>
+                                                </c:when>
+                                                <c:when test="${list.trnsfYn eq 'Y'}"> <%-- 이관 된 경우 --%>
+                                                    <p class="box-label bigger waiting">
                                                         <span>이관</span>
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </p>
+                                                    </p>
+                                                </c:when>
+                                            </c:choose>
                                         </div>
                                     </div>
                                 </div>

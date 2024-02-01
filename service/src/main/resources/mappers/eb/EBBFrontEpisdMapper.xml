@@ -37,8 +37,8 @@
 			, rcrmt_mthd_cd
 			, rcrmt_mthd_cd_nm
 		    , place_seq
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
-		    , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS file_dsc
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS web_path
+		    , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 			, place_nm
 			, non_member_cd
 		FROM ed_edctn_prcs_mst a
@@ -188,7 +188,7 @@
 				, b.fxnum_impsb_yn
 				, place_seq
 				, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = b.place_seq) as place_nm
-				, (SELECT web_path FROM co_file_dtl WHERE file_seq = 1 AND file_ord = 0) AS web_path
+				, (SELECT web_path FROM co_file_dtl WHERE file_seq = 1 order by file_ord desc limit 1) AS web_path
 				, b.exps_yn
 			from ed_edctn_episd_mst b
 			where  exps_yn = 'Y'
@@ -549,7 +549,7 @@
 				   , cmptn_dtm
 				   , mem_seq
 				   , ptcpt_dtm
-				   , (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+				   , (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 
 			  FROM ed_edctn_episd_mst a
 					   LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -747,7 +747,7 @@
 					, cmptn_dtm
 					, mem_seq
 					, ptcpt_dtm
-					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		      		, bfre_mem_seq
 					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		      		, ptcpt_seq
@@ -1396,7 +1396,7 @@
 		, cmptn_dtm
 		, mem_seq
 		, ptcpt_dtm
-		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		, bfre_mem_seq
 		, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		, ptcpt_seq
@@ -1888,8 +1888,8 @@
 				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
 				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
-				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
-				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc
+				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS web_path
+				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
 			 from
@@ -1950,8 +1950,8 @@
 				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
 				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
-				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
-				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc
+				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS web_path
+				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
 			 from
