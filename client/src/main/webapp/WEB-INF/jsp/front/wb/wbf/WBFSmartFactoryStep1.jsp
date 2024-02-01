@@ -189,24 +189,24 @@
                                         <tr>
                                             <th>주생산품</th>
                                             <td>
-                                                <c:if test="${not empty rtnData.mjrPrdct1}">
-                                                    ① ${rtnData.mjrPrdct1}
+                                                <c:if test="${not empty registerDtl.mjrPrdct1}">
+                                                    ① ${registerDtl.mjrPrdct1}
                                                 </c:if>
-                                                <c:if test="${empty rtnData.mjrPrdct1}">
+                                                <c:if test="${empty registerDtl.mjrPrdct1}">
                                                     -
                                                 </c:if>
 
-                                                <c:if test="${not empty rtnData.mjrPrdct2}">
-                                                    ② ${rtnData.mjrPrdct2}
+                                                <c:if test="${not empty registerDtl.mjrPrdct2}">
+                                                    ② ${registerDtl.mjrPrdct2}
                                                 </c:if>
-                                                <c:if test="${empty rtnData.mjrPrdct2}">
+                                                <c:if test="${empty registerDtl.mjrPrdct2}">
                                                     -
                                                 </c:if>
 
-                                                <c:if test="${not empty rtnData.mjrPrdct3}">
-                                                    ③ ${rtnData.mjrPrdct3}
+                                                <c:if test="${not empty registerDtl.mjrPrdct3}">
+                                                    ③ ${registerDtl.mjrPrdct3}
                                                 </c:if>
-                                                <c:if test="${empty rtnData.mjrPrdct3}">
+                                                <c:if test="${empty registerDtl.mjrPrdct3}">
                                                     -
                                                 </c:if>
                                             </td>
