@@ -1819,7 +1819,7 @@
 						, episd_ord
 						, fxnum_impsb_yn
 						, fxnum_cnt
-						, (SELECT COUNT(*) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord  ) AS cnt
+						, (SELECT COUNT(*) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' ) AS cnt
 			from ed_edctn_episd_mst a
 			WHERE 1=1
 				and edctn_seq = #{edctnSeq}

@@ -1885,8 +1885,8 @@
 					END  AS accs_status_order
 				  , fxnum_cnt
 				  , fxnum_impsb_yn
-				  , "RCRMT_MTHD02" as rcrmt_mthd_cd
-				  , "모집 후 선발" as rcrmt_mthd_cd_nm
+				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
+				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
 				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
 				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc
@@ -1947,8 +1947,8 @@
 					END  AS accs_status_order
 				  , fxnum_cnt
 				  , fxnum_impsb_yn
-				  , "RCRMT_MTHD02" as rcrmt_mthd_cd
-				  , "모집 후 선발" as rcrmt_mthd_cd_nm
+				  , "RCRMT_MTHD01" as rcrmt_mthd_cd
+				  , "선착순 마감" as rcrmt_mthd_cd_nm
 				  , place_seq
 				  , (SELECT web_path FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS web_path
 				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq AND file_ord = 0) AS file_dsc

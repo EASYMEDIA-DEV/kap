@@ -771,12 +771,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
 			eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 
-			//선착순 마감 - 신청자 상태가 신청(선발)으로 입력
-			if(eBBPtcptDTO.getRcrmtMthdCd().equals("RCRMT_MTHD01")){
+			if("admin".equals(eBBPtcptDTO.getSiteGubun())) {
 				eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
-			//모집후 선발 - 신청자 상태가 대기(미선발)으로 입력
-			}else{
-				eBBPtcptDTO.setSttsCd("EDU_STTS_CD04");
+			}
+			else {
+				//선착순 마감 - 신청자 상태가 신청(선발)으로 입력
+				if(eBBPtcptDTO.getRcrmtMthdCd().equals("RCRMT_MTHD01")){
+					eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
+					//모집후 선발 - 신청자 상태가 대기(미선발)으로 입력
+				}else{
+					eBBPtcptDTO.setSttsCd("EDU_STTS_CD04");
+				}
 			}
 
 			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);

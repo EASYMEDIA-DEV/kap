@@ -10,7 +10,7 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="edctnSeq" name="edctnSeq" value="${rtnDto.edctnSeq}" />
             <input type="hidden" class="notRequired" id="ptcptSeq" name="ptcptSeq" value="${rtnDto.ptcptSeq}" />
-
+            <input type="hidden" class="notRequired" id="applyDateTime" name="applyDateTime" value="${rtnData.applyDateTime}" />
 
             <!-- 과정정보 -->
             <fieldset>
