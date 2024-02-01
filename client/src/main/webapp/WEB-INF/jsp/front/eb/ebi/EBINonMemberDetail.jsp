@@ -22,7 +22,7 @@
     </c:when>
 </c:choose>
 
-<div id="wrap" data-controller="controller/eb/ebi/EBINonMemberDetailCtrl">
+<div data-controller="controller/eb/ebi/EBINonMemberDetailCtrl">
     <form name="frmGo" method="GET" action="" data-del-type="none">
         <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnData.edctnSeq}" />
     </form>

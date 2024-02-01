@@ -37,7 +37,7 @@
     </c:when>
 </c:choose>
 
-<div id="wrap" data-controller="controller/eb/ebi/EBINonMemberApplyDetailCtrl">
+<div data-controller="controller/eb/ebi/EBINonMemberApplyDetailCtrl">
     <form name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" class="notRequired" id="email" name="email" value="${ rtnDto.email }" />

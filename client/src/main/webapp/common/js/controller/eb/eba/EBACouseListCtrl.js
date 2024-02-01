@@ -386,7 +386,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 						//검색 로직 실행
-						$formObj.find("#btnSearch").click();
+						// $formObj.find("#btnSearch").click();
 					}
 				}
 			},

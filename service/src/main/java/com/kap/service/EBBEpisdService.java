@@ -1,6 +1,5 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 
@@ -163,6 +162,11 @@ public interface EBBEpisdService {
 	 * 설문초기화 한다.
 	 */
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 설문 개수 조회
+	 */
+	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 
 	/**

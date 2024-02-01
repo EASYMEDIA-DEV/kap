@@ -16,7 +16,7 @@
     </c:when>
 </c:choose>
 
-<div id="wrap" data-controller="controller/eb/ebi/EBINonMemberStepCtrl">
+<div data-controller="controller/eb/ebi/EBINonMemberStepCtrl">
     <form name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 

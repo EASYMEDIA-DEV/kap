@@ -315,8 +315,14 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click: function(){
 						var choiceCnt = ctrl.obj.find("input[name=delValueList]:checked").size();
-						if(choiceCnt == 0){
+						if(choiceCnt  == -1){
+							return false;
+						}
+						else if(choiceCnt == 0) {
 							alert(msgCtrl.getMsg("fail.eb.eba.notSrchPartsCouse"));
+						}
+						else if(choiceCnt > 1){
+							alert(msgCtrl.getMsg("fail.eb.eba.notSrchPlaceCouse1"));
 						}else{
 							var clickObj = {};
 							clickObj.edctnSeq = ctrl.obj.find("input[name=delValueList]:checked").val();

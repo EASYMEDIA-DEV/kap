@@ -20,6 +20,30 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	var onlineFileHtml = $("#onlineList").find("tr.examTr").eq(1).clone(true);
 	//온라인강의 복사본 생성 끝
 
+
+	//설문 개수 조회
+	var svCntCheck = function () {
+		var srvSeq = $("#srvSeq").val();
+
+		if(!srvSeq) {
+			return false;
+		}
+
+		var svMst = {};
+		svMst.srvSeq = srvSeq;
+		svMst.episdSeq = $("#episdSeq").val();
+
+		cmmCtrl.jsonAjax(function(data){
+			var rtn = JSON.parse(data);
+
+			alert(rtn.respCnt);
+			if(rtn.respCnt == 0 ){
+				$(".eduSrvSearch").attr("disabled", false); //만족도조사 추가버튼 사용 가능
+				$("#srvStrtDtm, #srvEndDtm").attr("disabled", false); //설문, 시험 달력 사용 가능
+			}
+		}, './checkSurveyCnt', svMst, "text")
+	}
+
 	// 교육 참여자 목록 호출
 	var search = function (page){
 		//data로 치환해주어야한다.
@@ -1127,7 +1151,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									var rtn = JSON.parse(data);
 									if(rtn.respCnt > -1 ){
 										alert('설문 응답이 초기화되었습니다.');
-										location.reload();
+										/*location.reload();*/
+										svCntCheck();
 									}
 								}, './deleteSurveyRspn', svMst, "text")
 
@@ -1177,7 +1202,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 },
 		immediately : function(event) {
-
 
 
 
@@ -1274,7 +1298,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(".eduIsttrSearch").attr("disabled", true);//강사 추가버튼 사용 불가
 						$(".btnOneTrRemove").attr("disabled", true);//강사 삭제버튼 사용불가
 						$(".eduSrvSearch").attr("disabled", true);//만족도조사 추가버튼 사용불가
-						$(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가
+						/*$(".srvReset").attr("disabled", true);//설문 초기화버튼 사용불가*/
 						$(".eduExamSearch").attr("disabled", true);//평가버튼 사용 불가
 						$(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
 
@@ -1301,6 +1325,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//교육 참여자목록 조회
 			if($("#detailsKey").val() != ""){
 				search();
+
+				svCntCheck();
 			}
 			
 			//질문 번호 셋팅,점수 셋팅
