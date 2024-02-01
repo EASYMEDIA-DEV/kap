@@ -308,10 +308,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										deleteStack++
 									}
 
-									//debugger;
-
-
-
 									if(deleteStack<3){
 										ptcptAtndcList.push(atndcDayForm);
 									}

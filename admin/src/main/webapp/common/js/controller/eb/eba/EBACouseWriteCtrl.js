@@ -191,6 +191,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 		},
 		classname : {
+			listView : {
+				event : {
+					click : function() {
+						//상세보기
+						var detailsKey = $(this).data("detailsKey");
+						var episdYear = $(this).data("episdYear");
+						var episdOrd = $(this).data("episdOrd");
+						$formObj.find("input[name=detailsKey]").val(detailsKey);
+						$formObj.find("input[name=episdYear]").val(episdYear);
+						$formObj.find("input[name=episdOrd]").val(episdOrd);
+
+						location.href = "/mngwserc/eb/ebb/write?copyYn=N&detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd
+					}
+				}
+			},
 
 			classType : {
 				event : {

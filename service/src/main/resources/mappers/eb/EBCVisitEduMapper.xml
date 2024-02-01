@@ -563,14 +563,15 @@
 
 	<!--
          쿼리명 : EBCVisitEduMapper.selectVisitEduApplyRegDtm
-         설  명 : [사용자] 방문교육 신청일시 값을 가져온다.
+         설  명 : [사용자] 방문교육 신청일시와 신청된 방문교육의 순번을 가져온다.
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.12.05   구은희       최초생성
     -->
 	<select id="selectVisitEduApplyRegDtm" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
 		select /*EBCVisitEduMapper.selectVisitEduApplyRegDtm*/
-			reg_dtm
+			vst_seq
+			, reg_dtm
 		from ev_edctn_vst_mst
 		where 1=1
 		  and mem_seq = #{memSeq}

@@ -955,7 +955,7 @@ public class EBMMypageController
         /**
          * 교육신청 취소
          */
-        @PostMapping(value = "/apply/applyCancel")
+        @PostMapping(value = "/edu-apply/applyCancel")
         public String applyCancel(@RequestBody EBBPtcptDTO eBBPtcptDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
             String rtnStr = "";
             try

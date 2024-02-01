@@ -158,6 +158,7 @@ define(["ezCtrl"], function(ezCtrl) {
 						cmmCtrl.frmAjax(function(resultData){
 							var rtnData = resultData.rtnData;
 
+							debugger;
 							if(rtnData.regStat == "F"){
 								alert("이미 해당 회차에 신청한 회원입니다.");
 							}else if(rtnData.regStat == "R"){
@@ -174,6 +175,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					//정원초과
 				}else{
 					alert("교육 가능한 인원이 초과되었습니다.");
+					location.href="education/apply/detail?detailsKey="+seqObj.edctnSeq;
 					return false;
 				}
 			}
@@ -434,9 +436,12 @@ define(["ezCtrl"], function(ezCtrl) {
 			//리스트 조회
 			//폼 데이터 처리
 			//cmmCtrl.setFormData($formObj);
+			var chkYn = $("#chkYn").val();
 
+			if(chkYn =="Y"){
+				chkInfo();
+			}
 
-			chkInfo();
 		}
 	};
 

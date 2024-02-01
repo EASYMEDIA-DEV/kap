@@ -194,11 +194,11 @@
                                                                 <div class="middle-line">
                                                                     <div class="opt-group">
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType1" name="srchDateType" value="1" checked>
+                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="1" checked>
                                                                             <label for="srchDateType1">교육기간</label>
                                                                         </div>
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType2" name="srchDateType" value="2">
+                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="2">
                                                                             <label for="srchDateType2">접수기간</label>
                                                                         </div>
                                                                     </div>

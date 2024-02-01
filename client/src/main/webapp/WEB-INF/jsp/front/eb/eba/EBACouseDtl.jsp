@@ -91,9 +91,6 @@
                                     <div class="index-list-w" id="listContainer">
                                         <!-- 회차정보 호출 -->
                                     </div>
-
-
-
                                     <div class="btn-wrap add-load align-center">
                                         <a class="btn-solid small black-line pageSet" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
                                     </div>

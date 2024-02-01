@@ -94,7 +94,9 @@
                     </div>
                     <label class="col-sm-1 control-label">업종<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
-                        <p class="form-control-static">${rtnDto.cbsnCdNm}</p>
+                        <p class="form-control-static">
+                            ${not empty rtnDto.cbsnCdNm ? rtnDto.cbsnCdNm : '-'}
+                        </p>
                     </div>
                 </div>
             </fieldset>
@@ -211,7 +213,7 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">일반 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-11" style="margin-left: -15px">
                         <p class="form-control-static telNo">-</p>
                     </div>

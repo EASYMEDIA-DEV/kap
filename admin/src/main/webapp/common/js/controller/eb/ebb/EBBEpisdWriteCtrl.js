@@ -745,8 +745,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function(){
 						cmmCtrl.getCouseSrchLayerPop(function(data){
+
+							if(data.choiceCnt  == -1){
+								return false;
+							}
+
 							if(data.choiceCnt > 1){
 								alert(msgCtrl.getMsg("fail.eb.eba.notSrchPlaceCouse1"));
+
 							}else{
 								$("#edctnSeq").val(data.edctnSeq);
 								$("#ctgryCd").val(data.ctgryCd);
@@ -760,13 +766,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 								$("p.stduyDtm").text(data.stduyDtm);
+								$("#episdList").css("display", "");
+								$("#prevEpisd").css("display", "none");
+							}
+
+							if(($("#edctnSeq").val() == "" || $("#edctnSeq").val() === undefined)){
+								$("#episdList").css("display", "none");
+								$("#prevEpisd").css("display", "");
 							}
 
 							filedSet(data);
-
-							$("#episdList").css("display", "");
-							$("#prevEpisd").css("display", "none");
-
 
 						});
 					}
@@ -1015,6 +1024,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function(){
 						onlineHtml.css("display", "").removeClass("examTr");/*.removeClass("notRequired");*/
+						var firstTd = onlineHtml.find("td:first");
+						var currentValue = parseInt(firstTd.text(), 10);
+						firstTd.text(currentValue + 1);
 						onlineFileHtml.css("display", "").removeClass("examTr").removeClass("notRequired");
 						$("#onlineList").append("<tr>"+onlineHtml.html()+"</tr><tr>"+onlineFileHtml.html()+"</tr>");
 						onlineHtml.css("display", "none").addClass("examTr");/*.addClass("notRequired");*/
@@ -1351,6 +1363,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$("#episdYear").prop("disabled", true);//회차 년도
 					$("#episdOrd").prop("disabled", true);//회차
+
+					$("#cbsnCd").prop("disabled", true);//업종
 
 					$("#accsStrtDt").prop("disabled", true);//접수 시작일
 					$("#accsStrtHour").prop("disabled", true);//접수 시작시간

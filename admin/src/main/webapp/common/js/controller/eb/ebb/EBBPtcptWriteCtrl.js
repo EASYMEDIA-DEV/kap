@@ -43,8 +43,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							var memEmail = data.memEmail;//이메일
 							var gndr = data.gndr;//이메일
 
-							var pstnCdNm = data.pstnCdNm//직급
-							var deptDtlNm = data.deptDtlNm;//부서명
+							var pstnNm = data.pstnNm//직급
+							var pstnCdNm = data.pstnCdNm//직급상세
+
+							var deptCdNm = data.deptCdNm;//부서명
+							var deptDtlNm = data.deptDtlNm;//부서상세
+
 							var hpNo = data.hpNo//휴대폰번호
 							var telNo = data.telNo//회사전화번호
 							var bsnmNo = data.bsnmNo;//사업자번호
@@ -52,8 +56,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 							$(".memName").text(memName);
 							$(".memEmail").text(memEmail);
-							$(".pstnCdNm").text(pstnCdNm);
-							$(".deptDtlNm").text(deptDtlNm);
+
+							var pstnNmTxt = (pstnNm != '' && !(pstnNm === undefined)) ? pstnCdNm + "(" + pstnNm + ")" : pstnCdNm;
+							$(".pstnCdNm").text(pstnNmTxt);
+
+							var deptCdNmTxt = (deptDtlNm != '' && !(deptDtlNm === undefined)) ? deptCdNm + "(" + deptDtlNm + ")" : deptCdNm;
+							$(".deptDtlNm").text(deptCdNmTxt);
+
 							$(".hpNo").text(hpNo);
 							$(".telNo").text(telNo);
 

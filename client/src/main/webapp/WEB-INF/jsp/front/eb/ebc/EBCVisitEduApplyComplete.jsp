@@ -78,7 +78,7 @@
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap align-center for-motion">
                         <div class="btn-set">
-                            <a class="btn-solid small black-bg" href="/my-page/edu-apply/list"><span>신청내역 보기</span></a>
+                            <a class="btn-solid small black-bg" href="/my-page/edu-apply/visit-edu-detail?vstSeq=${rtnData.vstSeq}"><span>신청내역 보기</span></a>
                         </div>
                     </div>
                 </div>

@@ -185,6 +185,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             var pstnCd = ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCd").val(); // 직급 - select
                             var pstnCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnCdNm").val();
                             var deptCd= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptCd").val();
+                            var deptCdNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptCdNm").val();
                             var deptDtlNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".deptDtlNm").val();
                             var pstnNm= ctrl.obj.find("input[name=delValueList]:checked").parents("tr").children(".pstnNm").val();
 
@@ -216,8 +217,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             clickObj.memEmail = memEmail;
                             clickObj.cmpnNm = cmpnNm;
-                            clickObj.deptDtlNm = deptDtlNm;
-                            clickObj.pstnCdNm = pstnCdNm;
+
+                            clickObj.deptCdNm = deptCdNm;//부서
+                            clickObj.deptDtlNm = deptDtlNm;//부서상세
+                            clickObj.pstnNm = pstnNm;//직급
+                            clickObj.pstnCdNm = pstnCdNm;//직급상세
 
                             clickObj.hpNo = hpNo;
                             clickObj.telNo = telNo;

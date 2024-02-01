@@ -275,11 +275,11 @@
                                                         <td>
                                                             <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
                                                                 <p>
-                                                                        ${status.count}.
-                                                                        ${not empty list.nm ? list.nm : "-"}/
-                                                                        ${not empty list.score ? list.score : "-"}/
-                                                                        ${not empty list.year ? list.year : "-"} 년/
-                                                                        ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                    ${status.count}.
+                                                                    ${not empty list.nm ? list.nm : "-"}/
+                                                                    ${not empty list.score ? list.score : "-"}/
+                                                                    ${not empty list.year ? list.year : "-"} 년/
+                                                                    ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
                                                                 </p>
                                                             </c:forEach>
                                                         </td>

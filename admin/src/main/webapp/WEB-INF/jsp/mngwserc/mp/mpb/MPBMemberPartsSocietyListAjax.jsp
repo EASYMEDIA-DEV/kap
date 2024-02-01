@@ -55,6 +55,7 @@
         <input type="hidden" class="deptCd" value="${list.deptCd}"/>
         <input type="hidden" class="deptDtlNm" value="${list.deptDtlNm}"/>
         <input type="hidden" class="pstnNm" value="${list.pstnNm}"/>
+        <input type="hidden" class="pstnCdNm" value="${list.pstnCdNm}"/>
 
       </tr>
     </c:forEach>

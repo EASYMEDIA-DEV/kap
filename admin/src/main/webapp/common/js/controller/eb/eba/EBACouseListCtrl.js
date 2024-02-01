@@ -137,9 +137,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					click : function() {
 
 						var $this = this;
-
 						var delList = new Array();
-
 
 						if($("#listContainer").find("input:checkbox[name='delValueList']:checked").length == 0){
 							alert("삭제할 게시물을 선택해주세요.");
@@ -153,19 +151,15 @@ define(["ezCtrl"], function(ezCtrl) {
 						seqObj['edctnSeqList'] = delList;
 						cmmCtrl.jsonAjax(function(data){
 							var rtn = JSON.parse(data);
-							if(rtn.respCnt>0){
-								console.log('회차가 등록된 게시물이 존재하여 삭제 할 수 없습니다.');
+							if(rtn.respCnt > 0){
+								alert('회차가 등록된 게시물이 존재하여 삭제 할 수 없습니다.');
 							}else{
 								console.log('등록된 회차 없음');
 								delCallback($this);
 							}
-
-
 						}, "./deleteChk", seqObj, "text");
 
 						//delCallback(this);
-
-
 					}
 				}
 			},
@@ -314,6 +308,8 @@ define(["ezCtrl"], function(ezCtrl) {
 
 								});
 								clickObj.trObjList = trObjList;
+								clickObj.choiceCnt = choiceCnt;
+
 
 							}else{
 								var edctnSeq =trObj.find("td").eq(0).find("input[name=delValueList]:checked").val();

@@ -11,7 +11,7 @@
         </td>
         <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">
-          <a href="javascript:" class="listView ${list.authCd eq '99' ? 'text-danger' : ''}" data-details-key="${list.admSeq}">
+          <a href="javascript:" class="listView ${list.authCd eq '99' ? 'text-danger' : ''}" data-details-key="${list.edctnSeq}" data-episd-year="${list.episdYear}" data-episd-ord="${list.episdOrd}">
               ${ list.id }<c:if test="${ list.authCd eq '99'}"> (*)</c:if>
           </a>
         </td>

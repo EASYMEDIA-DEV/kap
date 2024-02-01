@@ -43,7 +43,6 @@
 		FROM ed_edctn_prcs_mst a
 		LEFT JOIN (
 						SELECT
-
 						bbb.*
 						, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = bbb.place_seq) as place_nm
 
@@ -68,12 +67,12 @@
 										when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1' /*접수중*/
 										when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3' /*접수마감*/
 									END  AS accs_status_order
-									, place_seq
-						           , rcrmt_mthd_cd
-						           , rcrmt_mthd_cd_nm
-									, "E" as non_member_cd
-									, @rownum:=@rownum+1
-									FROM (select
+										, place_seq
+										, rcrmt_mthd_cd
+										, rcrmt_mthd_cd_nm
+										, "E" as non_member_cd
+										, @rownum:=@rownum+1
+									FROM (SELECT
 												b.edctn_seq
 												, b.episd_year
 												, b.episd_ord
@@ -88,17 +87,11 @@
 												, place_seq
 												, b.rcrmt_mthd_cd
 												, (select cd_nm from co_code_mst where cd=b.rcrmt_mthd_cd) as rcrmt_mthd_cd_nm
-											from ed_edctn_episd_mst b
-
+											FROM ed_edctn_episd_mst b
 											WHERE b.exps_yn = 'Y'
-
 									) bb, (SELECT @rownum:=0) TMP
-
-
-
 						ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
 						GROUP BY edctn_seq
-
 		) bb ON a.edctn_seq = bb.edctn_seq
 
 		<include refid="selectFrontEpisdListwhereSql" />
@@ -114,7 +107,7 @@
 			<choose>
 				<when test="srchOrder == 1">
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+					ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc, accs_end_dtm asc
 				</when>
 				<when test="srchOrder == 2">
 					<!-- 교육일자순 -->
@@ -130,7 +123,7 @@
 				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
+					ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc, accs_end_dtm asc
 				</otherwise>
 			</choose>
 		</if>
@@ -154,34 +147,32 @@
 		FROM ed_edctn_prcs_mst a
 		LEFT JOIN (
 			SELECT
-
 				bbb.*
-
 				FROM (SELECT
-				edctn_seq
-				, episd_year
-				, episd_ord
-				, episd_seq
-				, accs_strt_dtm
-				, accs_end_dtm
-				, edctn_strt_dtm
-				, edctn_end_dtm
-				, fxnum_cnt
-				, fxnum_impsb_yn
-				, case
-				when NOW()   <![CDATA[<]]>  accs_strt_dtm then '접수대기'
-				when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '접수중'
-				when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '접수마감'
-				END  AS accs_status_nm
-				, case
-				when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2'
-				when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1'
-				when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3'
-				END  AS accs_status_order
-				, place_seq
-				, place_nm
-				, web_path
-				, @rownum:=@rownum+1
+					edctn_seq
+					, episd_year
+					, episd_ord
+					, episd_seq
+					, accs_strt_dtm
+					, accs_end_dtm
+					, edctn_strt_dtm
+					, edctn_end_dtm
+					, fxnum_cnt
+					, fxnum_impsb_yn
+					, case
+					when NOW()   <![CDATA[<]]>  accs_strt_dtm then '접수대기'
+					when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()   <![CDATA[<]]>    accs_end_dtm then '접수중'
+					when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '접수마감'
+					END  AS accs_status_nm
+					, case
+					when NOW()   <![CDATA[<]]>   accs_strt_dtm then '2'
+					when NOW()   <![CDATA[>]]>   accs_strt_dtm AND NOW()  <![CDATA[<]]>    accs_end_dtm then '1'
+					when NOW()   <![CDATA[>]]>   accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt   <![CDATA[>=]]>   fxnum_cnt) then '3'
+					END  AS accs_status_order
+					, place_seq
+					, place_nm
+					, web_path
+					, @rownum:=@rownum+1
 				FROM (select
 				b.edctn_seq
 				, b.episd_year
@@ -690,7 +681,7 @@
 							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 							when stts_cd = 'EDU_STTS_CD05' then '미선발'
-							when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+							when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 					end
 			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 		end edu_stat
@@ -1085,8 +1076,8 @@
 		<choose>
 			<when test="srchOrder == 1">
 				<!-- 신청 마감순-->
-				/*ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc*/
-				ORDER BY trnsf_yn asc, stts_cd asc, ptcpt_dtm asc
+				ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+				/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
@@ -1179,7 +1170,7 @@
 									end
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 									end
 							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 							END ) IN
@@ -1339,7 +1330,7 @@
 									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 									when stts_cd = 'EDU_STTS_CD04' then '신청대기'
 									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육양도'
+									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 							end
 							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 					end edu_stat
@@ -1752,8 +1743,8 @@
 						) MST ON MEM.MEM_SEQ = MST.MEM_SEQ
 		LEFT OUTER JOIN CP_CMPN_MST CMPN_MST ON MEM.WORK_BSNM_NO  = CMPN_MST.BSNM_NO
 		WHERE 1=1
-		/*AND MEM.wthdrw_yn = 'Y'
-		AND MEM.MEM_CD = 'CP'*/
+		AND MEM.wthdrw_yn = 'Y'
+		AND MEM.MEM_CD = 'CP'
 		AND CMPN_MST.BSNM_NO = #{workBsnmNo}
 		) A
 		WHERE 1=1

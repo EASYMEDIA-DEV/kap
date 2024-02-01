@@ -37,7 +37,9 @@
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">업종</p>
-                                <p class="txt f-sub-head">${rtnData.cbsnCdNm}</p>
+                                <p class="txt f-sub-head">
+                                    ${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}
+                                </p>
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">강사</p>

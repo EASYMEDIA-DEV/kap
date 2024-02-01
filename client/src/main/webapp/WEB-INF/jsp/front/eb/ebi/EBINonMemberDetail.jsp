@@ -6,15 +6,19 @@
 <c:set var="count" value="0" />
 
 <c:set var="accsStatusClass" value="" />
+<c:set var="accsStatusText" value="" />
 <c:choose>
     <c:when test="${ fn:contains(rtnData.accsStatusNm, '접수대기') }">
         <c:set var="accsStatusClass" value="waiting" />
+        <c:set var="accsStatusText" value="접수대기" />
     </c:when>
     <c:when test="${ fn:contains(rtnData.accsStatusNm, '접수중') }">
         <c:set var="accsStatusClass" value="accepting" />
+        <c:set var="accsStatusText" value="신청하기" />
     </c:when>
     <c:when test="${ fn:contains(rtnData.accsStatusNm, '마감') }">
         <c:set var="accsStatusClass" value="end" />
+        <c:set var="accsStatusText" value="마감" />
     </c:when>
 </c:choose>
 
@@ -136,7 +140,7 @@
                                                             <button class="btn-text-icon black-arrow" type="button" id="btnPicLayer" data-pic-nm="${ rtnData.picNm }" data-pic-email="${ rtnData.picEmail }" data-pic-tel-no="${ rtnData.picTelNo }"><span>담당자 문의</span></button>
                                                         </div>
                                                         <div class="btn-set">
-                                                            <a class="btn-solid small ${ fn:contains(rtnData.accsStatusNm, '접수중') ? 'black-bg' : 'gray-bg' } goStep" href="javascript:" data-url="./step1"><span>신청하기</span></a>
+                                                            <a class="btn-solid small ${ fn:contains(rtnData.accsStatusNm, '접수중') ? 'black-bg goStep' : 'gray-bg disabled' }" href="javascript:" data-url="./step1"><span>${ accsStatusText }</span></a>
                                                         </div>
                                                     </div>
                                                 </div>
