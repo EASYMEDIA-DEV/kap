@@ -6,6 +6,8 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.List;
+
 /**
  *  경영컨설팅 List DTO
  * <pre>
@@ -109,4 +111,21 @@ public class CBBManageConsultListDTO extends BaseDTO {
     private String regAdmName;
     @Schema(title = "수정자이름(관리자용)")
     private String modAdmName;
+
+    // 관리자 부품사 실적정보를 위한 dto
+    List<CBBManageConsultListDTO> list;
+    
+    @Schema(title = "사업자등록번호")
+    private String bsnmNo;
+    @Schema(title = "사업코드(기술지도/경영컨설팅 구분)")
+    private String cnstgCd;
+    @Schema(title = "초도방문파일순번")
+    private Integer initVstFileSeq;
+    @Schema(title = "초도방문파일정렬값")
+    private Integer initVstFileOrd;
+    @Schema(title = "회사소개서파일순번")
+    private Integer itrdcFileSeq;
+    @Schema(title = "회사소개서파일ord")
+    private Integer itrdcFileOrd;
+
 }
