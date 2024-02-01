@@ -777,7 +777,7 @@
                     </div>
                     <div class="article-list-w txt-list">
                         <c:forEach var="list" items="${noticeData.list}" varStatus="status">
-                            <a class="list-item" href="javascript:" title="링크 이동">
+                            <a class="list-item" href="/foundation/board/notice/view?detailsKey=${list.ntfySeq}" title="링크 이동">
                                 <div class="txt-box">
                                     <p class="tit f-head">${list.titl}</p>
                                     <div class="sub-txt f-body2"><p class="date">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '.')}</p><p class="view">조회수 <span>${list.readCnt}</span></p></div><!-- 2024-01-05 태그 수정 -->
@@ -816,12 +816,12 @@
                     <div class="sec-tit-area">
                         <p class="sec-tit f-title3">재단소식</p>
                         <div class="btn-wrap">
-                            <a class="btn-text-icon black-arrow" href="javascript:" title="링크 이동"><span>전체 보기</span></a>
+                            <a class="btn-text-icon black-arrow" href="/foundation/board/company-news/list" title="링크 이동"><span>전체 보기</span></a>
                         </div>
                     </div>
                     <div class="article-list-w with-thunmbnail">
                         <c:forEach var="list" items="${companyData.list}" varStatus="status">
-                            <a class="list-item" href="javascript:" title="링크 이동">
+                            <a class="list-item" href="/foundation/board/company-news/view?detailsKey=${list.fndnNewsSeq}" title="링크 이동">
                                 <div class="img-box">
                                     <img src="${list.webPath}" alt="${list.fileDsc}">
                                 </div>
