@@ -60,13 +60,9 @@
                                                 <c:forEach var="list" items="${rtnData.list}" varStatus="status">
                                                     <a class="list-item open listView" href="javascript:" title="링크 이동" data-details-key="${list.nwsltSeq}">
                                                         <div class="img-box">
-                                                            <c:choose>
-                                                                <c:when test="${ not empty list.webPath }">
-                                                                    <img src="${ list.webPath }" alt="">
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                            <c:if test="${ not empty list.webPath }">
+                                                                <img src="${ list.webPath }" alt="${ list.fileDsc }">
+                                                            </c:if>
                                                         </div>
                                                         <div class="txt-box">
                                                             <p class="tit f-head">

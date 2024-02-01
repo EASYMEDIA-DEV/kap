@@ -1713,7 +1713,7 @@ footer .copy-area span:last-child:after {display: none;}
 .total-edu-area .edu-plan-area .period-bar-list{margin-top:10rem; width:1712rem;}
 .total-edu-area .edu-plan-area .period-bar-div{padding:12rem 88rem; width:100%; height:max(76rem, 68px); border-top:1px solid #ECEEEF}
 .total-edu-area .edu-plan-area .period-bar-div:last-child{border-bottom:1px solid #ECEEEF}
-.total-edu-area .edu-plan-area .period-bar{position:relative; max-width:128rem; height:24rem; border-radius:2px;}
+.total-edu-area .edu-plan-area .period-bar{position:relative; /* max-width:128rem; */ height:24rem; border-radius:2px;}
 .total-edu-area .edu-plan-area .period-bar span{padding-left:6rem; white-space:nowrap; font-size:max(14rem, 12px)}
 .total-edu-area .edu-plan-area .period-bar.receive{background:rgba(0,100,255,0.12);}
 .total-edu-area .edu-plan-area .period-bar.receive a{display:flex; align-items: center; height:100%; cursor: auto;}
@@ -1760,7 +1760,7 @@ footer .copy-area span:last-child:after {display: none;}
   .total-edu-area .edu-plan-area .month-area .scroll-box{width:960rem;}
   .total-edu-area .edu-plan-area .period-bar-list{width:960rem;}
   .total-edu-area .edu-plan-area .period-bar-div{padding:8rem 48rem; height:auto;}
-  .total-edu-area .edu-plan-area .period-bar{display:flex; align-items: center; height:23rem; max-width:72rem; border-radius:2px;}
+  .total-edu-area .edu-plan-area .period-bar{display:flex; align-items: center; height:23rem;/*  max-width:72rem; */ border-radius:2px;}
   .total-edu-area .edu-plan-area .period-bar span{display:inline-block; padding:0 4rem; white-space: nowrap; font-size:12rem; line-height:160%;}
   .total-edu-area .year-plan-btn{margin-top:24rem; padding-right:20rem;}
 }
@@ -2871,8 +2871,8 @@ footer .copy-area span:last-child:after {display: none;}
 
             /* 교육/세미나 > 상세 */
 .training-view-page .training-list {display: flex;}
-.training-view-page .training-list .img-area {width: 350rem; margin-top: 0; margin-right: 40rem;}
-.training-view-page .training-list .img-area img {width: 100%;}
+.training-view-page .training-list .img-area {width: 350rem; height: 218rem; margin-top: 0; margin-right: 40rem; background: #ECEEEF url("/common/images/icon-logo-gray.svg") no-repeat center center / 130rem auto; border-radius: 2px; overflow: hidden;}
+.training-view-page .training-list .img-area img {width: 100%; height: 100%; object-fit: cover;}
 .training-view-page .training-list .txt-area {display: flex; align-items: flex-start; flex-direction: column; justify-content: space-between;}
 .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 6rem;}
 .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 13rem; color: #06161E; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem;}
@@ -2956,7 +2956,7 @@ footer .copy-area span:last-child:after {display: none;}
 @media all and (max-width: 1023px) {
               /* 교육/세미나 > 상세 */
   .training-view-page .training-list {display: block; position: relative;}
-  .training-view-page .training-list .img-area {position: relative; left: -20rem; width: 100vw; margin-right: 0; margin-bottom: 32rem;}
+  .training-view-page .training-list .img-area {position: relative; left: -20rem; width: 100vw; height: 243rem; margin-right: 0; margin-bottom: 32rem; border-radius: 0;}
   .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 4rem;}
   .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 12rem;}
   .training-view-page .training-list .class-property-w {margin-top: 32rem; width: 100%;}
@@ -3011,7 +3011,7 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .top-info::after {content: ''; display: block; position: absolute; left: -6rem; bottom: -6rem; width: 10rem; height: 10rem; background-color: #fff; border-right: 1px solid #D9DDE0; border-top: 1px solid #D9DDE0; z-index: 1; transform: rotate(45deg);}
 .training-confirm .sort-label-area .label span {font-size: max(14rem, 13px);}
 .training-confirm .sort-label-area .label + .label:before {top: max(10rem, 9px);}
-.training-confirm .training-view-page .training-list .img-area {flex-shrink: 0; width: 184rem; margin-right: 24rem;}
+.training-confirm .training-view-page .training-list .img-area {flex-shrink: 0; width: 184rem; height: 114rem; margin-right: 24rem; background-size: 80rem auto;}
 .training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; width: 100%;}
 .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 10rem;}
 .training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem; border-right: 1px solid #ECEEEF;}
@@ -3057,7 +3057,7 @@ footer .copy-area span:last-child:after {display: none;}
   .training-confirm .top-info {position: relative; padding: 20rem;}
   .training-confirm .sort-label-area .label span {font-size: 12rem;}
   .training-confirm .sort-label-area .label + .label:before {top: 8rem;}
-  .training-confirm .training-view-page .training-list .img-area {position: absolute; left: auto; right: 0; top: 0; width: 80rem; height: 80rem; margin-right: 0; margin-bottom: 0; border-radius: 2px; overflow: hidden;}
+  .training-confirm .training-view-page .training-list .img-area {position: absolute; left: auto; right: 0; top: 0; width: 80rem; height: 80rem; margin-right: 0; margin-bottom: 0; border-radius: 2px; background-size: 50rem auto;}
   .training-confirm .training-view-page .training-list .img-area img {height: 100%; object-fit: cover;}
   .training-confirm .training-view-page .training-list .txt-area {display: block;}
   .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 3rem;}
@@ -3162,6 +3162,7 @@ footer .copy-area span:last-child:after {display: none;}
         /* 기본 -> pc: 64, mobile: 32 */
 .cont-sec .info-head:not(.no-bdr) + *:not(.filter-popup, .table-sec) {margin-top: 64rem;}
 .cont-sec .info-head:not(.no-bdr) + .filter-popup + * {margin-top: 64rem;}
+.cont-sec .info-head:not(.no-bdr) + .tab-btn-area{margin:96rem 0 48rem;}
         /* 선x -> pc: 24, mobile: 16 */
 .cont-sec .info-head.no-bdr + * {margin-top: 24rem;}
 
@@ -3186,6 +3187,7 @@ footer .copy-area span:last-child:after {display: none;}
           /* 기본/컨텐츠아이템 -> pc: 64, mobile: 16 */
   .cont-sec .info-head:not(.no-bdr) + .filter-popup + .index-list-w {margin-top: 16rem;}
   .cont-sec .info-head:not(.no-bdr) + .filter-popup + .trainings-list-w {margin-top: 16rem;}
+  .cont-sec .info-head:not(.no-bdr) + .tab-btn-area{margin:48rem 0 36rem;}
           /* 선x -> pc: 24, mobile: 16 */
   .cont-sec .info-head.no-bdr + * {margin-top: 16rem;}
   .sec-tit-area ~ .sec-con-area .info-head {margin-top: 24rem;}
@@ -3740,6 +3742,7 @@ footer .copy-area span:last-child:after {display: none;}
 .agree-terms-w .agree-list-w .list-item .acco-hide-area .terms-con {height: 220rem; padding: 20rem 28rem; overflow-y: auto; background-color: #f5f6f7;}
 .agree-terms-w .agree-list-w .list-item .acco-hide-area .terms-con::-webkit-scrollbar {width: 4rem;}
 .agree-terms-w .agree-list-w .list-item .acco-hide-area .terms-con::-webkit-scrollbar-thumb {border-radius: 2px; background-color: #9CA1A6;}
+.agree-terms-w .agree-list-w .list-item .acco-hide-area .terms-con pre {white-space: normal;}
 .agree-terms-w .agree-list-w .list-item .included-chk-area {display: flex; align-items: center; height: 58rem; padding: 0 0 0 28rem;}
 .agree-terms-w .agree-list-w .list-item .included-chk-area .form-checkbox input + label {color: #697278;}
 .agree-terms-w .agree-list-w .list-item .included-chk-area .form-checkbox + .form-checkbox {margin-left: 60rem;}

@@ -211,10 +211,10 @@ define(["ezCtrl"], function(ezCtrl) {
 								$(this).prop("checked", isChecked);
 							})
 
-							if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
+							/*if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
 								$(this).closest("div").find(".classType:not(.classType:first)").trigger("click");
 								$(".cdListContainer").find("input:checkbox").prop("checked",true);
-							}
+							}*/
 
 						}
 					}

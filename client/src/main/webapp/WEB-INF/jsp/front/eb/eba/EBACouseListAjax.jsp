@@ -90,7 +90,16 @@
                                         </p>
                                     </div>
                                     <div class="list">
-                                        <p class="txt">${list.stduyMthdCdNm}</p>
+                                        <p class="txt">
+                                            <c:choose>
+                                                <c:when test="${list.stduyMthdCdNm eq '온라인교육'}">
+                                                    온라인
+                                                </c:when>
+                                                <c:otherwise>
+                                                    ${list.stduyMthdCdNm}
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </p>
                                         <p class="date"><span class="item">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</span>
                                             <span class="item">
                                     <c:if test="${list.fxnumImpsbYn eq 'Y'}">

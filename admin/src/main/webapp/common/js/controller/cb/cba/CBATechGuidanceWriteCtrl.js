@@ -476,8 +476,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                     var dpndnRateSize = $(".dpndnRate").length;
                                                     for(var i =0; i<dpndnRateSize; i++){
                                                         if(!$(".dpndnRate").eq(i).val()){
-                                                            alert("매출비중을 입력해주세요.");
-                                                            $(".dlvryRate").eq(i).focus();
+                                                            alert("의존율를 입력해주세요.");
+                                                            $(".dpndnRate").eq(i).focus();
                                                             return false;
                                                         }
                                                     }
@@ -515,7 +515,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                                                                 alert("업종을 선택해주세요.");
                                                                                 $("input[name='cbsnCd']").focus();
                                                                                 return false;
-                                                                            }else if(cbsnCd == 'TEC_GUIDE_INDUS01'){
+                                                                            }else if(cbsnCd == 'TEC_GUIDE_INDUS01' && $("input[name='etcNm']").val() == ""){
                                                                                 alert("업종을 입력해주세요.");
                                                                                 $("input[name='etcNm']").focus();
                                                                                 return false;

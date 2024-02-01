@@ -183,7 +183,7 @@
             $(".stduyDdLayer").text(rtnDto.stduyDdCdNm+"일("+rtnDto.stduyTimeCdNm+"시간)");//교육일자, 시간 변경
 
             var listSize = rtnEpisdList.length;
-            console.log("@@ listSize = "+ listSize);
+
             if(listSize>0){
                 $(".edu-info-div").css("display", "");
                 $(".edu-plan-area").find(".listNotEmpty").find(".round-list").empty();
@@ -193,7 +193,6 @@
                 $(".listEmpty").css("display", "none");
                 $(".total-edu-area").removeClass("no-data");
 
-                console.log("@@ rtnEpisdList = "+ rtnEpisdList);
                 $.each(rtnEpisdList, function(){
 
                     var copyEpisdSample = $(".copyEpisdSample").find(".round-div").clone(true);
@@ -212,21 +211,15 @@
                     var accsEndYear = $this.accsEndYear;
                     var edctnStrtYear = $this.edctnStrtYear;
                     var edctnEndYear = $this.edctnEndYear;
+                    var accsStatusOrder = $this.accsStatusOrder;
 
                     var episdYear = $this.episdYear;
 
-
-
-                    if(episdOrd == "4"){
-                        console.log("@@ accsStrtYear = "+ accsStrtYear);
-                        console.log("@@ accsEndYear = "+ accsEndYear);
-                        console.log("@@ accsStrtDt = "+ accsStrtDt);
-                        console.log("@@ accsEndDt = "+ accsEndDt);
-
-                    }
-
                     copyEpisdSample.find(".episdOrd").text(episdOrd+"회차");
                     copyEpisdSample.find(".episdAccsDt").text(accsStrtDt + " ~ " + accsEndDt);
+                    copyEpisdSample.find(".episdAccsDt").attr("data-start-year", accsStrtYear);
+                    copyEpisdSample.find(".episdAccsDt").attr("data-end-year", accsEndYear);
+
                     if(episdYear != accsStrtYear && episdYear != accsEndYear){
                         copyEpisdSample.find(".episdAccsDt").closest("div").addClass("no-this-year");
                     }
