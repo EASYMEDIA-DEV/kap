@@ -1932,6 +1932,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn())   && "N".equals(cmptnDto.getCmptnYn())  ){
 
 
+
+			eBBEpisdDTO.setEdctnSeq(cmptnDto.getEdctnSeq());
+			eBBEpisdDTO.setEpisdYear(cmptnDto.getEpisdYear());
 			EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
 
 			eBBEpisdDTO.setCrtfctNo(cmptnNo.getCrtfctNo());

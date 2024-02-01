@@ -51,8 +51,6 @@ define(["ezCtrl"], function(ezCtrl) {
 			//폼 데이터 처리
 			//cmmCtrl.setFormData($formObj);
 
-
-			chkInfo();
 		}
 	};
 

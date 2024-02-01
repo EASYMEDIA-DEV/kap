@@ -1532,13 +1532,13 @@
 			, b.hp_no
 			, b.email
 			, b.dept_cd
-			, (select cd_nm from co_code_mst where  cd=b.dept_cd ) as dept_cd_nm
+			, case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
 			, b.dept_dtl_nm
 			, b.pstn_cd
-			, (select cd_nm from co_code_mst where  cd=b.pstn_cd ) as pstn_cd_nm
+			, case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
 			, b.pstn_nm
 			, a.stts_cd
-			, (select cd_nm from co_code_mst where cd = a.stts_cd) as stts_cd_nm
+			, case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
 			, a.reg_dtm as edu_dtm
 			, b.reg_dtm
 			, a.cmptn_yn
@@ -1641,13 +1641,13 @@
 				, b.hp_no
 				, b.email
 				, b.dept_cd
-				, (select cd_nm from co_code_mst where  cd=b.dept_cd ) as dept_cd_nm
+				, case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
 				, b.dept_dtl_nm
 				, b.pstn_cd
-				, (select cd_nm from co_code_mst where  cd=b.pstn_cd ) as pstn_cd_nm
+				, case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
 				, b.pstn_nm
 				, a.stts_cd
-				, (select cd_nm from co_code_mst where cd = a.stts_cd) as stts_cd_nm
+				, case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
 				, a.reg_dtm as edu_dtm
 				, b.reg_dtm
 				, a.cmptn_yn

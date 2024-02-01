@@ -261,7 +261,7 @@
                                                                                     ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
                                                                                 ~
                                                                                     ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                                                (${list.stduyDdCdNm}일간)
+                                                                                (${dayValRel1}일간)
                                                                             </p>
                                                                         </div>
                                                                         <div class="list">
@@ -383,7 +383,7 @@
                                                                                     ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
                                                                                 ~
                                                                                     ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                                                (${list.stduyDdCdNm}일간)
+                                                                                (${dayValRel2}일간)
                                                                             </p>
                                                                         </div>
                                                                         <div class="list">
