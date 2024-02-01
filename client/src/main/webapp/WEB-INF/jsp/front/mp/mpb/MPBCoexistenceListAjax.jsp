@@ -63,11 +63,11 @@
                                     <div class="info-list-w ">
                                         <div class="info-list">
                                             <p class="tit f-caption2">신청일자</p>
-                                            <p class="txt f-body2">${ kl:convertDate(item.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</p>
+                                            <p class="txt f-body2">${ kl:convertDate(item.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                                         </div>
                                         <div class="info-list">
                                             <div class="tit f-caption2">사업기간</div>
-                                            <p class="txt f-body2">${ kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') } ~ <br class="only-pc"/>${ kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }</p>
+                                            <p class="txt f-body2">${ kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') } ~ <br class="only-pc"/>${ kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
                                         </div>
                                     </div>
                                 </div>
