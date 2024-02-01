@@ -2852,7 +2852,7 @@
 				, a.exam_score
 		        , cmptn_yn
 		    	, b.cmptn_auto_yn
-				, (SELECT IFNULL(ROUND((atndc_dtm / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
+				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
 				, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = B.EDCTN_SEQ AND EPISD_YEAR = B.EPISD_YEAR AND B.EPISD_ORD) AS PTCPT_INFO
 				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = 28 AND EPISD_YEAR = 2024 AND EPISD_ORD = 4) AS LCRT_INFO
 		FROM ep_edctn_ptcpt_mst A
