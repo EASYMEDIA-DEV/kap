@@ -58,10 +58,17 @@ public class EBBEpisdSurveyDTO extends BaseDTO {
     private Integer rspnCnt;
     @Schema(title = "응답분", example = "숫자")
     private Integer rspnMm;
+
     @Schema(title = "내용")
     private String cntn;
 
-    @Schema(title = "참여자순번", example = "숫자")
+    @Schema(title = "과정명")
+    private String nm;
+
+    @Schema(title = "회원번호", example = "숫자")
     private Integer memSeq;
+
+    @Schema(title = "참여자순번", example = "숫자")
+    private Integer ptcptSeq;
 
 }

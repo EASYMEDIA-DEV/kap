@@ -384,6 +384,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							return false;
 						}
 
+						var stepFlag = true;
 						//위원인경우
 
 						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김

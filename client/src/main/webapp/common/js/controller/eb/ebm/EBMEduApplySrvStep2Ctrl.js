@@ -127,7 +127,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						});
 
 						cmmCtrl.jsonAjax(function(data){
-							location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()
+							location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()+"&ptcptSeq="+$formObj.find("input[name=ptcptSeq]").val()
 						}, actionUrl, svRepnMst, "text")
 					}
 				}

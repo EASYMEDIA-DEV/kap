@@ -1,5 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.Date" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <script>
 
 
@@ -457,11 +459,24 @@
                                                 <p class="f-head eduYear">2023년</p>
                                                 <div class="scroll-div">
                                                     <div class="scroll-box">
-                                                        <div class="month-wrap">
+
+                                                        <%
+                                                            Date nowDate = new Date();
+                                                            pageContext.setAttribute("nowDate", nowDate);//현재 시간
+                                                        %>
+                                                        <fmt:formatDate pattern="MM.dd" value="${nowDate}" var="nowDate" />
+                                                        <div class="month-wrap" data-date="${nowDate}">
+                                                            <!-- 2024-02-01 추가 -->
+                                                            <div class="month-chk-w">
+                                                                <div class="dot"></div>
+                                                                <div class="line"></div>
+                                                            </div>
+                                                            <!-- // 2024-02-01 추가 -->
                                                             <c:forEach var="forMonth" varStatus="status" begin="1" end="12">
                                                                 <p class="month <c:if test="${status.index eq month}">now</c:if>"><span class="f-body2">${forMonth}월</span></p>
                                                             </c:forEach>
                                                         </div>
+
                                                         <div class="period-bar-list">
 
                                                         </div>

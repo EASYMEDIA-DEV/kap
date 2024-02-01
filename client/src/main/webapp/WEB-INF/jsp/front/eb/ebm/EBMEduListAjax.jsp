@@ -6,6 +6,18 @@
 
             <c:choose>
                 <c:when test="${list.eduGubun eq 'E'}">
+
+                    <!--교육일수 차이 계산-->
+                    <c:set var="dayVal" value=""/>
+                    <c:choose>
+                        <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                            <c:set var="strtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                            <c:set var="endDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                            <c:set var="dayVal" value="${kl:getDaysDiff(strtDt, endDt) + 1}"/>
+                        </c:when>
+                    </c:choose>
+
+
                     <div class="training-confirm episdDtl" data-episdseq="${list.episdSeq}" data-edctnseq="${list.edctnSeq}" data-episdyear="${list.episdYear}" data-episdord="${list.episdOrd}" data-ptcptSeq="${list.ptcptSeq}" data-trnsfYn="${list.trnsfYn}">
                         <div class="top-info">
                             <div class="training-view-page">
@@ -93,7 +105,7 @@
                                                     <p class="txt f-body2">
                                                             ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }
                                                         ~
-                                                            ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }(${list.stduyDdCdNm}일간)
+                                                            ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }(${dayVal}일간)
                                                     </p>
                                                 </div>
                                                 <div class="info-list">
