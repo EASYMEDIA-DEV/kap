@@ -42,7 +42,7 @@
 			, place_nm
 			, non_member_cd
 		FROM ed_edctn_prcs_mst a
-		LEFT JOIN (
+		INNER JOIN (
 						SELECT
 						bbb.*
 						, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = bbb.place_seq) as place_nm
@@ -146,7 +146,7 @@
 		SELECT /*EBBFrontEpisdMapper.selectFrontCouseListCnt*/
 			count(*) cnt
 		FROM ed_edctn_prcs_mst a
-		LEFT JOIN (
+		INNER JOIN (
 			SELECT
 				bbb.*
 				FROM (SELECT
@@ -1965,7 +1965,30 @@
 			) a
 	</sql>
 
-
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectQrPtcptDtl
+		설  명 : 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.02.01    김학규       최초생성
+    -->
+	<select id="selectQrPtcptDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT /* EBBFrontEpisdMapper.selectQrPtcptDtl */
+			ptcpt_seq
+			 , edctn_seq
+			 , episd_year
+			 , episd_ord
+			 , episd_seq
+			 , mem_seq
+			 , stts_cd
+			 , cmptn_yn
+			 , exam_score
+		FROM ep_edctn_ptcpt_mst
+		WHERE edctn_seq = #{detailsKey}
+		  AND episd_year = #{episdYear}
+		  AND episd_ord = #{episdOrd}
+		  AND mem_seq = #{memSeq}
+	</select>
 
 </mapper>
 

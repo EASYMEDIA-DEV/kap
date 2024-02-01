@@ -1957,6 +1957,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 
 
+	/**
+	 * 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	 */
+	public EBBPtcptDTO selectQrPtcptDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+		return eBBFrontEpisdMapper.selectQrPtcptDtl(eBBEpisdDTO);
+	}
 
 
 

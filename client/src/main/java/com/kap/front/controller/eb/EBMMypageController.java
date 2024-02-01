@@ -158,9 +158,13 @@ public class EBMMypageController
     {
 
         String vwUrl = "";
+        eBBEpisdDTO.setMypageYn("Y");
+        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
         if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
             //QR 이미지 타고 들어옴
+            EBBPtcptDTO ptcptDto = eBBEpisdService.selectQrPtcptDtl(eBBEpisdDTO);
+            eBBEpisdDTO.setPtcptSeq(ptcptDto.getPtcptSeq());
             //로직 처리
             modelMap.addAttribute("episdCheck", "Y");
         }else{
@@ -168,8 +172,7 @@ public class EBMMypageController
         }
 
 
-        eBBEpisdDTO.setMypageYn("Y");
-        eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+
         HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");

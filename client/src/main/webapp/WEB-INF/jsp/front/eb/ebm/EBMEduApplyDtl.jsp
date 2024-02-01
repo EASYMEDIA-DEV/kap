@@ -417,7 +417,7 @@
                         <c:choose>
                             <c:when test="${not empty rtnData.srvSeq}">
                                 <c:choose>
-                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
                                         <div class="cont-sec no-border scroll-motion">
                                             <div class="for-motion">
                                                 <div class="sec-tit-area">

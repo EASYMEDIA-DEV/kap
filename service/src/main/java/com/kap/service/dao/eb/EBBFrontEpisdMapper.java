@@ -75,5 +75,9 @@ public interface EBBFrontEpisdMapper {
 	 */
 	public List<MPAUserDto> selectApplyUserList(MPAUserDto mpaUserDto) throws Exception;
 
+	/**
+	 * 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	 */
+	public EBBPtcptDTO selectQrPtcptDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 }
