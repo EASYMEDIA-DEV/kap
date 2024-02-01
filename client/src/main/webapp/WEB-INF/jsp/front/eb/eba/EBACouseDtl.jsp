@@ -227,6 +227,16 @@
 
                                                         <c:forEach var="list" items="${relList1.list}" varStatus="status">
 
+                                                            <!--교육일수 차이 계산-->
+                                                            <c:set var="dayVal" value=""/>
+                                                            <c:choose>
+                                                                <c:when test="${not empty relList1.edctnStrtDtm && not empty relList1.edctnEndDtm}">
+                                                                    <c:set var="strtDtRel1" value="${ empty relList1.edctnStrtDtm ? '-' : kl:convertDate(relList1.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="endDtRel1" value="${ empty relList1.edctnEndDtm ? '-' : kl:convertDate(relList1.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="dayValRel1" value="${kl:getDaysDiff(strtDtRel1, endDtRel1) + 1}"/>
+                                                                </c:when>
+                                                            </c:choose>
+
 
                                                             <a class="swiper-slide marquee_item1 waiting episdDtl" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                                                                 <!--
@@ -296,7 +306,7 @@
                                                                                         ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
                                                                                     ~
                                                                                         ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                                                    (${list.stduyDdCdNm}일간)
+                                                                                    (${dayValRel1}일간)
                                                                                 </div>
                                                                             </div>
                                                                             <div class="list ">
@@ -310,13 +320,6 @@
                                                                         </div>
                                                                         <div class="btn-wrap">
                                                                             <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
-                                                                            <%--<c:if test="${list.accsStatusOrder eq 3}">
-                                                                                <div class="btn-solid small black-bg" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                                                            </c:if>
-                                                                            <c:if test="${list.accsStatusOrder ne 3}">
-                                                                                <div class="btn-solid small black-bg episdDtl" data-edctnSeq="${list.edctnSeq}"><span>더 알아보기</span></div>
-                                                                            </c:if>--%>
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -346,6 +349,17 @@
                                                     <div class="swiper-wrapper marquee_wrapper1">
 
                                                         <c:forEach var="list" items="${relList2.list}" varStatus="status">
+
+                                                            <!--교육일수 차이 계산-->
+                                                            <c:set var="dayVal" value=""/>
+                                                            <c:choose>
+                                                                <c:when test="${not empty relList2.edctnStrtDtm && not empty relList2.edctnEndDtm}">
+                                                                    <c:set var="strtDtRel2" value="${ empty relList2.edctnStrtDtm ? '-' : kl:convertDate(relList2.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="endDtRel2" value="${ empty relList2.edctnEndDtm ? '-' : kl:convertDate(relList2.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="dayValRel2" value="${kl:getDaysDiff(strtDtRel2, endDtRel2) + 1}"/>
+                                                                </c:when>
+                                                            </c:choose>
+
                                                             <a class="swiper-slide marquee_item1 waiting episdDtl" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                                                                 <!--
                                                                   접수중: accepting
@@ -414,7 +428,7 @@
                                                                                         ${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
                                                                                     ~
                                                                                         ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
-                                                                                    (${list.stduyDdCdNm}일간)
+                                                                                    (${dayValRel2}일간)
                                                                                 </div>
                                                                             </div>
                                                                             <div class="list ">

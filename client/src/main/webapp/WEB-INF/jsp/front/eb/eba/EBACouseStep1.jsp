@@ -48,6 +48,17 @@
 
         </c:choose>
 
+        <!--교육일수 차이 계산-->
+        <c:set var="dayVal" value=""/>
+        <c:choose>
+            <c:when test="${not empty episdDto.edctnStrtDtm && not empty episdDto.edctnEndDtm}">
+                <c:set var="strtDt" value="${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                <c:set var="endDt" value="${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                <c:set var="dayVal" value="${kl:getDaysDiff(strtDt, endDt) + 1}"/>
+            </c:when>
+        </c:choose>
+
+
         <input type="hidden" id="gpcPass" name="gpcPass" value="${gpcPass}" />
 
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
@@ -220,7 +231,7 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육일자</p>
-                                                                    <p class="txt f-body2">${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~<br/> ${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${episdDto.stduyDdCdNm}일간)</p>
+                                                                    <p class="txt f-body2">${ empty episdDto.edctnStrtDtm ? '-' : kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~<br/> ${ empty episdDto.edctnEndDtm ? '-' : kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${dayVal}일간)</p>
                                                                     <input type="hidden" name="edctnStrtDtm" id="edctnStrtDtm" value="${kl:convertDate(episdDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                                                     <input type="hidden" name="edctnEndDtm" id="edctnEndDtm" value="${kl:convertDate(episdDto.edctnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}">
                                                                 </div>
@@ -297,7 +308,11 @@
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>
-                                                    <td>${applicantInfo.deptCdNm}(${applicantInfo.deptDtlNm})</td>
+                                                    <td>${applicantInfo.deptCdNm}
+                                                        <c:if test="${not empty applicantInfo.deptDtlNm}">
+                                                            (${applicantInfo.deptDtlNm})
+                                                        </c:if>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>

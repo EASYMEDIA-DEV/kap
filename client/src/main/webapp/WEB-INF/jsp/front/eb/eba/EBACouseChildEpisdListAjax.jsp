@@ -7,11 +7,22 @@
         <c:set var="floatingYn" value="N"/>
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <c:if test="${list.accsStatusOrder eq 1 && floatingYn eq 'N'}">
+
+                <!--교육일수 차이 계산-->
+                <c:set var="dayVal" value=""/>
+                <c:choose>
+                    <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                        <c:set var="floatStrtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                        <c:set var="floatEndDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                        <c:set var="floatDayVal" value="${kl:getDaysDiff(floatStrtDt, floatEndDt) + 1}"/>
+                    </c:when>
+                </c:choose>
+
             <div>
                 <input type="hidden" name="floatingEpisdSeq" id="floatingEpisdSeq" value="${list.episdSeq}"/>
                 <input type="hidden" name="floatingEpisdOrd" id="floatingEpisdOrd" value="${list.episdOrd}"/>
                 <input type="hidden" name="floatingAccsStrtDtm" id="floatingAccsStrtDtm" value="${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}"/>
-                <input type="hidden" name="floatingEdctnStrtDtm" id="floatingEdctnStrtDtm" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${list.stduyDdCdNm}일간)"/>
+                <input type="hidden" name="floatingEdctnStrtDtm" id="floatingEdctnStrtDtm" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${floatDayVal}일간)"/>
                 <input type="hidden" name="floatingIsttrGroupName" id="floatingIsttrGroupName" value="${list.isttrGroupName}"/>
                 <c:if test="${list.fxnumImpsbYn eq 'Y'}">
                     <input type="hidden" name="floatingFxnumImpsb" id="floatingFxnumImpsb" value="${list.fxnumCnt}명"/>

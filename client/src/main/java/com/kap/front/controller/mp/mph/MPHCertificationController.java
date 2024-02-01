@@ -83,7 +83,7 @@ public class MPHCertificationController {
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set
         cdDtlList.add("COMPANY_TYPE");
-        cdDtlList.add("CO_YEAR_CD");
+        cdDtlList.add("");
         cdDtlList.add("MEM_CD");
 
 
