@@ -125,10 +125,10 @@
                                                                     <div class="middle-line">
                                                                         <div class="form-group form-calendar">
                                                                             <div class="form-input">
-                                                                                <input type="text" name="strtDt" class="datetimepicker_strtDt" onclick="cmmCtrl.initCalendar(this);">
+                                                                                <input type="text" name="strtDt" class="datetimepicker_strtDt">
                                                                             </div>
                                                                             <div class="form-input calendar">
-                                                                                <input type="text" name="endDt" class="datetimepicker_endDt" onclick="cmmCtrl.initCalendar(this);">
+                                                                                <input type="text" name="endDt" class="datetimepicker_endDt">
                                                                             </div>
                                                                         </div>
                                                                     </div>
