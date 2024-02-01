@@ -193,26 +193,23 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						$(".cdListContainer").css("display","none");
 						$(".cdListContainer").attr("disabled", true);
-						$(".cdListContainer").find("input:checkbox").prop("checked", false);
 
+						var clickBox = $(this).find("input:checkbox").val();
+						if($(this).find("input:checkbox").is(":checked")){
+							$(".cdListContainer."+clickBox).find("input:checkbox").prop("checked", true);
+						}
 
 						$(".classType input:checked").each(function(){
-							console.log($(this).val());
 
 							var checkVal = $(this).val();
 
-							var cdnm = $(this).data("cdnm"); //내일 이거 해야됨 클릭한것의 cdnm값 갖고오기
+							var cdnm = $(this).data("cdnm");
 							$("."+checkVal).find(".cdnm").html(cdnm);
 							$("."+checkVal).css("display","block");
 
 							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-							console.log("@@" +checkVal);
+
 							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
-
-
-
-							$(".cdListContainer."+checkVal).find("input:checkbox").prop("checked", true);
-
 
 						});
 
@@ -221,14 +218,6 @@ define(["ezCtrl"], function(ezCtrl) {
 							$(".cdListContainer").attr("disabled", true);
 							$(".cdListContainer").find("input:checkbox").prop("checked", false);
 						}
-
-						/*$(".detailCdList").find('input[type=checkbox]').prop("checked",false);
-
-						if($(".detailCdList").find('input[type=checkbox]').is(":visible")){
-							$(".detailCdList").find('input[type=checkbox]').each(function(){
-								$(this).prop("checked",true);
-							})
-						}*/
 
 					}
 				}
@@ -304,6 +293,13 @@ define(["ezCtrl"], function(ezCtrl) {
 								$(this).prop("checked", isChecked);
 							})
 						}
+						console.log($(this).closest("label").attr("class"));
+
+						if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
+							$(this).closest("div").find(".classType:not(.classType:first)").trigger("click");
+							$(".cdListContainer").find("input:checkbox").prop("checked",true);
+						}
+
 					}
 				}
 			},
@@ -358,8 +354,25 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 
 				//전부 다 해제 했을경우 전체도 해제
-				if($("input[name='ctgryCd']:checked").length == 0){
+				if($("input[name='ctgryCd']:checked").length == 0 || $(".classType:not(.classType:first)").find("input:checked").length != 3){
 					$(".classType").find(".checkboxAll").prop("checked", false);
+				}
+
+				//중분류 타입별 체크박스 선택된것 없으면 숨김처리
+				if($(".cdListContainer.CLASS01").find("input:checked").length == 0){
+					$(".cdListContainer.CLASS01").css("display","none");
+					$(".cdListContainer.CLASS01").attr("disabled", true);
+					$(".cdListContainer.CLASS01").find("input:checkbox").prop("checked", false);
+				}
+				if($(".cdListContainer.CLASS02").find("input:checked").length == 0){
+					$(".cdListContainer.CLASS02").css("display","none");
+					$(".cdListContainer.CLASS02").attr("disabled", true);
+					$(".cdListContainer.CLASS02").find("input:checkbox").prop("checked", false);
+				}
+				if($(".cdListContainer.CLASS03").find("input:checked").length == 0){
+					$(".cdListContainer.CLASS03").css("display","none");
+					$(".cdListContainer.CLASS03").attr("disabled", true);
+					$(".cdListContainer.CLASS03").find("input:checkbox").prop("checked", false);
 				}
 
 

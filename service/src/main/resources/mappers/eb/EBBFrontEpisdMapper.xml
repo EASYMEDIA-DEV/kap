@@ -1231,8 +1231,8 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduListCnt" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectMypageEduListCnt*/
-	  	edu_gubun
+		SELECT /*EBBEpisdMapper.selectMypageEduList*/
+		edu_gubun
 		, edctn_seq
 		, episd_seq
 		, episd_year
@@ -1322,23 +1322,25 @@
 		, cmptn_dtm
 		, mem_seq
 		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-							case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-									case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-											when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-											when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
-									end
-									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
-									when stts_cd = 'EDU_STTS_CD04' then '신청대기'
-									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
-							end
-							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-					end edu_stat
+		case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+		case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+		when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+		when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+		end
+		when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+		when stts_cd = 'EDU_STTS_CD04' then '신청대기'
+		when stts_cd = 'EDU_STTS_CD05' then '미선발'
+		when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+		end
+		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		end edu_stat
 		, ptcpt_dtm
 		, web_path
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
+		, hope_dt -- 방문교육 교육희망일
+		, ptcpt_cnt  -- 방문교육 교육인원
 		FROM (SELECT
 		'E' as edu_gubun
 		, b.edctn_seq
@@ -1394,9 +1396,11 @@
 		, mem_seq
 		, ptcpt_dtm
 		, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
-	  	, bfre_mem_seq
+		, bfre_mem_seq
 		, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
-	    , ptcpt_seq
+		, ptcpt_seq
+		, "" AS hope_dt
+		, 0 AS ptcpt_cnt
 		FROM (SELECT
 		episd_seq
 		, mem_seq
@@ -1491,11 +1495,13 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
-		, ptcpt_dtm
-		, web_path
+		,  ptcpt_dtm
+		,  web_path
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
+		, hope_dt
+		, ptcpt_cnt
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
@@ -1568,7 +1574,7 @@
 		, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst a WHERE a.isttr_seq in (SELECT isttr_seq FROM ev_edctn_isttr_rel b WHERE b.vst_seq = A.vst_seq AND b.vst_rslt_seq = D.vst_rslt_seq)) AS isttr_group_name
 
 		, 'V' as edu_gubun
-		, A.vst_seq AS edctn_seq
+		,  A.vst_seq AS edctn_seq
 		,  null AS episd_seq
 		,  null AS episd_ord
 		,  null AS parnt_seq
@@ -1610,8 +1616,15 @@
 		,  null AS cmptn_dtm
 		,  null AS ptcpt_dtm
 		,  null AS web_path
+		, CASE
+		WHEN (SELECT COUNT(*)
+		FROM ev_edctn_trnsf_dtl
+		WHERE mem_seq = A.mem_seq
+		AND bfre_mem_seq = A.mem_seq
+		AND vst_seq = A.vst_seq) > 0 THEN 'Y'
+		ELSE 'N'
+		END AS TRNSF_YN
 		, 0 AS bfre_mem_seq
-		, "N" AS TRNSF_YN
 		, 0 AS ptcpt_seq
 		FROM
 		(
@@ -1708,7 +1721,6 @@
 		)AA
 
 		<include refid="selectMypageEduListWhereSql" />
-
 
 	</select>
 

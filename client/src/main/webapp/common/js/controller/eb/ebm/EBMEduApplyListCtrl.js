@@ -38,10 +38,10 @@ define(["ezCtrl"], function(ezCtrl) {
 
 				var rtnPage = 0;
 
-				if((tempPage * 9)>totCnt){
+				if((tempPage * 10)>totCnt){
 					rtnPage = totCnt
 				}else{
-					rtnPage = (tempPage * 9);
+					rtnPage = (tempPage * 10);
 				}
 
 				if(rtnPage == totCnt){
