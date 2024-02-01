@@ -18,7 +18,7 @@
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
             <input type="hidden" class="notRequired" name="bfreMemSeq" value="${userInfo.memSeq}"/>
             <input type="hidden" class="notRequired" name="aftrMemSeq"/>
-            <input type="hidden" id="appctnSeq" name="appctnSeq" value="${rtnInfo.appctnSeq}" />
+            <input type="hidden" class="notRequired" id="appctnSeq" name="appctnSeq" value="${rtnInfo.appctnSeq}" />
 
             <c:if test="${empty rtnInfo.appctnSeq}">
                 <h6 class="mt0"><strong>관리자 등록</strong></h6><hr>
