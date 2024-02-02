@@ -335,6 +335,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		//교육방식이 온라인, 블렌디드 일때만 온라인 목차 출력
 		if("STDUY_MTHD01" == stduyMthdCd){
 		$(".onlineSet").css("display", "none");
+		$(".eduRoom").css("display", "");
 
 		$(".onlineSet").find("input:text").each(function(){
 			if($(this).closest("tr").attr("class") !="examTr"){
@@ -367,6 +368,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	}else{
 		$(".onlineSet").css("display", "");
+		$(".eduRoom").css("display", "");
 
 		$(".onlineSet").find("input:text").each(function(){
 			if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
