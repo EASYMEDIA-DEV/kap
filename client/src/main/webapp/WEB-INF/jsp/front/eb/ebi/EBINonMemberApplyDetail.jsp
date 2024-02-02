@@ -37,6 +37,9 @@
     </c:when>
 </c:choose>
 
+<c:set var="edctnStrtDtm" value="${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+<c:set var="edctnEndDtm" value="${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+
 <div data-controller="controller/eb/ebi/EBINonMemberApplyDetailCtrl">
     <form name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
@@ -132,7 +135,7 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육일자</p>
-                                                                    <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ rtnData.stduyDdCdNm }일간)</p>
+                                                                    <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ <br class="only-pc"/>${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(edctnStrtDtm, edctnEndDtm) +1 }일간)</p>
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">신청일시</p>
