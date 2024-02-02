@@ -271,7 +271,6 @@
                                                                 pageContext.setAttribute("edctnStrtDtm", eduStrtDtm);//교육 시작시간-30분
                                                             %>
 
-
                                                             <c:choose>
                                                                 <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && edctnStrtDtm.before(currentDate)}">
                                                                     <button class="btn-solid small gray-bg icon taking onlineStep" type="button" data-lctrSeq="${list.lctrSeq}"><span>수강하기</span></button>
@@ -283,7 +282,7 @@
 
                                                         </c:when>
                                                         <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && rtnData.eduStat eq '교육중'}">
-                                                            <button class="btn-solid small gray-bg icon taking" type="button"><span>수강하기</span></button>
+                                                            <button class="btn-solid small gray-bg icon taking onlineStep" type="button"><span>수강하기</span></button>
                                                         </c:when>
 
                                                     </c:choose>

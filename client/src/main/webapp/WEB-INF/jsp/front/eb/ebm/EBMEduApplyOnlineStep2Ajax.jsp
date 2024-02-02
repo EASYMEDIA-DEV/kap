@@ -96,6 +96,9 @@
                             <c:if test="${not empty nextItem}">
                                 <a class="btn-solid small black-bg btnNextStep" href="javascript:"  data-nextSeq="${nextItem.lctrSeq}"><span>다음 강의</span></a>
                             </c:if>
+                            <c:if test="${empty nextItem}">
+                                <a class="btn-solid small black-bg onlineStep3" href="javascript:"><span>다음 강의</span></a>
+                            </c:if>
 
                         </div>
                     </div>

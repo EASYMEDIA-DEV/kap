@@ -31,7 +31,7 @@
                     <div class="page-bot-btn-sec">
                         <div class="btn-wrap">
                             <div class="btn-set">
-                                <a class="btn-solid small black-bg" href="javascript:"><span>신청내역 상세</span></a>
+                                <a class="btn-solid small black-bg" href="/my-page/edu-apply/detail?detailsKey=${rtnData.edctnSeq}&episdYear=${rtnData.episdYear}&episdOrd=${rtnData.episdOrd}&ptcptSeq=${rtnData.ptcptSeq}"><span>신청내역 상세</span></a>
                             </div>
                             <div class="btn-set">
                             </div>

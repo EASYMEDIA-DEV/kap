@@ -47,6 +47,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		},
 		classname : {
 
+			//온라인강의 페이징 처리
+			lctrPageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
+
+
+						var pageIndex = $lctrFormObj.find("input[name=pageIndex]").val();
+						lctrSearch(++pageIndex);
+					}
+				}
+			},
+
 
 			onlineStep1 : {
 				event : {
@@ -55,8 +68,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var detailsKey = $("#edctnSeq").val();
 						var episdOrd = $("#episdOrd").val();
 						var episdYear = $("#episdYear").val();
+						var ptcptSeq = $("#ptcptSeq").val();
 
-						location.href="./onlineStep1?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						location.href="./onlineStep1?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 
 					}
 				}
@@ -80,6 +94,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			onlineStep3 : {
+				event : {
+					click: function () {
+						var detailsKey = $("#edctnSeq").val();
+						var episdOrd = $("#episdOrd").val();
+						var episdYear = $("#episdYear").val();
+						var ptcptSeq = $("#ptcptSeq").val();
+
+						location.href="./onlineStep3?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+
+					}
+				}
+			},
+
+
 
 			onlineStep : {
 				event : {

@@ -51,6 +51,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			//CALLBACK 처리
 			$("#listLctrContainer").html(respObj);
+			if($("#onlineStepYn").val() == "N"){
+				$(".onlineStep").hide();
+			}
+
 
 			//이름이 없을경우 추출해서 입력 해준다.
 			$("#listLctrContainer").find(".list-item").each(function(){
@@ -80,7 +84,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//총 건수
 
 			if(totCnt <= 10 ){
-				$(".btn-wrap.align-center").remove();
+				$(".btn-wrap.align-center").hide();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 				var tempPage = (page === undefined || page == "") ? 1 : page;
@@ -91,6 +95,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					rtnPage = totCnt
 				}else{
 					rtnPage = (tempPage * 10);
+				}
+
+				if(rtnPage == totCnt){
+					$(".btn-wrap.align-center").hide();
+				}else{
+					$(".btn-wrap.align-center").show();
 				}
 
 				$(".btn-wrap.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
@@ -120,6 +130,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		},
 		classname : {
 
+			//온라인강의 페이징 처리
+			lctrPageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
+
+
+						var pageIndex = $formObj.find("input[name=pageIndex]").val();
+						lctrSearch(++pageIndex);
+					}
+				}
+			},
+
 
 			myPageDetail :{
 				event : {
@@ -129,7 +152,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var episdOrd = $("#episdOrd").val();
 						var ptcptSeq = $("#ptcptSeq").val();
 
-						location.href="./detail?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
+						location.href="./detail?detailsKey="+detailsKey+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 					}
 				}
 			},

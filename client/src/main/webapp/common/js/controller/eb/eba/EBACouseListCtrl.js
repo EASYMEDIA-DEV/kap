@@ -14,6 +14,33 @@ define(["ezCtrl"], function(ezCtrl) {
 	var $formObj = ctrl.obj.find("form").eq(0);
 	var $formLayerObj = ctrl.obj.find("form").eq(1);
 
+	var setUrlTime = function(arg){
+
+		var youtubeXhr2 = new XMLHttpRequest();
+		youtubeXhr2.open('GET', 'https://www.youtube.com/watch?v=' + arg, 0);
+		youtubeXhr2.send();
+		var youtubeTime = youtubeXhr2.responseText.split('"lengthSeconds":"')[1].split('"')[0];
+
+		return youtubeTime;
+	}
+
+	var setUrlName = function(arg){
+
+		var youtubeXhr = new XMLHttpRequest();
+		youtubeXhr.open('GET', 'https://noembed.com/embed?url=https://www.youtube.com/watch?v=' + arg, 0);
+		youtubeXhr.send();
+
+		var youtubeTitle = youtubeXhr.responseText.split('"title":"')[1].split('"')[0];
+		var youtubeHqImage = youtubeXhr.responseText.split('"thumbnail_url":"')[1].split('"')[0];
+		var youtubeMqImage = youtubeHqImage.replace('hq', 'mq');
+		var youtubeSdImage = youtubeHqImage.replace('hq', 'sd');
+
+
+
+
+		return youtubeTitle;
+	}
+
 
 	// 목록 조회
 	var search = function (page){
@@ -439,7 +466,18 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+			//온라인강의 페이징 처리
+			lctrPageSet : {
+				event : {
+					click : function() {
+						//페이징 이동
 
+
+						var pageIndex = $lctrFormObj.find("input[name=pageIndex]").val();
+						lctrSearch(++pageIndex);
+					}
+				}
+			},
 
 			//페이징 처리
 			pageSet : {

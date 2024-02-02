@@ -44,7 +44,7 @@
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">업종</p>
-                                <p class="txt f-sub-head">${rtnData.cbsnCdNm}</p>
+                                <p class="txt f-sub-head">${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}</p>
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">강사</p>
@@ -130,7 +130,7 @@
                             // 현재 날짜와 시간 가져오기
                             Date currentDate = new Date();
                             EBBEpisdDTO  eBBEpisdDTO= (EBBEpisdDTO)request.getAttribute("rtnData");
-                            String dateString = "2024-01-16 16:25:00";//eBBEpisdDTO.getEdctnStrtDtm();
+                            String dateString = eBBEpisdDTO.getEdctnStrtDtm();//"2024-01-16 16:25:00";
                             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                             Date convertedDate = sdf.parse(dateString);
 
@@ -142,7 +142,7 @@
                             // 30분 전의 날짜와 시간을 가져오기
                             Date eduStrtDtm = cal.getTime();
 
-                            // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
+                            // JSP 페이지의 속성으로 10분 전의 날짜와 현재 날짜를 전달
                             pageContext.setAttribute("currentDate", currentDate);//현재 시간
                             pageContext.setAttribute("edctnStrtDtm", eduStrtDtm);//교육 시작시간-30분
                         %>
