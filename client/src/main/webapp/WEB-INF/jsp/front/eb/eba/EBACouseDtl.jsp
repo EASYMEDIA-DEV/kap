@@ -230,9 +230,9 @@
                                                             <!--교육일수 차이 계산-->
                                                             <c:set var="dayVal" value=""/>
                                                             <c:choose>
-                                                                <c:when test="${not empty relList1.edctnStrtDtm && not empty relList1.edctnEndDtm}">
-                                                                    <c:set var="strtDtRel1" value="${ empty relList1.edctnStrtDtm ? '-' : kl:convertDate(relList1.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
-                                                                    <c:set var="endDtRel1" value="${ empty relList1.edctnEndDtm ? '-' : kl:convertDate(relList1.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                                                                    <c:set var="strtDtRel1" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="endDtRel1" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                                     <c:set var="dayValRel1" value="${kl:getDaysDiff(strtDtRel1, endDtRel1) + 1}"/>
                                                                 </c:when>
                                                             </c:choose>
@@ -248,7 +248,6 @@
                                                                     <img src="${list.webPath}" alt="">
                                                                 </div>
                                                                 <div class="txt-area">
-
                                                                     <div class="sort-label-area">
                                                                         <p class="label"><span>${list.prntCdNm}</span></p>
                                                                         <p class="label"><span>${list.ctgryCdNm}</span></p>
@@ -353,9 +352,9 @@
                                                             <!--교육일수 차이 계산-->
                                                             <c:set var="dayVal" value=""/>
                                                             <c:choose>
-                                                                <c:when test="${not empty relList2.edctnStrtDtm && not empty relList2.edctnEndDtm}">
-                                                                    <c:set var="strtDtRel2" value="${ empty relList2.edctnStrtDtm ? '-' : kl:convertDate(relList2.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
-                                                                    <c:set var="endDtRel2" value="${ empty relList2.edctnEndDtm ? '-' : kl:convertDate(relList2.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                                                                    <c:set var="strtDtRel2" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                                                    <c:set var="endDtRel2" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                                     <c:set var="dayValRel2" value="${kl:getDaysDiff(strtDtRel2, endDtRel2) + 1}"/>
                                                                 </c:when>
                                                             </c:choose>
