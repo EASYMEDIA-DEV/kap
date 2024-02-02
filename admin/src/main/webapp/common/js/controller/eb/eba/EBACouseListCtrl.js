@@ -321,9 +321,9 @@ define(["ezCtrl"], function(ezCtrl) {
 						else if(choiceCnt == 0) {
 							alert(msgCtrl.getMsg("fail.eb.eba.notSrchPartsCouse"));
 						}
-						else if(choiceCnt > 1){
+						/*else if(choiceCnt > 1){
 							alert(msgCtrl.getMsg("fail.eb.eba.notSrchPlaceCouse1"));
-						}else{
+						}*/else{
 							var clickObj = {};
 							clickObj.edctnSeq = ctrl.obj.find("input[name=delValueList]:checked").val();
 							var trObj = ctrl.obj.find("input[name=delValueList]:checked").parents("tr");

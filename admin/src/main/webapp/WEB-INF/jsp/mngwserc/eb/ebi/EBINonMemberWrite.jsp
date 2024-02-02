@@ -189,51 +189,51 @@
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
                                     <tbody id="isttrContainer">
-                                    <tr data-total-count="0" class="notIsttr">
-                                        <td colspan="5" class="text-center" <c:if test="${isttrList.size() ne 0}">style="display:none;"</c:if>>
-                                            검색결과가 없습니다.<br>
-                                            (등록된 데이터가 없습니다.)
-                                        </td>
-                                    </tr>
-                                    <tr class="setIsttr" data-total-count="0" style="display:none;">
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                        </td>
-                                        <td class="text-center">
-                                            <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
-                                        </td>
-                                        <input type="hidden" class="notRequired" name="isttrSeq" id="isttrSeq" value="" disabled="true" titlle="강사번호">
-                                    </tr>
-                                    <c:choose>
-                                        <c:when test="${isttrList.size() ne 0}">
-                                            <c:forEach var="list" items="${isttrList}" varStatus="status">
-                                                <tr>
-                                                    <td class="text-center">
-                                                        ${isttrList.size() - status.index}
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.name}
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.ffltnNm}
-                                                    </td>
-                                                    <td class="text-center">
-                                                            ${list.spclCntn}
-                                                    </td>
-                                                    <td class="text-center">
-                                                        <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
-                                                    </td>
-                                                    <input type="hidden" class="notRequired" name="isttrSeq" value="${list.isttrSeq}" disabled="true" titlle="강사번호">
-                                                </tr>
-                                            </c:forEach>
+                                        <tr data-total-count="${ fn:length(isttrList) }" class="notIsttr">
+                                            <td colspan="5" class="text-center" <c:if test="${fn:length(isttrList) ne 0}">style="display:none;"</c:if>>
+                                                검색결과가 없습니다.<br>
+                                                (등록된 데이터가 없습니다.)
+                                            </td>
+                                        </tr>
+                                        <tr class="setIsttr" data-total-count="0" style="display:none;">
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                            </td>
+                                            <td class="text-center">
+                                                <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                            </td>
+                                            <input type="hidden" class="notRequired" name="isttrSeq" id="isttrSeq" value="" disabled="true" titlle="강사번호">
+                                        </tr>
+                                        <c:choose>
+                                            <c:when test="${fn:length(isttrList) ne 0}">
+                                                <c:forEach var="list" items="${isttrList}" varStatus="status">
+                                                    <tr>
+                                                        <td class="text-center">
+                                                            ${fn:length(isttrList) - status.index}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.name}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.ffltnNm}
+                                                        </td>
+                                                        <td class="text-center">
+                                                                ${list.spclCntn}
+                                                        </td>
+                                                        <td class="text-center">
+                                                            <button type="button" class="btn btn-sm btn-danger btnOneTrRemove">삭제</button>
+                                                        </td>
+                                                        <input type="hidden" class="notRequired" name="isttrSeq" value="${list.isttrSeq}" disabled="true" titlle="강사번호">
+                                                    </tr>
+                                                </c:forEach>
 
-                                        </c:when>
-                                    </c:choose>
+                                            </c:when>
+                                        </c:choose>
                                     </tbody>
                                 </table>
                             </div>
@@ -304,14 +304,13 @@
                                     </thead>
                                     <!-- 리스트 목록 결과 -->
                                     <tbody>
-
-                                    <tr data-total-count="0" class="notPlace" <c:if test="${roomDto.nm ne ''}">style="display:none;"</c:if>>
+                                    <tr data-total-count="0 ${roomDto}" class="notPlace" <c:if test="${not empty roomDto}">style="display:none;"</c:if>>
                                         <td colspan="4" class="text-center">
                                             검색결과가 없습니다.<br>
                                             (등록된 데이터가 없습니다.)
                                         </td>
                                     </tr>
-                                    <tr  class="setPlace" <c:if test="${roomDto.nm eq ''}">style="display: none;"</c:if>>
+                                    <tr class="setPlace" <c:if test="${empty roomDto}">style="display: none;"</c:if>>
                                         <td class="text-center">
                                             ${roomDto.nm}
                                         </td>

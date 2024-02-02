@@ -841,6 +841,7 @@ footer .copy-area span:last-child:after {display: none;}
 .form-select select:disabled {color: #9CA1A6;}
 .form-select.active::before {transform: translateY(-50%) rotate(180deg);}
 .form-select.w332 {width: 332rem;}
+.form-select:has(select:disabled)::before {opacity: .4;}
 
 .form-select.bdr-select {min-width: 103rem; width: auto; min-height: 40rem; height: auto; background-color: transparent; border-bottom: 1px solid #06161E;} /* 텍스트 형태 + 하단 border */
 .form-select.bdr-select::before {right: 0; top: 0; transform: translateY(0);}
@@ -3015,9 +3016,13 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .sort-label-area .label span {font-size: max(14rem, 13px);}
 .training-confirm .sort-label-area .label + .label:before {top: max(10rem, 9px);}
 .training-confirm .training-view-page .training-list .img-area {flex-shrink: 0; width: 184rem; height: 114rem; margin-right: 24rem; background-size: 80rem auto;}
-.training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; width: 100%;}
+.training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; align-items: stretch; width: 100%;}
 .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 10rem;}
 .training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem; border-right: 1px solid #ECEEEF;}
+.training-confirm .training-view-page .training-list:not(:has(.img-area)) .txt-area .top-line {flex-shrink: 0; width: calc(75% - 13rem); }
+.training-confirm .training-view-page .training-list .txt-area .top-line + * {align-self: flex-start;}
+.training-confirm .training-view-page .training-list .top-line + .status-info-w {flex-wrap: wrap; padding-left: 24rem;}
+.training-confirm .training-view-page .training-list .top-line + .group {padding-left: 24rem;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a {position: relative;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a::after {content: ""; vertical-align: middle; position: relative; top: -2rem; display: inline-block; margin-left: 4rem;  width: 32rem; height: 32rem; background: url("/common/images/icon-arrow-right.svg") no-repeat center center / 100% auto; transition: .3s transform;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a:hover::after {transform: translateX(6rem);}
@@ -3067,6 +3072,9 @@ footer .copy-area span:last-child:after {display: none;}
   .training-confirm .training-view-page .training-list .txt-area .group {margin-top: 4rem;}
   .training-confirm .training-view-page .training-list .txt-area .group .status-info-w {margin-top: 0;}
   .training-confirm .training-view-page .training-list .txt-area .top-line {width: 100%; padding-right: 100rem; border-right: 0;}
+  .training-confirm .training-view-page .training-list:not(:has(.img-area)) .txt-area .top-line {width: 100%; padding-right: 0;}
+  .training-confirm .training-view-page .training-list .top-line + .status-info-w {padding-left: 0;}
+  .training-confirm .training-view-page .training-list .top-line + .group {padding-left: 0;}
   .training-confirm .training-view-page .training-list .txt-area .status-info-w {margin-top: 12rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-name a::after {top: -2rem; margin-left: 2rem; width: 24rem; height: 24rem;}
   .training-confirm .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 4rem; font-size: 12rem;}

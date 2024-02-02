@@ -130,10 +130,10 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 
 		if(ebbDto != null) {
 			//교육 신청 페이지 진입 시간
-			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm:ss");
 			LocalDateTime currentDateTime = LocalDateTime.now();
 			String formattedDateTime = currentDateTime.format(formatter);
-			ebbDto.setApplyDateTime(formattedDateTime);
+			ebbDto.setApplyDateTime(formattedDateTime.substring(0, 19));
 
 			EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 

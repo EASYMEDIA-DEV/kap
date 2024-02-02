@@ -151,7 +151,7 @@
                     <div class="accepting-fixed-area">
                         <div class="for-position">
                             <button class="open-click-area" type="button">
-                                <p class="tit">방문교육 신청하기</span></p>
+                                <p class="tit">방문교육 신청하기</p>
                                 <div class="btn-text-icon plus"><span>더보기</span></div>
                             </button>
 

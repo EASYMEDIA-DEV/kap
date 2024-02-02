@@ -73,6 +73,12 @@
 					location.href="/";
 				}
 			});
+
+
+			if ($(".accepting-fixed-area").length > 0) {
+				$("#wrap").addClass("has-bot-fix-area");
+			}
+
 		});
 	</script>
 
