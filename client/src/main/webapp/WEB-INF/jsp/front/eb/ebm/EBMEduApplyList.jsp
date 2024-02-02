@@ -1,5 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<c:set var="date" value="<%=new java.util.Date( )%>" />
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
 <div id="wrap" class="mypage" data-controller="controller/eb/ebm/EBMEduApplyListCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
@@ -198,7 +199,7 @@
                                                                             <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
                                                                             <div class="input-btn-wrap">
                                                                                 <button class="delete-btn" title="지우기" type="button"></button>
-                                                                                <button class="srch-btn" title="검색"></button>
+                                                                                <button class="srch-btn btnBindSearch" title="검색"type="button"></button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -227,11 +228,25 @@
                                                                         <div class="middle-line">
                                                                             <div class="form-group form-calendar">
                                                                                 <div class="form-input">
-                                                                                    <input type="text" placeholder="2023.01.01" name="strtDt" id="strtDt" >
+                                                                                    <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
+
+                                                                                    <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
+                                                                                    <span class="input-group-btn" style="z-index:0;">
+                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                                                    <em class="ion-calendar"></em>
+                                                                                </button>
+                                                                            </span>
                                                                                 </div>
                                                                                 <div class="form-input calendar">
-                                                                                    <input type="text" placeholder="2023.01.01"  name="endDt" id="endDt">
+                                                                                    <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
+                                                                                    <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="종료일"/>
+                                                                                    <span class="input-group-btn" style="z-index:0;">
+                                                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                                                    <em class="ion-calendar"></em>
+                                                                                </button>
+                                                                            </span>
                                                                                 </div>
+
                                                                             </div>
                                                                         </div>
                                                                     </div>

@@ -185,6 +185,14 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		classname : {
 
+			btnBindSearch : {
+				event : {
+					click : function() {
+						$formObj.find("#btnSearch").click();
+					}
+				}
+			},
+
 			classType : {
 				event : {
 					click : function() {
@@ -250,9 +258,26 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		immediately : function() {
 			//리스트 조회
+			cmmCtrl.setCalendarInit(3,-3);
+
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
 			search();
+
+			$(document).on('keydown', function(event) {
+				// 필터 검색 인지 확인
+				if($('.all-srch').css('display') !== 'block') {
+
+					// 눌린 키가 Enter 키인지 확인
+					if (event.which === 13) {
+						// 다른 이벤트 중지
+						event.preventDefault();
+						cmmCtrl.setFormData($formObj);
+						search(1);
+						return false;
+					}
+				}
+			});
 
 		}
 	};
