@@ -227,7 +227,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="picName" name="picName" oninput="this.value = this.value.replace(/[^ㄱ-ㅎ|가-힣|a-z|A-Z]/g, '').replace(/(\..*)\./g, '$1');" placeholder="이름 입력" title="이름">
+                                                        <input type="text" class="picName" name="picName" oninput="this.value = this.value.replace(/[^ㄱ-ㅎ|가-힣|a-z|A-Z]/g, '').replace(/(\..*)\./g, '$1');" maxlength="50" placeholder="이름 입력" title="이름">
                                                     </div>
                                                 </div>
                                             </div>
@@ -260,11 +260,11 @@
                                                 <div class="form-group form-email">
                                                     <input type="hidden" class="picEmail" name="picEmail" value=""/>
                                                     <div class="form-input">
-                                                        <input type="text" class="id" name="picEmail" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" placeholder="이메일 입력" title="이메일">
+                                                        <input type="text" class="id" name="picEmail" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" maxlength="50" placeholder="이메일 입력" title="이메일">
                                                     </div>
                                                     @
                                                     <div class="form-input">
-                                                        <input type="text" name="picEmail" class="address" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" placeholder="직접입력" title="이메일">
+                                                        <input type="text" name="picEmail" class="address" oninput="this.value=this.value.replace(/[^\x00-\x7F]/g, '')" placeholder="직접입력" maxlength="50" title="이메일">
                                                     </div>
                                                     <div class="form-select">
                                                         <select id="addressSelect" title="메일 선택">
@@ -305,7 +305,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="picDeptNm" name="picDeptNm" placeholder="부서 입력" title="부서">
+                                                        <input type="text" class="picDeptNm" name="picDeptNm" placeholder="부서 입력" maxlength="50" title="부서">
                                                     </div>
                                                 </div>
                                             </div>
@@ -321,7 +321,7 @@
                                             <div class="data-line">
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" class="picPstnNm" name="picPstnNm" placeholder="직급 입력" title="직급">
+                                                        <input type="text" class="picPstnNm" name="picPstnNm" placeholder="직급 입력" maxlength="50" title="직급">
                                                     </div>
                                                 </div>
                                             </div>
@@ -336,7 +336,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
                     <a class="btn-solid small gray-bg cancelApply" href="javascript:"><span>취소</span></a>
-                    <a class="btn-solid small black-bg consInfoAppl" href="javascript:"><span>다음</span></a>
+                    <a class="btn-solid small black-bg consInfoApply" href="javascript:"><span>다음</span></a>
                 </div>
             </div>
         </div>

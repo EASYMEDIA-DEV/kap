@@ -243,6 +243,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                         var agree = $("#agreeChk").val();
                         var qltyPicCnt = $(".qltyPicCnt").val();
                         var hqZipcode = $("#hqZipcode").val();
+                        var hqDtlAddr = $("#hqDtlAddr").val();
                         var mainAddr = $("#mainAddr").val();
                         var subAddr = $("#subAddr").val();
                         var rprsntApprvYn = $("input[name='rprsntApprvYn']:checked").val();
@@ -279,83 +280,91 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                             alert("품질담당 인원을 입력해주세요.");
                             $(".qltyPicCnt").focus();
                             return false;
-                        }else {
-                            if (!hqZipcode) {
-                                alert("공장주소를 입력해주세요.");
-                                $("#hqZipcode").focus();
+                        }
+
+                        if (!hqZipcode) {
+                            alert("공장주소를 입력해주세요.");
+                            $("#hqZipcode").focus();
+                            return false;
+                        }
+
+                        if (!hqDtlAddr) {
+                            alert("상세주소를 입력해주세요.");
+                            $("#hqDtlAddr").focus();
+                            return false;
+                        }
+
+                        if (mainAddr == "선택") {
+                            alert("소재 지역을 선택해주세요.");
+                            $("#mainAddr").focus();
+                            return false;
+                        }
+
+                        if (subAddr == "") {
+                            alert("소재 지역을 선택해주세요.");
+                            $("#subAddr").focus();
+                            return false;
+                        }
+
+                        if (!rprsntApprvYn) {
+                            alert("대표자 승인여부를 선택해주세요.");
+                            $("input[name='rprsntApprvYn']").focus();
+                            return false;
+                        }
+
+                        if (!appctnRsnCd) {
+                            alert("신청사유를 선택해주세요.");
+                            $("input[name='appctnRsnCd']").focus();
+                            return false;
+                        }
+
+                        if (!cbsnCd) {
+                            alert("업종을 선택해주세요.");
+                            $("input[name='cbsnCd']").focus();
+                            return false;
+                        }
+
+                        if (cbsnCd == 'TEC_GUIDE_INDUS01') {
+                            if (!$("input[name='etcNm']").val()) {
+                                alert("업종을 입력해주세요.");
+                                $("input[name='etcNm']").focus();
                                 return false;
-                            } else {
-                                if (mainAddr == "선택") {
-                                    alert("소재 지역을 선택해주세요.");
-                                    $("#mainAddr").focus();
-                                    return false;
-                                } else {
-                                    if (subAddr == "") {
-                                        alert("소재 지역을 선택해주세요.");
-                                        $("#subAddr").focus();
-                                        return false;
-                                    } else {
-                                        if (!rprsntApprvYn) {
-                                            alert("대표자 승인여부를 선택해주세요.");
-                                            $("input[name='rprsntApprvYn']").focus();
-                                            return false;
-                                        } else {
-                                            if (!appctnRsnCd) {
-                                                alert("신청사유를 선택해주세요.");
-                                                $("input[name='appctnRsnCd']").focus();
-                                                return false;
-                                            } else {
-                                                if (!cbsnCd) {
-                                                    alert("업종을 선택해주세요.");
-                                                    $("input[name='cbsnCd']").focus();
-                                                    return false;
-                                                }else if (cbsnCd == 'TEC_GUIDE_INDUS01') {
-                                                    if (!$("input[name='etcNm']").val()) {
-                                                        alert("업종을 입력해주세요.");
-                                                        $("input[name='etcNm']").focus();
-                                                        return false;
-                                                    }
-                                                }else {
-                                                    if (!appctnTypeCd) {
-                                                        alert("신청사항을 선택해주세요.");
-                                                        $("input[name='appctnTypeCd']").focus();
-                                                        return false;
-                                                    } else {
-                                                        var searchFile = $("#searchFile").val();
-                                                        if (!searchFile) {
-                                                            alert("회사소개서를 등록해주세요.");
-                                                            $("#searchFile").focus();
-                                                            return false;
-                                                        } else {
-                                                            var searchFile1 = $("#searchFile1").val();
-                                                            if (!searchFile1) {
-                                                                alert("개선활동 추진계획서를 등록해주세요.");
-                                                                $("#searchFile1").focus();
-                                                                return false;
-                                                            }else{
-                                                                if(agree == "N"){
-                                                                    alert("약관에 동의해주세요");
-                                                                    $("#agreeChk").focus();
-                                                                    return false;
-                                                                }else{
-                                                                    if(confirm("위 정보로 사업을 신청하시겠습니까?")){
-                                                                        cmmCtrl.fileFrm(function(data){
-                                                                            console.log();
-                                                                            var cnstgSeq = data.actCnt;
-                                                                            //콜백함수. 페이지 이동
-                                                                            location.replace("./complete?cnstgSeq="+cnstgSeq);
-                                                                        }, "./insert", $formObj, "json");
-                                                                    }
-                                                                }
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
                             }
+                        }
+
+                        if (!appctnTypeCd) {
+                            alert("신청사항을 선택해주세요.");
+                            $("input[name='appctnTypeCd']").focus();
+                            return false;
+                        }
+
+                        var searchFile = $("#searchFile").val();
+                        if (!searchFile) {
+                            alert("회사소개서를 등록해주세요.");
+                            $("#searchFile").focus();
+                            return false;
+                        }
+
+                        var searchFile1 = $("#searchFile1").val();
+                        if (!searchFile1) {
+                            alert("개선활동 추진계획서를 등록해주세요.");
+                            $("#searchFile1").focus();
+                            return false;
+                        }
+
+                        if(agree == "N"){
+                            alert("약관에 동의해주세요");
+                            $("#agreeChk").focus();
+                            return false;
+                        }
+
+                        if(confirm("위 정보로 사업을 신청하시겠습니까?")){
+                            cmmCtrl.fileFrm(function(data){
+                                console.log();
+                                var cnstgSeq = data.actCnt;
+                                //콜백함수. 페이지 이동
+                                location.replace("./complete?cnstgSeq="+cnstgSeq);
+                            }, "./insert", $formObj, "json");
                         }
                     }
                 }

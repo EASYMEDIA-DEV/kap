@@ -255,7 +255,7 @@ public class CBTechGuidanceController {
         }
         return "jsonView";
     }
-    @GetMapping("/consInfoAppl")
+    @GetMapping("/consInfoApply")
     public String getConsultInfoApplicationPage(ModelMap modelMap, CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, @PathVariable("type") String type) throws Exception {
         String url = "";
 

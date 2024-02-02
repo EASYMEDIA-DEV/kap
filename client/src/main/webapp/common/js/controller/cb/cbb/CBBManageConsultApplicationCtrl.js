@@ -138,7 +138,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         classname : {
-            consInfoAppl : {
+            consInfoApply : {
                 event : {
                     click : function(){
                         var picName = $(".picName").val();
@@ -209,7 +209,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         cmmCtrl.jsonAjax(function (data) {
                             var cmssr = JSON.parse(data);
                             if(cmssr){
-                                location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val()+"&cnstgSeq="+cmssr;
+                                location.href= "./consInfoApply?bsnmNo="+$("#bsnmNo").val()+"&cnstgSeq="+cmssr;
                             }
                         }, './cmssrInfo', cmssrInfo, "text");
                     }
