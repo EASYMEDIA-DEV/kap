@@ -966,7 +966,7 @@
 		,  null AS stts_cd_nm
 		,  null AS cmptn_yn
 		,  null AS cmptn_dtm
-		,  null AS ptcpt_dtm
+		,  A.reg_dtm AS ptcpt_dtm
 		,  null AS web_path
 		, CASE
 			WHEN (SELECT COUNT(*)
@@ -1083,7 +1083,7 @@
 				</if>
 				<if test="applyListYn != 'Y'.toString()">
 					<!-- 접수일자순 -->
-					ORDER BY reg_dtm desc
+					ORDER BY ptcpt_dtm desc
 				</if>
 			</when>
 			<when test="srchOrder == 2">
@@ -1238,7 +1238,7 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduListCnt" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectMypageEduList*/
+		SELECT /*EBBEpisdMapper.selectMypageEduListCnt*/
 		edu_gubun
 		, edctn_seq
 		, episd_seq
