@@ -361,21 +361,14 @@
                                                 <!-- 0: 평가하기 비활성화, 1:평가하기 활성화-->
                                                 <c:set var="examStatus" value="0"/>
 
+
                                                 <c:choose>
-                                                    <c:when test="${rtnData.trnsfYn eq 'N' && rtnData.otsdExamPtcptYn eq 'Y'}">
-                                                        <!--오프라인여부 Y일경우 일정상관없이 평가 가능-->
+                                                    <c:when test="${rtnData.trnsfYn eq 'N' && not empty rtnData.examSeq && examStatDt le nowDate && nowDate le examEndDt}">
                                                         <c:set var="examStatus" value="1"/>
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        <c:choose>
-                                                            <c:when test="${rtnData.trnsfYn eq 'N' && not empty rtnData.examSeq && rtnData.otsdExamPtcptYn ne 'Y' && examStatDt le nowDate && nowDate le examEndDt}">
-                                                                <c:set var="examStatus" value="1"/>
-                                                            </c:when>
-                                                        </c:choose>
-                                                    </c:otherwise>
                                                 </c:choose>
 
-                                                <c:if test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty examPtcptSeq}">
+                                                <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty examPtcptSeq}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                 </c:if>
 
@@ -470,6 +463,17 @@
                                                     <td>${applicantInfo.name}</td>
                                                 </tr>
                                                 <tr>
+                                                    <th>성별</th>
+                                                    <td>
+                                                        <c:if test="${applicantInfo.gndr eq '1'}">
+                                                            남
+                                                        </c:if>
+                                                        <c:if test="${applicantInfo.gndr ne '1'}">
+                                                            여
+                                                        </c:if>
+                                                    </td>
+                                                </tr>
+                                                <tr>
                                                     <th>휴대폰번호</th>
                                                     <td>${applicantInfo.hpNo}</td>
                                                 </tr>
@@ -502,17 +506,11 @@
                                                         </c:choose>
                                                     </td>
                                                 </tr>
-                                                <tr>
-                                                    <th>성별</th>
-                                                    <td>
-                                                        <c:if test="${applicantInfo.gndr eq '1'}">
-                                                            남
-                                                        </c:if>
-                                                        <c:if test="${applicantInfo.gndr ne '1'}">
-                                                            여
-                                                        </c:if>
-                                                    </td>
-                                                </tr>
+
+
+
+
+
                                                 <!-- // 2023-12-07 수정 -->
                                                 </tbody>
                                             </table>

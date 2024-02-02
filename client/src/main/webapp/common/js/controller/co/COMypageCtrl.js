@@ -33,7 +33,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			//총 건수
 
 			if(totCnt <= 9 ){
-				$(".btn-wrap.add-load.align-center").remove();
+				$(".btn-wrap.add-load.align-center").hide();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
@@ -45,7 +45,12 @@ define(["ezCtrl"], function(ezCtrl) {
 					rtnPage = (tempPage * 9);
 				}
 
-				$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+				if(rtnPage == totCnt){
+					$(".btn-wrap.add-load.align-center").hide();
+				}else{
+					$(".btn-wrap.add-load.align-center").show();
+					$(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+				}
 
 			}
 
@@ -146,6 +151,25 @@ define(["ezCtrl"], function(ezCtrl) {
 						//리스트 갯수 변경
 						$formObj.find("input[name=listRowSize]").val($(this).val());
 						search(1);
+					}
+				}
+			},
+
+			episdDtl : {
+				event : {
+					click : function() {
+
+						var trnsfyn = $(this).data("trnsfyn");
+
+							var edctnSeq = $(this).data("edctnseq");
+							var episdYear = $(this).data("episdyear");
+							var episdOrd = $(this).data("episdord");
+							var ptcptSeq = $(this).data("ptcptseq");
+							$(this).data("episdord");
+
+							location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+
+
 					}
 				}
 			}

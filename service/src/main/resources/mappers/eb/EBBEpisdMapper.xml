@@ -341,6 +341,14 @@
 				AND MEM_SEQ = #{memSeq}
 			</if>
 
+			<if test='mypageMainYn == "Y".toString() '>
+				<!--신청한 내역중 교육중인것만 호출 -->
+				AND STTS_CD = 'EDU_STTS_CD01'
+				AND (edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm)
+
+			</if>
+
+
 			<!-- -->
 			<if test="edctnSeq != null and edctnSeq != ''">
 				AND edctn_seq = #{edctnSeq}
@@ -2791,16 +2799,14 @@
  	-->
 	<select id="selectRelCmptnInfo" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
 		SELECT /* EBBEpisdMapper.selectRelCmptnInfo */
-			REL_CNT
-			, CASE WHEN COUNT(REL_CMPTN_YN) > 0 THEN 'N' ELSE 'Y' END AS REL_CMPTN_YN
+			SUM(REL_CNT) AS REL_CNT
+			 , CASE WHEN COUNT(REL_CMPTN_YN) <![CDATA[>]]> 0 THEN 'N' ELSE 'Y' END AS REL_CMPTN_YN
 		FROM (SELECT
 				  A.EDCTN_SEQ
-				   , A.PTCPT_SEQ
-				   , A.MEM_SEQ
 				   , B.CNNCT_EDCTN_SEQ
 				   , COUNT(CNNCT_EDCTN_SEQ) AS REL_CNT
-				   , (SELECT COUNT(CMPTN_YN) FROM ep_edctn_ptcpt_mst WHERE EDCTN_SEQ = B.CNNCT_EDCTN_SEQ AND MEM_SEQ = A.MEM_SEQ AND CMPTN_YN = 'N' ) AS REL_CMPTN_YN
-			  FROM ep_edctn_ptcpt_mst A
+				   , (SELECT COUNT(CMPTN_YN) FROM ep_edctn_ptcpt_mst WHERE EDCTN_SEQ = B.CNNCT_EDCTN_SEQ AND MEM_SEQ = #{memSeq} AND CMPTN_YN = 'Y' ) AS REL_CMPTN_YN
+			  FROM ed_edctn_prcs_mst A
 					   LEFT JOIN(
 				  SELECT
 					  CNNCT_EDCTN_SEQ
@@ -2810,10 +2816,10 @@
 				  WHERE CNNCT_CD = 'EDCTN_REL03'
 			  ) B ON B.EDCTN_SEQ = A.EDCTN_SEQ
 
-
 			  WHERE 1=1
 				AND A.EDCTN_SEQ = #{edctnSeq}
-				AND A.MEM_SEQ = #{memSeq}) AA
+			  GROUP BY CNNCT_EDCTN_SEQ
+			 ) AA
 	</select>
 
 

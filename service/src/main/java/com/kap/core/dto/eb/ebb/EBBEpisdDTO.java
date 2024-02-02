@@ -463,6 +463,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Builder.Default
     private String changeListYn = "N";
 
+    @Schema(title = "마이페이지 서브 메인에서만 사용하는 조건절", example = "Y/N")
+    @Builder.Default
+    private String mypageMainYn = "N";
+
     @Schema(title = "마이페이지에서만 사용하는 조건절", example = "Y/N")
     @Builder.Default
     private String mypageYn = "N";

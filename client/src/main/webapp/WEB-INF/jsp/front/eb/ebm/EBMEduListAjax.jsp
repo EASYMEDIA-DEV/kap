@@ -54,6 +54,11 @@
                                                             <span>${list.eduStat}</span>
                                                         </p>
                                                     </c:when>
+                                                    <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육중')}">
+                                                        <p class="box-label bigger accepting">
+                                                            <span>${list.eduStat}</span>
+                                                        </p>
+                                                    </c:when>
                                                     <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육종료' or list.eduStat eq '교육완료')}">
                                                         <p class="box-label bigger complete">
                                                             <span>${list.eduStat}</span>
@@ -156,6 +161,7 @@
                                             <p class="training-name f-title1">${list.nm}</p>
                                         </div>
                                         <div class="status-info-w">
+
                                             <c:choose>
                                                 <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육대기' or list.eduStat eq '신청대기' or list.eduStat eq '협의중')}">
                                                     <p class="box-label bigger waiting">

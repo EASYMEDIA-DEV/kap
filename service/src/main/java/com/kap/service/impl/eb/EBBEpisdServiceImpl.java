@@ -696,6 +696,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			//필수과정에 있는걸 수료 했는지 체크함
 			EBBPtcptDTO cmptnDto = eBBEpisdMapper.selectRelCmptnInfo(eBBPtcptDTO);
 
+			System.out.println("@@@ cmptnDto = " + cmptnDto);
+
 			if(cmptnDto.getRelCnt()>0){
 				System.out.println("@@연계과정 있으므로 연계과정의 수료여부 체크함");
 

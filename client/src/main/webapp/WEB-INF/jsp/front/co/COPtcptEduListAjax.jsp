@@ -3,7 +3,7 @@
     <c:when test="${ not empty rtnData.list}">
         <input type="hidden" name="totalCount" id="totalCount" value="${rtnData.totalCount}"/>
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <div class="training-confirm">
+            <div class="training-confirm episdDtl" data-episdseq="${list.episdSeq}" data-edctnseq="${list.edctnSeq}" data-episdyear="${list.episdYear}" data-episdord="${list.episdOrd}" data-ptcptSeq="${list.ptcptSeq}" data-trnsfYn="${list.trnsfYn}">
                 <div class="top-info">
                     <div class="training-view-page">
                         <div class="training-list">
