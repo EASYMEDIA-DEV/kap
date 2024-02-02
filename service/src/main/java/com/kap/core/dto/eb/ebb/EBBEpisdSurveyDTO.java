@@ -71,4 +71,15 @@ public class EBBEpisdSurveyDTO extends BaseDTO {
     @Schema(title = "참여자순번", example = "숫자")
     private Integer ptcptSeq;
 
+
+    @Schema(title = "카테고리 부모 코드 명 ", example = "")
+    private String prntCdNm;
+
+    @Schema(title = "카테고리 코드 명", example = "")
+    private String ctgryCdNm;
+    @Schema(title = "업종코드명", example = "코드명")
+    private String cbsnCdNm;
+    @Schema(title = "회차 내 모든 강사명", example = "이름")
+    private String isttrGroupName;
+
 }

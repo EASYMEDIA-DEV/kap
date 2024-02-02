@@ -2595,9 +2595,14 @@
 			, B.CNTN
 			, C.MEM_SEQ
 			, C.PTCPT_SEQ
+		    , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = D.CTGRY_CD) AS CTGRY_CD_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT PARNT_SEQ FROM CO_CODE_MST WHERE CD = D.CTGRY_CD)) AS PRNT_CD_NM
+			, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = A.edctn_seq AND episd_ord = A.episd_ord AND episd_year = A.episd_year )) AS isttr_group_name
+			, (select cd_nm from co_code_mst WHERE cd = A.cbsn_cd) as cbsn_cd_nm
 		FROM  ED_EDCTN_EPISD_MST A
     	LEFT JOIN SV_MST B ON A.SRV_SEQ = B.SRV_SEQ
 		LEFT JOIN EP_EDCTN_PTCPT_MST C ON A.EPISD_SEQ = C.EPISD_SEQ
+		LEFT JOIN ED_EDCTN_PRCS_MST D ON A.EDCTN_SEQ = D.EDCTN_SEQ
 		WHERE
 			A.EDCTN_SEQ = #{detailsKey}
 			AND A.EPISD_YEAR = #{episdYear}

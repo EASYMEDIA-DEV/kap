@@ -123,7 +123,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								});
 							}
 							svRepnMst.svSurveyQstnRspnDtlList.push(svQstnDtl);
-							console.log(svRepnMst);
 						});
 
 						cmmCtrl.jsonAjax(function(data){
