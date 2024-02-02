@@ -331,6 +331,44 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
         },
         classname : {
 
+            delFile : {
+                event : {
+                    click : function() {
+                        var dataTransfer = new DataTransfer();
+
+                        var fileName = $(this).closest('.file-list').find('.name').text();
+                        var fileExtension = $(this).closest('.file-list').find('.unit').text().substring(1);
+                        var fileSize = $(this).val();
+
+                        var obj = $("#searchFile")[0].files;
+                        var fileCnt = obj.length;
+                        var objArray = Array.from(obj);
+
+                        var file;
+                        var inputFileName;
+                        var inputFileExtension;
+                        var inputFileSize;
+
+                        for (var i = 0; i < fileCnt; i++) {
+                            file = obj[i];
+                            inputFileName = file.name.split('.')[0];
+                            inputFileExtension = file.name.split('.').pop();
+                            inputFileSize = file.size;
+
+                            if (inputFileName === fileName && inputFileExtension === fileExtension && inputFileSize == fileSize) {
+                                objArray.splice(i, 1);
+                                $(this).closest('.file-list').remove();
+                                break;
+                            }
+                        }
+
+                        objArray.forEach(file => { dataTransfer.items.add(file); });
+
+                        $('#searchFile')[0].files = dataTransfer.files;
+                    }
+                }
+            }
+
         },
         immediately : function() {
 
