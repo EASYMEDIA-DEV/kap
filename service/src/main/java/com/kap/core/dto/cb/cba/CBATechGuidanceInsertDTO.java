@@ -63,6 +63,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String deptDtlNm;
     @Schema(title = "신청자 직급")
     private String pstnCd;
+    @Schema(title = "신청자 직급코드명")
+    private String pstnCdNm;
     @Schema(title = "신청자 직급명")
     private String pstnNm;
     @Schema(title = "신청자 전화번호")

@@ -475,7 +475,7 @@
 
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap align-center for-motion">
-                            <a class="btn-solid small black-bg" href="/education/apply/list"><span>목록</span></a>
+                            <a class="btn-solid small black-bg" href="javascript:" onclick="window.history.back();"><span>목록</span></a>
                         </div>
                     </div>
 

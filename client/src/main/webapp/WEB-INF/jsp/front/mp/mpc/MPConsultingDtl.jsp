@@ -30,7 +30,7 @@
                                 <div class="gray-bg-sec">
                                     <div class="flex">
                                         <input type="hidden" name="bsnYear" class="bsnYear" value="${rtnData.bsnYear}">
-                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>${rtnData.cnstgNm}</p>
+                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>상주${rtnData.cnstgNm}</p>
                                         <div class="group">
                                             <c:if test="${rtnData.cnstgCd eq 'CONSULT_GB01'}">
                                                 <c:choose>
@@ -69,7 +69,7 @@
                                     <div class="def-list-w">
                                         <div class="def-list">
                                             <p class="tit f-head">신청일자</p>
-                                            <p class="txt f-sub-head">${rtnData.appctnDt}</p>
+                                            <p class="txt f-sub-head">${kl:convertDate(rtnData.appctnDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '-')}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -141,7 +141,12 @@
                                             </tr>
                                             <tr>
                                                 <th>직급</th>
-                                                <td>${rtnData.pstnNm}</td>
+                                                <td>
+                                                    ${not empty rtnData.pstnCdNm ? rtnData.pstnCdNm : "-"}
+                                                    <c:if test="${rtnData.pstnCd eq 'MEM_CD01007'}" >
+                                                        (${rtnData.pstnNm})
+                                                    </c:if>
+                                                </td>
                                             </tr>
                                             </tbody>
                                         </table>
@@ -167,7 +172,7 @@
                                             <tbody>
                                             <tr>
                                                 <th>사업자등록번호</th>
-                                                <td>${rtnData.bsnmNo}</td>
+                                                <td>${kl:bsnmNoConvert(rtnData.bsnmNo)}</td>
                                             </tr>
                                             <tr>
                                                 <th>부품사명</th>
@@ -220,9 +225,22 @@
                                             <tr>
                                                 <th>주생산품</th>
                                                 <td>
-                                                    <c:if test="${not empty rtnData.mjrPrdct1}">①${rtnData.mjrPrdct1}</c:if>
-                                                    <c:if test="${not empty rtnData.mjrPrdct1}">②${rtnData.mjrPrdct2}</c:if>
-                                                    <c:if test="${not empty rtnData.mjrPrdct1}">③${rtnData.mjrPrdct3}</c:if>
+                                                    <c:choose>
+                                                        <c:when test="${empty rtnData.mjrPrdct1 and empty rtnData.mjrPrdct2 and empty rtnData.mjrPrdct3}">
+                                                            -
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <c:if test="${not empty rtnData.mjrPrdct1}">
+                                                                ① ${rtnData.mjrPrdct1}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnData.mjrPrdct2}">
+                                                                ② ${rtnData.mjrPrdct2}
+                                                            </c:if>
+                                                            <c:if test="${not empty rtnData.mjrPrdct3}">
+                                                                ③ ${rtnData.mjrPrdct3}
+                                                            </c:if>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </td>
                                             </tr>
                                             <c:choose>
@@ -528,7 +546,7 @@
                 </div>
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion align-right">
-                        <a class="btn-solid small black-bg" href="/consulting/list"><span>목록</span></a>
+                        <a class="btn-solid small black-bg" href="/my-page/consulting/list"><span>목록</span></a>
                     </div>
                 </div>
             </div>

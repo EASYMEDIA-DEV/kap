@@ -51,12 +51,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function(){
                         pageCnt = pageCnt+1; // 더보기 누를 때마다 1씩 증가
-                        var openCnt = (".popOpen").length // 보이는 게시물
-                        var closeCnt = $("#infoCard").find(".close").length; // 숨겨진 게시물
+                        var openCnt = $("#infoCard").find(".popOpen").length // 보이는 게시물
+                        alert(pageCnt); alert(page);
+
                         if(pageCnt <= page){
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("popOpen");
+                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("popOpen");
                             $(".cntText").text(openCnt+9 +"/"+ chilCnt);
                         }else{
                             $("#infoCard").find(".close").show();
@@ -79,6 +80,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             popOpen : {
                 event : {
                     click : function() {
+
                         var memSeq = $(this).find(".memSeq").val();
                         var cmssrCbsnCdNm = $(this).find(".cmssrCbsnCdNm").text();
                         var cssInfo = {};
@@ -108,7 +110,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             contact : {
                 event : {
                     click : function(){
-                        console.log();
+
                        /* var cmssrCbsnCd = $(".cmssrCbsnCd").text()
                         location.href="/foundation/cs/qa/index?inqSec="+cmssrCbsnCd;*/
                     }
@@ -121,7 +123,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#infoCard").children("a").slice(9,chilCnt).removeClass("popOpen");
                 $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
                 var openCnt = $("#infoCard").find(".popOpen").length // 보이는 게시물
-                var closeCnt = $("#infoCard").find(".close").length; // 숨겨진 게시물
                 $(".cntText").text(openCnt +"/"+ chilCnt);
             }else{
                 $(".moreBtn").hide();

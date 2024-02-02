@@ -240,7 +240,7 @@
                                                                     </div>
                                                                     <div class="info-list">
                                                                         <p class="tit f-caption2">신청일자</p>
-                                                                        <p class="txt f-body2">${appctnList.appctnDt}</p>
+                                                                        <p class="txt f-body2">${kl:convertDate(appctnList.appctnDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '-')}</p>
                                                                     </div>
                                                                 </div>
                                                             </div>

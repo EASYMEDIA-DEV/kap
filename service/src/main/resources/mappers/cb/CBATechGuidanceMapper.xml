@@ -299,6 +299,7 @@
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = DEPT_CD) DEPT_NM,
             B.DEPT_DTL_NM,
             B.PSTN_CD,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = PSTN_CD) PSTN_CD_NM,
             B.PSTN_NM,
             (SELECT CD FROM CP_CNSTG_CBSN_DTL where cnstg_seq = A.CNSTG_SEQ) CBSN_CD,
             (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,

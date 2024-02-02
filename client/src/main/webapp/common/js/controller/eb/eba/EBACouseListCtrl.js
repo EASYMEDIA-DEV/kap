@@ -506,7 +506,8 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click : function(e){
 						var edctnseq = $(this).data("edctnseq");
-						location.href="/education/apply/detail?detailsKey="+edctnseq;
+						$formObj.find("input[name=detailsKey]").val($(this).data("edctnseq"));
+						location.href="/education/apply/detail?" + $formObj.serialize();
 					}
 				}
 			},
