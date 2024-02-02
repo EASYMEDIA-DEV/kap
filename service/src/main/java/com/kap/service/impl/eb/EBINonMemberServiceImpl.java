@@ -128,35 +128,35 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 
 		EBINonMemberDTO ebbDto = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
-		//교육 신청 페이지 진입 시간
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-		LocalDateTime currentDateTime = LocalDateTime.now();
-		String formattedDateTime = currentDateTime.format(formatter);
-		ebbDto.setApplyDateTime(formattedDateTime);
+		if(ebbDto != null) {
+			//교육 신청 페이지 진입 시간
+			DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+			LocalDateTime currentDateTime = LocalDateTime.now();
+			String formattedDateTime = currentDateTime.format(formatter);
+			ebbDto.setApplyDateTime(formattedDateTime);
 
-		EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
+			EBFEduRoomDetailDTO roomDto = new EBFEduRoomDetailDTO();
 
-		if(ebbDto !=null && ebbDto.getPlaceSeq() !=null){
-			roomDto.setDetailsKey(String.valueOf(ebbDto.getPlaceSeq()));
-			roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
-		}
+			if (ebbDto.getPlaceSeq() != null) {
+				roomDto.setDetailsKey(String.valueOf(ebbDto.getPlaceSeq()));
+				roomDto = eBFEduRoomService.selectEduRoomDtl(roomDto);
+			}
 
-		//강사관계 호출
-		List<EBBisttrDTO> isttrList = eBINonMemberMapper.selectIsttrList(ebbDto);
+			//강사관계 호출
+			List<EBBisttrDTO> isttrList = eBINonMemberMapper.selectIsttrList(ebbDto);
 
-		//예산지출 상세 호출
-		List<EBBBdgetDTO> bdgetList = new ArrayList();
-		EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
-		if(ebbDto !=null) {
+			//예산지출 상세 호출
+			List<EBBBdgetDTO> bdgetList = new ArrayList();
+			EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
 			bdgetDto.setEdctnSeq(ebbDto.getEdctnSeq());
 			bdgetList = eBINonMemberMapper.selectBdgetDtlList(bdgetDto);
-		}
 
-		map.put("rtnData", ebbDto);//비회원 교육 과정 상세
-		map.put("roomDto", roomDto);//교육장 정보
-		map.put("isttrList", isttrList);//강사 목록
-		map.put("bdgetList", bdgetList);//예산 지출 내역 목록
-		map.put("rtnTrgtData", eBINonMemberMapper.selectNonMemberTrgtList(pEBINonMemberDTO)); //비회원 교육 대상 목록
+			map.put("rtnData", ebbDto);//비회원 교육 과정 상세
+			map.put("roomDto", roomDto);//교육장 정보
+			map.put("isttrList", isttrList);//강사 목록
+			map.put("bdgetList", bdgetList);//예산 지출 내역 목록
+			map.put("rtnTrgtData", eBINonMemberMapper.selectNonMemberTrgtList(pEBINonMemberDTO)); //비회원 교육 대상 목록
+		}
 
 		return map;
 	}
