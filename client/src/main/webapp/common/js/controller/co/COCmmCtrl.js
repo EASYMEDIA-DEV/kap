@@ -1168,20 +1168,6 @@ var cmmCtrl = (function(){
 				scrollMonth : false,
 				scrollTime : false,
 				todayButton: false,
-				onSelectDate : function(selectedDate, selectedObj) {
-					var endDt     = selectedDate;
-					var strtDtObj = jQuery(".datetimepicker_strtDt");
-					var strtDt    = new Date(strtDtObj.val());
-
-					if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
-					{
-						strtDtObj.val(selectedObj.val());
-					}
-
-					strtDtObj.datetimepicker("setOptions", { maxDate : endDt, value : strtDtObj.val() });
-
-					selectedObj.blur();
-				}
 			}).on('change',function(e){
 				var strtDt   = new Date($(this).val());
 				var endDtObj = jQuery(".datetimepicker_endDt");
