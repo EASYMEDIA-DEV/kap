@@ -363,6 +363,10 @@
                                                     <div class="form-group">
                                                         <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                             <p class="empty-txt">선택된 파일 없음</p>
+                                                            <div class="file-list" style="display: none;">
+                                                                <p class="file-name"><span class="name"></span><span class="unit"></span></p>
+                                                                <button class="btn-delete filedelete" title="파일 삭제하기" type="button"></button>
+                                                            </div>
                                                         </div>
                                                         <div class="file-btn-area">
                                                             <input type="file" class="searchFile" name="atchFile" id="searchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">
@@ -376,6 +380,10 @@
                                                         <div class="form-group">
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <p class="empty-txt">선택된 파일 없음</p>
+                                                                <div class="file-list" style="display: none;">
+                                                                    <p class="file-name"><span class="name"></span><span class="unit"></span></p>
+                                                                    <button class="btn-delete filedelete" title="파일 삭제하기" type="button"></button>
+                                                                </div>
                                                             </div>
                                                             <div class="file-btn-area">
                                                                 <input type="file" class="searchFile" name="atchFile1" id="searchFile1" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip">

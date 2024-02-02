@@ -203,11 +203,11 @@
                                                                 <div class="middle-line">
                                                                     <div class="opt-group">
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="1" checked>
+                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="1">
                                                                             <label for="srchDateType1">교육기간</label>
                                                                         </div>
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="2">
+                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="2" checked>
                                                                             <label for="srchDateType2">접수기간</label>
                                                                         </div>
                                                                     </div>
@@ -217,7 +217,8 @@
                                                                     <div class="form-group form-calendar">
                                                                         <div class="form-input">
                                                                             <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${kl:convertDate(kl:addDay(today, '-90'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+
+                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>
@@ -226,7 +227,7 @@
                                                                         </div>
                                                                         <div class="form-input calendar">
                                                                             <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="종료일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>

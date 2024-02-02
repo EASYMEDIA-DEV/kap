@@ -371,11 +371,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			for(EBBPtcptDTO orgDto: ptcptList){
 				List<EBBPtcptDTO> tempList = new ArrayList();
-				System.out.println("@@orgDto.getPtcptSeq() = " +orgDto.getPtcptSeq());
+//				System.out.println("@@orgDto.getPtcptSeq() = " +orgDto.getPtcptSeq());
 
 				for(EBBPtcptDTO atndcDto : ptcptAtndcList){
 					//원본 참여자 목록 반복문 돌리면서 출석데이터와 매칭, 매칭하면서 같으면 리스트안에 리스트 넣어줌
-					System.out.println("@@@ atndcDto.getPtcptSeq() = " + atndcDto.getPtcptSeq());
+//					System.out.println("@@@ atndcDto.getPtcptSeq() = " + atndcDto.getPtcptSeq());
 					if(orgDto.getPtcptSeq().equals(atndcDto.getPtcptSeq()) ){
 						tempList.add(atndcDto);
 					}
@@ -1012,6 +1012,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	{
 		int rtnCnt = eBBEpisdMapper.deleteSurveyRspn(eBBEpisdDTO);
 		return rtnCnt;
+	}
+
+
+	/**
+	 * 설문 개수 조회
+	 */
+	@Transactional
+	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		return eBBEpisdMapper.checkSurveyCnt(eBBEpisdDTO);
 	}
 
 
@@ -1932,6 +1942,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn())   && "N".equals(cmptnDto.getCmptnYn())  ){
 
 
+
+			eBBEpisdDTO.setEdctnSeq(cmptnDto.getEdctnSeq());
+			eBBEpisdDTO.setEpisdYear(cmptnDto.getEpisdYear());
 			EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
 
 			eBBEpisdDTO.setCrtfctNo(cmptnNo.getCrtfctNo());
@@ -1957,6 +1970,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 
 
+	/**
+	 * 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	 */
+	public EBBPtcptDTO selectQrPtcptDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
+		return eBBFrontEpisdMapper.selectQrPtcptDtl(eBBEpisdDTO);
+	}
 
 
 

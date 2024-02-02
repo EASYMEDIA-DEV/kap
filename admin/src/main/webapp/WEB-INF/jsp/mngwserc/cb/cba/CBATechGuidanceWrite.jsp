@@ -1090,7 +1090,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">초도방문일</label>
                                         <div class="col-sm-5">
-                                            <div class="input-group" style="z-index:0;">
+                                            <div class="input-group" style="z-index:0;width: 220px;">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${kl:convertDate(rsumeList.vstDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="초도방문일" value="${rsumeList.vstDt}"/>
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">

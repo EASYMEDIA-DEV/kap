@@ -1129,7 +1129,7 @@ var cmmCtrl = (function(){
 		});
 	}
 
-	var fn_calendar = function(){
+	var fn_calendar = function(beforeMonth,afterMonth){
 		jQuery.datetimepicker.setLocale("ko");
 
 		// 게시기간(일자) Start -----
@@ -1168,20 +1168,6 @@ var cmmCtrl = (function(){
 				scrollMonth : false,
 				scrollTime : false,
 				todayButton: false,
-				onSelectDate : function(selectedDate, selectedObj) {
-					var endDt     = selectedDate;
-					var strtDtObj = jQuery(".datetimepicker_strtDt");
-					var strtDt    = new Date(strtDtObj.val());
-
-					if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
-					{
-						strtDtObj.val(selectedObj.val());
-					}
-
-					strtDtObj.datetimepicker("setOptions", { maxDate : endDt, value : strtDtObj.val() });
-
-					selectedObj.blur();
-				}
 			}).on('change',function(e){
 				var strtDt   = new Date($(this).val());
 				var endDtObj = jQuery(".datetimepicker_endDt");
@@ -1200,10 +1186,10 @@ var cmmCtrl = (function(){
 
 		var date = new Date();
 		var strtObj = jQuery(".datetimepicker_strtDt");
-		strtObj.datetimepicker("setOptions", { value : date_format(6) });
+		strtObj.datetimepicker("setOptions", { value : date_format(beforeMonth) });
 
 		var endObj = jQuery(".datetimepicker_endDt");
-		endObj.datetimepicker("setOptions", { value : date_format(-6)});
+		endObj.datetimepicker("setOptions", { value : date_format(afterMonth)});
 	}
 
 	var date_format = function(trgtPerid){
@@ -1237,7 +1223,7 @@ var cmmCtrl = (function(){
 			trgtDay = "0" + trgtDay;
 		}
 
-		return trgtDay = trgtYear + "-" + trgtMonth  + "-" + trgtDay;
+		return trgtDay = trgtYear + "." + trgtMonth  + "." + trgtDay;
 	}
 
 

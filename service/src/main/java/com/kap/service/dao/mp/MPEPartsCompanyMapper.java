@@ -1,6 +1,7 @@
 package com.kap.service.dao.mp;
 
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
@@ -106,9 +107,14 @@ public interface MPEPartsCompanyMapper {
     public List<MPEPartsCompanyDTO> selectEduStatisticsCntList(MPEPartsCompanyDTO mpePartsCompanyDTO) throws Exception;
 
     /**
-     * 컨설팅 목록을 조회
+     * 컨설팅 목록(기술지도)을 조회
      */
-    public List<CBATechGuidanceInsertDTO> selectConsultingList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception;
+    public List<CBATechGuidanceInsertDTO> selectTechGuidanceList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception;
+
+    /**
+     * 컨설팅 목록(경영컨설팅)을 조회
+     */
+    public List<CBBManageConsultListDTO> selectManageConsultList(CBBManageConsultListDTO cbbManageConsultListDTO) throws Exception;
 
     /**
      * 컨설팅 목록 개수 조회

@@ -31,7 +31,9 @@
                                                 <p class="label"><span>${list.prntCdNm}</span></p>
                                                 <p class="label"><span>${list.ctgryCdNm}</span></p>
                                             </div>
-                                            <p class="training-name f-title1">${list.nm}</p>
+                                            <p class="training-name f-title1">
+                                                <a href="javascript:">${list.nm}</a>
+                                            </p>
                                         </div>
                                         <div class="group">
                                             <p class="f-head">${list.episdOrd}회차</p>
@@ -81,7 +83,7 @@
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">신청일시</p>
-                                                    <p class="txt f-body2">${ empty list.ptcptDtm ? '-' : kl:convertDate(list.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                                    <p class="txt f-body2">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">모집방식</p>

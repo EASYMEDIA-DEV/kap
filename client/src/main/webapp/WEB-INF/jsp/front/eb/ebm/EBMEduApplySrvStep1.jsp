@@ -47,18 +47,19 @@
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">총 문항수</p>
-                                <p class="txt f-sub-head">45문항</p>
+                                <p class="txt f-sub-head">${rtnData.qstnCnt}문항</p>
                             </div>
                             <div class="def-list">
                                 <p class="tit f-head">예상 응답시간</p>
-                                <p class="txt f-sub-head">약 10분</p>
+                                <p class="txt f-sub-head">약 ${rtnData.rspnMm}분</p>
                             </div>
                         </div>
 
                         <div class="noti-txt-w">
-                            <P class="bullet-noti-txt f-caption2">* 귀사의 무궁한 발전을 기원합니다.</P>
-                            <P class="bullet-noti-txt f-caption2">* 재단에서는 귀하의 의견을 수렴하여 만족도 높을 교육/세미나를 진행 할 수 있도록 노력합니다.</P>
-                            <P class="bullet-noti-txt f-caption2">* 귀하께서 기재하신 내용은 외부로 유출되거나 타 용도로 사용하지 않을 것을 약속드립니다.</P>
+                            ${rtnData.cntn}
+<%--                            <P class="bullet-noti-txt f-caption2">* 귀사의 무궁한 발전을 기원합니다.</P>--%>
+<%--                            <P class="bullet-noti-txt f-caption2">* 재단에서는 귀하의 의견을 수렴하여 만족도 높을 교육/세미나를 진행 할 수 있도록 노력합니다.</P>--%>
+<%--                            <P class="bullet-noti-txt f-caption2">* 귀하께서 기재하신 내용은 외부로 유출되거나 타 용도로 사용하지 않을 것을 약속드립니다.</P>--%>
                         </div>
                     </div>
 

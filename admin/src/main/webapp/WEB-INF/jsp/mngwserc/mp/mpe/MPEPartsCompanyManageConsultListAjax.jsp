@@ -4,12 +4,12 @@
         <c:forEach var="list" items="${manageConsultList.list}" varStatus="status">
             <tr data-total-count="${manageConsultList.totalCount}">
                 <td class="text-center">${manageConsultList.totalCount - manageConsultList.firstIndex - status.index}</td>
-                <td class="text-center">${list.cbsnNm}</td>
+                <td class="text-center">${list.cmssrCbsnNm}</td>
                 <td class="text-center">${list.cmssrNm}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${list.rsumeSttsNm eq '지도완료'}">
-                            ${ kl:convertDate(list.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }
+                            ${ kl:convertDate(list.cnstgKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') } ~ ${ kl:convertDate(list.cnstgPscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }
                         </c:when>
                         <c:otherwise>
                             -
@@ -22,7 +22,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.initVstFileSeq}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/file/view?fileSeq=${list.initVstFileSeq}&fileOrd=${list.list.initVstOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -42,7 +42,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.lvlupFileSeq}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/file/view?fileSeq=${list.lvlupFileSeq}&fileOrd=${list.lvlupFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -52,7 +52,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.itrdcFileSeq}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/file/view?fileSeq=${list.itrdcFileSeq}&fileOrd=${list.itrdcFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>

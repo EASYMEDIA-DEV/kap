@@ -144,7 +144,7 @@
                                                                 <div class="btn-wrap">
                                                                     <div class="btn-set">
                                                                         <c:if test="${not empty rtnData.edctnNtctnFileSeq}">
-                                                                            <a class="btn-text-icon download" href="/file/view?download=${rtnData.edctnNtctnFileSeq}&fileOrd=${rtnData.fileOrd}"><span>안내문</span></a>
+                                                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${rtnData.edctnNtctnFileSeq}&fileOrd=${rtnData.fileOrd}"><span>안내문</span></a>
                                                                         </c:if>
 
                                                                     </div>
@@ -417,7 +417,7 @@
                         <c:choose>
                             <c:when test="${not empty rtnData.srvSeq}">
                                 <c:choose>
-                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                    <c:when test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
                                         <div class="cont-sec no-border scroll-motion">
                                             <div class="for-motion">
                                                 <div class="sec-tit-area">

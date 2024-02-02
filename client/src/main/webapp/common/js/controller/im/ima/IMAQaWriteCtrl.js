@@ -285,6 +285,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         objArray.forEach(file => { dataTransfer.items.add(file); });
 
                         $('#searchFile')[0].files = dataTransfer.files;
+
+                        $("#searchFile").closest(".form-group").find(".file-list-area").empty();
+                        $("#searchFile").closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
                     }
                 }
             }

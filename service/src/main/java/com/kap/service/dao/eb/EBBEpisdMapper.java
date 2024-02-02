@@ -1,7 +1,6 @@
 package com.kap.service.dao.eb;
 
 import com.kap.core.dto.eb.ebb.*;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -232,6 +231,11 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 설문초기화
 	 */
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 설문 개수
+	 */
+	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육차수 상세를 조회한다.(설문유효성)

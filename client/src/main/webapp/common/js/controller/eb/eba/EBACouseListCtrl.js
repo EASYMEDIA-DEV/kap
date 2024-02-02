@@ -38,7 +38,7 @@ define(["ezCtrl"], function(ezCtrl) {
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 				var rtnPage = 0;
 
-				if((tempPage * 9) > totCnt){
+				if((tempPage * 9) >= totCnt){
 					$(".btn-wrap.add-load.align-center").hide();
 					rtnPage = totCnt
 				}else{
@@ -386,7 +386,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 						//검색 로직 실행
-						$formObj.find("#btnSearch").click();
+						// $formObj.find("#btnSearch").click();
 					}
 				}
 			},
@@ -504,7 +504,8 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		immediately : function() {
 
-			cmmCtrl.setCalendar();
+			/*cmmCtrl.setCalendar();*/
+			cmmCtrl.setCalendarInit(3,-3);
 
 			//리스트 조회
 			//폼 데이터 처리

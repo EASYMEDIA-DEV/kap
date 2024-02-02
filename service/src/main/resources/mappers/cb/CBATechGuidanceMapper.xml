@@ -794,6 +794,7 @@
             VSTR_NM = #{vstrNm} ,
             NTRVR_NM =  #{ntrvrNm} ,
             INIT_VST_RSLT_CD = #{initVstRsltCd} ,
+            INIT_VST_RSLT_CNTN = #{initVstRsltCntn},
             INIT_VST_OPNN_CNTN = #{initVstOpnnCntn},
             CMSSR_SEQ =  #{cmssrSeq} ,
             GUIDE_TYPE_CD = #{guideTypeCd} ,

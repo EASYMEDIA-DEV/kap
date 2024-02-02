@@ -1,6 +1,5 @@
 package com.kap.service;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 
@@ -164,6 +163,11 @@ public interface EBBEpisdService {
 	 */
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
+	/**
+	 * 설문 개수 조회
+	 */
+	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 
 	/**
 	 * 교육차수 상세를 조회한다.(설문유효성)
@@ -207,6 +211,12 @@ public interface EBBEpisdService {
 	 * 마이페이지 - 수료 체크로직
 	 */
 	public EBBEpisdDTO setCmptnChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	 */
+	public EBBPtcptDTO selectQrPtcptDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
 
 
 

@@ -19,6 +19,10 @@
                     <c:set var="studyStatusClass" value="end" />
                 </c:when>
             </c:choose>
+
+            <c:set var="edctnStrtDtm" value="${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+            <c:set var="edctnEndDtm" value="${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+
             <div class="training-list-w">
                 <div class="training-confirm">
                     <div class="top-info">
@@ -67,7 +71,7 @@
                                             </div>
                                             <div class="info-list">
                                                 <p class="tit f-caption2">교육기간</p>
-                                                <p class="txt f-body2">${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ <br class="only-pc"/>${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ list.stduyDdCdNm }일간)</p><!-- 2023-12-19 only-pc 클래스 추가 -->
+                                                <p class="txt f-body2">${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ <br class="only-pc"/>${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(edctnStrtDtm, edctnEndDtm) +1 }일간)</p><!-- 2023-12-19 only-pc 클래스 추가 -->
                                             </div>
                                         </div>
                                     </div>

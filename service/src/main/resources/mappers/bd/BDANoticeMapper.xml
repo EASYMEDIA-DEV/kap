@@ -73,7 +73,7 @@
         </if>
         , EXPS_YN
         FROM
-        BD_NTFY_MST A
+            BD_NTFY_MST A
         WHERE 1=1
         <include refid="selectNoticeListwhereSql" />
             LIMIT #{firstIndex}, #{recordCountPerPage}
@@ -129,6 +129,9 @@
             , CNTN
             , FILE_SEQ
             , EXPS_YN
+        <if test='siteGubun == "front"'>
+            , #{srchVal} AS SRCH_VAL
+        </if>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
@@ -285,8 +288,18 @@
             (
                 SELECT
                     (SELECT COUNT(*) FROM BD_NTFY_MST B WHERE B.NTFY_SEQ <![CDATA[<=]]> A.NTFY_SEQ) AS ROW_NUM
-                     , (SELECT MIN(NTFY_SEQ) FROM BD_NTFY_MST C WHERE C.NTFY_SEQ <![CDATA[>]]> A.NTFY_SEQ) AS NEXT_SEQ
-                     , (SELECT MAX(NTFY_SEQ) FROM BD_NTFY_MST D WHERE D.NTFY_SEQ <![CDATA[<]]> A.NTFY_SEQ) AS PREV_SEQ
+                     , (SELECT MIN(NTFY_SEQ) FROM BD_NTFY_MST C WHERE C.NTFY_SEQ <![CDATA[>]]> A.NTFY_SEQ
+                    <if test="srchVal != null and srchVal != ''">
+                        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                    </if>
+                    ) AS NEXT_SEQ
+                     , (SELECT MAX(NTFY_SEQ) FROM BD_NTFY_MST D WHERE D.NTFY_SEQ <![CDATA[<]]> A.NTFY_SEQ
+                    <if test="srchVal != null and srchVal != ''">
+                        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                    </if>
+                    ) AS PREV_SEQ
                 FROM
                     BD_NTFY_MST A
                 WHERE NTFY_SEQ = #{detailsKey}

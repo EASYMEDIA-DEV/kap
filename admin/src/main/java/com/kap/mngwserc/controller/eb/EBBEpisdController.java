@@ -25,7 +25,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.FileCopyUtils;
@@ -923,6 +922,26 @@ public class EBBEpisdController {
         try
         {
             modelMap.addAttribute("respCnt", eBBEpisdService.deleteSurveyRspn(eBBEpisdDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+
+    @Operation(summary = "설문 개수 조회", tags = "", description = "")
+    @PostMapping(value="/checkSurveyCnt")
+    public String checkSurveyCnt(@RequestBody EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", eBBEpisdService.checkSurveyCnt(eBBEpisdDTO));
         }
         catch (Exception e)
         {

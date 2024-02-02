@@ -16,7 +16,10 @@
     </c:when>
 </c:choose>
 
-<div id="wrap" data-controller="controller/eb/ebi/EBINonMemberStepCtrl">
+<c:set var="edctnStrtDtm" value="${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+<c:set var="edctnEndDtm" value="${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+
+<div data-controller="controller/eb/ebi/EBINonMemberStepCtrl">
     <form name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
@@ -133,7 +136,7 @@
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">교육일자</p>
-                                                                    <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ <br/>${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ rtnData.stduyDdCdNm }일간)</p>
+                                                                    <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ <br/>${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(edctnStrtDtm, edctnEndDtm) +1 }일간)</p>
                                                                 </div>
                                                             </div>
                                                             <!-- 2024-01-05 구조 변경 및 클래스 삭제 -->
@@ -423,12 +426,12 @@
 
 <script>
     window.onpageshow = function (event) {
-        console.log(event);
+        // console.log(event);
         if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
-            alert("정상적인 접근이 아닙니다.");
             location.href = "/";
+            alert("정상적인 접근이 아닙니다.");
         }
     }
 

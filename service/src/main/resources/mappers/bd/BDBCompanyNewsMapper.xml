@@ -123,6 +123,9 @@
             , PC_THNL_SEQ
             , MBL_THNL_SEQ
             , EXPS_YN
+        <if test='siteGubun == "front"'>
+            , #{srchVal} AS SRCH_VAL
+        </if>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
             , REG_IP
@@ -273,8 +276,18 @@
             (
                 SELECT
                     (SELECT COUNT(*) FROM BD_FNDN_NEWS_MST B WHERE B.FNDN_NEWS_SEQ <![CDATA[<=]]> A.FNDN_NEWS_SEQ) AS ROW_NUM
-                     , (SELECT MIN(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST C WHERE C.FNDN_NEWS_SEQ <![CDATA[>]]> A.FNDN_NEWS_SEQ) AS NEXT_SEQ
-                     , (SELECT MAX(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST D WHERE D.FNDN_NEWS_SEQ <![CDATA[<]]> A.FNDN_NEWS_SEQ) AS PREV_SEQ
+                     , (SELECT MIN(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST C WHERE C.FNDN_NEWS_SEQ <![CDATA[>]]> A.FNDN_NEWS_SEQ
+                    <if test="srchVal != null and srchVal != ''">
+                        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                    </if>
+                    ) AS NEXT_SEQ
+                     , (SELECT MAX(FNDN_NEWS_SEQ) FROM BD_FNDN_NEWS_MST D WHERE D.FNDN_NEWS_SEQ <![CDATA[<]]> A.FNDN_NEWS_SEQ
+                    <if test="srchVal != null and srchVal != ''">
+                        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                    </if>
+                    ) AS PREV_SEQ
                 FROM
                     BD_FNDN_NEWS_MST A
                 WHERE FNDN_NEWS_SEQ = #{detailsKey}

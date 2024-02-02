@@ -42,7 +42,7 @@
 			, place_nm
 			, non_member_cd
 		FROM ed_edctn_prcs_mst a
-		LEFT JOIN (
+		INNER JOIN (
 						SELECT
 						bbb.*
 						, (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = bbb.place_seq) as place_nm
@@ -146,7 +146,7 @@
 		SELECT /*EBBFrontEpisdMapper.selectFrontCouseListCnt*/
 			count(*) cnt
 		FROM ed_edctn_prcs_mst a
-		LEFT JOIN (
+		INNER JOIN (
 			SELECT
 				bbb.*
 				FROM (SELECT
@@ -966,7 +966,7 @@
 		,  null AS stts_cd_nm
 		,  null AS cmptn_yn
 		,  null AS cmptn_dtm
-		,  null AS ptcpt_dtm
+		,  A.reg_dtm AS ptcpt_dtm
 		,  null AS web_path
 		, CASE
 			WHEN (SELECT COUNT(*)
@@ -1076,9 +1076,15 @@
 
 		<choose>
 			<when test="srchOrder == 1">
-				<!-- 신청 마감순-->
-				ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
-				/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
+				<if test="applyListYn == 'Y'.toString()">
+					<!-- 신청마감순 -->
+					ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+					/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
+				</if>
+				<if test="applyListYn != 'Y'.toString()">
+					<!-- 접수일자순 -->
+					ORDER BY ptcpt_dtm desc
+				</if>
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
@@ -1232,7 +1238,7 @@
             2023.11.15    김학규       최초생성
 	-->
 	<select id="selectMypageEduListCnt" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
-		SELECT /*EBBEpisdMapper.selectMypageEduList*/
+		SELECT /*EBBEpisdMapper.selectMypageEduListCnt*/
 		edu_gubun
 		, edctn_seq
 		, episd_seq
@@ -1965,7 +1971,30 @@
 			) a
 	</sql>
 
-
+	<!--
+		쿼리명 : EBBFrontEpisdMapper.selectQrPtcptDtl
+		설  명 : 마이페이지 교육신청상세 QR코드로 접근시 회원 번호 조회
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.02.01    김학규       최초생성
+    -->
+	<select id="selectQrPtcptDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT /* EBBFrontEpisdMapper.selectQrPtcptDtl */
+			ptcpt_seq
+			 , edctn_seq
+			 , episd_year
+			 , episd_ord
+			 , episd_seq
+			 , mem_seq
+			 , stts_cd
+			 , cmptn_yn
+			 , exam_score
+		FROM ep_edctn_ptcpt_mst
+		WHERE edctn_seq = #{detailsKey}
+		  AND episd_year = #{episdYear}
+		  AND episd_ord = #{episdOrd}
+		  AND mem_seq = #{memSeq}
+	</select>
 
 </mapper>
 

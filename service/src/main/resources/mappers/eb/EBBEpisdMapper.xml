@@ -176,7 +176,7 @@
 				, cmptn_dtm
 			  	, mem_seq
 			    , ptcpt_dtm
-				, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+				, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 				</if>
 				FROM ed_edctn_episd_mst a
 				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -299,7 +299,7 @@
 			, cmptn_yn
 			, cmptn_dtm
 			, mem_seq
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		</if>
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -553,7 +553,7 @@
 			, url
 			, time
 			, thnl_file_seq
-			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq AND file_ord = 0) AS web_path
+			, (SELECT web_path FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS web_path
 			, reg_id
 			, reg_ip
 			, a.reg_dtm
@@ -818,7 +818,7 @@
 						, cmptn_dtm
 						, mem_seq
 						, ptcpt_dtm
-						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq AND file_ord = 0) AS web_path
+						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		      			, bfre_mem_seq
 						, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS trnsf_yn
 		      			, exam_score
@@ -1532,13 +1532,13 @@
 			, b.hp_no
 			, b.email
 			, b.dept_cd
-			, (select cd_nm from co_code_mst where  cd=b.dept_cd ) as dept_cd_nm
+			, case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
 			, b.dept_dtl_nm
 			, b.pstn_cd
-			, (select cd_nm from co_code_mst where  cd=b.pstn_cd ) as pstn_cd_nm
+			, case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
 			, b.pstn_nm
 			, a.stts_cd
-			, (select cd_nm from co_code_mst where cd = a.stts_cd) as stts_cd_nm
+			, case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
 			, a.reg_dtm as edu_dtm
 			, b.reg_dtm
 			, a.cmptn_yn
@@ -1641,13 +1641,13 @@
 				, b.hp_no
 				, b.email
 				, b.dept_cd
-				, (select cd_nm from co_code_mst where  cd=b.dept_cd ) as dept_cd_nm
+				, case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
 				, b.dept_dtl_nm
 				, b.pstn_cd
-				, (select cd_nm from co_code_mst where  cd=b.pstn_cd ) as pstn_cd_nm
+				, case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
 				, b.pstn_nm
 				, a.stts_cd
-				, (select cd_nm from co_code_mst where cd = a.stts_cd) as stts_cd_nm
+				, case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
 				, a.reg_dtm as edu_dtm
 				, b.reg_dtm
 				, a.cmptn_yn
@@ -2072,6 +2072,23 @@
 		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
 		where sv_rspn_mst.srv_seq = #{srvSeq}
 	</delete>
+
+	<!--
+         쿼리명 : EBBEpisdMapper.checkSurveyCnt
+         설  명 : 설문 개수 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.02.01   장두석       최초생성
+    -->
+	<select id="checkSurveyCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		select /* EBBEpisdMapper.checkSurveyCnt */
+			COUNT(*)
+		from
+			sv_rspn_mst a
+		where
+			srv_seq = #{srvSeq}
+			AND rfnc_seq = #{episdSeq}
+	</select>
 
 	<!--
          쿼리명 : EBBEpisdMapper.selectEpisdExelList
@@ -2578,9 +2595,14 @@
 			, B.CNTN
 			, C.MEM_SEQ
 			, C.PTCPT_SEQ
+		    , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = D.CTGRY_CD) AS CTGRY_CD_NM
+			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT PARNT_SEQ FROM CO_CODE_MST WHERE CD = D.CTGRY_CD)) AS PRNT_CD_NM
+			, (SELECT GROUP_CONCAT(name SEPARATOR ', ') from cp_isttr_mst WHERE isttr_seq in (SELECT isttr_seq FROM ed_edctn_isttr_rel WHERE edctn_seq = A.edctn_seq AND episd_ord = A.episd_ord AND episd_year = A.episd_year )) AS isttr_group_name
+			, (select cd_nm from co_code_mst WHERE cd = A.cbsn_cd) as cbsn_cd_nm
 		FROM  ED_EDCTN_EPISD_MST A
     	LEFT JOIN SV_MST B ON A.SRV_SEQ = B.SRV_SEQ
 		LEFT JOIN EP_EDCTN_PTCPT_MST C ON A.EPISD_SEQ = C.EPISD_SEQ
+		LEFT JOIN ED_EDCTN_PRCS_MST D ON A.EDCTN_SEQ = D.EDCTN_SEQ
 		WHERE
 			A.EDCTN_SEQ = #{detailsKey}
 			AND A.EPISD_YEAR = #{episdYear}
@@ -2852,7 +2874,7 @@
 				, a.exam_score
 		        , cmptn_yn
 		    	, b.cmptn_auto_yn
-				, (SELECT IFNULL(ROUND((atndc_dtm / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
+				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
 				, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = B.EDCTN_SEQ AND EPISD_YEAR = B.EPISD_YEAR AND B.EPISD_ORD) AS PTCPT_INFO
 				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = 28 AND EPISD_YEAR = 2024 AND EPISD_ORD = 4) AS LCRT_INFO
 		FROM ep_edctn_ptcpt_mst A

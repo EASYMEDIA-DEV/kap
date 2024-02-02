@@ -3,6 +3,7 @@ package com.kap.mngwserc.controller.mp;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
@@ -210,7 +211,7 @@ public class MPEPartsCompanyController {
     @PostMapping(value = "/selectTechGuidanceList")
     public String selectTechGuidanceListAjax(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
         cbaTechGuidanceInsertDTO.setCnstgCd("CONSULT_GB01");
-        modelMap.addAttribute("techGuidanceList", mpePartsCompanyService.selectConsultingList(cbaTechGuidanceInsertDTO));
+        modelMap.addAttribute("techGuidanceList", mpePartsCompanyService.selectTechGuidanceList(cbaTechGuidanceInsertDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyTechGuidanceListAjax";
     }
 
@@ -218,9 +219,9 @@ public class MPEPartsCompanyController {
      *  부품사 실적정보 조회 - 경영컨설팅 목록 조회
      */
     @PostMapping(value = "/selectManageConsultList")
-    public String selectManageConsultListAjax(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO, ModelMap modelMap) throws Exception {
-        cbaTechGuidanceInsertDTO.setCnstgCd("CONSULT_GB02");
-        modelMap.addAttribute("manageConsultList", mpePartsCompanyService.selectConsultingList(cbaTechGuidanceInsertDTO));
+    public String selectManageConsultListAjax(CBBManageConsultListDTO cbbManageConsultListDTO, ModelMap modelMap) throws Exception {
+        cbbManageConsultListDTO.setCnstgCd("CONSULT_GB02");
+        modelMap.addAttribute("manageConsultList", mpePartsCompanyService.selectManageConsultList(cbbManageConsultListDTO));
         return "mngwserc/mp/mpe/MPEPartsCompanyManageConsultListAjax";
     }
 

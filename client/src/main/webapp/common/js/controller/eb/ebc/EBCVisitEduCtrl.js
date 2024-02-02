@@ -16,7 +16,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
     var height = 600; //팝업의 높이
     var isFile = true;
     // 파일 체크
-    var extnCheck = function(obj, extns, maxSize)
+    /*var extnCheck = function(obj, extns, maxSize)
     {
         isFile = true;
         var fileObj = jQuery(obj).val();
@@ -60,6 +60,74 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             if (isFile) {
                 $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
                 $('#'+fileId).closest(".form-group").find('.empty-txt').addClass("attached");
+            }
+        }
+    };*/
+    var extnCheck = function(obj, extns, maxSize)
+    {
+        var fileObj = jQuery(obj).val(), isFile = true;
+        var fileId = obj.id;
+
+        if (!fileObj)
+        {
+            isFile = false;
+        }
+        else
+        {
+            $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+
+            var file;
+            file = obj.files[0];
+
+            var fileExtn = file.name.split(".").pop();
+
+            if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
+                //파일확장자 체크
+                $('#'+fileId).val("");
+                $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+                // $('#'+fileId).closest(".form-group").find('.empty-txt').text("선택된 파일 없음");
+                // $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                alert('첨부 가능한 파일 확장자가 아닙니다.');
+
+                isFile = false;
+            } else {
+                //파일용량 체크
+                if (typeof obj.files != "undefined")
+                {
+                    var fileSize = file.size;
+                    var maxFileSize = maxSize * 1024 * 1024;
+
+                    if (fileSize > maxFileSize)
+                    {
+                        $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+                        // $('#'+fileId).closest(".form-group").find('.empty-txt').text("선택된 파일 없음");
+                        // $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                        alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
+                        isFile = false;
+                    }
+                    else if(fileSize == 0) {
+                        $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find(".file-list-area").empty();
+                        $('#'+fileId).closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                        alert("빈 파일은 업로드가 불가능 합니다");
+                        isFile = false;
+                    }
+                }
+            }
+
+            if (isFile) {
+                var val = '<div class="file-list">' +
+                    '               <p class="file-name">' +
+                    '                   <span class="name">' + file.name.split(".")[0] + '</span>' +
+                    '                   <span class="unit">.' + file.name.split(".").pop() + '</span>' +
+                    '               </p>' +
+                    '               <button class="btn-delete delFile" title="파일 삭제하기" type="button" value="' + file.size + '"></button>' +
+                    '            </div>';
+                // $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').append(val);
             }
         }
     };
@@ -262,6 +330,47 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             }
         },
         classname : {
+
+            delFile : {
+                event : {
+                    click : function() {
+                        var dataTransfer = new DataTransfer();
+
+                        var fileName = $(this).closest('.file-list').find('.name').text();
+                        var fileExtension = $(this).closest('.file-list').find('.unit').text().substring(1);
+                        var fileSize = $(this).val();
+
+                        var obj = $("#searchFile")[0].files;
+                        var fileCnt = obj.length;
+                        var objArray = Array.from(obj);
+
+                        var file;
+                        var inputFileName;
+                        var inputFileExtension;
+                        var inputFileSize;
+
+                        for (var i = 0; i < fileCnt; i++) {
+                            file = obj[i];
+                            inputFileName = file.name.split('.')[0];
+                            inputFileExtension = file.name.split('.').pop();
+                            inputFileSize = file.size;
+
+                            if (inputFileName === fileName && inputFileExtension === fileExtension && inputFileSize == fileSize) {
+                                objArray.splice(i, 1);
+                                $(this).closest('.file-list').remove();
+                                break;
+                            }
+                        }
+
+                        objArray.forEach(file => { dataTransfer.items.add(file); });
+
+                        $('#searchFile')[0].files = dataTransfer.files;
+
+                        $("#searchFile").closest(".form-group").find(".file-list-area").empty();
+                        $("#searchFile").closest(".form-group").find(".file-list-area").append('<p class="empty-txt">선택된 파일 없음</p>');
+                    }
+                }
+            }
 
         },
         immediately : function() {

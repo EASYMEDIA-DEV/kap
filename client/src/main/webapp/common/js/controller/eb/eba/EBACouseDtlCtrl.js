@@ -128,15 +128,17 @@ define(["ezCtrl"], function(ezCtrl) {
 			//총 건수
 			console.log(totCnt);
 			if(totCnt <= 10 ){
-				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").remove();
+				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").hide();
 			}else{
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 
 				var rtnPage = 0;
 
 				if((tempPage * 10) > totCnt){
+					ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").hide();
 					rtnPage = totCnt
 				}else{
+					ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").show();
 					rtnPage = (tempPage * 10);
 				}
 				ctrl.obj.find(".onlineEduContPopup").find(".btn-wrap.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");

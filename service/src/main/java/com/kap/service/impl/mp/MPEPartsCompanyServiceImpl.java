@@ -5,6 +5,7 @@ import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
+import com.kap.core.dto.cb.cbb.CBBManageConsultListDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
 import com.kap.core.dto.wb.wbj.WBJAcomSearchDTO;
@@ -675,9 +676,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
     }
 
     /**
-     * 컬설팅 목록을 조회한다.
+     * 컨설팅 목록(기술지도)을 조회한다.
      */
-    public CBATechGuidanceInsertDTO selectConsultingList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception {
+    public CBATechGuidanceInsertDTO selectTechGuidanceList(CBATechGuidanceInsertDTO cbaTechGuidanceInsertDTO) throws Exception {
 
         COPaginationUtil page = new COPaginationUtil();
 
@@ -689,10 +690,36 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
         cbaTechGuidanceInsertDTO.setFirstIndex(page.getFirstRecordIndex());
         cbaTechGuidanceInsertDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        cbaTechGuidanceInsertDTO.setList(mpePartsCompanyMapper.selectConsultingList(cbaTechGuidanceInsertDTO));
+        cbaTechGuidanceInsertDTO.setList(mpePartsCompanyMapper.selectTechGuidanceList(cbaTechGuidanceInsertDTO));
         cbaTechGuidanceInsertDTO.setTotalCount(mpePartsCompanyMapper.selectConsultingListCnt(cbaTechGuidanceInsertDTO));
 
         return cbaTechGuidanceInsertDTO;
+    }
+
+    /**
+     * 컨설팅 목록(기술지도)을 조회한다.
+     */
+    public CBBManageConsultListDTO selectManageConsultList(CBBManageConsultListDTO cbbManageConsultListDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(cbbManageConsultListDTO.getPageIndex());
+        page.setRecordCountPerPage(cbbManageConsultListDTO.getListRowSize());
+
+        page.setPageSize(cbbManageConsultListDTO.getPageRowSize());
+
+        cbbManageConsultListDTO.setFirstIndex(page.getFirstRecordIndex());
+        cbbManageConsultListDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+        CBATechGuidanceInsertDTO dto = new CBATechGuidanceInsertDTO();
+
+        dto.setCnstgCd(cbbManageConsultListDTO.getCnstgCd());
+        dto.setBsnmNo(cbbManageConsultListDTO.getBsnmNo());
+
+        cbbManageConsultListDTO.setList(mpePartsCompanyMapper.selectManageConsultList(cbbManageConsultListDTO));
+        cbbManageConsultListDTO.setTotalCount(mpePartsCompanyMapper.selectConsultingListCnt(dto));
+
+        return cbbManageConsultListDTO;
     }
 
     /**

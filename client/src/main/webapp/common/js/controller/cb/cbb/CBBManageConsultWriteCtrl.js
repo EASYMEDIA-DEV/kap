@@ -78,7 +78,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
-                $('#'+fileId).closest(".form-group").find('.empty-txt').text(obj.files[0].name);
+                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
+                $('#'+fileId).closest(".form-group").find('.empty-txt').hide();
+                $('#'+fileId).closest(".form-group").find('.file-list').show();
+                $('#'+fileId).closest(".form-group").find('.name').text(obj.files[0].name.split(".")[0]);
+                $('#'+fileId).closest(".form-group").find('.unit').text("." + obj.files[0].name.split(".").reverse()[0]);
             }
         }
     };
@@ -240,6 +244,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         } else {
                             cmmCtrl.searchPostCode(width, height, "zipcode", "bscAddr", "dtlAddr");
                         }
+                    }
+                }
+            },
+            filedelete : {
+                event : {
+                    click : function(){
+                        jQuery(this).closest().find(".name").text("");
+                        jQuery(this).closest(".form-group").find(".file-list-area").addClass("file-list-area");
+                        jQuery(this).closest(".form-group").find(".file-list").hide();
+                        jQuery(this).closest(".form-group").find(".empty-txt").show();
+                        jQuery(this).closest(".form-group").find(".searchFile").val("");
                     }
                 }
             },
