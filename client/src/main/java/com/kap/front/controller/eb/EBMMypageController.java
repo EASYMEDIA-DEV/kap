@@ -701,12 +701,10 @@ public class EBMMypageController
 
         eBBEpisdDTO.setMypageYn("Y");
         eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-        HashMap<String, Object> rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
-
-        EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
+        EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
 
 
-        modelMap.addAttribute("rtnData", rtnDto);
+        modelMap.addAttribute("rtnData", rtnData);
 
 
         return "front/eb/ebm/EBMEduApplySrvStep1.front";
