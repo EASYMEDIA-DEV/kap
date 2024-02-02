@@ -419,7 +419,7 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 				pEBINonMemberDTO.setRegStat("N");
 			}
 			//이미 등록된 신청자 (중복)
-			else if(tempDto.getSttsCd() != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
+			else if(tempDto != null && tempDto.getSttsCd() != null && !"EDU_STTS_CD02".equals(tempDto.getSttsCd())){
 				pEBINonMemberDTO.setRegStat("F");
 			}
 			//등록
