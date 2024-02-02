@@ -159,7 +159,7 @@
                                                                                 <label for="sttsCd3">교육대기</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox"data-name="sttsCdList"  id="sttsCd4" name="sttsCd" value="교육 중">
+                                                                                <input type="checkbox"data-name="sttsCdList"  id="sttsCd4" name="sttsCd" value="교육중">
                                                                                 <label for="sttsCd4">교육 중</label>
                                                                             </div>
                                                                             <div class="form-checkbox">

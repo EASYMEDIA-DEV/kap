@@ -41,6 +41,7 @@
 		    , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = a.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 			, place_nm
 			, non_member_cd
+			, exps_yn
 		FROM ed_edctn_prcs_mst a
 		INNER JOIN (
 						SELECT
@@ -221,6 +222,7 @@
 	<sql id="selectFrontEpisdListwhereSql">
 		<where>
 			1=1
+			AND a.exps_yn = 'Y'
 
 
 			<if test="cnnctCd != null and cnnctCd != '' ">
@@ -673,19 +675,23 @@
 		, cmptn_yn
 		, cmptn_dtm
 		, mem_seq
-		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-							case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-									when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-									when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
-									end
-							when stts_cd = 'EDU_STTS_CD02' then '신청취소'
-							when stts_cd = 'EDU_STTS_CD04' then '신청대기'
-							when stts_cd = 'EDU_STTS_CD05' then '미선발'
-							when stts_cd = 'EDU_STTS_CD06' then '교육취소'
-					end
-			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-		end edu_stat
+		, case when trnsf_yn = 'N' then
+													case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+														case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+														case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+														when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+														when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+													end
+													when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+													when stts_cd = 'EDU_STTS_CD04' then '신청대기'
+													when stts_cd = 'EDU_STTS_CD05' then '미선발'
+													when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+													end
+													when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+													end
+		    else '교육양도'
+		end as edu_stat
+
 		, ptcpt_dtm
 		, web_path
 		, bfre_mem_seq
@@ -1169,34 +1175,46 @@
 				and (
 
 						(
-							(case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-									case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-									case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '교육대기'
-											when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '교육중'
-											when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
-									end
-									when stts_cd = 'EDU_STTS_CD02' then '신청취소'
-									when stts_cd = 'EDU_STTS_CD05' then '미선발'
-									when stts_cd = 'EDU_STTS_CD06' then '교육취소'
-									end
-							when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-							END ) IN
+							(case when trnsf_yn = 'N' then
+									case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+										case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+										case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+												when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+												when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+										end
+										when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+										when stts_cd = 'EDU_STTS_CD04' then '신청대기'
+										when stts_cd = 'EDU_STTS_CD05' then '미선발'
+										when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+										end
+										when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+										end
+								else '교육양도'
+								end ) IN
 							<foreach collection="sttsCdList" item="sttsCdList" index="index" open="(" close=")" separator=" , ">
 								#{sttsCdList}
 							</foreach>
-
 						)
+
+
 						or
 						(
-							( CASE edctn_stts_cd
-										WHEN 'EBC_VISIT_CD02001' THEN '신청'
-										WHEN 'EBC_VISIT_CD02002' THEN '협의중'
-										WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
-										WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
-									END) IN
-									<foreach collection="sttsCdList" item="sttsCdList" index="index" open="(" close=")" separator=" , ">
-										#{sttsCdList}
-									</foreach>
+							(
+								case when trnsf_yn = 'N' then
+										CASE edctn_stts_cd
+											WHEN 'EBC_VISIT_CD02001' THEN '신청'
+											WHEN 'EBC_VISIT_CD02002' THEN '협의중'
+											WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+											WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
+										END
+
+								else '교육양도'
+							end
+
+							) IN
+							<foreach collection="sttsCdList" item="sttsCdList" index="index" open="(" close=")" separator=" , ">
+								#{sttsCdList}
+							</foreach>
 						)
 
 					)
@@ -1328,7 +1346,8 @@
 		, cmptn_yn
 		, cmptn_dtm
 		, mem_seq
-		, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		, case when trnsf_yn = 'N' then
+		case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 		case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 		case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 		when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
@@ -1340,7 +1359,9 @@
 		when stts_cd = 'EDU_STTS_CD06' then '교육취소'
 		end
 		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-		end edu_stat
+		end
+		else '교육양도'
+		end as edu_stat
 		, ptcpt_dtm
 		, web_path
 		, bfre_mem_seq
@@ -1898,6 +1919,7 @@
 				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
+				  , exps_yn
 			 from
 				 (SELECT
 					  d.*
@@ -1960,6 +1982,7 @@
 				  , (SELECT file_dsc FROM co_file_dtl WHERE file_seq = dd.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
 				  , (SELECT NM FROM ed_edctn_place_mst WHERE PLACE_SEQ = dd.place_seq) as place_nm
 				  , "N" as non_member_cd
+				  , exps_yn
 			 from
 				 (SELECT
 					  d.*
