@@ -167,7 +167,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							var ptcptSeq = $(this).data("ptcptseq");
 							$(this).data("episdord");
 
-							location.href="./detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
+							location.href="/my-page/edu-apply/detail?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 
 
 					}

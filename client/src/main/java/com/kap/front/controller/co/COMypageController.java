@@ -128,6 +128,8 @@ public class COMypageController
 
             //마이페이지에서 사용할 쿼리 조건절
             eBBEpisdDTO.setMypageYn("Y");
+            eBBEpisdDTO.setMypageMainYn("Y");
+
 
             //학습중인 과정 호출
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));

@@ -227,15 +227,17 @@
 
                                                         <c:forEach var="list" items="${relList1.list}" varStatus="status">
 
+                                                            <c:set var="accsStatusOrderClass1" value=""/>
+
                                                             <c:choose>
                                                                 <c:when test="${list.accsStatusOrder eq 1}">
-                                                                    <c:set var="accsStatusOrderClass" value="accepting"/>
+                                                                    <c:set var="accsStatusOrderClass1" value="accepting"/>
                                                                 </c:when>
                                                                 <c:when test="${list.accsStatusOrder eq 2}">
-                                                                    <c:set var="accsStatusOrderClass" value="waiting"/>
+                                                                    <c:set var="accsStatusOrderClass1" value="waiting"/>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <c:set var="accsStatusOrderClass" value="end"/>
+                                                                    <c:set var="accsStatusOrderClass1" value="end"/>
                                                                 </c:otherwise>
                                                             </c:choose>
 
@@ -327,7 +329,7 @@
                                                                         </div>
                                                                         <div class="status-info-w">
                                                                             <p class="box-label bigger"><span>${list.placeNm}</span></p>
-                                                                            <p class="box-label bigger ${accsStatusOrderClass}"><span>${list.accsStatusNm}</span></p>
+                                                                            <p class="box-label bigger ${accsStatusOrderClass1}"><span>${list.accsStatusNm}</span></p>
                                                                         </div>
                                                                         <div class="btn-wrap">
                                                                             <div class="btn-solid small black-bg"><span>더 알아보기</span></div>
@@ -360,6 +362,20 @@
                                                     <div class="swiper-wrapper marquee_wrapper1">
 
                                                         <c:forEach var="list" items="${relList2.list}" varStatus="status">
+
+                                                            <c:set var="accsStatusOrderClass2" value=""/>
+
+                                                            <c:choose>
+                                                                <c:when test="${list.accsStatusOrder eq 1}">
+                                                                    <c:set var="accsStatusOrderClass2" value="accepting"/>
+                                                                </c:when>
+                                                                <c:when test="${list.accsStatusOrder eq 2}">
+                                                                    <c:set var="accsStatusOrderClass2" value="waiting"/>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:set var="accsStatusOrderClass2" value="end"/>
+                                                                </c:otherwise>
+                                                            </c:choose>
 
                                                             <!--교육일수 차이 계산-->
                                                             <c:set var="dayVal" value=""/>
@@ -449,7 +465,7 @@
                                                                         </div>
                                                                         <div class="status-info-w">
                                                                             <p class="box-label bigger"><span>${list.placeNm}</span></p>
-                                                                            <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                                            <p class="box-label bigger ${accsStatusOrderClass2}"><span>${list.accsStatusNm}</span></p>
                                                                         </div>
                                                                         <div class="btn-wrap">
                                                                             <c:if test="${list.accsStatusOrder eq 3}">

@@ -12,6 +12,7 @@
     <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
     <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" id="episdSeq" name="episdSeq" value="" />
+    <input type="hidden" id="detailsKey" name="detailsKey" value="" />
 
 
     <div class="cont-wrap">

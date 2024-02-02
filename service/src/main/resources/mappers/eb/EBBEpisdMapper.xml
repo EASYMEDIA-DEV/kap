@@ -116,6 +116,7 @@
 								end edu_stat
 					, ptcpt_dtm
 					, web_path
+					, ptcpt_seq
 				</if>
 			FROM (SELECT
 				b.edctn_seq
@@ -177,6 +178,7 @@
 			  	, mem_seq
 			    , ptcpt_dtm
 				, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
+				, ptcpt_seq
 				</if>
 				FROM ed_edctn_episd_mst a
 				LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -184,6 +186,7 @@
 				<if test=' mypageYn == "Y".toString() '>
 					LEFT JOIN (SELECT
 					episd_seq
+				    , ptcpt_seq
 					, mem_seq
 					, stts_cd
 					, cmptn_yn
@@ -299,6 +302,7 @@
 			, cmptn_yn
 			, cmptn_dtm
 			, mem_seq
+		   	, ptcpt_seq
 			, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
 		</if>
 		FROM ed_edctn_episd_mst a
@@ -307,6 +311,7 @@
 		<if test=' mypageYn == "Y".toString() '>
 			LEFT JOIN (SELECT
 			episd_seq
+		    , ptcpt_seq
 			, mem_seq
 			, stts_cd
 			, cmptn_yn
