@@ -22,7 +22,7 @@
                             </div>
                         </div>
                         <div class="btn-wrap">
-                            <a class="btn-solid small gray-bg" type="button" href="https://gpc.hyundai.co.kr/gpc/main/index.do"><span>GPC 바로가기</span></a>
+                            <a class="btn-solid small gray-bg" type="button" href="https://gpc.hyundai.co.kr/gpc/main/index.do" target="_blank"><span>GPC 바로가기</span></a>
                         </div>
                     </div>
                 </div>

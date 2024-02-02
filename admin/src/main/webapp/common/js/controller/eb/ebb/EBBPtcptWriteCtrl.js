@@ -103,7 +103,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							if(passFlag && isGpcUser =="N"){
 
 								if(confirm("GPC 홈페이지에 회원가입해주세요.")){
-									location.href="https://gpc.hyundai.co.kr/gpc/member/sign-up/terms/index.do";
+									window.open("https://gpc.hyundai.co.kr/gpc/member/sign-up/terms/index.do");
 								}
 								passFlag = false;
 							}
@@ -112,7 +112,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							if(passFlag && kapUserId == ""){
 
 								if(confirm("GPC 계정에 KAP 아이디를 등록해주세요.")){
-									location.href="https://gpc.hyundai.co.kr/gpc/main/index.do";
+									window.open("https://gpc.hyundai.co.kr/gpc/main/index.do");
 								}
 								passFlag = false;
 							}
@@ -121,7 +121,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							if(passFlag && nowId != kapUserId){
 
 								if(confirm("인증된 GPC 계정에 입력된 KAP 아이디와 일치하지 않습니다. \n GPC 사이트로 이동하시겠습니까?")){
-									location.href="https://gpc.hyundai.co.kr/gpc/main/index.do";
+									window.open("https://gpc.hyundai.co.kr/gpc/main/index.do");
 								}
 								passFlag = false;
 							}
@@ -130,7 +130,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 							if(passFlag && gndr != gndrCd){
 
 								if(confirm("GPC 계정의 성별과 KAP 성별이 일치하지 않습니다. \nGPC 사이트로 이동하시겠습니까?")) {
-									location.href="https://gpc.hyundai.co.kr/gpc/main/index.do";
+									window.open("https://gpc.hyundai.co.kr/gpc/main/index.do");
 								}
 
 								passFlag = false;
@@ -153,6 +153,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 		immediately : function() {
 
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
+
+
+			//gpcId 변경시 인증과 메시지 전부 초기화
+			$("#gpcId").change(function(){
+				$("#gpcPass").val("N");
+				$("#gpcIdText").text("재인증이 필요합니다.");
+			});
+
+
 
 			// 유효성 검사
 			$formObj.validation({

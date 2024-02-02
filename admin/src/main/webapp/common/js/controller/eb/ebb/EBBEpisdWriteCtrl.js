@@ -354,13 +354,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$(".eduRoom").css("display", "none");
 			$(".onlineSet").find("input:text").each(function(){
 
-				if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
-					//$(this).removeClass("notRequired");
+				if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineTime' ||  $(this).attr("name") == 'onlineNm' )){
+					$(this).addClass("notRequired");
+				} else if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineUrl')){
+					$(this).removeClass("notRequired");
 				}
 
 			});
 			$(".onlineSet").find("div.dropzone").each(function(){
-				if($(this).closest("tr").attr("class") !="examTr"){
+				if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
 					//$(this).removeClass("notRequired");
 				}
 			});
@@ -371,14 +373,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$(".eduRoom").css("display", "");
 
 		$(".onlineSet").find("input:text").each(function(){
-			if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
+			if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineTime' ||  $(this).attr("name") == 'onlineNm' )){
+				$(this).addClass("notRequired");
+			} else if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineUrl')){
 				$(this).removeClass("notRequired");
 			}
 
 		});
 		$(".onlineSet").find("div.dropzone").each(function(){
 			if($(this).closest("tr").attr("class") !="examTr" && $(this).attr("name") != 'onlineTime'){
-				$(this).removeClass("notRequired");
+				//$(this).removeClass("notRequired");
 			}
 		});
 
@@ -1559,15 +1563,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								var onlineUrl = $(this).find("[name='onlineUrl']").val();
 								var onlineTime = $(this).find("[name='onlineTime']").val();
 
-
-								/*onlinePack.thnlFileSeq = $(this).next().find("input:hidden.thnlFileForm").val();
-
-								onlinePack.edctnSeq = actForm.edctnSeq;
-								onlinePack.episdOrd = actForm.episdOrd;
-								onlinePack.episdYear = actForm.episdYear;
-								onlinePack.nm = onlineNm;
-								onlinePack.url = onlineUrl;*/
-
 								if(onlineUrl ===undefined || onlineUrl =="" && onlineChk == true){
 									alert("유튜브 URL을 입력해 주세요");
 									onlineChk = false;
@@ -1575,6 +1570,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							}
 						});
 
+					}
+
+					if(!onlineChk){
+						return false;
 					}
 
 

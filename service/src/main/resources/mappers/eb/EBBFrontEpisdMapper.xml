@@ -278,12 +278,13 @@
 			<if test="strtDt != null and strtDt != ''">
 				<choose>
 					<when test="srchDate == 1">
-						AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND edctn_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
-					</when>
-					<when test="srchDate == 2">
 						AND accs_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
 						AND accs_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+					</when>
+					<when test="srchDate == 2">
+						AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						AND edctn_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+
 					</when>
 				</choose>
 			</if>
@@ -1241,23 +1242,6 @@
 					</when>
 				</choose>
 			</if>
-
-
-			<!--<if test="strtDt != null and strtDt != ''">
-				<choose>
-					&lt;!&ndash;교육기간&ndash;&gt;
-					<when test="srchDate == 1">
-						AND EDCTN_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-						AND EDCTN_END_DTM <![CDATA[ < ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-					</when>
-
-					&lt;!&ndash;접수기간&ndash;&gt;
-					<when test="srchDate == 2">
-						AND PTCPT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-						AND PTCPT_DTM <![CDATA[ < ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-					</when>
-				</choose>
-			</if>-->
 
 		</where>
 	</sql>

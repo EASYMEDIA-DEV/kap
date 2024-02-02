@@ -356,11 +356,9 @@ define(["ezCtrl"], function(ezCtrl) {
 
 
 							if(passFlag){
-								console.log("온다 Y");
 								$(".for-status-chk").addClass("satisfy");
 								$("#gpcPass").val("Y");
 							}else{
-								console.log("온다 N");
 								$(".for-status-chk").removeClass("satisfy");
 								$("#gpcPass").val("N");
 							}
@@ -521,6 +519,28 @@ define(["ezCtrl"], function(ezCtrl) {
 			if(chkYn =="Y"){
 				chkInfo();
 			}
+
+			//gpcId 변경시 인증과 메시지 전부 초기화
+			$("#gpcId").change(function(){
+				$(".for-status-chk").removeClass("satisfy");
+				$("#gpcPass").val("N");
+			});
+
+			$(document).on('keydown', function(event) {
+				// 필터 검색 인지 확인
+				if($('.all-srch').css('display') !== 'block') {
+
+					// 눌린 키가 Enter 키인지 확인
+					if (event.which === 13) {
+						// 다른 이벤트 중지
+						event.preventDefault();
+						//cmmCtrl.setFormData($formObj);
+						//search(1);
+						$(".gpcCheck").trigger("click");
+						return false;
+					}
+				}
+			});
 
 		}
 	};

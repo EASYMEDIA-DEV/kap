@@ -68,7 +68,7 @@
                                                                 <p class="label"><span>${rtnData.prntCdNm}</span></p>
                                                                 <p class="label"><span>${rtnData.ctgryCdNm}</span></p>
                                                             </div>
-                                                            <p class="training-name f-title1">${rtnData.nm}</p>
+                                                            <p class="training-name f-title3">${rtnData.nm}</p>
                                                             <p class="training-explain-txt">${rtnData.smmryNm}</p>
                                                         </div>
 
