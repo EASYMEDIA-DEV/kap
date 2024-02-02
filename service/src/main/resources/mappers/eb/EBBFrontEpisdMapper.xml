@@ -1076,9 +1076,15 @@
 
 		<choose>
 			<when test="srchOrder == 1">
-				<!-- 신청 마감순-->
-				ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
-				/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
+				<if test="applyListYn == 'Y'.toString()">
+					<!-- 신청마감순 -->
+					ORDER BY trnsf_yn asc, accs_status_order is null asc, accs_status_order asc, accs_order_day asc
+					/*ORDER BY reg_dtm asc, trnsf_yn asc, stts_cd asc, ptcpt_dtm asc*/
+				</if>
+				<if test="applyListYn != 'Y'.toString()">
+					<!-- 접수일자순 -->
+					ORDER BY reg_dtm desc
+				</if>
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
