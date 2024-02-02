@@ -31,7 +31,9 @@
                                                 <p class="label"><span>${list.prntCdNm}</span></p>
                                                 <p class="label"><span>${list.ctgryCdNm}</span></p>
                                             </div>
-                                            <p class="training-name f-title1">${list.nm}</p>
+                                            <p class="training-name f-title1">
+                                                <a href="javascript:">${list.nm}</a>
+                                            </p>
                                         </div>
                                         <div class="group">
                                             <p class="f-head">${list.episdOrd}회차</p>
@@ -54,6 +56,11 @@
                                                     </c:when>
                                                     <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육종료' or list.eduStat eq '교육완료')}">
                                                         <p class="box-label bigger complete">
+                                                            <span>${list.eduStat}</span>
+                                                        </p>
+                                                    </c:when>
+                                                    <c:when test="${list.trnsfYn eq 'N' and list.eduStat eq '교육중'}"> <%-- 이관 된 경우 --%>
+                                                        <p class="box-label bigger accepting">
                                                             <span>${list.eduStat}</span>
                                                         </p>
                                                     </c:when>
@@ -151,7 +158,9 @@
                                             <div class="sort-label-area">
                                                 <p class="label"><span>${list.ctgryCdNm}</span></p>
                                             </div>
-                                            <p class="training-name f-title1">${list.nm}</p>
+                                            <p class="training-name f-title1">
+                                                <a href="javascript:">${list.nm}</a>
+                                            </p>
                                         </div>
                                         <div class="status-info-w">
                                             <c:choose>
