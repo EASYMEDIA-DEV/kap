@@ -36,7 +36,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		cmmCtrl.jsonAjax(function(data){
 			var rtn = JSON.parse(data);
 
-			alert(rtn.respCnt);
+			// alert(rtn.respCnt);
 			if(rtn.respCnt == 0 ){
 				$(".eduSrvSearch").attr("disabled", false); //만족도조사 추가버튼 사용 가능
 				$("#srvStrtDtm, #srvEndDtm").attr("disabled", false); //설문, 시험 달력 사용 가능
