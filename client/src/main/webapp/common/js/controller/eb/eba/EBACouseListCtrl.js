@@ -38,7 +38,7 @@ define(["ezCtrl"], function(ezCtrl) {
 				var tempPage = (page === undefined || page == "") ? 1 : page;
 				var rtnPage = 0;
 
-				if((tempPage * 9) > totCnt){
+				if((tempPage * 9) >= totCnt){
 					$(".btn-wrap.add-load.align-center").hide();
 					rtnPage = totCnt
 				}else{
