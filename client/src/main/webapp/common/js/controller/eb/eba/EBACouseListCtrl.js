@@ -505,7 +505,7 @@ define(["ezCtrl"], function(ezCtrl) {
 		immediately : function() {
 
 			/*cmmCtrl.setCalendar();*/
-			cmmCtrl.setCalendarInit();
+			cmmCtrl.setCalendarInit(3,-3);
 
 			//리스트 조회
 			//폼 데이터 처리

@@ -217,7 +217,8 @@
                                                                     <div class="form-group form-calendar">
                                                                         <div class="form-input">
                                                                             <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${kl:convertDate(kl:addDay(today, '-90'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일"/>
+
+                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>

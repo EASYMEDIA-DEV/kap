@@ -131,7 +131,6 @@ public class EBMMypageController
         String rtnView = "front/eb/ebm/EBMEduListAjax";
         try
         {
-            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
             //교육 사업 신청내역 조회
             eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
 
@@ -282,9 +281,6 @@ public class EBMMypageController
             vwUrl = "front/COBlank.error";
         }
 
-
-
-
         return "front/eb/ebm/EBMEduApplyDtl.front";
     }
 
@@ -304,18 +300,14 @@ public class EBMMypageController
 
             EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
 
-
             //사용자 출석정보 호출
 
             if(rtnDto != null){
 
                 if("Y".equals(rtnDto.getCmptnYn())){
-
-                    System.out.println("@@@ rtnDto= " + rtnDto);
                     modelMap.addAttribute("rtnData", rtnDto);
 
                 }else{
-                    System.out.println("@@@ 여긴가1");
                     modelMap.addAttribute("msg", "잘못된 접근입니다.");
                     modelMap.addAttribute("url", "/");
                     vwUrl = "front/COBlank.error";
@@ -324,7 +316,6 @@ public class EBMMypageController
 
 
             }else{
-                System.out.println("@@@ 여긴가2");
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
                 modelMap.addAttribute("url", "/");
                 vwUrl = "front/COBlank.error";
@@ -403,21 +394,22 @@ public class EBMMypageController
 
         if(rtnMap !=null){
 
-            if(cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()){
-
-
+            if(cOLoginUserDTO.getSeq().equals(rtnDto.getMemSeq()) ){
 
                 //회원 기본정보 호출
                 mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
                 MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
 
                 if(applicantDto.getMemCd().equals("CP")) {
+
                     mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
                     MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
 
                     if (originList.getList().size() != 0) {
+
                         modelMap.addAttribute("rtnInfo", originList.getList().get(0));
                     }
+
                     modelMap.addAttribute("applicantInfo", applicantDto);
                     modelMap.addAttribute("sqInfoList", originList);
                 }
@@ -464,7 +456,6 @@ public class EBMMypageController
         {
             //회원이 속한 부품사의 회원목록 조회
             modelMap.addAttribute("rtnData",  eBBEpisdService.selectApplyUserList(mpaUserDto));
-
         }
         catch (Exception e)
         {
@@ -498,7 +489,7 @@ public class EBMMypageController
 
             EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
 
-            if(cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()){
+            if(cOLoginUserDTO.getSeq().equals(rtnDto.getMemSeq())){
                 EBBLctrDTO eBBLctrDTO = new EBBLctrDTO();
 
                 eBBLctrDTO.setEdctnSeq(rtnDto.getEdctnSeq());
@@ -573,7 +564,7 @@ public class EBMMypageController
 
             EBBEpisdDTO rtnDto = (EBBEpisdDTO) rtnMap.get("rtnData");
 
-            if (cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()) {
+            if (cOLoginUserDTO.getSeq().equals(rtnDto.getMemSeq())) {
 
                 modelMap.addAttribute("rtnData", rtnDto);
                 modelMap.addAttribute("lctrList", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
@@ -673,7 +664,7 @@ public class EBMMypageController
 
             EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
 
-            if (cOLoginUserDTO.getSeq() == rtnDto.getMemSeq()) {
+            if (cOLoginUserDTO.getSeq().equals(rtnDto.getMemSeq())) {
 
                 modelMap.addAttribute("rtnData", rtnDto);
 
@@ -732,7 +723,7 @@ public class EBMMypageController
             eBBEpisdDTO.setMemSeq(cOLoginUserDTO.getSeq());
             EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
 
-            if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
+            if (cOLoginUserDTO.getSeq().equals(rtnData.getMemSeq())){
 
                 if (rtnData.getRspnCnt() > 0){
                     modelMap.addAttribute("msg", "정상적인 접근이 아닙니다.");
@@ -826,7 +817,7 @@ public class EBMMypageController
             eBBEpisdDTO.setMemSeq(cOLoginUserDTO.getSeq());
 
             EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
-            if (cOLoginUserDTO.getSeq() == rtnData.getMemSeq()){
+            if (cOLoginUserDTO.getSeq().equals(rtnData.getMemSeq())){
                 vwUrl = "front/eb/ebm/EBMEduApplySrvStep3.front";
 
                         eBBEpisdDTO.setNm(rtnData.getNm());

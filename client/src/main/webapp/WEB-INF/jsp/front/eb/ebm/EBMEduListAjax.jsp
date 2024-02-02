@@ -59,11 +59,6 @@
                                                             <span>${list.eduStat}</span>
                                                         </p>
                                                     </c:when>
-                                                    <c:when test="${list.trnsfYn eq 'N' and list.eduStat eq '교육중'}"> <%-- 이관 된 경우 --%>
-                                                        <p class="box-label bigger accepting">
-                                                            <span>${list.eduStat}</span>
-                                                        </p>
-                                                    </c:when>
                                                     <c:when test="${list.trnsfYn eq 'Y'}"> <%-- 이관 된 경우 --%>
                                                         <p class="box-label bigger waiting">
                                                             <span>교육양도</span>
@@ -88,7 +83,7 @@
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">신청일시</p>
-                                                    <p class="txt f-body2">${ empty list.ptcptDtm ? '-' : kl:convertDate(list.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                                    <p class="txt f-body2">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">모집방식</p>
@@ -158,9 +153,7 @@
                                             <div class="sort-label-area">
                                                 <p class="label"><span>${list.ctgryCdNm}</span></p>
                                             </div>
-                                            <p class="training-name f-title1">
-                                                <a href="javascript:">${list.nm}</a>
-                                            </p>
+                                            <p class="training-name f-title1">${list.nm}</p>
                                         </div>
                                         <div class="status-info-w">
                                             <c:choose>
@@ -203,7 +196,7 @@
                                             <div class="info-list-w ">
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">신청일시</p>
-                                                    <p class="txt f-body2">${ empty list.ptcptDtm ? '-' : kl:convertDate(list.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                                    <p class="txt f-body2">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육인원</p>
