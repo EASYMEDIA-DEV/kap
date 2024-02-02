@@ -1129,7 +1129,7 @@ var cmmCtrl = (function(){
 		});
 	}
 
-	var fn_calendar = function(){
+	var fn_calendar = function(beforeMonth,afterMonth){
 		jQuery.datetimepicker.setLocale("ko");
 
 		// 게시기간(일자) Start -----
@@ -1200,10 +1200,10 @@ var cmmCtrl = (function(){
 
 		var date = new Date();
 		var strtObj = jQuery(".datetimepicker_strtDt");
-		strtObj.datetimepicker("setOptions", { value : date_format(6) });
+		strtObj.datetimepicker("setOptions", { value : date_format(beforeMonth) });
 
 		var endObj = jQuery(".datetimepicker_endDt");
-		endObj.datetimepicker("setOptions", { value : date_format(-6)});
+		endObj.datetimepicker("setOptions", { value : date_format(afterMonth)});
 	}
 
 	var date_format = function(trgtPerid){

@@ -85,7 +85,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function(){
-            cmmCtrl.setCalendarInit();
+            cmmCtrl.setCalendarInit(6,-6);
             $('#firstIndex').val(addCount);
         }
     };
