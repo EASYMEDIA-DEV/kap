@@ -327,7 +327,7 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                                             location.href = "/my-page/main";
                                         }
                                     } else {
-                                        if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
+                                        if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
                                             location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                         }
                                     }

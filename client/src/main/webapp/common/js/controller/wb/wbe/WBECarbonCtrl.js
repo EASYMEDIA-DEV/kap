@@ -161,7 +161,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             }
 
                             if(pass){
-                                if (confirm("위 정보로 사업을 신청하시겠습니까??")) {
+                                if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
                                     cmmCtrl.fileFrmAjax(function (data) {
                                         //콜백함수. 페이지 이동
                                         location.replace("./complete");
