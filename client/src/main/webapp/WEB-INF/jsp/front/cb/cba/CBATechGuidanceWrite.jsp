@@ -85,7 +85,7 @@
                                                 <div class="data-inner-line tempRow" id="dlvryRow">
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" placeholder="업체명 입력">
+                                                            <input type="text" class="dlvryCmpnNm" name="dlvryCmpnNm" maxlength="50" placeholder="업체명 입력">
                                                         </div>
                                                         <div class="form-input">
                                                             <input type="number" class="dlvryRate" name="dlvryRate" placeholder="매출비중(%) 입력" maxlength="3">
@@ -109,7 +109,7 @@
                                                 <div class="data-inner-line dpTempRow" id="dpndnRow">
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="dpndnCmpnNm" placeholder="업체명 입력" name="dpndnCmpnNm">
+                                                            <input type="text" class="dpndnCmpnNm" name="dpndnCmpnNm" maxlength="50" placeholder="업체명 입력" >
                                                         </div>
                                                         <div class="form-input">
                                                             <input type="number" class="dpndnRate" placeholder="의존율(%) 입력" name="dpndnRate" maxlength="3">
@@ -133,7 +133,7 @@
                                                 <div class="data-line">
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="number" class="qltyPicCnt" name="qltyPicCnt" placeholder="인원수 입력">
+                                                            <input type="number" class="qltyPicCnt" name="qltyPicCnt" maxlength="50" placeholder="인원수 입력">
                                                             <p class="unit-txt">명</p>
                                                         </div>
                                                     </div>
@@ -174,10 +174,10 @@
                                                         <div class="form-address">
                                                             <div class="form-group">
                                                                 <div class="form-input">
-                                                                    <input type="text" class="addr" placeholder="우편번호" id="hqZipcode" name="fctryZipcode" value="" readonly>
+                                                                    <input type="text" class="addr" placeholder="우편번호" id="hqZipcode" name="fctryZipcode" value="" readonly maxlength="50">
                                                                 </div>
                                                                 <div class="form-input w-longer">
-                                                                    <input type="text" class="addr" placeholder="주소" id="hqBscAddr" name="fctryBscAddr" value="" readonly>
+                                                                    <input type="text" class="addr" placeholder="주소" id="hqBscAddr" name="fctryBscAddr" value="" readonly maxlength="50">
                                                                 </div>
                                                                 <div class="btn-wrap">
                                                                     <button class="btn-solid small gray-bg searchPostCode" id="hqAddr" type="button"><span>우편번호 찾기</span></button>
@@ -185,7 +185,7 @@
                                                             </div>
                                                             <div class="form-group">
                                                                 <div class="form-input w-longest">
-                                                                    <input type="text" class="addr" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="">
+                                                                    <input type="text" class="addr" placeholder="상세주소 입력" id="hqDtlAddr" name="fctryDtlAddr" value="" maxlength="50">
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -310,7 +310,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-input w-longest">
-                                                                <input type="text" class="notRequired" name="etcNm" placeholder="업종 입력" title="업종" disabled>
+                                                                <input type="text" class="notRequired" name="etcNm" placeholder="업종 입력" title="업종" disabled maxlength="50">
                                                             </div>
                                                         </div>
                                                     </div>

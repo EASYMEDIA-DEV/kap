@@ -621,10 +621,8 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label" style="padding-bottom: 150px;">업종<span class="star"> *</span></label>
-                    <div style="font-weight:bold; padding-bottom: 10px; padding-top: 10px;">
-                       금속분야
-                    </div>
-                    <div class="col-sm-11" style="padding-bottom: 10px;">
+                    <div class="col-sm-7" style="padding-bottom: 18px;">
+                        <label class="col-sm-1 control-label">금속분야</label>
                         <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
                             <c:if test="${fn:contains(cdList.cd,'METAL') && cdList.cd ne 'TEC_GUIDE_METAL'}">
                                 <label class="radio-inline c-radio">
@@ -634,10 +632,9 @@
                             </c:if>
                         </c:forEach>
                     </div>
-                    <div style="font-weight:bold; padding-bottom: 10px; padding-top: 10px;">
-                        비금속분야
-                    </div>
-                    <div class="col-sm-11" style="padding-bottom: 10px;">
+
+                    <div class="col-sm-8" style="padding-bottom: 18px;">
+                        <label class="col-sm-1 control-label">비금속분야</label>
                         <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
                             <c:if test="${fn:contains(cdList.cd,'NON') && cdList.cd ne 'TEC_GUIDE_NON'}">
                                 <label class="radio-inline c-radio">
@@ -647,10 +644,9 @@
                             </c:if>
                         </c:forEach>
                     </div>
-                    <div style="font-weight:bold; padding-bottom: 10px; padding-top: 10px;">
-                        기타
-                    </div>
-                    <div class="col-sm-11">
+
+                    <div class="col-sm-5" style="margin-top: -9px;">
+                        <label class="col-sm-1 control-label" style="margin-top: 7px;">기타</label>
                         <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
                             <c:if test="${!fn:contains(cdList.cd,'NON') && !fn:contains(cdList.cd,'META')}">
                                 <label class="radio-inline c-radio">
@@ -659,7 +655,9 @@
                                 </label>
                             </c:if>
                         </c:forEach>
-                        <input type="text" class="form-control input-sm notRequired" name="etcNm" value="${rtnDto.etcNm}" style="width: 322px; margin-top: 10px;" title="업종" disabled placeholder="업종 입력"/>
+                        <span class="form-inline">
+                            <input type="text" class="form-control input-sm notRequired" name="etcNm" value="${rtnDto.etcNm}" style="width: 322px; margin-top: 10px;" title="업종" disabled placeholder="업종 입력"/>
+                        </span>
                     </div>
                 </div>
             </fieldset>

@@ -95,10 +95,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         classname : {
-            consInfoAppl : {
+            consInfoApply : {
                 event : {
                     click : function(){
-                        location.href= "./consInfoAppl?bsnmNo="+$("#bsnmNo").val()+"&sizeCd="+$("#sizeCd").val();
+                        location.href= "./consInfoApply?bsnmNo="+$("#bsnmNo").val()+"&sizeCd="+$("#sizeCd").val();
                     }
                 }
             },

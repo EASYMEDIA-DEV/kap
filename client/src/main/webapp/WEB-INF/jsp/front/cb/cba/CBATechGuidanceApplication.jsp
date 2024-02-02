@@ -208,7 +208,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap for-motion">
                     <a class="btn-solid small gray-bg cancelApply" href="javascript:"><span>취소</span></a>
-                    <a class="btn-solid small black-bg consInfoAppl" href="javascript:"><span>다음</span></a>
+                    <a class="btn-solid small black-bg consInfoApply" href="javascript:"><span>다음</span></a>
                 </div>
             </div>
         </div>

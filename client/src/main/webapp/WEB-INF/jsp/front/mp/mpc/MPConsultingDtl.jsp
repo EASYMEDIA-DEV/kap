@@ -267,10 +267,42 @@
                                                     <tr>
                                                         <th>SQ정보</th>
                                                         <td>
-                                                            <c:forEach var="info" items="${cmpnInfo.list}" varStatus="status">
-                                                                <c:set var="i" value="${i+1}"/>
-                                                                <p>${i}. ${info.nm} / ${info.score} / ${info.year} / ${info.crtfnCmpnNm}</p>
-                                                            </c:forEach>
+                                                            <c:choose>
+                                                                <c:when test="${empty cmpnInfo.list}">
+                                                                    -
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:forEach var="list" items="${cmpnInfo.list}" varStatus="status">
+                                                                        <c:if test="${empty list.nm}">
+                                                                            <c:set var="nm" value="-"/>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty list.nm}">
+                                                                            <c:set var="nm" value="${list.nm}"/>
+                                                                        </c:if>
+
+                                                                        <c:if test="${empty list.score}">
+                                                                            <c:set var="score" value="-"/>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty list.score}">
+                                                                            <c:set var="score" value="${list.score}"/>
+                                                                        </c:if>
+
+                                                                        <c:if test="${empty list.year}">
+                                                                            <c:set var="year" value="-"/>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty list.year}">
+                                                                            <c:set var="year" value="${list.year} 년"/>
+                                                                        </c:if>
+                                                                        <c:if test="${empty list.crtfnCmpnNm}">
+                                                                            <c:set var="crtfnCmpnNm" value="-"/>
+                                                                        </c:if>
+                                                                        <c:if test="${not empty list.crtfnCmpnNm}">
+                                                                            <c:set var="crtfnCmpnNm" value="${list.crtfnCmpnNm}"/>
+                                                                        </c:if>
+                                                                        <p class="f-body1">${status.count}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
+                                                                    </c:forEach>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </td>
                                                     </tr>
                                                 </c:otherwise>
@@ -346,7 +378,7 @@
                                                 <p class="title f-body2">FAX</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1">${rtnData.faxNo}</p>
+                                                <p class="txt f-body1">${not empty rtnData.faxNo ? rtnData.faxNo : "-"}</p>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -412,12 +444,19 @@
                                             <div class="td">
                                                 <p class="txt f-body1">
                                                     <c:choose>
-                                                        <c:when test="${fn:contains(rtnData.cbsnCd,'INDUS')}">
-                                                            기타 - ${rtnData.etcNm}
+                                                        <c:when test="${not empty rtnData.etcNm}">
+                                                            <c:choose>
+                                                                <c:when test="${fn:contains(rtnData.cbsnCd,'INDUS')}">
+                                                                    기타 - ${rtnData.etcNm}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <c:if test="${fn:contains(rtnData.cbsnCd,'METAL')}">금속분야 - ${rtnData.cbsnNm}</c:if>
+                                                                    <c:if test="${fn:contains(rtnData.cbsnCd,'NON')}">비금속분야 - ${rtnData.cbsnNm}</c:if>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                         </c:when>
                                                         <c:otherwise>
-                                                            <c:if test="${fn:contains(rtnData.cbsnCd,'METAL')}">금속분야 - ${rtnData.cbsnNm}</c:if>
-                                                            <c:if test="${fn:contains(rtnData.cbsnCd,'NON')}">비금속분야 - ${rtnData.cbsnNm}</c:if>
+                                                            -
                                                         </c:otherwise>
                                                     </c:choose>
                                                 </p>
@@ -428,7 +467,18 @@
                                                 <p class="title f-body2">신청사항</p>
                                             </div>
                                             <div class="td">
-                                                <p class="txt f-body1" id="appctnType"><c:forEach var="appctnTypeList" items="${rtnData.appctnTypeList}" varStatus="status">${appctnTypeList.appctnTypeNm}/</c:forEach></p>
+                                                <p class="txt f-body1" id="appctnType">
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnData.appctnTypeList}">
+                                                            <c:forEach var="appctnTypeList" items="${rtnData.appctnTypeList}" varStatus="status">
+                                                                ${appctnTypeList.appctnTypeNm}/
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>

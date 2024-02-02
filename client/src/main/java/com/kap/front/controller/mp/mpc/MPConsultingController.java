@@ -124,8 +124,6 @@ public class MPConsultingController {
                 if(tmpDto.getCtgryCd().equals("COMPANY01001")){
 
                     modelMap.addAttribute("cmpnInfo", mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO));
-                }else{
-                    modelMap.addAttribute("cmpnInfo", mPEPartsCompanyService.selectPartsComSQInfo(mPEPartsCompanyDTO));
                 }
 
                 if(tmpDto.getCnstgCd().equals("CONSULT_GB01")){
@@ -134,7 +132,7 @@ public class MPConsultingController {
                 }else{
                     CBBManageConsultInsertDTO cBBManageConsultInsertDTO = new CBBManageConsultInsertDTO();
                     cBBManageConsultInsertDTO.setBsnmNo(cBATechGuidanceInsertDTO.getBsnmNo());
-                    modelMap.addAttribute("rtnData", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
+                    modelMap.addAttribute("rtnData", tmpDto);
                 }
                 modelMap.addAttribute("rspnCnt", rspnCnt);
                 modelMap.addAttribute("srvCnt", srvCnt);
