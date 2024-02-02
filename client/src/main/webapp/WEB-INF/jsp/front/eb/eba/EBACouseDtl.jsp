@@ -293,7 +293,7 @@
                                                                     </div>
                                                                     <div class="status-info-w">
                                                                         <p class="box-label bigger"><span>${list.placeNm}</span></p>
-                                                                        <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                                        <p class="box-label bigger ${accsStatusOrderClass1}"><span>${list.accsStatusNm}</span></p>
                                                                     </div>
                                                                 </div>
                                                                 <!-- hover 시 노출되는 영역 -->
@@ -429,7 +429,7 @@
                                                                     </div>
                                                                     <div class="status-info-w">
                                                                         <p class="box-label bigger"><span>${list.placeNm}</span></p>
-                                                                        <p class="box-label bigger waiting"><span>${list.accsStatusNm}</span></p>
+                                                                        <p class="box-label bigger ${accsStatusOrderClass2}"><span>${list.accsStatusNm}</span></p>
                                                                     </div>
                                                                 </div>
                                                                 <!-- hover 시 노출되는 영역 -->
