@@ -297,7 +297,7 @@
                                                                 <c:if test="${not empty item.crtfnCmpnNm}">
                                                                     <c:set var="crtfnCmpnNm" value="${item.crtfnCmpnNm}"/>
                                                                 </c:if>
-                                                                <p class="f-body1">${status.index}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
+                                                                <p class="f-body1">${status.count}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
                                                             </c:forEach>
                                                         </c:otherwise>
                                                     </c:choose>

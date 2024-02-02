@@ -349,17 +349,14 @@ public class EBACouseController {
             mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
             MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
 
-
             if(applicantDto != null){
 
                 if(applicantDto.getMemCd().equals("CP")){
 
                     EBACouseDTO eBACouseDTO = new EBACouseDTO();
-
                     eBACouseDTO.setDetailsKey(eBBEpisdDTO.getDetailsKey());
                     //선택한 과정정보 호출
                     HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
-
                     EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
 
                     COPaginationUtil page = new COPaginationUtil();
@@ -374,9 +371,6 @@ public class EBACouseController {
 
                     HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
-
-
-
                     if(applicantDto.getMemCd().equals("CP")) {
                         mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
                         MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
@@ -385,35 +379,29 @@ public class EBACouseController {
                             modelMap.addAttribute("rtnInfo", originList.getList().get(0));
                         }
                         modelMap.addAttribute("applicantInfo", applicantDto);
-                        modelMap.addAttribute("sqInfoList", originList);
+                        modelMap.addAttribute("sqInfoList", mpePartsCompanyService.selectPartsComSQInfo(mpePartsCompanyDTO));
                     }
-
                     //회원 부품사정보 호출
-
                     modelMap.addAttribute("rtnData", rtnDto);
-
                     modelMap.addAttribute("episdDto", episdDto.get("rtnData"));
 
+                }else if(applicantDto.getMemCd().equals("CO")){
 
-                }else{
-
-                    modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                    modelMap.addAttribute("msg", "교육신청은 부품사 회원만 신청 가능합니다.");
                     modelMap.addAttribute("url", "/");
                     vwUrl = "front/COBlank.error";
 
+                }else if(applicantDto.getMemCd().equals("CS")){
+                    modelMap.addAttribute("msg", "위원 계정은 해당 서비스를 이용할 수 없습니다.");
+                    modelMap.addAttribute("url", "/");
+                    vwUrl = "front/COBlank.error";
                 }
 
-
             }else{
-                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("msg", "여기서 알럿뜨는건지 확인222222.");
                 modelMap.addAttribute("url", "/");
                 vwUrl = "front/COBlank.error";
-
             }
-
-
-
-
 
         }catch (Exception e){
 

@@ -55,7 +55,9 @@
                               접수마감: end
                             -->
                             <div class="img-area">
-                                <img src="${ not empty list.webPath ? list.webPath : '/common/images/img-main-training-offline-01.jpg' }" alt="${list.fileDsc}">
+                                <c:if test="${list.webPath}">
+                                    <img src="${list.webPath}" alt="${list.fileDsc}">
+                                </c:if>
                             </div>
                             <div class="txt-area">
                                 <!--비회원 구분자를 사용하여 영역 표시-->
