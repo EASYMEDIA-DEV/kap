@@ -855,8 +855,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnPartUserModal: {
                 event: {
                     click: function () {
+                        // 등록 페이지일 경우
+                        if($("#detailsKey").val() == "") {
+                            $("#bsnmNo").val("");
+                        }
+
                         $("#srchDivide").val("Y");
                         $(".srchGubun").remove();
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");

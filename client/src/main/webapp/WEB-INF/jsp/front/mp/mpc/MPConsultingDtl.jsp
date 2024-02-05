@@ -58,11 +58,41 @@
                                                         <p class="box-label bigger arr"><span>${rtnData.rsumeSttsNm}</span></p>
                                                     </div>
                                                 </c:when>
-                                                <c:otherwise>
+                                                <c:when test="${rtnData.rsumeSttsNm eq '지원단이관' or rtnData.rsumeSttsNm eq '지도연기' or rtnData.rsumeSttsNm eq '이관'}">
                                                     <div class="status-info-w">
-                                                        <p class="box-label bigger accepting"><span>${rtnData.rsumeSttsNm}</span></p>
+                                                        <p class="box-label bigger waiting">
+                                                            <span>${rtnData.rsumeSttsNm}</span>
+                                                        </p>
                                                     </div>
-                                                </c:otherwise>
+                                                </c:when>
+                                                <c:when test="${rtnData.rsumeSttsNm eq '신청' or rtnData.rsumeSttsNm eq '사용자취소' or rtnData.rsumeSttsNm eq '지도착수' or rtnData.rsumeSttsNm eq '재단취소' or rtnData.rsumeSttsNm eq '부품사취소'}">
+                                                    <div class="status-info-w">
+                                                        <p class="box-label bigger">
+                                                            <span>${rtnData.rsumeSttsNm}</span>
+                                                        </p>
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${rtnData.rsumeSttsNm eq '사전심사탈락' or rtnData.rsumeSttsNm eq '지도불가'}">
+                                                    <div class="status-info-w">
+                                                        <p class="box-label bigger arr">
+                                                            <span>${rtnData.rsumeSttsNm}</span>
+                                                        </p>
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${rtnData.rsumeSttsNm eq '사전심사선정' or rtnData.rsumeSttsNm eq '지도승인' or rtnData.rsumeSttsNm eq '지도중'}">
+                                                    <div class="status-info-w">
+                                                        <p class="box-label bigger accepting">
+                                                            <span>${rtnData.rsumeSttsNm}</span>
+                                                        </p>
+                                                    </div>
+                                                </c:when>
+                                                <c:when test="${rtnData.rsumeSttsNm eq '지도완료'}">
+                                                    <div class="status-info-w">
+                                                        <p class="box-label bigger complete">
+                                                            <span>${rtnData.rsumeSttsNm}</span>
+                                                        </p>
+                                                    </div>
+                                                </c:when>
                                             </c:choose>
                                         </div>
                                     </div>
