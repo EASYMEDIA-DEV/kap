@@ -303,7 +303,7 @@
                                                     <td>${applicantInfo.email}</td>
                                                 </tr>
                                                 <tr>
-                                                    <th>전화번호</th>
+                                                    <th>일반 전화번호</th>
                                                     <td>${applicantInfo.telNo}</td>
                                                 </tr>
                                                 <tr>

@@ -348,9 +348,8 @@
 															</div>
 														</li>
 													</c:if>
-														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' }">
+														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' && loginMap.authCd eq 'CP'}">
 															<li>
-
 																<div class="for-move">
 																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
 																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
@@ -365,7 +364,27 @@
 																</div>
 															</li>
 														</c:if>
-
+														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' && loginMap.authCd eq 'CO'}">
+															<c:if test="${menu2.attr.link eq '/my-page/coexistence/list' ||
+																	      menu2.attr.link eq '/my-page/member/intrduction/certification' ||
+																	      menu2.attr.link eq '/my-page/member/qa/list' ||
+																	      menu2.attr.link eq '/my-page/member/wthdrw/certification'}">
+															<li>
+																<div class="for-move">
+																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																		<ul class="three-pack">
+																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																					<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																				</c:if>
+																			</c:forEach>
+																		</ul>
+																	</c:if>
+																</div>
+															</li>
+															</c:if>
+														</c:if>
 													</c:if>
 												</c:forEach>
 											</ul>
@@ -373,6 +392,20 @@
 									</li>
 								</c:if>
 							</c:forEach>
+							<c:if test="${empty loginMap}">
+								<li>
+									<div class="one-pack">
+										<a class="one-depth for-move" href="javascript:">비회원 신청내역 조회</a>
+									</div>
+									<ul class="two-pack">
+										<li>
+											<div class="for-move">
+												<a class="two-depth" href="/education/apply/non-member/auth">비회원 신청내역 조회</a>
+											</div>
+										</li>
+									</ul>
+								<li>
+							</c:if>
 						</ul>
 					</c:if>
 					<div class="notice-wrap">
