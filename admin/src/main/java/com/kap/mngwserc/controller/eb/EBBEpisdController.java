@@ -261,6 +261,7 @@ public class EBBEpisdController {
     {
         try
         {
+            System.out.println("@@@ eBBEpisdDTO = " + eBBEpisdDTO);
             eBBEpisdDTO.setChangeListYn("Y");
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);

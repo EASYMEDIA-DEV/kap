@@ -342,7 +342,7 @@
                                                         <c:set var="edctnEndDt" value="${ empty rtnData.edctnEndDtm ? '-' : kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
 
                                                         <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && edctnStrtDt le nowDate && nowDate le edctnEndDt}">
-                                                            <c:if test="${episdCheck eq 'Y' && nowAtndcYn eq 'N'}">
+                                                            <c:if test="${nowAtndcYn eq 'N'}">
                                                                 <button class="btn-solid small gray-bg icon attendance atndcCheck" type="button"><span>출석하기</span></button>
                                                             </c:if>
 
@@ -370,7 +370,7 @@
                                                     </c:when>
                                                 </c:choose>
 
-                                                <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty examPtcptSeq}">
+                                                <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty rtnData.examPtcptSeq}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                 </c:if>
 

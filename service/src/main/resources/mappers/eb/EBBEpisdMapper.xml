@@ -1794,8 +1794,6 @@
 					, exam_score = #{ptcptList.examScore}
 				</if>
 
-
-
 			where 1=1
 				and edctn_seq = #{ptcptList.edctnSeq}
 				and episd_year = #{ptcptList.episdYear}
@@ -2852,25 +2850,37 @@
 			 , atndc_info
 			 , ptcpt_info
 			 , lcrt_info
-			 , CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02' THEN CASE WHEN IFNULL(ROUND((PTCPT_INFO/LCRT_INFO)*100, 0), 0) <![CDATA[>=]]> cmptn_stnd_cd_nm THEN
-																	  /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-			CASE WHEN jdgmt_yn = 'Y' AND exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'
-		END
-					/*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-					WHEN jdgmt_yn = 'N' THEN 'Y'
+			 , CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02'
+						THEN
+						CASE WHEN IFNULL(ROUND((PTCPT_INFO/LCRT_INFO)*100, 0), 0) <![CDATA[>=]]> cmptn_stnd_cd_nm
+								 THEN
+								 /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
+								 CASE WHEN jdgmt_yn = 'Y'
+										  THEN
+										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N' END
+									  ELSE
+										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
+										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
+									 END
+							 ELSE	'N'
 
-			ELSE 'N' END
+							END
+					ELSE
+						CASE WHEN ATNDC_INFO <![CDATA[>=]]>  cmptn_stnd_cd_nm
+								 THEN
+								 CASE WHEN jdgmt_yn = 'Y'
+										  THEN
+										  /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
+										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'END
+									  ELSE
+										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
+										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
+									 END
+							 ELSE 'N'
+							END
+			END
 
-			WHEN stduy_mthd_cd IN ('STDUY_MTHD01', 'STDUY_MTHD03') THEN CASE WHEN ATNDC_INFO <![CDATA[>=]]>  cmptn_stnd_cd_nm THEN
-
-			/*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-			CASE WHEN jdgmt_yn = 'Y' AND exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'
-		END
-					/*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-					WHEN jdgmt_yn = 'N' THEN 'Y'
-
-			ELSE 'N' END
-		END AS PTCPT_CMTN_YN
+			AS PTCPT_CMTN_YN
 
 		FROM (SELECT
 				A.PTCPT_SEQ
@@ -2888,7 +2898,7 @@
 		    	, b.cmptn_auto_yn
 				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
 				, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = B.EDCTN_SEQ AND EPISD_YEAR = B.EPISD_YEAR AND B.EPISD_ORD) AS PTCPT_INFO
-				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = 28 AND EPISD_YEAR = 2024 AND EPISD_ORD = 4) AS LCRT_INFO
+				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = #{edctnSeq} AND EPISD_YEAR = #{episdYear} AND EPISD_ORD = #{episdOrd}) AS LCRT_INFO
 		FROM ep_edctn_ptcpt_mst A
 		LEFT JOIN (
 			SELECT

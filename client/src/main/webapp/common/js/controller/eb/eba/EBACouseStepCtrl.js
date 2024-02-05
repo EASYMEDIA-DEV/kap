@@ -310,6 +310,11 @@ define(["ezCtrl"], function(ezCtrl) {
 						var seqObj = {};
 						var gpcId = $("#gpcId").val();
 
+						if(gpcId == ""){
+							alert("GPC 아이디를 입력해주세요.");
+							return false;
+						}
+
 						seqObj.gpcId = gpcId;
 
 

@@ -81,6 +81,7 @@
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
               <input type="hidden" name="orgCmptnYn" id="orgCmptnYn" value="${ptcptList.cmptnYn}"/>
               <c:if test="${ptcptList.cmptnYn eq 'Y'}">
+              <input type="hidden" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
                 수료
               </c:if>
               <c:if test="${ptcptList.cmptnYn ne 'Y'}">
