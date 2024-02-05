@@ -980,7 +980,7 @@
                             <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>
                             <div class="col-sm-5">
                                 <p class="form-control-static">
-                                    <c:if test="${rtnDto.srvMemCnt ne ''}">${rtnDto.srvMemCnt}명</c:if>
+                                    ${not empty rtnDto.srvMemCnt ? rtnDto.srvMemCnt : 0}명
                                 </p>
                             </div>
                         </div>

@@ -1,5 +1,6 @@
 package com.kap.service;
 
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
 import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
@@ -73,4 +74,10 @@ public interface EBEExamService {
      * 주관식 답변 수정
      */
     public int updateEdctnSbjctRspn(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst, EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst, HttpServletRequest request) throws Exception;
+
+    /**
+     * 관리자 - 오프라인 시험일경우 빈 마스터만 넣어줌
+     */
+    public int insertOtsdExamPtcptMst(EBBPtcptDTO eBBPtcptDTO) throws Exception;
+
 }
