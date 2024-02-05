@@ -214,6 +214,13 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+			listBtn : {
+				event : {
+					click : function() {
+						location.href="/education/apply/list?" + $formObj.serialize();
+					}
+				}
+			}
 
 
 		},
@@ -432,7 +439,7 @@ define(["ezCtrl"], function(ezCtrl) {
 							alert("교육신청은 부품사 회원만 신청 가능합니다.");
 							return false;
 						}else if(authCd == "CS"){
-							alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
+							alert("위원 계정은 해당 서비스를 이용할 수 없습니다.");
 							return false;
 						}
 

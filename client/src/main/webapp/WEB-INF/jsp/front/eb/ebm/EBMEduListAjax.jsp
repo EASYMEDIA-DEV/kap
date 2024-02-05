@@ -90,7 +90,7 @@
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">신청일시</p>
-                                                    <p class="txt f-body2">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                                    <p class="txt f-body2">${ empty list.ptcptDtm ? '-' : kl:convertDate(list.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">모집방식</p>
@@ -204,7 +204,7 @@
                                             <div class="info-list-w ">
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">신청일시</p>
-                                                    <p class="txt f-body2">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                                    <p class="txt f-body2">${ empty list.ptcptDtm ? '-' : kl:convertDate(list.ptcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육인원</p>

@@ -38,7 +38,7 @@
                                 <div class="sec-con-area">
                                     <div class="info-head">
                                         <div class="left">
-                                            <p class="article-total-count f-body2">총 <span>1065</span>건</p>
+                                            <p class="article-total-count f-body2">총 <span></span>건</p>
                                             <div class="sort-select">
                                                 <div class="form-select txt-select">
                                                     <select id="srchOrder" name="srchOrder" title="정렬 바꾸기">
