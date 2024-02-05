@@ -136,7 +136,7 @@
                                         <tbody>
                                         <tr>
                                             <th>사업자등록번호</th>
-                                            <td>${fn:substring(registerDtl.bsnmNo,0,3) } - ${fn:substring(registerDtl.bsnmNo,3,5) } - ${fn:substring(registerDtl.bsnmNo,5, 10) }</td>
+                                            <td>${fn:substring(registerDtl.bsnmNo,0,3) }-${fn:substring(registerDtl.bsnmNo,3,5) }-${fn:substring(registerDtl.bsnmNo,5, 10) }</td>
                                         </tr>
                                         <tr>
                                             <th>부품사명</th>
@@ -174,7 +174,7 @@
                                             <th>매출액</th>
                                             <td>
                                                 <c:if test="${not empty registerDtl.slsPmt}">
-                                                    ${registerDtl.slsPmt}억 원(${registerDtl.slsYear}년)
+                                                    ${registerDtl.slsPmt}억 원(${ kl:convertDate( registerDtl.slsYear, 'yyyy-MM-dd', 'yyyy', '')}년)
                                                 </c:if>
                                             </td>
                                         </tr>
@@ -283,7 +283,7 @@
                                                                 <c:if test="${not empty item.crtfnCmpnNm}">
                                                                     <c:set var="crtfnCmpnNm" value="${item.crtfnCmpnNm}"/>
                                                                 </c:if>
-                                                                <p class="f-body1">${status.index}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
+                                                                <p class="f-body1">${status.index+1}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
                                                             </c:forEach>
                                                         </c:otherwise>
                                                     </c:choose>
