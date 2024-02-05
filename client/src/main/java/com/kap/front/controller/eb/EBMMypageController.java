@@ -621,6 +621,7 @@ public class EBMMypageController
             rtnDto.setMemSeq(cOLoginUserDTO.getSeq());
             rtnDto.setEpisdYear(ebbPtcptDTO.getEpisdYear());
             rtnDto.setEdctnSeq(ebbPtcptDTO.getEdctnSeq());
+            rtnDto.setEpisdOrd(ebbPtcptDTO.getEpisdOrd());
             //수료여부 체크
             EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
             System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
@@ -888,6 +889,7 @@ public class EBMMypageController
                     rtnDto.setMemSeq(cOLoginUserDTO.getSeq());
                     rtnDto.setEpisdYear(eBBPtcptDTO.getEpisdYear());
                     rtnDto.setEdctnSeq(eBBPtcptDTO.getEdctnSeq());
+                    rtnDto.setEpisdOrd(eBBPtcptDTO.getEpisdOrd());
 
                     //수료여부 체크
                     EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
