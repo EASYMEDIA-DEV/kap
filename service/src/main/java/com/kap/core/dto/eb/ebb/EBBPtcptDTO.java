@@ -108,6 +108,10 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "수료여부", example = "Y/N")
     private String cmptnYn;
 
+    @Schema(title = "수료여부 이전값", example = "Y/N")
+    private String orgCmptnYn;
+
+
     @Schema(title = "오프라인 평가 여부", example = "Y/N")
     private String otsdExamPtcptYn;
 

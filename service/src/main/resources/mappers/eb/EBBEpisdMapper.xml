@@ -106,7 +106,7 @@
 								case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 								case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 								when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-								when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+								when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
 								end
 								when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 								when stts_cd = 'EDU_STTS_CD06' then '교육취소'
@@ -736,7 +736,7 @@
 				case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 				case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
 				when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-				when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육종료'
+				when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
 				end
 				when stts_cd = 'EDU_STTS_CD02' then '신청취소'
 				when stts_cd = 'EDU_STTS_CD06' then '교육취소'
@@ -1562,7 +1562,7 @@
 			case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 			case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
 			when d.edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   d.edctn_end_dtm  then '교육중'
-			when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육종료'
+			when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
 			end
 			when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
 			when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
@@ -1671,7 +1671,7 @@
 				case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 				case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
 				when d.edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   d.edctn_end_dtm  then '교육중'
-				when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육종료'
+				when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
 				end
 				when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
 				when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
@@ -1783,7 +1783,8 @@
 				mod_id = #{ptcptList.modId}
 				, mod_ip = #{ptcptList.modIp}
 				, mod_dtm = now()
-				<if test='ptcptList.cmptnChangeYn =="Y" '>
+				<if test='ptcptList.orgCmptnYn =="Y" and ptcptList.cmptnYn =="N" '>
+				<!--<if test='ptcptList.cmptnChangeYn =="Y" '>-->
 					/*변경됐을때만*/
 					, cmptn_yn = #{ptcptList.cmptnYn}
 					, cmptn_dtm = now()

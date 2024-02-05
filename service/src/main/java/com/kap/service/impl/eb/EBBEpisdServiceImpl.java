@@ -573,9 +573,22 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			for(EBBPtcptDTO eBBPtcptDTO : ptcptList){
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+				//이전 데이터 불러와서 변경이 N -> Y이면 실행시킴 아니면 일반 업데이트
+				if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("Y")){
+					EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);// -> edctnSeq, episdYear
+					System.out.println("@@@ 수료완료 = " + cmptnNo.getCrtfctNo());
+					cmptnNo.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+					eBBEpisdMapper.updatePtcptCmptnInfo(cmptnNo);// -> ptcptSeq
+				}
 			}
+			System.out.println("@@@ eBBEpisdDTO = " + eBBEpisdDTO);
+
+
+
 			//교육참여자 평가, 수료상태 수정
 			eBBEpisdMapper.updateEpisdPtcpt(eBBEpisdDTO);
+
 		}
 
 

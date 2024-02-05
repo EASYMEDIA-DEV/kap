@@ -27,7 +27,7 @@
                 <input type="hidden" class="notRequired" id="prev_episdOrd" name="episdOrd" value="" />
                 <input type="hidden" class="notRequired" id="stduyMthdCd" name="stduyMthdCd" value="" />
 
-                <input type="hidden" class="notRequired" id="chan_memSeq" name="memSeq" value="" />
+                <input type="hidden" class="notRequired" id="chan_memSeq" name="memSeq" value="" disabled/>
 
                 <!-- 레이어 여부 -->
                 <input type="hidden" name="srchLayer" value="Y" />

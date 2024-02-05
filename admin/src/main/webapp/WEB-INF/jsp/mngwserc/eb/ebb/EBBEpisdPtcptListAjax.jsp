@@ -11,6 +11,9 @@
               <c:set var="disabledChk" value="disabled"/>
 
             </c:when>
+            <c:otherwise>
+              <c:set var="disabledChk" value=""/>
+            </c:otherwise>
             </c:choose>
             <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}" ${disabledChk} />
             <span class="ion-checkmark-round"></span>
@@ -76,10 +79,17 @@
 
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
-              <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
-                <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
-                <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
-              </select>
+              <input type="hidden" name="orgCmptnYn" id="orgCmptnYn" value="${ptcptList.cmptnYn}"/>
+              <c:if test="${ptcptList.cmptnYn eq 'Y'}">
+                수료
+              </c:if>
+              <c:if test="${ptcptList.cmptnYn ne 'Y'}">
+                <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
+                  <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
+                  <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
+                </select>
+              </c:if>
+
             </c:when>
             <c:otherwise>
               -
