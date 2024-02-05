@@ -15,7 +15,7 @@
                 <c:when test="${ fn:contains(list.edctnStatusNm, '교육중') }">
                     <c:set var="studyStatusClass" value="accepting" />
                 </c:when>
-                <c:when test="${ fn:contains(list.edctnStatusNm, '교육마감') }">
+                <c:when test="${ fn:contains(list.edctnStatusNm, '교육종료') }">
                     <c:set var="studyStatusClass" value="end" />
                 </c:when>
             </c:choose>
