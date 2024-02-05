@@ -52,16 +52,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function(){
                         pageCnt = pageCnt+1; // 더보기 누를 때마다 1씩 증가
                         var openCnt = $("#infoCard").find(".popOpen").length // 보이는 게시물
-                        alert(pageCnt); alert(page);
 
-                        if(pageCnt <= page){
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("popOpen");
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("popOpen");
-                            $(".cntText").text(openCnt+9 +"/"+ chilCnt);
-                        }else{
-                            $("#infoCard").find(".close").show();
+                        if(pageCnt == 2) {
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).show();
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).removeClass("close");
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).addClass("popOpen");
                             $(".moreBtn").hide();
+                        } else {
+                            if(pageCnt <= page){
+                                $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
+                                $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("close");
+                                $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("popOpen");
+                                $(".cntText").text(openCnt+9 +"/"+ chilCnt);
+                            } else {
+                                $("#infoCard").find(".close").show();
+                                $(".moreBtn").hide();
+                            }
                         }
                     }
                 }

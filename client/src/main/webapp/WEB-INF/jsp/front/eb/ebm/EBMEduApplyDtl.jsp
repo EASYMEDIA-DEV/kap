@@ -59,7 +59,9 @@
                                             <div class="training-view-page">
                                                 <div class="training-list">
                                                     <div class="img-area">
-                                                        <img src="${rtnData.webPath}" alt="">
+                                                        <c:if test="${not empty rtnData.webPath}">
+                                                            <img src="${rtnData.webPath}" alt="${rtnData.fileDsc}">
+                                                        </c:if>
                                                     </div>
                                                     <div class="txt-area">
 
@@ -826,7 +828,18 @@
                                                             <div class="ul-txt-w info">
                                                                 <div class="ul-txt-list">
                                                                     <div class="ul-txt">
-                                                                        <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">${rtnData.examScore}점</dd></dl>
+                                                                        <dl><dt class="f-caption2">평가점수</dt>
+                                                                            <dd class="f-caption1">
+                                                                                <c:choose>
+                                                                                    <c:when test="${not empty rtnData.examScore}">
+                                                                                        ${rtnData.examScore}점
+                                                                                    </c:when>
+                                                                                    <c:otherwise>
+                                                                                        -
+                                                                                    </c:otherwise>
+                                                                                </c:choose>
+                                                                            </dd>
+                                                                        </dl>
                                                                         <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
                                                                     </div>
                                                                 </div>

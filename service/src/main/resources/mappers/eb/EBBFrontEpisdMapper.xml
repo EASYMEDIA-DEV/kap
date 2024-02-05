@@ -695,6 +695,7 @@
 
 		, ptcpt_dtm
 		, web_path
+		, file_dsc
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
@@ -755,7 +756,8 @@
 					, mem_seq
 					, ptcpt_dtm
 					, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
-		      		, bfre_mem_seq
+					, (SELECT file_dsc FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS file_dsc
+		   			, bfre_mem_seq
 					, CASE WHEN MEM_SEQ != #{memSeq} THEN 'Y' ELSE 'N' END AS TRNSF_YN
 		      		, ptcpt_seq
 					, "" AS hope_dt
@@ -856,6 +858,7 @@
 		END AS edu_stat
 		,  ptcpt_dtm
 		,  web_path
+		,  file_dsc
 		, bfre_mem_seq
 		, TRNSF_YN
 		, ptcpt_seq
@@ -975,6 +978,7 @@
 		,  null AS cmptn_dtm
 		,  A.reg_dtm AS ptcpt_dtm
 		,  null AS web_path
+		,  null AS file_dsc
 		, CASE
 			WHEN (SELECT COUNT(*)
 			FROM ev_edctn_trnsf_dtl

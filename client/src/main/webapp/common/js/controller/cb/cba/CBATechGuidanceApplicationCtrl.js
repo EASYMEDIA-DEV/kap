@@ -84,7 +84,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         memInfo.detailsKey = data;
         cmmCtrl.jsonAjax(function (data) {
             var memInfo = JSON.parse(data)
-            $(".deptCd").text(memInfo.deptCdNm+"("+memInfo.deptDtlNm+")");
+            $(".deptCd").text(memInfo.deptCdNm+" ("+memInfo.deptDtlNm+")");
          }, './selectDtlInfo', memInfo, "text");
     };
 

@@ -29,7 +29,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                 var appctnMemSeq = completeInfo.appctnMemSeq;
                 var etcNm = completeInfo.etcNm;
                 var cbsnCd = completeInfo.cbsnCd
-                $(".regDtm").text(regDtm.slice(0,16));
+
+                var replacedRegDtm = regDtm.replace(/-/g, '.');
+                $(".regDtm").text(replacedRegDtm.slice(0,16));
                 $(".name").text(name);
                 $(".cmpnNm").text(cmpnNm);
                 $(".appctnFldNm").text(appctnFldNm);

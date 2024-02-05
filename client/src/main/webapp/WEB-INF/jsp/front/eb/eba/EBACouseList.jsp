@@ -27,7 +27,7 @@
         -->
         <div class="sub-top-vis-area <c:if test="${ device eq 'PC' }">basic-page</c:if>">
             <div class="page-tit-area">
-                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm } ${ device }</span></p>
+                <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
             </div>
             <c:if test="${ device eq 'PC' }">
             <div class="img-area">
