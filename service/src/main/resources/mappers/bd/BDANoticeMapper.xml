@@ -309,6 +309,288 @@
     </select>
 
     <!--
+         쿼리명 : BDANoticeMapper.selectNextRowNumInfo
+         설  명 : [사용자] 공지사항 다음 글 정보 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectNextRowNumInfo" parameterType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectNextRowNumInfo */
+            ROWNUM
+            , NTFY_SEQ
+            ,TITL
+            ,REG_DTM
+            ,MAIN_POST_YN
+        FROM
+        (
+        SELECT @rownum:=@rownum+1 AS ROWNUM
+                , TB1.NTFY_SEQ
+                , TB1.TITL
+                , TB1.REG_DTM
+                , TB1.MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , 'Y' AS MAIN_POST_YN
+        FROM BD_NTFY_MST
+        WHERE 1=1
+        AND NTFY_YN = 'Y'
+        AND ((EXPS_STRT_DTM <![CDATA[ <= ]]>  SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+        AND EXPS_YN = 'Y'
+    <if test="srchVal != null and srchVal != ''">
+        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+    </if>
+        ) AS A
+
+        UNION ALL
+
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , 'N' AS MAIN_POST_YN
+        FROM BD_NTFY_MST
+        WHERE 1=1
+        <if test="srchVal != null and srchVal != ''">
+            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+        </if>
+        ) AS B
+        ) AS TB1
+        , (select @rownum:=0) temp
+        ORDER BY MAIN_POST_YN DESC, REG_DTM DESC
+
+        ) TTB
+        WHERE rownum = #{rownum} - 1
+
+    </select>
+
+    <!--
+         쿼리명 : BDANoticeMapper.selectPrevRowNumInfo
+         설  명 : [사용자] 공지사항 이전 글 정보 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectPrevRowNumInfo" parameterType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectPrevRowNumInfo */
+            ROWNUM
+             , NTFY_SEQ
+             ,TITL
+             ,REG_DTM
+             ,MAIN_POST_YN
+        FROM
+            (
+                SELECT @rownum:=@rownum+1 AS ROWNUM
+                        , TB1.NTFY_SEQ
+                        , TB1.TITL
+                        , TB1.REG_DTM
+                        , TB1.MAIN_POST_YN
+                FROM
+                    (
+                    SELECT
+                    NTFY_SEQ
+                        , TITL
+                        , READ_CNT
+                        , REG_DTM
+                        , NTFY_YN
+                        , ODTM_YN
+                        , EXPS_STRT_DTM
+                        , EXPS_END_DTM
+                        , MAIN_POST_YN
+                    FROM
+                    (
+                    SELECT
+                    NTFY_SEQ
+                        , TITL
+                        , READ_CNT
+                        , REG_DTM
+                        , NTFY_YN
+                        , ODTM_YN
+                        , EXPS_STRT_DTM
+                        , EXPS_END_DTM
+                        , 'Y' AS MAIN_POST_YN
+                    FROM BD_NTFY_MST
+                    WHERE 1=1
+                    AND NTFY_YN = 'Y'
+                    AND ((EXPS_STRT_DTM <![CDATA[ <= ]]>  SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+                    AND EXPS_YN = 'Y'
+                <if test="srchVal != null and srchVal != ''">
+                    AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                    OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                </if>
+                    ) AS A
+
+                    UNION ALL
+
+                    SELECT
+                    NTFY_SEQ
+                        , TITL
+                        , READ_CNT
+                        , REG_DTM
+                        , NTFY_YN
+                        , ODTM_YN
+                        , EXPS_STRT_DTM
+                        , EXPS_END_DTM
+                        , MAIN_POST_YN
+                    FROM
+                    (
+                    SELECT
+                    NTFY_SEQ
+                        , TITL
+                        , READ_CNT
+                        , REG_DTM
+                        , NTFY_YN
+                        , ODTM_YN
+                        , EXPS_STRT_DTM
+                        , EXPS_END_DTM
+                        , 'N' AS MAIN_POST_YN
+                    FROM BD_NTFY_MST
+                    WHERE 1=1
+                    <if test="srchVal != null and srchVal != ''">
+                        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+                    </if>
+                    ) AS B
+                    ) AS TB1
+                        , (select @rownum:=0) temp
+                ORDER BY MAIN_POST_YN DESC, REG_DTM DESC
+
+            ) TTB
+        WHERE rownum = #{rownum} + 1
+
+    </select>
+
+    <!--
+         쿼리명 : BDANoticeMapper.selectNoticeRowNum
+         설  명 : [사용자] 다음글, 이전글을 위한 ROWNUM 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.02.05   구은희       최초생성
+    -->
+    <select id="selectNoticeRowNum" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT ROWNUM
+        FROM
+        (
+        SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM
+        , TB1.NTFY_SEQ
+        , TB1.TITL
+        , TB1.REG_DTM
+        , TB1.MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , 'Y' AS MAIN_POST_YN
+        FROM BD_NTFY_MST
+        WHERE 1=1
+        AND NTFY_YN = 'Y'
+        AND ((EXPS_STRT_DTM <![CDATA[ <= ]]>  SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+        AND EXPS_YN = 'Y'
+    <if test="srchVal != null and srchVal != ''">
+        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+    </if>
+        ) AS A
+
+        UNION ALL
+
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , MAIN_POST_YN
+        FROM
+        (
+        SELECT
+        NTFY_SEQ
+        , TITL
+        , READ_CNT
+        , REG_DTM
+        , NTFY_YN
+        , ODTM_YN
+        , EXPS_STRT_DTM
+        , EXPS_END_DTM
+        , 'N' AS MAIN_POST_YN
+        FROM BD_NTFY_MST
+        WHERE 1=1
+        <if test="srchVal != null and srchVal != ''">
+            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+        </if>
+        ) AS B
+        ) AS TB1
+        , (select @ROWNUM:=0) TEMP
+        ORDER BY MAIN_POST_YN DESC, REG_DTM DESC
+        ) TB
+
+        WHERE NTFY_SEQ = #{detailsKey} AND MAIN_POST_YN = #{mainPostYn}
+    </select>
+
+    <!--
          쿼리명 : BDANoticeMapper.selectMainPostList
          설  명 : [사용자] 공지사항 중요공지 목록을 조회
           수정일     수정자       수정내용
@@ -326,7 +608,9 @@
             BD_NTFY_MST A
         WHERE 1=1
           AND NTFY_YN = 'Y'
-          AND (exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute))
+          AND ((EXPS_STRT_DTM <![CDATA[ <= ]]> SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+          AND EXPS_YN = 'Y'
+        ORDER BY REG_DTM DESC
     </select>
 
     <!--

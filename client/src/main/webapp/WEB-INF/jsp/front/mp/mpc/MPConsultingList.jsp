@@ -32,7 +32,7 @@
                                         <div class="form-select txt-select">
                                             <select id="ordFlag" name="ordFlag" title="정렬 바꾸기">
                                                 <option value="1" selected="">업데이트순</option>
-                                                <option value="2">신청일</option>
+                                                <option value="2">신청일자순</option>
                                             </select>
                                         </div>
                                     </div>

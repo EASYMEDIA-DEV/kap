@@ -434,11 +434,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("#deptCd").focus();
                             return false;
                         }
-                        if (jQuery("input[name='deptDtlNm']").val() =="") {
+
+                        // 부서상세는 유효성 체크 제외
+                        /*if (jQuery("input[name='deptDtlNm']").val() =="") {
                             alert("부서상세를 입력해주세요.");
                             jQuery("input[name='deptDtlNm']").focus();
                             return false;
-                        }
+                        }*/
                         if (!pstnCd|| pstnCd == '선택') {
                             alert("직급을 선택해주세요.");
                             $("#pstnCdSelect").focus();

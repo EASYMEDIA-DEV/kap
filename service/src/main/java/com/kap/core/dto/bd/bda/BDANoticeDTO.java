@@ -106,4 +106,12 @@ public class BDANoticeDTO extends BaseDTO {
     @Schema(title = "사용자 메인여부", example = "Y/N")
     @Builder.Default
     private String mainYn = "N";
+
+    @Schema(title = "사용자 게시물 rownum", example = "")
+    private Integer rownum;
+
+    @Schema(title = "사용자 실제 노출되고 있는 중요공지 여부", example = "Y/N")
+    private String mainPostYn;
+
+    
 }

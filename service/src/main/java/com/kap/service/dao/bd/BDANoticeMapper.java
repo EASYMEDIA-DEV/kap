@@ -77,6 +77,20 @@ public interface BDANoticeMapper {
      */
     public List<BDANoticeDTO> selectMainPostList(BDANoticeDTO pBDANoticeDTO) throws Exception;
 
+    /**
+     * 공지사항 이전, 다음 글을 위한 ROWNUM 조회
+     */
+    public BDANoticeDTO selectNoticeRowNum(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+    /**
+     * 공지사항 다음 글 SEQ 조회
+     */
+    public BDANoticeDTO selectNextRowNumInfo(BDANoticeDTO pBDANoticeDTO) throws Exception;
+
+    /**
+     * 공지사항 이전 글 SEQ 조회
+     */
+    public BDANoticeDTO selectPrevRowNumInfo(BDANoticeDTO pBDANoticeDTO) throws Exception;
 
 
 }

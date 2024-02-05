@@ -73,7 +73,12 @@ public class BDANoticeController {
             if(!"".equals(pBDANoticeDTO.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", bDANoticeService.selectNoticeDtl(pBDANoticeDTO));
                 modelMap.addAttribute("fileList", bDANoticeService.selectNoticeFileList(pBDANoticeDTO));
-                modelMap.addAttribute("nextPrevInfo", bDANoticeService.selectNextAndPrevSeqVal(pBDANoticeDTO));
+
+                pBDANoticeDTO.setRownum(bDANoticeService.selectNoticeRowNum(pBDANoticeDTO).getRownum());
+                modelMap.addAttribute("nextInfo", bDANoticeService.selectNextRowNumInfo(pBDANoticeDTO));
+                modelMap.addAttribute("prevInfo", bDANoticeService.selectPrevRowNumInfo(pBDANoticeDTO));
+
+                //modelMap.addAttribute("nextPrevInfo", bDANoticeService.selectNextAndPrevSeqVal(pBDANoticeDTO));
                 bDANoticeService.updateNoticeReadCnt(pBDANoticeDTO);
             }
         }

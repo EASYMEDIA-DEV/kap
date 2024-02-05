@@ -20,6 +20,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $formObj.find("input[name=detailsKey]").val($(this).data("nextSeq"));
+                        $formObj.find("input[name=mainPostYn]").val($(this).data("nextMainPostYn"));
                         location.href = "./view?" + $formObj.serialize();
                     }
                 }
@@ -28,6 +29,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $formObj.find("input[name=detailsKey]").val($(this).data("prevSeq"));
+                        $formObj.find("input[name=mainPostYn]").val($(this).data("prevMainPostYn"));
                         location.href = "./view?" + $formObj.serialize();
                     }
                 }

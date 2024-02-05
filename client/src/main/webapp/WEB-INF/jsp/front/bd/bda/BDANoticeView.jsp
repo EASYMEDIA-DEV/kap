@@ -6,6 +6,7 @@
     <form class="form-horizontal" id="frmData" name="frmData" method="post" >
         <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.ntfySeq}" />
         <input type="hidden" id="srchVal" name="srchVal" value="${rtnDto.srchVal}" />
+        <input type="hidden" id="mainPostYn" name="mainPostYn" value="" />
         <div class="cont-wrap">
             <div class="inner">
                 <div class="cont-sec-w">
@@ -38,16 +39,16 @@
                             </div>
                             <div class="page-move">
                                 <c:choose>
-                                    <c:when test="${not empty nextPrevInfo.nextSeq}">
-                                        <a class="has-article next-btn f-body2" href="javascript:" id="nextBtn" data-next-seq="${nextPrevInfo.nextSeq}"><span class="status">다음</span><span class="tit">${nextPrevInfo.nextTitl}</span></a>
+                                    <c:when test="${not empty nextInfo.ntfySeq}">
+                                        <a class="has-article next-btn f-body2" href="javascript:" id="nextBtn" data-next-seq="${nextInfo.ntfySeq}" data-next-main-post-yn="${nextInfo.mainPostYn}"><span class="status">다음</span><span class="tit">${nextInfo.titl}</span></a>
                                     </c:when>
                                     <c:otherwise>
                                         <a class="next-btn f-body2" href="javascript:"><span class="status">다음</span><span class="tit">다음글이 없습니다.</span></a>
                                     </c:otherwise>
                                 </c:choose>
                                 <c:choose>
-                                    <c:when test="${not empty nextPrevInfo.prevSeq}">
-                                        <a class="has-article prev-btn f-body2" href="javascript:" id="prevBtn" data-prev-seq="${nextPrevInfo.prevSeq}"><span class="status">이전</span><span class="tit">${nextPrevInfo.prevTitl}</span></a>
+                                    <c:when test="${not empty prevInfo.ntfySeq}">
+                                        <a class="has-article prev-btn f-body2" href="javascript:" id="prevBtn" data-prev-seq="${prevInfo.ntfySeq}" data-prev-main-post-yn="${prevInfo.mainPostYn}"><span class="status">이전</span><span class="tit">${prevInfo.titl}</span></a>
                                     </c:when>
                                     <c:otherwise>
                                         <a class="prev-btn f-body2" href="javascript:"><span class="status">이전</span><span class="tit">이전글이 없습니다.</span></a>

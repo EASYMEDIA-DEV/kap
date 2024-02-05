@@ -53,7 +53,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         //상세보기
                         $formObj.find("input[name=detailsKey]").val($(this).data("detailsKey"));
-                        location.href = "./view?detailsKey=" + $formObj.find("input[name=detailsKey]").val() + "&srchVal=" + $formObj.find("input[name=srchVal]").val();
+                        $formObj.find("input[name=mainPostYn]").val($(this).data("mainPostYn"));
+                        location.href = "./view?detailsKey=" + $formObj.find("input[name=detailsKey]").val()
+                                        + "&srchVal=" + $formObj.find("input[name=srchVal]").val()
+                                        + "&mainPostYn=" + $formObj.find("input[name=mainPostYn]").val();
                     }
                 }
             }
