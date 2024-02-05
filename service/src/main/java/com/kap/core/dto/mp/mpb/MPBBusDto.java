@@ -79,7 +79,7 @@ public class MPBBusDto extends BaseDTO {
     private String guidePscndDt;
 
     @Schema(title = "개선률", example = "5")
-    private Integer fltyImpvmRate;
+    private double fltyImpvmRate;
 
 
 
