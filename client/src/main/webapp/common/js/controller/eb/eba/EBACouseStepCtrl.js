@@ -522,8 +522,10 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			//gpcId 변경시 인증과 메시지 전부 초기화
 			$("#gpcId").change(function(){
-				$(".for-status-chk").removeClass("satisfy");
-				$("#gpcPass").val("N");
+				if($("#gpcPass").val() == "Y"){
+					$(".for-status-chk").removeClass("satisfy");
+					$("#gpcPass").val("N");
+				}
 			});
 
 			$(document).on('keydown', function(event) {

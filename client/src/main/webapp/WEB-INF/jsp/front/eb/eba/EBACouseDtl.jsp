@@ -75,7 +75,7 @@
                         </div>
                         <div class="cont-sec anchor-con scroll-motion" id="roundSection">
                             <div class="for-motion">
-                                <div class="sec-tit-area non-block"><!-- non-block : pc/mobile 둘다 flex -->
+                                <div class="sec-tit-area non-block tabLink1"><!-- non-block : pc/mobile 둘다 flex -->
                                     <p class="f-title3">회차정보</p>
                                     <p class="article-total-count f-body2">총 <span>15</span>개</p>
                                 </div>
@@ -92,7 +92,7 @@
                         </div>
                         <div class="cont-sec anchor-con scroll-motion" id="outlineSection">
                             <div class="for-motion">
-                                <div class="sec-tit-area">
+                                <div class="sec-tit-area tabLink2">
                                     <p class="f-title3">과정소개</p>
                                 </div>
                                 <div class="sec-con-area">
@@ -151,7 +151,7 @@
                         </div>
                         <div class="cont-sec scroll-motion">
                             <div class="for-motion">
-                                <div class="sec-tit-area">
+                                <div class="sec-tit-area tabLink3">
                                     <p class="f-title3">학습 기본정보</p>
                                 </div>
                                 <div class="sec-con-area">
@@ -212,7 +212,7 @@
                         </div>
                         <div class="cont-sec anchor-con scroll-motion" id="connectedSection">
                             <div class="for-motion">
-                                <div class="sec-tit-area">
+                                <div class="sec-tit-area tabLink4">
                                     <p class="f-title3">연계학습</p>
                                 </div>
                                 <div class="sec-con-area">
@@ -594,16 +594,16 @@
 
                     <!-- 앵커 영역 -->
                     <div class="anchor-btn-w">
-                        <button class="anchor-btn active" href="javascript:">
+                        <button class="anchor-btn active" href=".tabLink1" type="button">
                             <span>회차정보</span>
                         </button>
-                        <button class="anchor-btn" href="javascript:">
+                        <button class="anchor-btn" href=".tabLink2" type="button">
                             <span>과정소개</span>
                         </button>
-                        <button class="anchor-btn" href="javascript:">
+                        <button class="anchor-btn" href=".tabLink3" type="button">
                             <span>학습정보</span>
                         </button>
-                        <button class="anchor-btn" href="javascript:">
+                        <button class="anchor-btn" href=".tabLink4" type="button">
                             <span>연계학습</span>
                         </button>
                     </div>

@@ -157,8 +157,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 			//gpcId 변경시 인증과 메시지 전부 초기화
 			$("#gpcId").change(function(){
-				$("#gpcPass").val("N");
-				$("#gpcIdText").text("재인증이 필요합니다.");
+				if($("#gpcPass").val() == "Y"){
+					$("#gpcPass").val("N");
+					$("#gpcIdText").text("");
+				}
+
 			});
 
 
