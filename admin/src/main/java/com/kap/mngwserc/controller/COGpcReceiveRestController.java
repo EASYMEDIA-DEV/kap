@@ -6,15 +6,16 @@ import com.kap.core.dto.EmfMap;
 import com.kap.core.dto.co.COGpcEdctnDTO;
 import com.kap.core.dto.co.COGpcEpisdDTO;
 import com.kap.core.dto.co.COGpcPtcptDTO;
+import com.kap.core.dto.sv.sva.SVASurveyApiMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.COAAdmService;
 import com.kap.service.COGpcService;
+import com.kap.service.SVASurveyService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -46,6 +47,8 @@ public class COGpcReceiveRestController {
     private final COGpcService cOGpcService;
 
     private final COAAdmService cOAAdmService;
+
+    private final SVASurveyService sVASurveyService;
 
     //사용자 http 경로
     @Value("${app.user-domain}")
@@ -143,15 +146,13 @@ public class COGpcReceiveRestController {
      * GPC KAP 인터페이스 설문 문항 데이터 관련(Interceptor에서 처리)
      */
     @PostMapping(value="/eduSrvyList")
-    public COAAdmDTO getApiEduSrvyList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    public SVASurveyApiMstInsertDTO getApiEduSrvyList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
     {
-        //응답할 데이터
-        log.error("getApi cOSampleDTO : {}", emfMap);
-        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
-        // 명세서의 내용대로 kapSeq <== 과정순번을 받음
-        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
-        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
-        return rtnCOAAdmDTO;
+
+        String kapSeq = emfMap.getString("kapSeq");
+        SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+        sVASurveyDTO.setDetailsKey(kapSeq);
+        return sVASurveyService.selectApiSurveyDtl( sVASurveyDTO );
     }
 
     /**

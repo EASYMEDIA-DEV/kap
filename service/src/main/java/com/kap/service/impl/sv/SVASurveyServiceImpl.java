@@ -420,4 +420,21 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 
 		return respCnt;
 	}
+
+	@Override
+	public SVASurveyApiMstInsertDTO selectApiSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception {
+
+		SVASurveyApiMstInsertDTO sVASurveyApiMstInsertDTO = sVASurveyMapper.selectApiSurveyDtl(sVASurveyDTO);
+		List<SVASurveyApiQstnDtlDTO> surveyQstnDtlList = sVASurveyMapper.selectApiSurveyQstnDtlList(sVASurveyDTO);
+		SVASurveyApiQstnDtlDTO sVASurveyQstnDtlDTO = new SVASurveyApiQstnDtlDTO();
+		if(surveyQstnDtlList != null && surveyQstnDtlList.size() > 0) {
+			for (int i = 0; i < surveyQstnDtlList.size(); i++) {
+				surveyQstnDtlList.get(i).setSrvySeq(i);
+			}
+		}
+
+		sVASurveyApiMstInsertDTO.setSrvyList( surveyQstnDtlList );
+
+		return sVASurveyApiMstInsertDTO;
+	}
 }

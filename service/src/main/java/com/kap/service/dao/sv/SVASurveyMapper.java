@@ -165,4 +165,15 @@ public interface SVASurveyMapper {
      */
     public int selectSurveyScore(SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO);
 
+    /**
+     * 설문 마스터 조회(Api)
+     */
+    public SVASurveyApiMstInsertDTO selectApiSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO);
+
+    /**
+     * 설문 질문 조회(Api)
+     */
+    public List<SVASurveyApiQstnDtlDTO> selectApiSurveyQstnDtlList(SVASurveyMstSearchDTO sVASurveyDTO);
+
+
 }
