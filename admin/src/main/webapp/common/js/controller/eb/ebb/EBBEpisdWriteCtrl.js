@@ -1341,7 +1341,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			if($("#detailsKey").val() != ""){
 				search();
 
-				svCntCheck();
+				// svCntCheck();
 			}
 			
 			//질문 번호 셋팅,점수 셋팅
