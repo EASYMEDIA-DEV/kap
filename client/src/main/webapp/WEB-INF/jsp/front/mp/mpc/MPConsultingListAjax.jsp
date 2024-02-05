@@ -19,7 +19,8 @@
                                             <div class="sort-label-area">
                                                 <p class="f-caption2"><span>${appctnList.cnstgNm}</span></p>
                                             </div>
-                                                <p class="training-name f-title3 dtlBtn" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주기술지도 </p>
+                                                <%--<p class="training-name f-title3 dtlBtn" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주기술지도 </p>--%>
+                                                <p class="training-name f-title3"><a class="dtlBtn" href="javascript:" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주기술지도 </a></p><!-- 2024-01-19 a태그 추가 -->
                                         </div>
                                         <div class="group">
                                             <c:choose>
@@ -59,7 +60,8 @@
                                         <div class="sort-label-area">
                                             <p class="f-caption2"><span>${appctnList.cnstgNm}</span></p>
                                         </div>
-                                            <p class="training-name f-title3 dtlBtn" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주경영컨설팅 </p>
+                                            <%--<p class="training-name f-title3 dtlBtn" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주경영컨설팅 </p>--%>
+                                            <p class="training-name f-title3"><a class="dtlBtn" href="javascript:" data-seq="${appctnList.cnstgSeq}">${appctnList.bsnYear} 상주경영컨설팅 </a></p><!-- 2024-01-19 a태그 추가 -->
                                     </div>
                                     <div class="group">
                                         <c:choose>
