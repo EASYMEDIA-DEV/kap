@@ -1784,7 +1784,6 @@
 				, mod_ip = #{ptcptList.modIp}
 				, mod_dtm = now()
 				<if test='ptcptList.orgCmptnYn =="Y" and ptcptList.cmptnYn =="N" '>
-				<!--<if test='ptcptList.cmptnChangeYn =="Y" '>-->
 					/*변경됐을때만*/
 					, cmptn_yn = #{ptcptList.cmptnYn}
 					, cmptn_dtm = now()
