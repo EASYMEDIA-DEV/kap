@@ -394,7 +394,7 @@ define(["ezCtrl"], function(ezCtrl) {
 										$(".relField").find("input:hidden").each(function(){
 											if($(this).val() == rObj.edctnSeq && passYn != "F" && passYn != "M") passYn = "F";
 
-											if($(this).val() == $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
+											if($("#detailsKey").val() != "" && $(this).val() == $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
 										});
 
 										if(passYn =="F" || passYn =="M"){
@@ -410,7 +410,7 @@ define(["ezCtrl"], function(ezCtrl) {
 											passYn = "F";
 										}
 									});
-									if(clickObj.edctnSeq== $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
+									if($("#detailsKey").val() != "" && clickObj.edctnSeq== $("#detailsKey").val() && passYn != "F" && passYn != "M") passYn = "M";
 
 								}
 
