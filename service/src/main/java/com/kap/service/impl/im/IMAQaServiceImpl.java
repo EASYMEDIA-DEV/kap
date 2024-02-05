@@ -111,8 +111,12 @@ public class IMAQaServiceImpl implements IMAQaService {
         }
 
         if(pIMAQaDTO.getMypageYn() != null && "Y".equals(pIMAQaDTO.getMypageYn())) {
-            rtnData.setCntn(rtnData.getCntn().replace("\n", "<br>"));
-            rtnData.setRplyCntn(rtnData.getRplyCntn().replace("\n", "<br>"));
+            if(rtnData.getCntn() != null) {
+                rtnData.setCntn(rtnData.getCntn().replace("\n", "<br>"));
+            }
+            if(rtnData.getRplyCntn() != null) {
+                rtnData.setRplyCntn(rtnData.getRplyCntn().replace("\n", "<br>"));
+            }
         }
 
         return rtnData;
