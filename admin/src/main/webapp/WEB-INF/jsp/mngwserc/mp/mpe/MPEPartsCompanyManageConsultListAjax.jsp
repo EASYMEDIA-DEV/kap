@@ -22,7 +22,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.initVstFileSeq}&fileOrd=${list.list.initVstOrd}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.initVstFileSeq}&fileOrd=${list.list.initVstOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -32,7 +32,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.kickfFileSeq}&fileOrd=${list.kickfFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -42,7 +42,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.lvlupFileSeq}&fileOrd=${list.lvlupFileOrd}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.lvlupFileSeq}&fileOrd=${list.lvlupFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>
@@ -52,7 +52,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/file/view?fileSeq=${list.itrdcFileSeq}&fileOrd=${list.itrdcFileOrd}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.itrdcFileSeq}&fileOrd=${list.itrdcFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>

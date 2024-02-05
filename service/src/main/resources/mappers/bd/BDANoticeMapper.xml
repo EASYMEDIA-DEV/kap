@@ -610,6 +610,10 @@
           AND NTFY_YN = 'Y'
           AND ((EXPS_STRT_DTM <![CDATA[ <= ]]> SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
           AND EXPS_YN = 'Y'
+       <if test="srchVal != null and srchVal != ''">
+          AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+          OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+       </if>
         ORDER BY REG_DTM DESC
     </select>
 

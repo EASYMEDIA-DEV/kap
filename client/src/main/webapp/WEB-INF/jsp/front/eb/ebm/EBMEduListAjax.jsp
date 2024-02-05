@@ -208,7 +208,16 @@
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육인원</p>
-                                                    <p class="txt f-body2">${list.ptcptCnt}명</p>
+                                                    <p class="txt f-body2">
+                                                        <c:choose>
+                                                            <c:when test="${list.ptcptCnt < 10}">
+                                                                0${list.ptcptCnt}명
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                ${list.ptcptCnt}명
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </p>
                                                 </div>
                                                 <div class="info-list">
                                                     <p class="tit f-caption2">교육희망일</p>

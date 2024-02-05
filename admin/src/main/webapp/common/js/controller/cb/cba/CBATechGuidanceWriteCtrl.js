@@ -738,8 +738,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             btnPartUserModal: {
                 event: {
                     click: function () {
+                        // 등록 페이지일 경우
+                        if($("#detailsKey").val() == "") {
+                            $("#bsnmNo").val("");
+                        }
+
                         $("#srchDivide").val("Y");
                         $(".srchGubun").remove();
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             var cmpnMst = {};
                             cmpnMst.bsnmNo = data.bsnmNo.replaceAll("-", "");
@@ -795,7 +801,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         $(".svaSurveySrchLayer").one('show.bs.modal', function() {
 
                             var modal = $(this);
-                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+                            modal.appendTo("body");// 한 화면에 여러개 창이 뜰 경우를 위해 위치 선정
 
                         }).one('hidden.bs.modal', function() {
                             // Remove class for soft backdrop (if not will affect future modals)
@@ -807,7 +813,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }).modal();
                     }
                 }
-            },tabClick : {
+            },
+            tabClick : {
                 event : {
                     click : function (e){
                         if(e.target.getAttribute('href') == "#techGuidance") {
@@ -833,7 +840,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 }
             },
             //페이징 목록 갯수
-
             listRowSizeContainer : {
                 event : {
                     change : function(){
@@ -880,7 +886,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var rslt = (bfreRate - aftrRate)/bfreRate*100;
 
                         $("input[name=fltyImpvmRate]").val(rslt.toFixed(1));
-
                     }
                 }
             }, //리스트 전체 체크박스 선택시
@@ -936,7 +941,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                     phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
                                 } else {
                                     phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
-
                                 }
                             }
                         } else {
@@ -961,7 +965,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             if(appctnCheck == 10){
 
             }
-
 
             changeStts(); // 진행상태 변경
             questionSet();

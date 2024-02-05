@@ -703,7 +703,7 @@
                         </c:if>
 
 
-                        <c:if test="${rtnData.trnsfYn eq 'N'}">
+                        <c:if test="${rtnData.trnsfYn eq 'N' and rtnData.stduyMthdCd ne 'STDUY_MTHD02'}">
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">
                                     <div class="sec-tit-area">
