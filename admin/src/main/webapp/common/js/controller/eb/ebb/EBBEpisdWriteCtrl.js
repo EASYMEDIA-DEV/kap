@@ -1243,6 +1243,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					if(check.test($(this).val() )) {
 						alert("한글입력은 불가능합니다.");
+						event.preventDefault();
 						$(this).val("");
 						return false;
 					}
