@@ -410,6 +410,7 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 				DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 				LocalDateTime applyDateTime = LocalDateTime.parse(tempADT, formatter);
 				LocalDateTime modDtm = LocalDateTime.parse(tempMOD, formatter);
+
 				if(applyDateTime.compareTo(modDtm) < 0) {
 					modYn = true;
 				}

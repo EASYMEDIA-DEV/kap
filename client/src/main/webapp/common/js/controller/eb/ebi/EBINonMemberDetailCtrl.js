@@ -119,9 +119,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function () {
                         var url = $(this).data("url");
 
-                        $formObj.attr("action", url);
+                        var seqObj = {};
+                        seqObj.edctnSeq = $("#detailsKey").val();
 
-                        $formObj.submit();
+                        //정원수 체크
+                        cmmCtrl.jsonAjax(function(data){
+                            if(data != "") {
+                                var rtn = JSON.parse(data);
+
+                                //정원여유
+                                if(rtn.fxnumStta == "S") {
+                                    $formObj.attr("action", url);
+
+                                    $formObj.submit();
+                                }
+                                //정원초과
+                                else {
+                                    alert(msgCtrl.getMsg("fail.eb.ebi.step.al_010"));
+                                    // return false;
+                                    location.reload();
+                                }
+                            }
+                        }, "./fxnumChk", seqObj, "text");
                     }
                 }
             },

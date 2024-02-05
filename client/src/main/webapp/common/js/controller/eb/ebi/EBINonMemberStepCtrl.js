@@ -267,7 +267,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //정원여유
                                 if(rtn.fxnumStta == "S"){
                                     cmmCtrl.frmAjax(function(rtnData){
-                                        console.log(rtnData);
+                                        // console.log(rtnData);
                                         // var rtnData = resultData.rtnData;
                                         //과정 수정/삭제
                                         if(rtnData.regStat == "N"){

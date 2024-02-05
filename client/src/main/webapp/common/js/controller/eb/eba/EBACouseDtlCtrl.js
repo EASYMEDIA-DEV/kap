@@ -426,7 +426,28 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						seqObj.stduyMthdCd = $("#stduyMthdCd").val(); //학습방식, 온라인이면 출석정보 등록 안함
 
-						if(memSeq == "" || memSeq === undefined){
+						var stepFlag = true;
+
+						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
+						cmmCtrl.jsonAjax(function(data){
+
+							if(data != "A"){
+								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
+								// location.href="./detail?detailsKey="+$("#edctnSeq").val();
+								stepFlag = false;
+
+								if(data == "D") {
+									location.href = "./list";
+								}
+								else {
+									location.reload();
+								}
+							}
+							return false;
+						}, "/education/apply/EpisdChk", seqObj, "text")
+
+
+						if(stepFlag && (memSeq == "" || memSeq === undefined)){
 							if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
 								location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
 							} else {
@@ -442,20 +463,6 @@ define(["ezCtrl"], function(ezCtrl) {
 							alert("위원 계정은 해당 서비스를 이용할 수 없습니다.");
 							return false;
 						}
-
-						var stepFlag = true;
-						//위원인경우
-
-						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
-						cmmCtrl.jsonAjax(function(data){
-
-							if(data != "A"){
-								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
-								location.href="./detail?detailsKey="+$("#edctnSeq").val();
-								stepFlag = false;
-							}
-							return false;
-						}, "/education/apply/EpisdChk", seqObj, "text")
 
 						if(stepFlag){
 							$("#episdYear").val(episdYear);
