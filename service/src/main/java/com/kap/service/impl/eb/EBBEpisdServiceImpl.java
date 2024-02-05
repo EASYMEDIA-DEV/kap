@@ -878,6 +878,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				nextPtcptDto.setEdctnEndDtm(targetDto.getEdctnEndDtm());
 				nextPtcptDto.setEpisdSeq(targetDto.getEpisdSeq());//회차순번
 
+				nextPtcptDto.setSttsCd("EDU_STTS_CD01");
+
 				eBBEpisdMapper.insertPtcptDtl(nextPtcptDto);
 
 				//온라인 교육일때는 출석폼 입력 안함
