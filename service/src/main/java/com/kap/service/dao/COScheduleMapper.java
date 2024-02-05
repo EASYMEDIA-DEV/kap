@@ -1,6 +1,9 @@
 package com.kap.service.dao;
 
+import com.kap.core.dto.eb.EBScheduleGuideDTO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * <pre>
@@ -32,6 +35,11 @@ public interface COScheduleMapper {
      * 퇴실 안한사람 자동 퇴실처리
      */
     public int updatAtndcInfo();
+
+    /**
+     * 교육 시작 3일 전 교육 일정 안내 대상자 조회
+     */
+    public List<EBScheduleGuideDTO> selectSubjectList();
 
 
 

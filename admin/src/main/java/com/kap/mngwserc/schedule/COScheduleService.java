@@ -3,6 +3,7 @@ package com.kap.mngwserc.schedule;
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
+import com.kap.core.dto.eb.EBScheduleGuideDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
 import com.kap.service.COMessageService;
 import com.kap.service.EBDSqCertiReqService;
@@ -94,6 +95,37 @@ public class COScheduleService {
         cOScheduleMapper.updatAtndcInfo();
 
         log.info("EP_EDCTN_PTCPT_STTS_ATNDC Schedule End");
+    }
+
+    /**
+     * 교육 시작 3일 전 교육 일정 안내 메일 발송 (매일 오전 09시 30분)
+     */
+    @Scheduled(cron = "0 30 9 * * ?") // 초(0~59) 분(0~59) 시(0~23) 일(1~31) 월(1~12) 요일(1~7, 일요일 : 1) 연도(생략가능)
+    @SchedulerLock(name = "EP_EDCTN_SCHEDULE_GUIDE_CRTFN", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
+    public void selectEdctnScheduleGuideCrtfn() throws Exception {
+        log.info("EP_EDCTN_SCHEDULE_GUIDE_CRTFN Schedule Start");
+
+        List<EBScheduleGuideDTO> subjectList = cOScheduleMapper.selectSubjectList();
+
+        if (subjectList != null && subjectList.size() > 0) {
+            //메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("[KAP] 교육일정 안내");
+            for (EBScheduleGuideDTO data : subjectList) {
+                COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                receiverDto.setEmail(data.getEmail());
+                receiverDto.setName(data.getName());
+                receiverDto.setNote1(data.getNm());
+                receiverDto.setNote2(data.getPlaceNm());
+                receiverDto.setNote3(data.getEdctnStrtDtm());
+                receiverDto.setNote4(data.getEdctnEndDtm());
+                receiverDto.setNote5(data.getCmpnNm());
+                cOMailDTO.getReceiver().add(receiverDto);
+            }
+            cOMessageService.sendMail(cOMailDTO, "EBBScheduleGuide.html");
+
+            log.info("EP_EDCTN_SCHEDULE_GUIDE_CRTFN Schedule End");
+        }
     }
 
 
