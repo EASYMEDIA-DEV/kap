@@ -35,7 +35,9 @@
                                 <div class="training-view-page">
                                     <div class="training-list">
                                         <div class="img-area">
-                                            <img src="${rtnData.webPath}" alt="">
+                                            <c:if test="${not empty rtnData.webPath}">
+                                                <img src="${rtnData.webPath}" alt="${rtnData.fileDsc}">
+                                            </c:if>
                                         </div>
                                         <div class="txt-area">
                                             <div class="top-line">

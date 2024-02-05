@@ -55,7 +55,7 @@
                               접수마감: end
                             -->
                             <div class="img-area">
-                                <c:if test="${list.webPath}">
+                                <c:if test="${not empty list.webPath}">
                                     <img src="${list.webPath}" alt="${list.fileDsc}">
                                 </c:if>
                             </div>
