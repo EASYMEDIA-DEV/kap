@@ -799,7 +799,7 @@
                     </div>
                     <div class="article-list-w txt-list">
                         <c:forEach var="list" items="${faqData.list}" varStatus="status">
-                            <a class="list-item" href="javascript:" title="링크 이동">
+                            <a class="list-item" href="/foundation/board/faq/list?faqSeq=${list.faqSeq}" title="링크 이동">
                                 <div class="txt-box">
                                     <p class="tit f-head">${list.titl}</p>
                                     <span class="sub-txt f-body2">${list.ctgryName}</span>

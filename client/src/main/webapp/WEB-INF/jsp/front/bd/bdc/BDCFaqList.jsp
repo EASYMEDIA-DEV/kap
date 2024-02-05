@@ -3,6 +3,7 @@
     <form class="form-horizontal" id="frmData" name="frmData" method="get">
         <!-- 카테고리별 화면으로 이동시 시퀀스 -->
         <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+        <input type="hidden" id="seq" name="seq" value="${faqSeq}" />
         <div class="cont-wrap">
             <!--
               신청 페이지: apply-page 클래스 추가

@@ -43,6 +43,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $(".moreBtn").hide();
             }
 
+            var seq = $formObj.find("input[name=seq]").val();
+            if($formObj.find("input[name=seq]").val() != "") {
+                var selector = '[data-details-key="' + seq + '"] .acco-hide-area';
+                $('#listContainer').find(selector).css('display', 'block');
+                $('.moreBtn').trigger('click');
+            }
         }, "./select", $formObj, "GET", "html");
     }
 
@@ -106,12 +112,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
         immediately : function() {
             search();
-            $(".btnArea").children("a:first").addClass("active");
-
         }
     };
-
-
     ctrl.exec();
 
     return ctrl;
