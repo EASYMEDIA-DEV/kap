@@ -110,6 +110,11 @@ public class IMAQaServiceImpl implements IMAQaService {
             rtnData.setRplyFileList(cOFileService.getFileInfs(rtnData.getRplyFileSeq()));
         }
 
+        if(pIMAQaDTO.getMypageYn() != null && "Y".equals(pIMAQaDTO.getMypageYn())) {
+            rtnData.setCntn(rtnData.getCntn().replace("\n", "<br>"));
+            rtnData.setRplyCntn(rtnData.getRplyCntn().replace("\n", "<br>"));
+        }
+
         return rtnData;
     }
 
@@ -152,7 +157,8 @@ public class IMAQaServiceImpl implements IMAQaService {
             //이름
             receiverDto.setName(pIMAQaDTO.getRegName());
             //치환문자1
-            receiverDto.setNote1(MaskingUtil.nameMasking(pIMAQaDTO.getRegName()));
+//            receiverDto.setNote1(MaskingUtil.nameMasking(pIMAQaDTO.getRegName()));
+            receiverDto.setNote1(pIMAQaDTO.getRegName());
             //치환문자2
             receiverDto.setNote2(pIMAQaDTO.getParntCtgryNm());
             //치환문자3
