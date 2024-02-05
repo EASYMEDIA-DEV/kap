@@ -44,6 +44,11 @@ public class EXGExamEdctnPtcptRspnMst extends BaseDTO {
     private Integer examScore;
     @Schema(title = "수료여부")
     private String cmptnYn;
+    @Schema(title = "수료번호")
+    private String crtfctNo;
+
+
+
     @Schema(title = "질문 답변")
     private List<EXGExamQstnRspnDtlDTO> qstnList;
     @Schema(title = "객관식 답변")

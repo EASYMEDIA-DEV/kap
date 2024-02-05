@@ -164,4 +164,10 @@ public interface EBEExamMapper {
      * 교육 참여 온라인 강의 전체, 수강 수
      */
     public HashMap getEdctnLtcrSum(EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst);
+
+    /**
+     *  관리자 - 오프라인 시험일경우 빈 마스터만 넣어줌
+     */
+    public int insertOtsdExamPtcptMst(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
+
 }

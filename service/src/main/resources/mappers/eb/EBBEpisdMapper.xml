@@ -2980,6 +2980,28 @@
 		where ptcpt_seq = #{ptcptSeq}
 	</update>
 
+	<!--
+          쿼리명 : EBBEpisdMapper.selectPtcptDtl
+          설  명 : 마이페이지 - 수료진행
+           수정일     수정자       수정내용
+         ==========   ======    ==============
+         2024.01.24   김학규       최초생성
+	 -->
+	<select id="selectPtcptExamDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT
+		    EDCTN_SEQ
+			, EPISD_SEQ
+			, EPISD_YEAR
+			, EPISD_ORD
+			, MEM_SEQ
+			, PTCPT_SEQ
+			, CMPTN_YN
+			, CMPTN_DTM
+			, crtfct_no
+		FROM ep_edctn_ptcpt_mst
+		where ptcpt_seq = #{ptcptSeq}
+	</select>
+
 
 
 	<!--
