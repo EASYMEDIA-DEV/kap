@@ -40,6 +40,9 @@ public class SVASurveyApiQstnDtlDTO{
     @Schema(title = "설문타입", example = "")
     private String srvyType;
 
+    @Schema(title = "차트항목", example = "")
+    private String qstnSmry;
+
     @Schema(title = "질문제목", example = "")
     private String qstn;
 

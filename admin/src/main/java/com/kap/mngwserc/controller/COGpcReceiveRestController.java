@@ -7,6 +7,7 @@ import com.kap.core.dto.co.COGpcEdctnDTO;
 import com.kap.core.dto.co.COGpcEpisdDTO;
 import com.kap.core.dto.co.COGpcPtcptDTO;
 import com.kap.core.dto.sv.sva.SVASurveyApiMstInsertDTO;
+import com.kap.core.dto.sv.sva.SVASurveyApiRspnInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.COAAdmService;
@@ -159,18 +160,15 @@ public class COGpcReceiveRestController {
      * GPC KAP 인터페이스 설문 참여 데이터 관련(Interceptor에서 처리)
      */
     @PostMapping(value="/eduSrvyPtctpList")
-    public COAAdmDTO getApiEduSrvyPtctpList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
+    public SVASurveyApiRspnInsertDTO getApiEduSrvyPtctpList(@RequestBody @MapData EmfMap emfMap, HttpServletRequest request) throws Exception
     {
-        //응답할 데이터
-        log.error("getApi cOSampleDTO : {}", emfMap);
-        COAAdmDTO cOAAdmDTO = new COAAdmDTO();
-        // 명세서의 내용대로 kapSchdSeq, KAPID <== 회차순번을 받음
-        //cOAAdmDTO.setAuthCd(emfMap.getString("detailsKey"));
-        COAAdmDTO rtnCOAAdmDTO = cOAAdmService.selectAdmList(cOAAdmDTO);
-        return rtnCOAAdmDTO;
+        String kapSchdSeq = emfMap.getString("kapSchdSeq");
+        String kapId = emfMap.getString("kapId");
+        SVASurveyMstSearchDTO sVASurveyDTO = new SVASurveyMstSearchDTO();
+        sVASurveyDTO.setDetailsKey(kapSchdSeq);
+        sVASurveyDTO.setRegId(kapId);
+        return sVASurveyService.selectApiRspnSurveyDtl( sVASurveyDTO );
+
+
     }
-
-
-
-
 }

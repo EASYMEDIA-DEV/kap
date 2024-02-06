@@ -92,4 +92,10 @@ public interface SVASurveyService {
 	 */
 	public SVASurveyApiMstInsertDTO selectApiSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
 
+	/**
+	 * 응답 상세(API)
+	 */
+	public SVASurveyApiRspnInsertDTO selectApiRspnSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
+
+
 }
