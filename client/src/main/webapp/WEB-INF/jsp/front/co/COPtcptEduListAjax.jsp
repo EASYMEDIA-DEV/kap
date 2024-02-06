@@ -8,7 +8,9 @@
                     <div class="training-view-page">
                         <div class="training-list">
                             <div class="img-area">
-                                <img src="${list.webPath}" alt="">
+                                <c:if test="${not empty list.webPath}">
+                                    <img src="${list.webPath}" alt="${list.fileDsc}">
+                                </c:if>
                             </div>
                             <div class="txt-area">
                                 <div class="top-line">

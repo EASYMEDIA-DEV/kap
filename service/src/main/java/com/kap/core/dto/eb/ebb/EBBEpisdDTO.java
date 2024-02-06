@@ -475,6 +475,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Builder.Default
     private String mypageYn = "N";
 
+    @Schema(title = "마이페이지 증명서 발급이동 유무", example = "Y/N")
+    @Builder.Default
+    private String crtfctYn = "N";
+
     @Schema(title = "마이페이지 교육신청내역 교육/방문교육 구분자 교육과정:E, 방문교육:V", example = "E/V")
     private String eduGubun;
 

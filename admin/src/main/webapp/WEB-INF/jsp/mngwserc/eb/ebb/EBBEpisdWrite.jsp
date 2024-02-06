@@ -974,7 +974,7 @@
                             <label class="col-sm-1 control-label">교육 참여자<span class="star text-danger"> *</span></label>
                             <div class="col-sm-5">
                                 <p class="form-control-static">
-                                    <c:if test="${rtnDto.edctnMemCnt ne ''}">${rtnDto.edctnMemCnt}명</c:if>
+                                        ${not empty rtnDto.edctnMemCnt ? rtnDto.edctnMemCnt : 0}명
                                 </p>
                             </div>
                             <label class="col-sm-1 control-label">설문 참여자<span class="star text-danger"> *</span></label>

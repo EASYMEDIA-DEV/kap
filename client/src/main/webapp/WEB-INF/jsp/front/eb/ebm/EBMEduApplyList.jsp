@@ -127,7 +127,7 @@
                                                                                 <label for="cmptnYn">전체</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
-                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn1" name="cmptnYn" value="Y">
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn1" name="cmptnYn" value="Y" <c:if test="${rtnData.crtfctYn eq 'Y'}">checked</c:if>  >
                                                                                 <label for="cmptnYn1">수료</label>
                                                                             </div>
                                                                             <div class="form-checkbox">

@@ -16,6 +16,7 @@
         <input type="hidden" id="episdOrd" name="episdOrd" value="${ rtnData.episdOrd }" />
         <input type="hidden" id="episdYear" name="episdYear" value="${ rtnData.episdYear }" />
         <input type="hidden" id="ptcptSeq" name="ptcptSeq" value="${ rtnData.ptcptSeq }" />
+        <input type="hidden" id="memSeq" name="memSeq" value="${ rtnData.memSeq }" />
 
         <input type="hidden" id="srvYn" name="srvYn" value="${rtnData.srvYn}" />
 

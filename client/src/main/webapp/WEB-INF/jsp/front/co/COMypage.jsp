@@ -51,20 +51,20 @@
                                                 <ul class="counts">
                                                     <li class="count">
                                                         <span class="f-sub-head">교육사업</span>
-                                                        <a class="f-title1" href="javascript:">${eduYearCnt}</a>
+                                                        <a class="f-title1" href="/my-page/edu-apply/list">${eduYearCnt}</a>
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">컨설팅사업</span>
-                                                        <a class="f-title1" href="javascript:">${coeYearCnt}</a>
+                                                        <a class="f-title1" href="/my-page/consulting/list">${coeYearCnt}</a>
                                                     </li>
                                                     <li class="count">
                                                         <span class="f-sub-head">상생사업</span>
-                                                        <a class="f-title1" href="javascript:">${consultingYearCnt}</a>
+                                                        <a class="f-title1" href="/my-page/coexistence/list">${consultingYearCnt}</a>
                                                     </li>
                                                 </ul>
                                                 <div class="pc btn-wrap">
                                                     <div class="btn-set">
-                                                        <a class="btn-solid small white-bg" href="javascript:"><span>증명서 발급</span></a>
+                                                        <a class="btn-solid small white-bg" href="/my-page/edu-apply/list?crtfctYn=Y"><span>증명서 발급</span></a>
                                                         <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                                     </div>
                                                 </div>
