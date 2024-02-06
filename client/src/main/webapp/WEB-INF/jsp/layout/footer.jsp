@@ -75,10 +75,10 @@
 							<c:when test="${not empty loginMap.authCd}">
 
 								<c:choose>
-									<c:when test="${loginMap.authCd eq 'CP'}">
+									<c:when test="${loginMap.authCd eq 'CS'}">
 										<a class="quick-btn certificate" href="#" onclick="alert('위원 계정은 해당 서비스를 이용할 수 없습니다.');"><span class="txt">증명서</span></a>
 									</c:when>
-									<c:when test="${loginMap.authCd ne 'CP'}">
+									<c:when test="${loginMap.authCd ne 'CS'}">
 										<a class="quick-btn certificate" href="/my-page/edu-apply/list" ><span class="txt">증명서</span></a>
 									</c:when>
 								</c:choose>

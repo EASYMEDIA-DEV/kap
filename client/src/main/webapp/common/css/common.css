@@ -1173,7 +1173,7 @@ footer .copy-area span:last-child:after {display: none;}
 .dash-list-w .dash-list .item {display: flex;}
 .dash-list-w .dash-list .item:first-child {width: 54%;}
 .dash-list-w .dash-list .item:last-child {width: 46%;}
-.dash-list-w .dash-list .item .item-title {margin-right: 50rem;}
+.dash-list-w .dash-list .item .item-title {margin-right: 50rem; min-width: 40rem;}
 .dash-list-w .dash-list .item .item-txt {padding-right: 40rem; /*word-wrap: break-word; word-break: break-all;*/}
 @media all and (max-width: 1023px) {
   .data-view-w ~ .data-view-w {margin-top: 60rem;}
@@ -1186,7 +1186,7 @@ footer .copy-area span:last-child:after {display: none;}
   .dash-list-w .dash-list .item {display: block; margin-top: 8rem; padding-right: 0; width: 100%;}
   .dash-list-w .dash-list .item:first-child {width: 100%; margin-top: 0;}
   .dash-list-w .dash-list .item:last-child {width: 100%;}
-  .dash-list-w .dash-list .item .item-title {margin-right: 0; font-size: 13rem;}
+  .dash-list-w .dash-list .item .item-title {margin-right: 0; min-width: unset; font-size: 13rem;}
   .dash-list-w .dash-list .item .item-txt {margin-top: 4rem; padding-right: 0;}
 }
 /* --------------------------------------------- data view form 데이터 뷰 - END --------------------------------------------- */
@@ -2879,7 +2879,7 @@ footer .copy-area span:last-child:after {display: none;}
 .training-view-page .training-list .img-area img {width: 100%; height: 100%; object-fit: cover;}
 .training-view-page .training-list .txt-area {display: flex; align-items: flex-start; flex-direction: column; justify-content: space-between;}
 .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 6rem;}
-.training-view-page .training-list .txt-area .training-explain-txt {margin-top: 13rem; color: #06161E; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem;}
+.training-view-page .training-list .txt-area .training-explain-txt {margin-top: 13rem; color: #06161E; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem; word-break: break-all; word-wrap: break-word;}
 .training-view-page .training-list .class-property-w {display: flex; flex-wrap:wrap}
 .training-view-page .training-list .class-property-w .property-list {display: flex; align-items: center; position: relative; /*min-height: 32rem;*/ margin-right: 20rem; padding-right: 20rem;}
 .training-view-page .training-list .class-property-w .property-list:after {content: ''; display: block; position: absolute; right: 0; top: 50%; width: 1px; height: 44rem; margin-top: -22rem; background-color: #ECEEEF;}
@@ -3023,7 +3023,8 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .training-view-page .training-list .txt-area .top-line + * {align-self: flex-start;}
 .training-confirm .training-view-page .training-list .top-line + .status-info-w {flex-wrap: wrap; padding-left: 24rem;}
 .training-confirm .training-view-page .training-list .top-line + .group {padding-left: 24rem;}
-.training-confirm .training-view-page .training-list .txt-area .training-name a {position: relative;}
+.training-confirm .training-view-page .training-list .txt-area .training-name {word-break: break-all; word-wrap: break-word;}
+.training-confirm .training-view-page .training-list .txt-area .training-name a {position: relative; word-break: break-all; word-wrap: break-word;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a::after {content: ""; vertical-align: middle; position: relative; top: -2rem; display: inline-block; margin-left: 4rem;  width: 32rem; height: 32rem; background: url("/common/images/icon-arrow-right.svg") no-repeat center center / 100% auto; transition: .3s transform;}
 .training-confirm .training-view-page .training-list .txt-area .training-name a:hover::after {transform: translateX(6rem);}
 .training-confirm .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 20rem;}
