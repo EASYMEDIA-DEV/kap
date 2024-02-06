@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 	<div class="container-fluid">
-		<div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/eba/EBACouseListCtrl">
+		<div class="card-body" data-controller="controller/eb/eba/EBACheckBoxCtrl controller/eb/eba/EBACouseListCtrl">
 			<h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
 			<form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
 				<!-- 현재 페이징 번호 -->

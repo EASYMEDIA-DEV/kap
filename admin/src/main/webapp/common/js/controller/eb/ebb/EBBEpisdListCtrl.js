@@ -111,6 +111,45 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+			//등록 페이지 이동
+			btnWrite : {
+				event : {
+					click : function() {
+						//파라미터를 물고 가야함. 목록 버튼 클릭시 검색 조건 물고 넘겨야함.
+						$formObj.find("input[name=_csrf]").remove();
+						location.href = "./write";
+					}
+				}
+			},
+
+			//검색 초기화
+			btnRefresh : {
+				event : {
+					click : function() {
+						//FORM 데이터 전체 삭제
+						var pageIndex 	= $formObj.find("#pageIndex").val();
+						var listRowSize = $formObj.find("#listRowSize").val();
+						var pageRowSize = $formObj.find("#pageRowSize").val();
+						var csrfKey 	= $formObj.find("#csrfKey").val();
+						var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+						$formObj.clearForm();
+						//FORM 전송 필수 데이터 삽입
+						$formObj.find("#pageIndex").val( pageIndex );
+						$formObj.find("#listRowSize").val( listRowSize );
+						$formObj.find(".listRowSizeContainer").val( listRowSize );
+						$formObj.find("#pageRowSize").val( pageRowSize );
+						$formObj.find("#csrfKey").val( csrfKey );
+						$formObj.find("input[name=srchLayer]").val( srchLayer );
+
+						//캘린더 초기화
+						cmmCtrl.setPeriod(this, "", "", false);
+
+						//검색 로직 실행
+						$formObj.find("#btnSearch").click();
+					}
+				}
+			},
+
 			btnExcel : {
 				event : {
 					click : function() {
@@ -154,8 +193,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						var actionForm = {};
 
-
-
 						var seqList = new Array();
 						$("#vueList").find("input:checkbox[name='delValueList']:checked").each(function(){
 							seqList.push($(this).data("episdseq"));
@@ -183,46 +220,8 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
-
 		},
 		classname : {
-
-			classType : {
-				event : {
-					click : function() {
-
-						$(".cdListContainer").css("display","none");
-						$(".cdListContainer").attr("disabled", true);
-
-						var clickBox = $(this).find("input:checkbox").val();
-						if($(this).find("input:checkbox").is(":checked")){
-							$(".cdListContainer."+clickBox).find("input:checkbox").prop("checked", true);
-						}
-
-						$(".classType input:checked").each(function(){
-
-							var checkVal = $(this).val();
-
-							var cdnm = $(this).data("cdnm");
-							$("."+checkVal).find(".cdnm").html(cdnm);
-							$("."+checkVal).css("display","block");
-
-							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-
-							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
-
-						});
-
-						if($(".classType input:checked").length == 0){
-							$(".cdListContainer").css("display","none");
-							$(".cdListContainer").attr("disabled", true);
-							$(".cdListContainer").find("input:checkbox").prop("checked", false);
-						}
-
-					}
-				}
-			},
-
 
 			//페이징 처리
 			pageSet : {
@@ -276,52 +275,6 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
-			//리스트 전체 체크박스 선택시
-			checkboxAll : {
-				event : {
-					click : function() {
-						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxSingle가 변경됨
-						var trgtArr = $(this).closest("div").find(".checkboxSingle");
-						if (trgtArr.length > 0)
-						{
-							var isChecked = false;
-							if($(this).is(":checked"))
-							{
-								isChecked = true;
-							}
-							$.each(trgtArr, function(){
-								$(this).prop("checked", isChecked);
-							})
-						}
-						console.log($(this).closest("label").attr("class"));
-
-						/*if($(this).closest("label").attr("class") == "checkbox-inline c-checkbox classType"){
-							$(this).closest("div").find(".classType:not(.classType:first)").trigger("click");
-							$(".cdListContainer").find("input:checkbox").prop("checked",true);
-						}*/
-
-					}
-				}
-			},
-			checkboxSingle : {
-				event : {
-					click : function() {
-						//상위 DIV 안의 checkboxSingle를 찾아야함. 그렇지 않음 페이지 모든 .checkboxAll이 변경됨
-						var trgtObj = $(this).closest("div");
-						var allCbxCnt = trgtObj.find(".checkboxSingle").length;
-						var selCbxCnt = trgtObj.find(".checkboxSingle:checked").length;
-						if (allCbxCnt == selCbxCnt)
-						{
-							trgtObj.find(".checkboxAll").prop("checked", true);
-						}
-						else
-						{
-							trgtObj.find(".checkboxAll").prop("checked", false);
-						}
-					}
-				}
-			},
-
 			listRowSizeContainer : {
 				event : {
 					change : function(){
@@ -333,50 +286,6 @@ define(["ezCtrl"], function(ezCtrl) {
 			}
 		},
 		immediately : function() {
-
-			//교육차수고나리 과정분류 체크박스 컨트롤
-			$("input[name='ctgryCd']").click(function(){
-
-				var closestClass = $(this).closest(".cdListContainer").attr("class");
-
-				var ctryClass = closestClass.substring(closestClass.indexOf("CLASS"), closestClass.length);
-
-				//클래스명을 받아온다
-				//해당 클래스명으로 된 영역의 모든 체크박스가 해제되면 부모레벨의 모든 체크박스도 해제시킴
-
-				if($(this).closest(".cdListContainer").find("input:checkbox:checked").length == 0){
-					//$("input[name='prntCd']").prop("checked", false);
-
-					$("input:checkbox."+ctryClass).prop("checked", false);
-
-				}else{
-					$("input:checkbox."+ctryClass).prop("checked", true);
-				}
-
-				//전부 다 해제 했을경우 전체도 해제
-				if($("input[name='ctgryCd']:checked").length == 0 || $(".classType:not(.classType:first)").find("input:checked").length != 3){
-					$(".classType").find(".checkboxAll").prop("checked", false);
-				}
-
-				//중분류 타입별 체크박스 선택된것 없으면 숨김처리
-				if($(".cdListContainer.CLASS01").find("input:checked").length == 0){
-					$(".cdListContainer.CLASS01").css("display","none");
-					$(".cdListContainer.CLASS01").attr("disabled", true);
-					$(".cdListContainer.CLASS01").find("input:checkbox").prop("checked", false);
-				}
-				if($(".cdListContainer.CLASS02").find("input:checked").length == 0){
-					$(".cdListContainer.CLASS02").css("display","none");
-					$(".cdListContainer.CLASS02").attr("disabled", true);
-					$(".cdListContainer.CLASS02").find("input:checkbox").prop("checked", false);
-				}
-				if($(".cdListContainer.CLASS03").find("input:checked").length == 0){
-					$(".cdListContainer.CLASS03").css("display","none");
-					$(".cdListContainer.CLASS03").attr("disabled", true);
-					$(".cdListContainer.CLASS03").find("input:checkbox").prop("checked", false);
-				}
-
-
-			});
 
 			//리스트 조회
 			//폼 데이터 처리
