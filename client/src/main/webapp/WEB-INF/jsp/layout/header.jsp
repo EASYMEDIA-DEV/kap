@@ -35,6 +35,7 @@
 	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 	<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
 	<meta property="og:image" content="${ogImage}" id="og-image-value"/>
+	<meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 2024-02-05 meta태그 추가 -->
 	<link rel="stylesheet" href="/common/css/swiper.css" />
 	<link rel="stylesheet" href="/common/css/fonts.css" />
 	<link rel="stylesheet" href="/common/css/common.css?bust=${sysDate}" />

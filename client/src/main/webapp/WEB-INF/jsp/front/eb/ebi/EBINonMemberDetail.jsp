@@ -34,7 +34,7 @@
         <div class="cont-wrap"><!-- 2024-01-04 no-mgt 클래스 삭제 -->
             <div class="sub-top-vis-area">
                 <div class="page-tit-area">
-                    <p class="page-tit f-xlarge-title"><span class="for-move">교육신청 ${parseEdctnStrtDtm}</span></p>
+                    <p class="page-tit f-xlarge-title"><span class="for-move">교육신청</span></p>
                 </div>
             </div>
 
@@ -160,9 +160,9 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        <div class="paragraph">
+                                        <%--<div class="paragraph">
                                             <p class="f-sub-head">${ rtnData.smmryNm }</p>
-                                        </div>
+                                        </div>--%>
                                         <div class="paragraph">
                                             <p class="f-sub-head">${ rtnData.itrdcCntn }</p>
                                         </div>
@@ -179,7 +179,8 @@
                                     <div class="txt-sec">
                                         <div class="ul-txt-w highlight">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">${ rtnData.stduyTrgtCntn }</p>
+                                                <%--<p class="ul-txt has-dot">${ rtnData.stduyTrgtCntn }</p>--%>
+                                                <p class="ul-txt">${ rtnData.stduyTrgtCntn }</p>
                                             </div>
                                         </div>
                                     </div>

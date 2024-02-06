@@ -48,7 +48,7 @@
                                             </tr>
                                             <tr>
                                                 <th>전화번호</th>
-                                                <td>${ rtnData.picTelNo }</td>
+                                                <td>${ kl:hpNum(rtnData.picTelNo) }</td>
                                             </tr>
                                             </tbody>
                                         </table>

@@ -190,7 +190,7 @@
                                         </div>
                                         <div class="row">
                                             <div class="th">
-                                                <p class="title f-head">구분<span class="essential-mark color-sky">*</span></p>
+                                                <p class="title f-head">업체명<span class="essential-mark color-sky">*</span></p>
                                             </div>
                                             <div class="td">
                                                 <div class="data-line-w">
@@ -206,14 +206,14 @@
                                         </div>
                                         <div class="row">
                                             <div class="th">
-                                                <p class="title f-head">이름<span class="essential-mark color-sky">*</span></p>
+                                                <p class="title f-head">성명<span class="essential-mark color-sky">*</span></p>
                                             </div>
                                             <div class="td">
                                                 <div class="data-line-w">
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="이름 입력" id="name" name="name" title="이름" maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');">
+                                                                <input type="text" placeholder="성명 입력" id="name" name="name" title="성명" maxlength="50" oninput="this.value = this.value.replace(/[^a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ]/g, '');">
                                                             </div>
                                                         </div>
                                                     </div>

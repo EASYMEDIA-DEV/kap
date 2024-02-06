@@ -136,8 +136,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 //정원초과
                                 else {
                                     alert(msgCtrl.getMsg("fail.eb.ebi.step.al_010"));
-                                    // return false;
-                                    location.reload();
+                                    return false;
+                                    // location.reload();
                                 }
                             }
                         }, "./fxnumChk", seqObj, "text");
