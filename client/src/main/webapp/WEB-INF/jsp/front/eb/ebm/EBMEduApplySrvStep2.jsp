@@ -98,7 +98,7 @@
 
                                             <div class="question-tit">
                                                 <p class="number ${qstnList.cd}questionTxt">Q1</p>
-                                                <p class="tit f-sub-head"> <c:if test="${qstnList.cd eq 'EDU05'}"><strong>${qstnList.isttrName} 강사의 </strong></c:if>${qstnList.qstnNm} <c:if test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}"><span class="essential-mark color-sky">*</span></c:if></p>
+                                                <p class="tit f-sub-head"> <c:if test="${qstnList.cd eq 'EDU05'}"><strong>${qstnList.isttrName}</strong>&nbsp;</c:if>${qstnList.qstnNm} <c:if test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}"><span class="essential-mark color-sky">*</span></c:if></p>
                                             </div>
                                             <div class="survey-con">
                                                 <c:choose>
