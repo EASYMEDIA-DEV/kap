@@ -78,7 +78,19 @@ public class EBMMypageController
     @GetMapping("/my-page/edu-apply/list")
     public String getApplyList(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
+        String vwUrl = "front/eb/ebm/EBMEduApplyList.front";
         try{
+
+            //회원 기본정보 호출
+            MPAUserDto mpaUserDto = new MPAUserDto();
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+            if(!applicantDto.getMemCd().equals("CP")) {
+                modelMap.addAttribute("msg", "위원 계정은 해당 서비스를 이용할 수 없습니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
 
             // 공통코드 배열 셋팅
             ArrayList<String> cdDtlList = new ArrayList<String>();
@@ -108,6 +120,8 @@ public class EBMMypageController
 
             //나의 1:1문의 호출
 
+
+
         }catch (Exception e){
             if (log.isDebugEnabled())
             {
@@ -117,7 +131,7 @@ public class EBMMypageController
         }
 
 
-        return "front/eb/ebm/EBMEduApplyList.front";
+        return vwUrl;
 
     }
 
