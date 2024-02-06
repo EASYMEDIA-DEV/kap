@@ -290,7 +290,7 @@
                                         <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                     </div>
                                 </div>
-                                <p class="last-date f-caption2"><span>최근접속일</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</span></p>
+                                <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</span></p>
                             </div>
                         </c:if>
 					</div>
@@ -319,7 +319,7 @@
 															<li>
 																<div class="for-move">
 																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
-																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 && menu2.children[0].attr.gnbYn eq 'Y'}">
 																		<ul class="three-pack">
 																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
 																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
