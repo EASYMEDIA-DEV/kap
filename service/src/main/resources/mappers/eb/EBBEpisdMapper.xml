@@ -219,6 +219,10 @@
 					<!--학습시간 긴순-->
 					ORDER BY stduy_dd_cd_nm desc
 				</when>
+				<when test="srchOrder == 5">
+					<!-- 교육신청 상세 페이지 - 접수 마감일 최신순으로 정렬 -->
+					ORDER BY accs_end_dtm desc
+				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
 					ORDER BY accs_status_order ASC, accs_order_day asc

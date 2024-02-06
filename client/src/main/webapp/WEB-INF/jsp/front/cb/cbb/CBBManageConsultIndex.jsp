@@ -40,7 +40,15 @@
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>"><span>신청하기</span></a>
+                                        <a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>"
+                                            <c:choose>
+                                                <c:when test="${not empty loginMap}">
+                                                    href="./application"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    href="javascript:"
+                                                </c:otherwise>
+                                            </c:choose>><span>신청하기</span></a>
                                     </div>
                                 </div>
 
@@ -77,7 +85,7 @@
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" href="javascript:" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -93,7 +101,7 @@
                             <div class="list-sec">
                                 <div class="article-list-w txt-card-list" id="infoCard"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
                                     <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
-                                        <a class="list-item popOpen" title="팝업 열기">
+                                        <a class="list-item popOpen" href="javascript:" title="팝업 열기">
                                             <div class="bg">
                                                 <img src="${csList.webPath}" alt="">
                                             </div>
@@ -157,7 +165,15 @@
                                     <!-- <a class="btn-solid small gray-bg has-icon download" href="javascript:" download title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a> --><!-- 2024-01-24 다운로드 버튼 삭제-->
                                 </div>
                                 <div class="btn-set">
-                                    <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
+                                    <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>"
+                                        <c:choose>
+                                            <c:when test="${not empty loginMap}">
+                                                href="./application"
+                                            </c:when>
+                                            <c:otherwise>
+                                                href="javascript:"
+                                            </c:otherwise>
+                                        </c:choose>><span>신청하기</span></a>
                                 </div>
                             </div>
 

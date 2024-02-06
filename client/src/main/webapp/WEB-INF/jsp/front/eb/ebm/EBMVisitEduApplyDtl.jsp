@@ -1,4 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <div id="wrap" data-controller="controller/eb/ebm/EBMVisitEduApplyDtlCtrl">
     <input type="hidden" class="notRequired" id="vstSeq" name="vstSeq" value="${visitEduApplyList.vstSeq}" />
     <input type="hidden" class="notRequired" id="memSeq" name="memSeq" value="${visitEduApplyList.memSeq}" />
@@ -117,10 +119,6 @@
                                             <tr>
                                                 <th>신청자</th>
                                                 <td>${applicantInfo.name}</td>
-                                            </tr>
-                                            <tr>
-                                                <th>성별</th>
-                                                <td></td>
                                             </tr>
                                             <tr>
                                                 <th>휴대폰번호</th>
@@ -466,14 +464,7 @@
                                                 </div>
                                                 <div class="td">
                                                     <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${visitEduApplyList.ptcptCnt < 10}">
-                                                                0${visitEduApplyList.ptcptCnt}명
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                ${visitEduApplyList.ptcptCnt}명
-                                                            </c:otherwise>
-                                                        </c:choose>
+                                                        ${visitEduApplyList.ptcptCnt}명
                                                     </p>
                                                 </div>
                                             </div>
@@ -501,155 +492,158 @@
                             </div>
                         </div>
                     </div>
-                    <div class="cont-sec no-border scroll-motion">
-                        <div class="for-motion">
-                            <div class="sec-tit-area">
-                                <p class="f-title3">방문교육 결과</p>
-                            </div>
-                            <div class="sec-con-area">
-                                <div class="gray-bg-sec">
-                                    <div class="data-view-w">
-                                        <div class="data-view-form">
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">교육상태</p>
+                    <c:if test="${visitEduApplyList.edctnSttsName eq '교육완료'}">
+                        <div class="cont-sec no-border scroll-motion">
+                            <div class="for-motion">
+                                <div class="sec-tit-area">
+                                    <p class="f-title3">방문교육 결과</p>
+                                </div>
+                                <div class="sec-con-area">
+                                    <div class="gray-bg-sec">
+                                        <div class="data-view-w">
+                                            <div class="data-view-form">
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">교육상태</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">${visitEduApplyList.edctnSttsName}</p>
+                                                    </div>
                                                 </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">${visitEduApplyList.edctnSttsName}</p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">확정주제</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty visitEduApplyList.cnfrmdTheme}">
+                                                                    ${visitEduApplyList.cnfrmdTheme}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">확정주제</p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">교육기간</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty visitEduApplyList.edctnStrtDtm}">
+                                                                    ${kl:convertDate(visitEduApplyList.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
+                                                                    ~ ${kl:convertDate(visitEduApplyList.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
+                                                                    (${visitEduApplyList.edctnDay}일간)
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty visitEduApplyList.cnfrmdTheme}">
-                                                                ${visitEduApplyList.cnfrmdTheme}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">교육장소</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty visitEduApplyList.edctnPlace}">
+                                                                    ${visitEduApplyList.edctnPlace}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">교육기간</p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">강사</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty isttrList.list}">
+                                                                    <c:forEach var="isttrList" items="${isttrList.list}">
+                                                                        <c:if test="${not empty isttrList.isttr1}">
+                                                                            ${isttrList.isttr1}
+                                                                        </c:if>
+                                                                        <c:if test="${not empty isttrList.isttr2}">
+                                                                            , ${isttrList.isttr2}
+                                                                        </c:if>
+                                                                        <c:if test="${not empty isttrList.isttr3}">
+                                                                            , ${isttrList.isttr3}
+                                                                        </c:if>
+                                                                        <c:if test="${not empty isttrList.isttr4}">
+                                                                            , ${isttrList.isttr4}
+                                                                        </c:if>
+                                                                        <c:if test="${not empty isttrList.isttr5}">
+                                                                            , ${isttrList.isttr5}
+                                                                        </c:if>
+                                                                        <c:if test="${not empty isttrList.isttr6}">
+                                                                            , ${isttrList.isttr6}
+                                                                        </c:if>
+                                                                        <c:if test="${empty isttrList.isttr1}">
+                                                                            -
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose>
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty visitEduApplyList.edctnStrtDtm}">
-                                                                ${kl:convertDate(visitEduApplyList.edctnStrtDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
-                                                                ~ ${kl:convertDate(visitEduApplyList.edctnEndDtm, 'yyyy-MM-dd hh:mm:ss', 'yyyy.MM.dd', '')}
-                                                                (n일간)
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">교육장소</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">(${visitEduApplyList.placeZipcode}) ${visitEduApplyList.placeBscAddr} ${visitEduApplyList.placeDtlAddr}</p>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">교육장소</p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">수료인원</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty visitEduApplyList.cmptnCnt}">
+                                                                    ${visitEduApplyList.cmptnCnt}
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose> 명
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty visitEduApplyList.edctnPlace}">
-                                                                ${visitEduApplyList.edctnPlace}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">강사</p>
-                                                </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty isttrList.list}">
-                                                                <c:forEach var="isttrList" items="${isttrList.list}">
-                                                                    <c:if test="${not empty isttrList.isttr1}">
-                                                                        ${isttrList.isttr1}
-                                                                    </c:if>
-                                                                    <c:if test="${not empty isttrList.isttr2}">
-                                                                        , ${isttrList.isttr2}
-                                                                    </c:if>
-                                                                    <c:if test="${not empty isttrList.isttr3}">
-                                                                        , ${isttrList.isttr3}
-                                                                    </c:if>
-                                                                    <c:if test="${not empty isttrList.isttr4}">
-                                                                        , ${isttrList.isttr4}
-                                                                    </c:if>
-                                                                    <c:if test="${not empty isttrList.isttr5}">
-                                                                        , ${isttrList.isttr5}
-                                                                    </c:if>
-                                                                    <c:if test="${not empty isttrList.isttr6}">
-                                                                        , ${isttrList.isttr6}
-                                                                    </c:if>
-                                                                    <c:if test="${empty isttrList.isttr1}">
-                                                                        -
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose>
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">교육장소</p>
-                                                </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">(${visitEduApplyList.placeZipcode}) ${visitEduApplyList.placeBscAddr} ${visitEduApplyList.placeDtlAddr}</p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">수료인원</p>
-                                                </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty visitEduApplyList.cmptnCnt}">
-                                                                ${visitEduApplyList.cmptnCnt}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose> 명
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="th">
-                                                    <p class="title f-body2">출석률</p>
-                                                </div>
-                                                <div class="td">
-                                                    <p class="txt f-body1">
-                                                        <c:choose>
-                                                            <c:when test="${not empty visitEduApplyList.ptcptRate}">
-                                                                ${visitEduApplyList.ptcptRate * 100}
-                                                            </c:when>
-                                                            <c:otherwise>
-                                                                -
-                                                            </c:otherwise>
-                                                        </c:choose> %
-                                                    </p>
+                                                <div class="row">
+                                                    <div class="th">
+                                                        <p class="title f-body2">출석률</p>
+                                                    </div>
+                                                    <div class="td">
+                                                        <p class="txt f-body1">
+                                                            <c:choose>
+                                                                <c:when test="${not empty visitEduApplyList.ptcptRate}">
+                                                                    <fmt:formatNumber type="number" maxFractionDigits="0"
+                                                                                      value="${visitEduApplyList.ptcptRate * 100}" />
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    -
+                                                                </c:otherwise>
+                                                            </c:choose> %
+                                                        </p>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -657,7 +651,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </c:if>
                 </div>
                 <div class="page-bot-btn-sec scroll-motion">
                     <div class="btn-wrap for-motion align-right">
