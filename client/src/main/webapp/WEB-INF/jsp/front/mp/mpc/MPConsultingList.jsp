@@ -12,7 +12,7 @@
     <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <%--<p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>--%>
-            <p class="page-tit f-xlarge-title"><span class="for-move">컨설팅 사업 <br/>신청내역</span></p>
+            <p class="page-tit f-xlarge-title"><span class="for-move">컨설팅신청내역</span></p>
         </div>
     </div>
     <div class="divide-con-area" >
@@ -160,19 +160,7 @@
                                                                             </c:otherwise>
                                                                         </c:choose>
                                                                         <c:choose>
-                                                                            <c:when test="${fn:contains(appctnList.rsumeSttsNm, '탈락')}">
-                                                                                <div class="status-info-w">
-                                                                                    <p class="box-label bigger arr"><span>${appctnList.rsumeSttsNm}</span></p>
-                                                                                </div>
-                                                                                <div class="tooltip-wrap">
-                                                                                    <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
-                                                                                    <div class="tooltip-box">
-                                                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
-                                                                                        <button class="btn-close" title="툴팁 닫기" type="button"></button>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </c:when>
-                                                                            <c:when test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
+                                                                             <c:when test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
                                                                                 <div class="status-info-w">
                                                                                     <p class="box-label bigger waiting">
                                                                                         <span>${appctnList.rsumeSttsNm}</span>
@@ -186,7 +174,21 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </c:when>
-                                                                            <c:when test="${appctnList.rsumeSttsNm eq '사전심사탈락' or appctnList.rsumeSttsNm eq '지도불가'}">
+                                                                            <c:when test="${appctnList.rsumeSttsNm eq '사전심사탈락'}">
+                                                                                <div class="status-info-w">
+                                                                                    <p class="box-label bigger arr">
+                                                                                        <span>사전심사결과탈락</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="tooltip-wrap">
+                                                                                    <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                                                                    <div class="tooltip-box">
+                                                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                                                        <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </c:when>
+                                                                            <c:when test="${appctnList.rsumeSttsNm eq '지도불가'}">
                                                                                 <div class="status-info-w">
                                                                                     <p class="box-label bigger arr">
                                                                                         <span>${appctnList.rsumeSttsNm}</span>
@@ -231,11 +233,6 @@
                                                                         </c:otherwise>
                                                                     </c:choose>
                                                                         <c:choose>
-                                                                            <c:when test="${fn:contains(appctnList.rsumeSttsNm, '탈락')}">
-                                                                                <div class="status-info-w">
-                                                                                    <p class="box-label bigger arr"><span>${appctnList.rsumeSttsNm}</span></p>
-                                                                                </div>
-                                                                            </c:when>
                                                                             <c:when test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
                                                                                 <div class="status-info-w">
                                                                                     <p class="box-label bigger waiting">
@@ -250,7 +247,21 @@
                                                                                     </p>
                                                                                 </div>
                                                                             </c:when>
-                                                                            <c:when test="${appctnList.rsumeSttsNm eq '사전심사탈락' or appctnList.rsumeSttsNm eq '지도불가'}">
+                                                                            <c:when test="${appctnList.rsumeSttsNm eq '사전심사탈락'}">
+                                                                                <div class="status-info-w">
+                                                                                    <p class="box-label bigger arr">
+                                                                                        <span>사전심사결과탈락</span>
+                                                                                    </p>
+                                                                                </div>
+                                                                                <div class="tooltip-wrap">
+                                                                                    <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                                                                    <div class="tooltip-box">
+                                                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                                                        <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </c:when>
+                                                                            <c:when test="${appctnList.rsumeSttsNm eq '지도불가'}">
                                                                                 <div class="status-info-w">
                                                                                     <p class="box-label bigger arr">
                                                                                         <span>${appctnList.rsumeSttsNm}</span>
@@ -286,7 +297,16 @@
                                                         <div class="cont-area">
                                                             <div class="info-list-w ">
                                                                 <div class="info-list">
-                                                                    <p class="tit f-caption2">신청업종</p>
+                                                                    <p class="tit f-caption2">
+                                                                        <c:choose>
+                                                                            <c:when test="${appctnList.cnstgCd eq 'CONSULT_GB01'}">
+                                                                                신청업종
+                                                                            </c:when>
+                                                                            <c:otherwise>
+                                                                                신청분야
+                                                                            </c:otherwise>
+                                                                        </c:choose>
+                                                                    </p>
                                                                     <c:choose>
                                                                         <c:when test="${appctnList.cnstgCd eq 'CONSULT_GB01'}">
                                                                             <p class="txt f-body2">${appctnList.cbsnNm}</p>

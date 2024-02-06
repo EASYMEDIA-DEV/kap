@@ -1482,6 +1482,7 @@
                 BSN_YEAR,
                 (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
                 (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
+                MOD_DTM,
                 REG_DTM
             FROM CP_CNSTG_APPCTN_MST A
         ) TMP
@@ -1508,11 +1509,14 @@
         </if>
         <choose>
             <when test="ordFlag == 1">
-                ORDER BY TMP.REG_DTM DESC
+                ORDER BY TMP.MOD_DTM DESC
             </when>
             <when test="ordFlag == 2">
-                ORDER BY TMP.APPCTN_DT DESC
+                ORDER BY TMP.REG_DTM DESC
             </when>
+            <otherwise>
+                ORDER BY TMP.MOD_DTM DESC
+            </otherwise>
         </choose>
     </select>
 

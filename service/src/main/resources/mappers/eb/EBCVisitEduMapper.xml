@@ -596,6 +596,7 @@
 		  , appctn_theme_cntn = #{appctnThemeCntn}
 		  , appctn_rsn = #{appctnRsn}
 		  , hope_dt = #{hopeDt}
+		  , edctn_stts_cd = #{edctnSttsCd}
 		  , place_zipcode = #{placeZipcode}
 		  , place_bsc_addr = #{placeBscAddr}
 		  , place_dtl_addr = #{placeDtlAddr}
