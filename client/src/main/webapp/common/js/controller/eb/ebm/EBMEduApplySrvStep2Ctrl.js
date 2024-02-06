@@ -129,6 +129,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()+"&ptcptSeq="+$formObj.find("input[name=ptcptSeq]").val()
 						}, actionUrl, svRepnMst, "text")
 					}
+				},
+				msg : {
+					empty : {
+						text : "에 응답해주세요.",
+						radio : "에 응답해주세요.",
+						checkbox : "에 응답해주세요.",
+					},
+					confirm : {
+						init : "저장하시겠습니까?"
+					}
 				}
 			});
 		}

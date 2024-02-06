@@ -32,7 +32,10 @@
                 <div class="right">
                     <div class="status-info-w">
                         <p class="box-label bigger"><span>${rtnData.episdYear}년 ${rtnData.episdOrd}차</span></p>
-                        <p class="box-label bigger"><span>${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}</span></p>
+                        <c:if test="${not empty rtnData.cbsnCdNm}">
+                            <p class="box-label bigger"><span>${rtnData.cbsnCdNm}</span></p>
+                        </c:if>
+
                         <p class="box-label bigger"><span>${rtnData.isttrGroupName}</span></p>
 <%--                        <p class="box-label bigger"><span>홍길남</span></p>--%>
                         <p class="box-label bigger teal"><span>${rtnData.qstnCnt}문항</span></p>
@@ -98,7 +101,7 @@
 
                                             <div class="question-tit">
                                                 <p class="number ${qstnList.cd}questionTxt">Q1</p>
-                                                <p class="tit f-sub-head"> <c:if test="${qstnList.cd eq 'EDU05'}"><strong>${qstnList.isttrName} 강사의 </strong></c:if>${qstnList.qstnNm} <c:if test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}"><span class="essential-mark color-sky">*</span></c:if></p>
+                                                <p class="tit f-sub-head"> <c:if test="${qstnList.cd eq 'EDU05'}"><strong>${qstnList.isttrName}</strong>&nbsp;</c:if>${qstnList.qstnNm} <c:if test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}"><span class="essential-mark color-sky">*</span></c:if></p>
                                             </div>
                                             <div class="survey-con">
                                                 <c:choose>
