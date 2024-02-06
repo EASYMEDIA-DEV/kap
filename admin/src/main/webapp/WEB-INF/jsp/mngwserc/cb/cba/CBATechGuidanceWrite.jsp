@@ -752,7 +752,7 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">사전심사결과</label>
                                     <div class="col-sm-11">
-                                        <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
+                                        <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 220px;">
                                             <option value="">선택</option>
                                             <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
                                                 <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
@@ -762,8 +762,8 @@
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label"></label>
-                                    <div class="col-sm-11">
-                                        <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500"></textarea>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500" style="height: 150px"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -771,11 +771,11 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="" placeholder="방문자 입력"/>
+                                        <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="" placeholder="방문자 입력" style="width: 220px;"/>
                                     </div>
                                     <label class="col-sm-1 control-label">면담자</label>
                                     <div class="col-sm-4">
-                                        <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="" placeholder="면담자 입력"/>
+                                        <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="" placeholder="면담자 입력" style="width: 220px;"/>
                                     </div>
                                 </div>
                             </fieldset>
@@ -783,8 +783,8 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문일</label>
                                     <div class="col-sm-5">
-                                        <div class="input-group" style="z-index:0;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="" title="초도방문일"/>
+                                        <div class="input-group" style="z-index:0; width: 220px;">
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${today}" title="초도방문일"/>
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -798,7 +798,7 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문결과</label>
                                     <div class="col-sm-11">
-                                        <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 322px;">
+                                        <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 220px;">
                                             <option value="">선택</option>
                                             <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
                                                 <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
@@ -808,32 +808,30 @@
                                         </select>
                                     </div>
                                     <label class="col-sm-1 control-label"></label>
-                                    <div class="col-sm-6 rsltCntn" style="display: none;">
-                                        <textarea class="form-control input-sm notRequired" id="initVstRsltCntn" name="initVstRsltCntn" value="" placeholder="탈락사유 입력" maxlength="500"></textarea>
+                                    <div class="col-sm-8 rsltCntn" style="display: none;">
+                                        <textarea class="form-control input-sm notRequired" id="initVstRsltCntn" name="initVstRsltCntn" value="" placeholder="탈락사유 입력" maxlength="500" style="height: 150px"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">초도방문의견</label>
-                                    <div class="col-sm-11">
-                                        <textarea class="form-control input-sm notRequired" id="initVstOpnnCntn" name="initVstOpnnCntn" placeholder="초도방문의견 입력" maxlength="500"></textarea>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control input-sm notRequired" id="initVstOpnnCntn" name="initVstOpnnCntn" placeholder="초도방문의견 입력" maxlength="500" style="height: 150px"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">담당위원</label>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-3 form-inline">
                                         <input type="hidden" class="notRequired" name="cmssrSeq" value="">
-                                        <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="">
-                                    </div>
-                                    <div class="col-sm-1">
+                                        <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="" style="width: 220px;">
                                         <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                     </div>
                                     <label class="col-sm-1 control-label">지도구분</label>
                                     <div class="col-sm-4">
-                                        <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd">
+                                        <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="z-width: 220px;">
                                             <option value="">선택</option>
                                             <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
                                                 <option value="${guideTypeCd.cd}" >${guideTypeCd.cdNm}</option>
@@ -847,18 +845,18 @@
                                     <label class="col-sm-1 control-label">지도착수일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="" title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}" title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
-                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                        <em class="ion-calendar"></em>
-                                                    </button>
-                                                </span>
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
                                         </div>
                                     </div>
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-5">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${today}" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -871,7 +869,7 @@
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">지도현황</label>
-                                    <div class="col-sm-2">
+                                    <div class="col-sm-3" style="z-index:0; width: 250px;">
                                         <select class="form-control input-sm notRequired" name="guidePscndCd" id="guidePscndCd">
                                             <option value="">선택</option>
                                             <c:forEach var="guidePscnd" items="${cdDtlList.GUIDE_PSCND}" varStatus="status">
@@ -879,21 +877,21 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="input-group col-md-2" style="z-index:0;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="" title="지도현황" />
+                                    <div class="input-group col-sm-3" style="z-index:0; width: 220px;">
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${today}" title="지도현황" />
                                         <span class="input-group-btn" style="z-index:0;">
-                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                        <em class="ion-calendar"></em>
-                                                    </button>
-                                                </span>
+                                            <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                <em class="ion-calendar"></em>
+                                            </button>
+                                        </span>
                                     </div>
                                 </div>
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">연기/취소 사유</label>
-                                    <div class="col-sm-5">
-                                        <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유" maxlength="500"></textarea>
+                                    <div class="col-sm-8">
+                                        <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유" maxlength="500" style="height: 150px"></textarea>
                                     </div>
                                 </div>
                             </fieldset>
@@ -913,13 +911,13 @@
                                 <div class="form-group text-sm form-inline fltyImpvmRate">
                                     <label class="col-sm-1 control-label">공정불량개선율</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>&nbsp;ppm
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>&nbsp;ppm
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="0" title="불량개션율" readonly="readonly" placeholder="0"/>&nbsp;%
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="0" title="불량개션율" readonly="readonly" placeholder="0" style="width: 220px" />&nbsp;%
                                     </div>
                                 </div>
                             </fieldset>
@@ -959,7 +957,7 @@
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">랩업자료 첨부파일</label>
+                                    <label class="col-sm-1 control-label">랩업자료<br/>첨부파일</label>
                                     <div class="col-sm-10 col-md-11">
                                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
@@ -976,7 +974,7 @@
                             </fieldset>
                             <fieldset>
                                 <div class="form-group text-sm">
-                                    <label class="col-sm-1 control-label">기타사업자료 첨부파일</label>
+                                    <label class="col-sm-1 control-label">기타사업자료<br/>첨부파일</label>
                                     <div class="col-sm-10 col-md-11">
                                         <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                         <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
@@ -1055,7 +1053,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">사전심사결과</label>
                                         <div class="col-sm-11">
-                                            <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 322px;">
+                                            <select class="form-control input-sm notRequired" id="bfJdgmtRslt" name="bfreJdgmtRsltCd" title="사전심사결과" style="margin-bottom: 10px;width: 220px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
                                                     <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
@@ -1065,8 +1063,8 @@
                                             </select>
                                         </div>
                                         <label class="col-sm-1 control-label"></label>
-                                        <div class="col-sm-11">
-                                            <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500">${rsumeList.bfreJdgmtRsltCntn}</textarea>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control input-sm notRequired" id="bfreJdgmtRsltCntn" name="bfreJdgmtRsltCntn" title="사전심사결과 의견" placeholder="사전심사결과 의견 입력" maxlength="500" style="height: 150px;">${rsumeList.bfreJdgmtRsltCntn}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1074,11 +1072,11 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="${rsumeList.vstrNm}" placeholder="방문자 입력"/>
+                                            <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="${rsumeList.vstrNm}" placeholder="방문자 입력" style="width: 220px;"/>
                                         </div>
                                         <label class="col-sm-1 control-label">면담자</label>
                                         <div class="col-sm-4">
-                                            <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="${rsumeList.ntrvrNm}" placeholder="면담자 입력"/>
+                                            <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="${rsumeList.ntrvrNm}" placeholder="면담자 입력" style="width: 220px;"/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1087,7 +1085,7 @@
                                         <label class="col-sm-1 control-label">초도방문일</label>
                                         <div class="col-sm-5">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${kl:convertDate(rsumeList.vstDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="초도방문일" value="${rsumeList.vstDt}"/>
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${not empty rsumeList.vstDt ? kl:convertDate(rsumeList.vstDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="초도방문일" value="${rsumeList.vstDt}"/>
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1101,7 +1099,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">초도방문결과</label>
                                         <div class="col-sm-11">
-                                            <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 322px;">
+                                            <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 220px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
                                                     <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT04'}">
@@ -1111,32 +1109,30 @@
                                             </select>
                                         </div>
                                         <label class="col-sm-1 control-label"></label>
-                                        <div class="col-sm-6 rsltCntn" style="display: none;">
-                                            <textarea class="form-control input-sm notRequired" id="initVstRsltCntn" name="initVstRsltCntn" placeholder="탈락사유 입력" maxlength="500">${rsumeList.initVstRsltCntn}</textarea>
+                                        <div class="col-sm-8 rsltCntn" style="display: none;">
+                                            <textarea class="form-control input-sm notRequired" id="initVstRsltCntn" name="initVstRsltCntn" placeholder="탈락사유 입력" maxlength="500" style="height: 150px">${rsumeList.initVstRsltCntn}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">초도방문의견</label>
-                                        <div class="col-sm-11">
-                                            <textarea class="form-control input-sm notRequired" id="initVstOpnnCntn" name="initVstOpnnCntn" placeholder="초도방문의견 입력" maxlength="500">${rsumeList.initVstOpnnCntn}</textarea>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control input-sm notRequired" id="initVstOpnnCntn" name="initVstOpnnCntn" placeholder="초도방문의견 입력" maxlength="500" style="height: 150px">${rsumeList.initVstOpnnCntn}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">담당위원</label>
-                                        <div class="col-sm-3">
+                                        <div class="col-sm-4 form-inline">
                                             <input type="hidden" class="notRequired" name="cmssrSeq" value="${rsumeList.cmssrSeq}">
-                                            <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="${rsumeList.cmssrName}">
-                                        </div>
-                                        <div class="col-sm-1">
+                                            <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="${rsumeList.cmssrName}" style="width: 220px;">
                                             <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                         </div>
                                         <label class="col-sm-1 control-label">지도구분</label>
                                         <div class="col-sm-4">
-                                            <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd">
+                                            <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="width: 220px">
                                                 <option value="">선택</option>
                                                 <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
                                                     <option value="${guideTypeCd.cd}" <c:if test="${rsumeList.guideTypeCd eq guideTypeCd.cd }">selected</c:if>>${guideTypeCd.cdNm}</option>
@@ -1150,23 +1146,23 @@
                                         <label class="col-sm-1 control-label">지도착수일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="지도착수일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${not empty rsumeList.guideBgnDt ? kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도착수일" />
                                                 <span class="input-group-btn" style="z-index:0;">
-                                                        <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                            <em class="ion-calendar"></em>
-                                                        </button>
-                                                    </span>
+                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
                                             </div>
                                         </div>
                                         <label class="col-sm-1 control-label">킥오프일</label>
                                         <div class="col-sm-5">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${kl:convertDate(rsumeList.guideKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="킥오프일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${not empty rsumeList.guideKickfDt ? kl:convertDate(rsumeList.guideKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">
-                                                        <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                            <em class="ion-calendar"></em>
-                                                        </button>
-                                                    </span>
+                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -1174,7 +1170,7 @@
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">지도현황</label>
-                                        <div class="col-sm-2">
+                                        <div class="col-sm-3" style="z-index:0; width: 250px;">
                                             <select class="form-control input-sm notRequired" name="guidePscndCd" id="guidePscndCd">
                                                 <option value="">선택</option>
                                                 <c:forEach var="guidePscnd" items="${cdDtlList.GUIDE_PSCND}" varStatus="status">
@@ -1182,21 +1178,21 @@
                                                 </c:forEach>
                                             </select>
                                         </div>
-                                        <div class="input-group col-md-2" style="z-index:0;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${kl:convertDate(rsumeList.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="초도방문일" />
+                                        <div class="input-group col-sm-3" style="z-index:0; width: 220px;">
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${not empty rsumeList.guidePscndDt ? kl:convertDate(rsumeList.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도현황" />
                                             <span class="input-group-btn" style="z-index:0;">
-                                                        <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                            <em class="ion-calendar"></em>
-                                                        </button>
-                                                    </span>
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
                                         </div>
                                     </div>
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">연기/취소 사유</label>
-                                        <div class="col-sm-5">
-                                            <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유" maxlength="500">${rsumeList.xtnsnCnclRsn}</textarea>
+                                        <div class="col-sm-8">
+                                            <textarea class="form-control input-sm notRequired" id="xtnsnCnclRsn" name="xtnsnCnclRsn" placeholder="연기/취소 사유" maxlength="500" style="height: 150px">${rsumeList.xtnsnCnclRsn}</textarea>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1216,13 +1212,13 @@
                                     <div class="form-group text-sm form-inline fltyImpvmRate">
                                         <label class="col-sm-1 control-label">공정불량개선율</label>
                                         <div class="col-sm-3 form-inline">
-                                            <input type="number" class="form-control input-sm fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력"/>&nbsp;ppm
+                                            <input type="number" class="form-control input-sm fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
                                         </div>
                                         <div class="col-sm-3 form-inline">
-                                            <input type="number" class="form-control input-sm fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력"/>&nbsp;ppm
+                                            <input type="number" class="form-control input-sm fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
                                         </div>
                                         <div class="col-sm-3 form-inline">
-                                            <input type="number" class="form-control input-sm fltyImpvmRate" name="fltyImpvmRate" value="<c:if test="${not empty rsumeList.fltyImpvmRate}">${rsumeList.fltyImpvmRate}</c:if><c:if test="${empty rsumeList.fltyImpvmRate}">0</c:if>" title="불량개션율" readonly="readonly" placeholder="0"/>&nbsp;%
+                                            <input type="number" class="form-control input-sm fltyImpvmRate" name="fltyImpvmRate" value="<c:if test="${not empty rsumeList.fltyImpvmRate}">${rsumeList.fltyImpvmRate}</c:if><c:if test="${empty rsumeList.fltyImpvmRate}">0</c:if>" title="불량개션율" readonly="readonly" placeholder="0" style="width: 220px" />&nbsp;%
                                         </div>
                                     </div>
                                 </fieldset>

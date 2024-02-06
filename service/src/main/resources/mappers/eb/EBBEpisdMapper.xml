@@ -734,6 +734,7 @@
 				END AS stts_cd_nm
 				, cmptn_yn
 				, cmptn_dtm
+		     	, crtfct_no
 				, ptcpt_seq
 				, mem_seq
 				, case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
@@ -833,6 +834,7 @@
 						, (select cd_nm from co_code_mst where cd=d.stts_cd) as stts_cd_nm
 						, cmptn_yn
 						, cmptn_dtm
+						, crtfct_no
 						, mem_seq
 						, ptcpt_dtm
 						, (SELECT web_path FROM co_file_dtl WHERE file_seq = b.thnl_file_seq order by file_ord desc limit 1) AS web_path
@@ -857,6 +859,7 @@
 					, stts_cd
 					, cmptn_yn
 					, cmptn_dtm
+			      	, crtfct_no
 					, exam_score
 					, reg_dtm as ptcpt_dtm
 					FROM ep_edctn_ptcpt_mst tbl) d ON d.episd_seq = a.episd_seq

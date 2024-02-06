@@ -1,7 +1,6 @@
 package com.kap.service.impl.im;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.common.utility.MaskingUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
@@ -306,7 +305,7 @@ public class IMAQaServiceImpl implements IMAQaService {
         //이름
         userReceiverDto.setName(pIMAQaDTO.getRegName());
         //치환문자1
-        userReceiverDto.setNote1(MaskingUtil.nameMasking(pIMAQaDTO.getRegName()));
+        userReceiverDto.setNote1(pIMAQaDTO.getRegName());
         //치환문자2
         userReceiverDto.setNote2(pIMAQaDTO.getParntCtgryNm());
         //치환문자3
