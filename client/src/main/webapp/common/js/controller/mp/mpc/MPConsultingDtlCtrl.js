@@ -2,7 +2,7 @@ define(["ezCtrl"], function(ezCtrl) {
     "use strict";
     // set controller name
     var exports = {
-        controller : "controller/mp/mpc/MPConsultingLDtlCtrl"
+        controller : "controller/mp/mpc/MPConsultingDtlCtrl"
     };
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
