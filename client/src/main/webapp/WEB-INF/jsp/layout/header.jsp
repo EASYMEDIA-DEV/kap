@@ -392,21 +392,15 @@
 									</li>
 								</c:if>
 							</c:forEach>
-							<c:if test="${empty loginMap}">
-								<li>
-									<div class="one-pack">
-										<a class="one-depth for-move" href="javascript:">비회원 신청내역 조회</a>
-									</div>
-									<ul class="two-pack">
-										<li>
-											<div class="for-move">
-												<a class="two-depth" href="/education/apply/non-member/auth">비회원 신청내역 조회</a>
-											</div>
-										</li>
-									</ul>
-								<li>
-							</c:if>
+
 						</ul>
+						<c:if test="${empty loginMap}">
+						<div class="non-member-apply">
+							<a href="/education/apply/non-member/auth">
+								<p class="f-body1">비회원 신청내역 조회</p>
+							</a>
+						</div>
+						</c:if>
 					</c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">
