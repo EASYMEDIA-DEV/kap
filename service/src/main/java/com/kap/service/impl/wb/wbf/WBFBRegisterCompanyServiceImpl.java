@@ -1638,6 +1638,34 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     }
 
     /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBFBRegisterCompanyMapper.getBsnmNoCnt(wBFBRegisterDTO);
+
+        wBFBRegisterDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+
+        int respCnt = 0;
+
+        respCnt = wBFBRegisterCompanyMapper.getSbrdnBsnmNoCnt(wBFBRegisterDTO);
+
+        wBFBRegisterDTO.setRespCnt(respCnt);
+
+        return respCnt;
+    }
+
+    /**
      * 사업자번호/종된사업자번호 중복 확인
      * @return
      */
