@@ -10,7 +10,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
     var $formObj = $('#frmData');
     var addCount = 3;
-    var imageText = "";
 
     // set model
     ctrl.model = {
@@ -181,6 +180,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
                     }
                 }
+            },
+            fileDelete : {
+                event : {
+                    click : function() {
+                        $(this).closest(".form-group").find("input[type=file]").val("");
+                        $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $(this).closest(".form-group").find('.file-list').remove();
+                    }
+                }
             }
         },
         immediately : function(){
@@ -192,9 +200,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 loading:false,
                 sync:true
             },function(data){
-                console.log(data);
-                //해당 input file 객체에 data(tempFileData) 응답 값이 저장
-                $('.empty-txt').text(data[0].orgnFileNm);
+                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + data[0].orgnFileNm.replace(data[0].fileExtn,'') + '</span>';
+                fileHtml += '<span class="unit">.' + data[0].fileExtn + '</span></p>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                $('.file-list-area').addClass("attached");
+                $('.file-list-area').append(fileHtml);
             });
             $('#firstIndex').val(addCount);
         }

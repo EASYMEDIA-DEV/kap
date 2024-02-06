@@ -18,7 +18,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
-        var fileLengh = document.querySelectorAll('p.file-name').length;;
+        var fileLengh = document.querySelectorAll('p.file-name').length;
         var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
@@ -37,7 +37,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             if (extns.indexOf(fileExtn.toLowerCase()) < 0) {
                 //파일확장자 체크
                 $('#'+fileId).val("");
-                $('#'+fileId).closest(".form-group").find('.file-list').empty();
+                $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                $('#'+fileId).closest(".form-group").find('.file-list').remove();
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
 
                 isFile = false;
@@ -50,12 +51,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     if (fileSize > maxFileSize)
                     {
                         $('#'+fileId).val("");
-                        $('#'+fileId).closest(".form-group").find('.file-list').empty();
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $('#'+fileId).closest(".form-group").find('.file-list').remove();
                         alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
                         isFile = false;
                     }
 
                     if(fileLengh == maxLengh){
+                        $('#'+fileId).val("");
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $('#'+fileId).closest(".form-group").find('.file-list').remove();
                         alert("첨부파일은 최대 " + maxLengh + " 개만 등록 가능합니다.");
                         isFile = false;
                     }
@@ -63,16 +68,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
             }
             if (isFile) {
-                $(".file-list").show();
-                var fileHtml = '<p class="file-name"><span class="name">' + fileName + '</span>';
-                fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
-                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>';
-
-                $('#'+fileId).closest(".form-group").find('.file-list').append(fileHtml);
-                // 파일 추가되면 class 추가
-                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass('attached');
-
                 fileInput = jQuery(obj).clone(true);
+                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
+                fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
+                $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
             }
         }
     };
@@ -189,7 +190,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $(this).closest(".form-group").find("input[type=file]").val("");
-                        $(this).closest(".form-group").find('.file-list').empty();
+                        $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                        $(this).closest(".form-group").find('.file-list').remove();
                     }
                 }
             }
@@ -200,14 +202,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 location.href="/";
             }
 
-            $formObj.find("input[type=file]").fileUpload({
+            /*$formObj.find("input[type=file]").fileUpload({
                 loading:false,
                 sync:true
             },function(data){
-                console.log(data);
-                //해당 input file 객체에 data(tempFileData) 응답 값이 저장
-                $('.empty-txt').text(data[0].orgnFileNm);
-            });
+                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + data[0].orgnFileNm.replace(data[0].fileExtn,'') + '</span>';
+                fileHtml += '<span class="unit">.' + data[0].fileExtn + '</span></p>';
+                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                $('.file-list-area').addClass("attached");
+                $('.file-list-area').append(fileHtml);
+            });*/
             $('#firstIndex').val(addCount);
         }
     };
