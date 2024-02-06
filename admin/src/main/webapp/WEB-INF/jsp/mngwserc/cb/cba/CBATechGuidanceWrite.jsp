@@ -533,7 +533,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">품질담당인원<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="number" class="form-control input-sm qltyPicCnt" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" title="품질담당인원" placeholder="인원수 입력"/>
+                        <input type="number" class="form-control input-sm qltyPicCnt" name="qltyPicCnt" value="${rtnDto.qltyPicCnt}" title="품질담당인원" maxlength="50" placeholder="인원수 입력"/>
                     </div>
                     <label class="col-sm-1 control-label">FAX</label>
                     <div class="col-sm-4">

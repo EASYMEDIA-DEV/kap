@@ -22,6 +22,15 @@ define(["ezCtrl"], function(ezCtrl) {
     // set model
     ctrl.model = {
         id : {
+            ordFlag : {
+                event : {
+                    change : function(){
+                        //정렬조건 변경
+                        $formObj.find("ordFlag").val($("#ordFlag").val());
+                        search(1);
+                    }
+                }
+            }
         },
         classname : {
             dtlBtn : {
@@ -62,22 +71,24 @@ define(["ezCtrl"], function(ezCtrl) {
                         }
                     }
                 }
-            },searchBtn : {
+            },
+            searchBtn : {
                 event : {
                     click : function() {
                         search($(this));
                     }
                 }
-            },filterInit : {
-            event : {
-                click : function () {
-                    $('input[name=statusChk]').prop("checked",false);
-                    $('input[name=q]').val('');
-                    $('input[name=strtDt]').val('');
-                    $('input[name=endDt]').val('');
+            },
+            filterInit : {
+                event : {
+                    click : function () {
+                        $('input[name=statusChk]').prop("checked",false);
+                        $('input[name=q]').val('');
+                        $('input[name=strtDt]').val('');
+                        $('input[name=endDt]').val('');
+                    }
                 }
             }
-        }
         },
         immediately : function() {
             $(window).ready(function(){
