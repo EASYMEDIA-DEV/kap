@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -66,6 +67,10 @@ public class SVASurveyMstInsertDTO extends BaseDTO {
     @Builder.Default
     private boolean posbChg = true;
 
+    @Schema(title = "설문유형코드", example = "")
+    @NotNull
+    private String srvTypeCd;
+
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")
@@ -81,5 +86,11 @@ public class SVASurveyMstInsertDTO extends BaseDTO {
 
     @Schema(title = "설문관리 질문 리스트")
     private List<SVASurveyQstnDtlDTO> svSurveyQstnDtlList;
+
+    @Schema(title = "설문관리 API 질문 리스트")
+    private List<SVASurveyApiQstnDtlDTO> srvyList;
+
+    @Schema(title = "kap과정순번")
+    private String kapSeq;
 
 }

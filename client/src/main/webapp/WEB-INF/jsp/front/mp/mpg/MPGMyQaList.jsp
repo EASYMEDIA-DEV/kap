@@ -137,9 +137,9 @@
                                                         <td class="t-align-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                                                         <td class="t-align-center">${ list.parntCtgryNm } > ${ list.ctgryNm }</td>
                                                         <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="listView"  data-details-key="${list.qaSeq}" data-mem-seq="${list.memSeq}" data-rsume-cd="${list.rsumeCd}">${ list.titl }</a></p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                        <td class="t-align-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                                        <td class="t-align-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>
                                                         <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
-                                                        <td class="t-align-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
+                                                        <td class="t-align-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')) }</td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>

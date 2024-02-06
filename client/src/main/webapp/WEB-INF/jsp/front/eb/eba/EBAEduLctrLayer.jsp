@@ -29,7 +29,7 @@
 
                                         <!--반복 종료-->
                                     </ul>
-                                    <div class="btn-wrap align-center">
+                                    <div class="btn-wrap align-center" style="display:none;">
                                         <a class="btn-solid small black-line lctrPageSet" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
                                     </div>
                                 </div>

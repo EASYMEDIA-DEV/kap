@@ -37,7 +37,15 @@
                                         <p class="txt f-head">상주기술지도 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다. <br>이후 담당자가 연락하여, 초도 방문 후 상주기술지도 부품사를 선정하게 됩니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
+                                        <a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>"
+                                            <c:choose>
+                                                <c:when test="${not empty loginMap}">
+                                                    href="./application"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    href="javascript:"
+                                                </c:otherwise>
+                                            </c:choose>><span>신청하기</span></a>
                                     </div>
                                 </div>
 
@@ -71,7 +79,7 @@
                                         <p class="txt f-head">기술지도 신청 관련 도움을 드리기 위해 Q&A 게시판을 운영하고 있습니다. <br>질문을 남겨주시면 빠른 시일 내에 답변드리겠습니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <a class="btn-solid small white-bg" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
+                                        <a class="btn-solid small white-bg" href="javascript:" id="goContact" data-seq="${loginMap.seq}"><span>신청 문의하기</span></a>
                                     </div>
                                 </div>
                             </div>
@@ -87,7 +95,7 @@
                             <div class="list-sec">
                                 <div class="article-list-w txt-card-list" id="infoCard"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
                                     <c:forEach var="csList" items="${rtnDto.list}" varStatus="status">
-                                        <a class="list-item popOpen" title="팝업 열기">
+                                        <a class="list-item popOpen" href="javascript:" title="팝업 열기">
                                             <div class="bg">
                                                 <img src="${csList.webPath}" alt="">
                                             </div>
@@ -151,7 +159,15 @@
                                    <%-- <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>--%>
                                 </div>
                                 <div class="btn-set">
-                                    <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>" <c:if test="${not empty loginMap}"> href="./application"</c:if>><span>신청하기</span></a>
+                                    <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>"
+                                        <c:choose>
+                                            <c:when test="${not empty loginMap}">
+                                                href="./application"
+                                            </c:when>
+                                            <c:otherwise>
+                                                href="javascript:"
+                                            </c:otherwise>
+                                        </c:choose>><span>신청하기</span></a>
                                 </div>
                             </div>
 
@@ -210,7 +226,7 @@
                     </div>
                     <div class="bot-fix-btn-area">
                         <div class="btn-wrap align-right">
-                            <a class="btn-solid small black-bg" data-seq="${loginMap.seq}" href="javascript:" id="goQa"><span>위원 문의</span></a>
+                            <a class="btn-solid small black-bg" href="javascript:" data-seq="${loginMap.seq}" href="javascript:" id="goQa"><span>위원 문의</span></a>
                         </div>
                     </div>
                     <div class="user-opt-area">

@@ -4,9 +4,12 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COEgovSeqDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
 import com.kap.core.dto.ex.exg.*;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.EBEExamService;
+import com.kap.service.dao.eb.EBBEpisdMapper;
 import com.kap.service.dao.eb.EBEExamMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +37,9 @@ import java.util.List;
 public class EBEExamServiceImpl implements EBEExamService {
     //Mapper
     private final EBEExamMapper eBEExamMapper;
+
+    private final EBBEpisdMapper eBBEpisdMapper;
+
 
     /* 교육평가마스터 시퀀스 */
     private final EgovIdGnrService examMstIdgen;
@@ -399,6 +405,16 @@ public class EBEExamServiceImpl implements EBEExamService {
                 }
             }
         }
+
+        EBBPtcptDTO ptcptDto = new EBBPtcptDTO();
+        ptcptDto.setPtcptSeq(eXGExamEdctnPtcptRspnMst.getPtcptSeq());
+        EBBPtcptDTO rtnPtcptDto = eBBEpisdMapper.selectPtcptExamDtl(ptcptDto);
+        EBBEpisdDTO eBBEpisdDTO = new EBBEpisdDTO();
+        eBBEpisdDTO.setEdctnSeq(rtnPtcptDto.getEdctnSeq());
+        eBBEpisdDTO.setEpisdYear(rtnPtcptDto.getEpisdYear());
+        EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
+        eXGExamEdctnPtcptRspnMst.setCrtfctNo(cmptnNo.getCrtfctNo());
+
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
         return actCnt;
     }
@@ -472,9 +488,48 @@ public class EBEExamServiceImpl implements EBEExamService {
                 }
             }
         }
+
+        //수료번호 출력
+        EBBPtcptDTO ptcptDto = new EBBPtcptDTO();
+        ptcptDto.setPtcptSeq(eXGExamEdctnPtcptRspnMst.getPtcptSeq());
+        EBBPtcptDTO rtnPtcptDto = eBBEpisdMapper.selectPtcptExamDtl(ptcptDto);
+        EBBEpisdDTO eBBEpisdDTO = new EBBEpisdDTO();
+        eBBEpisdDTO.setEdctnSeq(rtnPtcptDto.getEdctnSeq());
+        eBBEpisdDTO.setEpisdYear(rtnPtcptDto.getEpisdYear());
+        EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
+        eXGExamEdctnPtcptRspnMst.setCrtfctNo(cmptnNo.getCrtfctNo());
+
+
         //교육참여마스터 시험 점수 변경
         eXGExamEdctnPtcptRspnMst.setExamScore(totalScord);
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
+        return actCnt;
+    }
+
+
+    /**
+     * 관리자 - 오프라인 시험일경우 빈 마스터만 넣어줌
+     */
+    public int insertOtsdExamPtcptMst(EBBPtcptDTO eBBPtcptDTO) throws Exception{
+        System.out.println("@@@진입");
+        int actCnt = 0;
+        EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst = new EXGExamEdctnPtcptRspnMst();
+        int examPtcptSeq = examPtcptSeqIdgen.getNextIntegerId();
+
+        COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+        eXGExamEdctnPtcptRspnMst.setMemSeq( cOUserDetailsDTO.getSeq() );
+        eXGExamEdctnPtcptRspnMst.setRegId( cOUserDetailsDTO.getId() );
+        eXGExamEdctnPtcptRspnMst.setRegIp( cOUserDetailsDTO.getLoginIp() );
+
+        eXGExamEdctnPtcptRspnMst.setModId( cOUserDetailsDTO.getId() );
+        eXGExamEdctnPtcptRspnMst.setModIp( cOUserDetailsDTO.getLoginIp() );
+
+        eXGExamEdctnPtcptRspnMst.setPtcptSeq( eBBPtcptDTO.getPtcptSeq() );
+        eXGExamEdctnPtcptRspnMst.setExamPtcptSeq( eBBPtcptDTO.getPtcptSeq() );
+        eXGExamEdctnPtcptRspnMst.setExamScore( eBBPtcptDTO.getExamScore() );
+        System.out.println("@@@등록전 정보 eXGExamEdctnPtcptRspnMst = " + eXGExamEdctnPtcptRspnMst);
+        actCnt = eBEExamMapper.insertOtsdExamPtcptMst(eXGExamEdctnPtcptRspnMst);
+
         return actCnt;
     }
 

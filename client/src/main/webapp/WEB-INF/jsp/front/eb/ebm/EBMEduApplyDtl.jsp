@@ -370,7 +370,7 @@
                                                     </c:when>
                                                 </c:choose>
 
-                                                <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty examPtcptSeq}">
+                                                <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                 </c:if>
 
@@ -703,7 +703,7 @@
                         </c:if>
 
 
-                        <c:if test="${rtnData.trnsfYn eq 'N'}">
+                        <c:if test="${rtnData.trnsfYn eq 'N' and rtnData.stduyMthdCd ne 'STDUY_MTHD02'}">
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">
                                     <div class="sec-tit-area">

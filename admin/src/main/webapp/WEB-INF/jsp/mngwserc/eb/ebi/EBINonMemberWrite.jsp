@@ -278,7 +278,7 @@
                                         <input type="text" class="form-control input-sm emailChk" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자 이메일" maxlength="50" placeholder="담당자 이메일"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm mobileNumChk" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자 전화번호" maxlength="50" placeholder="담당자 전화번호"/>
+                                        <input type="text" class="form-control input-sm mobileChk mobileNumChk" id="picTelNo" name="picTelNo" value="${rtnDto.picTelNo}" title="담당자 전화번호" maxlength="13" placeholder="담당자 전화번호"/>
                                     </td>
                                     </tbody>
                                 </table>

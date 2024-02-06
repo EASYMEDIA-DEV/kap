@@ -1,10 +1,7 @@
 package com.kap.service;
 
 import com.kap.core.dto.COCodeDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
-import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
-import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
+import com.kap.core.dto.sv.sva.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
@@ -88,5 +85,17 @@ public interface SVASurveyService {
 	 * 설문 응답 점수 계산
 	 */
 	public int selectSurveyScore(SVASurveyRspnScoreDTO sVASurveyRspnScoreDTO) throws Exception;
+
+
+	/**
+	 * 설문 상세(API)
+	 */
+	public SVASurveyApiMstInsertDTO selectApiSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
+
+	/**
+	 * 응답 상세(API)
+	 */
+	public SVASurveyApiRspnInsertDTO selectApiRspnSurveyDtl(SVASurveyMstSearchDTO sVASurveyDTO) throws Exception;
+
 
 }

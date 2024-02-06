@@ -68,6 +68,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 	//교육장 서비스
 	private final EBFEduRoomService eBFEduRoomService;
+	private final EBEExamService eBEExamService;
+
+
 
 	//sq평가원 자격증
 	//public final EBDSqCertiReqService eBDSqCertiReqService;
@@ -574,17 +577,21 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
+				System.out.println("@@@ 가기전");
+				//오프라인 시험일경우 빈 시험 마스터값 넣어줌
+				if(eBBPtcptDTO.getOtsdExamPtcptYn() != null && eBBPtcptDTO.getOtsdExamPtcptYn().equals("Y")){
+					System.out.println("@@@ 들어옴");
+					//eBEExamService.insertOtsdExamPtcptMst(eBBPtcptDTO);//보류 examSeq가 없음
+				}
+
 				//이전 데이터 불러와서 변경이 N -> Y이면 실행시킴 아니면 일반 업데이트
 				if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("Y")){
 					EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);// -> edctnSeq, episdYear
-					System.out.println("@@@ 수료완료 = " + cmptnNo.getCrtfctNo());
+
 					cmptnNo.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
 					eBBEpisdMapper.updatePtcptCmptnInfo(cmptnNo);// -> ptcptSeq
 				}
 			}
-			System.out.println("@@@ eBBEpisdDTO = " + eBBEpisdDTO);
-
-
 
 			//교육참여자 평가, 수료상태 수정
 			eBBEpisdMapper.updateEpisdPtcpt(eBBEpisdDTO);

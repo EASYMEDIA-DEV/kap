@@ -266,27 +266,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 var rtn = JSON.parse(data);
                                 //정원여유
                                 if(rtn.fxnumStta == "S"){
-                                    cmmCtrl.frmAjax(function(rtnData){
-                                        console.log(rtnData);
-                                        // var rtnData = resultData.rtnData;
-                                        //과정 수정/삭제
-                                        if(rtnData.regStat == "N"){
-                                            alert(msgCtrl.getMsg("fail.eb.ebi.step.al_011"));
-                                            location.replace("./detail?detailsKey=" + $("#edctnSeq").val());
-                                        }
-                                        //신청 중복
-                                        else if(rtnData.regStat == "F"){
-                                            alert(msgCtrl.getMsg("fail.eb.ebi.step.al_012"));
-                                            return false;
-                                        }
-                                        //신청 완료
-                                        else if(rtnData.regStat == "S"){
-                                            // $("#regDtm").val(rtnData.regDtm);
-                                            /*$("#frmGo").attr("action", "./step2");
-                                            $("#frmGo").submit();*/
-                                            location.href = "./step2?edctnSeq=" + rtnData.edctnSeq + "&ptcptSeq=" + rtnData.ptcptSeq;
-                                        }
-                                    }, "./setPtcptInfo", $formObj, "post", "json");
+                                    if(confirm("위 정보로 교육을 신청하시겠습니까?")) {
+                                        cmmCtrl.frmAjax(function(rtnData){
+                                            // console.log(rtnData);
+                                            // var rtnData = resultData.rtnData;
+                                            //과정 수정/삭제
+                                            if(rtnData.regStat == "N"){
+                                                alert(msgCtrl.getMsg("fail.eb.ebi.step.al_011"));
+                                                location.replace("./detail?detailsKey=" + $("#edctnSeq").val());
+                                            }
+                                            //신청 중복
+                                            else if(rtnData.regStat == "F"){
+                                                alert(msgCtrl.getMsg("fail.eb.ebi.step.al_012"));
+                                                return false;
+                                            }
+                                            //신청 완료
+                                            else if(rtnData.regStat == "S"){
+                                                // $("#regDtm").val(rtnData.regDtm);
+                                                /*$("#frmGo").attr("action", "./step2");
+                                                $("#frmGo").submit();*/
+                                                    location.href = "./step2?edctnSeq=" + rtnData.edctnSeq + "&ptcptSeq=" + rtnData.ptcptSeq;
+                                            }
+                                        }, "./setPtcptInfo", $formObj, "post", "json");
+                                    }
+                                    else {
+                                        return false;
+                                    }
                                 }
                                 //정원초과
                                 else{

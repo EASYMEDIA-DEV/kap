@@ -170,7 +170,16 @@
                                             </div>
                                         </div>
                                         <div class="list ">
-                                            <div class="tit">${list.stduyMthdCdNm}</div>
+                                            <div class="tit">
+                                                <c:choose>
+                                                    <c:when test="${list.stduyMthdCdNm eq '온라인교육'}">
+                                                        온라인
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        ${list.stduyMthdCdNm}
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
                                             <div class="txt status-txt">${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)</div>
                                         </div>
                                     </div>

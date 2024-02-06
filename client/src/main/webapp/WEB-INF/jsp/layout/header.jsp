@@ -35,6 +35,7 @@
 	<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 	<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
 	<meta property="og:image" content="${ogImage}" id="og-image-value"/>
+	<meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 2024-02-05 meta태그 추가 -->
 	<link rel="stylesheet" href="/common/css/swiper.css" />
 	<link rel="stylesheet" href="/common/css/fonts.css" />
 	<link rel="stylesheet" href="/common/css/common.css?bust=${sysDate}" />
@@ -57,6 +58,8 @@
 
 	<!--함수 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
+	<!-- 유튜브 API -->
+	<script type="text/javascript" src="/common/js/controller/co/COYoutubeCtrl.js?${sysDate}"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
 
@@ -290,7 +293,7 @@
                                         <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                     </div>
                                 </div>
-                                <p class="last-date f-caption2"><span>최근접속일</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</span></p>
+                                <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</span></p>
                             </div>
                         </c:if>
 					</div>
@@ -319,7 +322,7 @@
 															<li>
 																<div class="for-move">
 																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
-																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 && menu2.children[0].attr.gnbYn eq 'Y'}">
 																		<ul class="three-pack">
 																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
 																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
@@ -392,21 +395,15 @@
 									</li>
 								</c:if>
 							</c:forEach>
-							<c:if test="${empty loginMap}">
-								<li>
-									<div class="one-pack">
-										<a class="one-depth for-move" href="javascript:">비회원 신청내역 조회</a>
-									</div>
-									<ul class="two-pack">
-										<li>
-											<div class="for-move">
-												<a class="two-depth" href="/education/apply/non-member/auth">비회원 신청내역 조회</a>
-											</div>
-										</li>
-									</ul>
-								<li>
-							</c:if>
+
 						</ul>
+						<c:if test="${empty loginMap}">
+						<div class="non-member-apply">
+							<a href="/education/apply/non-member/auth">
+								<p class="f-body1">비회원 신청내역 조회</p>
+							</a>
+						</div>
+						</c:if>
 					</c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">

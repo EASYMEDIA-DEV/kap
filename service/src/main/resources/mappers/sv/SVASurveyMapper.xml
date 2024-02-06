@@ -745,8 +745,8 @@
 			 ,a.reg_dtm
 			 ,a.mod_id
 			 ,a.mod_dtm
-			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
-			 , (select group_concat(sbjct_rply) from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
+			 , (select group_concat(sbjct_rply) from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc
@@ -771,7 +771,7 @@
 			 ,a.reg_dtm
 			 ,a.mod_id
 			 ,a.mod_dtm
-			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq and svmd.isttr_seq = #{isttrSeq}) as win_answer
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq and svmd.isttr_seq = #{isttrSeq}) as win_answer
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc
@@ -796,8 +796,8 @@
 			 ,a.reg_dtm
 			 ,a.mod_id
 			 ,a.mod_dtm
-			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svmd.exmpl_seq = a.exmpl_seq) as win_answer
-			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svmd.exmpl_seq = a.exmpl_seq) as win_answer
+			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where rfnc_cd = 'CON' and rfnc_seq = #{rfncSeq}  and svsd.qstn_seq = a.qstn_seq) as win_answer_text
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc
@@ -925,6 +925,108 @@
 			, now()
 			)
 	</insert>
+
+
+	<!--
+          쿼리명 : SVASurveyMapper.selectApiSurveyList
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2024.02.05   박준희     최초생성
+     -->
+	<select id="selectApiSurveyDtl" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyApiMstInsertDTO">
+		select /* SVASurveyMapper.selectApiSurveyDtl */
+			#{detailsKey} AS kap_seq
+		from sv_mst A
+		where srv_seq IN (
+			SELECT * FROM ( SELECT SRV_SEQ from ED_EDCTN_EPISD_MST
+			WHERE EDCTN_SEQ = #{detailsKey}
+			ORDER BY EPISD_YEAR ASC , EPISD_ORD ASC LIMIT 1 ) AS T
+			)
+	</select>
+
+	<!--
+    쿼리명 : SVASurveyMapper.selectApiSurveyQstnDtlList
+    설  명 : 설문 질문 조회
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.02.05    박준희       최초생성
+-->
+	<select id="selectApiSurveyQstnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyApiQstnDtlDTO">
+
+			SELECT /* SVASurveyMapper.selectApiSurveyQstnDtlList */
+
+				  SRVY_CD
+				 , SRVY_TYPE
+				 , CASE WHEN SRVY_TYPE='T' THEN NULL WHEN  SRV_TYPE_CD = 'QST05' THEN '5' WHEN SRV_TYPE_CD = 'QST06'  THEN '7' WHEN SRV_TYPE_CD = 'QST07' THEN '10' END QSTN_SMRY
+				 , QSTN
+				 , CASE WHEN SRV_TYPE_CD IN ('QST05','QST06','QST07') THEN '1' ELSE '' END AS EXMPL_1
+				 , CASE WHEN SRV_TYPE_CD IN ('QST05','QST06','QST07') THEN '2' ELSE '' END AS EXMPL_2
+				 , CASE WHEN SRV_TYPE_CD IN ('QST05','QST06','QST07') THEN '3' ELSE '' END AS EXMPL_3
+				 , CASE WHEN SRV_TYPE_CD IN ('QST05','QST06','QST07') THEN '4' ELSE '' END AS EXMPL_4
+				 , CASE WHEN SRV_TYPE_CD IN ('QST05','QST06','QST07') THEN '5' ELSE '' END AS EXMPL_5
+				 , CASE WHEN SRV_TYPE_CD IN ('QST06','QST07') THEN '6' ELSE '' END AS EXMPL_6
+				 , CASE WHEN SRV_TYPE_CD IN ('QST06','QST07') THEN '7' ELSE '' END AS EXMPL_7
+				 , CASE WHEN SRV_TYPE_CD IN ('QST07') THEN '8' ELSE '' END AS EXMPL_8
+				 , CASE WHEN SRV_TYPE_CD IN ('QST07') THEN '9' ELSE '' END AS EXMPL_9
+				 , CASE WHEN SRV_TYPE_CD IN ('QST07') THEN '10' ELSE '' END AS EXMPL_10
+			FROM (
+				 SELECT
+					 @rownum:=@rownum+1 AS ROWNUM
+					  , 'AA' AS SRVY_CD
+					  , CASE WHEN SRV_TYPE_CD IN ( 'QST03' ,'QST04') THEN 'T' ELSE 'S' END AS SRVY_TYPE
+					  , '' AS QSTN_SMRY
+					  , QSTN_NM AS QSTN
+					  ,(SELECT MAX(SRV_TYPE_CD) AS SRV_TYPE_CD FROM sv_qstn_dtl WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_TYPE_CD
+				 FROM sv_qstn_dtl A , (SELECT @rownum:=0) B
+				 WHERE A.SRV_SEQ IN (
+					 SELECT * FROM ( SELECT SRV_SEQ from ED_EDCTN_EPISD_MST
+									 WHERE EDCTN_SEQ = #{detailsKey}
+									 ORDER BY EPISD_YEAR ASC , EPISD_ORD ASC LIMIT 1 ) AS T
+				 )
+				 ORDER BY CASE WHEN A.SRV_TYPE_CD IN ( 'QST03' ,'QST04') THEN 1 ELSE 0 END ASC , A.QSTN_SEQ ASC
+			 ) T
+			ORDER BY SRVY_TYPE ASC , ROWNUM ASC
+
+
+	</select>
+
+	<!--
+          쿼리명 : SVASurveyMapper.selectApiRspnSurveyDtl
+          설  명 : 목록을 조회한다.
+              수정일	 수정자     수정내용
+         ==========   ======   =============
+         2024.02.05   박준희     최초생성
+     -->
+	<select id="selectApiRspnSurveyDtl" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyApiRspnInsertDTO">
+		select /* SVASurveyMapper.selectApiRspnSurveyDtl */
+			(SELECT EDCTN_SEQ FROM ED_EDCTN_EPISD_MST WHERE EPISD_SEQ = #{detailsKey}) AS kap_seq
+			, #{detailsKey} AS kap_schd_seq
+		from sv_rspn_mst A
+		where RFNC_CD = 'EDU' AND RFNC_SEQ = #{detailsKey} AND REG_ID = #{regId}
+	</select>
+
+	<!--
+    쿼리명 : SVASurveyMapper.selectApiSurveyRspnDtlList
+    설  명 : 설문 질문 조회
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.02.05    박준희       최초생성
+-->
+	<select id="selectApiSurveyRspnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyApiRspnDtlDTO">
+		SELECT /* SVASurveyMapper.selectApiSurveyRspnDtlList */
+			 A.REG_ID AS KAP_ID
+			 , 0 AS SRVY_SEQ
+			 , 'AA' AS SRVY_CD
+			 , CASE WHEN B.SRV_TYPE_CD IN ( 'QST03' ,'QST04') THEN 'T' ELSE 'S' END AS SRVY_TYPE
+			 , C.EXMPL_ORD AS RPLY
+		FROM SV_RSPN_MST A
+				 INNER JOIN SV_QSTN_DTL B ON A.SRV_SEQ = B.SRV_SEQ
+				 INNER JOIN SV_EXMPL_DTL C ON B.QSTN_SEQ = C.QSTN_SEQ
+				 INNER JOIN SV_MTLCC_RSPN_DTL D ON C.EXMPL_SEQ = D.EXMPL_SEQ AND D.SRV_RSPN_SEQ = A.SRV_RSPN_SEQ
+		WHERE A.RFNC_CD = 'EDU' AND A.RFNC_SEQ = #{detailsKey} AND A.REG_ID = #{regId}
+		ORDER BY CASE WHEN B.SRV_TYPE_CD IN ( 'QST03' ,'QST04') THEN 1 ELSE 0 END ASC , B.QSTN_SEQ ASC
+	</select>
 
 	<select id="selectSurveyScore" statementType="CALLABLE" parameterType="SVASurveyRspnScoreDTO">
 		{call sp_survey_score(#{srvType} , #{targetSeq}, #{ptcptName} , #{ptcptTelno} , #{ptcptPstn}  , #{regId} , #{regIp})}

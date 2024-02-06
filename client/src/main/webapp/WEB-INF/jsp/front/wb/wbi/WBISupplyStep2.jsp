@@ -69,8 +69,6 @@
                         <div class="form-group">
                           <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                             <p class="empty-txt">선택된 파일 없음</p>
-                            <div class="file-list">
-                            </div>
                           </div>
                           <div class="file-btn-area">
                             <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>

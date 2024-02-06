@@ -22,8 +22,8 @@
     </c:when>
 </c:choose>
 
-<c:set var="edctnStrtDtm" value="${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
-<c:set var="edctnEndDtm" value="${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+<c:set var="parseEdctnStrtDtm" value="${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
+<c:set var="parseEdctnEndDtm" value="${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
 
 <div data-controller="controller/eb/ebi/EBINonMemberDetailCtrl">
     <form name="frmGo" method="GET" action="" data-del-type="none">
@@ -132,7 +132,7 @@
                                                         </div>
                                                         <div class="info-list">
                                                             <p class="tit f-caption2">교육기간</p>
-                                                            <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(edctnStrtDtm, edctnEndDtm) +1 }일간)</p>
+                                                            <p class="txt f-body2">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(parseEdctnStrtDtm, parseEdctnEndDtm) +1 }일간)</p>
                                                         </div>
                                                     </div>
                                                     <div class="btn-wrap">
@@ -160,9 +160,9 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        <div class="paragraph">
+                                        <%--<div class="paragraph">
                                             <p class="f-sub-head">${ rtnData.smmryNm }</p>
-                                        </div>
+                                        </div>--%>
                                         <div class="paragraph">
                                             <p class="f-sub-head">${ rtnData.itrdcCntn }</p>
                                         </div>
@@ -179,7 +179,8 @@
                                     <div class="txt-sec">
                                         <div class="ul-txt-w highlight">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt has-dot">${ rtnData.stduyTrgtCntn }</p>
+                                                <%--<p class="ul-txt has-dot">${ rtnData.stduyTrgtCntn }</p>--%>
+                                                <p class="ul-txt">${ rtnData.stduyTrgtCntn }</p>
                                             </div>
                                         </div>
                                     </div>
@@ -362,7 +363,7 @@
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">교육일자</p>
-                                                    <p class="txt">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(edctnStrtDtm, edctnEndDtm) +1 }일간)</p>
+                                                    <p class="txt">${ kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } (${ kl:getDaysDiff(parseEdctnStrtDtm, parseEdctnEndDtm) +1 }일간)</p>
                                                 </div>
                                                 <div class="list">
                                                     <p class="tit">강사</p>

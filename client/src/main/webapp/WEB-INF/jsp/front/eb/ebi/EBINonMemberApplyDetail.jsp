@@ -32,7 +32,7 @@
     <c:when test="${ fn:contains(list.edctnStatusNm, '교육중') }">
         <c:set var="studyStatusClass" value="accepting" />
     </c:when>
-    <c:when test="${ fn:contains(list.edctnStatusNm, '교육마감') }">
+    <c:when test="${ fn:contains(list.edctnStatusNm, '교육종료') }">
         <c:set var="studyStatusClass" value="end" />
     </c:when>
 </c:choose>
@@ -202,7 +202,7 @@
                                                     <td>${ ptcptData.pstnCdNm } <c:if test="${ fn:contains(ptcptData.pstnCd, 'MEM_CD01007') }">(${ ptcptData.pstnNm })</c:if></td>
                                                 </tr>
                                                 <tr>
-                                                    <th>핸드폰 번호</th>
+                                                    <th>휴대폰번호</th>
                                                     <td>${ kl:hpNum(ptcptData.hpNo) }</td>
                                                 </tr>
                                                 <tr>
@@ -213,7 +213,7 @@
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-text-icon black-circle goList" href="javascript:" data-url="./list"><span>목록</span></a>
+                                            <a class="btn-solid small black-bg goList" href="javascript:" data-url="./list"><span>목록</span></a>
                                         </div>
                                     </div>
                                 </div>

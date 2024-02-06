@@ -57,7 +57,7 @@
                                     <div class="def-list-w">
                                         <div class="def-list">
                                             <p class="tit f-head">신청일시</p>
-                                            <p class="txt f-sub-head">${ kl:convertDate(ptcptData.regDtm, 'yyyy.MM.dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
+                                            <p class="txt f-sub-head">${ kl:convertDate(ptcptData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</p>
                                         </div>
                                     </div>
                                 </div>

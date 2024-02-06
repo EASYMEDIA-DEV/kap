@@ -25,7 +25,9 @@
                               접수마감: end
                             -->
                             <div class="img-area">
-                                <img src="${list.webPath}" alt="" >
+                                <c:if test="${not empty list.webPath}">
+                                    <img src="${list.webPath}" alt="${list.fileDsc}">
+                                </c:if>
                             </div>
                             <div class="txt-area">
                                 <!--비회원 구분자를 사용하여 영역 표시-->

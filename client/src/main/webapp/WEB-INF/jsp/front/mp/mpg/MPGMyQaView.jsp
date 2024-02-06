@@ -38,7 +38,7 @@
                             <div class="question-wrap">
                                 <div class="title-area">
                                     <div class="title f-title3"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p>${ rtnData.titl }</div>
-                                    <p class="date f-body2">${ kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</p>
+                                    <p class="date f-body2">${ kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</p>
                                 </div>
                                 <div class="body-area">
                                     <div class="txt-wrap f-sub-head">
@@ -59,7 +59,7 @@
                             <div class="answer-wrap">
                                 <div class="title-area">
                                     <div class="title f-title3">답변</div>
-                                    <p class="date f-body2">${ kl:convertDate(rtnData.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</p>
+                                    <p class="date f-body2">${ kl:convertDate(rtnData.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</p>
                                 </div>
                                 <div class="body-area">
                                     <p class="f-sub-head">

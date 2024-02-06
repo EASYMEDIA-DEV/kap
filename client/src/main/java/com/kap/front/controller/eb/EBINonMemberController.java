@@ -74,6 +74,7 @@ public class EBINonMemberController {
         modelMap.addAttribute("parntMenuList", cOBUserMenuService.getMenuList(pCOMenuDTO));
 
 //        modelMap.addAttribute("rtnData", eBINonMemberService.selectNonMemberApplyList(pEBINonMemberDTO));
+        pEBINonMemberDTO.setTotalCount(eBINonMemberService.searchPtcptCnt(pEBINonMemberDTO));
         modelMap.addAttribute("rtnDto", pEBINonMemberDTO);
 
         return "front/eb/ebi/EBINonMemberApplyList.front";

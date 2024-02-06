@@ -10,16 +10,20 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     var ctrl = new ezCtrl.controller(exports.controller);
 
     var offerBsnmNoCheck = true;
+    var fileInput = "";
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -66,6 +70,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                 $('#'+fileId).closest(".form-group").find('.file-list-area').append(html);
                 $('#'+fileId).closest(".form-group").find('.file-list-area').addClass('attached');
+                fileInput = jQuery(obj).clone(true);
             }
         }
     };

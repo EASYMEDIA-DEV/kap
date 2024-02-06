@@ -15,10 +15,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -32,7 +35,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 //파일확장자 체크
                 $('#'+fileId).val("");
                 $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
-                $('#'+fileId).closest(".form-group").find('.file-list-area').empty();
+                $('#'+fileId).closest(".form-group").find('.file-list').remove();
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
 
                 isFile = false;
@@ -47,7 +50,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     {
                         $('#'+fileId).val("");
                         $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
-                        $('#'+fileId).closest(".form-group").find('.file-list-area').empty();
+                        $('#'+fileId).closest(".form-group").find('.file-list').remove();
                         alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
                         isFile = false;
                     }
@@ -55,6 +58,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
+                fileInput = jQuery(obj).clone(true);
                 var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
                 fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
                 fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';

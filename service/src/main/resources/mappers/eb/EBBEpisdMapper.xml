@@ -219,6 +219,10 @@
 					<!--학습시간 긴순-->
 					ORDER BY stduy_dd_cd_nm desc
 				</when>
+				<when test="srchOrder == 5">
+					<!-- 교육신청 상세 페이지 - 접수 마감일 최신순으로 정렬 -->
+					ORDER BY accs_end_dtm desc
+				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
 					ORDER BY accs_status_order ASC, accs_order_day asc
@@ -1690,7 +1694,7 @@
 			and a.edctn_seq = #{edctnSeq}
 			and a.episd_year = #{episdYear}
 			and a.episd_ord = #{episdOrd}
-			and a.stts_cd != 'EDU_STTS_CD04'
+			and a.stts_cd = 'EDU_STTS_CD04'
 
 
 		<if test='atndcYn == "N" '>
@@ -1793,8 +1797,6 @@
 				 <if test='ptcptList.otsdExamPtcptYn =="Y" '>
 					, exam_score = #{ptcptList.examScore}
 				</if>
-
-
 
 			where 1=1
 				and edctn_seq = #{ptcptList.edctnSeq}
@@ -2852,25 +2854,37 @@
 			 , atndc_info
 			 , ptcpt_info
 			 , lcrt_info
-			 , CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02' THEN CASE WHEN IFNULL(ROUND((PTCPT_INFO/LCRT_INFO)*100, 0), 0) <![CDATA[>=]]> cmptn_stnd_cd_nm THEN
-																	  /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-			CASE WHEN jdgmt_yn = 'Y' AND exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'
-		END
-					/*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-					WHEN jdgmt_yn = 'N' THEN 'Y'
+			 , CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02'
+						THEN
+						CASE WHEN IFNULL(ROUND((PTCPT_INFO/LCRT_INFO)*100, 0), 0) <![CDATA[>=]]> cmptn_stnd_cd_nm
+								 THEN
+								 /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
+								 CASE WHEN jdgmt_yn = 'Y'
+										  THEN
+										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N' END
+									  ELSE
+										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
+										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
+									 END
+							 ELSE	'N'
 
-			ELSE 'N' END
+							END
+					ELSE
+						CASE WHEN ATNDC_INFO <![CDATA[>=]]>  cmptn_stnd_cd_nm
+								 THEN
+								 CASE WHEN jdgmt_yn = 'Y'
+										  THEN
+										  /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
+										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'END
+									  ELSE
+										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
+										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
+									 END
+							 ELSE 'N'
+							END
+			END
 
-			WHEN stduy_mthd_cd IN ('STDUY_MTHD01', 'STDUY_MTHD03') THEN CASE WHEN ATNDC_INFO <![CDATA[>=]]>  cmptn_stnd_cd_nm THEN
-
-			/*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-			CASE WHEN jdgmt_yn = 'Y' AND exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'
-		END
-					/*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-					WHEN jdgmt_yn = 'N' THEN 'Y'
-
-			ELSE 'N' END
-		END AS PTCPT_CMTN_YN
+			AS PTCPT_CMTN_YN
 
 		FROM (SELECT
 				A.PTCPT_SEQ
@@ -2888,7 +2902,7 @@
 		    	, b.cmptn_auto_yn
 				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
 				, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = B.EDCTN_SEQ AND EPISD_YEAR = B.EPISD_YEAR AND B.EPISD_ORD) AS PTCPT_INFO
-				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = 28 AND EPISD_YEAR = 2024 AND EPISD_ORD = 4) AS LCRT_INFO
+				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = #{edctnSeq} AND EPISD_YEAR = #{episdYear} AND EPISD_ORD = #{episdOrd}) AS LCRT_INFO
 		FROM ep_edctn_ptcpt_mst A
 		LEFT JOIN (
 			SELECT
@@ -2969,6 +2983,28 @@
 			, mod_dtm = now()
 		where ptcpt_seq = #{ptcptSeq}
 	</update>
+
+	<!--
+          쿼리명 : EBBEpisdMapper.selectPtcptDtl
+          설  명 : 마이페이지 - 수료진행
+           수정일     수정자       수정내용
+         ==========   ======    ==============
+         2024.01.24   김학규       최초생성
+	 -->
+	<select id="selectPtcptExamDtl" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
+		SELECT
+		    EDCTN_SEQ
+			, EPISD_SEQ
+			, EPISD_YEAR
+			, EPISD_ORD
+			, MEM_SEQ
+			, PTCPT_SEQ
+			, CMPTN_YN
+			, CMPTN_DTM
+			, crtfct_no
+		FROM ep_edctn_ptcpt_mst
+		where ptcpt_seq = #{ptcptSeq}
+	</select>
 
 
 

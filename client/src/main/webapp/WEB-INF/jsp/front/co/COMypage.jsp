@@ -76,7 +76,7 @@
                                                 <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
                                             </div>
                                         </div>
-                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty loginMap.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</span></p>
+                                        <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ empty loginMap.regDtm ? '-' : kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') }</span></p>
                                     </div>
                                 </div>
                             </div>
@@ -148,10 +148,10 @@
                                                     </c:choose>
                                                     <tr>
                                                         <td class="t-align-center">${ qaList.parntCtgryNm } > ${ qaList.ctgryNm }</td>
-                                                        <td><p class="txt-ellipsis">${ qaList.titl }</p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                        <td class="t-align-center">${ kl:convertDate(qaList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                                                        <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="qaDtl"  data-details-key="${qaList.qaSeq}" data-mem-seq="${qaList.memSeq}" data-rsume-cd="${qaList.rsumeCd}">${ qaList.titl }</a></p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
+                                                        <td class="t-align-center">${ kl:convertDate(qaList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>
                                                         <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
-                                                        <td class="t-align-center">${ kl:decode(qaList.modDtm, "", "-", kl:convertDate(qaList.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
+                                                        <td class="t-align-center">${ kl:decode(qaList.modDtm, "", "-", kl:convertDate(qaList.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')) }</td>
                                                     </tr>
                                                 </c:forEach>
                                                 </tbody>

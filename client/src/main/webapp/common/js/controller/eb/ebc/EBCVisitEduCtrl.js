@@ -233,9 +233,25 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
                         }
                     }
                 }
-            }
+            },
 
-            ,
+            samePlaceBtn : {
+                event : {
+                    click : function() {
+                        if($(this).prop("checked")) {
+                            $("#placeZipcode").val($("#zipcode").val());
+                            $("#placeBscAddr").val($("#bscAddr").val());
+                            $("#placeDtlAddr").val($("#dtlAddr").val());
+                        }
+                        else {
+                            $("#placeZipcode").val("");
+                            $("#placeBscAddr").val("");
+                            $("#placeDtlAddr").val("");
+                        }
+                    }
+                }
+            },
+
             // 상세주소 입력 시 체크박스 해제
             placeDtlAddr : {
                 event : {

@@ -9,9 +9,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     var equidHtml = '';
+    var fileInput = "";
     var equidChagneFunction = function() {
         var equimentLength = $('.equiment').length;
-        console.log(equimentLength);
         $('.equimentCnt').text(equimentLength);
 
         var tchlgTotalCnt = 0;
@@ -27,10 +27,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     {
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
+        var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
 
         if (!fileObj)
         {
             isFile = false;
+            $('#'+fileId).remove();
+            fileArea.prepend(fileInput);
         }
         else
         {
@@ -67,6 +70,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
+                fileInput = jQuery(obj).clone(true);
                 var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
                 fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
                 fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';

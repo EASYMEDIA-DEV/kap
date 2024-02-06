@@ -128,12 +128,40 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+			//검색 초기화
 			btnRefresh : {
 				event : {
-					click : function () {
-						$(".cdListContainer").css("display","none");
-						$(".cdListContainer").attr("disabled", true);
-						$(".cdListContainer").find("input:checkbox").prop("checked", false);
+					click : function() {
+						//FORM 데이터 전체 삭제
+						var pageIndex 	= $formObj.find("#pageIndex").val();
+						var listRowSize = $formObj.find("#listRowSize").val();
+						var pageRowSize = $formObj.find("#pageRowSize").val();
+						var csrfKey 	= $formObj.find("#csrfKey").val();
+						var srchLayer 	= $formObj.find("input[name=srchLayer]").val();
+						$formObj.clearForm();
+						//FORM 전송 필수 데이터 삽입
+						$formObj.find("#pageIndex").val( pageIndex );
+						$formObj.find("#listRowSize").val( listRowSize );
+						$formObj.find(".listRowSizeContainer").val( listRowSize );
+						$formObj.find("#pageRowSize").val( pageRowSize );
+						$formObj.find("#csrfKey").val( csrfKey );
+						$formObj.find("input[name=srchLayer]").val( srchLayer );
+
+						//캘린더 초기화
+						cmmCtrl.setPeriod(this, "", "", false);
+
+						//검색 로직 실행
+						$formObj.find("#btnSearch").click();
+					}
+				}
+			},
+			//등록 페이지 이동
+			btnWrite : {
+				event : {
+					click : function() {
+						//파라미터를 물고 가야함. 목록 버튼 클릭시 검색 조건 물고 넘겨야함.
+						$formObj.find("input[name=_csrf]").remove();
+						location.href = "./write";
 					}
 				}
 			},
@@ -201,49 +229,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
 		},
 		classname : {
-
-			classType : {
-				event : {
-					click : function() {
-
-						$(".cdListContainer").css("display","none");
-						$(".cdListContainer").attr("disabled", true);
-						$(".cdListContainer").find("input:checkbox").prop("checked", false);
-
-
-						$(".classType input:checked").each(function(){
-							// console.log($(this).val());
-
-							var checkVal = $(this).val();
-
-							var cdnm = $(this).data("cdnm"); //내일 이거 해야됨 클릭한것의 cdnm값 갖고오기
-							$("."+checkVal).find(".cdnm").html(cdnm);
-							$("."+checkVal).css("display","block");
-
-							$("."+checkVal).find("input:checkbox").attr("disabled", false);
-							// console.log(cdnm);
-							$("."+checkVal).find("input:checkbox").find("span").append(cdnm+"23434");
-
-
-						});
-
-						if($(".classType input:checked").length == 0){
-							$(".cdListContainer").css("display","none");
-							$(".cdListContainer").attr("disabled", true);
-							$(".cdListContainer").find("input:checkbox").prop("checked", false);
-						}
-
-						$(".detailCdList").find('input[type=checkbox]').prop("checked",false);
-						if($(".detailCdList").find('input[type=checkbox]').is(":visible")){
-							$(".detailCdList").find('input[type=checkbox]').each(function(){
-								$(this).prop("checked",true);
-							})
-						}
-
-					}
-				}
-			},
-
 
 			//페이징 처리
 			pageSet : {

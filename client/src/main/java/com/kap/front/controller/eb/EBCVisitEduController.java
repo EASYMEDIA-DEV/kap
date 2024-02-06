@@ -46,7 +46,7 @@ import java.util.List;
 @Slf4j
 @Controller
 @RequiredArgsConstructor
-@RequestMapping(value="/education/visit/")
+@RequestMapping(value="/education/visit")
 public class EBCVisitEduController {
 
     /** 서비스 **/

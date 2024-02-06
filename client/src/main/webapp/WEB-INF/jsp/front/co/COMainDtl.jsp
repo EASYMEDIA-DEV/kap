@@ -78,7 +78,7 @@
                 </div>
             </div>
         </a>
-        <a class="biz-list acco-list consulting" href="/consulting/tech/index">
+        <a class="biz-list acco-list consulting" href="/consulting/tech/content">
             <div class="title-area" href="javascript:">
                 <p class="tit">컨설팅사업</p>
                 <p class="txt only-mobile">부품사 경쟁력 강화</p>
@@ -599,7 +599,7 @@
                     </div>
                     <div class="field-list-w">
                         <div class="for-set">
-                            <a class="field-list" href="/consulting/tech/index">
+                            <a class="field-list" href="/consulting/tech/content">
                                 <div class="thumbnail-img only-mobile">
                                     <img src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
                                 </div>
@@ -611,7 +611,7 @@
                                     <div class="btn-text-icon black-circle"><span>자세히 보기</span></div>
                                 </div>
                             </a>
-                            <a class="field-list" href="/consulting/manage/index">
+                            <a class="field-list" href="/consulting/manage/content">
                                 <div class="thumbnail-img only-mobile">
                                     <img src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
                                 </div>
@@ -799,7 +799,7 @@
                     </div>
                     <div class="article-list-w txt-list">
                         <c:forEach var="list" items="${faqData.list}" varStatus="status">
-                            <a class="list-item" href="javascript:" title="링크 이동">
+                            <a class="list-item" href="/foundation/board/faq/list?faqSeq=${list.faqSeq}" title="링크 이동">
                                 <div class="txt-box">
                                     <p class="tit f-head">${list.titl}</p>
                                     <span class="sub-txt f-body2">${list.ctgryName}</span>

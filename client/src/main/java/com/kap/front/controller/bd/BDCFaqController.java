@@ -54,6 +54,7 @@ public class BDCFaqController {
             cdDtlList.add("BOARD_TYPE_CD");
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
             modelMap.addAttribute("rtnData", bDCFaqService.selectFaqList(pBDCFaqDTO));
+            modelMap.addAttribute("faqSeq", pBDCFaqDTO.getFaqSeq());
         }
         catch (Exception e)
         {

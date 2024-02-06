@@ -26,7 +26,7 @@
 				emailChk : {
 					className : "emailChk",
 					//regExr : "^[_a-zA-Z0-9-\\.\\_]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$"
-					regExr : "^[_a-zA-Z0-9-\\.\\_]+@[\\.a-zA-Z0-9-]+\\.(com|net)$"
+					regExr : "^[_a-zA-Z0-9-\\.\\_]+@[\\.a-zA-Z0-9-]+\\.(com|net|org)$"
 				},
 				numberChk : {
 					className : "numberChk",

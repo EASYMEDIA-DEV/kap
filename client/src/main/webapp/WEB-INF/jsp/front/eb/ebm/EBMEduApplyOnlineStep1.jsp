@@ -157,7 +157,7 @@
                         </c:choose>
                         <input type="hidden" name="onlineStepYn" id="onlineStepYn" value="${onlineSetYn}" />
 
-                        <div class="btn-wrap add-load align-center">
+                        <div class="btn-wrap add-load align-center" style="display:none;">
                             <a class="btn-solid small black-line lctrPageSet" href="javascript:"><span>더보기</span><span class="item-count">(1/50)</span></a>
                         </div>
                     </div>

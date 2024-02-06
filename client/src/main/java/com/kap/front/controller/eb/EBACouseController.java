@@ -154,6 +154,7 @@ public class EBACouseController {
     {
         try
         {
+            eBBEpisdDTO.setSrchOrder(5); // 회차 목록 - 접수 마감일 최신순으로 정렬
             modelMap.addAttribute("rtnData", eBBEpisdService.selectCouseChildEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }

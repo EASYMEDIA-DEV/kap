@@ -172,7 +172,23 @@ define(["ezCtrl"], function(ezCtrl) {
 
 					}
 				}
-			}
+			},
+
+			//상세보기
+			qaDtl : {
+				event : {
+					click : function() {
+						//상세보기
+						var detailsKey = $(this).data("detailsKey");
+						var memSeq = $(this).data("memSeq");
+						var rsumeCd = $(this).data("rsumeCd");
+						$formObj.find("input[name=detailsKey]").val(detailsKey);
+						$formObj.find("input[name=memSeq]").val(memSeq);
+						$formObj.find("input[name=rsumeCd]").val(rsumeCd);
+						location.href = "./member/qa/select?detailsKey=" + detailsKey + "&memSeq=" + memSeq + "&rsumeCd=" + rsumeCd;
+					}
+				}
+			},
 
 		},
 		immediately : function() {

@@ -15,7 +15,7 @@
         <td class="text-center">${kl:bsnmNoConvert(ptcptList.ptcptBsnmNo)}</td><!--사업자등록번호-->
         <td class="text-center">${ptcptList.deptCdNm} ${ptcptList.deptDtlNm == '' ? '' : '('+=ptcptList.deptDtlNm+=')'} </td><!-- 부서 -->
         <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
-        <td class="text-center">${ptcptList.hpNo}</td><!-- 휴대폰번호 -->
+        <td class="text-center">${kl:hpNum(ptcptList.hpNo)}</td><!-- 휴대폰번호 -->
         <td class="text-center">${ptcptList.email}</td><!-- 이메일 -->
         <td class="text-center">
             ${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }

@@ -24,33 +24,6 @@ define(["ezCtrl"], function(ezCtrl) {
 	// 지도를 생성합니다
 	var map = new daum.maps.Map(mapContainer, mapOption);
 
-	var setUrlTime = function(arg){
-
-		var youtubeXhr2 = new XMLHttpRequest();
-		youtubeXhr2.open('GET', 'https://www.youtube.com/watch?v=' + arg, 0);
-		youtubeXhr2.send();
-		var youtubeTime = youtubeXhr2.responseText.split('"lengthSeconds":"')[1].split('"')[0];
-
-		return youtubeTime;
-	}
-
-	var setUrlName = function(arg){
-
-		var youtubeXhr = new XMLHttpRequest();
-		youtubeXhr.open('GET', 'https://noembed.com/embed?url=https://www.youtube.com/watch?v=' + arg, 0);
-		youtubeXhr.send();
-
-		var youtubeTitle = youtubeXhr.responseText.split('"title":"')[1].split('"')[0];
-		var youtubeHqImage = youtubeXhr.responseText.split('"thumbnail_url":"')[1].split('"')[0];
-		var youtubeMqImage = youtubeHqImage.replace('hq', 'mq');
-		var youtubeSdImage = youtubeHqImage.replace('hq', 'sd');
-
-
-
-
-		return youtubeTitle;
-	}
-
 	// 목록 조회
 	var search = function (page){
 		//data로 치환해주어야한다.
@@ -153,23 +126,18 @@ define(["ezCtrl"], function(ezCtrl) {
 			//이름이 없을경우 추출해서 입력 해준다.
 			$("#listLctrContainer").find(".list-item").each(function(){
 
+				var youtubeForm = {};
+				if($(this).find(".urlName").text().trim() == ""|| $(this).find(".urlTime").find("span").text().trim() == ""){
+					var urlKey = $(this).find(".urlKey").data("urlkey");
+					youtubeForm = COYoutubeCtrl.youtubeSearch(youtubeForm, urlKey);
+				}
+
 				if($(this).find(".urlName").text().trim() == ""){
-					var urlKey = $(this).find(".urlKey").data("urlkey");
-					var tempName = setUrlName(urlKey);
-
-					$(this).find(".urlName").text(tempName);
+					$(this).find(".urlName").text(youtubeForm.title);
 				};
-
 				if($(this).find(".urlTime").find("span").text().trim() == ""){
-					var urlKey = $(this).find(".urlKey").data("urlkey");
-					var tempTime = setUrlTime(urlKey);
-
-					var q = Math.floor( tempTime / 60);
-					q = (q == 0) ? 1 : q;
-
-					$(this).find(".urlTime").find("span").text(q);
+					$(this).find(".urlTime").find("span").text(youtubeForm.duration);
 				};
-
 
 			});
 
@@ -199,7 +167,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctrl.obj.find("#listLctrContainerTotCnt").text(totCnt);
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $lctrFormObj, "listLctrContainer", "pagingContainer");
-		}, "/education/apply/episdLctrDtlList", $lctrFormObj, "GET", "html");
+		}, "/education/apply/episdLctrDtlList", $lctrFormObj, "GET", "html", true);
 
 	}
 
@@ -214,6 +182,13 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
+			listBtn : {
+				event : {
+					click : function() {
+						location.href="/education/apply/list?" + $formObj.serialize();
+					}
+				}
+			}
 
 
 		},
@@ -419,7 +394,28 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						seqObj.stduyMthdCd = $("#stduyMthdCd").val(); //학습방식, 온라인이면 출석정보 등록 안함
 
-						if(memSeq == "" || memSeq === undefined){
+						var stepFlag = true;
+
+						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
+						cmmCtrl.jsonAjax(function(data){
+
+							if(data != "A"){
+								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
+								// location.href="./detail?detailsKey="+$("#edctnSeq").val();
+								stepFlag = false;
+
+								if(data == "D") {
+									location.href = "./list";
+								}
+								else {
+									location.reload();
+								}
+							}
+							return false;
+						}, "/education/apply/EpisdChk", seqObj, "text")
+
+
+						if(stepFlag && (memSeq == "" || memSeq === undefined)){
 							if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")){
 								location.href="/education/apply/step1?detailsKey="+edctnSeq+"&episdSeq="+edpisdSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd;
 							} else {
@@ -432,23 +428,9 @@ define(["ezCtrl"], function(ezCtrl) {
 							alert("교육신청은 부품사 회원만 신청 가능합니다.");
 							return false;
 						}else if(authCd == "CS"){
-							alert("위원회원은 해당 서비스를 이용 할 수 없습니다.");
+							alert("위원 계정은 해당 서비스를 이용할 수 없습니다.");
 							return false;
 						}
-
-						var stepFlag = true;
-						//위원인경우
-
-						//교육 취소, 변경, 삭제의 이유로 변동이 있을경우 알럿띄우고 교육상세로 넘김
-						cmmCtrl.jsonAjax(function(data){
-
-							if(data != "A"){
-								alert("교육 정보가 변경되었습니다. 다시 신청 바랍니다.");
-								location.href="./detail?detailsKey="+$("#edctnSeq").val();
-								stepFlag = false;
-							}
-							return false;
-						}, "/education/apply/EpisdChk", seqObj, "text")
 
 						if(stepFlag){
 							$("#episdYear").val(episdYear);

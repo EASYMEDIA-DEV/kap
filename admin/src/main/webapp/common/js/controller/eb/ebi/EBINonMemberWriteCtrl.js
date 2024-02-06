@@ -454,6 +454,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// set model
 	ctrl.model = {
 		id : {
+
+			//문의 담당자 이름
+			picNm : {
+				event : {
+					input : function() {
+						if ($(this).val() != "")
+						{
+							var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+							var value = $(this).val();
+							if (regexp.test(value)) {
+								alert("한글만 입력 가능합니다");
+								$(this).val("");
+								return false;
+							}
+						}
+					}
+				}
+			},
+
+			//문의 담당자 이메일
+			picEmail : {
+				event : {
+					input : function() {
+						if ($(this).val() != "")
+						{
+							var check  = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+							if(check.test($(this).val() )) {
+								alert("한글입력은 불가능합니다.");
+								event.preventDefault();
+								$(this).val("");
+								return false;
+							}
+						}
+					}
+				}
+			},
+
 			//신청자 여러명 신청 취소
 			cancelSelectEdctn : {
 				event : {

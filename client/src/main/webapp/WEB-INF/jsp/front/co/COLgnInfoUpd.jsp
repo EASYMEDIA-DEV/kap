@@ -16,6 +16,7 @@
     <meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
     <meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
     <meta property="og:image" content="img URL" id="og-image-value"/>
+    <meta name="format-detection" content="telephone=no, address=no, email=no" /><!-- 2024-02-05 meta태그 추가 -->
     <!-- <meta name="twitter:url" content="URL" id="twitter-url-value"/>
     <meta name="twitter:title" content="Main" id="twitter-title-value"/>
     <meta name="twitter:image" content="img URL" />

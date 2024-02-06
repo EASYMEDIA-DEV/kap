@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -72,6 +73,7 @@ public class SVASurveyMstSearchDTO extends BaseDTO {
 
     @Schema(title = "교육회차순번", example = "숫자")
     private Integer episdSeq;
+
 
 
 }

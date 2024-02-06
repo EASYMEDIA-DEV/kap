@@ -307,7 +307,10 @@ public interface EBBEpisdMapper {
 	 */
 	public int selectPtcptDupleChk(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
-
+	/**
+	 *  전달받은 참여번호의 정보 호출
+	 */
+	public EBBPtcptDTO selectPtcptExamDtl(EBBPtcptDTO eBBPtcptDTO) throws Exception;
 
 
 

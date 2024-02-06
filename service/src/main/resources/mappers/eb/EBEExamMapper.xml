@@ -831,6 +831,7 @@
 		<if test="cmptnYn != null and cmptnYn == 'Y'.toString()">
 			, cmptn_yn = #{cmptnYn}
 		    , cmptn_dtm = now()
+			, crtfctNo = #{crtfctNo}
 		</if>
 		<if test="cmptnYn != null and cmptnYn == 'N'.toString()">
 			, cmptn_yn = #{cmptnYn}
@@ -898,6 +899,43 @@
 				 left join ep_edctn_lctr_dtl ptctp_lctr_dtl on ptctp_lctr_dtl.lctr_seq = lctr_dtl.lctr_seq AND ptctp_lctr_dtl.ptcpt_seq = #{ptcptSeq}
 		where lctr_dtl.edctn_seq = #{edctnSeq}
 	</select>
+
+
+	<!--
+         쿼리명 : EXGExamMapper.insertOtsdExamPtcptMst
+         설  명 : 교육 시험 참여 등록
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.09    김학규       최초생성
+    -->
+	<insert id="insertOtsdExamPtcptMst" parameterType="EXGExamEdctnPtcptRspnMst">
+		insert /* EXGExamMapper.insertOtsdExamPtcptMst */ into ep_edctn_exam_ptcpt_mst
+		(
+		exam_ptcpt_seq
+		, ptcpt_seq
+		, exam_seq
+		, mem_seq
+		, reg_id
+		, reg_ip
+		, reg_dtm
+		, mod_id
+		, mod_ip
+		, mod_dtm
+		)
+		values
+			(
+			#{examPtcptSeq}
+			, #{ptcptSeq}
+			, #{examSeq}
+			, #{memSeq}
+			, #{regId}
+			, #{regIp}
+			, now()
+			, #{regId}
+			, #{regIp}
+			, now()
+			)
+	</insert>
 
 </mapper>
 

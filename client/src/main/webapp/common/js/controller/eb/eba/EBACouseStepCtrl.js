@@ -66,23 +66,18 @@ define(["ezCtrl"], function(ezCtrl) {
 			//이름이 없을경우 추출해서 입력 해준다.
 			$("#listLctrContainer").find(".list-item").each(function(){
 
+				var youtubeForm = {};
+				if($(this).find(".urlName").text().trim() == ""|| $(this).find(".urlTime").find("span").text().trim() == ""){
+					var urlKey = $(this).find(".urlKey").data("urlkey");
+					youtubeForm = COYoutubeCtrl.youtubeSearch(youtubeForm, urlKey);
+				}
+
 				if($(this).find(".urlName").text().trim() == ""){
-					var urlKey = $(this).find(".urlKey").data("urlkey");
-					var tempName = setUrlName(urlKey);
-
-					$(this).find(".urlName").text(tempName);
+					$(this).find(".urlName").text(youtubeForm.title);
 				};
-
 				if($(this).find(".urlTime").find("span").text().trim() == ""){
-					var urlKey = $(this).find(".urlKey").data("urlkey");
-					var tempTime = setUrlTime(urlKey);
-
-					var q = Math.floor( tempTime / 60);
-					q = (q == 0) ? 1 : q;
-
-					$(this).find(".urlTime").find("span").text(q);
+					$(this).find(".urlTime").find("span").text(youtubeForm.duration);
 				};
-
 
 			});
 
@@ -119,7 +114,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			ctrl.obj.find("#listLctrContainerTotCnt").text(totCnt);
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $lctrFormObj, "listLctrContainer", "pagingContainer");
-		}, "/education/apply/episdLctrDtlList", $lctrFormObj, "GET", "html");
+		}, "/education/apply/episdLctrDtlList", $lctrFormObj, "GET", "html", true);
 
 	}
 
@@ -309,6 +304,11 @@ define(["ezCtrl"], function(ezCtrl) {
 
 						var seqObj = {};
 						var gpcId = $("#gpcId").val();
+
+						if(gpcId == ""){
+							alert("GPC 아이디를 입력해주세요.");
+							return false;
+						}
 
 						seqObj.gpcId = gpcId;
 
