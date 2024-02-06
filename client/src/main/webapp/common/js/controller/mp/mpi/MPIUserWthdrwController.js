@@ -66,10 +66,42 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                     func : function (){
                         if (confirm(msgCtrl.getMsg("confirm.wthdrw"))) {
-                            cmmCtrl.frmAjax(function(respObj) {
-                                alert(msgCtrl.getMsg("success.mp.wthdrw.al_001"));
-                                document.getElementById("formWthdrwSuccess").submit();
-                            }, "/my-page/member/wthdrw/update-wthdrw", $formObj, "POST", "json",'',false);
+                            var ajaxData = {
+                            }
+                            jQuery("#formWthdrwSuccess").serializeArray().forEach(function (field) {
+                                if (field.name == '_csrf') {
+                                    ajaxData[field.name] = field.value;
+                                }
+                            });
+
+                                jQuery(".loading-area").stop().fadeIn(200);
+                                jQuery.ajax({
+                                    url: "/my-page/member/intrduction/confirm-comp",
+                                    type: "post",
+                                    timeout: 30000,
+                                    data: ajaxData,
+                                    dataType: "json",
+                                    cache: false,
+                                    success: function (data, status, xhr) {
+                                        if (data.data.chk) {
+                                            alert("참여 중인 사업이 " + data.data.count + " 건 있습니다. 소속부품사 변경이 불가합니다.\n")
+                                            return false;
+                                        } else {
+                                            cmmCtrl.frmAjax(function (respObj) {
+                                                alert(msgCtrl.getMsg("success.mp.wthdrw.al_001"));
+                                                document.getElementById("formWthdrwSuccess").submit();
+                                            }, "/my-page/member/wthdrw/update-wthdrw", $formObj, "POST", "json", '', false);
+                                        }
+                                    },
+                                    error: function (data, status, xhr) {
+                                        $(".loading-area").stop().fadeOut(200);
+                                        return false;
+                                    },
+                                    complete: function () {
+                                        $(".loading-area").stop().fadeOut(200);
+                                    }
+                                });
+
 
                         }
                     }
