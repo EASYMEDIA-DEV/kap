@@ -151,16 +151,16 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="training-confirm">
+                    <div class="training-confirm visitEduDtl" data-edctnseq="${list.edctnSeq}">
                         <div class="top-info">
                             <div class="training-view-page">
-                                <div class="training-list visitEduDtl" data-edctnseq="${list.edctnSeq}">
+                                <div class="training-list">
                                     <div class="txt-area">
                                         <div class="top-line">
                                             <div class="sort-label-area">
                                                 <p class="label"><span>${list.ctgryCdNm}</span></p>
                                             </div>
-                                            <p class="training-name f-title1">${list.nm}</p>
+                                            <p class="training-name f-title3"><a href="javascript:">${list.nm}</a></p>
                                         </div>
                                         <div class="status-info-w">
 

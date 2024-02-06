@@ -356,6 +356,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "참여자의 교육상태", example = "텍스트")
     private String eduStat;
 
+    @Schema(title = "참여자의 교육상태 정렬값", example = "숫자")
+    private Integer eduStatOrder;
+
+
     @Schema(title = "교육 참여일", example = "yyyy-mm-dd HH:mm:ss")
     private String ptcptDtm;
 
