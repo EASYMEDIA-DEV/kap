@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
-<div id="wrap" class="mypage evaluation" data-controller="controller/eb/ebm/EBMEduApplyDtlCtrl">
+<div id="wrap" class="mypage evaluation" data-controller="controller/eb/ebm/EBMEduYoutubeCtrl controller/eb/ebm/EBMEduApplyDtlCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <!-- 페이징 버튼 사이즈 -->

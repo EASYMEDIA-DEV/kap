@@ -57,6 +57,8 @@
 
 	<!--함수 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
+	<!-- 유튜브 API -->
+	<script type="text/javascript" src="/common/js/controller/co/COYoutubeCtrl.js?${sysDate}"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
 
