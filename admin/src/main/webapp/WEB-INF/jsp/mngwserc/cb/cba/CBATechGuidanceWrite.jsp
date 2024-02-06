@@ -770,11 +770,11 @@
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="" placeholder="방문자 입력" style="width: 220px;"/>
                                     </div>
                                     <label class="col-sm-1 control-label">면담자</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="" placeholder="면담자 입력" style="width: 220px;"/>
                                     </div>
                                 </div>
@@ -830,7 +830,7 @@
                                         <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                     </div>
                                     <label class="col-sm-1 control-label">지도구분</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="z-width: 220px;">
                                             <option value="">선택</option>
                                             <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
@@ -843,7 +843,7 @@
                             <fieldset>
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">지도착수일</label>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
                                             <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}" title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
@@ -854,14 +854,14 @@
                                         </div>
                                     </div>
                                     <label class="col-sm-1 control-label">킥오프일</label>
-                                    <div class="col-sm-5">
+                                    <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
                                             <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${today}" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
-                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                        <em class="ion-calendar"></em>
-                                                    </button>
-                                                </span>
+                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -1071,11 +1071,11 @@
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문자</label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <input type="text" class="form-control input-sm notRequired"  name="vstrNm" id="vstrNm" value="${rsumeList.vstrNm}" placeholder="방문자 입력" style="width: 220px;"/>
                                         </div>
                                         <label class="col-sm-1 control-label">면담자</label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <input type="text" class="form-control input-sm notRequired"  name="ntrvrNm" id="ntrvrNm" value="${rsumeList.ntrvrNm}" placeholder="면담자 입력" style="width: 220px;"/>
                                         </div>
                                     </div>
@@ -1125,13 +1125,13 @@
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">담당위원</label>
-                                        <div class="col-sm-4 form-inline">
+                                        <div class="col-sm-3 form-inline">
                                             <input type="hidden" class="notRequired" name="cmssrSeq" value="${rsumeList.cmssrSeq}">
                                             <input type="text" class="form-control input-sm notRequired" readonly="readonly" name="cmssrName" value="${rsumeList.cmssrName}" style="width: 220px;">
                                             <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                         </div>
                                         <label class="col-sm-1 control-label">지도구분</label>
-                                        <div class="col-sm-4">
+                                        <div class="col-sm-3">
                                             <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="width: 220px">
                                                 <option value="">선택</option>
                                                 <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
@@ -1143,9 +1143,9 @@
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
-                                        <label class="col-sm-1 control-label">지도착수일</label>
-                                        <div class="col-sm-4">
-                                            <div class="input-group" style="z-index:0;width: 220px;">
+                                        <label class="col-sm-1 control-label" style="z-index:0;width: 220px;">지도착수일</label>
+                                        <div class="col-sm-3">
+                                            <div class="input-group">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${not empty rsumeList.guideBgnDt ? kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도착수일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
@@ -1155,7 +1155,7 @@
                                             </div>
                                         </div>
                                         <label class="col-sm-1 control-label">킥오프일</label>
-                                        <div class="col-sm-5">
+                                        <div class="col-sm-3">
                                             <div class="input-group" style="z-index:0;width: 220px;">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${not empty rsumeList.guideKickfDt ? kl:convertDate(rsumeList.guideKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">

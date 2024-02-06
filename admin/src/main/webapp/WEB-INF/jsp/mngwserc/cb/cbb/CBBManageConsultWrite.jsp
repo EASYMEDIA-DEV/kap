@@ -1228,7 +1228,7 @@
                                             </c:forEach>
                                         </select>
                                     </div>
-                                    <div class="col-sm-3">
+                                    <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
                                             <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${not empty rsumeList.cnstgPscndDt ? rsumeList.cnstgPscndDt : today}"title="컨설팅현황일자" style="width: 150px;" />
                                         <span class="input-group-btn" style="z-index:0;">

@@ -140,7 +140,7 @@
                                                             <c:if test="${ not empty rtnData.edctnNtctnFileSeq }">
                                                             <button class="btn-text-icon download" data-file="/file/download?fileSeq=${ rtnData.edctnNtctnFileSeq }&fileOrd=0"><span>안내문</span></button>
                                                             </c:if>
-                                                            <button class="btn-text-icon black-arrow" type="button" id="btnPicLayer" data-pic-nm="${ rtnData.picNm }" data-pic-email="${ rtnData.picEmail }" data-pic-tel-no="${ rtnData.picTelNo }"><span>담당자 문의</span></button>
+                                                            <button class="btn-text-icon black-arrow" type="button" id="btnPicLayer" data-pic-nm="${ rtnData.picNm }" data-pic-email="${ rtnData.picEmail }" data-pic-tel-no="${ kl:hpNum(rtnData.picTelNo) }"><span>담당자 문의</span></button>
                                                         </div>
                                                         <div class="btn-set">
                                                             <a class="btn-solid small ${ fn:contains(rtnData.accsStatusNm, '접수중') ? 'black-bg goStep' : 'gray-bg disabled' }" href="javascript:" data-url="./step1"><span>${ accsStatusText }</span></a>

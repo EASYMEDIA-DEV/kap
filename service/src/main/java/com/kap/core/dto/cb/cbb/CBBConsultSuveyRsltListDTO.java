@@ -69,19 +69,19 @@ public class CBBConsultSuveyRsltListDTO extends BaseDTO {
     @Schema(title = "렙업일")
     private String lvlupDt;
     @Schema(title = "총점(100)")
-    private short ttlScore;
+    private float ttlScore;
     @Schema(title = "지도실적(50)")
-    private short guideRsltScore;
+    private float guideRsltScore;
     @Schema(title = "의사소통(5)")
-    private short cmmnctnScore;
+    private float cmmnctnScore;
     @Schema(title = "기획력(10)")
-    private short plnngabltScore;
+    private float plnngabltScore;
     @Schema(title = "실행력(15)")
-    private short exctvabltScore;
+    private float exctvabltScore;
     @Schema(title = "마인드(5)")
-    private short mndScore;
+    private float mndScore;
     @Schema(title = "전문지식(15)")
-    private short exprtsScore;
+    private float exprtsScore;
 
     @Schema(title = "검색사업연도")
     private String rtnBsnYear;
