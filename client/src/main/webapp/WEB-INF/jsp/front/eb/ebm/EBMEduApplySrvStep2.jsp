@@ -32,7 +32,10 @@
                 <div class="right">
                     <div class="status-info-w">
                         <p class="box-label bigger"><span>${rtnData.episdYear}년 ${rtnData.episdOrd}차</span></p>
-                        <p class="box-label bigger"><span>${not empty rtnData.cbsnCdNm ? rtnData.cbsnCdNm : '-'}</span></p>
+                        <c:if test="${not empty rtnData.cbsnCdNm}">
+                            <p class="box-label bigger"><span>${rtnData.cbsnCdNm}</span></p>
+                        </c:if>
+
                         <p class="box-label bigger"><span>${rtnData.isttrGroupName}</span></p>
 <%--                        <p class="box-label bigger"><span>홍길남</span></p>--%>
                         <p class="box-label bigger teal"><span>${rtnData.qstnCnt}문항</span></p>
