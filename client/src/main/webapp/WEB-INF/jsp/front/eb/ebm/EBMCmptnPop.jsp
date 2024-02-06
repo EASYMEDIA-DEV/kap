@@ -60,7 +60,7 @@
 <fmt:formatDate pattern="dd" value="${nowDate}" var="nowDay" />
 <div class="print-popup" style="width: 1080rem; height: 1528rem; padding: 76rem 50rem 50rem;"><!-- style 속성은 디자인 확인용으로 추가. 추후에 삭제 필요 -->
     <div class="print-wrap">
-        <p class="print-code">${rtnData.cmptnNo}</p>
+        <p class="print-code">${rtnData.crtfctNo}</p>
         <p class="print-title">수료증</p>
 
         <div class="def-list-w">

@@ -24,7 +24,7 @@
 
                 <div class="status-con-box completed"><!-- complete: 완료 페이지 -->
                     <div class="cont-for-padding">
-                        <p class="f-title1"><span class="color-sky">알아야 할 품질 기초</span><br> 온라인 강의 수강이 완료되었습니다</p>
+                        <p class="f-title1"><span class="color-sky">${rtnData.nm}</p>
                         <p class="detail-txt">온라인 강의 수강에 참여해 주셔서 감사합니다. 강의 유형에 따라 교육/세미나 만족도 조사 또는 평가가 있을 예정이오니 많은 참여 바랍니다.</p>
                     </div>
 

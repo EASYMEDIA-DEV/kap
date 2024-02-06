@@ -284,9 +284,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								memAtndcForm.lvgrmHour = lvgrmHour;
 							}
 
-							if(orgEtcNm != etcNm && etcNm !=""){
+							//if(orgEtcNm != etcNm && etcNm !=""){
 								memAtndcForm.etcNm = etcNm;
-							}
+							//}
 
 
 							//변경점이 없는경우 or 애초에 값이 없는경우
@@ -310,6 +310,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actionForm.ptcptList = ptcptAtndcList;
 
+						debugger
 						if(resultFlag){
 
 							cmmCtrl.jsonAjax(function(data){

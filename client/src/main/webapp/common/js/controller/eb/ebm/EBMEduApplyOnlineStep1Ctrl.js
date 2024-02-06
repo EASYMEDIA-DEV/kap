@@ -105,6 +105,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$(".item-count").text();
 
 			ctrl.obj.find("#listLctrContainerTotCnt").text(totCnt);
+
+			ctrl.obj.find(".lctrCnt").text($(".status.f-caption1").length);
+
+
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "listLctrContainer", "pagingContainer");
 		}, "/my-page/edu-apply/onlineStep1Select", $formObj, "GET", "html", true);

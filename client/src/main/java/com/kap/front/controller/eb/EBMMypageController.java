@@ -497,6 +497,9 @@ public class EBMMypageController
                 eBBLctrDTO.setEpisdYear(rtnDto.getEpisdYear());
 
                 //신청한 교육과정의 온라인 목록
+                eBBLctrDTO.setSiteGubun("admin");
+                eBBLctrDTO.setMypageYn("Y");
+                eBBLctrDTO.setPtcptSeq(rtnDto.getPtcptSeq());
                 modelMap.addAttribute("lctrList", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
 
                 modelMap.addAttribute("rtnData", rtnDto);
@@ -527,6 +530,7 @@ public class EBMMypageController
     {
         try
         {
+            eBBLctrDTO.setMypageYn("Y");
             modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
         }
         catch (Exception e)
@@ -601,6 +605,7 @@ public class EBMMypageController
     {
         try
         {
+            eBBLctrDTO.setMypageYn("Y");
             EBBLctrDTO ttt = eBBEpisdService.selectLctrDtlList(eBBLctrDTO);
 
             EBBPtcptDTO setDto = new EBBPtcptDTO();

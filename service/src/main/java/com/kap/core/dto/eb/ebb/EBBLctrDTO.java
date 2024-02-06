@@ -52,6 +52,9 @@ public class EBBLctrDTO extends BaseDTO {
     @NotNull
     private Integer nowLctrSeq;
 
+    @Schema(title = "참여자순번", example = "숫자")
+    private Integer ptcptSeq;
+
     @Schema(title = "강의명", example = "텍스트")
     private String nm;
 
