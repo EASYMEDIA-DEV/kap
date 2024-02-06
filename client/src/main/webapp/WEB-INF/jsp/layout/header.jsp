@@ -58,10 +58,12 @@
 
 	<!--함수 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
-	<!-- 유튜브 API -->
-	<script type="text/javascript" src="/common/js/controller/co/COYoutubeCtrl.js?${sysDate}"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
+
+	<!-- 유튜브 API -->
+	<script type="text/javascript" src="/common/js/controller/co/COYoutubeCtrl.js?${sysDate}"></script>
+
 
 	<script type="text/javascript">
 
@@ -195,11 +197,14 @@
 					<c:choose>
 						<c:when test="${ not empty loginMap}">
 							<div class="btn-wrap">
-								<c:if test="${ loginMap.authCd ne 'CS'}">
+								<c:if test="${ loginMap.authCd eq 'CP'}">
 									<a class="btn-text-icon black-arrow" href="/my-page/main" title="링크 이동"><span>마이페이지</span></a>
 								</c:if>
 								<c:if test="${ loginMap.authCd eq 'CS'}">
 									<a class="btn-text-icon black-arrow" href="/my-page/member/attend/attend-page" title="링크 이동"><span>마이페이지</span></a>
+								</c:if>
+								<c:if test="${ loginMap.authCd eq 'CO'}">
+									<a class="btn-text-icon black-arrow" href="/my-page/coexistence/list" title="링크 이동"><span>마이페이지</span></a>
 								</c:if>
 							</div>
 							<div class="btn-wrap">
@@ -234,32 +239,32 @@
 					<div class="menu-head">
 						<p class="menu-tit f-xlarge-title">전체 서비스</p>
 						<div class="log-menu">
-                            <c:choose>
-                                <c:when test="${ not empty loginMap}">
-                                    <p class="user-tit f-title1"><span>${loginMap.name}</span>님<br class="only-mobile"> 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
-                                    <div class="pc btn-wrap">
+							<c:choose>
+								<c:when test="${ not empty loginMap}">
+									<p class="user-tit f-title1"><span>${loginMap.name}</span>님<br class="only-mobile"> 안녕하세요.</p><!-- @ 로그인 후에 보이는 요소 -->
+									<div class="pc btn-wrap">
 										<c:if test="${loginMap.authCd ne 'CS'}">
-                                        <a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
+											<a class="btn-text-icon black-arrow" href="/my-page/member/intrduction/certification" title="링크 이동"><span>정보수정</span></a>
 										</c:if>
-                                        <a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
-                                    </div>
-                                </c:when>
-                                <c:otherwise>
-                                    <p class="log-tit f-title3">MY</p>
+										<a class="btn-text-icon black-arrow" href="/my-page/logout" title="링크 이동"><span>로그아웃</span></a>
+									</div>
+								</c:when>
+								<c:otherwise>
+									<p class="log-tit f-title3">MY</p>
 									<div class="pc btn-wrap">
 										<a class="btn-text-icon black-arrow" href="/login" title="링크 이동"><span>로그인</span></a>
 										<a class="btn-text-icon black-arrow" href="/member/join" title="링크 이동"><span>회원가입</span></a>
 									</div>
-                                </c:otherwise>
-                            </c:choose>
+								</c:otherwise>
+							</c:choose>
 						</div>
-                        <c:if test="${ not empty loginMap}">
-                            <div class="loginfo-wrap">
+						<c:if test="${ not empty loginMap}">
+							<div class="loginfo-wrap">
 								<c:if test="${ loginMap.authCd ne 'CS'}">
-                                <div class="loginfo-box">
-                                    <p class="info-tit f-title3">사업 신청내역</p>
-									<span class="f-caption2">최근 1년 기준</span>
-                                    <div class="info-cont">
+									<div class="loginfo-box">
+										<p class="info-tit f-title3">사업 신청내역</p>
+										<span class="f-caption2">최근 1년 기준</span>
+										<div class="info-cont">
 
 											<ul class="counts">
 												<li class="count">
@@ -277,25 +282,25 @@
 
 											</ul>
 
-                                        <div class="pc btn-wrap">
-                                            <div class="btn-set">
-                                                <a class="btn-solid small white-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
-                                                <a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
-                                            </div>
-                                        </div>
+											<div class="pc btn-wrap">
+												<div class="btn-set">
+													<a class="btn-solid small white-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
+													<a class="btn-solid small white-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
+												</div>
+											</div>
 
-                                    </div>
-                                </div>
+										</div>
+									</div>
 								</c:if>
-                                <div class="mob btn-wrap">
-                                    <div class="btn-set">
-                                        <a class="btn-solid small gray-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
-                                        <a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
-                                    </div>
-                                </div>
-                                <p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</span></p>
-                            </div>
-                        </c:if>
+								<div class="mob btn-wrap">
+									<div class="btn-set">
+										<a class="btn-solid small gray-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
+										<a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
+									</div>
+								</div>
+								<p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</span></p>
+							</div>
+						</c:if>
 					</div>
 					<c:if test="${ not empty gnbMenuList}">
 						<ul class="gnb">
@@ -303,12 +308,12 @@
 								<c:if test="${ not empty loginMap || menu.data !='마이페이지' }">
 									<li>
 										<div class="one-pack">
-<%--											<a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>--%>
+												<%--											<a class="one-depth for-move" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link }">${ menu.data}</a>--%>
 											<a class="one-depth for-move" href="javascript:">${ menu.data}</a>
 										</div>
 										<c:if test="${ menu.children != null && fn:length(menu.children) > 0 }">
 											<ul class="two-pack">
-												<c:if test="${menu.data eq '마이페이지' && loginMap.authCd ne 'CS'}">
+												<c:if test="${menu.data eq '마이페이지' && loginMap.authCd eq 'CP'}">
 													<li>
 														<div class="for-move">
 															<a class="two-depth" href="${ empty menu.attr.link ? 'javascript:' : menu.attr.link}">${ menu.data}</a>
@@ -334,23 +339,23 @@
 																</div>
 															</li>
 														</c:if>
-													<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'  }">
-														<li>
+														<c:if test="${menu2.data eq '근태 체크' && loginMap.authCd eq 'CS'  }">
+															<li>
 
-															<div class="for-move">
-																<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
-																<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
-																	<ul class="three-pack">
-																		<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
-																			<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
-																				<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
-																			</c:if>
-																		</c:forEach>
-																	</ul>
-																</c:if>
-															</div>
-														</li>
-													</c:if>
+																<div class="for-move">
+																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																		<ul class="three-pack">
+																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																					<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																				</c:if>
+																			</c:forEach>
+																		</ul>
+																	</c:if>
+																</div>
+															</li>
+														</c:if>
 														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' && loginMap.authCd eq 'CP'}">
 															<li>
 																<div class="for-move">
@@ -369,23 +374,24 @@
 														</c:if>
 														<c:if test="${menu2.data ne '근태 체크' && loginMap.authCd ne 'CS' && menu.data eq '마이페이지' && loginMap.authCd eq 'CO'}">
 															<c:if test="${menu2.attr.link eq '/my-page/coexistence/list' ||
+																		  menu2.attr.link eq '/my-page/main' ||
 																	      menu2.attr.link eq '/my-page/member/intrduction/certification' ||
 																	      menu2.attr.link eq '/my-page/member/qa/list' ||
 																	      menu2.attr.link eq '/my-page/member/wthdrw/certification'}">
-															<li>
-																<div class="for-move">
-																	<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
-																	<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
-																		<ul class="three-pack">
-																			<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
-																				<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
-																					<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
-																				</c:if>
-																			</c:forEach>
-																		</ul>
-																	</c:if>
-																</div>
-															</li>
+																<li>
+																	<div class="for-move">
+																		<a class="two-depth" href="${ empty menu2.attr.link ? 'javascript:' : menu2.attr.link }">${ menu2.data}</a>
+																		<c:if test="${ menu2.children != null && fn:length(menu2.children) > 0 }">
+																			<ul class="three-pack">
+																				<c:forEach var="menu3" items="${menu2.children}" varStatus="status3">
+																					<c:if test="${ menu3.attr.gnbYn eq 'Y'}">
+																						<li><a class="three-depth" href="${ empty menu3.attr.link ? 'javascript:' : menu3.attr.link }">${ menu3.data}</a></li>
+																					</c:if>
+																				</c:forEach>
+																			</ul>
+																		</c:if>
+																	</div>
+																</li>
 															</c:if>
 														</c:if>
 													</c:if>
@@ -398,39 +404,39 @@
 
 						</ul>
 						<c:if test="${empty loginMap}">
-						<div class="non-member-apply">
-							<a href="/education/apply/non-member/auth">
-								<p class="f-body1">비회원 신청내역 조회</p>
-							</a>
-						</div>
+							<div class="non-member-apply">
+								<a href="/education/apply/non-member/auth">
+									<p class="f-body1">비회원 신청내역 조회</p>
+								</a>
+							</div>
 						</c:if>
 					</c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">
 							<ul>
-                                <c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
-<%--                                    ${ status.index}--%>
-                                    <c:choose>
-                                        <c:when test="${ status.index eq 0 }">
-                                            <c:set var="cls" value="current" />
-                                        </c:when>
-                                        <c:when test="${ status.index eq 1 }">
-                                            <c:set var="cls" value="next" />
-                                        </c:when>
-                                        <c:otherwise>
-                                            <c:set var="cls" value="prev" />
-                                        </c:otherwise>
-                                    </c:choose>
-                                    <li class="${ cls }">
-                                        <c:set var="daysDiff" value="${kl:getDaysDiff(curDate, kl:convertDate(ntfyList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyyMMdd', ''))}" />
-                                        <a class="f-body2" href="/board/notice?detailsKey=${ntfyList.ntfySeq}">
-                                            <c:if test="${ daysDiff >= -3 }">
-                                                <span class="new-icon small" aria-label="새로운 정보"></span>
-                                            </c:if>
-                                                ${ ntfyList.titl }
-                                        </a>
-                                    </li>
-                                </c:forEach>
+								<c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
+									<%--                                    ${ status.index}--%>
+									<c:choose>
+										<c:when test="${ status.index eq 0 }">
+											<c:set var="cls" value="current" />
+										</c:when>
+										<c:when test="${ status.index eq 1 }">
+											<c:set var="cls" value="next" />
+										</c:when>
+										<c:otherwise>
+											<c:set var="cls" value="prev" />
+										</c:otherwise>
+									</c:choose>
+									<li class="${ cls }">
+										<c:set var="daysDiff" value="${kl:getDaysDiff(curDate, kl:convertDate(ntfyList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyyMMdd', ''))}" />
+										<a class="f-body2" href="/board/notice?detailsKey=${ntfyList.ntfySeq}">
+											<c:if test="${ daysDiff >= -3 }">
+												<span class="new-icon small" aria-label="새로운 정보"></span>
+											</c:if>
+												${ ntfyList.titl }
+										</a>
+									</li>
+								</c:forEach>
 							</ul>
 						</div>
 					</div>
