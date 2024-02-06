@@ -945,13 +945,14 @@
                                                     <option value="${cnstgPscndCd.cd}" >${cnstgPscndCd.cdNm}</option>
                                                 </c:forEach>
                                             </select>
-                                            &nbsp;
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${today}" title="컨설팅현황일자" style="width: 150px;" />
-                                            <span class="input-group-btn" style="z-index:0; display: inline">
-                                                <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
-                                                    <em class="ion-calendar"></em>
-                                                </button>
-                                            </span>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${today}" title="컨설팅현황일자" style="width: 150px;" />
+                                                <span class="input-group-btn" style="z-index:0; display: inline;">
+                                                    <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1229,9 +1230,9 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <div class="input-group" style="z-index:0;width: 220px;">
+                                        <div class="input-group">
                                             <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${not empty rsumeList.cnstgPscndDt ? rsumeList.cnstgPscndDt : today}"title="컨설팅현황일자" style="width: 150px;" />
-                                        <span class="input-group-btn" style="z-index:0;">
+                                            <span class="input-group-btn" style="z-index:0; display: inline;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
                                                 </button>
