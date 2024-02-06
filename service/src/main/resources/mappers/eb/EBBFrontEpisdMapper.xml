@@ -693,6 +693,22 @@
 													end
 		    else '교육양도'
 		end as edu_stat
+		, case when trnsf_yn = 'N' then
+					case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+					case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '2'
+					when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '3'
+					when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '4'
+				end
+				when stts_cd = 'EDU_STTS_CD02' then '5'
+				when stts_cd = 'EDU_STTS_CD04' then '1'
+				when stts_cd = 'EDU_STTS_CD05' then '7'
+				when stts_cd = 'EDU_STTS_CD06' then '5'
+				end
+				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '5'  /*폐강일 경우*/
+			end
+		else '6'
+		end as edu_stat_order
 
 		, ptcpt_dtm
 		, web_path
@@ -857,6 +873,12 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
+		,  CASE edctn_stts_cd
+			WHEN 'EBC_VISIT_CD02001' THEN '2'
+			WHEN 'EBC_VISIT_CD02002' THEN '2'
+			WHEN 'EBC_VISIT_CD02003' THEN '4'
+			WHEN 'EBC_VISIT_CD02004' THEN '5'
+		END AS edu_stat_order
 		,  ptcpt_dtm
 		,  web_path
 		,  file_dsc
@@ -1095,24 +1117,28 @@
 				</if>
 				<if test="applyListYn != 'Y'.toString()">
 					<!-- 접수일자순 -->
-					ORDER BY ptcpt_dtm desc
+					ORDER BY edu_stat_order ASC, edu_gubun ASC, ptcpt_dtm desc
 				</if>
 			</when>
 			<when test="srchOrder == 2">
 				<!-- 교육일자순 -->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, edctn_strt_dtm asc, hope_dt asc
+				/*ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, edctn_strt_dtm asc, hope_dt asc*/
+				ORDER BY  edu_stat_order ASC, edu_gubun ASC, edctn_strt_dtm asc, hope_dt asc
 			</when>
 			<when test="srchOrder == 3">
 				<!--학습시간 짧은순-->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm asc, stduy_time_cd_nm asc
+				/*ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm asc, stduy_time_cd_nm asc*/
+				ORDER BY edu_stat_order ASC, edu_gubun ASC, stduy_dd_cd_nm asc, stduy_time_cd_nm asc
 			</when>
 			<when test="srchOrder == 4">
 				<!--학습시간 긴순-->
-				ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm desc, stduy_time_cd_nm desc
+				/*ORDER BY trnsf_yn asc, stts_cd asc, accs_status_order is null asc, stduy_dd_cd_nm desc, stduy_time_cd_nm desc*/
+				ORDER BY edu_stat_order ASC, edu_gubun ASC, stduy_dd_cd_nm desc, stduy_time_cd_nm desc
 			</when>
 			<otherwise>
 				<!-- 신청 마감순-->
-				ORDER BY trnsf_yn asc, stts_cd asc,accs_status_order is null asc, accs_status_order ASC, accs_order_day asc
+				/*ORDER BY trnsf_yn asc, stts_cd asc,accs_status_order is null asc, accs_status_order ASC, accs_order_day asc*/
+				ORDER BY edu_stat_order ASC, edu_gubun ASC, accs_order_day asc
 			</otherwise>
 		</choose>
 
@@ -1365,6 +1391,22 @@
 		end
 		else '교육양도'
 		end as edu_stat
+		, case when trnsf_yn = 'N' then
+			case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+			case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+			case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '2'
+			when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '3'
+			when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '4'
+			end
+			when stts_cd = 'EDU_STTS_CD02' then '5'
+			when stts_cd = 'EDU_STTS_CD04' then '1'
+			when stts_cd = 'EDU_STTS_CD05' then '7'
+			when stts_cd = 'EDU_STTS_CD06' then '5'
+			end
+			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '5'  /*폐강일 경우*/
+			end
+			else '6'
+		end as edu_stat_order
 		, ptcpt_dtm
 		, web_path
 		, bfre_mem_seq
@@ -1526,6 +1568,12 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
+		,  CASE edctn_stts_cd
+			WHEN 'EBC_VISIT_CD02001' THEN '2'
+			WHEN 'EBC_VISIT_CD02002' THEN '2'
+			WHEN 'EBC_VISIT_CD02003' THEN '4'
+			WHEN 'EBC_VISIT_CD02004' THEN '5'
+		END AS edu_stat_order
 		,  ptcpt_dtm
 		,  web_path
 		, bfre_mem_seq
