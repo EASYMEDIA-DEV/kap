@@ -18,7 +18,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		$("#id").val($.cookie('id'));
 	}
 
-	const email = ['naver.com' ,'google.com' ,'nate.com','daum.net']
+	const email = ['naver.com' ,'gmail.com' ,'nate.com','daum.net']
 	function emailSel() {
 		email.forEach((domain) => {
 			const emailAddr = $("#emailAddr").val();

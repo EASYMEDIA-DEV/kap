@@ -20,7 +20,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     let secretEmailAuth = "";
 
     let EmailChk = false;
-    const email = ['naver.com' ,'google.com' ,'nate.com','daum.net']
+    const email = ['naver.com' ,'gmail.com' ,'nate.com','daum.net']
     function emailSel() {
         email.forEach((domain) => {
             $("#emailSelect").append(`<option value="${domain}">${domain}</option>`);

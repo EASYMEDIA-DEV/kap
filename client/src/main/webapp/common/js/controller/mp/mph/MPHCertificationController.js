@@ -19,7 +19,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
-    const email = ['naver.com' ,'google.com' ,'nate.com','daum.net']
+    const email = ['naver.com' ,'gmail.com' ,'nate.com','daum.net']
     function emailSel() {
         email.forEach((domain) => {
 
