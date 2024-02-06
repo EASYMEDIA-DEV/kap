@@ -201,15 +201,8 @@ public class WBBManagementController {
     public String insert(WBBAApplyMstDTO wbbApplyMstDTO, ModelMap modelMap, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         try {
 
-            String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
-
-            if (RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wbbApplyMstDTO.getEpisdSeq()))) {
-                RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
-                return "redirect:/";
-            } else {
                 modelMap.addAttribute("actCnt", wbbbCompanyService.insertApply(wbbApplyMstDTO,multiRequest,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
-            }
         } catch (Exception e) {
            if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
