@@ -443,6 +443,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	ctrl.model = {
 		id : {
 
+
+			picEmail : {
+				event : {
+					input : function() {
+						if ($(this).val() != "")
+						{
+							var check  = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
+
+							if(check.test($(this).val() )) {
+								$(this).val("");
+								alert("한글입력은 불가능합니다.");
+								event.preventDefault();
+
+								return false;
+							}
+						}
+					}
+				}
+			},
+
 			btnExcel : {
 				event : {
 					click : function() {
@@ -688,6 +708,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		},
 		classname : {
+
+			koreanCustromChk : {
+				event : {
+					input : function(e) {
+						if ($(this).val() != "")
+						{
+							var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
+							var value = $(this).val();
+							if (regexp.test(value)) {
+								alert("한글만 입력 가능합니다");
+								$(this).val("");
+								return false;
+							}
+						}
+					}
+				}
+			},
 
 			tabClick : {
 				event : {
@@ -1218,9 +1255,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		immediately : function(event) {
 
 
-
-
-
 			if($("#edctnSeq").val() == ""){
 				$("#episdList").css("display", "none");
 				$("#prevEpisd").css("display", "");
@@ -1228,36 +1262,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				$("#episdList").css("display", "");
 				$("#prevEpisd").css("display", "none");
 			}
-
-
-			$(".koreanCustromChk").keyup(function(event){
-				if ($(this).val() != "")
-				{
-					var regexp = /[a-z0-9]|[ \[\]{}()<>?|`~!@#$%^&*-_+=,.;:\"'\\]/g;
-					var value = $(this).val();
-					if (regexp.test(value)) {
-						alert("한글만 입력 가능합니다");
-						$(this).val("");
-						return false;
-					}
-				}
-			});
-
-			$("#picEmail").keyup(function(event){
-				if ($(this).val() != "")
-				{
-
-					var check  = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
-
-					if(check.test($(this).val() )) {
-						alert("한글입력은 불가능합니다.");
-						event.preventDefault();
-						$(this).val("");
-						return false;
-					}
-
-				}
-			});
 
 			$excelObj.find("button.down").on('click', function(){
 				var rsn = $excelObj.find("#rsn").val().trim();
