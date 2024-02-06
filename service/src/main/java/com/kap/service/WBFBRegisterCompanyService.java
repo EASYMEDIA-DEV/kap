@@ -96,7 +96,7 @@ public interface WBFBRegisterCompanyService {
     /**
      *  신청 부품사 등록 - 사용자
      */
-    public int insertApply(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
+    public WBFBRegisterDTO insertApply(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 
     /**
      *  부품사 회원 정보 조회 - 사용자
@@ -119,13 +119,8 @@ public interface WBFBRegisterCompanyService {
     public void excelDownload(WBFBRegisterSearchDTO wBFBRegisterSearchDTO, HttpServletResponse response) throws Exception;
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 사업자번호/종된사업자번호 중복 확인
      */
-    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
-
-    /**
-     * 종된 사업자번호 매핑 여부 확인
-     */
-    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception;
+    public int getSbrdmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception;
 
 }

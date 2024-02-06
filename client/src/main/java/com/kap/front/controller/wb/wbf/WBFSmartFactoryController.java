@@ -3,8 +3,10 @@ package com.kap.front.controller.wb.wbf;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.service.*;
@@ -12,13 +14,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -225,7 +227,10 @@ public class WBFSmartFactoryController {
                 return "redirect:/";
             } else {
                 wBFBRegisterDTO.setBsnCd("BSN06");
-                modelMap.addAttribute("actCnt", wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request));
+
+                WBFBRegisterDTO respDto = wBFBRegisterCompanyService.insertApply(wBFBRegisterDTO, multiRequest, request);
+                modelMap.addAttribute("respCnt", respDto.getRespCnt());
+                modelMap.addAttribute("appctnSeq", respDto.getAppctnSeq());
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
@@ -257,7 +262,6 @@ public class WBFSmartFactoryController {
                 wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
                 wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
 
-                modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getApplyDtl(wBFBRegisterSearchDTO));
 
@@ -272,6 +276,32 @@ public class WBFSmartFactoryController {
         }
 
         return vwUrl;
+    }
+
+
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value = "/coexistence/smartFactory")
+    public class WBFSmartFactoryRestController {
+
+        /* 부품사 관리*/
+        public final WBFBRegisterCompanyService wBFBRegisterCompanyService;
+
+        @PostMapping(value = "/getSbrdmNoCheck")
+        public WBFBRegisterSearchDTO getSbrdmNoCheck(@RequestBody WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
+
+            try {
+                wBFBRegisterSearchDTO.setRespCnt(wBFBRegisterCompanyService.getSbrdmNoCheck(wBFBRegisterSearchDTO));
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return wBFBRegisterSearchDTO;
+        }
+
     }
 
 }

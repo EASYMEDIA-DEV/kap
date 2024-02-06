@@ -176,18 +176,31 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
-                                cmmCtrl.fileFrm(function(data){
-                                    //콜백함수. 페이지 이동
-                                    if (data.actCnt == 999) {
-                                        if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                            location.href = "/my-page/coexistence/list";
-                                        }
+                                var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+                                var episdSeq = $("#episdSeq").val();
+
+                                var wBFBRegisterSearchDTO = {};
+                                wBFBRegisterSearchDTO.sbrdnBsnmNo = sbrdnBsnmNo;
+                                wBFBRegisterSearchDTO.episdSeq = episdSeq;
+
+                                cmmCtrl.jsonAjax(function(data){
+                                    let respData = JSON.parse(data);
+                                    if(respData.respCnt == 100) {
+                                        alert("이미 해당 회차에 신청한 부품사입니다.");
+                                        return false;
+                                    } else if(respData.respCnt == 200) {
+                                        alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                        return false;
                                     } else {
                                         if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
-                                            location.href = "./complete?episdSeq="+$('input[name=episdSeq]').val();
+                                            cmmCtrl.fileFrm(function(data){
+                                                if(data.respCnt > 0) {
+                                                    location.href = `./complete?episdSeq=${episdSeq}&appctnSeq=${data.appctnSeq}`;
+                                                }
+                                            }, "./insert", $formObj, "json");
                                         }
                                     }
-                                }, "./insert", $formObj, "json");
+                                },"./getSbrdmNoCheck",wBFBRegisterSearchDTO, "text");
                             } else {
                                 alert('약관에 동의해주세요.');
                             }

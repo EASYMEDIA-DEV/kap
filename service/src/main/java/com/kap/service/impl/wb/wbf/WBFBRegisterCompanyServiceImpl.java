@@ -1288,7 +1288,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
      * 사업 신청 등록
      */
     @Transactional
-    public int insertApply(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
+    public WBFBRegisterDTO insertApply(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         int respCnt = 0;
 
         try {
@@ -1296,105 +1296,99 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             String regId = cOUserDetailsDTO.getId();
             String regIp = CONetworkUtil.getMyIPaddress(request);
 
+            wBFBRegisterDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wBFBRegisterDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+            wBFBRegisterDTO.setRegId(regId);
+            wBFBRegisterDTO.setRegIp(regIp);
+
             WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
             wBFBRegisterSearchDTO.setEpisdSeq(wBFBRegisterDTO.getEpisdSeq());
             wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
             wBFBRegisterSearchDTO.setSbrdnBsnmNo(wBFBRegisterDTO.getSbrdnBsnmNo().trim());
-            int Overlap =  wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
+            wBFBRegisterSearchDTO.setRegisterDtl(wBFBRegisterCompanyMapper.getCompanyInfo(wBFBRegisterSearchDTO));
 
-            if(Overlap > 0){
-                respCnt = 999;
-            } else {
-                wBFBRegisterDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-                wBFBRegisterDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
-                wBFBRegisterDTO.setRegId(regId);
-                wBFBRegisterDTO.setRegIp(regIp);
+            /* 상생신청 마스터 */
+            int firstAppctnMstIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
+            wBFBRegisterDTO.setAppctnSeq(firstAppctnMstIdgen); /* 신청순번 */
+            respCnt = wBFBRegisterCompanyMapper.putAppctnMst(wBFBRegisterDTO);
 
-                wBFBRegisterSearchDTO.setRegisterDtl(wBFBRegisterCompanyMapper.getCompanyInfo(wBFBRegisterSearchDTO));
-
-                /* 상생신청 마스터 */
-                int firstAppctnMstIdgen = cxAppctnMstSeqIdgen.getNextIntegerId();
-                wBFBRegisterDTO.setAppctnSeq(firstAppctnMstIdgen); /* 신청순번 */
-                wBFBRegisterCompanyMapper.putAppctnMst(wBFBRegisterDTO);
-
-                /* 상생신청지원금액상세 - 선급금 초기값 */
-                /* 스마트 공장 구축 - 선급금지급/지원금지급 코드 값*/
-                List<String> giveTypes = new ArrayList<>(Arrays.asList("PRO_TYPE03001", "PRO_TYPE03002", "PRO_TYPE03003"));
-                for(String type : giveTypes) {
-                    int firstAppctnSpprtDtlIdgen = cxAppctnSpprtDtlIdgen.getNextIntegerId();
-                    wBFBRegisterDTO.setAppctnSpprtSeq(firstAppctnSpprtDtlIdgen);
-                    wBFBRegisterDTO.setGiveType(type);
-                    wBFBRegisterDTO.setAppctnSttsCd((type + "_01_001"));
-                    wBFBRegisterDTO.setMngSttsCd((type + "_02_001"));
-                    wBFBRegisterCompanyMapper.putAppctnSpprtDtl(wBFBRegisterDTO);
-                }
-
-                /* 스마트 공장 구축 - 신청 코드 값*/
-                wBFBRegisterDTO.setRsumeSttsCd("PRO_TYPE02001");
-                /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
-                wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_001");
-                /* 스마트 신청 관리자 최초 상태값 - 미확인 */
-                wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
-                /* 신청진행상세 진행 정렬 초기 값 */
-                wBFBRegisterDTO.setRsumeOrd(1);
-
-                /* 상생신청 진행상세 */
-                int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-                wBFBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
-                wBFBRegisterCompanyMapper.putAppctnRsumeDtl(wBFBRegisterDTO);
-
-                // 신청파일 등록
-                List<COFileDTO> rtnList = null;
-                Map<String, MultipartFile> files = multiRequest.getFileMap();
-                Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-                MultipartFile file;
-                int atchFileCnt = 0;
-
-                while (itr.hasNext()) {
-                    Map.Entry<String, MultipartFile> entry = itr.next();
-                    file = entry.getValue();
-
-                    if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
-                        atchFileCnt++;
-                    }
-                }
-
-                if (!files.isEmpty()) {
-                    rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
-
-                    for (int i = 0; i < rtnList.size() ; i++) {
-
-                        List<COFileDTO> fileList = new ArrayList();
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
-
-                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-
-                        WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
-                        fileInfo.setRsumeSeq(wBFBRegisterDTO.getRsumeSeq());
-                        fileInfo.setRsumeOrd(wBFBRegisterDTO.getRsumeOrd());
-                        if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE01"); }
-                        else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
-                        else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
-                        else if(i == 3) { fileInfo.setFileCd("ATTACH_FILE_TYPE04"); }
-                        fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
-                        fileInfo.setRegId(regId);
-                        fileInfo.setRegIp(regIp);
-
-                        wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
-                    }
-                }
-
-                /* 상생신청 스마트 상세 */
-                wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(wBFBRegisterDTO);
+            /* 상생신청지원금액상세 - 선급금 초기값 */
+            /* 스마트 공장 구축 - 선급금지급/지원금지급 코드 값*/
+            List<String> giveTypes = new ArrayList<>(Arrays.asList("PRO_TYPE03001", "PRO_TYPE03002", "PRO_TYPE03003"));
+            for(String type : giveTypes) {
+                int firstAppctnSpprtDtlIdgen = cxAppctnSpprtDtlIdgen.getNextIntegerId();
+                wBFBRegisterDTO.setAppctnSpprtSeq(firstAppctnSpprtDtlIdgen);
+                wBFBRegisterDTO.setGiveType(type);
+                wBFBRegisterDTO.setAppctnSttsCd((type + "_01_001"));
+                wBFBRegisterDTO.setMngSttsCd((type + "_02_001"));
+                wBFBRegisterCompanyMapper.putAppctnSpprtDtl(wBFBRegisterDTO);
             }
+
+            /* 스마트 공장 구축 - 신청 코드 값*/
+            wBFBRegisterDTO.setRsumeSttsCd("PRO_TYPE02001");
+            /* 스마트 신청 신청자 최초 상태값 - 접수완료 */
+            wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_001");
+            /* 스마트 신청 관리자 최초 상태값 - 미확인 */
+            wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
+            /* 신청진행상세 진행 정렬 초기 값 */
+            wBFBRegisterDTO.setRsumeOrd(1);
+
+            /* 상생신청 진행상세 */
+            int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+            wBFBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
+            wBFBRegisterCompanyMapper.putAppctnRsumeDtl(wBFBRegisterDTO);
+
+            // 신청파일 등록
+            List<COFileDTO> rtnList = null;
+            Map<String, MultipartFile> files = multiRequest.getFileMap();
+            Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+            MultipartFile file;
+            int atchFileCnt = 0;
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }
+
+            if (!files.isEmpty()) {
+                rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                for (int i = 0; i < rtnList.size() ; i++) {
+
+                    List<COFileDTO> fileList = new ArrayList();
+                    rtnList.get(i).setStatus("success");
+                    rtnList.get(i).setFieldNm("fileSeq");
+                    fileList.add(rtnList.get(i));
+
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                    WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
+                    fileInfo.setRsumeSeq(wBFBRegisterDTO.getRsumeSeq());
+                    fileInfo.setRsumeOrd(wBFBRegisterDTO.getRsumeOrd());
+                    if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE01"); }
+                    else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
+                    else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
+                    else if(i == 3) { fileInfo.setFileCd("ATTACH_FILE_TYPE04"); }
+                    fileInfo.setFileSeq(fileSeqMap.get("fileSeq"));
+                    fileInfo.setRegId(regId);
+                    fileInfo.setRegIp(regIp);
+
+                    wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+                }
+            }
+
+            /* 상생신청 스마트 상세 */
+            wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(wBFBRegisterDTO);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-
-        return respCnt;
+        wBFBRegisterDTO.setRespCnt(respCnt);
+        return wBFBRegisterDTO;
     }
 
     /**
@@ -1411,10 +1405,18 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         return wBFBRegisterSearchDTO;
     }
 
+    /**
+     * 등록된 부품사 신청 내역 조회
+     * @return
+     */
     public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
         return wBFBRegisterCompanyMapper.getApplyDtl(wBFBRegisterSearchDTO);
     }
 
+    /**
+     * 부품사 신청 정보를 수정한다.
+     * @return
+     */
     public int updInfoUser(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         int respCnt = 0;
 
@@ -1636,30 +1638,32 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     }
 
     /**
-     * 사업자번호 매핑 여부 확인
+     * 사업자번호/종된사업자번호 중복 확인
+     * @return
      */
-    public int getBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+    public int getSbrdmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) throws Exception {
 
         int respCnt = 0;
 
-        respCnt = wBFBRegisterCompanyMapper.getBsnmNoCnt(wBFBRegisterDTO);
+        try {
+            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+            wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
 
-        wBFBRegisterDTO.setRespCnt(respCnt);
+            int Overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
 
-        return respCnt;
-    }
+            /* 종된 사업장번호 미 입력 */
+            if(Overlap > 0 && wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+                respCnt = 100;
+            }
 
-    /**
-     * 종된 사업자번호 매핑 여부 확인
-     */
-    public int getSbrdnBsnmNoCnt(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
+            /* 종된 사업장번호 입력 */
+            if(Overlap > 0 && !wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+                respCnt = 200;
+            }
 
-        int respCnt = 0;
-
-        respCnt = wBFBRegisterCompanyMapper.getSbrdnBsnmNoCnt(wBFBRegisterDTO);
-
-        wBFBRegisterDTO.setRespCnt(respCnt);
-
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return respCnt;
     }
 }

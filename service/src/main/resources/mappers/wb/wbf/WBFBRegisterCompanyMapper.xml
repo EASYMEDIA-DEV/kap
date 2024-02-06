@@ -1095,7 +1095,8 @@
         SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
         FROM cx_appctn_mst
         WHERE episd_seq = #{episdSeq}
-            AND appctn_bsnm_no = #{bsnmNo} AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+        AND appctn_bsnm_no = #{bsnmNo}
+        AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
     </select>
 
     <!--
@@ -1114,7 +1115,7 @@
             A.REG_DTM
         FROM CX_APPCTN_MST A
         JOIN cx_appctn_rsume_dtl B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
-        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE02001_01_004'
+        WHERE EPISD_SEQ = #{episdSeq} AND A.APPCTN_SEQ = #{appctnSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE02001_01_004'
     </select>
 
     <!--
@@ -1197,34 +1198,6 @@
         </where>
     </sql>
 
-    <!--
-         쿼리명 : WBFBRegisterCompanyMapper.getBsnmNoCnt
-         설  명 : 사업자번호 매핑 여부 확인
-         수정일     수정자     수정내용
-        ==========  ======  ==============
-        2023.11.08  김대성     최초 생성
-    -->
-    <select id="getBsnmNoCnt" parameterType="wBFBRegisterDTO" resultType="java.lang.Integer">
-        SELECT /* WBFBRegisterCompanyMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
-        WHERE EPISD_SEQ = #{episdSeq}
-          AND APPCTN_BSNM_NO = #{bsnmNo}
-    </select>
-
-    <!--
-         쿼리명 : WBFBRegisterCompanyMapper.getSbrdnBsnmNoCnt
-         설  명 : 종된 사업자번호 매핑 여부 확인
-         수정일     수정자     수정내용
-        ==========  ======  ==============
-        2023.11.08  김대성     최초 생성
-    -->
-    <select id="getSbrdnBsnmNoCnt" parameterType="wBFBRegisterDTO" resultType="java.lang.Integer">
-        SELECT /* WBFBRegisterCompanyMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
-        WHERE EPISD_SEQ = #{episdSeq}
-          AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
-          AND APPCTN_BSNM_NO = #{bsnmNo}
-    </select>
 </mapper>
 
 

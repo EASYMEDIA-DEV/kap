@@ -3,7 +3,7 @@
 <div class="cont-wrap" data-controller="controller/wb/wbf/WBFSmartFactoryCtrl">
     <form id="frmData" name="frmData" enctype="multipart/form-data">
         <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-        <input type="hidden" class="notRequired" name="episdSeq" value="${rtnData.episdSeq}" />
+        <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}" />
         <input type="hidden" id="msg" value="${msg}">
         <div class="sub-top-vis-area apply-page consult-biz">
             <div class="page-tit-area">
