@@ -269,8 +269,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									var orgatndcHour, atndcHour, orglvgrmHour, lvgrmHour, orgEtcNm, etcNm;
 									var atndcDayForm = {};
 
-
-									atndcDayForm.ptcptSeq = $(this).closest("tr").find("input:checkbox").val();;
+									atndcDayForm.ptcptSeq = $(this).closest("tr").data("ptcptseq");
 									atndcDayForm.edctnDt = targetDt;
 
 									orgatndcHour = $(this).data("orgatndchour");//수정전 출석시간

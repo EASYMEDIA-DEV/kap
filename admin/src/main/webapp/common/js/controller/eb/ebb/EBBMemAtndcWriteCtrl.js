@@ -310,7 +310,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actionForm.ptcptList = ptcptAtndcList;
 
-						debugger
 						if(resultFlag){
 
 							cmmCtrl.jsonAjax(function(data){
