@@ -44,7 +44,7 @@
                     <div class="def-list-w">
                         <div class="def-list">
                             <p class="tit f-head">회원가입 완료일</p>
-                            <p class="txt f-sub-head" id="nowDate" >${kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                            <p class="txt f-sub-head" id="nowDate" >${kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')}</p>
                         </div>
                     </div>
                 </div>
