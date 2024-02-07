@@ -69,7 +69,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click: function () {
 						//상세보기
 						var detailsKey = $(this).data("detailsKey");
-						var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=" + $formObj.find("input[name=mainPostYn]").val();
+						var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=N";
 						location.href = url;
 					}
 				}

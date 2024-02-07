@@ -171,7 +171,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
                         $formObj.find("input[name=mainPostYn]").val($(this).data("mainPostYn"));
-                        var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=" + $formObj.find("input[name=mainPostYn]").val();
+                        var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=N";
                         location.href = url;
                     }
                 }
