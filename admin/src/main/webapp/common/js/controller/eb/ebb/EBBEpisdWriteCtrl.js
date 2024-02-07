@@ -88,14 +88,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	var memAtndcLayer = function(e){
 
+		var edctnSeq =  $(e).data("edctnseq");
+		var episdYear =  $(e).data("episdyear");
+		var episdOrd =  $(e).data("episdord");
+
+
+
 		var ptcptSeq =  $(e).data("ptcptseq");
+		var memSeq =  $(e).data("memseq");
 
 		/*console.log(ptcptSeq);*/
 
 		//출석부 레이어 팝업 호출
 		$(".ebbMemAtndcSrchLayer").one('show.bs.modal', function() {
 			/*$(this).find("button.tempBtn").attr("data-ptcptSeq", ptcptSeq);*/
+
+			$(".ebbMemAtndcSrchLayer").find("#edctnSeq").val(edctnSeq);
+			$(".ebbMemAtndcSrchLayer").find("#episdYear").val(episdYear);
+			$(".ebbMemAtndcSrchLayer").find("#episdOrd").val(episdOrd);
+
 			$(".ebbMemAtndcSrchLayer").find("#ptcptSeq").val(ptcptSeq);
+			$(".ebbMemAtndcSrchLayer").find("#memSeq").val(memSeq);
+
+
 
 			$(this).find("button.tempBtn").trigger("click");
 
@@ -1241,6 +1256,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						cmmCtrl.paramAjax(function(data){
 							$("#exgExamUserDtlLayerContainer").html(data);
 							$("#exgExamUserDtlLayer").one('show.bs.modal', function() {
+								var modal = $(this);
+								modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
 							}).one('hidden.bs.modal', function() {
 							}).one('choice', function(data, param) {
 								search(1)
@@ -2047,6 +2064,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								var ptcptForm = {};
 								var examScore = $(this).find("input[name='examScore']").val();
 								var ptcptSeq = $(this).find("input[name=delValueList]").val();
+								var memSeq = $(this).find("input[name=delValueList]").data("memseq");
 								var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
 								var orgCmptnYn = $(this).find("td").find("#orgCmptnYn").val();//$(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
 
@@ -2057,6 +2075,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								ptcptForm.episdYear = actForm.episdYear;//회차년도
 								ptcptForm.episdOrd = actForm.episdOrd;//회차번호
 								ptcptForm.ptcptSeq = ptcptSeq;//참여자 번호
+								ptcptForm.memSeq = memSeq;//회원 번호
+
 								ptcptForm.examScore = examScore;//평가점수
 
 								ptcptForm.orgCmptnYn = orgCmptnYn//수료여부 원래값

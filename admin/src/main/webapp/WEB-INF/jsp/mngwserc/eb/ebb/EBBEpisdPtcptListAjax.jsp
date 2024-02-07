@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<!-- 교육차수관리 > 참여자 목록 -->
 <c:choose>
   <c:when test="${ not empty rtnData.ptcptList}">
     <c:forEach var="ptcptList" items="${rtnData.ptcptList}" varStatus="status">
@@ -15,7 +16,7 @@
               <c:set var="disabledChk" value=""/>
             </c:otherwise>
             </c:choose>
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}" ${disabledChk} />
+            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}"   ${disabledChk} />
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
@@ -38,7 +39,7 @@
 
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
-              <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}">${ptcptList.eduAtndc}%</a>
+              <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" data-edctnSeq="${eBBEpisdDTO.edctnSeq}" data-episdOrd="${eBBEpisdDTO.episdOrd}" data-episdYear="${eBBEpisdDTO.episdYear}" >${ptcptList.eduAtndc}%</a>
             </c:when>
             <c:otherwise>
               -

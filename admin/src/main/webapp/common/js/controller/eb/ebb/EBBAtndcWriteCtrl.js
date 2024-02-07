@@ -1,5 +1,7 @@
 define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
+	//교육차수관리  > 전체출석부
+
 	"use strict";
 
 	// set controller name

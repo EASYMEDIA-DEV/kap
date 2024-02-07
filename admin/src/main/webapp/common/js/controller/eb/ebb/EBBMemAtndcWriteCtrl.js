@@ -1,5 +1,7 @@
 define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
+	//교육차수관리  > 개인별 출석부
+
 	"use strict";
 
 	// set controller name
@@ -248,7 +250,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							var memAtndcForm = {};
 
+							memAtndcForm.edctnSeq = $("#edctnSeq").val();
+							memAtndcForm.episdOrd = $("#episdOrd").val();
+							memAtndcForm.episdYear = $("#episdYear").val();
+
 							memAtndcForm.ptcptSeq = $("#ptcptSeq").val();
+							memAtndcForm.memSeq = $("#memSeq").val();
 							memAtndcForm.edctnDt =$(this).find(".edctnDt").text();
 
 

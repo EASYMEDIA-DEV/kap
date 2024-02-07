@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<!-- 교육차수관리 > 참여자 목록 > 개인별 출석부 EBBMemAtndcLayer -> EBBMemAtndcAjax  -->
 <c:choose>
   <c:when test="${ not empty rtnData}">
 

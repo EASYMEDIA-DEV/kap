@@ -1,11 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<!-- 교육차수관리 > 참여자 목록 > 전체 출석부 EBBAtndcLayer ->  EBBEpisdAtndcListAjax -->
 <!-- 사유 레이어 팝업(Modal) -->
 <div class="modal fade ebbAtndcSrchLayer" tabindex="-1" role="dialog" data-controller="controller/eb/ebb/EBBAtndcWriteCtrl">
     <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
     <div class="modal-dialog modal-lg modal-center" role="document" style="width:97%;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >▣ 출석부
+                <h5 class="modal-title" >@▣ 출석부
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

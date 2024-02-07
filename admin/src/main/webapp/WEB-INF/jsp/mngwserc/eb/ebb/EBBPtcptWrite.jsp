@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<!-- 교육차수관리 > 참여자 목록 > 신청자 등록  -->
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/eb/ebb/EBBPtcptWriteCtrl">

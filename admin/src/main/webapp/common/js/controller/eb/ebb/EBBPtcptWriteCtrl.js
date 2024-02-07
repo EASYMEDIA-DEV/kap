@@ -1,5 +1,7 @@
 define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
+	//교육차수관리  > 신청자 등록
+
 	"use strict";
 
 	// set controller name

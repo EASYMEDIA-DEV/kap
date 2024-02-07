@@ -577,11 +577,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
-				System.out.println("@@@ 가기전");
-				//오프라인 시험일경우 빈 시험 마스터값 넣어줌
+				//오프라인 시험일경우  입력한 점수에따라서 수료기준을 통과했는지 판단후 수료처리 해줌
 				if(eBBPtcptDTO.getOtsdExamPtcptYn() != null && eBBPtcptDTO.getOtsdExamPtcptYn().equals("Y")){
-					System.out.println("@@@ 들어옴");
-					//eBEExamService.insertOtsdExamPtcptMst(eBBPtcptDTO);//보류 examSeq가 없음
+					//
+					EBBEpisdDTO otsdPtcptDto = new EBBEpisdDTO();
+					otsdPtcptDto.setEdctnSeq(eBBPtcptDTO.getEdctnSeq());
+					otsdPtcptDto.setEpisdYear(eBBPtcptDTO.getEpisdYear());
+					otsdPtcptDto.setEpisdOrd(eBBPtcptDTO.getEpisdOrd());
+					otsdPtcptDto.setMemSeq(eBBPtcptDTO.getMemSeq());
+					otsdPtcptDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+
+					setCmptnChk(otsdPtcptDto);
 				}
 
 				//이전 데이터 불러와서 변경이 N -> Y이면 실행시킴 아니면 일반 업데이트
@@ -1026,6 +1032,19 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		if(ptcptList.size()>0){
 			eBBEpisdDTO.setPtcptList(ptcptList);
 			rtnCnt = eBBEpisdMapper.updateAtndcList(eBBEpisdDTO);
+		}
+
+		//업데이트후 사용자 반복문 다시돌려서 수료에 합당한 기준이인지 확인후 수료처리
+		for(EBBPtcptDTO ptcptDto : eBBEpisdDTO.getPtcptList()){
+			EBBEpisdDTO cmptnChkDto = new EBBEpisdDTO();
+			cmptnChkDto.setEdctnSeq(ptcptDto.getEdctnSeq());
+			cmptnChkDto.setEpisdYear(ptcptDto.getEpisdYear());
+			cmptnChkDto.setEpisdOrd(ptcptDto.getEpisdOrd());
+			cmptnChkDto.setMemSeq(ptcptDto.getMemSeq());
+			cmptnChkDto.setPtcptSeq(ptcptDto.getPtcptSeq());
+
+			setCmptnChk(cmptnChkDto);
+
 		}
 
 		return rtnCnt;

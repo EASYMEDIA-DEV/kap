@@ -1,5 +1,7 @@
 define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
+	//교육차수관리  > 참여자목록 > 차수변경
+
 	"use strict";
 
 	// set controller name
