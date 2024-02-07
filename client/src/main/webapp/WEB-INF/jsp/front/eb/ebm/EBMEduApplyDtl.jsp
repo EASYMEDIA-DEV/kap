@@ -3,7 +3,6 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <%@ page import="com.kap.core.dto.eb.ebb.EBBEpisdDTO" %>
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
 <div id="wrap" class="mypage" data-controller="controller/eb/ebm/EBMEduApplyDtlCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
@@ -814,7 +813,7 @@
                                     </div>
                                 </div>
 
-                                <c:if test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                <c:if test="${(not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
                                     <div class="cont-sec no-border scroll-motion">
                                         <div class="for-motion">
                                             <div class="sec-tit-area">
@@ -840,14 +839,17 @@
                                                                                 </c:choose>
                                                                             </dd>
                                                                         </dl>
-                                                                        <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
+                                                                        <dl><dt class="f-caption2">등록일시</dt>
+                                                                            <dd class="f-caption1">
+                                                                                    ${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }
+                                                                            </dd></dl>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <c:choose>
-                                                        <c:when test="${examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01' && not empty rtnData.examScore}">
+                                                        <c:when test="${(examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01' && not empty rtnData.examScore || (rtnData.otsdExamPtcptYn eq 'Y' && not empty rtnData.examPtcptDtm))}">
                                                             <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
                                                                 <p class="txt f-body1">참여완료</p>
                                                             </div>

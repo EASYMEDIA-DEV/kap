@@ -757,7 +757,7 @@
 				, case when srv_cnt = 0 then 'N' ELSE 'Y' END srv_yn
 				, srv_dtm
 				, exam_ptcpt_seq
-				, exam_ptcpt_dtm
+		     	, case when otsd_exam_ptcpt_yn = 'Y' then ofln_exam_dtm else exam_ptcpt_dtm end as exam_ptcpt_dtm /* 오프라인평가인경우 별도의 컬럼값으로 출력 */
 			</if>
 		FROM (SELECT
 				  b.edctn_seq
@@ -845,6 +845,7 @@
 						, (SELECT reg_dtm FROM sv_rspn_mst WHERE rfnc_cd = 'EDU' AND mem_seq = ${memSeq} AND rfnc_seq = a.episd_seq) as srv_dtm
 		      			, (SELECT EXAM_PTCPT_SEQ FROM ep_edctn_exam_ptcpt_mst WHERE PTCPT_SEQ = d.ptcpt_seq AND MEM_SEQ = ${memSeq}) as exam_ptcpt_seq
 						, (SELECT reg_dtm FROM ep_edctn_exam_ptcpt_mst WHERE PTCPT_SEQ = d.ptcpt_seq AND MEM_SEQ = ${memSeq}) as exam_ptcpt_dtm
+						, ofln_exam_dtm
 					</if>
 			  FROM ed_edctn_episd_mst a
 			  LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
@@ -859,6 +860,7 @@
 					, stts_cd
 					, cmptn_yn
 					, cmptn_dtm
+			      	, ofln_exam_dtm
 			      	, crtfct_no
 					, exam_score
 					, reg_dtm as ptcpt_dtm
@@ -1802,6 +1804,7 @@
 				/*오프라인평가인경우에만 입력*/
 				 <if test='ptcptList.otsdExamPtcptYn =="Y" '>
 					, exam_score = #{ptcptList.examScore}
+				  	, ofln_exam_dtm = now()
 				</if>
 
 			where 1=1
