@@ -146,7 +146,7 @@
         <name>newLine</name>
         <function-class>com.kap.common.utility.COStringUtil</function-class>
         <function-signature>java.lang.String newLine(java.lang.String)</function-signature>
-        <example>${kl:emptyHypen(value)}</example>
+        <example>${kl:newLine(value)}</example>
     </function>
 
 </taglib>
