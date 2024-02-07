@@ -134,16 +134,22 @@ public class COCOmmController {
         //교육
         EBBEpisdDTO eBBEpisdDTO = new EBBEpisdDTO();
         eBBEpisdDTO.setQ( cOSearchDTO.getQ() );
+        eBBEpisdDTO.setSiteGubun("front");
+        eBBEpisdDTO.setApplyListYn("Y");
         int episdCnt = eBBEpisdService.selectEpisdListCnt( eBBEpisdDTO );
         modelMap.put("episdCnt", episdCnt);
         //공지사항
         BDANoticeDTO pBDANoticeDTO = new BDANoticeDTO();
         pBDANoticeDTO.setQ( cOSearchDTO.getQ() );
+        pBDANoticeDTO.setMainYn("Y");
+        pBDANoticeDTO.setSiteGubun("front");
         int noticeCnt = bDANoticeService.selectNoticeListCnt(pBDANoticeDTO);
         modelMap.put("noticeCnt", noticeCnt);
         //재단소식
         BDBCompanyNewsDTO pBDBCompanyNewsDTO = new BDBCompanyNewsDTO();
         pBDBCompanyNewsDTO.setQ( cOSearchDTO.getQ() );
+        pBDBCompanyNewsDTO.setMainYn("Y");
+        pBDBCompanyNewsDTO.setSiteGubun("front");
         int newsCnt = bDBCompanyNewsService.selectCompanyNewsListCnt(pBDBCompanyNewsDTO);
         modelMap.put("newsCnt", newsCnt);
         //뉴스레터
