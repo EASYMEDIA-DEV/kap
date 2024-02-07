@@ -46,6 +46,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }
             },
         classname : {
+            //다운로드
+            fileDown : {
+                event : {
+                    click : function(e) {
+                        $(".loading-area").stop().fadeIn(200);
+                        var url = $(this).data("url");
+
+                        async function downloadFile() {
+                            await new Promise(resolve => setTimeout(resolve, 200)); // 200ms 대기
+                            location.href = url;
+                            $(".loading-area").stop().fadeOut(200);
+                        }
+
+                        downloadFile();
+                    }
+                }
+            },
+
             //검색 레이어에서 선택시 호출
             moreBtn : {
                 event : {

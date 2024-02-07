@@ -92,6 +92,22 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
         },
         classname : {
+            fileDown : {
+                event : {
+                    click : function(e) {
+                        $(".loading-area").stop().fadeIn(200);
+                        var url = $(this).data("url");
+
+                        async function downloadFile() {
+                            await new Promise(resolve => setTimeout(resolve, 200)); // 200ms 대기
+                            location.href = url;
+                            $(".loading-area").stop().fadeOut(200);
+                        }
+
+                        downloadFile();
+                    }
+                }
+            },
             addMore : {
                 event : {
                     click : function() {

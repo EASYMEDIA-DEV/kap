@@ -59,7 +59,7 @@
                                     </div>
                                     <div class="right has-button">
                                         <div class="btn-wrap">
-                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                            <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
                                         </div>
                                     </div>
                                 </div>
@@ -151,7 +151,7 @@
                                             <p class="tit">첨부파일</p>
                                             <div class="txt">
                                                 <div class="btn-wrap">
-                                                    <a class="btn-text-icon download" href="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${fileData.mngmntFileSeq}&fileOrd=${fileData.mngmntFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
                                                 </div>
                                             </div>
                                         </div>

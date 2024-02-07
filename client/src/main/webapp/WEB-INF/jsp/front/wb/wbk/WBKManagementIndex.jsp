@@ -71,7 +71,7 @@
                                 <div class="btn-wrap">
                                     <c:if test="${not empty rtnRoundDtl.fileSeq}">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=1" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=1" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                                         </div>
                                     </c:if>
                                     <div class="btn-set">

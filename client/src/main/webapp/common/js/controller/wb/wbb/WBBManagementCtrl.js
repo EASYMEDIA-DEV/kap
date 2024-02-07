@@ -217,30 +217,41 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         });
                         */
-                        $(".loading-area").css("display", "flex");
+                        $(".loading-area").stop().fadeIn(200);
                         var optnFiles = $('.optnFile');
                         var numFiles = optnFiles.length;
                         var currentIndex = 0;
 
-                        // 파일 다운로드 함수
                         function downloadFile() {
                             var currentFile = $(optnFiles[currentIndex]);
-                            // console.log("다운로드: ", currentFile.val());
-                            // location.href = "/file/download?fileSeq="+currentFile.val()+"&fileOrd=0";
-                            window.open("/file/download?fileSeq="+currentFile.val()+"&fileOrd=0", '_blank');
+                            location.href = "/file/download?fileSeq="+currentFile.val()+"&fileOrd=0";
+                            // window.open("/file/download?fileSeq="+currentFile.val()+"&fileOrd=0", '_blank');
 
                             currentIndex++;
 
                             if (currentIndex < numFiles) {
-                                setTimeout(downloadFile, 2000); // 2초 후에 다음 파일 다운로드
+                                setTimeout(downloadFile, 1500); // 2초 후에 다음 파일 다운로드
                             } else {
-                                // 모든 파일 다운로드 완료 시
-                                console.log("모든 파일 다운로드 완료");
-                                $(".loading-area").css("display", "none");
+                                $(".loading-area").stop().fadeOut(200);
                             }
                         }
 
-                        // 첫 번째 파일 다운로드 시작
+                        downloadFile();
+                    }
+                }
+            },
+            fileDown : {
+                event : {
+                    click : function(e) {
+                        $(".loading-area").stop().fadeIn(200);
+                        var url = $(this).data("url");
+
+                        async function downloadFile() {
+                            await new Promise(resolve => setTimeout(resolve, 200)); // 200ms 대기
+                            location.href = url;
+                            $(".loading-area").stop().fadeOut(200);
+                        }
+
                         downloadFile();
                     }
                 }

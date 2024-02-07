@@ -196,7 +196,7 @@
                                                         <!-- 2024-01-03 첨부파일 양식 변경 -->
                                                         <div class="file-prev-area">
                                                             <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                                                <a href="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download="" title="파일 다운로드" id="down${status.index}">${item.fileNm}</a>
+                                                                <a class="fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" download="" title="파일 다운로드" id="down${status.index}">${item.fileNm}</a>
                                                             </c:forEach>
                                                         </div>
                                                         <!-- // 2024-01-03 첨부파일 양식 변경 -->
