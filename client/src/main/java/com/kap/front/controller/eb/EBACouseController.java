@@ -126,7 +126,6 @@ public class EBACouseController {
         try
         {
             eBBEpisdDTO.setApplyListYn("Y");
-//            System.out.println("여기 eBBEpisdDTO= " +eBBEpisdDTO);
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }

@@ -16,6 +16,7 @@
             <input type="hidden" id="firstIndex" name="firstIndex" value="0"/>
             <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }"/>
             <input type="hidden" name="menuType" value="${menuType}"/>
+            <input type="hidden" id="mainPostYn" name="mainPostYn" value="" />
             <input type="hidden" name="letterCnt" id="letterCnt" value="${letterCnt}"/>
             <input type="hidden" name="episdCnt" id="episdCnt" value="${episdCnt}"/>
             <input type="hidden" name="noticeCnt" id="noticeCnt" value="${noticeCnt}"/>

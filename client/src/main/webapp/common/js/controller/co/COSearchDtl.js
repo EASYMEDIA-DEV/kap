@@ -170,11 +170,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click: function () {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        var url = "/foundation/board/notice/view?detailsKey=" + detailsKey;
+                        $formObj.find("input[name=mainPostYn]").val($(this).data("mainPostYn"));
+                        var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=" + $formObj.find("input[name=mainPostYn]").val();
                         location.href = url;
                     }
                 }
             },
+            //교육 상세보기
+            episdDtl : {
+                    event: {
+                        click: function () {
+                            //상세보기
+                            var edctnseq = $(this).data("edctnseq");
+                            var url = "/education/apply/detail?detailsKey="+edctnseq;
+                            location.href = url;
+                        }
+                    }
+                },
+            //메뉴 탭 더보기 버튼
             menuAdd : {
                 event: {
                     click: function () {

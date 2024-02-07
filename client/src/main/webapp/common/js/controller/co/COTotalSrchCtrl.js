@@ -31,15 +31,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			//교육 상세보기
 			episdDtl : {
-				event : {
-					click : function(e){
-						var edctnseq = $(e.target).closest("div").data("edctnseq");
-						location.href="/education/apply/detail?detailsKey="+edctnseq;
+				event: {
+					click: function () {
+						var edctnseq = $(this).data("edctnseq");
+						location.href = "/education/apply/detail?detailsKey="+edctnseq;
+
 					}
 				}
 			},
-			//간략화 해야함
 			//뉴스레터 상세보기
 			nwslttrListView: {
 				event: {
@@ -68,7 +69,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click: function () {
 						//상세보기
 						var detailsKey = $(this).data("detailsKey");
-						var url = "/foundation/board/notice/view?detailsKey=" + detailsKey;
+						var url = "/foundation/board/notice/view?detailsKey=" + detailsKey + "&mainPostYn=" + $formObj.find("input[name=mainPostYn]").val();
 						location.href = url;
 					}
 				}
