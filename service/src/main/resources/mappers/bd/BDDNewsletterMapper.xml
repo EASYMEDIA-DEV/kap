@@ -86,7 +86,7 @@
     2023.11.22    장두석       최초생성
     -->
     <select id="getNewsletterListTotCnt" parameterType="BDDNewsletterDTO" resultType="java.lang.Integer">
-        SELECT /* BDDNewsletterMapper.getNewsletterListCnt */
+        SELECT /* BDDNewsletterMapper.getNewsletterListTotCnt */
             COUNT(*)
         FROM
             BD_NWSLT_MST A

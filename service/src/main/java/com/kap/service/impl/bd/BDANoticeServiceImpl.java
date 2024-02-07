@@ -81,10 +81,9 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      */
     public BDANoticeDTO selectNoticeTabList(BDANoticeDTO pBDANoticeDTO) throws Exception {
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
-
         int recordCountPerPage = (pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize() >= pBDANoticeDTO.getTotalCount()) ? pBDANoticeDTO.getTotalCount() : pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize();
         pBDANoticeDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeTotalList(pBDANoticeDTO));
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
 
@@ -109,7 +108,7 @@ public class BDANoticeServiceImpl implements BDANoticeService {
         }
 
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
-        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeTotalList(pBDANoticeDTO));
+        pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
 
