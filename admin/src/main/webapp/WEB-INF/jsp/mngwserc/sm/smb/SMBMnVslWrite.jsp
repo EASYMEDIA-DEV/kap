@@ -103,7 +103,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="200" title="제목" placeholder="제목을 입력해주세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" maxlength="50" title="제목" placeholder="제목을 입력해주세요." />
                     </div>
                 </div>
             </fieldset>
@@ -116,7 +116,7 @@
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="mnHexCd" name="mnHexCd" value="${rtnDto.mnHexCd}" maxlength="6" title="HEX" placeholder="#123456" onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');"/>
+                        <input type="text" class="form-control input-sm notRequired" id="mnHexCd" name="mnHexCd" value="${rtnDto.mnHexCd}" maxlength="7" title="HEX" placeholder="#123456" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');"/>
                     </div>
                 </div>
             </fieldset>
@@ -129,7 +129,7 @@
                     <div class="col-sm-1"></div>
                     <label class="col-sm-1 control-label">HEX</label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm notRequired" id="subHexCd" name="subHexCd" value="${rtnDto.subHexCd}" maxlength="6" title="HEX" placeholder="#123456" onkeyup="this.value=this.value.replace(/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');" />
+                        <input type="text" class="form-control input-sm notRequired" id="subHexCd" name="subHexCd" value="${rtnDto.subHexCd}" maxlength="7" title="HEX" placeholder="#123456" oninput="this.value=this.value.replace(/[\sㄱ-ㅎ|ㅏ-ㅣ|가-힣]/g,'');" />
                     </div>
                 </div>
             </fieldset>

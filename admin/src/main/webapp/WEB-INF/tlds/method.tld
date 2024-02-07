@@ -140,4 +140,13 @@
         <example>${kl:emptyHypen(value)}</example>
     </function>
 
+    <!-- textarea 데이터 줄바꿈 -->
+    <function>
+        <description>newLine</description>
+        <name>newLine</name>
+        <function-class>com.kap.common.utility.COStringUtil</function-class>
+        <function-signature>java.lang.String newLine(java.lang.String)</function-signature>
+        <example>${kl:emptyHypen(value)}</example>
+    </function>
+
 </taglib>

@@ -51,10 +51,10 @@
                             <div class="col-sm-6">
                                 <c:choose>
                                     <c:when test="${not empty userInfo.name}">
-                                        <input type="text" class="form-control" id="id" value="${userInfo.name}(${userInfo.id})" title="신청자" maxlength="50" disabled/>
+                                        <input type="text" class="form-control" id="id" value="${userInfo.name}(${userInfo.id})" title="신청자" maxlength="50" readonly/>
                                     </c:when>
                                     <c:otherwise>
-                                        <input type="text" class="form-control" id="nameAndId" value="" title="신청자" maxlength="50" disabled/>
+                                        <input type="text" class="form-control" id="nameAndId" value="" title="신청자" maxlength="50" readonly/>
                                     </c:otherwise>
                                 </c:choose>
                             </div>
@@ -222,7 +222,7 @@
                         <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <div class="col-sm-6" style="margin-left: -15px">
-                                <input type="text" class="form-control telNumber notRequired" id="compTel" name="compTel" value="${userInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
+                                <input type="text" class="form-control telNumber" id="compTel" name="compTel" value="${userInfo.compTel}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                             </div>
                         </div>
 

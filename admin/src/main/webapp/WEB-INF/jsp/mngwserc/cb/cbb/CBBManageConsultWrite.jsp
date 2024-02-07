@@ -945,9 +945,9 @@
                                                     <option value="${cnstgPscndCd.cd}" >${cnstgPscndCd.cdNm}</option>
                                                 </c:forEach>
                                             </select>
-                                            <div class="input-group">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${today}" title="컨설팅현황일자" style="width: 150px;" />
-                                                <span class="input-group-btn" style="z-index:0; display: inline;">
+                                            <div class="input-group" style="width: 150px;">
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${today}" title="컨설팅현황일자" />
+                                                <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
                                                     </button>
@@ -960,9 +960,9 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">컨설팅 연장실적</label>
                                         <div class="col-sm-4 form-inline">
-                                            <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="" style="width: 220px;">
+                                            <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="" style="width: 180px;">
                                             &nbsp;회 /&nbsp;
-                                            <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="" style="width: 220px;">
+                                            <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="" style="width: 180px;">
                                             &nbsp;개월
                                         </div>
                                         <label class="col-sm-1 control-label">컨설팅 기간</label>
@@ -1230,9 +1230,9 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-4">
-                                        <div class="input-group">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${not empty rsumeList.cnstgPscndDt ? rsumeList.cnstgPscndDt : today}"title="컨설팅현황일자" style="width: 150px;" />
-                                            <span class="input-group-btn" style="z-index:0; display: inline;">
+                                        <div class="input-group" style="width: 150px;">
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${not empty rsumeList.cnstgPscndDt ? rsumeList.cnstgPscndDt : today}"title="컨설팅현황일자" />
+                                            <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
                                                 </button>
@@ -1245,9 +1245,9 @@
                                 <div class="form-group text-sm">
                                     <label class="col-sm-1 control-label">컨설팅 연장실적</label>
                                     <div class="col-sm-4 form-inline">
-                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="${rsumeList.cnstgXtnsnRsltCnt}" style="width: 220px;">
+                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltCnt" placeholder="횟수 입력" value="${rsumeList.cnstgXtnsnRsltCnt}" style="width: 180px;">
                                         &nbsp;회 /&nbsp;
-                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="${rsumeList.cnstgXtnsnRsltMnth}" style="width: 220px;">
+                                        <input type="text" class="form-control input-sm notRequired" name="cnstgXtnsnRsltMnth" placeholder="개월 수 입력" value="${rsumeList.cnstgXtnsnRsltMnth}" style="width: 180px;">
                                         &nbsp;개월
                                     </div>
                                     <label class="col-sm-1 control-label">컨설팅 기간</label>
@@ -1522,7 +1522,7 @@
                                                     <tbody>
                                                         <tr>
                                                             <th>종합 점수</th>
-                                                            <th>지도실적(50)</th>
+                                                            <th>컨설팅 실적(50)</th>
                                                             <th>의사소통 능력(5)</th>
                                                             <th>기획력(10)</th>
                                                             <th>실행력(15)</th>
@@ -1545,8 +1545,20 @@
                                     </fieldset>
                             </c:forEach>
                         </c:forEach>
+                        <br/>
+                        <c:set var="count" value="0" />
                         <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
                             <c:if test="${cd ne qstnList.cd}">
+                                <c:choose>
+                                    <c:when test="${count eq 0}">
+                                        <h6 class="ml mb-xl">Part1. 컨설팅 실적 및 역량 평가</h6>
+                                    </c:when>
+                                    <c:when test="${count eq 6}">
+                                        <br/>
+                                        <h6 class="ml mb-xl">Part2. 품질기술봉사단 운영제도 만족도 평가</h6>
+                                    </c:when>
+                                </c:choose>
+                                <c:set var="count" value="${count + 1}" />
                                 <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
                             </c:if>
                             <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
@@ -1556,24 +1568,24 @@
                                     <div class="form-group text-sm">
                                         <table class="table">
                                             <tr>
-                                                <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
-                                                <th class="col-md-1">설문유형<span class="star"> *</span></th>
-                                                <td class="form-inline col-md-8" >
-                                                        ${qstnList.srvTypeNm}
+                                                <th rowspan="3" class="${qstnList.cd}questionTxt" style="width: 120px">질문1</th>
+                                                <th style="width: 120px">설문유형<span class="star"> *</span></th>
+                                                <td style="white-space: normal">
+                                                        ${kl:newLine(qstnList.srvTypeNm)}
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <th>질문<span class="star"> *</span></th>
-                                                <td>${qstnList.qstnNm}</td>
+                                                <th style="width: 120px">질문<span class="star"> *</span></th>
+                                                <td style="white-space: normal">${kl:newLine(qstnList.qstnNm)}</td>
                                                 <td></td>
                                             </tr>
                                             <tr>
                                                 <th>응답<span class="star"> *</span></th>
-                                                <td>
+                                                <td style="white-space: normal">
                                                     <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                         <c:choose>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                                ${exmplList.winAnswerText}
+                                                                ${kl:newLine(exmplList.winAnswerText)}
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
                                                                 - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
@@ -1592,6 +1604,7 @@
                             </c:if>
                         <c:set var="cd" value="${ qstnList.cd}" />
                         </c:forEach>
+                        <c:set var="count" value="0" />
                     </c:if>
                     </div>
                 </div>

@@ -64,7 +64,7 @@
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
                             <input type="hidden" id="memSeq" class="notRequired" name="memSeq" value="" />
-                            <input type="text" class="form-control" id="mem" value="${rtnDto.nm}" title="신청자" disabled/>
+                            <input type="text" class="form-control" id="mem" value="${rtnDto.nm}" title="신청자" readonly/>
                         </div>
                         <div class="col-sm-1">
                             <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색</button>
@@ -223,7 +223,7 @@
                     <label class="col-sm-1 control-label">회사 전화번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <div class="col-sm-3" style="margin-left: -15px">
-                            <input type="text" class="form-control telNumber notRequired" id="compTel" name="telNo" value="${rtnDto.smmryNm}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
+                            <input type="text" class="form-control telNumber" id="compTel" name="telNo" value="${rtnDto.smmryNm}" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="13" title="회사 전화번호" placeholder="회사 전화번호 입력"/>
                         </div>
                     </div>
 

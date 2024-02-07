@@ -208,11 +208,38 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             downloadAll : {
                 event : {
                     click : function() {
+                        /*
                         $('.optnFile').each(function() {
-                           location.href = "/file/download?fileSeq="+$(this).val()+"&fileOrd=0";
+                           // location.href = "/file/download?fileSeq="+$(this).val()+"&fileOrd=0";
                            fnSleep(3000); //각 파일별 시간 텀을 준다
 
                         });
+                        */
+                        $(".loading-area").css("display", "flex");
+                        var optnFiles = $('.optnFile');
+                        var numFiles = optnFiles.length;
+                        var currentIndex = 0;
+
+                        // 파일 다운로드 함수
+                        function downloadFile() {
+                            var currentFile = $(optnFiles[currentIndex]);
+                            // console.log("다운로드: ", currentFile.val());
+                            // location.href = "/file/download?fileSeq="+currentFile.val()+"&fileOrd=0";
+                            window.open("/file/download?fileSeq="+currentFile.val()+"&fileOrd=0", '_blank');
+
+                            currentIndex++;
+
+                            if (currentIndex < numFiles) {
+                                setTimeout(downloadFile, 2000); // 2초 후에 다음 파일 다운로드
+                            } else {
+                                // 모든 파일 다운로드 완료 시
+                                console.log("모든 파일 다운로드 완료");
+                                $(".loading-area").css("display", "none");
+                            }
+                        }
+
+                        // 첫 번째 파일 다운로드 시작
+                        downloadFile();
                     }
                 }
             },

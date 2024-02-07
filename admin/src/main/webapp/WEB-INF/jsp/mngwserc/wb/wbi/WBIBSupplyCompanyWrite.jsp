@@ -48,7 +48,7 @@
                     <label class="col-sm-1 control-label">신청자(아이디)<span class="star"> *</span></label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-6">
-                            <input type="text" class="form-control" id="nameAndId" value="" title="신청자" maxlength="50" disabled/>
+                            <input type="text" class="form-control" id="nameAndId" value="" title="신청자" maxlength="50" readonly/>
                         </div>
                         <div class="col-sm-1">
                             <button type="button" class="btn btn-sm btn-info btnPartUserModal">회원검색</button>
