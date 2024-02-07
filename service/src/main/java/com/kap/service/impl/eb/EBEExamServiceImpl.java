@@ -346,6 +346,10 @@ public class EBEExamServiceImpl implements EBEExamService {
         actCnt = eBEExamMapper.insertExamPtcptMst(eXGExamEdctnPtcptRspnMst);
 
         if(eXGExamEdctnPtcptRspnMst.getSbjctList() != null && eXGExamEdctnPtcptRspnMst.getSbjctList().size() > 0){
+            //답변 리스트 초기화
+            if(eXGExamEdctnPtcptRspnMst.getQstnList() == null){
+                eXGExamEdctnPtcptRspnMst.setQstnList( new ArrayList<EXGExamQstnRspnDtlDTO>() );
+            }
             for(EXGExamEdctnPtcptSbjctRspnMst eXGExamEdctnPtcptSbjctRspnMst : eXGExamEdctnPtcptRspnMst.getSbjctList())
             {
                 EXGExamQstnRspnDtlDTO eXGExamQstnRspnDtlDTO = new EXGExamQstnRspnDtlDTO();
