@@ -1,16 +1,16 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<!-- 교육차수관리 > 참여자 목록 > 출석부에서 사용하는 목록 -->
+<!-- 교육차수관리 > 참여자 목록 > 전체 출석부에서 사용하는 목록 -->
 <c:choose>
   <c:when test="${ not empty rtnData.ptcptList}">
     <c:forEach var="ptcptList" items="${rtnData.ptcptList}" varStatus="status">
-      <tr  data-total-count="${rtnData.totalCount}" data-ptcptSeq="${ptcptList.ptcptSeq}">
+      <tr  data-total-count="${rtnData.totalCount}" data-ptcptSeq="${ptcptList.ptcptSeq}" data-memseq="${ptcptList.memSeq}">
 <%--        <td class="text-center">--%>
 <%--          <label class="checkbox-inline c-checkbox">--%>
 <%--            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}"/>--%>
 <%--            <span class="ion-checkmark-round"></span>--%>
 <%--          </label>--%>
 <%--        </td>--%>
-        <td class="text-center">@@@@${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
+        <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
         <td class="text-center">${ptcptList.id}</td>
         <td class="text-center">${ptcptList.name}</td>
         <td class="text-center">${ptcptList.cmpnNm}</td>

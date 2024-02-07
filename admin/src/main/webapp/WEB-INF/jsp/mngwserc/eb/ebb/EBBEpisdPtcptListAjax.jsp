@@ -56,9 +56,6 @@
               <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
               <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">
                 <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" />점
-                <%--<button type="button" class="btn btn-inverse btn-sm examScoreUpdate">
-                  저장
-                </button>--%>
               </c:if>
               <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
                 <c:choose>

@@ -33,7 +33,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 			//전체 갯수
-			var totCnt = $(respObj).eq(0).data("totalCount");
+			var totCnt = $("#ptcptListContainer").find("tr").data("totalCount");
 			//총 건수
 			ctrl.obj.find("#ptcptListLayerContainerTotCnt").text(totCnt);
 
@@ -272,6 +272,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									var atndcDayForm = {};
 
 									atndcDayForm.ptcptSeq = $(this).closest("tr").data("ptcptseq");
+									atndcDayForm.memSeq = $(this).closest("tr").data("memseq");
 									atndcDayForm.edctnDt = targetDt;
 
 									orgatndcHour = $(this).data("orgatndchour");//수정전 출석시간

@@ -60,7 +60,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 			//전체 갯수
-			var totCnt = $(respObj).eq(0).data("totalCount");
+			var totCnt = $("#ptcptListContainer").find("tr:first").data("totalCount");
 			//총 건수
 			ctrl.obj.find("#ptcptListContainerTotCnt").text(totCnt);
 
@@ -70,7 +70,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				memAtndcLayer(this);
 
 			});
-
+			console.log(totCnt);
 
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
@@ -79,6 +79,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				if(!confirm("다른 페이지로 이동 시 입력한 값은 저장되지 않습니다. 이동하시겠습니까?")){
 					return false;
 				}
+
 			});
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
