@@ -260,7 +260,7 @@
 						</div>
 						<c:if test="${ not empty loginMap}">
 							<div class="loginfo-wrap">
-								<c:if test="${ loginMap.authCd ne 'CS'}">
+								<c:if test="${ loginMap.authCd eq 'CP'}">
 									<div class="loginfo-box">
 										<p class="info-tit f-title3">사업 신청내역</p>
 										<span class="f-caption2">최근 1년 기준</span>
@@ -292,12 +292,14 @@
 										</div>
 									</div>
 								</c:if>
+								<c:if test="${ loginMap.authCd eq 'CP'}">
 								<div class="mob btn-wrap">
 									<div class="btn-set">
 										<a class="btn-solid small gray-bg" href="/my-page/edu-apply/list"><span>증명서 발급</span></a>
 										<a class="btn-solid small gray-bg" href="/foundation/cs/qa/index"><span>1:1 문의</span></a>
 									</div>
 								</div>
+								</c:if>
 								<p class="last-date f-caption2"><span>최근 로그인 일시</span><span class="date">${ kl:convertDate(loginMap.lastLgnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</span></p>
 							</div>
 						</c:if>
