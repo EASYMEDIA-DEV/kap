@@ -213,7 +213,7 @@ public class EBEExamServiceImpl implements EBEExamService {
         for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : examQstnDtlList){
             eXGExamQstnDtlDTO.setExExamExmplDtlList( new ArrayList<EXGExamExmplDtlDTO>());
             for(EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList){
-                if(eXGExamQstnDtlDTO.getQstnSeq() == eXGExamExmplDtlDTO.getQstnSeq()){
+                if(eXGExamQstnDtlDTO.getQstnSeq().equals( eXGExamExmplDtlDTO.getQstnSeq() )){
                     eXGExamQstnDtlDTO.getExExamExmplDtlList().add(eXGExamExmplDtlDTO);
                 }
             }
@@ -238,12 +238,12 @@ public class EBEExamServiceImpl implements EBEExamService {
             eXGExamQstnDtlDTO.setExExamExmplDtlList( new ArrayList<EXGExamExmplDtlDTO>());
             eXGExamQstnDtlDTO.setExExamExmplRspnDtlList( new ArrayList<EXGExamExmplRspnDtlDTO>());
             for(EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList){
-                if(eXGExamQstnDtlDTO.getQstnSeq() == eXGExamExmplDtlDTO.getQstnSeq()){
+                if(eXGExamQstnDtlDTO.getQstnSeq().equals( eXGExamExmplDtlDTO.getQstnSeq() )){
                     eXGExamQstnDtlDTO.getExExamExmplDtlList().add(eXGExamExmplDtlDTO);
                 }
             }
             for(EXGExamExmplRspnDtlDTO eXGExamExmplRspnDtlDTO : examExmplRspnDtlList){
-                if(eXGExamQstnDtlDTO.getQstnSeq() == eXGExamExmplRspnDtlDTO.getQstnSeq()){
+                if(eXGExamQstnDtlDTO.getQstnSeq().equals( eXGExamExmplRspnDtlDTO.getQstnSeq() )){
                     eXGExamQstnDtlDTO.getExExamExmplRspnDtlList().add(eXGExamExmplRspnDtlDTO);
                 }
             }
@@ -291,7 +291,10 @@ public class EBEExamServiceImpl implements EBEExamService {
         List<EXGExamQstnDtlDTO> eXGExamExmplDtlDTOList = eBEExamMapper.getExamQstnCanswList(eXGExamMstSearchDTO);
         if(eXGExamEdctnPtcptRspnMst.getMtlccList() != null && eXGExamEdctnPtcptRspnMst.getMtlccList().size() > 0 && eXGExamExmplDtlDTOList != null && eXGExamExmplDtlDTOList.size() > 0)
         {
-            eXGExamEdctnPtcptRspnMst.setQstnList( new ArrayList<EXGExamQstnRspnDtlDTO>() );
+            //답변 리스트 초기화
+            if(eXGExamEdctnPtcptRspnMst.getQstnList() == null){
+                eXGExamEdctnPtcptRspnMst.setQstnList( new ArrayList<EXGExamQstnRspnDtlDTO>() );
+            }
             boolean isSuccess = false;
             for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : eXGExamExmplDtlDTOList)
             {
@@ -301,7 +304,7 @@ public class EBEExamServiceImpl implements EBEExamService {
                 String[] exmplCanswList = null;
                 for(EXGExamEdctnPtcptMtlccRspnMst eXGExamEdctnPtcptMtlccRspnMst : eXGExamEdctnPtcptRspnMst.getMtlccList()) {
                     eXGExamEdctnPtcptMtlccRspnMst.setCanswYn("N");
-                    if (eXGExamEdctnPtcptMtlccRspnMst.getQstnSeq() == eXGExamQstnDtlDTO.getQstnSeq())
+                    if (eXGExamEdctnPtcptMtlccRspnMst.getQstnSeq().equals(eXGExamQstnDtlDTO.getQstnSeq()) )
                     {
                         exmplSize = exmplSize + 1;
                         exmplCanswList = eXGExamQstnDtlDTO.getExmplCansw().split(",");
@@ -320,7 +323,7 @@ public class EBEExamServiceImpl implements EBEExamService {
                         }
                     }
                 }
-                if(size != exmplCanswList.length || exmplSize != exmplCanswList.length){
+                if(exmplCanswList != null && (size != exmplCanswList.length || exmplSize != exmplCanswList.length)){
                     isSuccess = false;
                 }
                 if(isSuccess){
