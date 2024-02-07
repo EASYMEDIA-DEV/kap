@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="date" value="<%=new java.util.Date()%>" />
-<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd HH:mm" /></c:set>
+<c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy.MM.dd HH:mm" /></c:set>
 
 <div class="cont-wrap" data-controller="controller/wb/wbd/WBDSafetyCtrl">
   <form id="frmData" name="frmData" enctype="multipart/form-data">

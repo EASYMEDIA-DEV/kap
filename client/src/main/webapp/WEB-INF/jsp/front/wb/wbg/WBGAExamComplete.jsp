@@ -52,7 +52,7 @@
                                 <div class="def-list-w">
                                     <div class="def-list">
                                         <p class="tit f-head">신청일시</p>
-                                        <p class="txt f-sub-head">${rtnData.regDtm}</p>
+                                        <p class="txt f-sub-head">${kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                                     </div>
                                     <div class="def-list">
                                         <p class="tit f-head">신청정보</p>
