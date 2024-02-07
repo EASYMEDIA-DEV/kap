@@ -220,21 +220,21 @@
                                                         ① ${rtnData.mjrPrdct1}
                                                     </c:if>
                                                     <c:if test="${empty rtnData.mjrPrdct1}">
-                                                        -
+                                                        ① -
                                                     </c:if>
 
                                                     <c:if test="${not empty rtnData.mjrPrdct2}">
                                                         ② ${rtnData.mjrPrdct2}
                                                     </c:if>
                                                     <c:if test="${empty rtnData.mjrPrdct2}">
-                                                        -
+                                                        ② -
                                                     </c:if>
 
                                                     <c:if test="${not empty rtnData.mjrPrdct3}">
                                                         ③ ${rtnData.mjrPrdct3}
                                                     </c:if>
                                                     <c:if test="${empty rtnData.mjrPrdct3}">
-                                                        -
+                                                        ③ -
                                                     </c:if>
                                                 </td>
                                             </tr>

@@ -60,6 +60,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
+                $('#'+fileId).closest(".form-group").find('.file-list').remove();
+
                 fileInput = jQuery(obj).clone(true);
                 var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
                 fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';

@@ -200,6 +200,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 loading:false,
                 sync:true
             },function(data){
+                $('.file-list').remove();
                 var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + data[0].orgnFileNm.replace(data[0].fileExtn,'') + '</span>';
                 fileHtml += '<span class="unit">.' + data[0].fileExtn + '</span></p>';
                 fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
