@@ -626,7 +626,7 @@
 										  JOIN co_mem_mst mem_mst on mem_mst.mem_seq = ptcpt_mst.mem_seq
 		WHERE ptcpt_mst.ptcpt_seq = #{ptcptSeq} AND ptcpt_mst.mem_seq = #{memSeq}
 		  <if test="siteGubun == 'front'.toString()">
-		  	and ptcpt_mst.stts_cd = 'EDU_STTS_CD01' AND prcs_mst.jdgmt_yn = 'Y' AND NOW() between episd_mst.exam_strt_dtm and episd_mst.exam_end_dtm
+		  	and ptcpt_mst.stts_cd = 'EDU_STTS_CD01' AND prcs_mst.jdgmt_yn = 'Y' AND NOW() between episd_mst.exam_strt_dtm and DATE_FORMAT(episd_mst.exam_end_dtm, '%Y-%m-%d 23:59:59')
 		  </if>
 	</select>
 
