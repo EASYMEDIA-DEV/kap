@@ -773,7 +773,8 @@
                                 </div>
                             </div>
 
-                            <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                        </c:if>
+                            <c:if test="${rtnData.trnsfYn eq 'N' and rtnData.sttsCd eq 'EDU_STTS_CD01'}">
                                 <div class="cont-sec no-border scroll-motion">
                                     <div class="for-motion">
                                         <div class="sec-tit-area">
@@ -813,7 +814,7 @@
                                     </div>
                                 </div>
 
-                                <c:if test="${(not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                                <c:if test="${rtnData.trnsfYn eq 'N' && (not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
                                     <div class="cont-sec no-border scroll-motion">
                                         <div class="for-motion">
                                             <div class="sec-tit-area">
@@ -869,16 +870,8 @@
                                     </div>
                                 </c:if>
 
-
-
                             </c:if>
 
-
-
-
-
-
-                        </c:if>
 
                     </div>
                     <div class="page-bot-btn-sec scroll-motion">

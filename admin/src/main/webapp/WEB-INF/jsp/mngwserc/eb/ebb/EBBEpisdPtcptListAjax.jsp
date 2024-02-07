@@ -79,10 +79,12 @@
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
               <input type="hidden" name="orgCmptnYn" id="orgCmptnYn" value="${ptcptList.cmptnYn}"/>
               <c:if test="${ptcptList.cmptnYn eq 'Y'}">
-              <input type="hidden" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
+                <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
+                <input type="hidden" class="notRequired" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
                 수료
               </c:if>
               <c:if test="${ptcptList.cmptnYn ne 'Y'}">
+                <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
                 <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
                   <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
                   <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>

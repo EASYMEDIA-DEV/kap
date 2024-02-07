@@ -552,7 +552,7 @@
                                         </div>
                                         <div class="btn-sec">
                                             <div class="btn-wrap">
-                                                <button class="btn-text-icon black-arrow" type="button"><span>GPC 회원가입</span></button>
+                                                <a href="https://gpc.hyundai.co.kr/gpc/member/sign-up/terms/index.do" class="btn-text-icon black-arrow" target="_blank"><span>GPC 회원가입</span></a>
                                             </div>
                                         </div>
                                     </div>

@@ -2069,6 +2069,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
 								var orgCmptnYn = $(this).find("td").find("#orgCmptnYn").val();//$(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
 
+								var oflnExamDtm = $(this).find("td").find("#oflnExamDtm").val();
+
 								var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
 								if(orgCmptnYn != cmptnYn) cmptnChangeYn = "Y";
 
@@ -2079,6 +2081,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								ptcptForm.memSeq = memSeq;//회원 번호
 
 								ptcptForm.examScore = examScore;//평가점수
+								ptcptForm.oflnExamDtm = oflnExamDtm;//오프라인점수 날짜
 
 								ptcptForm.orgCmptnYn = orgCmptnYn//수료여부 원래값
 								ptcptForm.cmptnYn = cmptnYn//수료여부

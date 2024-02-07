@@ -1677,6 +1677,7 @@
 				, a.exam_score
 				, e.exam_ptcpt_seq
 				, otsd_exam_ptcpt_yn
+				, ofln_exam_dtm
 				, case when d.edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 				case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
 				case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
@@ -1691,6 +1692,7 @@
 				end edu_stat
 
 				, ifnull(ROUND(((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq AND atndc_dtm IS NOT NULL) / (select COUNT(edctn_dt) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq))*100), '0') as  edu_atndc/*출석률*/
+
 			from ep_edctn_ptcpt_mst a
 			left join(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
 			left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
@@ -1732,11 +1734,12 @@
 			, "" as exam_score
 			, f.exam_ptcpt_seq
 			, otsd_exam_ptcpt_yn
+			, ofln_exam_dtm
 			, '교육양도' as edu_stat
 			, 0 as  edu_atndc/*출석률*/
 			from ep_edctn_trnsf_dtl a
 			LEFT JOIN (
-			SELECT ptcpt_seq, edctn_seq, episd_year, episd_ord, ptcpt_bsnm_no, reg_dtm from ep_edctn_ptcpt_mst
+			SELECT ptcpt_seq, edctn_seq, episd_year, episd_ord, ptcpt_bsnm_no, reg_dtm, ofln_exam_dtm from ep_edctn_ptcpt_mst
 			)b ON b.ptcpt_seq = a.ptcpt_seq
 
 			LEFT JOIN(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') c on c.mem_seq = a.bfre_mem_seq
@@ -1804,7 +1807,9 @@
 				/*오프라인평가인경우에만 입력*/
 				 <if test='ptcptList.otsdExamPtcptYn =="Y" '>
 					, exam_score = #{ptcptList.examScore}
+					<if test='ptcptList.oflnExamDtm =="" or ptcptList.oflnExamDtm == null '>
 				  	, ofln_exam_dtm = now()
+					</if>
 				</if>
 
 			where 1=1
