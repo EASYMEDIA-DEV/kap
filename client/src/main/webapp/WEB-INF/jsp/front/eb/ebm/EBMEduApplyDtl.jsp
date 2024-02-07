@@ -364,7 +364,6 @@
                                                 <!-- 0: 평가하기 비활성화, 1:평가하기 활성화-->
                                                 <c:set var="examStatus" value="0"/>
 
-
                                                 <c:choose>
                                                     <c:when test="${rtnData.trnsfYn eq 'N' && not empty rtnData.examSeq && examStatDt le nowDate && nowDate le examEndDt}">
                                                         <c:set var="examStatus" value="1"/>

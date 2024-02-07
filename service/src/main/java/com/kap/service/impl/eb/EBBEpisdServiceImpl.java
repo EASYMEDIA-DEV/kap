@@ -768,6 +768,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				//연계과정 수료 했으므로 신청 진행
 				if("Y".equals(cmptnDto.getRelCmptnYn())){
 					eBBPtcptDTO.setRegStat("S");
+
 				//연계과정 미수료로 신청 불가
 				}else{
 					eBBPtcptDTO.setRegStat("R");
@@ -778,38 +779,41 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setRegStat("S");
 				System.out.println("@@연계과정 없으므로 수료여부 체크없이 신청 진행");
 			}
+			System.out.println("@@ eBBPtcptDTO.getRegStat()= " + eBBPtcptDTO.getRegStat());
+
+			if(eBBPtcptDTO.getRegStat().equals("S")){
+
+				COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+				eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
+				eBBPtcptDTO.setRegName( cOUserDetailsDTO.getName() );
+				eBBPtcptDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
+				eBBPtcptDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
+				eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
+				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
+				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
 
-			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-			eBBPtcptDTO.setRegId( cOUserDetailsDTO.getId() );
-			eBBPtcptDTO.setRegName( cOUserDetailsDTO.getName() );
-			eBBPtcptDTO.setRegDeptCd( cOUserDetailsDTO.getDeptCd() );
-			eBBPtcptDTO.setRegDeptNm( cOUserDetailsDTO.getDeptNm() );
-			eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
-			eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
-			eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
+				int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
+				eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 
-
-			int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
-			eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
-
-			if("admin".equals(eBBPtcptDTO.getSiteGubun())) {
-				eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
-			}
-			else {
-				//선착순 마감 - 신청자 상태가 신청(선발)으로 입력
-				if(eBBPtcptDTO.getRcrmtMthdCd().equals("RCRMT_MTHD01")){
+				if("admin".equals(eBBPtcptDTO.getSiteGubun())) {
 					eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
-					//모집후 선발 - 신청자 상태가 대기(미선발)으로 입력
-				}else{
-					eBBPtcptDTO.setSttsCd("EDU_STTS_CD04");
 				}
-			}
+				else {
+					//선착순 마감 - 신청자 상태가 신청(선발)으로 입력
+					if(eBBPtcptDTO.getRcrmtMthdCd().equals("RCRMT_MTHD01")){
+						eBBPtcptDTO.setSttsCd("EDU_STTS_CD01");
+						//모집후 선발 - 신청자 상태가 대기(미선발)으로 입력
+					}else{
+						eBBPtcptDTO.setSttsCd("EDU_STTS_CD04");
+					}
+				}
 
-			eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
+				eBBEpisdMapper.insertPtcptDtl(eBBPtcptDTO);
 
-			if(!eBBPtcptDTO.getStduyMthdCd().equals("STDUY_MTHD02")){
-				setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
+				if(!eBBPtcptDTO.getStduyMthdCd().equals("STDUY_MTHD02")){
+					setAtndcList(eBBPtcptDTO);//교육참여 출석 상세 목록을 등록한다.
+				}
 			}
 
 		}
