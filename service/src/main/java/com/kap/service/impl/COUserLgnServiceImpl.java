@@ -180,6 +180,14 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 			if (rtnCode.endsWith("00") || rtnCode.endsWith("10"))
 			{
 				cOUserDetailsDTO = cOUserLgnMapper.actionLogin(rtnCOUserDto);
+				//추가 로그인일시가 없을경우 현재 시간을 보여줌
+				if(cOUserDetailsDTO.getLastLgnDtm() == null) {
+					Date date = new Date();
+					SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					String str = format.format(date);
+					cOUserDetailsDTO.setLastLgnDtm(str);
+
+				}
 				//QR이미지 다운로드 처리
 				String episdCheck = "";
 				if("Y".equals(RequestContextHolder.getRequestAttributes().getAttribute("episdCheck", RequestAttributes.SCOPE_SESSION))){
