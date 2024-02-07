@@ -10,8 +10,8 @@
                     <c:forEach var="list" items="${rtnData.list}" varStatus="status">
                         <div class="swiper-slide list">
                             <div class="txt-wrap">
-                                <p class="motion tit">${fn:replace(list.mnCopy, newLine, '<br>')}</p>
-                                <p class="motion txt">${list.subCopy}</p>
+                                <p class="motion tit" style="color: ${list.mnHexCd}">${fn:replace(list.mnCopy, newLine, '<br>')}</p>
+                                <p class="motion txt" style="color: ${list.subHexCd}">${fn:replace(list.subCopy, newLine, '<br>')}</p>
                                 <div class="motion btn-wrap">
                                     <c:choose>
                                         <c:when test="${not empty list.urlUrl}">
@@ -601,7 +601,7 @@
                         <div class="for-set">
                             <a class="field-list" href="/consulting/tech/content">
                                 <div class="thumbnail-img only-mobile">
-                                    <img src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
+                                    <img src="/common/images/img-technical guidance-thumbnail-mobile-01.jpg" alt="">
                                 </div>
                                 <div class="title-area">
                                     <p class="tit">기술지도</p>
@@ -613,7 +613,7 @@
                             </a>
                             <a class="field-list" href="/consulting/manage/content">
                                 <div class="thumbnail-img only-mobile">
-                                    <img src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
+                                    <img src="/common/images/img-technical guidance-thumbnail-mobile-02.jpg" alt="">
                                 </div>
                                 <div class="title-area">
                                     <p class="tit">경영컨설팅</p>
@@ -718,8 +718,7 @@
                     <div class="support-kind-w">
                         <a class="support-list" href="/coexistence/equipment/content">
                             <div class="thumbnail-img">
-                                <img class="only-pc" src="/common/images/img-main-support-img-01.jpg" alt="">
-                                <img class="only-mobile" src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
+                                <img src="/common/images/img-main-support-img-01.jpg" alt="">
                             </div>
                             <div class="title-area">
                                 <p class="tit">자금지원</p>
@@ -731,8 +730,7 @@
                         </a>
                         <a class="support-list" href="/coexistence/automotive/content">
                             <div class="thumbnail-img">
-                                <img class="only-pc" src="/common/images/img-main-support-img-02.jpg" alt="">
-                                <img class="only-mobile" src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
+                                <img src="/common/images/img-main-support-img-02.jpg" alt="">
                             </div>
                             <div class="title-area">
                                 <p class="tit">포상지원</p>
@@ -744,8 +742,7 @@
                         </a>
                         <a class="support-list" href="/coexistence/survey/index">
                             <div class="thumbnail-img">
-                                <img class="only-pc" src="/common/images/img-main-support-img-03.jpg" alt="">
-                                <img class="only-mobile" src="/common/images/@img-main-thumbnail-mobile-01.jpg" alt="">
+                                <img src="/common/images/img-main-support-img-03.jpg" alt="">
                             </div>
                             <div class="title-area">
                                 <p class="tit">설문조사</p>

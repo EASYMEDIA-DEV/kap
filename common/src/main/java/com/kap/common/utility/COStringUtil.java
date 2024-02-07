@@ -374,11 +374,21 @@ public class COStringUtil {
         return prefix + "-" + middlePart + "-" + suffix;
     }
 
+    /**
+     * empty일 경우 hypen
+     */
     public static String emptyHypen(String str1) {
         if(StringUtils.isEmpty(str1)){
             return "-";
         }
         return str1;
+    }
+
+    /**
+     * textarea 데이터 줄바꿈
+     */
+    public static String newLine(String str1) {
+        return str1.replace("\n", "<br>");
     }
 
     /**

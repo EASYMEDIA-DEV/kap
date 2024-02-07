@@ -831,7 +831,7 @@
                                     </div>
                                     <label class="col-sm-1 control-label">지도구분</label>
                                     <div class="col-sm-3">
-                                        <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="z-width: 220px;">
+                                        <select class="form-control input-sm notRequired" name="guideTypeCd" id="guideTypeCd" style="width: 220px;">
                                             <option value="">선택</option>
                                             <c:forEach var="guideTypeCd" items="${cdDtlList.GUIDE_TYPE_CD}" varStatus="status">
                                                 <option value="${guideTypeCd.cd}" >${guideTypeCd.cdNm}</option>
@@ -1477,7 +1477,7 @@
                                         <tbody>
                                         <tr>
                                             <th>종합 점수</th>
-                                            <th>지도실적(50)</th>
+                                            <th>컨설팅 실적(50)</th>
                                             <th>의사소통 능력(5)</th>
                                             <th>기획력(10)</th>
                                             <th>실행력(15)</th>
@@ -1499,54 +1499,64 @@
                             </div>
                         </fieldset>
                     </c:forEach>
-
+                    <br/>
+                    <c:set var="count" value="0" />
                     <c:forEach var="qstnList" items="${rtnSurveyData.svSurveyQstnDtlList}" varStatus="qstnStatus">
                         <c:if test="${cd ne qstnList.cd}">
+                            <c:choose>
+                                <c:when test="${count eq 0}">
+                                    <h6 class="ml mb-xl">Part1. 컨설팅 실적 및 역량 평가</h6>
+                                </c:when>
+                                <c:when test="${count eq 6}">
+                                    <br/>
+                                    <h6 class="ml mb-xl">Part2. 품질기술봉사단 운영제도 만족도 평가</h6>
+                                </c:when>
+                            </c:choose>
+                            <c:set var="count" value="${count + 1}" />
                             <h6 class="ml mb-xl ${fn:substring(qstnList.cd,0,3)}"><em class="ion-android-checkbox-blank mr-sm"></em>${qstnList.cdNm}</h6>
                         </c:if>
                         <c:if test="${qstnList.cd ne 'CON01' && qstnList.cd ne 'CON02'}">
                             <c:set var="rowspan" value="${qstnList.exmplCnt+3}" />
                             <fieldset style="<c:if test="${qstnList.ctgryCd eq null}">display:none;</c:if>" class="surveyList ${qstnList.cd}" data-survey-type="${qstnList.cd}" >
                                 <input type="hidden" name="dpth" value="${qstnList.dpth}">
-                                <div class="form-group text-sm">
-                                    <table class="table">
-                                        <tr>
-                                            <th rowspan="3" class="col-md-1 ${qstnList.cd}questionTxt">질문1</th>
-                                            <th class="col-md-1">설문유형<span class="star"> *</span></th>
-                                            <td class="form-inline col-md-8" >
-                                                    ${qstnList.srvTypeNm}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <th>질문<span class="star"> *</span></th>
-                                            <td>${qstnList.qstnNm}</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <th>응답<span class="star"> *</span></th>
-                                            <td>
-                                                <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                    <c:choose>
-                                                        <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                            ${exmplList.winAnswerText}
-                                                        </c:when>
-                                                        <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                            - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
-                                                        </c:when>
-                                                        <c:otherwise>
-                                                            - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
-                                                        </c:otherwise>
-                                                    </c:choose>
-                                                </c:forEach>
-                                            </td>
-                                            <td></td>
-                                        </tr>
-                                    </table>
-                                </div>
+                                <table class="table">
+                                    <tr>
+                                        <th rowspan="3" class="${qstnList.cd}questionTxt" style="width: 120px">질문1</th>
+                                        <th style="width: 120px">설문유형<span class="star"> *</span></th>
+                                        <td style="white-space: normal">
+                                                ${kl:newLine(qstnList.srvTypeNm)}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th style="width: 120px">질문<span class="star"> *</span></th>
+                                        <td style="white-space: normal">${kl:newLine(qstnList.qstnNm)}</td>
+                                        <td></td>
+                                    </tr>
+                                    <tr>
+                                        <th>응답<span class="star"> *</span></th>
+                                        <td style="white-space: normal">
+                                            <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
+                                                <c:choose>
+                                                    <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
+                                                        ${kl:newLine(exmplList.winAnswerText)}
+                                                    </c:when>
+                                                    <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                        - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:forEach>
+                                        </td>
+                                        <td></td>
+                                    </tr>
+                                </table>
                             </fieldset>
                         </c:if>
                         <c:set var="cd" value="${ qstnList.cd}" />
                     </c:forEach>
+                    <c:set var="count" value="0" />
                 </c:if>
             </div>
        </div>

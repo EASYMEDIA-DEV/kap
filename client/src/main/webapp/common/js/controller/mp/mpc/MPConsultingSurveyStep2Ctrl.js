@@ -62,7 +62,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         $("#pdfDownload").hide();
                         $(".page-bot-btn-sec").hide();
-
+                        $(".loading-area").stop().fadeIn(200);
                         html2canvas($('.cont-wrap')[0]).then(function (canvas) {
                             var filename = '컨설팅_만족도_설문_' + Date.now() + '.pdf';
                             var doc = new jsPDF('p', 'mm', 'a4');
@@ -81,10 +81,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 heightLeft -= pageHeight;
                             }
                             doc.save(filename);
+                            $(".loading-area").stop().fadeOut(200);
                         });
                         $("#pdfDownload").show();
                         $(".page-bot-btn-sec").show();
-
                     }
                 }
             },
