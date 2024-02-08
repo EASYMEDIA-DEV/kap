@@ -1471,7 +1471,53 @@
         ==========   ======    ==============
         2024.01.02   임서화       최초생성
     -->
-    <select id="selectMemSeqAppctnMst" parameterType="CBATechGuidanceInsertDTO">
+    <select id="selectMemSeqAppctnMstCnt" parameterType="CBATechGuidanceInsertDTO" resultType="java.lang.Integer">
+        SELECT
+
+            COUNT(*)
+
+        FROM (
+        SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
+        CNSTG_SEQ,
+        CNSTG_CD,
+        APPCTN_MEM_SEQ,
+        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
+        RSUME_STTS_CD,
+        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) RSUME_STTS_NM,
+        (SELECT BFRE_JDGMT_RSLT_CNTN FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ) RSLT_CNTN,
+        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM,
+        APPCTN_DT,
+        BSN_YEAR,
+        (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
+        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
+        MOD_DTM,
+        REG_DTM
+        FROM CP_CNSTG_APPCTN_MST A
+        ) TMP
+
+        <include refid="selectMemSeqAppctnWhereSql" />
+
+        <choose>
+            <when test="ordFlag == 1">
+                ORDER BY TMP.MOD_DTM DESC
+            </when>
+            <when test="ordFlag == 2">
+                ORDER BY TMP.REG_DTM DESC
+            </when>
+            <otherwise>
+                ORDER BY TMP.MOD_DTM DESC
+            </otherwise>
+        </choose>
+    </select>
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectMemSeqAppctnMst
+         설  명 : 사용자 마이페이지 - 컨설팅 사업 신청 내역 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.02   임서화       최초생성
+    -->
+    <select id="selectMemSeqAppctnMst" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT * FROM (
             SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
                 CNSTG_SEQ,
@@ -1490,27 +1536,9 @@
                 REG_DTM
             FROM CP_CNSTG_APPCTN_MST A
         ) TMP
-        WHERE TMP.APPCTN_MEM_SEQ = #{memSeq}
-        <if test="statusChk != null and statusChk != ''.toString() ">
-            AND TMP.CNSTG_CD IN
-                <choose>
-                    <when test="statusChk =='CONSULT_GB01'">
-                        ("CONSULT_GB01")
-                    </when>
-                    <when test="statusChk =='CONSULT_GB02'">
-                        ("CONSULT_GB02")
-                    </when>
-                    <otherwise>
-                        ("CONSULT_GB01", "CONSULT_GB02")
-                    </otherwise>
-                </choose>
-        </if>
-        <if test="dateType != null and dateType != ''.toString() ">
-            AND TMP.APPCTN_DT BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y.%m.%d'), INTERVAL 1 DAY)
-        </if>
-        <if test="q != null and q != ''.toString()">
-           AND TMP.CNSTG_NM LIKE CONCAT('%', #{q}, '%') OR TMP.BSN_YEAR LIKE CONCAT('%', #{q}, '%')
-        </if>
+
+        <include refid="selectMemSeqAppctnWhereSql" />
+
         <choose>
             <when test="ordFlag == 1">
                 ORDER BY TMP.MOD_DTM DESC
@@ -1522,7 +1550,55 @@
                 ORDER BY TMP.MOD_DTM DESC
             </otherwise>
         </choose>
+
+        <if test="siteGubun == 'front'.toString() ">
+            limit #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
+
+
+    <sql id="selectMemSeqAppctnWhereSql">
+        <where>
+
+            TMP.APPCTN_MEM_SEQ = #{memSeq}
+
+            <if test="statusChk != null and statusChk != ''.toString() ">
+                AND TMP.CNSTG_CD IN
+                <choose>
+                    <when test="statusChk =='CONSULT_GB01'">
+                        ("CONSULT_GB01")
+                    </when>
+                    <when test="statusChk =='CONSULT_GB02'">
+                        ("CONSULT_GB02")
+                    </when>
+                    <otherwise>
+                        ("CONSULT_GB01", "CONSULT_GB02")
+                    </otherwise>
+                </choose>
+            </if>
+
+            <!-- 키워드 -->
+            <if test="q != null and q !='' ">
+                AND CONCAT(BSN_YEAR, CNSTG_NM) LIKE REPLACE(    concat('%', #{q}, '%')           , '상주', '')
+
+
+            </if>
+
+            <!--<if test="dateType != null and dateType != ''.toString() ">
+                AND TMP.APPCTN_DT BETWEEN STR_TO_DATE(#{strtDt}, '%Y.%m.%d') AND DATE_ADD(STR_TO_DATE(#{endDt}, '%Y.%m.%d'), INTERVAL 1 DAY)
+            </if>-->
+            <!--<if test="q != null and q != ''.toString()">
+                AND TMP.CNSTG_NM LIKE CONCAT('%', #{q}, '%') OR TMP.BSN_YEAR LIKE CONCAT('%', #{q}, '%')
+            </if>-->
+
+
+            <if test="strtDt != null and strtDt != '' and endDt != null and endDt != ''  ">
+                AND appctn_dt <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+                AND appctn_dt <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+            </if>
+
+        </where>
+    </sql>
 
     <!--
          쿼리명 : CBATechGuidanceMapper.selectTechGuidanceDtlCheck

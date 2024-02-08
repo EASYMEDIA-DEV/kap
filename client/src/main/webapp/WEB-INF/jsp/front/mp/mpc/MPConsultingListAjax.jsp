@@ -1,9 +1,11 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
     <c:when test="${not empty rtnData }">
-        <div class="trainings-list-w">
+        <input type="hidden" name="totalCount" id="totalCount" value="${totalCount}"/>
+
             <c:forEach var="appctnList" items="${rtnData}" varStatus="status">
             <div class="training-confirm infoCard openCard">
+
                 <div class="top-info">
                     <div class="training-view-page">
                         <div class="training-list">
@@ -164,12 +166,11 @@
             </div>
         </c:forEach>
         </div>
-        </div>
-    <div class="btn-wrap add-load align-center moreBtn">
-        <a class="btn-solid small black-line" href="javascript:"><span>더보기</span><span class="item-count cntText"></span></a>
-    </div>
+
+
 </c:when>
 <c:otherwise>
+    <input type="hidden" name="totalCount" id="totalCount" value="0"/>
     <div class="index-list-w">
         <!-- 데이터 없을 경우 노출되는 영역 -->
         <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->

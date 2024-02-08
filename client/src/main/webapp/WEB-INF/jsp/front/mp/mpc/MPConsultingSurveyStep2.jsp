@@ -66,7 +66,7 @@
                                 <div class="data-line">
                                     <div class="form-group">
                                         <div class="form-input">
-                                            <input type="text" placeholder="이름 입력" name="ptcptName" title="참여자">
+                                            <input type="text" placeholder="이름 입력" name="ptcptName" title="참여자" maxlength="50">
                                         </div>
                                     </div>
                                 </div>
@@ -82,7 +82,7 @@
                                 <div class="data-line">
                                     <div class="form-group">
                                         <div class="form-input">
-                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처">
+                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처" class="mobileChk">
                                         </div>
                                     </div>
                                 </div>
@@ -98,7 +98,7 @@
                                 <div class="data-line">
                                     <div class="form-group">
                                         <div class="form-input">
-                                            <input type="text" placeholder="직급 입력" name="ptcptPstn" title="직급">
+                                            <input type="text" placeholder="직급 입력" name="ptcptPstn" title="직급" maxlength="50">
                                         </div>
                                     </div>
                                 </div>

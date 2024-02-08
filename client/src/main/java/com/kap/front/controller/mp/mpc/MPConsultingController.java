@@ -1,6 +1,7 @@
 package com.kap.front.controller.mp.mpc;
 
 import com.kap.common.utility.CONetworkUtil;
+import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
@@ -58,6 +59,11 @@ public class MPConsultingController {
     private final CBBManageConsultService cBBManageConsultService;
     private final MPEPartsCompanyService mPEPartsCompanyService;
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
+
+    private final MPConsultingService mPConsultingService;
+
+
+
     private final SVASurveyService sVSurveyService;
 
     /**
@@ -70,9 +76,22 @@ public class MPConsultingController {
         {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
-            System.err.println("cBATechGuidanceInsertDTO"+cBATechGuidanceInsertDTO);
-            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
+
+            COPaginationUtil page = new COPaginationUtil();
+            page.setCurrentPageNo(cBATechGuidanceInsertDTO.getPageIndex());
+            page.setRecordCountPerPage(cBATechGuidanceInsertDTO.getListRowSize());
+            page.setPageSize(cBATechGuidanceInsertDTO.getPageRowSize());
+            cBATechGuidanceInsertDTO.setPageRowSize(10);
+            cBATechGuidanceInsertDTO.setFirstIndex(page.getFirstRecordIndex());
+            cBATechGuidanceInsertDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+
+            CBATechGuidanceInsertDTO rtnDto = mPConsultingService.selectConsultingList(cBATechGuidanceInsertDTO);
+
+            modelMap.addAttribute("rtnData", rtnDto);
+
+            /*  modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
             modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
+            modelMap.addAttribute("param", cBATechGuidanceInsertDTO);*/
         }
         catch (Exception e)
         {
@@ -89,8 +108,15 @@ public class MPConsultingController {
         try {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
-            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
-            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
+
+            CBATechGuidanceInsertDTO rtnDto = mPConsultingService.selectConsultingList(cBATechGuidanceInsertDTO);
+
+            modelMap.addAttribute("rtnData", rtnDto.getList());
+            modelMap.addAttribute("totalCount", rtnDto.getTotalCount());
+
+
+            /*modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
+            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());*/
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

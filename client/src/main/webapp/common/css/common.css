@@ -838,16 +838,17 @@ footer .copy-area span:last-child:after {display: none;}
 .form-select {display: flex; align-items: center; position: relative; width: max(243rem, 200px); /* height: 50rem; */ min-height: 50rem; background-color: #F5F6F7; z-index:1;} /* form - select */
 .form-select::before {content: ""; display: inline-block; position: absolute; right: 28rem; top: 50%; transform: translateY(-50%); width: 24rem; height: 24rem; background: url("/common/images/icon-arrow-down.svg") no-repeat center center / 100%; transition: transform .2s ease; z-index: -1;}
 .form-select select {width: 100%; height: 100%; padding: 0 60rem 0 28rem; font-size: max(16rem, 14px); font-family: "Pretendard_Regular", sans-serif; color: #06161E; line-height: 160%; letter-spacing: -.02em; cursor: pointer;}
-.form-select select:disabled {color: #9CA1A6;}
 .form-select.active::before {transform: translateY(-50%) rotate(180deg);}
 .form-select.w332 {width: 332rem;}
+.form-select.disabled select {color: #9CA1A6; pointer-events: none;}
+.form-select.disabled::before {opacity: .4;}
+.form-select select:disabled {color: #9CA1A6;}
 .form-select:has(select:disabled)::before {opacity: .4;}
 
 .form-select.bdr-select {min-width: 103rem; width: auto; min-height: 40rem; height: auto; background-color: transparent; border-bottom: 1px solid #06161E;} /* 텍스트 형태 + 하단 border */
 .form-select.bdr-select::before {right: 0; top: 0; transform: translateY(0);}
 .form-select.bdr-select select {padding: 0 24rem 10rem 0; font-size: max(18rem, 16px); font-family: "Pretendard_SemiBold", sans-serif; color: #06161E; line-height: 155%; letter-spacing: -.02em;}
 .form-select.bdr-select.active::before {transform: rotate(180deg);}
-/* .form-select.txt-select {width: 128rem; height: 40rem; background-color: transparent;} */
 .form-select.txt-select {min-width: 128rem; width: auto; height: 40rem; background-color: transparent;}
 .form-select.txt-select::before {right: 0;}
 .form-select.txt-select select {padding: 0; font-size: max(16rem, 14px); font-family: "Pretendard_Medium", sans-serif; line-height: 160%;}

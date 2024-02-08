@@ -178,7 +178,15 @@
                             <div class="btn-set">
                                 <c:choose>
                                     <c:when test="${list.accsStatusOrder eq 1}"><!--접수중-->
-                                        <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                        <c:choose>
+                                            <c:when test="${list.fxnumCnt > list.accsCnt}">
+                                               <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>마감</span></a>
+                                            </c:otherwise>
+                                        </c:choose>
+
                                     </c:when>
                                     <c:when test="${list.accsStatusOrder eq 2}"><!--접수대기-->
                                         <a class="btn-solid small black-bg disabled" href="javascript:" ><span>접수대기</span></a>

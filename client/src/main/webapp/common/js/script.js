@@ -197,19 +197,22 @@ var commonScript = (function(){
         if(window.innerWidth > 1023){
           if(!$(".filter-popup").hasClass("opened")){
             $(this).attr("title", "필터 닫기");
+            $(".info-head .form-select").addClass("disabled");
             $(".filter-popup").addClass("opened").stop(true, true).slideDown(300, function(){
               ScrollTrigger.refresh();
             });
             
           }else{
             $(this).attr("title", "필터 열기");
+            $(".info-head .form-select").removeClass("disabled");
             $(".filter-popup").removeClass("opened").stop(true, true).slideUp(300, function(){
               ScrollTrigger.refresh();
             });
           }          
         }else{
           $(this).attr("title", "필터 닫기");
-          $(".filter-popup").addClass("opened").show()
+          $(".filter-popup").addClass("opened").show();
+          $(".info-head .form-select").addClass("disabled");
           gsap.to($(".filter-popup .for-flex .for-center"), 0.6, {top: 0, ease: Power3});
           $("body").addClass("stop-scroll");
           $(".dimd").css("z-index", 101).stop(true, true).fadeIn(300);
@@ -217,6 +220,8 @@ var commonScript = (function(){
       });
       $(".filter-popup .btn-role-close").off().on("click", function(){
         $(".filter-open-btn").attr("title", "필터 열기");
+        $(".info-head .form-select").removeClass("disabled");
+        
         $(".filter-popup").removeClass("opened");
 
         if(window.innerWidth > 1023){

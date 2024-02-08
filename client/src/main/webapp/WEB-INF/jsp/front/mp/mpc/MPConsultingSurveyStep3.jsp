@@ -12,7 +12,7 @@
 
         <div class="status-con-box completed"><!-- complete: 완료 페이지 -->
             <div class="cont-for-padding">
-                <p class="f-title1"><span class="color-sky">2023 상주기술지도</span><br> 만족도 설문 조사가 완료되었습니다.</p>
+                <p class="f-title1"><span class="color-sky">${rtnData.bsnYear} 상주${rtnData.cnstgNm}</span><br> 만족도 설문 조사가 완료되었습니다.</p>
                 <p class="detail-txt">만족도 설문 조사에 참여해 주셔서 감사합니다. 평가해주신 의견을 수렴하여 컨설팅 지도의 품질을 향상하는 용도로 활용될 예정이며, 외부로 유출되거나 타 용도로 사용하지 않을 것을 약속드립니다.</p>
             </div>
 

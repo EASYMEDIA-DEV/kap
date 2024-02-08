@@ -1272,6 +1272,24 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 },
 		immediately : function(event) {
 
+			$(".eduDt").change(function(){
+
+				var accsEndDt = $("#accsEndDt").val();
+				var edctnStrtDt = $("#edctnStrtDt").val();
+
+				if(accsEndDt !="" && edctnStrtDt !="" ){
+					debugger
+					if(accsEndDt == edctnStrtDt || accsEndDt > edctnStrtDt){
+
+						alert("교육시작일이 접수종료일과 같거나 빠를수 없습니다.");
+						$("#accsEndDt").val(null);
+						$("#edctnStrtDt").val(null);
+						return false;
+					}
+				}
+
+			});
+
 
 			if($("#edctnSeq").val() == ""){
 				$("#episdList").css("display", "none");

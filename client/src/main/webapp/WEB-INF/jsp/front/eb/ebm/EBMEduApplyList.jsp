@@ -9,9 +9,6 @@
         <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
-
-
-
         <!-- content 영역 start -->
         <div class="cont-wrap">
 
@@ -228,7 +225,6 @@
                                                                         <div class="middle-line">
                                                                             <div class="form-group form-calendar">
                                                                                 <div class="form-input">
-                                                                                    <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
 
                                                                                     <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
                                                                                     <span class="input-group-btn" style="z-index:0;">

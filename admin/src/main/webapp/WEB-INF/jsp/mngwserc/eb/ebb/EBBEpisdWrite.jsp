@@ -244,7 +244,7 @@
                         </div>
                     </fieldset>
 
-                    <fieldset>
+                    <fieldset class="eduDt">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">접수기간<span class="star text-danger"> *</span></label>
                             <div class="col-sm-10">
@@ -280,7 +280,7 @@
                             </div>
                         </div>
                     </fieldset>
-                    <fieldset>
+                    <fieldset class="eduDt">
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">교육기간<span class="star text-danger"> *</span></label>
                             <div class="col-sm-10">
