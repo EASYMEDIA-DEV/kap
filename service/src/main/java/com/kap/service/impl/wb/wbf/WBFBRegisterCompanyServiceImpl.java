@@ -1676,17 +1676,25 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         try {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+            wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
-            int Overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
+            /* 회원 순번 기준 신청 조회 */
+            int overLapMemSeq = wBFBRegisterCompanyMapper.getMemSeqCheck(wBFBRegisterSearchDTO);
 
-            /* 종된 사업장번호 미 입력 */
-            if(Overlap > 0 && wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+            if(overLapMemSeq == 0) {
+                int overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
+
+                /* 종된 사업장번호 미 입력 */
+                if(overlap > 0 && wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+                    respCnt = 200;
+                }
+
+                /* 종된 사업장번호 입력 */
+                if(overlap > 0 && !wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+                    respCnt = 300;
+                }
+            } else {
                 respCnt = 100;
-            }
-
-            /* 종된 사업장번호 입력 */
-            if(Overlap > 0 && !wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
-                respCnt = 200;
             }
 
         } catch (Exception e) {

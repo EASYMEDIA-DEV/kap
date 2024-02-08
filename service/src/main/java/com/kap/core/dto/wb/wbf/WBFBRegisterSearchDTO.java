@@ -32,7 +32,7 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "이관번호", example = "")
     private String trnsfSeq;
     @Schema(title = "이전회원순번", example = "")
-    private String memSeq;
+    private Integer memSeq;
     @Schema(title = "이전회원순번", example = "")
     private String bfreMemSeq;
     @Schema(title = "이전회원순번", example = "")

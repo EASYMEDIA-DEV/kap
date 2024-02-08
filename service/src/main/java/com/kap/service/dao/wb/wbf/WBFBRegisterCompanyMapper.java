@@ -277,6 +277,11 @@ public interface WBFBRegisterCompanyMapper {
     public int getSbrdmNoCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
 
     /**
+     *  등록 회원 순번 확인
+     */
+    public int getMemSeqCheck(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
+
+    /**
      *  사용자 - 신청 정보 조회
      */
     public WBFBRegisterSearchDTO getApplyDtl(WBFBRegisterSearchDTO wBFBRegisterSearchDTO);
