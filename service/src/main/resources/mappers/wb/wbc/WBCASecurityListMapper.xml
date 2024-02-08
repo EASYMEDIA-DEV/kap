@@ -65,7 +65,7 @@
             WHEN STATUS_ORD = 2 THEN ACCS_STRT_DTM
             WHEN STATUS_ORD = 3 THEN
             CASE WHEN BSN_END_DTM IS NULL THEN ACCS_END_DTM ELSE BSN_END_DTM END
-            END
+            END DESC
         </if>
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
