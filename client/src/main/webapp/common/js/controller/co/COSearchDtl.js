@@ -224,7 +224,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 //공지사항 탭 클릭
                 else if (menuType == "notice") {
                     var cnt = $("#noticeCnt").val();
-                    var url = "/foundation/board/notice/tab/list";
+                    var url = "/foundation/board/notice/tab/list?mainYn=Y";
                 }
                 search(1,cnt,url);
             }
