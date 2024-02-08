@@ -80,4 +80,10 @@ public interface CBBManageConsultService {
      */
     public int insertUserManageCmssrInfoConsult(CBBManageConsultInsertDTO cBBManageConsultInsertDTO) throws Exception;
 
+    /**
+     * 담당 임원 상세 조회
+     */
+    public CBBManageConsultInsertDTO selectOneCnstgPicInfo(CBBManageConsultInsertDTO cbbManageConsultInsertDTO) throws Exception;
+
+
 }

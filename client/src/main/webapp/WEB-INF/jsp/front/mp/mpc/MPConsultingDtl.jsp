@@ -362,6 +362,54 @@
                             </div>
                         </div>
                     </div>
+                    <c:if test="${rtnData.cnstgCd eq 'CONSULT_GB02'}">
+                        <div class="cont-sec no-border scroll-motion">
+                            <div class="for-motion">
+                                <div class="sec-tit-area">
+                                    <p class="f-title3">담당임원 정보</p>
+                                </div>
+                                <div class="sec-con-area">
+                                    <div class="table-sec">
+                                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                            <table class="basic-table">
+                                                <caption>신청자 기본 정보</caption>
+                                                <colgroup>
+                                                    <col style="width: 273rem;">
+                                                    <col style="width: 820rem;">
+                                                </colgroup>
+                                                <tbody>
+                                                <tr>
+                                                    <th>이름</th>
+                                                    <td>${picInfo.picName}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>휴대폰번호</th>
+                                                    <td>${picInfo.cmssrHpNo}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>이메일</th>
+                                                    <td>${picInfo.picEmail}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>회사 전화번호</th>
+                                                    <td>${picInfo.cmssrCmpnTelNo}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>부서</th>
+                                                    <td>${picInfo.picDeptNm}</td>
+                                                </tr>
+                                                <tr>
+                                                    <th>직급</th>
+                                                    <td>${picInfo.picPstnNm}</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
                     <div class="cont-sec no-border scroll-motion">
                         <div class="for-motion">
                             <div class="sec-tit-area">
@@ -529,11 +577,255 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        <!-- 2024-02-06 추가 -->
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">회사소개서</p>
+                                            </div>
+                                            <div class="td">
+                                                <c:choose>
+                                                    <c:when test="${not empty rtnData.itrdcFileSeq}">
+                                                        <div class="attatched-file-area">
+                                                            <a class="btn-text-icon download-bg gray" href="/file/download?fileSeq=${rtnData.itrdcFileSeq}&fileOrd=${rtnData.itrdcFileOrd}" title="파일 다운로드" download><span>${rtnData.itrdcFileName}</span></a>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">개선활동 추진계획서</p>
+                                            </div>
+                                            <div class="td">
+                                                <c:choose>
+                                                    <c:when test="${not empty rtnData.impvmFileSeq}">
+                                                        <div class="attatched-file-area">
+                                                            <a class="btn-text-icon download-bg gray" href="/file/download?fileSeq=${rtnData.impvmFileSeq}&fileOrd=${rtnData.impvmFileOrd}" title="파일 다운로드" download><span>${rtnData.impvmFileName}</span></a>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <!-- //2024-02-06 추가 -->
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="cont-sec no-border scroll-motion">
+                        <div class="for-motion">
+                            <div class="sec-tit-area">
+                                <p class="f-title3">사업신청 정보</p>
+                            </div>
+                            <div class="sec-con-area">
+                                <div class="gray-bg-sec">
+                                    <div class="data-view-form">
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">부품사 규모</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${sizeCdNm}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">주고객사 납품비율</p>
+                                            </div>
+                                            <div class="td">
+                                                <div class="dash-list-w">
+                                                    <c:choose>
+                                                        <c:when test="${not empty dlvryCmpnList}">
+                                                            <c:forEach var="dlvryCmpnList" items="${dlvryCmpnList}" varStatus="status">
+                                                                <div class="dash-list">
+                                                                    <div class="item">
+                                                                        <p class="item-title f-body2">업체명</p>
+                                                                        <p class="item-txt f-head">${dlvryCmpnList.dlvryCmpnNm}</p>
+                                                                    </div>
+                                                                    <div class="item">
+                                                                        <p class="item-title">비율</p>
+                                                                        <p class="item-txt f-head">${dlvryCmpnList.dlvryRate}%</p>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">국내완성차 의존율</p>
+                                            </div>
+                                            <div class="td">
+                                                <div class="dash-list-w">
+                                                    <c:choose>
+                                                        <c:when test="${not empty dpndCmpnList}">
+                                                            <c:forEach var="dpndCmpnList" items="${dpndCmpnList}" varStatus="status">
+                                                                <div class="dash-list">
+                                                                    <div class="item">
+                                                                        <p class="item-title f-body2">업체명</p>
+                                                                        <p class="item-txt f-head">${dpndCmpnList.dpndnCmpnNm}</p>
+                                                                    </div>
+                                                                    <div class="item">
+                                                                        <p class="item-title">비율</p>
+                                                                        <p class="item-txt f-head">${dpndCmpnList.dpndnRate}%</p>
+                                                                    </div>
+                                                                </div>
+                                                            </c:forEach>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            -
+                                                        </c:otherwise>
+                                                    </c:choose>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">해외 의존율</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">30 %</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">국내 매출액</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.dmstcSlsPmt} 억</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">해외 매출액</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.frgnSlsPmt} 억</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">전체 매출액</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.ttlSlsPmt} 억</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">자동차부품 매출액</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.carPartSlsPmt} 억</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">자동차부품 외 매출액</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.carPartXcludSlsPmt} 억</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">공장주소</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">(${rtnDto.fctryZipcode}) ${rtnDto.fctryBscAddr} <br>${rtnDto.fctryDtlAddr}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">소재지역</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.firstRgnsCd} ${rtnDto.scndRgnsCd}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">홈페이지 주소</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${not empty rtnDto.hmpgeUrl? rtnDto.hmpgeUrl : "-"}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">신청사유</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.appctnRsnCd}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">품질담당 인원</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.qltyPicCnt} 명</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">컨설팅요청 세부내용</p>
+                                            </div>
+                                            <div class="td">
+                                                <p class="txt f-body1">${rtnDto.rqstCntn}</p>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">회사소개서</p>
+                                            </div>
+                                            <div class="td">
+                                                <c:choose>
+                                                    <c:when test="${not empty rtnData.itrdcFileSeq}">
+                                                        <div class="attatched-file-area">
+                                                            <a class="btn-text-icon download-bg gray" href="/file/download?fileSeq=${rtnData.itrdcFileSeq}&fileOrd=${rtnData.itrdcFileOrd}" title="파일 다운로드" download><span>${rtnData.itrdcFileName}</span></a>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="th">
+                                                <p class="title f-body2">개선활동 추진계획서</p>
+                                            </div>
+                                            <div class="td">
+                                                <c:choose>
+                                                    <c:when test="${not empty rtnData.impvmFileSeq}">
+                                                        <div class="attatched-file-area">
+                                                            <a class="btn-text-icon download-bg gray" href="/file/download?fileSeq=${rtnData.impvmFileSeq}&fileOrd=${rtnData.impvmFileOrd}" title="파일 다운로드" download><span>${rtnData.impvmFileName}</span></a>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        -
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <c:if test="${srvCnt > 0}"> <!-- 설문 응답 가능 기간에 포함되는 설문-->
                         <div class="cont-sec no-border scroll-motion">
                             <div class="for-motion">

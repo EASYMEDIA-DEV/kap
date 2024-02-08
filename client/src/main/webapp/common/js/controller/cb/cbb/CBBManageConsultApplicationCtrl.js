@@ -30,7 +30,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     if(coInfo.list[i].nm){
                         var html = "<p>"+coInfo.list[i].nm+' /'+coInfo.list[i].score+' /'+coInfo.list[i].year+' /'+coInfo.list[i].crtfnCmpnNm+"</p>";
                         var replaceHtml = html.replaceAll("undefined", "-")
-                        document.getElementById("sqInfo").innerHTML +=replaceHtml
+                        document.getElementById("sqInfo").innerHTML += "-"
+                    } else {
+                        document.getElementById("sqInfo").innerHTML += "-"
                     }
                 }
             }else if(ctgryCd == "COMPANY01001"){

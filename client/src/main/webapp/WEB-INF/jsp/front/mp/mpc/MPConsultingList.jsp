@@ -119,7 +119,7 @@
                                                 <button class="btn-solid small gray-bg btn-role-close" type="button"><span>닫기</span><!--ㅠ-->
                                                 </button></div>
                                             <div class="btn-set">
-                                                <button class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
+                                                <button type="button" class="btn-solid small gray-bg filterInit"><span>필터 초기화</span></button>
                                                 <button class="btn-solid small black-bg" id="btnSearch"><span>적용</span></button>
                                             </div>
                                         </div>
@@ -129,9 +129,9 @@
 
                             <c:choose>
                                 <c:when test="${not empty rtnData }">
-                                    <div class="trainings-list-w">
+                                    <div class="trainings-list-w" id="infoCard">
                                         <c:forEach var="appctnList" items="${rtnData}" varStatus="status">
-                                        <div class="training-confirm infoCard openCard">
+                                        <div class="training-confirm">
                                             <div class="top-info">
                                                 <div class="training-view-page">
                                                     <div class="training-list">

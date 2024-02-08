@@ -38,7 +38,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
-                            $(".cntText").text(openCnt+9 +"/"+ chilCnt);
+                            $(".cntText").text("(" + openCnt+9 +"/"+ chilCnt + ")");
                         }else{
                             $("#infoCard").find(".close").show();
                             $(".moreBtn").hide();
@@ -64,7 +64,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");
                 $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
                 var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
-                $(".cntText").text(openCnt +"/"+ chilCnt);
+                $(".cntText").text("(" + openCnt + "/" + chilCnt + ")");
             }else{
                 $(".moreBtn").hide();
             }

@@ -22,6 +22,7 @@
             <input type="hidden" name="newsCnt" id="newsCnt" value="${newsCnt}"/>
             <input type="hidden" name="menuCnt" id="menuCnt" value="${menuCnt}"/>
             <input type="hidden" name="menuAddPage" id="menuAddPage" value="${menuAddPage}"/>
+            <input type="hidden" name="f" value="${f}" />
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             <div class="srch-wrap scroll-motion">
                 <div class="form-input srch-input for-motion">

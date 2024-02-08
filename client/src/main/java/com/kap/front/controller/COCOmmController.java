@@ -142,12 +142,14 @@ public class COCOmmController {
         BDANoticeDTO pBDANoticeDTO = new BDANoticeDTO();
         pBDANoticeDTO.setQ( cOSearchDTO.getQ() );
         pBDANoticeDTO.setMainYn("Y");
+        pBDANoticeDTO.setF("99");
         pBDANoticeDTO.setSiteGubun("front");
         int noticeCnt = bDANoticeService.selectNoticeListCnt(pBDANoticeDTO);
         modelMap.put("noticeCnt", noticeCnt);
         //재단소식
         BDBCompanyNewsDTO pBDBCompanyNewsDTO = new BDBCompanyNewsDTO();
         pBDBCompanyNewsDTO.setQ( cOSearchDTO.getQ() );
+        pBDBCompanyNewsDTO.setF("99");
         pBDBCompanyNewsDTO.setMainYn("Y");
         pBDBCompanyNewsDTO.setSiteGubun("front");
         int newsCnt = bDBCompanyNewsService.selectCompanyNewsListCnt(pBDBCompanyNewsDTO);
@@ -155,10 +157,12 @@ public class COCOmmController {
         //뉴스레터
         BDDNewsletterDTO pBDDNewsletterDTO = new BDDNewsletterDTO();
         pBDDNewsletterDTO.setQ( cOSearchDTO.getQ() );
+        pBDDNewsletterDTO.setF("99");
         int letterCnt = bDDNewsletterService.selectNewsletterListCnt(pBDDNewsletterDTO);
         modelMap.put("letterCnt", letterCnt);
 
         modelMap.put("q", cOSearchDTO.getQ());
+        modelMap.put("f", "99");
         modelMap.put("menuType", menuType);
         String rtnUrl = "/front/co/COSearch.front";
         if(menuType != null){

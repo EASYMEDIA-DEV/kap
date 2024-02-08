@@ -17,6 +17,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// q=검색어
 	var q = $.trim($formObj.find("input[name=q]").val());
 
+
 	// set model
 	ctrl.model = {
 		id : {
@@ -117,7 +118,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				cmmCtrl.listFrmAjax(function(respObj) {
 					$("#noticeContainer").html(respObj);
 					//링크연결 여기서
-				}, "/foundation/board/notice/select", $formObj, "GET", "html", false, false);
+				}, "/foundation/board/notice/select?mainYn=Y", $formObj, "GET", "html", false, false);
 			}
 			//재단뉴스
 			if( parseInt($("#foundationList").data("cnt")) > 0) {

@@ -356,6 +356,10 @@
                     EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
                     )
                 </when>
+                <when test="f == 99">
+                    AND TITL LIKE CONCAT('%', #{q}, '%') OR
+                    CNTN LIKE CONCAT('%', #{q}, '%')
+                </when>
                 <otherwise>
                     AND (
                     TITL LIKE CONCAT('%', #{q}, '%') OR

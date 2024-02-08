@@ -523,7 +523,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             COMailDTO cOMailDTO = new COMailDTO();
             //SMS 발송
             COSmsDTO smsDto = new COSmsDTO();
-            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
+            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 탈락 안내");
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
             CBBManageConsultInsertDTO tempDto = new CBBManageConsultInsertDTO();
@@ -1116,5 +1116,13 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         trsfDto.setTotalCount(trsfCnt);
 
         return trsfDto;
+    }
+
+    /**
+     * 담당 임원 상세 조회
+     */
+    public CBBManageConsultInsertDTO selectOneCnstgPicInfo(CBBManageConsultInsertDTO cbbManageConsultInsertDTO) throws Exception
+    {
+        return cBBManageConsultMapper.selectOneCnstgPicInfo(cbbManageConsultInsertDTO);
     }
 }

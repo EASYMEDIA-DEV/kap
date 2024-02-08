@@ -38,7 +38,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#listContainer").children("div.list-item").slice(10,chilCnt).hide();
 
                 var openCnt = $("#listContainer").find(".open").length // 보이는 게시물
-                $(".cntText").text(openCnt +"/"+ chilCnt);
+                $(".cntText").text("(" + openCnt + "/" + chilCnt + ")");
             }else{
                 $(".moreBtn").hide();
             }
@@ -85,7 +85,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#listContainer").children("div.list-item").slice(openCnt+1,openCnt+10).show();
                             $("#listContainer").children("div.list-item").slice(openCnt+1,openCnt+10).removeClass("open");
                             $("#listContainer").children("div.list-item").slice(openCnt+1,openCnt+10).addClass("open");
-                            $(".cntText").text(openCnt+10 +"/"+ chilCnt);
+                            $(".cntText").text("(" + openCnt+10 +"/"+ chilCnt + ")");
                         }else{
                             $("#listContainer").find(".close").show();
                             $(".moreBtn").hide();

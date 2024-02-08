@@ -237,4 +237,9 @@ public interface CBBManageConsultMapper {
      * 컨설팅사업 참여이관로그 테이블 삭제
      */
     public int deleteConsultAppctnTrnsfDtl(CBBManageConsultSearchDTO cBBManageConsultSearchDTO) throws Exception;
+
+    /**
+     *  마이페이지 컨설팅신청내역 담당 임원 정보 조회
+     */
+    public CBBManageConsultInsertDTO selectOneCnstgPicInfo(CBBManageConsultInsertDTO cbbManageConsultInsertDTO) throws Exception;
 }
