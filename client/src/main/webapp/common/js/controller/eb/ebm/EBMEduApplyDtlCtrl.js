@@ -150,8 +150,13 @@ define(["ezCtrl"], function(ezCtrl) {
 				event : {
 					click: function () {
 
+						var edctnSeq = $("#edctnSeq").val();
+						var episdYear = $("#episdYear").val();
+						var episdOrd = $("#episdOrd").val();
+						var ptcptSeq = $("#ptcptSeq").val();
+
 						// method 1 (새 윈도우 창 열어서 프린트 후 닫기)
-						var popUrl = "/my-page/edu-apply/cmPtm?detailsKey=28&episdYear=2024&episdOrd=4&ptcptSeq=137";
+						var popUrl = "/my-page/edu-apply/cmPtm?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&ptcptSeq="+ptcptSeq;
 						var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
 						var myWindow = window.open(popUrl, popOption);
 						myWindow.document.close();

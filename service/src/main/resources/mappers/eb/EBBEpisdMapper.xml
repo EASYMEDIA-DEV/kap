@@ -2821,7 +2821,7 @@
 	<select id="selectRelCmptnInfo" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
 		SELECT /* EBBEpisdMapper.selectRelCmptnInfo */
 			SUM(REL_CNT) AS REL_CNT
-			 , CASE WHEN COUNT(REL_CMPTN_YN) <![CDATA[>]]> 0 THEN 'N' ELSE 'Y' END AS REL_CMPTN_YN
+			 , CASE WHEN sum(REL_CMPTN_YN) <![CDATA[>=]]> SUM(REL_CNT) THEN 'Y' ELSE 'N' END AS REL_CMPTN_YN
 		FROM (SELECT
 				  A.EDCTN_SEQ
 				   , B.CNNCT_EDCTN_SEQ
