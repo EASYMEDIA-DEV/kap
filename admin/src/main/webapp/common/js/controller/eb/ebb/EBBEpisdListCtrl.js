@@ -74,7 +74,8 @@ define(["ezCtrl"], function(ezCtrl) {
 			//CALLBACK 처리
 			ctrl.obj.find("#listContainer").html(respObj);
 			//전체 갯수
-			var totCnt = $(respObj).eq(0).data("totalCount");
+
+			var totCnt = ctrl.obj.find("#listContainer").find("tr:first").data("totalCount");
 			//총 건수
 			ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 			//페이징 처리

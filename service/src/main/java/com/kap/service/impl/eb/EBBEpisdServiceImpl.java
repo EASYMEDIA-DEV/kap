@@ -144,9 +144,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			eBBEpisdDTO.setFirstIndex(page.getFirstRecordIndex());
 			eBBEpisdDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-
 			eBBEpisdDTO.setList(eBBEpisdMapper.selectEpisdList(eBBEpisdDTO));
 			eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
+
 		}
 
 

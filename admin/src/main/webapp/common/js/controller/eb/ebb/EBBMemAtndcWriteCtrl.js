@@ -321,7 +321,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
-								location.href = "./list";
+								ctrl.obj.find(".close").click();
+								//location.href = "./list";
 							}, "./updateAtndc", actionForm, "text");
 						}
 

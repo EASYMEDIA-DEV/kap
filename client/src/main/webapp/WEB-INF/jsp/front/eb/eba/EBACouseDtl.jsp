@@ -40,6 +40,7 @@
                                             </c:if>
                                         </div>
                                         <div class="txt-area">
+
                                             <div class="top-line">
                                                 <div class="sort-label-area">
                                                     <p class="label"><span>${rtnData.prntCdNm}</span></p>
@@ -48,6 +49,7 @@
                                                 <p class="training-name f-title1">${rtnData.nm}</p>
                                                 <p class="training-explain-txt">${rtnData.smmryNm}</p>
                                             </div>
+
                                             <div class="class-property-w">
 
                                                 <c:set var="propertyClass" value=""/>
