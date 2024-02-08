@@ -395,6 +395,8 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		EBINonMemberDTO tempDto = new EBINonMemberDTO();
 		EBINonMemberDTO tempDto2 = new EBINonMemberDTO();
 
+		pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
+
 		tempDto = eBINonMemberMapper.selectPtcptDtl(pEBINonMemberDTO);
 		tempDto2 = eBINonMemberMapper.selectNonMemberDtl(pEBINonMemberDTO);
 
@@ -439,7 +441,6 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 					pEBINonMemberDTO.setModIp(request.getRemoteAddr());
 				}
 
-				pEBINonMemberDTO.setHpNo(pEBINonMemberDTO.getHpNo().replaceAll("-", ""));
 				int firstEdctnPtcptIdgen = nmbEdctnPtcptSeqIdgen.getNextIntegerId();
 				pEBINonMemberDTO.setPtcptSeq(firstEdctnPtcptIdgen);
 				eBINonMemberMapper.insertPtcptDtl(pEBINonMemberDTO);

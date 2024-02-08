@@ -466,7 +466,6 @@
                 AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
                 AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
                 AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-                AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
         ) MST
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
         WHERE
@@ -521,7 +520,6 @@
                     AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
                     AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
                     AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-                    AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
             ) MST
         GROUP BY MST.BSN_YEAR
         ) AA
@@ -568,7 +566,6 @@
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-        AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
         ORDER BY
         CP_MST.REGDTM DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
@@ -601,7 +598,6 @@
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-        AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
     </select>
 
     <!--

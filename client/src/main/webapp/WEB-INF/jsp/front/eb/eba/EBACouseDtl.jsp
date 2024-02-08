@@ -97,7 +97,13 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        ${fn:replace(rtnData.itrdcCntn, newLine, '<br>')}
+                                        <div class="ul-txt-w highlight">
+                                            <div class="ul-txt-list">
+                                                <p class="ul-txt">
+                                                    ${fn:replace(rtnData.itrdcCntn, newLine, '<br>')}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -109,7 +115,13 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        ${fn:replace(rtnData.stduyTrgtCntn, newLine, '<br>')}
+                                        <div class="ul-txt-w highlight">
+                                            <div class="ul-txt-list">
+                                                <p class="ul-txt">
+                                                    ${fn:replace(rtnData.stduyTrgtCntn, newLine, '<br>')}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

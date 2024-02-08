@@ -110,7 +110,7 @@
              , exps_strt_dtm
         from bd_ntfy_mst
         where exps_yn = 'Y'
-          and ( IFNULL(odtm_yn, 'N') = 'Y' OR exps_strt_dtm <![CDATA[ <= ]]> (now()) and exps_end_dtm <![CDATA[ >= ]]> (now()))
+          /*and ( IFNULL(odtm_yn, 'N') = 'Y' OR exps_strt_dtm <![CDATA[ <= ]]> (now()) and exps_end_dtm <![CDATA[ >= ]]> (now()))*/
         order by reg_dtm desc
         limit 0, 3
     </select>

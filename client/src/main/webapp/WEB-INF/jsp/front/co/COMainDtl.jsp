@@ -728,6 +728,7 @@
                                 <div class="btn-text-icon black-arrow" href="/coexistence/equipment/content" title="링크 이동"><span>자세히 보기</span></div>
                             </div>
                         </a>
+                        <%--
                         <a class="support-list" href="/coexistence/automotive/content">
                             <div class="thumbnail-img">
                                 <img src="/common/images/img-main-support-img-02.jpg" alt="">
@@ -752,6 +753,7 @@
                                 <div class="btn-text-icon black-arrow" href="/coexistence/survey/index" title="링크 이동"><span>자세히 보기</span></div>
                             </div>
                         </a>
+                        --%>
                     </div>
                 </div>
             </section>

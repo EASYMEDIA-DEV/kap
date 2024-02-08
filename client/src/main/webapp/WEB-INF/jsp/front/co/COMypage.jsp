@@ -108,55 +108,66 @@
                                 <div class="sec-con-area">
                                     <div class="table-sec">
                                         <p class="info-txt f-caption2">최근 3개월 기준</p>
-                                        <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                            <table class="basic-table">
-                                                <caption>경영공시</caption>
-                                                <colgroup>
-                                                    <col style="width: 200rem;">
-                                                    <col style="width: 332rem;">
-                                                    <col style="width: 200rem;">
-                                                    <col style="width: 160rem;">
-                                                    <col style="width: 200rem;">
-                                                </colgroup>
-                                                <thead>
-                                                <tr>
-                                                    <th>문의유형</th>
-                                                    <th>제목</th>
-                                                    <th>등록일</th>
-                                                    <th>진행상태</th>
-                                                    <th>답변등록일</th>
-                                                </tr>
-                                                </thead>
-                                                <!--  -->
-                                                <tbody>
-                                                <c:set var="codeName" value="" />
-                                                <c:set var="statusType" value="" />
-                                                <c:forEach var="qaList" items="${myQaData.list}" varStatus="status">
-                                                    <c:choose>
-                                                        <c:when test="${ qaList.rsumeCd eq 'SYN' }">
-                                                            <c:set var="codeName" value="접수대기" />
-                                                            <c:set var="statusType" value="" />
-                                                        </c:when>
-                                                        <c:when test="${ qaList.rsumeCd eq 'SYNACK' }">
-                                                            <c:set var="codeName" value="접수완료" />
-                                                            <c:set var="statusType" value="waiting" />
-                                                        </c:when>
-                                                        <c:when test="${ qaList.rsumeCd eq 'ACK' }">
-                                                            <c:set var="codeName" value="답변완료" />
-                                                            <c:set var="statusType" value="complete" />
-                                                        </c:when>
-                                                    </c:choose>
-                                                    <tr>
-                                                        <td class="t-align-center">${ qaList.parntCtgryNm } > ${ qaList.ctgryNm }</td>
-                                                        <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="qaDtl"  data-details-key="${qaList.qaSeq}" data-mem-seq="${qaList.memSeq}" data-rsume-cd="${qaList.rsumeCd}">${ qaList.titl }</a></p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
-                                                        <td class="t-align-center">${ kl:convertDate(qaList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>
-                                                        <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
-                                                        <td class="t-align-center">${ kl:decode(qaList.modDtm, "", "-", kl:convertDate(qaList.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')) }</td>
-                                                    </tr>
-                                                </c:forEach>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <c:choose>
+                                            <c:when test="${not empty myQaData.list}">
+                                                <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                    <table class="basic-table">
+                                                        <caption>최근 3개월 기준 나의 1:1 문의 목록</caption>
+                                                        <colgroup>
+                                                            <col style="width: 200rem;">
+                                                            <col style="width: 332rem;">
+                                                            <col style="width: 200rem;">
+                                                            <col style="width: 160rem;">
+                                                            <col style="width: 200rem;">
+                                                        </colgroup>
+                                                        <thead>
+                                                        <tr>
+                                                            <th>문의유형</th>
+                                                            <th>제목</th>
+                                                            <th>등록일</th>
+                                                            <th>진행상태</th>
+                                                            <th>답변등록일</th>
+                                                        </tr>
+                                                        </thead>
+                                                        <!--  -->
+                                                        <tbody>
+                                                        <c:set var="codeName" value="" />
+                                                        <c:set var="statusType" value="" />
+                                                        <c:forEach var="qaList" items="${myQaData.list}" varStatus="status">
+                                                            <c:choose>
+                                                                <c:when test="${ qaList.rsumeCd eq 'SYN' }">
+                                                                    <c:set var="codeName" value="접수대기" />
+                                                                    <c:set var="statusType" value="" />
+                                                                </c:when>
+                                                                <c:when test="${ qaList.rsumeCd eq 'SYNACK' }">
+                                                                    <c:set var="codeName" value="접수완료" />
+                                                                    <c:set var="statusType" value="waiting" />
+                                                                </c:when>
+                                                                <c:when test="${ qaList.rsumeCd eq 'ACK' }">
+                                                                    <c:set var="codeName" value="답변완료" />
+                                                                    <c:set var="statusType" value="complete" />
+                                                                </c:when>
+                                                            </c:choose>
+                                                            <tr>
+                                                                <td class="t-align-center">${ qaList.parntCtgryNm } > ${ qaList.ctgryNm }</td>
+                                                                <td><p class="txt-ellipsis"><a href="javascript:" title="링크 이동" class="qaDtl"  data-details-key="${qaList.qaSeq}" data-mem-seq="${qaList.memSeq}" data-rsume-cd="${qaList.rsumeCd}">${ qaList.titl }</a></p></td><!-- @ 2줄 이상 말줄임 필요 시, <p class="txt-ellipsis"></p> 사용 -->
+                                                                <td class="t-align-center">${ kl:convertDate(qaList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '') }</td>
+                                                                <td class="t-align-center"><p class="box-label bigger ${ statusType }"><span>${ codeName }</span></p></td>
+                                                                <td class="t-align-center">${ kl:decode(qaList.modDtm, "", "-", kl:convertDate(qaList.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '')) }</td>
+                                                            </tr>
+                                                        </c:forEach>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </c:when>
+                                            <c:otherwise>
+                                                <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+                                                    <div class="txt-box">
+                                                        <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                                    </div>
+                                                </div>
+                                            </c:otherwise>
+                                        </c:choose>
                                         <div class="btn-wrap align-right">
                                             <a class="btn-text-icon black-circle" href="/my-page/member/qa/list"><span>나의 1:1문의 바로가기</span></a>
                                         </div>
