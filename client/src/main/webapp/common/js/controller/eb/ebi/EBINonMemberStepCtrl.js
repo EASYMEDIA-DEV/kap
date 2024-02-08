@@ -285,7 +285,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                                 // $("#regDtm").val(rtnData.regDtm);
                                                 /*$("#frmGo").attr("action", "./step2");
                                                 $("#frmGo").submit();*/
-                                                    location.href = "./step2?edctnSeq=" + rtnData.edctnSeq + "&ptcptSeq=" + rtnData.ptcptSeq;
+                                                location.href = "./step2?edctnSeq=" + rtnData.edctnSeq + "&ptcptSeq=" + rtnData.ptcptSeq;
                                             }
                                         }, "./setPtcptInfo", $formObj, "post", "json");
                                     }

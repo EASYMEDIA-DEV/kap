@@ -144,7 +144,7 @@
                                                                 <c:if test="${ not empty rtnData.edctnNtctnFileSeq }">
                                                                 <a class="btn-text-icon download" href="/file/download?fileSeq=${ rtnData.edctnNtctnFileSeq }&fileOrd=0" download=""><span>안내문</span></a>
                                                                 </c:if>
-                                                                <button class="btn-text-icon black-arrow" type="button" id="btnPicLayer" data-pic-nm="${ rtnData.picNm }" data-pic-email="${ rtnData.picEmail }" data-pic-tel-no="${ rtnData.picTelNo }"><span>담당자 문의</span></button>
+                                                                <button class="btn-text-icon black-arrow" type="button" id="btnPicLayer" data-pic-nm="${ rtnData.picNm }" data-pic-email="${ rtnData.picEmail }" data-pic-tel-no="${ kl:hpNum(rtnData.picTelNo) }"><span>담당자 문의</span></button>
                                                             </div>
                                                             <!-- // 2024-01-05 구조 변경 및 클래스 삭제 -->
                                                         </div>

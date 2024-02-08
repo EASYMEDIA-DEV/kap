@@ -890,9 +890,9 @@
                                         <div class="col-sm-11">
                                             <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 220px;">
                                                 <option value="">선택</option>
-                                                <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                    <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT03'}">
-                                                        <option value="${bfJdgmtRsltList.cd}" >${bfJdgmtRsltList.cdNm} </option>
+                                                <c:forEach var="initVstRsltList" items="${cdDtlList.INIT_VST_RSLT}" varStatus="status">
+                                                    <c:if test="${initVstRsltList.cd ne 'BF_JDGMT_RSLT03'}">
+                                                        <option value="${initVstRsltList.cd}" >${initVstRsltList.cdNm} </option>
                                                     </c:if>
                                                 </c:forEach>
                                             </select>
@@ -1173,9 +1173,9 @@
                                     <div class="col-sm-11">
                                         <select class="form-control input-sm initVstRsltCd notRequired" id="initVstRsltCd" name="initVstRsltCd" title="초도방문결과" style="margin-bottom: 10px;width: 220px;">
                                             <option value="">선택</option>
-                                            <c:forEach var="bfJdgmtRsltList" items="${cdDtlList.BF_JDGMT_RSLT}" varStatus="status">
-                                                <c:if test="${bfJdgmtRsltList.cd ne 'BF_JDGMT_RSLT03'}">
-                                                    <option value="${bfJdgmtRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq bfJdgmtRsltList.cd}">selected</c:if>>${bfJdgmtRsltList.cdNm} </option>
+                                            <c:forEach var="initVstRsltList" items="${cdDtlList.INIT_VST_RSLT}" varStatus="status">
+                                                <c:if test="${initVstRsltList.cd ne 'BF_JDGMT_RSLT03'}">
+                                                    <option value="${initVstRsltList.cd}" <c:if test="${rsumeList.initVstRsltCd eq initVstRsltList.cd}">selected</c:if>>${initVstRsltList.cdNm} </option>
                                                 </c:if>
                                             </c:forEach>
                                         </select>

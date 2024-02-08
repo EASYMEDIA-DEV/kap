@@ -1186,13 +1186,12 @@
                     ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
             WHERE 1=1
             <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
-                AND CP_MST.CNSTG_CD = '${rtnBsnGubun}'
+                AND CP_MST.CNSTG_CD = #{rtnBsnGubun}
             </if>
                 AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
                 AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
                 AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
-                AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-                AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+                AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'
             ) MST
             GROUP BY MST.BSN_YEAR
         ) AA
@@ -1239,16 +1238,15 @@
                     ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
             WHERE 1=1
             <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
-                AND CP_MST.CNSTG_CD = '${rtnBsnGubun}'
+                AND CP_MST.CNSTG_CD = #{rtnBsnGubun}
             </if>
                 AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
                 AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
-                AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
-                AND GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+                AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'
         ) MST
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
             WHERE
-                BSN_YEAR = ${rtnBsnYear}
+                BSN_YEAR = #{rtnBsnYear}
         </if>
         GROUP BY
             MST.BSN_YEAR
@@ -1688,7 +1686,7 @@
         FROM
             CP_CNSTG_APPCTN_MST A
         WHERE
-            CNSTG_SEQ = ${cnstgSeq}
+            CNSTG_SEQ = #{cnstgSeq}
     </select>
 
     <!--

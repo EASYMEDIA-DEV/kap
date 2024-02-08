@@ -160,11 +160,10 @@
                                 </div>
                                 <div class="sec-con-area">
                                     <div class="txt-sec">
-                                        <%--<div class="paragraph">
-                                            <p class="f-sub-head">${ rtnData.smmryNm }</p>
-                                        </div>--%>
-                                        <div class="paragraph">
-                                            <p class="f-sub-head">${ rtnData.itrdcCntn }</p>
+                                        <div class="ul-txt-w highlight">
+                                            <div class="ul-txt-list">
+                                                <p class="ul-txt">${ rtnData.itrdcCntn }</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
