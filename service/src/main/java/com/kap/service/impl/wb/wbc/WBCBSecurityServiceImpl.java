@@ -1271,6 +1271,13 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
+        if(respCnt > 0 ){
+            int cnt = wBCBSecurityMapper.getBsnmNoSeqCnt(wBCBSecurityMstInsertDTO);
+            if(cnt > 0 ){
+                respCnt = 999;
+            }
+        }
+
         return respCnt;
     }
 
@@ -1288,6 +1295,13 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
+        if(respCnt > 0 ){
+            int cnt = wBCBSecurityMapper.getSbrdnBsnmNoSeqCnt(wBCBSecurityMstInsertDTO);
+            if(cnt > 0 ){
+                respCnt = 999;
+            }
+        }
 
         return respCnt;
     }

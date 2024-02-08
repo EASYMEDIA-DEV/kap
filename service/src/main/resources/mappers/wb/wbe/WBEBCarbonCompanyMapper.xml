@@ -1350,6 +1350,21 @@
     </select>
 
     <!--
+         쿼리명 : WBEBCarbonCompanyMapper.getBsnmNoSeqCnt
+         설  명 : 사업자번호 매핑 여부 확인
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getBsnmNoSeqCnt" parameterType="wBEBCarbonCompanyMstInsertDTO" resultType="java.lang.Integer">
+        SELECT /* WBEBCarbonCompanyMapper.getBsnmNoSeqCnt*/ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq}
+          AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND MEM_SEQ = #{memSeq}
+    </select>
+
+    <!--
          쿼리명 : WBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt
          설  명 : 종된 사업자번호 매핑 여부 확인
          수정일     수정자     수정내용
@@ -1362,6 +1377,22 @@
         WHERE EPISD_SEQ = #{episdSeq}
           AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
           AND APPCTN_BSNM_NO = #{bsnmNo}
+    </select>
+
+    <!--
+         쿼리명 : WBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt
+         설  명 : 종된 사업자번호 매핑 여부 확인
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.08  김대성     최초 생성
+    -->
+    <select id="getSbrdnBsnmNoSeqCnt" parameterType="wBEBCarbonCompanyMstInsertDTO" resultType="java.lang.Integer">
+        SELECT /* WBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt*/ COUNT(*)
+        FROM CX_APPCTN_MST
+        WHERE EPISD_SEQ = #{episdSeq}
+          AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
+          AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND MEM_SEQ = #{memSeq}
     </select>
 
     <!--

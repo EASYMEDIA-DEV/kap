@@ -151,12 +151,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     async: false,
                                     cache : false,
                                     success : function(data, status, xhr){
-                                        if(data.respCnt > 0 ){
+                                        if(data.respCnt == 999){
                                             if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                                 location.href = "/my-page/coexistence/list";
                                             }
+                                        }else if(data.respCnt > 0 ){
+                                            alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.");
                                             return;
-                                        }else{
+                                        }else {
                                             pass = true;
                                         }
                                     }
@@ -171,12 +173,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     async: false,
                                     cache : false,
                                     success : function(data, status, xhr){
-                                        if(data.respCnt > 0 ){
-                                            if (confirm("입력하신 종된사업장번호로 신청한 이력이 있습니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                        if(data.respCnt == 999){
+                                            if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                                 location.href = "/my-page/coexistence/list";
                                             }
+                                        }else if(data.respCnt > 0 ){
+                                            alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n (종된사업장 중복)");
                                             return;
-                                        }else{
+                                        }else {
                                             pass = true;
                                         }
                                     }

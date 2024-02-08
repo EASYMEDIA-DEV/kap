@@ -1273,6 +1273,13 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
 
+        if(respCnt > 0 ){
+            int cnt = wBDBSafetyMapper.getBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
+            if(cnt > 0 ){
+                respCnt = 999;
+            }
+        }
+
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -1290,6 +1297,13 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
+
+        if(respCnt > 0 ){
+            int cnt = wBDBSafetyMapper.getSbrdnBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
+            if(cnt > 0 ){
+                respCnt = 999;
+            }
+        }
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 

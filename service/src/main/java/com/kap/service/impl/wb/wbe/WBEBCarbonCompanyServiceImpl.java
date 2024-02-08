@@ -1272,6 +1272,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
 
+        if(respCnt > 0 ){
+           int cnt = wBEBCarbonCompanyMapper.getBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
+           if(cnt > 0 ){
+               respCnt = 999;
+           }
+        }
+
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -1288,6 +1295,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+
+        if(respCnt > 0 ){
+            int cnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
+            if(cnt > 0 ){
+                respCnt = 999;
+            }
+        }
 
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
@@ -1306,6 +1320,10 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+
+        System.out.println("11wBEBTrnsfDTO.getMemSeq()  " + wBEBTrnsfDTO.getMemSeq());
+
+        System.out.println("11wBEBCarbonCompanyMstInsertDTO.getMemSeq()   " + wBEBCarbonCompanyMstInsertDTO.getMemSeq());
 
         if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
         {
@@ -1328,6 +1346,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+
+
+        System.out.println("22wBEBTrnsfDTO.getMemSeq()  " + wBEBTrnsfDTO.getMemSeq());
+
+        System.out.println("22wBEBCarbonCompanyMstInsertDTO.getMemSeq()   " + wBEBCarbonCompanyMstInsertDTO.getMemSeq());
 
         if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
         {

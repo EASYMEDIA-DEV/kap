@@ -239,6 +239,16 @@ public interface WBCBSecurityMapper {
     public int getSbrdnBsnmNoCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
 
     /**
+     * 사업자번호 매핑 여부 확인
+     */
+    public int getBsnmNoSeqCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
+
+    /**
+     * 종된 사업자번호 매핑 여부 확인
+     */
+    public int getSbrdnBsnmNoSeqCnt(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO) throws Exception;
+
+    /**
      *  Edit Page
      *  등록 부품사 수정 - 관리자 메모 수정
      */
