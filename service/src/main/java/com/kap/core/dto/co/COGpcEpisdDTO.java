@@ -21,6 +21,9 @@ public class COGpcEpisdDTO {
     @Schema(title = "KAP일정순번", example = "숫자")
     private Integer kapSchdSeq;
 
+    @Schema(title = "교육유형", example = "텍스트")
+    private String eduType;
+
     @Schema(title = "카테고리", example = "텍스트")
     private String ctgry;
 
