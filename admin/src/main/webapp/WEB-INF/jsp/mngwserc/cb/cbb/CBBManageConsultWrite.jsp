@@ -850,7 +850,7 @@
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="value="${not empty rsumeList.vstDt ? rsumeList.vstDt : today}" title="방문일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="${not empty rsumeList.vstDt ? rsumeList.vstDt : today}" title="방문일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
