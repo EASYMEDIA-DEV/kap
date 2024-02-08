@@ -1347,7 +1347,6 @@
         FROM CX_APPCTN_MST
         WHERE EPISD_SEQ = #{episdSeq}
           AND APPCTN_BSNM_NO = #{bsnmNo}
-          AND MEM_SEQ != #{memSeq}
     </select>
 
     <!--
@@ -1363,7 +1362,6 @@
         WHERE EPISD_SEQ = #{episdSeq}
           AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
           AND APPCTN_BSNM_NO = #{bsnmNo}
-          AND MEM_SEQ != #{memSeq}
     </select>
 
     <!--
