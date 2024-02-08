@@ -38,9 +38,9 @@
             WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '접수중'
             ELSE '마감'
             END AS ACCT_STATUS
-            , CASE WHEN NOW() <![CDATA[ < ]]> ACCS_STRT_DTM THEN 2
-            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 1
-            ELSE 3
+            , CASE WHEN NOW() <![CDATA[< ]]> ACCS_STRT_DTM THEN '2'
+            WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN '1'
+            ELSE '3'
             END AS DATE_ORD
             , DATEDIFF(ACCS_END_DTM,NOW()) AS D_DAY
             ,EXPS_YN
