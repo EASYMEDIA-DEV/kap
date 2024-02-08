@@ -367,6 +367,11 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "정렬 기준")
     private String ordFlag;
 
-    
+    @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 상세 - 회사소개서 파일명(확장자 포함)")
+    private String itrdcFileName;
+    @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 상세 - 사용자 개선활동 추진계획서 파일명(확장자 포함)")
+    private String impvmFileName;
+    @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 상세 - 사용자 개선활동 추진계획서 파일 정렬값")
+    private Integer impvmFileOrd;
 
 }

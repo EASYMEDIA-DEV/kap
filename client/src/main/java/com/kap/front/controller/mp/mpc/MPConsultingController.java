@@ -132,7 +132,11 @@ public class MPConsultingController {
                 }else{
                     CBBManageConsultInsertDTO cBBManageConsultInsertDTO = new CBBManageConsultInsertDTO();
                     cBBManageConsultInsertDTO.setBsnmNo(cBATechGuidanceInsertDTO.getBsnmNo());
-                    modelMap.addAttribute("rtnData", tmpDto);
+                    cBBManageConsultInsertDTO.setCbsnSeq(cBATechGuidanceInsertDTO.getDetailsKey());
+                    cBBManageConsultInsertDTO.setDetailsKey(cBATechGuidanceInsertDTO.getDetailsKey());
+
+                    modelMap.addAttribute("picInfo", cBBManageConsultService.selectOneCnstgPicInfo(cBBManageConsultInsertDTO));
+                    modelMap.addAttribute("rtnDto", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
                 }
                 modelMap.addAttribute("rspnCnt", rspnCnt);
                 modelMap.addAttribute("srvCnt", srvCnt);

@@ -222,7 +222,7 @@
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">매출액(연도)</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm numberChk notRequired" id="slsPmt" name="slsPmt" value="${rtnDto.slsPmt}" title="매출액" maxlength="50" placeholder="매출액"/>
+                        <input type="text" class="form-control input-sm numberChk notRequired" id="slsPmt" name="slsPmt" value="${rtnDto.slsPmt}" title="매출액" maxlength="9" placeholder="매출액"/>
                         &nbsp;억원&nbsp;
                         <select class="form-control input-sm notRequired" id="slsYear" name="slsYear">
                             <option value="">선택</option>
@@ -515,7 +515,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청일자<span class="star"> *</span></label>
                     <div class="input-group col-md-2" style="z-index:0;">
-                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt"  value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>" title="신청일자" />
+                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt"  value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>" title="신청일자" />
                         <span class="input-group-btn" style="z-index:0;">
                             <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                 <em class="ion-calendar"></em>
@@ -635,7 +635,7 @@
                     </div>
                     <label class="col-sm-1 control-label">전체 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4 form-inline">
-                        <input type="text" class="form-control input-sm ttlSlsPmt" name="ttlSlsPmt" value="${rtnDto.ttlSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
+                        <input type="text" class="form-control input-sm ttlSlsPmt" name="ttlSlsPmt" value="${rtnDto.ttlSlsPmt}" maxlength="9" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
@@ -643,11 +643,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">국내 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4 form-inline">
-                        <input type="text" class="form-control input-sm dmstcSlsPmt" name="dmstcSlsPmt" value="${rtnDto.dmstcSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
+                        <input type="text" class="form-control input-sm dmstcSlsPmt" name="dmstcSlsPmt" value="${rtnDto.dmstcSlsPmt}" maxlength="9" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                     <label class="col-sm-1 control-label">해외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4 form-inline">
-                        <input type="text" class="form-control input-sm frgnSlsPmt" name="frgnSlsPmt" value="${rtnDto.frgnSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
+                        <input type="text" class="form-control input-sm frgnSlsPmt" name="frgnSlsPmt" value="${rtnDto.frgnSlsPmt}" maxlength="9" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
@@ -655,11 +655,11 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">자동차부품 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4 form-inline">
-                        <input type="text" class="form-control input-sm carPartSlsPmt" name="carPartSlsPmt" value="${rtnDto.carPartSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
+                        <input type="text" class="form-control input-sm carPartSlsPmt" name="carPartSlsPmt" value="${rtnDto.carPartSlsPmt}" maxlength="9" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                     <label class="col-sm-1 control-label">자동차 부품 외 매출액<span class="star"> *</span></label>
                     <div class="col-sm-4 form-inline">
-                        <input type="text" class="form-control input-sm carPartXcludSlsPmt" name="carPartXcludSlsPmt" value="${rtnDto.carPartXcludSlsPmt}" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
+                        <input type="text" class="form-control input-sm carPartXcludSlsPmt" name="carPartXcludSlsPmt" value="${rtnDto.carPartXcludSlsPmt}" maxlength="9" placeholder="매출액 입력" onKeyup="this.value=this.value.replace(/[^0-9]/g,'');"/>&nbsp;억원
                     </div>
                 </div>
             </fieldset>
@@ -850,7 +850,7 @@
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="${today}" title="방문일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="value="${not empty rsumeList.vstDt ? rsumeList.vstDt : today}" title="방문일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -861,7 +861,7 @@
                                         <label class="col-sm-1 control-label">컨설팅<br/>완료예정일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${today}" title="컨설팅 완료예정일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${rsumeList.cnstgCmpltnSchdlDt}" title="컨설팅 완료예정일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -929,7 +929,7 @@
                                         <label class="col-sm-1 control-label">킥오프일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt guideKickfDt" name="guideKickfDt" value="${today}" title="킥오프일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt guideKickfDt" name="guideKickfDt" value="${rsumeList.guideKickfDt}" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>

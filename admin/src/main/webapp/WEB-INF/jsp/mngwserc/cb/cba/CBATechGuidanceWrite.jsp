@@ -620,8 +620,8 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label" style="padding-bottom: 150px;">업종<span class="star"> *</span></label>
-                    <div class="col-sm-7" style="padding-bottom: 18px;">
+                    <label class="col-sm-1 control-label">업종<span class="star"> *</span></label>
+                    <div class="col-sm-7" style="margin-left: -17px; padding-bottom: 18px;">
                         <label class="col-sm-1 control-label">금속분야</label>
                         <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
                             <c:if test="${fn:contains(cdList.cd,'METAL') && cdList.cd ne 'TEC_GUIDE_METAL'}">
@@ -632,34 +632,37 @@
                             </c:if>
                         </c:forEach>
                     </div>
-
-                    <div class="col-sm-8" style="padding-bottom: 18px;">
-                        <label class="col-sm-1 control-label">비금속분야</label>
-                        <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
-                            <c:if test="${fn:contains(cdList.cd,'NON') && cdList.cd ne 'TEC_GUIDE_NON'}">
-                                <label class="radio-inline c-radio">
-                                    <input type="radio" class="notRequired cbsnCd" name="cbsnCd" value="${cdList.cd}" title="업종" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">checked</c:if>/>
-                                    <span class="ion-record"></span> ${cdList.cdNm}
-                                </label>
-                            </c:if>
-                        </c:forEach>
-                    </div>
-
-                    <div class="col-sm-5" style="margin-top: -9px;">
-                        <label class="col-sm-1 control-label" style="margin-top: 7px;">기타</label>
-                        <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
-                            <c:if test="${!fn:contains(cdList.cd,'NON') && !fn:contains(cdList.cd,'META')}">
-                                <label class="radio-inline c-radio">
-                                    <input type="radio" class="notRequired cbsnCd" name="cbsnCd" value="${cdList.cd}" title="업종" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">checked</c:if>/>
-                                    <span class="ion-record"></span> ${cdList.cdNm}
-                                </label>
-                            </c:if>
-                        </c:forEach>
-                        <span class="form-inline">
-                            <input type="text" class="form-control input-sm notRequired" name="etcNm" value="${rtnDto.etcNm}" style="width: 322px; margin-top: 10px;" title="업종" disabled placeholder="업종 입력"/>
-                        </span>
-                    </div>
+                </div><div class="form-group text-sm">
+                <label class="col-sm-1 control-label"></label>
+                <div class="col-sm-8" style="margin-left: -17px; padding-bottom: 18px;">
+                    <label class="col-sm-1 control-label">비금속분야</label>
+                    <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
+                        <c:if test="${fn:contains(cdList.cd,'NON') && cdList.cd ne 'TEC_GUIDE_NON'}">
+                            <label class="radio-inline c-radio">
+                                <input type="radio" class="notRequired cbsnCd" name="cbsnCd" value="${cdList.cd}" title="업종" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">checked</c:if>/>
+                                <span class="ion-record"></span> ${cdList.cdNm}
+                            </label>
+                        </c:if>
+                    </c:forEach>
                 </div>
+            </div><div class="form-group text-sm">
+                <label class="col-sm-1 control-label"></label>
+                <div class="col-sm-7" style="margin-left: -17px;">
+                    <label class="col-sm-1 control-label" style="margin-left: -23px;">기타</label>
+                    <c:forEach var="cdList" items="${cdDtlList.TEC_GUIDE_INDUS}" varStatus="status">
+                        <c:if test="${!fn:contains(cdList.cd,'NON') && !fn:contains(cdList.cd,'META')}">
+                            <label class="radio-inline c-radio" style="margin-top: -5px;">
+                                <input type="radio" class="notRequired cbsnCd" name="cbsnCd" value="${cdList.cd}" title="업종" <c:if test="${rtnDto.cbsnCd eq cdList.cd}">checked</c:if>/>
+                                <span class="ion-record"></span> ${cdList.cdNm}
+                            </label>
+                        </c:if>
+                    </c:forEach>
+                    <span class="form-inline">
+                        <input type="text" class="form-control input-sm notRequired" name="etcNm" value="${rtnDto.etcNm}" style="width: 322px;" title="업종" disabled placeholder="업종 입력"/>
+                    </span>
+                </div>
+            </div>
+
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm appctnTypeCd">
@@ -784,7 +787,7 @@
                                     <label class="col-sm-1 control-label">초도방문일</label>
                                     <div class="col-sm-5">
                                         <div class="input-group" style="z-index:0; width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${today}" title="초도방문일"/>
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${rtnDto.vstDt}" title="초도방문일"/>
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -845,7 +848,7 @@
                                     <label class="col-sm-1 control-label">지도착수일</label>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${today}" title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${rtnDto.guideBgnDt}" title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -856,7 +859,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${today}" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${rtnDto.guideKickfDt}" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -878,7 +881,7 @@
                                         </select>
                                     </div>
                                     <div class="input-group col-sm-3" style="z-index:0; width: 220px;">
-                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${today}" title="지도현황" />
+                                        <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${rtnDto.guidePscndDt}" title="지도현황" />
                                         <span class="input-group-btn" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
