@@ -150,7 +150,7 @@
                           </div>
                           <div class="btn-wrap btn-down-wrap">
                             <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
-                              <a class="btn-text-icon download" href="/file/download?fileSeq=${item.scrtyEnvrnmtFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                              <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.scrtyEnvrnmtFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                               <input type="hidden" class="optnFile" value="${item.scrtyEnvrnmtFileSeq}">
                             </c:forEach>
                           </div>

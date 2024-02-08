@@ -176,7 +176,7 @@
                                     <c:if test="${not empty rtnRoundDtl.smjList}">
                                         <div class="btn-set">
                                             <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
-                                                <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${item.sftyFcltyFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                                <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.sftyFcltyFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                                             </c:forEach>
                                         </div>
                                     </c:if>

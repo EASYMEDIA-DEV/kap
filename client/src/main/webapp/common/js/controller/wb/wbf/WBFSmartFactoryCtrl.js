@@ -233,6 +233,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             btnDownload : {
                 event : {
                     click : function() {
+                        $(".loading-area").stop().fadeIn(200);
+
                         cmmCtrl.paramAjax(function(data){
                             if(data != null && data.length > 0)
                             {
@@ -248,7 +250,10 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 };
                                 location.href = `/file/download?fileSeq=${fileInfo.fileSeq}&fileOrd=${fileInfo.fileOrd}`
                             }
-                        }, "/file/list", { fileSeq : $(this).data("fileSeq") }, "json");
+                        }, "/file/list", { fileSeq: $(this).data("fileSeq") }, "json").done(function() {
+                            // 파일 다운로드가 완료되면 로딩 영역을 숨김
+                            $(".loading-area").stop().fadeOut(200);
+                        });
                     }
                 }
             },
