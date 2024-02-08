@@ -195,10 +195,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 cmmCtrl.jsonAjax(function(data){
                                     let respData = JSON.parse(data);
                                     if(respData.respCnt == 100) {
-                                        alert("이미 해당 회차에 신청한 부품사입니다.");
+                                        if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                            location.href = "/my-page/coexistence/list";
+                                        }
                                         return false;
                                     } else if(respData.respCnt == 200) {
-                                        alert("이미 해당 회차에 신청한 부품사입니다.\n (종된사업장 중복)");
+                                        alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.");
+                                        return false;
+                                    } else if(respData.respCnt == 300) {
+                                        alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n(종된사업장번호 중복)");
                                         return false;
                                     } else {
                                         if (confirm("위 정보로 사업을 신청하시겠습니까?")) {

@@ -151,7 +151,7 @@ public class WBFSmartFactoryController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 modelMap.addAttribute("episdSeq", wBFBRegisterSearchDTO.getEpisdSeq());
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
@@ -260,7 +260,7 @@ public class WBFSmartFactoryController {
                 COUserDetailsDTO cOUserDetailsDTO = null;
                 cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
                 wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq().toString());
+                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
 
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
                 modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getApplyDtl(wBFBRegisterSearchDTO));
