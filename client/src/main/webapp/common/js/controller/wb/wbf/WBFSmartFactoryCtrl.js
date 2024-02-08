@@ -79,14 +79,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         var episdSeq = $(this).data("episdSeq");
-                        var ctgryCd = $('#ctgryCd').val();
 
                         if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
-                            if(ctgryCd == 'COMPANY01002' || ctgryCd == 'COMPANY01001'){
-                                location.href = "./step2?episdSeq="+episdSeq;
-                            } else {
-                                alert("1, 2차 부품사만 신청 가능합니다.\n");
-                            }
+                            location.href = "./step2?episdSeq="+episdSeq;
                         }
                     }
                 }
