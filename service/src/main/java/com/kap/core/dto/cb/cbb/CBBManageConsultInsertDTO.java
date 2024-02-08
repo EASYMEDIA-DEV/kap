@@ -195,8 +195,11 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String appctnDt;
     @Schema(title = "회사규모코드")
     private String sizeCd;
+    @Schema(title = "회사규모코드명")
+    private String sizeCdNm;
     @Schema(title = "부품사 규모")
     private String cpSize;
+
 
     @Schema(title = "회사주소동일여부")
     private String cmpnAddrSameYn;
@@ -210,6 +213,10 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String firstRgnsCd;
     @Schema(title = "두번째 지역 코드")
     private String scndRgnsCd;
+    @Schema(title = "첫번째 지역 코드명")
+    private String firstRgnsCdNm;
+    @Schema(title = "두번째 지역 코드명")
+    private String scndRgnsCdNm;
 
     @Schema(title="고객사 비율 순번")
     private Integer cmpnDlvrySeq;
@@ -233,6 +240,8 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String rprsntApprvYn;
     @Schema(title = "신청사유코드")
     private String appctnRsnCd;
+    @Schema(title = "신청사유코드명")
+    private String appctnRsnCdNm;
     @Schema(title = "신청분야코드")
     private String appctnTypeCd;
     @Schema(title = "요청내용, 신청사항")

@@ -152,9 +152,11 @@ public class MPConsultingController {
                     modelMap.addAttribute("cmpnInfo", mPEPartsCompanyService.selectPartsCompanyDtl(mPEPartsCompanyDTO));
                 }
 
+                modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
+
                 if(tmpDto.getCnstgCd().equals("CONSULT_GB01")){
-                    modelMap.addAttribute("rtnData", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
                     modelMap.addAttribute("appctnTypeList", tmpDto.getAppctnTypeList());
+                    vwUrl = "front/mp/mpc/MPConsultingTechDtl.front";
                 }else{
                     CBBManageConsultInsertDTO cBBManageConsultInsertDTO = new CBBManageConsultInsertDTO();
                     cBBManageConsultInsertDTO.setBsnmNo(cBATechGuidanceInsertDTO.getBsnmNo());
@@ -162,12 +164,12 @@ public class MPConsultingController {
                     cBBManageConsultInsertDTO.setDetailsKey(cBATechGuidanceInsertDTO.getDetailsKey());
 
                     modelMap.addAttribute("picInfo", cBBManageConsultService.selectOneCnstgPicInfo(cBBManageConsultInsertDTO));
-                    modelMap.addAttribute("rtnDto", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
+                    modelMap.addAttribute("manageDto", cBBManageConsultService.selectManageConsultDtl(cBBManageConsultInsertDTO));
+
+                    vwUrl = "front/mp/mpc/MPConsultingManageDtl.front";
                 }
                 modelMap.addAttribute("rspnCnt", rspnCnt);
                 modelMap.addAttribute("srvCnt", srvCnt);
-
-                vwUrl = "front/mp/mpc/MPConsultingDtl.front";
 
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");
