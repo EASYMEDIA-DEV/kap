@@ -91,7 +91,7 @@
 			 , C.NM AS prcsNm
 			 , C.gpc_lvl AS lvl
 			 , B.EPISD_ORD AS ORD
-			 , C.stduy_dd_cd AS EDU_DD_CNT
+			 , (select cd_nm from co_code_mst where cd=C.stduy_dd_cd) as edu_dd_cnt
 			 , date_format(b.edctn_strt_dtm, '%Y-%m-%d') as edu_strt
 			 , date_format(b.edctn_end_dtm, '%Y-%m-%d') as edu_end
 			 , C.gpc_rfn_prcs AS rfnd_Prcs
