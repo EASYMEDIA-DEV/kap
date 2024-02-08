@@ -45,6 +45,7 @@
 			a.edctn_seq as kap_seq
 			 , a.episd_seq as kap_schd_seq
 			 , b.gpc_parnt_ctgry as ctgry
+			 , b.gpc_edctn_type as edu_type
 			 , b.gpc_ctgry as trck
 			 , b.nm as prcs_nm
 			 , b.gpc_lvl as lvl
