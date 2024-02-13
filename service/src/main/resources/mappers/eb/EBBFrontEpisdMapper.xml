@@ -28,6 +28,14 @@
 			, accs_strt_dtm
 			, accs_end_dtm
 			, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+			, CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[ > ]]> 0
+				THEN DATEDIFF(accs_end_dtm, NOW())
+				ELSE 0
+				END AS order_plus
+			, CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[ < ]]> 0
+				THEN DATEDIFF(NOW(), accs_end_dtm)
+				ELSE 0
+				END AS order_minus
 			, edctn_strt_dtm
 			, edctn_end_dtm
 			, accs_status_nm
@@ -110,23 +118,23 @@
 			<choose>
 				<when test="srchOrder == 1">
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order is null asc, accs_status_order asc, accs_order_day asc, accs_end_dtm asc
+					ORDER BY accs_status_order is null asc, accs_status_order asc, order_plus asc, order_minus asc
 				</when>
 				<when test="srchOrder == 2">
 					<!-- 교육일자순 -->
-					ORDER BY accs_status_order is null asc, edctn_strt_dtm asc
+					ORDER BY accs_status_order is null asc, edctn_strt_dtm asc, order_plus asc, order_minus asc
 				</when>
 				<when test="srchOrder == 3">
 					<!--학습시간 짧은순-->
-					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm asc
+					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm asc, order_plus asc, order_minus asc
 				</when>
 				<when test="srchOrder == 4">
 					<!--학습시간 긴순-->
-					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm desc
+					ORDER BY accs_status_order is null asc, stduy_dd_cd_nm desc, order_plus asc, order_minus asc
 				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
-					ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc, accs_end_dtm asc
+					ORDER BY accs_status_order is null asc, accs_status_order ASC, accs_order_day asc, accs_end_dtm asc, order_plus asc, order_minus asc
 				</otherwise>
 			</choose>
 		</if>
@@ -1949,6 +1957,14 @@
 				  , accs_strt_dtm
 				  , accs_end_dtm
 				  , DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+				  , CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[ > ]]> 0
+							 THEN DATEDIFF(accs_end_dtm, NOW())
+						 ELSE 0
+					END AS order_plus
+				  , CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[ < ]]> 0
+							 THEN DATEDIFF(NOW(), accs_end_dtm)
+						 ELSE 0
+					END AS order_minus
 				  , edctn_strt_dtm
 				  , edctn_end_dtm
 				  , case

@@ -22,7 +22,7 @@
                             -
                         </c:when>
                         <c:otherwise>
-                            <a href="/mngwserc/file/view?fileSeq=${list.initVstFileSeq}&fileOrd=${list.list.initVstOrd}"><img src="/common/images/fileicon.png"></a>
+                            <a href="/mngwserc/file/view?fileSeq=${list.initVstFileSeq}&fileOrd=${list.initVstFileOrd}"><img src="/common/images/fileicon.png"></a>
                         </c:otherwise>
                     </c:choose>
                 </td>

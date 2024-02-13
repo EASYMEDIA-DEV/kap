@@ -151,13 +151,6 @@ define(["ezCtrl"], function(ezCtrl) {
                         search(++pageIndex);
                     }
                 }
-            },
-            searchBtn : {
-                event : {
-                    click : function() {
-                        search($(this));
-                    }
-                }
             }
         },
         immediately : function() {
