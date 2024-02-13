@@ -6,7 +6,7 @@
             <div class="article-list-w txt-list">
                 <c:choose>
                     <c:when test="${mainPostData.mainPostList.size()>=3}">
-                        <c:forEach var="mainPostList" items="${mainPostData.mainPostList}" varStatus="status1" begin="0"
+                        <%--<c:forEach var="mainPostList" items="${mainPostData.mainPostList}" varStatus="status1" begin="0"
                                    end="2">
                             <a class="list-item noticeListView mainPost open" href="javascript:" title="링크 이동"
                                data-details-key="${mainPostList.ntfySeq}">
@@ -40,6 +40,25 @@
                         </c:forEach>
                         <c:forEach var="list" items="${rtnData.list}" varStatus="status" begin="0"
                                    end="${dynamicEnd}">
+                            <a class="list-item noticeListView normalPost open" href="javascript:" title="링크 이동"
+                               data-details-key="${list.ntfySeq}">
+                                <div class="sub-info-wrap">
+                                    <span class="num f-body2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</span>
+                                </div>
+                                <div class="txt-box">
+                                    <p class="tit f-head">
+                                        <c:if test="${list.newPostYn eq 'Y'}">
+                                            <span class="new-icon" aria-label="새로운 항목"></span>
+                                        </c:if>
+                                            ${list.titl}
+                                    </p>
+                                    <div class="sub-txt f-body2"><p
+                                            class="date">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p>
+                                        <p class="view">조회수 <span>${list.readCnt}</span></p></div>
+                                </div>
+                            </a>
+                        </c:forEach>--%>
+                        <c:forEach var="list" items="${rtnData.list}" varStatus="status">
                             <a class="list-item noticeListView normalPost open" href="javascript:" title="링크 이동"
                                data-details-key="${list.ntfySeq}">
                                 <div class="sub-info-wrap">

@@ -38,17 +38,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             //전체 갯수
             var totCnt = cnt;
             //총 건수
-            if(totCnt <= 10 ){
+            if(totCnt <= 9 ){
                 $(".btn-wrap.add-load.align-center").remove();
             }else{
                 var tempPage = (page === undefined || page == "") ? 1 : page;
 
                 var rtnPage = 0;
 
-                if((tempPage * 10)>=totCnt){
+                if((tempPage * 9)>=totCnt){
                     $(".btn-wrap.add-load.align-center").remove();
                 }else{
-                    rtnPage = (tempPage * 10);
+                    rtnPage = (tempPage * 9);
                 }
 
                 $(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");

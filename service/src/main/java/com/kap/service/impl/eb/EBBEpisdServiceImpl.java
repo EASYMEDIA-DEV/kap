@@ -117,7 +117,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBEpisdDTO.setPageRowSize(24);
 			} else {
 				if(eBBEpisdDTO.getPageRowSize() != null){
-					eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
+					//eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
+					eBBEpisdDTO.setPageRowSize(9);
 				}else{
 					eBBEpisdDTO.setPageRowSize(9);
 				}

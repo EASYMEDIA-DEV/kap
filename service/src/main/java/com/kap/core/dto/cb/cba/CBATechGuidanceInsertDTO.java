@@ -48,6 +48,8 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String bfName;
     @Schema(title = "이관 전 신청자 아이디")
     private String bfId;
+    @Schema(title = "이관여부", example = "Y")
+    private String trnsfYn;
     @Schema(title = "탈락 이유")
     private String rsltCntn;
 
