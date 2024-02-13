@@ -186,8 +186,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             insertSkip : {
                 event : {
                     click : function() {
-                        $(".loading-area").stop().fadeIn(200);
                         if(confirm("매출액 등이 최신 정보여야 합니다.\n현재 정보로 신청하시겠습니까?")) {
+                            $(".loading-area").stop().fadeIn(200);
                             cmmCtrl.fileFrm(function (data) {
                                 //콜백함수. 페이지 이동
                                 if (data.actCnt == 999) {
