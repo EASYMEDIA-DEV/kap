@@ -142,6 +142,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
 
                             if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertBsnmNoCnt",
                                     type : "POST",
@@ -153,10 +154,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     success : function(data, status, xhr){
                                         if(data.respCnt == 999){
                                             if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                                $(".loading-area").stop().fadeOut(200);
                                                 location.href = "/my-page/coexistence/list";
                                             }
                                         }else if(data.respCnt > 0 ){
                                             alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.");
+                                            $(".loading-area").stop().fadeOut(200);
                                             return;
                                         }else {
                                             pass = true;
@@ -175,10 +178,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     success : function(data, status, xhr){
                                         if(data.respCnt == 999){
                                             if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                                $(".loading-area").stop().fadeOut(200);
                                                 location.href = "/my-page/coexistence/list";
                                             }
                                         }else if(data.respCnt > 0 ){
                                             alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n (종된사업장 중복)");
+                                            $(".loading-area").stop().fadeOut(200);
                                             return;
                                         }else {
                                             pass = true;
@@ -190,10 +195,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             if(pass){
                                 if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
                                     cmmCtrl.fileFrmAjax(function (data) {
+                                        $(".loading-area").stop().fadeOut(200);
                                         //콜백함수. 페이지 이동
                                         location.replace("./complete");
                                     }, "./insert", $formObj, "json");
                                 }
+                                $(".loading-area").stop().fadeOut(200);
                             }
                         } else {
                             alert('약관에 동의해주세요.')

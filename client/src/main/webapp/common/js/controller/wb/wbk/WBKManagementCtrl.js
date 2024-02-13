@@ -335,6 +335,7 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                         if (valid) {
                             //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
+                                $(".loading-area").stop().fadeIn(200);
 
                                 cmmCtrl.fileFrm(function(data){
                                     //콜백함수. 페이지 이동
@@ -347,6 +348,7 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                                             location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                         }
                                     }
+                                    $(".loading-area").stop().fadeOut(200);
                                 }, "./insert", $formObj, "json");
                             } else {
                                 alert('약관에 동의해주세요.');

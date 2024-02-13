@@ -180,6 +180,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
+                                $(".loading-area").stop().fadeIn(200);
+
                                 var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
                                 var episdSeq = $("#episdSeq").val();
 
@@ -191,23 +193,28 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     let respData = JSON.parse(data);
                                     if(respData.respCnt == 100) {
                                         if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                            $(".loading-area").stop().fadeOut(200);
                                             location.href = "/my-page/coexistence/list";
                                         }
                                         return false;
                                     } else if(respData.respCnt == 200) {
                                         alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.");
+                                        $(".loading-area").stop().fadeOut(200);
                                         return false;
                                     } else if(respData.respCnt == 300) {
                                         alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n(종된사업장번호 중복)");
+                                        $(".loading-area").stop().fadeOut(200);
                                         return false;
                                     } else {
                                         if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
                                             cmmCtrl.fileFrm(function(data){
                                                 if(data.respCnt > 0) {
+                                                    $(".loading-area").stop().fadeOut(200);
                                                     location.href = `./complete?episdSeq=${episdSeq}&appctnSeq=${data.appctnSeq}`;
                                                 }
                                             }, "./insert", $formObj, "json");
                                         }
+                                        $(".loading-area").stop().fadeOut(200);
                                     }
                                 },"./getSbrdmNoCheck",wBFBRegisterSearchDTO, "text");
                             } else {
@@ -243,10 +250,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     type: data[0].fileExtn,
                                     webPath: data[0].webPath
                                 };
+                                $(".loading-area").stop().fadeOut(200);
                                 location.href = `/file/download?fileSeq=${fileInfo.fileSeq}&fileOrd=${fileInfo.fileOrd}`
                             }
+                            $(".loading-area").stop().fadeOut(200);
                         }, "/file/list", { fileSeq: $(this).data("fileSeq") }, "json").done(function() {
-                            // 파일 다운로드가 완료되면 로딩 영역을 숨김
                             $(".loading-area").stop().fadeOut(200);
                         });
                     }

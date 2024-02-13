@@ -86,6 +86,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 async : {
                     use : true,
                     func : function (){
+                        $(".loading-area").stop().fadeIn(200);
                         var actionUrl = "./insert";
 
                         var svRepnMst = {};
@@ -123,6 +124,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         });
 
                         cmmCtrl.jsonAjax(function(data){
+                            $(".loading-area").stop().fadeOut(200);
                             location.href = "./step3"
                         }, actionUrl, svRepnMst, "text")
                     }

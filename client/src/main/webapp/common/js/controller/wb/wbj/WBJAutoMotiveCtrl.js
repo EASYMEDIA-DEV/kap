@@ -274,9 +274,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
                                 if(confirm("매출액 등이 최신 정보여야 합니다. 현재 정보로 신청하시겠습니까?\n")){
+                                    $(".loading-area").stop().fadeIn(200);
                                     cmmCtrl.fileFrmAjax(function(data){
                                         console.log(JSON.stringify(data));
                                         var appctnSeq = data.WBJAcomDTO.appctnSeq;
+                                        $(".loading-area").stop().fadeOut(200);
 
                                         //콜백함수. 페이지 이동
                                         location.href = "./complete";
