@@ -230,7 +230,14 @@
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.sqInfoList}">
                                                             <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
-                                                                <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
+                                                                <c:choose>
+                                                                    <c:when test="${empty item.nm and empty item.score and empty item.year and empty item.crtfnCmpnNm}">
+                                                                        <p class="f-body1">-</p>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <p class="f-body1">${status.count}. ${item.nm ? item.nm : '-'} / ${item.score ? item.score : '-'} / ${item.year ? item.year : '-'} 년 / ${item.crtfnCmpnNm ? item.crtfnCmpnNm : '-'}</p>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </c:forEach>
                                                         </c:when>
                                                         <c:otherwise>

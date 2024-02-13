@@ -26,14 +26,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             var ctgryCd = coInfo.list[0].ctgryCd;
             if(ctgryCd == "COMPANY01002"){
                 $(".sqInfo").show();
-                for(var i=0; i <coInfo.list.length; i++){
-                    if(coInfo.list[i].nm){
-                        var html = "<p>"+coInfo.list[i].nm+' /'+coInfo.list[i].score+' /'+coInfo.list[i].year+' /'+coInfo.list[i].crtfnCmpnNm+"</p>";
-                        var replaceHtml = html.replaceAll("undefined", "-")
-                        document.getElementById("sqInfo").innerHTML += "-"
-                    } else {
-                        document.getElementById("sqInfo").innerHTML += "-"
+                if(coInfo.list.length > 0) {
+                    for(var i=0; i <coInfo.list.length; i++){
+                        if(coInfo.list[i].nm){
+                            var html = "<p>"+(i+1)+'. '+coInfo.list[i].nm+' / '+coInfo.list[i].score+' / '+coInfo.list[i].year+' 년 / '+coInfo.list[i].crtfnCmpnNm+"</p>";
+                            var replaceHtml = html.replaceAll("undefined", "-")
+                            document.getElementById("sqInfo").innerHTML += replaceHtml
+                        } else {
+                            document.getElementById("sqInfo").innerHTML += "<p>-</p>"
+                        }
                     }
+                }
+                else {
+                    document.getElementById("sqInfo").innerHTML += "<p>-</p>"
                 }
             }else if(ctgryCd == "COMPANY01001"){
 

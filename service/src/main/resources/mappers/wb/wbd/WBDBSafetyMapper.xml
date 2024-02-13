@@ -1324,7 +1324,7 @@
         ==========  ======  ==============
         2023.11.24  김대성     최초 생성
     -->
-    <select id="selectSqList" parameterType="wBDBSafetySearchDTO" resultType="wBDBCompanyDTO">
+    <select id="selectSqList" parameterType="wBDBSafetySearchDTO" resultType="WBDBCompanyDtlDTO">
         SELECT /* WBDBSafetyMapper.selectSqList */
             CBSN_SEQ
              , NM
