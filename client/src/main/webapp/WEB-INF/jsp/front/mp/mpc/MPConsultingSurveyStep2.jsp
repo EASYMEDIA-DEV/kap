@@ -244,7 +244,7 @@
             <div class="page-bot-btn-sec">
                 <div class="btn-wrap">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>목록</span></a><!-- 2023-12-22 추가 -->
+                        <a class="btn-solid small gray-bg" href="/my-page/consulting/surveyIndex?detailsKey=${rtnData.cnstgSeq}"><span>목록</span></a><!-- 2023-12-22 추가 -->
                     </div>
                     <div class="btn-set">
                         <a class="btn-solid small black-bg" href="javascript:" id="btnSubmit"><span>제출하기</span></a>

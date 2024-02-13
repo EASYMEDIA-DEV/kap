@@ -9,6 +9,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    //자리수 콤마 사용을 위한 설정
+    var naviLang= navigator.language;
+
+    var option = {
+        maximumFractionDigits: 4
+    };
+
+
     var questionSet = function(surveyType) {
 
 
@@ -121,25 +129,29 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     }, input : function(event){
 
                         event.preventDefault();
+                        var surveyCon = $(this).closest(".survey-con");
 
-                        let content = $(".answer:last").val();
+                        let content = surveyCon.find("textarea").val();
 
-                        var currentByte= $(".check-byte").find("p.txt").find(".current-byte");
+                        var currentByte = surveyCon.find(".check-byte").find("p.txt").find(".current-byte");
+                        var contextLeng = content.length;
+                        contextLeng = contextLeng.toLocaleString(naviLang, option);
+
 
                         // 글자수 세기
                         if (content.length == 0 || content == '') {
                             currentByte.text(0);
                         } else {
-                            currentByte.text(content.length);
+                            currentByte.text(contextLeng);
                         }
-                        $(".check-byte").find("p.txt").find(".current-byte").val(content.length);
+                        surveyCon.find(".check-byte").find("p.txt").find(".current-byte").val(content.length);
 
                         // 글자수 제한
                         if (content.length > 2000) {
                             // 200자 부터는 타이핑 되지 않도록
                             $(this).val($(this).val().substring(0, 2000));
                             // 200자 넘으면 알림창 뜨도록
-                            alert('글자수는 200자까지 입력 가능합니다.');
+                            alert('글자수는 2000자까지 입력 가능합니다.');
                             return false;
                         };
 

@@ -52,7 +52,7 @@
             <div class="page-bot-btn-sec">
                 <div class="btn-wrap">
                     <div class="btn-set">
-                        <a class="btn-solid small gray-bg" href="javascript:"><span>신청내역 상세</span></a>
+                        <a class="btn-solid small gray-bg" href="/my-page/consulting/detail?detailsKey=${rtnData.cnstgSeq}"><span>신청내역 상세</span></a>
                         <a class="btn-solid small black-bg" href="./surveyStep2?detailsKey=${rtnData.cnstgSeq}"><span>참여하기</span></a>
                     </div>
                     <div class="btn-set">
