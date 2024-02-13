@@ -92,7 +92,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         classname : {
             answer : {
                 event : {
-                    click : function() {
+                    click : function() {/*
                         var surveyList = $(this).closest('.survey-list');
                         var surveyListInner = $(this).closest('.survey-list-inner');
 
@@ -105,7 +105,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             surveyList.find('.survey-list-inner:not(:eq(0))').find('.answer').addClass("notRequired");
                         }
 
-                        if (nextNo != ''){
+                        if (nextNo != '' && !(nextNo ===undefined)){
+
                             if (nextNo.indexOf(',') > 0){
                                 var nextNoSplit = nextNo.split(',');
                                 $(nextNoSplit).each(function(i){
@@ -116,7 +117,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 surveyList.find('.'+nextNo).show();
                                 surveyList.find('.'+nextNo).find('.answer').removeClass("notRequired");
                             }
+                        }*/
+                    }, input : function(event){
+
+                        event.preventDefault();
+
+                        let content = $(".answer:last").val();
+
+                        var currentByte= $(".check-byte").find("p.txt").find(".current-byte");
+
+                        // 글자수 세기
+                        if (content.length == 0 || content == '') {
+                            currentByte.text(0);
+                        } else {
+                            currentByte.text(content.length);
                         }
+                        $(".check-byte").find("p.txt").find(".current-byte").val(content.length);
+
+                        // 글자수 제한
+                        if (content.length > 2000) {
+                            // 200자 부터는 타이핑 되지 않도록
+                            $(this).val($(this).val().substring(0, 2000));
+                            // 200자 넘으면 알림창 뜨도록
+                            alert('글자수는 200자까지 입력 가능합니다.');
+                            return false;
+                        };
+
                     }
                 }
             },

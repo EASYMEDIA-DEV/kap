@@ -197,7 +197,7 @@ public class MPConsultingController {
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
 //            modelMap.addAttribute("rtnData", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO));
-            modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
+            //modelMap.addAttribute("totalCnt", cBATechGuidanceMapper.selectMemSeqAppctnMst(cBATechGuidanceInsertDTO).size());
         }
         catch (Exception e)
         {
@@ -352,6 +352,7 @@ public class MPConsultingController {
             CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
             if (Integer.toString(cOLoginUserDTO.getSeq()).equals(rtnData.getMemSeq())){
+                modelMap.addAttribute("rtnData", rtnData);
                 vwUrl = "front/mp/mpc/MPConsultingSurveyStep3.front";
             }else{
                 modelMap.addAttribute("msg", "잘못된 접근입니다.");

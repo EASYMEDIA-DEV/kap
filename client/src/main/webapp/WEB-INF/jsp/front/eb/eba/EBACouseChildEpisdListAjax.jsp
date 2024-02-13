@@ -8,45 +8,53 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <c:if test="${list.accsStatusOrder eq 1 && floatingYn eq 'N'}">
 
-                <!--교육일수 차이 계산-->
-                <c:set var="dayVal" value=""/>
+
                 <c:choose>
-                    <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
-                        <c:set var="floatStrtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
-                        <c:set var="floatEndDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
-                        <c:set var="floatDayVal" value="${kl:getDaysDiff(floatStrtDt, floatEndDt) + 1}"/>
+                    <c:when test="${list.fxnumCnt > list.accsCnt}">
+                        <!--교육일수 차이 계산-->
+                        <c:set var="dayVal" value=""/>
+                        <c:choose>
+                            <c:when test="${not empty list.edctnStrtDtm && not empty list.edctnEndDtm}">
+                                <c:set var="floatStrtDt" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                <c:set var="floatEndDt" value="${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
+                                <c:set var="floatDayVal" value="${kl:getDaysDiff(floatStrtDt, floatEndDt) + 1}"/>
+                            </c:when>
+                        </c:choose>
+
+                        <div>
+                            <input type="hidden" name="floatingEpisdSeq" id="floatingEpisdSeq" value="${list.episdSeq}"/>
+                            <input type="hidden" name="floatingEpisdOrd" id="floatingEpisdOrd" value="${list.episdOrd}"/>
+                            <input type="hidden" name="floatingAccsStrtDtm" id="floatingAccsStrtDtm" value="${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}"/>
+                            <input type="hidden" name="floatingEdctnStrtDtm" id="floatingEdctnStrtDtm" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${floatDayVal}일간)"/>
+                            <input type="hidden" name="floatingIsttrGroupName" id="floatingIsttrGroupName" value="${list.isttrGroupName}"/>
+                            <c:if test="${list.fxnumImpsbYn eq 'Y'}">
+                                <input type="hidden" name="floatingFxnumImpsb" id="floatingFxnumImpsb" value="${list.fxnumCnt}명"/>
+                            </c:if>
+                            <c:if test="${list.fxnumImpsbYn eq 'N'}">
+                                <input type="hidden" name="floatingFxnumImpsb" id="floatingFxnumImpsb" value="제한없음"/>
+                            </c:if>
+                            <input type="hidden" name="floatingRcrmtMthdCdNm" id="floatingRcrmtMthdCdNm" value="(${list.rcrmtMthdCdNm})"/>
+                            <c:choose>
+                                <c:when test="${list.stduyMthdCd eq 'STDUY_MTHD02'}">
+                                    <input type="hidden" name="floatingPlaceNm" id="floatingPlaceNm" value="온라인"/>
+                                </c:when>
+                                <c:otherwise>
+                                    <input type="hidden" name="floatingPlaceNm" id="floatingPlaceNm" value="${list.placeNm}"/>
+                                </c:otherwise>
+                            </c:choose>
+                            <input type="hidden" name="floatingStduyMthdCdNm" id="floatingStduyMthdCdNm" value="${list.stduyMthdCdNm}"/>
+                            <input type="hidden" name="floatingStduyMthdCd" id="floatingStduyMthdCd" value="${list.stduyMthdCd}"/>
+                            <input type="hidden" name="floatingStduyDdCdNm" id="floatingStduyDdCdNm" value="${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)"/>
+                            <input type="hidden" name="floatingedctnNtctnFileSeq" id="floatingedctnNtctnFileSeq" value="${list.edctnNtctnFileSeq}"/>
+                            <input type="hidden" name="floatingedctnNtctnFileNm" id="floatingedctnNtctnFileNm" value="${list.edctnNtctnFileNm}"/>
+
+                            <c:set var="floatingYn" value="Y"/>
+                        </div>
                     </c:when>
                 </c:choose>
 
-            <div>
-                <input type="hidden" name="floatingEpisdSeq" id="floatingEpisdSeq" value="${list.episdSeq}"/>
-                <input type="hidden" name="floatingEpisdOrd" id="floatingEpisdOrd" value="${list.episdOrd}"/>
-                <input type="hidden" name="floatingAccsStrtDtm" id="floatingAccsStrtDtm" value="${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}"/>
-                <input type="hidden" name="floatingEdctnStrtDtm" id="floatingEdctnStrtDtm" value="${ empty list.edctnStrtDtm ? '-' : kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } ~ ${ empty list.edctnEndDtm ? '-' : kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-') } (${floatDayVal}일간)"/>
-                <input type="hidden" name="floatingIsttrGroupName" id="floatingIsttrGroupName" value="${list.isttrGroupName}"/>
-                <c:if test="${list.fxnumImpsbYn eq 'Y'}">
-                    <input type="hidden" name="floatingFxnumImpsb" id="floatingFxnumImpsb" value="${list.fxnumCnt}명"/>
-                </c:if>
-                <c:if test="${list.fxnumImpsbYn eq 'N'}">
-                    <input type="hidden" name="floatingFxnumImpsb" id="floatingFxnumImpsb" value="제한없음"/>
-                </c:if>
-                <input type="hidden" name="floatingRcrmtMthdCdNm" id="floatingRcrmtMthdCdNm" value="(${list.rcrmtMthdCdNm})"/>
-                <c:choose>
-                    <c:when test="${list.stduyMthdCd eq 'STDUY_MTHD02'}">
-                        <input type="hidden" name="floatingPlaceNm" id="floatingPlaceNm" value="온라인"/>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="hidden" name="floatingPlaceNm" id="floatingPlaceNm" value="${list.placeNm}"/>
-                    </c:otherwise>
-                </c:choose>
-                <input type="hidden" name="floatingStduyMthdCdNm" id="floatingStduyMthdCdNm" value="${list.stduyMthdCdNm}"/>
-                <input type="hidden" name="floatingStduyMthdCd" id="floatingStduyMthdCd" value="${list.stduyMthdCd}"/>
-                <input type="hidden" name="floatingStduyDdCdNm" id="floatingStduyDdCdNm" value="${list.stduyDdCdNm}일(${list.stduyTimeCdNm}시간)"/>
-                <input type="hidden" name="floatingedctnNtctnFileSeq" id="floatingedctnNtctnFileSeq" value="${list.edctnNtctnFileSeq}"/>
-                <input type="hidden" name="floatingedctnNtctnFileNm" id="floatingedctnNtctnFileNm" value="${list.edctnNtctnFileNm}"/>
 
-                <c:set var="floatingYn" value="Y"/>
-            </div>
+
 
             </c:if>
         </c:forEach>
@@ -183,7 +191,7 @@
                                                <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>마감</span></a>
+                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>정원 마감</span></a>
                                             </c:otherwise>
                                         </c:choose>
 

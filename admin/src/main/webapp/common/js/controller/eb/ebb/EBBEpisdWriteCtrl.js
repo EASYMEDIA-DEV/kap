@@ -2078,6 +2078,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//if(actForm.otsdExamPtcptYn != undefined && actForm.otsdExamPtcptYn == "Y"){
 
 							var ptcptList = new Array();
+
+						var ptcptCnt = $("#ptcptListContainer").find("tr:first").data("totalCount");
+
+						if(ptcptCnt>0){
 							$("#ptcptListContainer").find("tr").each(function(){
 
 								var ptcptForm = {};
@@ -2106,14 +2110,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								ptcptForm.otsdExamPtcptYn = actForm.otsdExamPtcptYn;//오프라인 여부
 								ptcptForm.cmptnChangeYn = cmptnChangeYn;
 
-								
+
 
 								ptcptList.push(ptcptForm);
 
 							});
+						}
 
-
-							actForm.ptcptList = ptcptList;
+						actForm.ptcptList = ptcptList;
 
 						//}
 						//오프라인평가 관련 데이터 세팅끝

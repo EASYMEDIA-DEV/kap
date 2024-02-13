@@ -1608,6 +1608,9 @@
     <select id="selectTechGuidanceDtlCheck" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /* CBATechGuidanceMapper.selectTechGuidanceDtlCheck */
             A.CNSTG_SEQ,
+            A.BSN_YEAR,
+            (SELECT CD_NM FROM co_code_mst WHERE CD = CNSTG_CD) AS CNSTG_NM,
+            A.CNSTG_CD,
             B.MEM_SEQ,
             B.NAME,
             B.TEL_NO,

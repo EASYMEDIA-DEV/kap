@@ -214,7 +214,7 @@
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">일반 전화번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">일반 전화번호</label>
                     <div class="col-sm-11" style="margin-left: -15px">
                         <p class="form-control-static telNo">-</p>
                     </div>

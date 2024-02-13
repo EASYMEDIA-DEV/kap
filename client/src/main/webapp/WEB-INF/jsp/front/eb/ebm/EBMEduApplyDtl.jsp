@@ -476,15 +476,21 @@
                                                 </tr>
                                                 <tr>
                                                     <th>휴대폰번호</th>
-                                                    <td>${applicantInfo.hpNo}</td>
+                                                    <td>
+                                                        ${not empty applicantInfo.hpNo ? applicantInfo.hpNo : '-'}
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>이메일</th>
-                                                    <td>${applicantInfo.email}</td>
+                                                    <td>
+                                                        ${not empty applicantInfo.email ? applicantInfo.email : '-'}
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>일반 전화번호</th>
-                                                    <td>${applicantInfo.telNo}</td>
+                                                    <td>
+                                                        ${not empty applicantInfo.telNo ? applicantInfo.telNo : '-'}
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>

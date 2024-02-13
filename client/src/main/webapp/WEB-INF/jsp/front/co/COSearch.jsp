@@ -15,7 +15,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="srch-wrap scroll-motion">
                 <div class="form-input srch-input for-motion">
-                    <input type="text" placeholder="검색어를 입력해 주세요." value="${ q }" title="검색어" name="q" maxlength="50">
+                    <input type="text" placeholder="검색어를 입력해주세요." value="${ q }" title="검색어" name="q" maxlength="50">
                     <div class="input-btn-wrap">
                         <button class="delete-btn" title="지우기" type="button"></button>
                         <button class="srch-btn" title="검색" type="submit"></button>

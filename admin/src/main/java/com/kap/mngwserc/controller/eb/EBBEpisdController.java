@@ -718,7 +718,7 @@ public class EBBEpisdController {
         public EBBEpisdDTO updateEpisd(@Valid @RequestBody EBBEpisdDTO eBBEpisdDTO) throws Exception
         {
             try{
-                System.out.println("@@@여기오면 안됨");
+
                 eBBEpisdService.updateEpisd(eBBEpisdDTO);
             }
             catch (Exception e)

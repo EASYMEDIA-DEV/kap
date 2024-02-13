@@ -41,6 +41,7 @@
             </div>
 
             <form class="form-horizontal" id="frmData" name="frmData" method="post" >
+
                 <input type="hidden" value="${rtnData.memSeq}" name="rtnMemSeq" class="notRequired" >
                 <input type="hidden" value="${rtnData.name}" name="rtnPtcptName" class="notRequired" >
                 <input type="hidden" value="${rtnData.telNo}"  name="rtnPtcptTelno" class="notRequired" >
@@ -194,7 +195,7 @@
                                             </c:when>
                                             <c:when test="${qstnList.srvTypeCd eq 'QST04'}">    <!--주관식서술-->
                                                 <div class="form-textarea exmplList">
-                                                    <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="필수 응답문항"></textarea>
+                                                    <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="필수 응답문항" maxlength="2000"></textarea>
                                                     <div class="check-byte">
                                                         <p class="txt"><span class="current-byte">0</span>자</p>
                                                         <p class="txt"><span class="max-byte">2,000</span>자</p>

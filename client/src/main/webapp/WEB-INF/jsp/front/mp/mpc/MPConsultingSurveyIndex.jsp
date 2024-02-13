@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+
 <div class="cont-wrap">
     <div class="inner">
         <div class="sub-top-vis-area">
@@ -44,7 +45,7 @@
                 </div>
 
                 <div class="noti-txt-w">
-                    <P class="bullet-noti-txt f-caption2">${survInfo.cntn}</P>
+                    ${survInfo.cntn}
                 </div>
             </div>
 
