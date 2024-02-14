@@ -463,9 +463,23 @@
                                                 <tr>
                                                     <th>SQ정보</th>
                                                     <td>
-                                                        <c:forEach var="item" items="${rtnCompany.sqInfoList}" varStatus="status">
-                                                            <p class="f-body1">${status.index}. ${item.nm} / ${item.score} / ${item.year} 년 / ${item.crtfnCmpnNm}</p>
-                                                        </c:forEach>
+                                                        <c:choose>
+                                                            <c:when test="${not empty rtnCompany.sqInfoList}">
+                                                                <c:forEach var="item" items="${rtnCompany.sqInfoList}" varStatus="status">
+                                                                    <c:choose>
+                                                                        <c:when test="${empty item.nm and empty item.score and empty item.year and empty item.crtfnCmpnNm}">
+
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <p class="f-body1">${status.count}. ${not empty item.nm ? item.nm : '-'} / ${not empty item.score ? item.score : '-'} / ${not empty item.year ? item.year+= ' 년' : '-'} / ${not empty item.crtfnCmpnNm ? item.crtfnCmpnNm : '-'}</p>
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                </c:forEach>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <p class="f-body1">-</p>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     </td>
                                                 </tr>
                                             </c:if>

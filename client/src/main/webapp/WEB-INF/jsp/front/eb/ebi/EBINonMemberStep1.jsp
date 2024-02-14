@@ -197,7 +197,7 @@
                                                     <div class="data-line">
                                                         <div class="form-group">
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="인증된 업체명 (인증 시 자동 입력)" id="ptcptCmpnNm" name="ptcptCmpnNm" title="부품사명" maxlength="50" readonly>
+                                                                <input type="text" placeholder="인증 시 자동 입력" id="ptcptCmpnNm" name="ptcptCmpnNm" title="부품사명" maxlength="50" readonly>
                                                             </div>
                                                         </div>
                                                     </div>

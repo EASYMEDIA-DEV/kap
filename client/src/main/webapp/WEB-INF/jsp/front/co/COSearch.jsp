@@ -123,7 +123,7 @@
             <div class="tab-section scroll-motion " id="noticeList" data-cnt="${ noticeCnt }">
                 <div class="for-motion">
                     <div class="section-tit-area">
-                        <p class="tit f-title2"><span class="menu-name">공지</span> (<span class="item-count">${noticeCnt}</span>)</p>
+                        <p class="tit f-title2"><span class="menu-name">공지사항</span> (<span class="item-count">${noticeCnt}</span>)</p>
                         <c:if test="${ noticeCnt > 0}">
                             <div class="btn-wrap">
                                 <a class="btn-text-icon black-arrow" href="/search/notice?q=${q}"  title="전체보기"><span>전체 보기</span></a>

@@ -294,39 +294,26 @@
                                                         <th>SQ정보</th>
                                                         <td>
                                                             <c:choose>
-                                                                <c:when test="${empty cmpnInfo.list}">
-                                                                    -
+                                                                <c:when test="${empty rtnData.sqInfoList and empty rtnData.sqInfoList1 and empty rtnData.sqInfoList2}">
+                                                                    <p class="f-body1">-</p>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <c:forEach var="list" items="${cmpnInfo.list}" varStatus="status">
-                                                                        <c:if test="${empty list.nm}">
-                                                                            <c:set var="nm" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.nm}">
-                                                                            <c:set var="nm" value="${list.nm}"/>
-                                                                        </c:if>
-
-                                                                        <c:if test="${empty list.score}">
-                                                                            <c:set var="score" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.score}">
-                                                                            <c:set var="score" value="${list.score}"/>
-                                                                        </c:if>
-
-                                                                        <c:if test="${empty list.year}">
-                                                                            <c:set var="year" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.year}">
-                                                                            <c:set var="year" value="${list.year} 년"/>
-                                                                        </c:if>
-                                                                        <c:if test="${empty list.crtfnCmpnNm}">
-                                                                            <c:set var="crtfnCmpnNm" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.crtfnCmpnNm}">
-                                                                            <c:set var="crtfnCmpnNm" value="${list.crtfnCmpnNm}"/>
-                                                                        </c:if>
-                                                                        <p class="f-body1">${status.count}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
-                                                                    </c:forEach>
+                                                                    <c:set var="count" value="1" />
+                                                                    <c:if test="${not empty rtnData.sqInfoList}">
+                                                                        <c:set var="item" value="${rtnData.sqInfoList}" />
+                                                                        <p class="f-body1">${count}. ${not empty item[0] ? item[0] : '-'} / ${not empty item[1] ? item[1] : '-'} / ${not empty item[2] ? item[2]+= ' 년' : '-'} / ${not empty item[3] ? item[3] : '-'}</p>
+                                                                        <c:set var="count" value="${count + 1}" />
+                                                                    </c:if>
+                                                                    <c:if test="${not empty rtnData.sqInfoList1}">
+                                                                        <c:set var="item" value="${rtnData.sqInfoList1}" />
+                                                                        <p class="f-body1">${count}. ${not empty item[0] ? item[0] : '-'} / ${not empty item[1] ? item[1] : '-'} / ${not empty item[2] ? item[2]+= ' 년' : '-'} / ${not empty item[3] ? item[3] : '-'}</p>
+                                                                        <c:set var="count" value="${count + 1}" />
+                                                                    </c:if>
+                                                                    <c:if test="${not empty rtnData.sqInfoList2}">
+                                                                        <c:set var="item" value="${rtnData.sqInfoList2}" />
+                                                                        <p class="f-body1">${count}. ${not empty item[0] ? item[0] : '-'} / ${not empty item[1] ? item[1] : '-'} / ${not empty item[2] ? item[2]+= ' 년' : '-'} / ${not empty item[3] ? item[3] : '-'}</p>
+                                                                        <c:set var="count" value="${count + 1}" />
+                                                                    </c:if>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>

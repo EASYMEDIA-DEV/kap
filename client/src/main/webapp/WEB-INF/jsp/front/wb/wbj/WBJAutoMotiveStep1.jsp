@@ -232,10 +232,10 @@
                                                             <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
                                                                 <c:choose>
                                                                     <c:when test="${empty item.nm and empty item.score and empty item.year and empty item.crtfnCmpnNm}">
-                                                                        <p class="f-body1">-</p>
+
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <p class="f-body1">${status.count}. ${item.nm ? item.nm : '-'} / ${item.score ? item.score : '-'} / ${item.year ? item.year : '-'} 년 / ${item.crtfnCmpnNm ? item.crtfnCmpnNm : '-'}</p>
+                                                                        <p class="f-body1">${status.count}. ${not empty item.nm ? item.nm : '-'} / ${not empty item.score ? item.score : '-'} / ${not empty item.year ? item.year += ' 년' : '-'} / ${not empty item.crtfnCmpnNm ? item.crtfnCmpnNm : '-'}</p>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </c:forEach>

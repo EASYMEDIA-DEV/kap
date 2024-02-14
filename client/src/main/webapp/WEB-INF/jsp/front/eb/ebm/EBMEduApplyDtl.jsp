@@ -612,13 +612,20 @@
                                                                 <c:choose>
                                                                     <c:when test="${not empty sqInfoList.list}">
                                                                         <c:forEach var="list" items="${sqInfoList.list}" varStatus="status">
-                                                                            <p>
-                                                                                ${status.count}.
-                                                                                ${not empty list.nm ? list.nm : "-"}/
-                                                                                ${not empty list.score ? list.score : "-"}/
-                                                                                ${not empty list.year ? list.year : "-"} 년/
-                                                                                ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
-                                                                            </p>
+                                                                            <c:choose>
+                                                                                <c:when test="${empty list.nm and empty list.score and empty list.year and empty list.crtfnCmpnNm}">
+
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <p>
+                                                                                        ${status.count}.
+                                                                                        ${not empty list.nm ? list.nm : "-"} /
+                                                                                        ${not empty list.score ? list.score : "-"} /
+                                                                                        ${not empty list.year ? list.year : "-"} 년 /
+                                                                                        ${not empty list.crtfnCmpnNm ? list.crtfnCmpnNm : "-"}
+                                                                                    </p>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
                                                                         </c:forEach>
                                                                     </c:when>
                                                                     <c:otherwise>

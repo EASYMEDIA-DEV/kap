@@ -1,10 +1,10 @@
 package com.kap.front.controller;
 
-import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COStringUtil;
-import com.kap.common.utility.COWebUtil;
-import com.kap.common.utility.seed.COBrowserUtil;
-import com.kap.core.dto.*;
+import com.kap.core.dto.BaseDTO;
+import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COSearchDTO;
+import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.bd.bda.BDANoticeDTO;
 import com.kap.core.dto.bd.bdb.BDBCompanyNewsDTO;
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
@@ -13,36 +13,24 @@ import com.kap.core.dto.co.COCNiceReqEncDto;
 import com.kap.core.dto.co.COCNiceServiceDto;
 import com.kap.core.dto.co.COCompApiResDto;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
-import com.kap.core.dto.eb.ebb.EBBPtcptDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstInsertDTO;
-import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.awt.image.BufferedImage;
-import java.io.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -210,7 +198,8 @@ public class COCOmmController {
             }
         }
         if(menuAddCnt > 0 && qMenuList.size() > 0){
-            for(int i = menuFirstIndex; i < menuAddCnt; i++) {
+            int max = menuAddCnt <= qMenuList.size() ? menuAddCnt : qMenuList.size();
+            for(int i = menuFirstIndex; i < max; i++) {
                 tabMenuList.add(qMenuList.get(i));
             }
             modelMap.put("tabMenuList", tabMenuList);

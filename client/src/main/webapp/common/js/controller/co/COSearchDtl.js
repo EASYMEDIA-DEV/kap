@@ -13,7 +13,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
     // 메뉴탭 더보기를 누르면 visibleMenuCnt개의 게시물이 추가됨
-    var visibleMenuCnt = 1;
+    var visibleMenuCnt = 9;
     // 메뉴의 총 갯수
     var menuCnt = $formObj.find("input[name=menuCnt]").val();
     // n개부터 m개까지의 게시물이 추가될때

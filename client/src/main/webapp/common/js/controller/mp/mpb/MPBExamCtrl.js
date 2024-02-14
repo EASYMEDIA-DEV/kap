@@ -85,6 +85,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            popOpen : {
+                event : {
+                    click : function() {
+                        openPopup('paymentInfoManagPopup');
+                    }
+                }
+            }
         },
         classname : {
             addBtn : {
