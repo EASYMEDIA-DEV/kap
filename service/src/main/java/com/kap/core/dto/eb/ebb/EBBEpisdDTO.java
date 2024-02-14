@@ -526,4 +526,7 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "사용자 교육 신청 목록 페이지 여부", example = "Y/N")
     private String applyListYn;
 
+    @Schema(title = "대시보드 검색타입", example = "A/B/C")
+    private String dashBoardType;
+
 }

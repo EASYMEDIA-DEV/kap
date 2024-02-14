@@ -20,6 +20,8 @@
 				<input type="hidden" id="detailsKey" name="detailsKey" value="" />
 				<input type="hidden" id="episdOrd" name="episdOrd" value="" />
 				<input type="hidden" id="episdYear" name="episdYear" value="" />
+				<input type="hidden" id="dashBoardType" name="dashBoardType" value="${rtnData.dashBoardType}" />
+
 				<!--기간 검색 시작-->
 				<jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
 					<jsp:param name="srchText" value="등록/수정기간" />
@@ -27,6 +29,7 @@
 					<jsp:param name="srchType" value="episd" />
 					<jsp:param name="endDtVal" value="${rtnData.endDt}" />
 					<jsp:param name="strtDtVal" value="${rtnData.strtDt}" />
+					<jsp:param name="dashBoardType" value="${rtnData.dashBoardType}" />
 				</jsp:include>
 
 

@@ -288,6 +288,23 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		immediately : function() {
 
+			//대시보드에서 접근시 검색 필터 설정해줌
+			var dashType= $("#dashBoardType").val();
+
+			if(!(dashType === undefined)){
+				//접수중
+				if(dashType == "A"){
+					$("input[name='accsStatus']").eq(1).prop("checked", true);
+					//교육대기
+				}else if(dashType == "B"){
+					$("input[name='edctnStatus']").eq(0).prop("checked", true);
+					//교육중
+				}else if(dashType == "C"){
+					$("input[name='edctnStatus']").eq(1).prop("checked", true);
+				}
+			}
+
+
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);

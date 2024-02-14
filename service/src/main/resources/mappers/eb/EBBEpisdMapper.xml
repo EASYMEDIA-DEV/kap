@@ -436,13 +436,13 @@
 					<choose>
 						<when test="accsStatusList != null">
 							<if test="accsStatusList == 1"><!--접수대기-->
-								NOW() <![CDATA[<]]> accs_strt_dtm
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND NOW() <![CDATA[<]]> accs_strt_dtm
 							</if>
 							<if test="accsStatusList == 2"><!--접수중-->
-								NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm
 							</if>
 							<if test="accsStatusList == 3"><!--마감-->
-								(NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt))
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND (NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'N' AND accs_cnt <![CDATA[>=]]> fxnum_cnt))
 							</if>
 						</when>
 
@@ -451,20 +451,20 @@
 				)
 			</if>
 
-			<!--접수상태-->
+			<!--교육상태-->
 			<if test="edctnStatusList != null and edctnStatusList.size() > 0">
 				and (
 				<foreach collection="edctnStatusList" item="edctnStatusList" index="index" open="" close="" separator=" or ">
 					<choose>
 						<when test="edctnStatusList != null">
 							<if test="edctnStatusList == 1"><!--접수대기-->
-								(NOW() <![CDATA[<]]> edctn_strt_dtm)
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND (NOW() <![CDATA[<]]> edctn_strt_dtm)
 							</if>
 							<if test="edctnStatusList == 2"><!--접수중-->
-								(NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm)
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND (NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm)
 							</if>
 							<if test="edctnStatusList == 3"><!--교육완료-->
-								(NOW() <![CDATA[>]]> edctn_end_dtm)
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND (NOW() <![CDATA[>]]> edctn_end_dtm)
 							</if>
 							<if test="edctnStatusList == 4"><!--교육취소-->
 								(edctn_stts_cd = 'EDCTN_STTS_CD02')

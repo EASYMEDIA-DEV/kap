@@ -53,6 +53,8 @@
 			FROM ed_edctn_episd_mst a
 			LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
 			LEFT JOIN (SELECT place_seq, nm, bsc_addr, dtl_addr, zipcode, rprsnt_tel_no FROM ed_edctn_place_mst ) c ON a.place_seq = c.place_seq
+
+			WHERE edctn_stts_cd = 'EDCTN_STTS_CD01'
 			) AA
 		) TBL
 	</select>
