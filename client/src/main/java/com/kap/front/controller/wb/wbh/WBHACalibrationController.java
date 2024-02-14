@@ -2,9 +2,6 @@ package com.kap.front.controller.wb.wbh;
 
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
-import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
 import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import com.kap.service.COCodeService;
@@ -142,7 +139,7 @@ public class WBHACalibrationController {
             } else {
                 modelMap.addAttribute("rtnData", wbhaCalibrationService.getRoundDtl(wbhaCalibrationSearchDTO));
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbhaCalibrationSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
