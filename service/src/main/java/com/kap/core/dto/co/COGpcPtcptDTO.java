@@ -69,6 +69,9 @@ public class COGpcPtcptDTO {
     @Schema(title = "전송일", example = "텍스트")
     private String kapSendDd;
 
+    @Schema(title = "신청일", example = "텍스트")
+    private String reportingDt;
+
 
 
     private List<COGpcPtcptDTO> list;

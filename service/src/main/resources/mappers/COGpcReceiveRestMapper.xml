@@ -95,6 +95,7 @@
 			 , date_format(b.edctn_strt_dtm, '%Y-%m-%d') as edu_strt
 			 , date_format(b.edctn_end_dtm, '%Y-%m-%d') as edu_end
 			 , C.gpc_rfn_prcs AS rfnd_Prcs
+		     , date_format(A.reg_dtm, '%Y-%m-%d %H:%i:%s') as reporting_dt
 			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
 
 		FROM ep_edctn_ptcpt_mst A
