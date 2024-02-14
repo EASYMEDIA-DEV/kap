@@ -129,7 +129,14 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click : function(){
                         var conSeq = $(this).data("seq");
-                        location.href="./detail?detailsKey="+conSeq;
+                        var trnsfYn = $(this).data("trnsfYn");
+
+                        if(trnsfYn == 'Y') {
+                            alert("이관된 내역입니다.");
+                            return false;
+                        } else {
+                            location.href="./detail?detailsKey="+conSeq;
+                        }
                     }
                 }
             },

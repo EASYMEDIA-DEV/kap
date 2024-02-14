@@ -11,6 +11,7 @@
             <input type="hidden" name="pageIndex" value="1" />
             <input type="hidden" name="pageRowSize" value="3" />
             <input type="hidden" name="listRowSize" value="3" />
+            <input type="hidden" name="srchYn" value="Y" />
             <input type="hidden" name="f" value="${f}" />
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="srch-wrap scroll-motion">

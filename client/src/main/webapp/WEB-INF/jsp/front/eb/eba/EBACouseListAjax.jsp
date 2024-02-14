@@ -212,9 +212,9 @@
     </c:when>
     <c:otherwise>
         <input type="hidden" name="totalCount" id="totalCount" value="0"/>
-        <div class="no-data-area has-border"><!-- has-border: 테두리 있을 경우 -->
+        <div class="no-data-area">
             <div class="txt-box">
-                <p class="txt f-body1">등록된 회차가 없습니다.</p>
+                <p class="txt f-body1">${rtnData.srchYn eq 'Y' ? '조회된 데이터가 없습니다.' : '등록된 회차가 없습니다.'}</p>
             </div>
         </div>
     </c:otherwise>

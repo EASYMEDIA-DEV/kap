@@ -108,10 +108,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			//교육 조회
 			if( parseInt($("#episdList").data("cnt")) > 0){
+				$formObj.find("srchYn").val("Y");
 				cmmCtrl.listFrmAjax(function(respObj) {
 					$("#episdContainer").html(respObj);
 					//링크연결 여기서
-				}, "/education/apply/select", $formObj, "GET", "html", false, false);
+				}, "/education/apply/select?srchYn=Y", $formObj, "GET", "html", false, false);
 			}
 			//공지 조회
 			if( parseInt($("#noticeList").data("cnt")) > 0){

@@ -517,6 +517,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Builder.Default
     private String mainYn = "N";
 
+    @Schema(title = "사용자 통합검색 영역 여부", example = "Y/N")
+    private String srchYn = "N";
+
     @Schema(title = "회원/비회원 구분 코드", example = "E/N")
     private String nonMemberCd;
 
