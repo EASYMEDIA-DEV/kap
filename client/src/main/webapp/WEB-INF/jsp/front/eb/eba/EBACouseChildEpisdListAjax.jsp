@@ -191,7 +191,7 @@
                                                <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>정원 마감</span></a>
+                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>정원마감</span></a>
                                             </c:otherwise>
                                         </c:choose>
 
@@ -200,7 +200,7 @@
                                         <a class="btn-solid small black-bg disabled" href="javascript:" ><span>접수대기</span></a>
                                     </c:when>
                                     <c:when test="${list.accsStatusOrder eq 3}"><!--마감-->
-                                        <a class="btn-solid small black-bg disabled" href="javascript:" ><span>마감</span></a>
+                                        <a class="btn-solid small black-bg disabled" href="javascript:" ><span>접수마감</span></a>
                                     </c:when>
                                     <c:otherwise>
 

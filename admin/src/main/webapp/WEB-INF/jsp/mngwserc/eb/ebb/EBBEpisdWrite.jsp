@@ -916,7 +916,7 @@
                                     <th class="text-center">가입일</th>
                                     <th class="text-center">교육신청일</th>
                                     <th class="text-center">교육상태</th>
-                                    <th class="text-center">출석</th>
+                                    <th class="text-center">출석/수강</th>
                                     <th class="text-center">평가</th>
                                     <th class="text-center">수료</th>
 
