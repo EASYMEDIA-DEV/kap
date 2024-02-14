@@ -6,9 +6,12 @@ import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.WBRoundOptnMstDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
+import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBFASmartRoundService;
 import com.kap.service.dao.wb.wbf.WBFASmartRoundMapper;
+import com.kap.service.dao.wb.wbf.WBFBRegisterCompanyMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -44,6 +47,7 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
 
     /* Mapper */
     private final WBFASmartRoundMapper wBFASmartRoundMapper;
+    private final WBFBRegisterCompanyMapper wBFBRegisterCompanyMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -295,9 +299,22 @@ public class WBFASmartRoundServiceImpl implements WBFASmartRoundService {
                     rtnCode = 100;
                 }
             } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
-                //신청가능 코드 200
-                rtnCode = 200;
-                RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+                wBFBRegisterSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                wBFBRegisterSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+                WBFBRegisterDTO wBFBRegisterDTO = wBFBRegisterCompanyMapper.getCompanyInfo(wBFBRegisterSearchDTO);
+
+                if ("COMPANY01001".equals(wBFBRegisterDTO.getCtgryCd()) || "COMPANY01002".equals(wBFBRegisterDTO.getCtgryCd())) {
+                    wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+                    //신청가능 코드 200
+                    rtnCode = 200;
+                    RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                } else {
+                    //부품사가 1차 2차가 아닐떄,
+                    rtnCode = 190;
+                }
             }
         }
 

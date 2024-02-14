@@ -123,16 +123,19 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         if($("#zipCode").val() == "" || $("#bscAddr").val() == ""){
                             alert("구축사업장 주소를 입력해주세요.");
+                            $("#zipCode").focus();
                             return;
                         }
 
                         if($("#dtlAddr").val() == ""){
                             alert("구축사업장 상세 주소를 입력해주세요.");
+                            $("#dtlAddr").focus();
                             return;
                         }
 
                         if($("#searchFile").val() == "") {
                             alert("신청서류를 모두 등록해주세요.");
+                            $("#searchFile").focus();
                             return;
                         }
 
@@ -167,6 +170,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     }
                                 });
                             }else{
+                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertSbrdnBsnmNoCnt",
                                     type : "POST",
@@ -226,15 +230,17 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             $formObj.find("input[type=file]").fileUpload({
-                loading:false,
+                loading:true,
                 sync:true
             },function(data){
+                // $(".loading-area").stop().fadeIn(200);
                 $('.file-list').remove();
                 var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + data[0].orgnFileNm.replace(data[0].fileExtn,'') + '</span>';
                 fileHtml += '<span class="unit">.' + data[0].fileExtn + '</span></p>';
                 fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
                 $('.file-list-area').addClass("attached");
                 $('.file-list-area').append(fileHtml);
+                // $(".loading-area").stop().fadeOut(200);
             });
             $('#firstIndex').val(addCount);
         }

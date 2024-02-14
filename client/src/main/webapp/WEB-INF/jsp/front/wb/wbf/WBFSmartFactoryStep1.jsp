@@ -189,26 +189,24 @@
                                         <tr>
                                             <th>주생산품</th>
                                             <td>
-                                                <c:if test="${not empty registerDtl.mjrPrdct1}">
-                                                    ① ${registerDtl.mjrPrdct1}
-                                                </c:if>
-                                                <c:if test="${empty registerDtl.mjrPrdct1}">
-                                                    -
-                                                </c:if>
+                                                <c:choose>
+                                                    <c:when test="${empty registerDtl.mjrPrdct1 and empty registerDtl.mjrPrdct2 and empty registerDtl.mjrPrdct3}">
+                                                        -
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:if test="${not empty registerDtl.mjrPrdct1}">
+                                                            ① ${registerDtl.mjrPrdct1}
+                                                        </c:if>
 
-                                                <c:if test="${not empty registerDtl.mjrPrdct2}">
-                                                    ② ${registerDtl.mjrPrdct2}
-                                                </c:if>
-                                                <c:if test="${empty registerDtl.mjrPrdct2}">
-                                                    -
-                                                </c:if>
+                                                        <c:if test="${not empty registerDtl.mjrPrdct2}">
+                                                            ② ${registerDtl.mjrPrdct2}
+                                                        </c:if>
 
-                                                <c:if test="${not empty registerDtl.mjrPrdct3}">
-                                                    ③ ${registerDtl.mjrPrdct3}
-                                                </c:if>
-                                                <c:if test="${empty registerDtl.mjrPrdct3}">
-                                                    -
-                                                </c:if>
+                                                        <c:if test="${not empty registerDtl.mjrPrdct3}">
+                                                            ③ ${registerDtl.mjrPrdct3}
+                                                        </c:if>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </td>
                                         </tr>
                                         <c:if test="${registerDtl.ctgryCd eq 'COMPANY01001'}">

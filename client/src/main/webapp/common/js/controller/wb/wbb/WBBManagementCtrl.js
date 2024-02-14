@@ -15,6 +15,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
+        $(".loading-area").stop().fadeIn(200);
+
         var fileObj = jQuery(obj).val(), isFile = true;
         var fileId = obj.id;
         var fileArea = $('#'+fileId).closest(".form-group").find('.file-btn-area');
@@ -69,6 +71,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
             }
         }
+        $(".loading-area").stop().fadeOut(200);
     };
 
     var fnSleep  = function(delay)

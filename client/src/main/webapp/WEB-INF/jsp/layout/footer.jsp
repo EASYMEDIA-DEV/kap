@@ -90,7 +90,7 @@
 						</c:choose>
 
 						<a class="quick-btn faq" href="/foundation/board/faq/list"><span class="txt">FAQ</span></a>
-						<a class="quick-btn manager" href="javascript:"><span class="txt">담당자</span></a>
+						<a class="quick-btn manager" href="/foundation/intro/organization/index"><span class="txt">담당자</span></a>
 					</div>
 				</div>
 				<a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
