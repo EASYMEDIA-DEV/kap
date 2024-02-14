@@ -68,7 +68,6 @@ public class SVASurveyMstInsertDTO extends BaseDTO {
     private boolean posbChg = true;
 
     @Schema(title = "설문유형코드", example = "")
-    @NotNull
     private String srvTypeCd;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
