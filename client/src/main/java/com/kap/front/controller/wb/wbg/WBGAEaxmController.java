@@ -4,9 +4,10 @@ import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.wbg.WBGAApplyMstDTO;
 import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
-import com.kap.core.dto.wb.wbh.WBHAApplyMstDTO;
-import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
-import com.kap.service.*;
+import com.kap.service.COCodeService;
+import com.kap.service.COGCntsService;
+import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.WBGAExamService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -138,7 +139,7 @@ public class WBGAEaxmController {
             } else {
                 modelMap.addAttribute("rtnData", wbgaExamService.getRoundDtl(wbgaExamSearchDTO));
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
-                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wbgaExamSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
             if (log.isDebugEnabled()) {

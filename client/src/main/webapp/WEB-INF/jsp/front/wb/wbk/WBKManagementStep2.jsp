@@ -2,7 +2,7 @@
 <div class="cont-wrap" data-controller="controller/wb/wbk/WBKManagementCtrl controller/wb/wbk/WBKPartWriteCtrl controller/co/COFormCtrl" >
   <form id="frmData" name="frmData" enctype="multipart/form-data">
   <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-  <input type="hidden" class="notRequired" name="episdSeq" value="${rtnData.episdSeq}" />
+<%--  <input type="hidden" class="notRequired" name="episdSeq" value="${rtnData.episdSeq}" />--%>
   <div class="sub-top-vis-area apply-page consult-biz">
     <div class="page-tit-area">
       <p class="page-tit f-xlarge-title"><span class="for-move">사업신청</span></p>
