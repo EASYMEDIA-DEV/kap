@@ -70,22 +70,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         search($(this));
-
-                        // 필터 검색 후 필터 닫기
-                        $(".filter-open-btn").attr("title", "필터 열기");
-                        $(".info-head .form-select").removeClass("disabled");
-
-                        $(".filter-popup").removeClass("opened");
-
-                        if(window.innerWidth > 1023){
-                            $(".filter-popup").stop(true, true).slideUp(300);
-                        }else{
-                            gsap.to($(".filter-popup .for-flex .for-center"), 0.6, {top: "100%", ease: Power3, onComplete: function(){
-                                    $(".filter-popup").hide();
-                                }});
-                            $("body").removeClass("stop-scroll");
-                            $(".dimd").css("z-index", 50).stop(true, true).fadeOut(300);
-                        }
                     }
                 }
             },
@@ -96,10 +80,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         $('input[name=q]').val('');
                         $('input[name=strtDt]').val('');
                         $('input[name=endDt]').val('');
-
-                        //검색 로직 실행
-                        cmmCtrl.setFormData($formObj);
-                        search(1);
                     }
                 }
             }
