@@ -125,13 +125,18 @@
                                                                 <div class="opt-group total-check-w">
 
                                                                     <div class="form-checkbox total-check">
-                                                                        <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd" name="stduyMthdCd">
+                                                                        <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd" name="stduyMthdCd" <c:if test="${fn:length(eBBEpisdDTO.stduyMthdCdList) eq 4}">checked</c:if>>
                                                                         <label for="stduyMthdCd">전체</label>
                                                                     </div>
 
+                                                                    <input type="hidden" name="stduyMthdCdList" value="${stduyMthdCdList}"/>
                                                                     <c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
                                                                         <div class="form-checkbox">
-                                                                            <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if>>
+                                                                            <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}"
+                                                                            <c:forEach var="list" items="${eBBEpisdDTO.stduyMthdCdList}">
+                                                                                   <c:if test="${list eq cdList.cd}">checked</c:if>
+                                                                            </c:forEach>
+                                                                            >
                                                                             <label for="stduyMthdCd${status.index}">
                                                                                 <c:choose>
                                                                                     <c:when test="${cdList.cd eq 'STDUY_MTHD02'}">
@@ -159,19 +164,31 @@
                                                             <div class="data-line">
                                                                 <div class="opt-group total-check-w">
                                                                     <div class="form-checkbox total-check">
-                                                                        <input type="checkbox" id="accsStatusOrder1" data-name="accsStatusOrderList" name="accsStatusOrder" value="" >
+                                                                        <input type="checkbox" id="accsStatusOrder1" data-name="accsStatusOrderList" name="accsStatusOrder" value=""<c:if test="${fn:length(eBBEpisdDTO.accsStatusOrderList) eq 4}">checked</c:if> >
                                                                         <label for="accsStatusOrder1">전체</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="accsStatusOrder2" data-name="accsStatusOrderList"  name="accsStatusOrder" value="2" >
+                                                                        <input type="checkbox" id="accsStatusOrder2" data-name="accsStatusOrderList"  name="accsStatusOrder" value="2"
+
+                                                                        <c:forEach var="list" items="${eBBEpisdDTO.accsStatusOrderList}">
+                                                                               <c:if test="${list eq 2}">checked</c:if>
+                                                                        </c:forEach>
+
+                                                                        >
                                                                         <label for="accsStatusOrder2">접수대기</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="accsStatusOrder3" data-name="accsStatusOrderList"  name="accsStatusOrder" value="1" >
+                                                                        <input type="checkbox" id="accsStatusOrder3" data-name="accsStatusOrderList"  name="accsStatusOrder" value="1"
+                                                                        <c:forEach var="list" items="${eBBEpisdDTO.accsStatusOrderList}">
+                                                                               <c:if test="${list eq 1}">checked</c:if>
+                                                                        </c:forEach>>
                                                                         <label for="accsStatusOrder3">접수중</label>
                                                                     </div>
                                                                     <div class="form-checkbox">
-                                                                        <input type="checkbox" id="accsStatusOrder4" data-name="accsStatusOrderList"  name="accsStatusOrder" value="3" >
+                                                                        <input type="checkbox" id="accsStatusOrder4" data-name="accsStatusOrderList"  name="accsStatusOrder" value="3"
+                                                                        <c:forEach var="list" items="${eBBEpisdDTO.accsStatusOrderList}">
+                                                                               <c:if test="${list eq 3}">checked</c:if>
+                                                                        </c:forEach>>
                                                                         <label for="accsStatusOrder4">마감</label>
                                                                     </div>
                                                                 </div>
@@ -187,7 +204,7 @@
                                                         <div class="data-line-w">
                                                             <div class="data-line">
                                                                 <div class="form-input srch-input w-longer">
-                                                                    <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력">
+                                                                    <input type="text" name="q" id="q" placeholder="과정명 또는 교육장소 입력" value="${eBBEpisdDTO.q}">
                                                                     <div class="input-btn-wrap">
                                                                         <button class="delete-btn" title="지우기" type="button"></button>
                                                                         <button class="srch-btn btnBindSearch" type="button" title="검색"></button>
@@ -207,11 +224,11 @@
                                                                 <div class="middle-line">
                                                                     <div class="opt-group">
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="1" checked>
+                                                                            <input type="radio" id="srchDateType2" name="srchDate" value="1" <c:if test="${(empty eBBEpisdDTO.srchDate || eBBEpisdDTO.srchDate eq 1) }">checked</c:if>>
                                                                             <label for="srchDateType2">접수기간</label>
                                                                         </div>
                                                                         <div class="form-radio">
-                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="2">
+                                                                            <input type="radio" id="srchDateType1" name="srchDate" value="2" <c:if test="${eBBEpisdDTO.srchDate eq 2 }">checked</c:if>>
                                                                             <label for="srchDateType1">교육기간</label>
                                                                         </div>
 
@@ -222,8 +239,10 @@
                                                                     <div class="form-group form-calendar">
                                                                         <div class="form-input">
                                                                             <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
+                                                                                <input type="hidden" name="paramStrtDt" id="paramStrtDt" value="${eBBEpisdDTO.strtDt}">
+                                                                                <input type="hidden" name="paramEndDt" id="paramEndDt" value="${eBBEpisdDTO.endDt}">
 
-                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
+                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${not empty eBBEpisdDTO.strtDt ? eBBEpisdDTO.strtDt : today}" title="시작일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>
@@ -232,7 +251,7 @@
                                                                         </div>
                                                                         <div class="form-input calendar">
                                                                             <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="종료일"/>
+                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${not empty eBBEpisdDTO.endDt ? eBBEpisdDTO.endDt : today}" title="종료일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>

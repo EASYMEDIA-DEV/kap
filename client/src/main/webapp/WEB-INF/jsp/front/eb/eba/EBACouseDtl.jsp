@@ -21,10 +21,6 @@
         <input type="hidden" id="authCd" name="authCd" value="${loginMap.authCd}" />
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
 
-        <input type="hidden" id="ctgryCd" name="ctgryCd" value="${paramDto.ctgryCd}" />
-        <input type="hidden" id="prntCd" name="prntCd" value="${paramDto.prntCd}" />
-
-
         <% pageContext.setAttribute("newLine", "\n"); %>
         <div class="cont-wrap">
             <div class="sub-top-vis-area">
@@ -531,7 +527,7 @@
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap align-center for-motion">
                             <%--<a class="btn-solid small black-bg" href="javascript:" onclick="window.history.back();"><span>목록</span></a>--%>
-                                <a class="btn-solid small black-bg listBack" href="javascript:" ><span>목록</span></a>
+                                <a class="btn-solid small black-bg listBack" href="javascript:" data-str-pam="${strPam}"><span>목록</span></a>
                         </div>
                     </div>
 

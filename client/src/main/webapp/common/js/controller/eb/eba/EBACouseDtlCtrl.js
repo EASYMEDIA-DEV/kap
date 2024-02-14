@@ -501,8 +501,8 @@ define(["ezCtrl"], function(ezCtrl) {
 			listBack : {
 				event : {
 					click : function() {
-						alert("enlfhrkrl");
-						location.href="/education/apply/list?" + $formObj.serialize();
+						var strPam = $(".listBack").data("strPam");
+						location.href="/education/apply/list?" + strPam;
 					}
 				}
 			},
