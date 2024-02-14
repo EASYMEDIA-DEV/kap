@@ -496,7 +496,16 @@ define(["ezCtrl"], function(ezCtrl) {
 						})
 					}
 				}
-			}
+			},
+
+			listBack : {
+				event : {
+					click : function() {
+						alert("enlfhrkrl");
+						location.href="/education/apply/list?" + $formObj.serialize();
+					}
+				}
+			},
 		},
 		immediately : function() {
 			//리스트 조회

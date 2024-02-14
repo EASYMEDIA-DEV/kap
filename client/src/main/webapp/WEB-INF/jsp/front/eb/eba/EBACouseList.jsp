@@ -95,6 +95,9 @@
                                                             <div class="data-line">
                                                                 <div class="form-group">
                                                                     <div class="form-select">
+
+                                                                        <input type="hidden" name="paramPrntCd" id="paramPrntCd" value="${eBBEpisdDTO.prntCd}"/>
+                                                                        <input type="hidden" name="paramCtgryCd" id="paramCtgryCd" value="${eBBEpisdDTO.ctgryCd}"/>
                                                                         <select name="prntCd" id="prntCd" title="과정 1차 분류" class="classType">
                                                                             <option value="" selected>전체</option>
                                                                             <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
@@ -103,7 +106,7 @@
                                                                         </select>
                                                                     </div>
                                                                     <div class="form-select">
-                                                                        <select name="ctgryCd" id="ctgryCd" title="과정 2차 분류" disabled=""><!-- 1차 분류 선택 시 disabled 해제 -->
+                                                                        <select name="ctgryCd" id="ctgryCd" title="과정 2차 분류" disabled="" data-ctgrycd="${eBBEpisdDTO.ctgryCd}"><!-- 1차 분류 선택 시 disabled 해제 -->
                                                                             <option value="" selected>전체</option>
                                                                         </select>
                                                                     </div>

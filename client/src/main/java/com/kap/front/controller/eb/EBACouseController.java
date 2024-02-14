@@ -102,6 +102,7 @@ public class EBACouseController {
 
             modelMap.addAttribute("rtnData", rtnList);
             modelMap.addAttribute("rtnFormDto", rtnFormDto);
+            modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
 
         }
         catch (Exception e)
@@ -172,7 +173,7 @@ public class EBACouseController {
      * 교육과정 신청 상세
      */
     @GetMapping(value="/apply/detail")
-    public String getEducationApplyDtl(EBACouseDTO eBACouseDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    public String getEducationApplyDtl(EBACouseDTO eBACouseDTO, EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         String vwUrl = "front/eb/eba/EBACouseDtl.front";
         try
@@ -246,6 +247,8 @@ public class EBACouseController {
             modelMap.addAttribute("relList1", rtnMap.get("relList1"));//과정 연계 목록 - 선수목록
             modelMap.addAttribute("relList2", rtnMap.get("relList2"));//과정 연계 목록 - 후속목록
             modelMap.addAttribute("deviceType", deviceType);//디바이스 체크
+            modelMap.addAttribute("paramDto", eBBEpisdDTO);//
+
 
         }
         catch (Exception e)

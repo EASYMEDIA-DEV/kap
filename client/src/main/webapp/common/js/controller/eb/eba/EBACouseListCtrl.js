@@ -540,11 +540,19 @@ define(["ezCtrl"], function(ezCtrl) {
 				}
 			},
 
+
+
+
+
 		},
 		immediately : function() {
 
 			/*cmmCtrl.setCalendar();*/
 			cmmCtrl.setCalendarInit(3,-3);
+
+			//뒤로가기, 목록으로 왔을때 과정분류값있으면 자동세팅
+			$("#prntCd").val($("#paramPrntCd").val()).prop("selected", true).trigger("click");
+
 
 			//리스트 조회
 			//폼 데이터 처리
