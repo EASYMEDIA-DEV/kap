@@ -1621,7 +1621,7 @@
 			, c.reg_dtm as edu_dtm
 			, c.reg_dtm
 			, "N" as cmptn_yn
-			, "" as exam_score
+			, 0 as exam_score
 			, f.exam_ptcpt_seq
 			, otsd_exam_ptcpt_yn
 			, '교육양도' as edu_stat
@@ -1773,7 +1773,7 @@
 			, c.reg_dtm as edu_dtm
 			, c.reg_dtm
 			, "N" as cmptn_yn
-			, "" as exam_score
+			, 0 as exam_score
 			, f.exam_ptcpt_seq
 			, otsd_exam_ptcpt_yn
 			, ofln_exam_dtm
