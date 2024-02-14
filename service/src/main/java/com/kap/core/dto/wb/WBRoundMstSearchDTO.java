@@ -91,4 +91,6 @@ public class WBRoundMstSearchDTO extends BaseDTO {
     @Schema(title = "파일 시퀀스")
     private Integer fileSeq;
 
+    @Schema(title = "사업자등록번호", example = "")
+    private String bsnmNo;
 }
