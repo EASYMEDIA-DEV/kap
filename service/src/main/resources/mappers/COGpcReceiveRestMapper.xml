@@ -23,8 +23,8 @@
 			, gpc_fxnum_cnt as max_cnt
 			, gpc_rfn_prcs as rfnd_prcs
 			, gpc_isttr_id as adm_seq
-			, pc_stduy_cntn as edu_cntn
-			, itrdc_cntn as edu_dtl
+			, pc_stduy_cntn as edu_dtl
+			, itrdc_cntn as edu_cntn
 			, date_format(now(), '%Y-%m-%d') as kap_send_dd
 		from ed_edctn_prcs_mst a
 		WHERE exps_yn = 'Y'
