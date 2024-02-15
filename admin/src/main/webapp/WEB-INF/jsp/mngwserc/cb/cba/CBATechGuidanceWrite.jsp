@@ -1146,9 +1146,9 @@
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
-                                        <label class="col-sm-1 control-label" style="z-index:0;width: 220px;">지도착수일</label>
+                                        <label class="col-sm-1 control-label">지도착수일</label>
                                         <div class="col-sm-3">
-                                            <div class="input-group">
+                                            <div class="input-group" style="z-index:0;width: 220px;">
                                                 <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${not empty rsumeList.guideBgnDt ? kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도착수일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
