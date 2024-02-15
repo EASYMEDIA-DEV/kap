@@ -145,8 +145,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             for(int j=0; j<companyInfo.getList().size(); j++){
                 List sqlInfoList = new ArrayList();
                 sqlInfoList.add(0,companyInfo.getList().get(j).getNm());
-                sqlInfoList.add(1,String.valueOf(companyInfo.getList().get(j).getScore()));
-                sqlInfoList.add(2,String.valueOf(companyInfo.getList().get(j).getYear()));
+                sqlInfoList.add(1,String.valueOf(companyInfo.getList().get(j).getScore() == null ? "" : companyInfo.getList().get(j).getScore()));
+                sqlInfoList.add(2,String.valueOf(companyInfo.getList().get(j).getYear() == null ? "" : companyInfo.getList().get(j).getYear()));
                 sqlInfoList.add(3,companyInfo.getList().get(j).getCrtfnCmpnNm());
                 sqlInfoList.add(4,companyInfo.getList().get(j).getCbsnSeq());
                 if(j==0){
