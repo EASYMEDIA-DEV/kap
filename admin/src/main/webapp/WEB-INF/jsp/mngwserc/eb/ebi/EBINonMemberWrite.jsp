@@ -65,7 +65,7 @@
                             <div class="col-sm-4">
                                 <div class="row">
                                     <div class="col-sm-5 pr0">
-                                        <select class="form-control input-sm wd-sm classType" name="cd" id="cd" title="과정분류-대분류">
+                                        <select class="form-control input-sm wd-sm classType notRequired" name="cd" id="cd" title="과정분류-대분류">
                                             <option value="-99">선택</option>
                                             <c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
                                                 <option value="${cdList.cd}" <c:if test="${rtnDto.prntCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -73,7 +73,7 @@
                                         </select>
                                     </div>
                                     <div class="col-sm-5 pr0">
-                                        <select class="form-control input-sm wd-sm" name="ctgryCd" id="ctgryCd" title="과정분류-소분류" data-ctgrycd="${rtnDto.ctgryCd}">
+                                        <select class="form-control input-sm wd-sm notRequired" name="ctgryCd" id="ctgryCd" title="과정분류-소분류" data-ctgrycd="${rtnDto.ctgryCd}">
                                             <option value="">선택</option>
                                         </select>
                                     </div>
@@ -89,11 +89,11 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">과정명<span class="star"> *</span></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm" id="nm" name="nm" value="${rtnDto.nm}" title="과정명" maxlength="50" placeholder="과정명 입력" />
+                                <input type="text" class="form-control input-sm notRequired" id="nm" name="nm" value="${rtnDto.nm}" title="과정명" maxlength="50" placeholder="과정명 입력" />
                             </div>
                             <label class="col-sm-1 control-label">과정요약<span class="star"> *</span></label>
                             <div class="col-sm-4">
-                                <input type="text" class="form-control input-sm" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="50" placeholder="과정요약 입력"/>
+                                <input type="text" class="form-control input-sm notRequired" id="smmryNm" name="smmryNm" value="${rtnDto.smmryNm}" title="과정요약" maxlength="50" placeholder="과정요약 입력"/>
                             </div>
                         </div>
                     </fieldset>
@@ -104,26 +104,26 @@
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
-                                        <input type="text" class="form-control input-sm datetimepicker_strtDt" name="accsStrtDt" id="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="접수 시작일" readonly="readonly"/>
+                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="accsStrtDt" id="accsStrtDt" value="${ kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="접수 시작일" readonly="readonly"/>
                                         <span class="input-group-btn pr-sm" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
+                                        <select class="form-control input-sm wd-sm notRequired" name="accsStrtHour" id="accsStrtHour" title="접수 시작시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
                                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
-                                        <input type="text" class="form-control input-sm datetimepicker_endDt" name="accsEndDtm" id="accsEndDt" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="접수 종료일" readonly="readonly"/>
+                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="accsEndDtm" id="accsEndDt" value="${ kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="접수 종료일" readonly="readonly"/>
                                         <span class="input-group-btn pr-sm" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm" name="accsEndHour" id="accsEndHour" title="접수 종료시간">
+                                        <select class="form-control input-sm wd-sm notRequired" name="accsEndHour" id="accsEndHour" title="접수 종료시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
                                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
@@ -140,26 +140,26 @@
                             <div class="col-sm-10">
                                 <div class="form-inline">
                                     <div class="input-group form-date-group mr-sm">
-                                        <input type="text" class="form-control input-sm datetimepicker_strtDt" name="edctnStrtDt" id="edctnStrtDt" value="${ kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="교육 시작일" readonly="readonly"/>
+                                        <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="edctnStrtDt" id="edctnStrtDt" value="${ kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="교육 시작일" readonly="readonly"/>
                                         <span class="input-group-btn pr-sm" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간">
+                                        <select class="form-control input-sm wd-sm notRequired" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
                                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
                                             </c:forEach>
                                         </select>
                                         <span class="input-group-addon bg-white b0">~</span>
-                                        <input type="text" class="form-control input-sm datetimepicker_endDt" name="edctnEndDt" id="edctnEndDt" value="${ kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="교육 종료일" readonly="readonly"/>
+                                        <input type="text" class="form-control input-sm datetimepicker_endDt notRequired" name="edctnEndDt" id="edctnEndDt" value="${ kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="교육 종료일" readonly="readonly"/>
                                         <span class="input-group-btn pr-sm" style="z-index:0;">
                                             <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간">
+                                        <select class="form-control input-sm wd-sm notRequired" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간">
                                             <option value="">선택</option>
                                             <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
                                                 <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
@@ -245,7 +245,7 @@
                             <label class="col-sm-1 control-label">정원<span class="star text-danger"> *</span></label>
                             <div class="col-sm-2">
                                 <label class="input_line form-inline">
-                                    <input type="text" class="form-control input-sm numberChk ${kl:decode(rtnDto.fxnumImpsbYn, 'N', 'notRequired', '')}" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"<c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">readonly</c:if>/> 명
+                                    <input type="text" class="form-control input-sm numberChk notRequired" id="fxnumCnt" name="fxnumCnt" value="${rtnDto.fxnumCnt}" title="정원수" maxlength="50" placeholder="정원수 입력" style="max-width: 150px;"<c:if test="${rtnDto.fxnumImpsbYn eq 'N'}">readonly</c:if>/> 명
                                 </label>
                             </div>
                             <div class="col-sm-1">
@@ -272,13 +272,13 @@
                                     <!-- 리스트 목록 결과 -->
                                     <tbody>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="picNm" name="picNm" value="${rtnDto.picNm}" title="담당자명" maxlength="50" placeholder="담당자명"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm emailChk" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자 이메일" maxlength="50" placeholder="담당자 이메일"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="picEmail" name="picEmail" value="${rtnDto.picEmail}" title="담당자 이메일" maxlength="50" placeholder="담당자 이메일"/>
                                     </td>
                                     <td class="text-center">
-                                        <input type="text" class="form-control input-sm mobileChk mobileNumChk" id="picTelNo" name="picTelNo" value="${kl:hpNum(rtnDto.picTelNo)}" title="담당자 전화번호" maxlength="13" placeholder="담당자 전화번호"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="picTelNo" name="picTelNo" value="${kl:hpNum(rtnDto.picTelNo)}" title="담당자 전화번호" maxlength="13" placeholder="담당자 전화번호"/>
                                     </td>
                                     </tbody>
                                 </table>
@@ -335,7 +335,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">과정소개<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control input-sm" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="500" title="과정 소개" placeholder="과정 소개 입력">${rtnDto.itrdcCntn}</textarea>
+                                <textarea class="form-control input-sm notRequired" id="itrdcCntn" name="itrdcCntn" rows="10" maxlength="500" title="과정소개" placeholder="과정 소개 입력">${rtnDto.itrdcCntn}</textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -344,7 +344,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">학습 목표<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <textarea class="form-control input-sm" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="500" title="학습 목표" placeholder="학습 목표 입력">${rtnDto.stduyTrgtCntn}</textarea>
+                                <textarea class="form-control input-sm notRequired" id="stduyTrgtCntn" name="stduyTrgtCntn" rows="10" maxlength="500" title="학습목표" placeholder="학습 목표 입력">${rtnDto.stduyTrgtCntn}</textarea>
                             </div>
                         </div>
                     </fieldset>
@@ -400,7 +400,7 @@
                             <div class="col-sm-11" style="margin-left: -70px;">
                                 <label class="col-sm-1 control-label">학습일</label>
                                 <div class="col-sm-1 mr-xl">
-                                    <select class="form-control input-sm wd-sm" name="stduyDdCd" id="stduyDdCd" title="학습일">
+                                    <select class="form-control input-sm wd-sm notRequired" name="stduyDdCd" id="stduyDdCd" title="학습일">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${studyCdList.STDUY_DD}" varStatus="status">
                                             <option value="${cdList.cd}" <c:if test="${rtnDto.stduyDdCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}일</option>
@@ -410,7 +410,7 @@
 
                                 <label class="col-sm-1 control-label ml-sm">학습시간</label>
                                 <div class="col-sm-1">
-                                    <select class="form-control input-sm wd-sm" name="stduyTimeCd" id="stduyTimeCd" title="학습시간">
+                                    <select class="form-control input-sm wd-sm notRequired" name="stduyTimeCd" id="stduyTimeCd" title="학습시간">
                                         <option value="">선택</option>
                                         <c:forEach var="cdList" items="${studyCdList.STDUY_TIME}" varStatus="status">
                                             <option value="${cdList.cd}" <c:if test="${rtnDto.stduyTimeCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}시간</option>
@@ -425,7 +425,7 @@
                         <div class="form-group text-sm">
                             <label class="col-sm-1 control-label">학습준비물<span class="star"> *</span></label>
                             <div class="col-sm-11">
-                                <input type="text" class="form-control input-sm" id="stduySuplsNm" name="stduySuplsNm" value="${rtnDto.stduySuplsNm}" title="학습준비물" maxlength="50" placeholder="학습준비물 입력" />
+                                <input type="text" class="form-control input-sm notRequired" id="stduySuplsNm" name="stduySuplsNm" value="${rtnDto.stduySuplsNm}" title="학습준비물" maxlength="50" placeholder="학습준비물 입력" />
                             </div>
                         </div>
                     </fieldset>

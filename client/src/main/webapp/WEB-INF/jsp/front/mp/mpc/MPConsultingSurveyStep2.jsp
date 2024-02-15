@@ -83,7 +83,7 @@
                                 <div class="data-line">
                                     <div class="form-group">
                                         <div class="form-input">
-                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처" class="mobileChk">
+                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처" class="phoneChk">
                                         </div>
                                     </div>
                                 </div>

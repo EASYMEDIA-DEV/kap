@@ -197,12 +197,14 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 	{
 		int respCnt = 0;
 
+		//등록자 정보 셋팅
 		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 		pEBINonMemberDTO.setRegId( cOUserDetailsDTO.getId() );
 		pEBINonMemberDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
 		pEBINonMemberDTO.setModId( cOUserDetailsDTO.getId() );
 		pEBINonMemberDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
+		//비회원 과정 시퀀스 셋팅
 		pEBINonMemberDTO.setEdctnSeq(nmbEdctnPrcsSeqIdgen.getNextIntegerId());
 
 		//파일 처리
@@ -215,8 +217,11 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 			pEBINonMemberDTO.setThnlFileSeq(thnlFileSeqMap.get("thnlFileSeq")); //썸네일
 		}
 
+		//에디터 textarea 값 처리
 		pEBINonMemberDTO.setPcStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getPcStduyCntn()));
 		pEBINonMemberDTO.setMblStduyCntn(COWebUtil.clearXSSMinimum(pEBINonMemberDTO.getMblStduyCntn()));
+
+		pEBINonMemberDTO.setPicTelNo(pEBINonMemberDTO.getPicTelNo().replaceAll("-", ""));
 
 		//비회원 교육 과정 등록
 		respCnt = eBINonMemberMapper.insertNonMember(pEBINonMemberDTO);

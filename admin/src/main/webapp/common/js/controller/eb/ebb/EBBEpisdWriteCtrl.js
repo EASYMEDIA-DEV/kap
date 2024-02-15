@@ -1494,39 +1494,43 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					if($("#edctnSeq").val() == ""){
 						alert("과정을 선택해주세요");
+						$(".couseSearch").focus();
 						return  false;
 					}
 
 					if($("#episdYear").val() == ""){
 						alert("년도를 선택해주세요.");
+						$("#episdYear").focus();
 						return false;
 					}
 
 					if($("#episdOrd").val() == ""){
 						alert("회차를 선택해주세요.");
+						$("#episdOrd").focus();
 						return false;
 					}
 
-					var accsStrtDt = $("#accsStrtDt").val();
-					var accsStrtHour = $("#accsStrtHour").val();
-					var accsEndDt = $("#accsEndDt").val();
-					var accsEndHour = $("#accsEndHour").val();
+					var accsStrtDt = $("#accsStrtDt");
+					var accsStrtHour = $("#accsStrtHour");
+					var accsEndDt = $("#accsEndDt");
+					var accsEndHour = $("#accsEndHour");
 
-					var edctnStrtDt = $("#edctnStrtDt").val();
-					var edctnStrtHour = $("#edctnStrtHour").val();
+					var edctnStrtDt = $("#edctnStrtDt");
+					var edctnStrtHour = $("#edctnStrtHour");
 
-					var edctnEndDt = $("#edctnEndDt").val();
-					var edctnEndHour = $("#edctnEndHour").val();
+					var edctnEndDt = $("#edctnEndDt");
+					var edctnEndHour = $("#edctnEndHour");
 
 					var attrArray = [accsStrtDt, accsStrtHour, accsEndDt, accsEndHour, edctnStrtDt, edctnStrtHour, edctnEndDt, edctnEndHour];
-					var attrArrayText = ["접수시작일시", "접수시작시간" ,"접수종료일시" ,"접수종료시간" ,"교육시작일시" ,"교육시작시간" ,"교육종료일시" ,"교육종료시간"];
+					var attrArrayText = ["접수시작일시", "접수시작시간시" ,"접수종료일" ,"접수종료시간" ,"교육시작일시" ,"교육시작시간" ,"교육종료일시" ,"교육종료시간"];
 
 					var forStatus = true;
 					for(var i=0; i<attrArray.length;i++){
-						var attr = attrArray[i];
+						var attr = attrArray[i].val();
 						if(attr == ""){
 							var returnText = (attrArrayText[i].indexOf("시간")> -1 ) ? "을 입력 해주세요" :  "를 입력 해주세요";
 							alert(attrArrayText[i] + returnText);
+							attrArray[i].focus();
 							forStatus = false;
 							break;
 						}
@@ -1551,6 +1555,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					if(checkList.length == 0){
 						alert("강사를 추가 해주세요");
+						$(".eduIsttrSearch").focus();
 						return false
 					}
 
@@ -1559,6 +1564,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					if(!fxnumImpsbYn){
 						if($("#fxnumCnt").val() ==""){
 							alert("정원수를 입력해주세요.");
+							$("#fxnumCnt").focus();
 							return false
 						}
 					}
@@ -1566,38 +1572,52 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					//모집방식
 
 					if($("input[name='rcrmtMthdCd']:checked").length == 0){
-						alert("담당자명을 입력해주세요.");
+						alert("모집방식을 선택해주세요.");
+						$("input[name='rcrmtMthdCd']").focus();
 						return false
 					}
 
 					//문읨담당자
 					if($("#picNm").val() == ""){
 						alert("담당자명을 입력해주세요.");
+						$("#picNm").focus();
 						return false
 					}
 					//담당자이메일
 					if($("#picEmail").val() == ""){
 						alert("담당자이메일을 입력해주세요.");
+						$("#picEmail").focus();
 						return false
 					}
 
 					var email = $("#picEmail").val();
-					var temp2 = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net)/;
+					var temp2 = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net|kr|co\.kr|org)$/;
 					var emailTest2 = temp2.test(email);
 
 					if(!emailTest2){
 						alert("이메일 양식에 맞게 입력 해주세요");
+						$("#picEmail").focus();
 						return false;
 					}
 
 
 					if($("#picTelNo").val() == ""){
 						alert("담당자전화번호를 입력해주세요.");
+						$("#picTelNo").focus();
 						return false
 					}
 
-					//집체교육이면 안넣음
 
+					//교육장소
+					var stduyMthdCd = $("#stduyMthdCd").val();
+
+					if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
+						alert("교육장소를 선택해주세요");
+						$(".eduRoomSearch").focus();
+						return false;
+					}
+
+					//집체교육이면 안넣음 (온라인 교육일 경우만)
 					var stduyMthdCd = $("#stduyMthdCd").val();
 					var onlineChk = true;
 					if(stduyMthdCd != "STDUY_MTHD01"){
@@ -1613,6 +1633,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 								if(onlineUrl ===undefined || onlineUrl =="" && onlineChk == true){
 									alert("유튜브 URL을 입력해 주세요");
+									$("input[name='onlineUrl']").focus();
 									onlineChk = false;
 								}
 							}
@@ -1624,45 +1645,42 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						return false;
 					}
 
-
-					//교육장소
-					var stduyMthdCd = $("#stduyMthdCd").val();
-
-					if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
-						alert("교육장소를 선택해주세요");
-						return false;
-					}
-
 					//만족도조사
 					if($("#srvSeq").val() == "") {
 						alert("만족도조사를 선택해주세요");
+						$(".eduSrvSearch").focus();
 						return false;
 					}
 
 					if($("#srvStrtDtm").val() == "") {
 						alert("만족도조사 시작일시를 입력해주세요");
+						$("#srvStrtDtm").focus();
 						return false;
 					}
 
 
 					if($("#srvEndDtm").val() == "") {
 						alert("만족도조사 종료일시를 입력해주세요");
+						$("#srvEndDtm").focus();
 						return false;
 					}
 
 					//평가
 					if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 						alert("평가를 선택해주세요");
+						$(".eduExamSearch").focus();
 						return false;
 					}
 
 					if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 						alert("평가 시작일시를 선택해주세요");
+						$("#examStrtDtm").focus();
 						return false;
 					}
 
 					if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 						alert("평가 종료일시를 선택해주세요");
+						$("#examEndDtm").focus();
 						return false;
 					}
 
@@ -1775,6 +1793,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if(isttrSeqList.length == 0){
 							alert("강사를 추가 해주세요");
+							$(".eduIsttrSearch").focus();
 							return false
 						}
 
@@ -1812,37 +1831,44 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if(stduyMthdCd != "STDUY_MTHD02" && $("#placeSeq").val() == ""){
 							alert("교육장소를 선택해주세요");
+							$(".eduRoomSearch").focus();
 							return false;
 						}
 
 						if($("#srvSeq").val() == "") {
 							alert("만족도조사를 선택해주세요");
+							$(".eduSrvSearch").focus();
 							return false;
 						}
 
 						if($("#srvStrtDtm").val() == "") {
 							alert("만족도조사 시작일시를 입력해주세요");
+							$("#srvStrtDtm").focus();
 							return false;
 						}
 
 
 						if($("#srvEndDtm").val() == "") {
 							alert("만족도조사 종료일시를 입력해주세요");
+							$("#srvEndDtm").focus();
 							return false;
 						}
 
 						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("평가를 선택해주세요");
+							$(".eduExamSearch").focus();
 							return false;
 						}
 
 						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("평가 시작일시를 선택해주세요");
+							$("#examStrtDtm").focus();
 							return false;
 						}
 
 						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
 							alert("평가 종료일시를 선택해주세요");
+							$("#examEndDtm").focus();
 							return false;
 						}
 
@@ -1955,6 +1981,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 										if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
 											alert("유튜브 URL을 입력해 주세요");
+											$("input[name='onlineUrl']").focus();
 											resultFlag = false;
 										}
 
@@ -2060,11 +2087,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if($("#expnsCprtnInsttNm").val() !="" &&  $("#expnsPmt").val() == ""){
 							alert("협력기관 지출금액을 입력해주세요.");
+							$("#expnsPmt").focus();
 							resultFlag = false;
 						}
 
 						if($("#expnsPmt").val() !="" &&  $("#expnsCprtnInsttNm").val() == ""){
 							alert("협력기관을 입력해주세요.");
+							$(".expnsCprtnInsttSearch").focus();
 							resultFlag = false;
 						}
 

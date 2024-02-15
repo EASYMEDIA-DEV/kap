@@ -492,6 +492,33 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			},
 
+			//문의 담당자 전화번호
+			picTelNo : {
+				event : {
+					keyup : function(e) {
+						var val = this.value.replace(/\D/g,'');
+						var newVal = '';
+
+						if(val.startsWith('02')) {
+							if(val.length === 9) {
+								newVal = val.replace(/^(\d{2})(\d{3})(\d{4})/, '$1-$2-$3');
+							}
+							else {
+								newVal = val.replace(/^(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+							}
+						} else {
+							if(val.length === 10) {
+								newVal = val.replace(/^(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+							}
+							else {
+								newVal = val.replace(/^(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+							}
+						}
+						this.value = newVal;
+					}
+				}
+			},
+
 			//신청자 여러명 신청 취소
 			cancelSelectEdctn : {
 				event : {
@@ -580,10 +607,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					click : function () {
 						if ($(this).prop('checked')) {
 							$("#fxnumCnt").val("");
-							$("#fxnumCnt").addClass("notRequired");
+							// $("#fxnumCnt").addClass("notRequired");
 							$("#fxnumCnt").prop("readonly", true);
 						} else {
-							$("#fxnumCnt").removeClass("notRequired");
+							// $("#fxnumCnt").removeClass("notRequired");
 							$("#fxnumCnt").prop("readonly", false);
 						}
 					}
@@ -1012,10 +1039,322 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					fileFieldNm : trgtObj.data("fileFieldNm")
 				})
 			});
+
 			// 유효성 검사
 			$formObj.validation({
 				after : function() {
-					var isValid = true, editorChk = true;
+					var isValid = true;
+
+					var ctgryCd = $("#ctgryCd").val();
+					var nm = $("#nm").val();
+					var smmryNm = $("#smmryNm").val();
+
+					var accsStrtDt = $("#accsStrtDt").val();
+					var accsStrtHour = $("#accsStrtHour").val();
+
+					var accsEndDt = $("#accsEndDt").val();
+					var accsEndHour = $("#accsEndHour").val();
+
+					var edctnStrtDt = $("#edctnStrtDt").val();
+					var edctnStrtHour = $("#edctnStrtHour").val();
+
+					var edctnEndDt = $("#edctnEndDt").val();
+					var edctnEndHour = $("#edctnEndHour").val();
+
+					var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
+					// var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
+					var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
+
+					var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
+					// var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
+					var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":00:00";
+
+					if($("#cd").val() == "-99"){
+						alert("과정분류-대분류를 선택해주세요");
+						$("#cd").focus();
+						return false;
+					}
+
+					if(ctgryCd == ""){
+						alert("과정분류-소분류를 선택해주세요");
+						$("#ctgryCd").focus();
+						return false;
+					}
+
+					if(nm == ""){
+						alert("과정명을 입력해주세요");
+						$("#nm").focus();
+						return false;
+					}
+
+					if(smmryNm == ""){
+						alert("과정요약을 입력해주세요");
+						$("#smmryNm").focus();
+						return false;
+					}
+
+					if(accsStrtDt == ""){
+						alert("접수 시작일을 입력해주세요");
+						$("#accsStrtDt").focus();
+						return false;
+					}
+
+					if(accsStrtHour == ""){
+						alert("접수 시작시간을 입력해주세요");
+						$("#accsStrtHour").focus();
+						return false;
+					}
+
+					if(accsEndDt == ""){
+						alert("접수 종료일을 입력해주세요");
+						$("#accsEndDt").focus();
+						return false;
+					}
+
+					if(accsEndHour == ""){
+						alert("접수 종료시간을 입력해주세요");
+						$("#accsEndHour").focus();
+						return false;
+					}
+
+					//접수시간 관련 날짜 유효성 체크
+					if(accsStrtDt > accsEndDt){
+						alert("접수 종료일은 접수 시작일보다 이후 날짜로 입력해주세요.");
+						$("#accsEndDt").focus();
+						return false;
+					}
+					if(accsStrtDt == accsEndDt){
+						if(accsStrtHour > accsEndHour){
+							alert("접수 시작시간이 더 클 수 없습니다.");
+							$("#accsStrtHour").focus();
+							return false;
+						}
+					}
+
+					if(edctnStrtDt == ""){
+						alert("교육 시작일을 입력해주세요");
+						$("#edctnStrtDt").focus();
+						return false;
+					}
+
+					if(accsStrtDt > edctnStrtDt){
+						alert("교육 시작일은 접수 종료일 이후로 입력해주세요.");
+						$("#edctnStrtDt").focus();
+						return false;
+					}
+
+					if(accsEndDt > edctnStrtDtm){
+						alert("교육 시작일은 접수 종료일 이후로 입력해주세요.");
+						$("#edctnStrtDt").focus();
+						return false;
+					}
+
+					if(edctnStrtHour == ""){
+						alert("교육 시작시간을 입력해주세요");
+						$("#edctnStrtHour").focus();
+						return false;
+					}
+
+					if(edctnEndDt == ""){
+						alert("교육 종료일을 입력해주세요");
+						$("#edctnEndDt").focus();
+						return false;
+					}
+
+					if(accsStrtDt > edctnEndDt){
+						alert("교육 종료일은 접수 종료일 이후로 입력해주세요.");
+						$("#edctnEndDt").focus();
+						return false;
+					}
+
+					if(accsEndDt > edctnEndDt){
+						alert("교육 종료일은 접수 종료일 이후로 입력해주세요.");
+						$("#edctnEndDt").focus();
+						return false;
+					}
+
+					if(edctnEndHour == ""){
+						alert("교육 종료시간을 입력해주세요");
+						$("#edctnEndHour").focus();
+						return false;
+					}
+
+					//교육기간 유효성 체크
+					if(edctnStrtDt > edctnEndDt){
+						alert("교육 종료일은 교육 시작일보다 이후 날짜로 입력해주세요.");
+						$("#edctnEndDtm").focus();
+						return false;
+					}
+					if(edctnStrtDt == edctnEndDt){
+						if(edctnStrtHour > edctnEndHour){
+							alert("교육 시작시간이 더 클 수 없습니다.");
+							$("#edctnStrtHour").focus();
+							return false;
+						}
+					}
+
+					//강사목록 세팅
+					var isttrSeqList= new Array();
+					$("input[name='isttrSeq']").each(function(){
+						if($(this).val() != undefined && $(this).val() != ""){
+							var tempForm = {};
+							tempForm.edctnSeq = $("#edctnSeq").val();
+							tempForm.isttrSeq = $(this).val();
+							isttrSeqList.push(tempForm);
+						}
+					});
+
+					if(isttrSeqList.length == 0){
+						alert("강사를 추가해주세요");
+						$(".eduIsttrSearch").focus();
+						return false
+					}
+
+					if($("#fxnumCnt").val() == ""){
+						alert("정원수를 입력해주세요");
+						$("#fxnumCnt").focus();
+						return false;
+					}
+
+					if($("#picNm").val() == ""){
+						alert("담당자명을 입력해주세요.");
+						$("#picNm").focus();
+						return false
+					}
+
+					if($("#picEmail").val() == ""){
+						alert("담당자 이메일을 입력해주세요.");
+						$("#picEmail").focus();
+						return false
+					}
+
+					var email = $("#picEmail").val();
+					var emailReg = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net|kr|co\.kr|org)$/;
+					var emailTest = emailReg.test(email);
+
+					if(!emailTest){
+						alert("이메일 양식에 맞게 입력해주세요");
+						$("#picEmail").focus();
+						return false;
+					}
+
+					if($("#picTelNo").val() == ""){
+						alert("담당자 전화번호를 입력해주세요.");
+						$("#picTelNo").focus();
+						return false
+					}
+
+					var telNo = $("#picTelNo").val();
+					var telNoReg = /^([0]{1}[0-9]{1,2})-([1-9]{1}[0-9]{2,3})-([0-9]{4})|(15|16|18)(00|70|44|66|77|88)-[0-9]{4}$/;
+					var telNoTest = telNoReg.test(telNo);
+
+					if(!telNoTest){
+						alert("연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.");
+						$("#picTelNo").focus();
+						return false;
+					}
+
+					if($("#placeSeq").val() == ""){
+						alert("교육장소를 선택해주세요");
+						$(".eduRoomSearch").focus();
+						return false;
+					}
+
+					if($("#itrdcCntn").val() == ""){
+						alert("과정소개를 입력해주세요");
+						$("#itrdcCntn").focus();
+						return false;
+					}
+
+					if($("#stduyTrgtCntn").val() == ""){
+						alert("학습목표를 입력해주세요");
+						$("#stduyTrgtCntn").focus();
+						return false;
+					}
+
+					/*var checkedCount = $("input[name='targetCd']:checked").length;
+                    if(checkedCount < 4) {
+                        alert("학습 대상은 기타 항목을 제외한 각 항목 별로 1개씩 선택해주세요");
+                        $(".cntCheck").focus();
+                        return false;
+                    }
+                    if( checkedCount > 4) {
+                        alert("학습 대상의 각 항목 별로 1개씩만 선택해주세요");
+                        $(".cntCheck").focus();
+                        return false;
+                    }*/
+
+					var count01 = 0;
+					var count02 = 0;
+					var count03 = 0;
+					var count04 = 0;
+
+					$('input[name="targetCd"]:checked').each(function() {
+						var value = $(this).val();
+						if(value.includes("ED_TARGET01")) {
+							count01++;
+						}
+						if(value.includes("ED_TARGET02")) {
+							count02++;
+						}
+						if(value.includes("ED_TARGET03")) {
+							count03++;
+						}
+						if(value.includes("ED_TARGET04")) {
+							count04++;
+						}
+					});
+
+					if (count01 === 0) {
+						alert("학습대상 - 회사를 선택해주세요.");
+						$("input[name='targetCd'][value*='ED_TARGET01']:first").focus();
+						return false;
+					}
+					if (count02 === 0) {
+						alert("학습대상 - 업종을 선택해주세요.");
+						$("input[name='targetCd'][value*='ED_TARGET02']:first").focus();
+						return false;
+					}
+					if (count03 === 0) {
+						alert("학습대상 - 직무를 선택해주세요.");
+						$("input[name='targetCd'][value*='ED_TARGET03']:first").focus();
+						return false;
+					}
+					if (count04 === 0) {
+						alert("학습대상 - 직급을 선택해주세요.");
+						$("input[name='targetCd'][value*='ED_TARGET04']:first").focus();
+						return false;
+					}
+
+					if($("#stduyDdCd").val() == ""){
+						alert("학습일을 선택해주세요");
+						$("#stduyDdCd").focus();
+						return false;
+					}
+
+					if($("#stduyTimeCd").val() == ""){
+						alert("학습시간을 선택해주세요");
+						$("#stduyTimeCd").focus();
+						return false;
+					}
+
+					if($("#stduySuplsNm").val() == ""){
+						alert("학습준비물을 입력해주세요");
+						$("#stduySuplsNm").focus();
+						return false;
+					}
+
+					if($("#stduySuplsNm").val() == ""){
+						alert("학습준비물을 입력해주세요");
+						$("#stduySuplsNm").focus();
+						return false;
+					}
+
+					if($("#stduySuplsNm").val() == ""){
+						alert("학습준비물을 입력해주세요");
+						$("#stduySuplsNm").focus();
+						return false;
+					}
 
 					$formObj.find(".ckeditorRequired").each(function() {
 						jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
@@ -1028,9 +1367,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if (editorVal < 1)
 						{
-							editorChk = false;
+							isValid = false;
 
-							alert(msgCtrl.getMsg("fail.co.cog.cnts"));
+							alert(jQuery(this).attr("title") + "을 입력해주세요.");
 
 							CKEDITOR.instances[jQuery(this).prop("id")].focus();
 
@@ -1041,9 +1380,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 					});
 
-					if (!editorChk)
-					{
-						isValid = false;
+					/*if($("#pcStduyCntn").val() == ""){
+						alert("PC 학습내용을 입력해주세요");
+						$("#pcStduyCntn").focus();
+						return false;
+					}
+
+					if($("#mblStduyCntn").val() == ""){
+						alert("모바일 학습내용을 입력해주세요");
+						$("#mblStduyCntn").focus();
+						return false;
+					}*/
+
+					if($("input[name='bdgetExpnsYn']:checked").val() == "Y") {
+						if($("#expnsCprtnInsttNm").val() == ""){
+							alert("협력기관을 입력해주세요.");
+							$("#expnsCprtnInsttNm").focus();
+							isValid = false;
+							return false;
+						}
+
+						if($("#expnsPmt").val() == ""){
+							alert("협력기관 지출금액을 입력해주세요.");
+							$("#expnsPmt").focus();
+							isValid = false;
+							return false;
+						}
 					}
 
 					return isValid;
@@ -1086,6 +1448,130 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 
+						if($("#cd").val() == "-99"){
+							alert("과정분류-대분류를 선택해주세요");
+							$("#cd").focus();
+							return false;
+						}
+
+						if(ctgryCd == ""){
+							alert("과정분류-소분류를 선택해주세요");
+							$("#ctgryCd").focus();
+							return false;
+						}
+
+						if(nm == ""){
+							alert("과정명을 입력해주세요");
+							$("#nm").focus();
+							return false;
+						}
+
+						if(smmryNm == ""){
+							alert("과정요약을 입력해주세요");
+							$("#smmryNm").focus();
+							return false;
+						}
+
+						if(accsStrtDt == ""){
+							alert("접수 시작일을 입력해주세요");
+							$("#accsStrtDt").focus();
+							return false;
+						}
+
+						if(accsStrtHour == ""){
+							alert("접수 시작시간을 입력해주세요");
+							$("#accsStrtHour").focus();
+							return false;
+						}
+
+						if(accsEndDt == ""){
+							alert("접수 종료일을 입력해주세요");
+							$("#accsEndDt").focus();
+							return false;
+						}
+
+						if(accsEndHour == ""){
+							alert("접수 종료시간을 입력해주세요");
+							$("#accsEndHour").focus();
+							return false;
+						}
+
+						//접수시간 관련 날짜 유효성 체크
+						if(accsStrtDt > accsEndDt){
+							alert("접수 종료일은 접수 시작일보다 이후 날짜로 입력해주세요.");
+							$("#accsEndDt").focus();
+							return false;
+						}
+						if(accsStrtDt == accsEndDt){
+							if(accsStrtHour > accsEndHour){
+								alert("접수 시작시간이 더 클 수 없습니다.");
+								$("#accsStrtHour").focus();
+								return false;
+							}
+						}
+
+						if(edctnStrtDt == ""){
+							alert("교육 시작일을 입력해주세요");
+							$("#edctnStrtDt").focus();
+							return false;
+						}
+
+						if(accsStrtDt > edctnStrtDt){
+							alert("교육 시작일은 접수 종료일 이후로 입력해주세요.");
+							$("#edctnStrtDt").focus();
+							return false;
+						}
+
+						if(accsEndDt > edctnStrtDtm){
+							alert("교육 시작일은 접수 종료일 이후로 입력해주세요.");
+							$("#edctnStrtDt").focus();
+							return false;
+						}
+
+						if(edctnStrtHour == ""){
+							alert("교육 시작시간을 입력해주세요");
+							$("#edctnStrtHour").focus();
+							return false;
+						}
+
+						if(edctnEndDt == ""){
+							alert("교육 종료일을 입력해주세요");
+							$("#edctnEndDt").focus();
+							return false;
+						}
+
+						if(accsStrtDt > edctnEndDt){
+							alert("교육 종료일은 접수 종료일 이후로 입력해주세요.");
+							$("#edctnEndDt").focus();
+							return false;
+						}
+
+						if(accsEndDt > edctnEndDt){
+							alert("교육 종료일은 접수 종료일 이후로 입력해주세요.");
+							$("#edctnEndDt").focus();
+							return false;
+						}
+
+						if(edctnEndHour == ""){
+							alert("교육 종료시간을 입력해주세요");
+							$("#edctnEndHour").focus();
+							return false;
+						}
+
+						//교육기간 유효성 체크
+						if(edctnStrtDt > edctnEndDt){
+							alert("교육 종료일은 교육 시작일보다 이후 날짜로 입력해주세요.");
+							$("#edctnEndDtm").focus();
+							return false;
+						}
+						if(edctnStrtDt == edctnEndDt){
+							if(edctnStrtHour > edctnEndHour){
+								alert("교육 시작시간이 더 클 수 없습니다.");
+								$("#edctnStrtHour").focus();
+								return false;
+							}
+						}
+
 						//강사목록 세팅
 						var isttrSeqList= new Array();
 						$("input[name='isttrSeq']").each(function(){
@@ -1098,44 +1584,72 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						});
 
 						if(isttrSeqList.length == 0){
-							alert("강사를 추가 해주세요");
+							alert("강사를 추가해주세요");
 							$(".eduIsttrSearch").focus();
 							return false
 						}
 
 						actForm.isttrSeqList = isttrSeqList; //강사
 
-						//접수시간 관련 날짜 유효성 체크
-						if(accsStrtDtm>accsEndDtm){
-							alert("접수 시작일이 접수 종료일보다 이전날짜로 입력 해주세요.");
-							$("#accsStrtDt").focus();
+						if($("#fxnumCnt").val() == ""){
+							alert("정원수를 입력해주세요");
+							$("#fxnumCnt").focus();
 							return false;
-						}
-						if(accsStrtDt == accsEndDt){
-							if(accsStrtHour > accsEndHour){
-								alert("접수 시작시간이 더 클 수 없습니다.");
-								$("#accsStrtHour").focus();
-								return false;
-							}
 						}
 
-						//교육기간 유효성 체크
-						if(edctnStrtDtm>edctnEndDtm){
-							alert("교육 시작일이 교육 종료일보다 이전날짜로 입력 해주세요.");
-							$("#edctnStrtDt").focus();
+						if($("#picNm").val() == ""){
+							alert("담당자명을 입력해주세요.");
+							$("#picNm").focus();
+							return false
+						}
+
+						if($("#picEmail").val() == ""){
+							alert("담당자 이메일을 입력해주세요.");
+							$("#picEmail").focus();
+							return false
+						}
+
+						var email = $("#picEmail").val();
+						var emailReg = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net|kr|co\.kr|org)$/;
+						var emailTest = emailReg.test(email);
+
+						if(!emailTest){
+							alert("이메일 양식에 맞게 입력해주세요");
+							$("#picEmail").focus();
 							return false;
 						}
-						if(edctnStrtDt == edctnEndDt){
-							if(edctnStrtHour > edctnEndHour){
-								alert("교육 시작시간이 더 클 수 없습니다.");
-								$("#edctnStrtHour").focus();
-								return false;
-							}
+
+						if($("#picTelNo").val() == ""){
+							alert("담당자 전화번호를 입력해주세요.");
+							$("#picTelNo").focus();
+							return false
+						}
+
+						var telNo = $("#picTelNo").val();
+						var telNoReg = /^([0]{1}[0-9]{1,2})-([1-9]{1}[0-9]{2,3})-([0-9]{4})|(15|16|18)(00|70|44|66|77|88)-[0-9]{4}$/;
+						var telNoTest = telNoReg.test(telNo);
+
+						if(!telNoTest){
+							alert("연락처는 02(010)-1234-5678 또는 15XX-XXXX 형식으로 입력되어야 합니다.");
+							$("#picTelNo").focus();
+							return false;
 						}
 
 						if($("#placeSeq").val() == ""){
 							alert("교육장소를 선택해주세요");
 							$(".eduRoomSearch").focus();
+							return false;
+						}
+
+						if($("#itrdcCntn").val() == ""){
+							alert("과정소개를 입력해주세요");
+							$("#itrdcCntn").focus();
+							return false;
+						}
+
+						if($("#stduyTrgtCntn").val() == ""){
+							alert("학습목표를 입력해주세요");
+							$("#stduyTrgtCntn").focus();
 							return false;
 						}
 
@@ -1150,6 +1664,130 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							$(".cntCheck").focus();
 							return false;
 						}*/
+
+						var count01 = 0;
+						var count02 = 0;
+						var count03 = 0;
+						var count04 = 0;
+
+						$('input[name="targetCd"]:checked').each(function() {
+							var value = $(this).val();
+							if(value.includes("ED_TARGET01")) {
+								count01++;
+							}
+							if(value.includes("ED_TARGET02")) {
+								count02++;
+							}
+							if(value.includes("ED_TARGET03")) {
+								count03++;
+							}
+							if(value.includes("ED_TARGET04")) {
+								count04++;
+							}
+						});
+
+						if (count01 === 0) {
+							alert("학습대상 - 회사를 선택해주세요.");
+							$("input[name='targetCd'][value*='ED_TARGET01']:first").focus();
+							return false;
+						}
+						if (count02 === 0) {
+							alert("학습대상 - 업종을 선택해주세요.");
+							$("input[name='targetCd'][value*='ED_TARGET02']:first").focus();
+							return false;
+						}
+						if (count03 === 0) {
+							alert("학습대상 - 직무를 선택해주세요.");
+							$("input[name='targetCd'][value*='ED_TARGET03']:first").focus();
+							return false;
+						}
+						if (count04 === 0) {
+							alert("학습대상 - 직급을 선택해주세요.");
+							$("input[name='targetCd'][value*='ED_TARGET04']:first").focus();
+							return false;
+						}
+
+						if($("#stduyDdCd").val() == ""){
+							alert("학습일을 선택해주세요");
+							$("#stduyDdCd").focus();
+							return false;
+						}
+
+						if($("#stduyTimeCd").val() == ""){
+							alert("학습시간을 선택해주세요");
+							$("#stduyTimeCd").focus();
+							return false;
+						}
+
+						if($("#stduySuplsNm").val() == ""){
+							alert("학습준비물을 입력해주세요");
+							$("#stduySuplsNm").focus();
+							return false;
+						}
+
+						if($("#stduySuplsNm").val() == ""){
+							alert("학습준비물을 입력해주세요");
+							$("#stduySuplsNm").focus();
+							return false;
+						}
+
+						if($("#stduySuplsNm").val() == ""){
+							alert("학습준비물을 입력해주세요");
+							$("#stduySuplsNm").focus();
+							return false;
+						}
+
+						$formObj.find(".ckeditorRequired").each(function() {
+							jQuery(this).val(CKEDITOR.instances[jQuery(this).attr("id")].getData());
+							jQuery(this).val(jQuery(this).val().split("<").join("~!left!~"));
+							jQuery(this).val(jQuery(this).val().split(">").join("~!right!~"));
+							jQuery(this).val(jQuery(this).val().split("\'").join("~!singlecomma!~"));
+							jQuery(this).val(jQuery(this).val().split("\"").join("~!doublecomma!~"));
+
+							var editorVal = jQuery(this).val().length;
+
+							if (editorVal < 1)
+							{
+								resultFlag = false;
+
+								alert(jQuery(this).attr("title") + "을 입력해주세요.");
+
+								CKEDITOR.instances[jQuery(this).prop("id")].focus();
+
+								// 에디터 최상단으로 스크롤 이동
+								jQuery(".main-container").scrollTop(jQuery(".main-container").scrollTop() + jQuery(this).parents("fieldset").offset().top - 73);
+
+								return false;
+							}
+						});
+
+						/*if($("#pcStduyCntn").val() == ""){
+                            alert("PC 학습내용을 입력해주세요");
+                            $("#pcStduyCntn").focus();
+                            return false;
+                        }
+
+                        if($("#mblStduyCntn").val() == ""){
+                            alert("모바일 학습내용을 입력해주세요");
+                            $("#mblStduyCntn").focus();
+                            return false;
+                        }*/
+
+						if(!resultFlag) {
+							return false;
+						}
+
+						//강사목록 세팅
+						var isttrSeqList= new Array();
+						$("input[name='isttrSeq']").each(function(){
+							if($(this).val() != undefined && $(this).val() != ""){
+								var tempForm = {};
+								tempForm.edctnSeq = $("#edctnSeq").val();
+								tempForm.isttrSeq = $(this).val();
+								isttrSeqList.push(tempForm);
+							}
+						});
+						actForm.isttrSeqList = isttrSeqList; //강사
 
 						actForm.ctgryCd = ctgryCd;//과정분류
 						actForm.nm = nm;//과정명
@@ -1302,14 +1940,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.bdgetList = bdgetList;
 
-						if($("#expnsCprtnInsttNm").val() !="" &&  $("#expnsPmt").val() == ""){
-							alert("협력기관 지출금액을 입력해주세요.");
-							resultFlag = false;
-						}
+						if($("input[name='bdgetExpnsYn']:checked").val() == "Y") {
+							if($("#expnsCprtnInsttNm").val() == ""){
+								alert("협력기관을 입력해주세요.");
+								$("#expnsCprtnInsttNm").focus();
+								resultFlag = false;
+								return false;
+							}
 
-						if($("#expnsPmt").val() !="" &&  $("#expnsCprtnInsttNm").val() == ""){
-							alert("협력기관을 입력해주세요.");
-							resultFlag = false;
+							if($("#expnsPmt").val() == ""){
+								alert("협력기관 지출금액을 입력해주세요.");
+								$("#expnsPmt").focus();
+								resultFlag = false;
+								return false;
+							}
 						}
 
 						actForm.bdgetExpnsYn = $("input[name='bdgetExpnsYn']:checked").val();
