@@ -1,5 +1,6 @@
 package com.kap.front.controller.eb;
 
+import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMailDTO;
@@ -14,6 +15,7 @@ import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
+import io.netty.util.internal.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -388,13 +390,15 @@ public class EBACouseController {
                         COMailDTO cOMailDTO = new COMailDTO();
                         cOMailDTO.setSubject("[KAP] 교육신청 완료 안내");
                         System.out.println("@@@@ 시작");
+
+
                         COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
                         receiverDto.setEmail(applicantDto.getEmail());
                         receiverDto.setName(applicantDto.getName());
                         receiverDto.setNote1(rtnDto.getNm());
                         receiverDto.setNote2(tempEpisdDTO.getPlaceNm());
-                        receiverDto.setNote3(tempEpisdDTO.getEdctnStrtDtm());
-                        receiverDto.setNote4(tempEpisdDTO.getEdctnEndDtm());
+                        receiverDto.setNote3(CODateUtil.convertDate(tempEpisdDTO.getEdctnStrtDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+                        receiverDto.setNote4(CODateUtil.convertDate(tempEpisdDTO.getEdctnEndDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
                         receiverDto.setNote5(applicantDto.getCmpnNm());
                         cOMailDTO.getReceiver().add(receiverDto);
 
@@ -527,6 +531,36 @@ public class EBACouseController {
             HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
 
             EBACouseDTO rtnDto = (EBACouseDTO)rtnMap.get("rtnData");
+
+            //회원 기본정보 호출
+            mpaUserDto.setDetailsKey(String.valueOf(COUserDetailsHelperService.getAuthenticatedUser().getSeq())) ;
+            MPAUserDto applicantDto = mpaUserService.selectUserDtlTab(mpaUserDto);
+
+            //교육신청 메일발송 시작
+
+            HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+            EBBEpisdDTO tempEpisdDTO = (EBBEpisdDTO)episdDto.get("rtnData");
+            //메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("[KAP] 교육신청 완료 안내");
+            System.out.println("@@@@ 시작");
+
+
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            receiverDto.setEmail(applicantDto.getEmail());
+            receiverDto.setName(applicantDto.getName());
+            receiverDto.setNote1(rtnDto.getNm());
+            receiverDto.setNote2(tempEpisdDTO.getPlaceNm());
+            receiverDto.setNote3(CODateUtil.convertDate(tempEpisdDTO.getEdctnStrtDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+            receiverDto.setNote4(CODateUtil.convertDate(tempEpisdDTO.getEdctnEndDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+            receiverDto.setNote5(applicantDto.getCmpnNm());
+            cOMailDTO.getReceiver().add(receiverDto);
+
+            cOMessageService.sendMail(cOMailDTO, "EBBEduApplyStep3.html");
+
+            //교육신청 메일발송 끝
+            System.out.println("@@@@ 끝");
 
             modelMap.addAttribute("rtnPtcptDto", rtnPtcptDto);
             modelMap.addAttribute("rtnData", rtnDto);

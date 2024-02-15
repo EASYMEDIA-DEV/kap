@@ -887,7 +887,11 @@
                                 </select>
                             </div>
                             <div class="pull-right">
-                                <button type="button" class="btn btn-default btn-sm mb-sm" id="btnEdctnAtndc">출석부</button>
+
+                                <c:if test="${rtnData.stduyMthdCd ne 'STDUY_MTHD02'}">
+                                    <button type="button" class="btn btn-default btn-sm mb-sm" id="btnEdctnAtndc">출석부</button>
+                                </c:if>
+
                                 <button type="button" class="btn btn-default btn-sm mb-sm" id="btnAddApp">신청자 등록</button>
                                 <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcel">엑셀다운로드</button>
                             </div>
@@ -935,6 +939,7 @@
                     <div class="clearfix">
                         <div class="pull-left">
                             <button type="button" class="btn btn-info btn-default" id="changeEpisd">차수 변경</button>
+                            <button type="button" class="btn btn-info btn-default" id="sendEduMail">메일 발송</button>
                         </div>
                     </div>
 
@@ -1535,6 +1540,7 @@
     <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업-->
     <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBMemAtndcLayer.jsp"></jsp:include><!--출석부 레이어 팝업 - 개인별 -->
     <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBChangeEpisdLayer.jsp"></jsp:include><!-- 차수변경 레이어팝업-->
+    <jsp:include page="/WEB-INF/jsp/mngwserc/eb/ebb/EBBInformMailLayer.jsp"></jsp:include><!-- 메일발송 레이어팝업-->
 </c:if>
 
 

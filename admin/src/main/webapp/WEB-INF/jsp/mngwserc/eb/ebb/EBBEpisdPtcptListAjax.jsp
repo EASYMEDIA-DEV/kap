@@ -8,15 +8,19 @@
           <label class="checkbox-inline c-checkbox">
 
             <c:choose>
-            <c:when test="${ptcptList.eduStat ne '교육대기'}">
-              <c:set var="disabledChk" value="disabled"/>
 
-            </c:when>
-            <c:otherwise>
-              <c:set var="disabledChk" value=""/>
-            </c:otherwise>
+              <c:when test="${ptcptList.eduStat eq '교육대기'}">
+                <c:set var="changeChk" value="changeChk"/>
+              </c:when>
+
+              <%--<c:when test="${ptcptList.eduStat ne '교육대기'}">
+                <c:set var="disabledChk" value="disabled"/>
+              </c:when>
+              <c:otherwise>
+                <c:set var="disabledChk" value=""/>
+              </c:otherwise>--%>
             </c:choose>
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt_seq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}"   ${disabledChk} />
+            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired ${changeChk}" data-ptcpt_seq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" />
             <span class="ion-checkmark-round"></span>
           </label>
         </td>
@@ -29,7 +33,7 @@
         <td class="text-center">${ptcptList.deptCdNm} ${ptcptList.deptDtlNm == '' ? '' : '('+=ptcptList.deptDtlNm+=')'} </td><!-- 부서 -->
         <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
         <td class="text-center">${ptcptList.hpNo}</td><!-- 휴대폰번호 -->
-        <td class="text-center">${ptcptList.email}</td><!-- 이메일 -->
+        <td class="text-center" data-email="${ptcptList.email}">${ptcptList.email}</td><!-- 이메일 -->
         <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!-- 가입일 -->
         <td class="text-center">
             ${ empty ptcptList.eduDtm ? '-' : kl:convertDate(ptcptList.eduDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
@@ -39,7 +43,12 @@
 
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
-              <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" data-edctnSeq="${eBBEpisdDTO.edctnSeq}" data-episdOrd="${eBBEpisdDTO.episdOrd}" data-episdYear="${eBBEpisdDTO.episdYear}" >${ptcptList.eduAtndc}%</a>
+              <c:if test="${eBBEpisdDTO.stduyMthdCd ne 'STDUY_MTHD02'}">
+                <a href="#" class="btnMemAtndc" data-ptcptSeq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" data-edctnSeq="${eBBEpisdDTO.edctnSeq}" data-episdOrd="${eBBEpisdDTO.episdOrd}" data-episdYear="${eBBEpisdDTO.episdYear}" >${ptcptList.eduAtndc}%</a>
+              </c:if>
+              <c:if test="${eBBEpisdDTO.stduyMthdCd eq 'STDUY_MTHD02'}">
+                ${ptcptList.eduAtndc}%
+              </c:if>
             </c:when>
             <c:otherwise>
               -

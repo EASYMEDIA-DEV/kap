@@ -424,6 +424,9 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "수료증번호", example = "텍스트")
     private String crtfctNo;
 
+    @Schema(title = "교육내용 메일발송용", example = "텍스트")
+    private String informCntn;
+
 
 
 
@@ -500,6 +503,11 @@ public class EBBEpisdDTO extends BaseDTO {
     private List<EBBPtcptDTO> ptcptList;//참여자 목록
 
     private List<String> episdSeqList; //차수 번호 리스트
+
+
+    @Schema(title = "참여자 메일 리스트", example = "숫자")
+    private List<String> ptcptEmailList; //참여자 메일 리스트
+
 
     private List<EBBLctrDTO> lctrList;//온라인강의 목록
 

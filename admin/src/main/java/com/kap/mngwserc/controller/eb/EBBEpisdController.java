@@ -7,9 +7,12 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.common.utility.seed.COBrowserUtil;
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.eb.ebb.*;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
 import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptMst;
@@ -17,10 +20,7 @@ import com.kap.core.dto.ex.exg.EXGExamEdctnPtcptRspnMst;
 import com.kap.core.dto.ex.exg.EXGExamMstSearchDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.EBBEpisdService;
-import com.kap.service.EBEExamService;
-import com.kap.service.SVASurveyService;
+import com.kap.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -77,6 +77,9 @@ public class EBBEpisdController {
 
     /** 평가 서비스 **/
     private final EBEExamService eBEExamService;
+
+    /** 메일 서비스 **/
+    private final COMessageService cOMessageService;
 
     //파일 업로드 경로
     @Value("${app.file.upload-path}")
@@ -611,6 +614,47 @@ public class EBBEpisdController {
         return "mngwserc/eb/ebb/EBBMemAtndcAjax";
     }
 
+    @Operation(summary = "교육내용 메일발송", tags = "", description = "")
+    @PostMapping(value="/setInformSendMail")
+    public String setInformSendMail(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            List<String> ptcptMailList = eBBEpisdDTO.getPtcptEmailList();
+
+            String infoFormCntn = eBBEpisdDTO.getInformCntn();
+            infoFormCntn = COWebUtil.clearXSSMinimum(infoFormCntn);
+
+            for(String ptcptEmail : ptcptMailList){
+
+                //교육내용안내 메일발송 시작
+                COMailDTO cOMailDTO = new COMailDTO();
+                cOMailDTO.setSubject("[KAP] 교육 내용 안내");
+
+                COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                receiverDto.setEmail(ptcptEmail);
+                receiverDto.setNote1(infoFormCntn);
+
+                cOMailDTO.getReceiver().add(receiverDto);
+
+                cOMessageService.sendMail(cOMailDTO, "EBBInformMail.html");
+
+                //교육신청 메일발송 끝
+            }
+
+            modelMap.addAttribute("respCnt", 1);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
     /**
      * 교육 차수 QR 이미지 다운로드
      */
@@ -954,7 +998,6 @@ public class EBBEpisdController {
         }
         return "jsonView";
     }
-
 
 }
 

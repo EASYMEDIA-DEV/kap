@@ -460,6 +460,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		id : {
 
 
+			sendEduMail : {
+				event : {
+					click : function() {
+
+						//교육내용 메일 발송 레이어팝업 호출
+						$(".ebbInformMailLayer").one('show.bs.modal', function() {
+
+							jQuery("textarea[id='informCntn']").each(function(){
+								cmmCtrl.setEditor({
+									editor : jQuery(this).attr("id"),
+									height : 400
+								});
+							});
+
+							var modal = $(this);
+							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
+
+						}).one('hidden.bs.modal', function() {
+							// Remove class for soft backdrop (if not will affect future modals)
+						}).one('choice', function(data, param) {
+
+						}).modal();
+
+					}
+				}
+			},
 			picEmail : {
 				event : {
 					input : function() {
@@ -521,6 +547,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event : {
 					click : function() {
 
+						var resultFlag = true;
+
 
 						//차수변경 클릭
 						var seqObj = {};
@@ -535,19 +563,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 						//체크한 회원정보 전부 가져옴
+						var chkFlag = true;
 						var seqList = new Array();
 						$("#ptcptListContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
-							seqList.push($(this).val());
+
+							if(resultFlag && $(this).hasClass("changeChk")){
+								seqList.push($(this).val());
+							}else if(resultFlag){
+								alert("교육대기인 회원만 선택 가능합니다.");
+								resultFlag = false;
+							}
+
 						});
 
 
-						if(seqList.length<1){
+						if(resultFlag && seqList.length<1){
 							alert("회원을 선택해주세요.");
 							return false;
 
 						}
 
-						var resultFlag = true;
+
 						//선택한 참여자 목록중 교육취소가 하나라도 있으면 전부 취소
 						$("#ptcptListContainer").find("input:checkbox[name='delValueList']:checked").each(function(){
 
@@ -559,6 +595,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						});
 
 
+						console.log(seqList);
 						if(resultFlag){
 							seqObj.memSeq = seqList;
 
