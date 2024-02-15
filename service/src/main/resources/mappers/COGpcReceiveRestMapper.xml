@@ -123,7 +123,7 @@
 			 , b.episd_seq as kap_schd_seq
 			 , d.id as kap_id
 			 , a.exam_score as tot_score
-			 , a.cmptn_yn
+			 , a.cmptn_yn as cmplt_yn
 			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
 		FROM ep_edctn_ptcpt_mst A
 				 LEFT JOIN ed_edctn_episd_mst B ON B.EPISD_SEQ = A.EPISD_SEQ
