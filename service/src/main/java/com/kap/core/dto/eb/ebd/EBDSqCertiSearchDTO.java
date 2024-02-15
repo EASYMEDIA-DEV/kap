@@ -3,7 +3,6 @@ package com.kap.core.dto.eb.ebd;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.eb.ebb.EBBEpisdSqCertDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
@@ -55,5 +54,7 @@ public class EBDSqCertiSearchDTO extends BaseDTO {
 
     @Schema(title = "보수과목 리스트")
     private List<EBBEpisdSqCertDTO> educationRepairList;
+
+    @Builder.Default
     private int repairTotalCount = 0;
 }

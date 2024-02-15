@@ -617,8 +617,8 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">담당위원</label>
                                             <div class="col-sm-6 form-inline">
-                                                <input type="hidden" id="chkCmssrSeq" name="chkCmssrSeq" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrSeq}">
-                                                <input type="text" id="chkCmssrNm" class="form-control" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                <input type="hidden" id="chkCmssrSeq" class="notRequired" name="chkCmssrSeq" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrSeq}">
+                                                <input type="text" id="chkCmssrNm" class="form-control notRequired" value="${rtnData.applyList[0].msEquipmentList[0].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
                                                 <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                             </div>
                                         </div>

@@ -1119,7 +1119,15 @@
     <update id="updatePicCmssrSeq" parameterType="wbhaApplyMstDTO">
         UPDATE /* WBHACalibrationMapper.updatePicCmssrSeq */ CX_APPCTN_MST
         SET
-            PIC_CMSSR_SEQ = #{chkCmssrSeq}
+            PIC_CMSSR_SEQ =
+                <choose>
+                    <when test="chkCmssrSeq != null and chkCmssrSeq != ''.toString()">
+                        #{chkCmssrSeq}
+                    </when>
+                    <otherwise>
+                        null
+                    </otherwise>
+                </choose>
         WHERE APPCTN_SEQ = #{detailsKey}
     </update>
 
@@ -1242,7 +1250,14 @@
         ) VALUES (
             #{rsumeSeq},
             #{rsumeOrd},
-            #{chkCmssrSeq},
+            <choose>
+                <when test="chkCmssrSeq != null and chkCmssrSeq != ''.toString()">
+                    #{chkCmssrSeq},
+                </when>
+                <otherwise>
+                    null,
+                </otherwise>
+            </choose>
             <if test='siteGubun == "admin"'>
                 #{accsDt},
             </if>
