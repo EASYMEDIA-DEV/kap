@@ -56,13 +56,6 @@
                                                     </div>
                                                 </div>
                                             </c:if>
-                                            <c:if test="${appctnList.rsumeSttsNm eq '지도불가'}">
-                                                <div class="status-info-w">
-                                                    <p class="box-label bigger arr">
-                                                        <span>${appctnList.rsumeSttsNm}</span>
-                                                    </p>
-                                                </div>
-                                            </c:if>
                                             <c:if test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
                                                 <div class="status-info-w">
                                                     <p class="box-label bigger waiting">
@@ -162,13 +155,6 @@
                                         <c:if test="${appctnList.rsumeSttsNm eq '신청' or appctnList.rsumeSttsNm eq '사용자취소' or appctnList.rsumeSttsNm eq '지도착수' or appctnList.rsumeSttsNm eq '재단취소' or appctnList.rsumeSttsNm eq '부품사취소'}">
                                             <div class="status-info-w">
                                                 <p class="box-label bigger">
-                                                    <span>${appctnList.rsumeSttsNm}</span>
-                                                </p>
-                                            </div>
-                                        </c:if>
-                                        <c:if test="${appctnList.rsumeSttsNm eq '지도불가'}">
-                                            <div class="status-info-w">
-                                                <p class="box-label bigger arr">
                                                     <span>${appctnList.rsumeSttsNm}</span>
                                                 </p>
                                             </div>
