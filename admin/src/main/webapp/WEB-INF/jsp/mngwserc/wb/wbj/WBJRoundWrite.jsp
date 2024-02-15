@@ -33,7 +33,7 @@
                     <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <select class="form-control input-sm yearCnt" id="year" name="year">
-                            <c:forEach begin="${year}" end="${todayYear+3}" var="result" step="1">
+                            <c:forEach begin="${todayYear-20}" end="${todayYear+3}" var="result" step="1">
                                 <option value="${result}" <c:if test="${rtnInfo.year eq result}">selected</c:if><c:if test="${empty rtnInfo and todayYear eq result}">selected</c:if>>${result}</option>
                             </c:forEach>
                         </select>
