@@ -5,6 +5,7 @@ import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
@@ -86,12 +87,12 @@ public interface EBCVisitEduService {
     /**
      * 방문교육 신청정보를 등록
      */
-    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, MultipartHttpServletRequest multiRequest) throws Exception;
+    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception;
 
     /**
      * 방문교육 신청일시 값 조회
      */
-    public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
+    public EBCVisitEduDTO selectVisitEduApplyInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception;
 
     /**
      * 사용자 방문교육 신청자정보를 조회

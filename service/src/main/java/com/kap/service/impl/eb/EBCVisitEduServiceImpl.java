@@ -1,10 +1,9 @@
 package com.kap.service.impl.eb;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
-import com.kap.core.dto.COFileDTO;
-import com.kap.core.dto.COSystemLogDTO;
-import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.*;
 import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -21,15 +20,19 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -92,7 +95,11 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     //파일 업로드 유틸
     private final COFileUtil cOFileUtil;
 
-    COStringUtil stringUtil;
+    // 이메일 서비스
+    private final COMessageService cOMessageService;
+
+    @Value("${app.site.name}")
+    private String siteName;
 
     /**
      * 방문교육 목록을 조회한다.
@@ -803,7 +810,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     /**
      * 방문교육 신청정보 등록
      */
-    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, MultipartHttpServletRequest multiRequest) throws Exception {
+    public int applyVisitEduInfo(EBCVisitEduDTO ebcVisitEduDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         ebcVisitEduDTO.setVstSeq(edctnVstMstSeqIdgen.getNextIntegerId());
         //신청분야 상세 insert
         ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
@@ -823,15 +830,52 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
         ebcVisitEduDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
-        return ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+        EBCVisitEduDTO applicantDto = ebcVisitEduMapper.selectVisitEduApplyInfo(ebcVisitEduDTO);
+        //메일 발송
+        int respCnt = 0;
+        String regIp = CONetworkUtil.getMyIPaddress(request);
+        ebcVisitEduDTO.setRegIp(regIp);
 
+        /* 메일에 표기될 문의 접수일 날짜 셋팅 */
+        LocalDate currentDate = LocalDate.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String formattedDate = currentDate.format(formatter);
+
+        /* 문의 작성자에게 보내는 메일 처리 */
+        COMailDTO cOMailDTO = new COMailDTO();
+        cOMailDTO.setSubject("["+siteName+"] 방문교육 신청이 완료되었습니다.");
+        //수신자 정보
+        COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
+        //이메일
+        userReceiverDto.setEmail(ebcVisitEduDTO.getEmail());
+        //이름
+        userReceiverDto.setName(ebcVisitEduDTO.getEmail());
+        //치환문자1
+        userReceiverDto.setNote1("(" + ebcVisitEduDTO.getPlaceZipcode() + ") " + ebcVisitEduDTO.getPlaceBscAddr() + " " + ebcVisitEduDTO.getPlaceDtlAddr());
+        //치환문자2
+        userReceiverDto.setNote2(ebcVisitEduDTO.getHopeDt());
+        //치환문자3
+        userReceiverDto.setNote3(applicantDto.getCmpnNm());
+        //치환문자4
+        userReceiverDto.setNote4(applicantDto.getName());
+        //치환문자5
+        userReceiverDto.setNote5(applicantDto.getRegDtm().substring(0, applicantDto.getRegDtm().lastIndexOf(":")));
+
+        //수신자 정보 등록
+        cOMailDTO.getReceiver().add(userReceiverDto);
+        //메일 발송
+        cOMessageService.sendMail(cOMailDTO, "VisitEduApplyEmailEDM.html");
+
+        int resCnt = ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+
+        return resCnt;
     }
 
     /**
      * 방문교육 신청일시 값 조회
      */
-    public EBCVisitEduDTO selectVisitEduApplyRegDtm(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
-        return ebcVisitEduMapper.selectVisitEduApplyRegDtm(ebcVisitEduDTO);
+    public EBCVisitEduDTO selectVisitEduApplyInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
+        return ebcVisitEduMapper.selectVisitEduApplyInfo(ebcVisitEduDTO);
     }
 
     /**
@@ -848,4 +892,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
     public void updateVisitEduApplyCancel(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
         ebcVisitEduMapper.updateVisitEduApplyCancel(ebcVisitEduDTO);
     }
+
+
 }

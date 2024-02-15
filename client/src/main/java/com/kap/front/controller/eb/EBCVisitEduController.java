@@ -202,7 +202,7 @@ public class EBCVisitEduController {
             ebcVisitEduDTO.setRegId(COUserDetailsHelperService.getAuthenticatedUser().getId());
             ebcVisitEduDTO.setRegIp(COUserDetailsHelperService.getAuthenticatedUser().getLoginIp());
 
-            int respCnt = ebcVisitEduService.applyVisitEduInfo(ebcVisitEduDTO, multiRequest);
+            int respCnt = ebcVisitEduService.applyVisitEduInfo(ebcVisitEduDTO, multiRequest, request);
             modelMap.addAttribute("respCnt", respCnt);
 
             // 방문신청여부 세션값에 저장
@@ -243,7 +243,7 @@ public class EBCVisitEduController {
                     vwUrl = "redirect:../index";
                 } else {
                     ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
-                    modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyRegDtm(ebcVisitEduDTO));
+                    modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyInfo(ebcVisitEduDTO));
                 }
             } else {
                 vwUrl = "redirect:../index";
