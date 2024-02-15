@@ -126,7 +126,7 @@ public class BDANoticeController {
         try
         {
             modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeTabList(pBDANoticeDTO));
-            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostTotalList(pBDANoticeDTO));
+            //modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostTotalList(pBDANoticeDTO));
         }
         catch (Exception e)
         {

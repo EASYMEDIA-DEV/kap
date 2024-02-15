@@ -5,7 +5,6 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.EmfMap;
-import com.kap.core.dto.eb.EBScheduleGuideDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
@@ -551,8 +550,8 @@ public class EBACouseController {
     {
         try
         {
-
             eBBEpisdDTO.setApplyListYn("Y");
+            eBBEpisdDTO.setSrchYn("Y");
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
             modelMap.addAttribute("episdCnt", eBBEpisdService.selectEpisdListCnt(eBBEpisdDTO));
