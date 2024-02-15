@@ -315,40 +315,42 @@
                                                     <tr>
                                                         <th>SQ정보</th>
                                                         <td>
+                                                            <c:set var="item1" value="${rtnData.sqInfoList}" />
+                                                            <c:set var="item2" value="${rtnData.sqInfoList1}" />
+                                                            <c:set var="item3" value="${rtnData.sqInfoList2}" />
                                                             <c:choose>
-                                                                <c:when test="${empty cmpnInfo.list}">
-                                                                    -
+                                                                <c:when test="${empty item1[0] and empty item1[1] and empty item1[2] and empty item1[3] and empty item2[0] and empty item2[1] and empty item2[2] and empty item2[3] and empty item3[0] and empty item3[1] and empty item3[2] and empty item3[3]}">
+                                                                    <p class="f-body1">-</p>
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <c:forEach var="list" items="${cmpnInfo.list}" varStatus="status">
-                                                                        <c:if test="${empty list.nm}">
-                                                                            <c:set var="nm" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.nm}">
-                                                                            <c:set var="nm" value="${list.nm}"/>
-                                                                        </c:if>
+                                                                    <c:set var="count" value="1" />
+                                                                    <c:choose>
+                                                                        <c:when test="${empty item1[0] and empty item1[1] and empty item1[2] and empty item1[3]}">
 
-                                                                        <c:if test="${empty list.score}">
-                                                                            <c:set var="score" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.score}">
-                                                                            <c:set var="score" value="${list.score}"/>
-                                                                        </c:if>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <p class="f-body1">${count}. ${not empty item1[0] ? item1[0] : '-'} / ${not empty item1[1] ? item1[1] : '-'} / ${not empty item1[2] ? item1[2]+= ' 년' : '-'} / ${not empty item1[3] ? item1[3] : '-'}</p>
+                                                                            <c:set var="count" value="${count + 1}" />
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                    <c:choose>
+                                                                        <c:when test="${empty item2[0] and empty item2[1] and empty item2[2] and empty item2[3]}">
 
-                                                                        <c:if test="${empty list.year}">
-                                                                            <c:set var="year" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.year}">
-                                                                            <c:set var="year" value="${list.year} 년"/>
-                                                                        </c:if>
-                                                                        <c:if test="${empty list.crtfnCmpnNm}">
-                                                                            <c:set var="crtfnCmpnNm" value="-"/>
-                                                                        </c:if>
-                                                                        <c:if test="${not empty list.crtfnCmpnNm}">
-                                                                            <c:set var="crtfnCmpnNm" value="${list.crtfnCmpnNm}"/>
-                                                                        </c:if>
-                                                                        <p class="f-body1">${status.count}. ${nm} / ${score} / ${year} / ${crtfnCmpnNm}</p>
-                                                                    </c:forEach>
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <p class="f-body1">${count}. ${not empty item2[0] ? item2[0] : '-'} / ${not empty item2[1] ? item2[1] : '-'} / ${not empty item2[2] ? item2[2]+= ' 년' : '-'} / ${not empty item2[3] ? item2[3] : '-'}</p>
+                                                                            <c:set var="count" value="${count + 1}" />
+                                                                        </c:otherwise>
+                                                                    </c:choose>
+                                                                    <c:choose>
+                                                                        <c:when test="${empty item3[0] and empty item3[1] and empty item3[2] and empty item3[3]}">
+
+                                                                        </c:when>
+                                                                        <c:otherwise>
+                                                                            <p class="f-body1">${count}. ${not empty item3[0] ? item3[0] : '-'} / ${not empty item3[1] ? item3[1] : '-'} / ${not empty item3[2] ? item3[2]+= ' 년' : '-'} / ${not empty item3[3] ? item3[3] : '-'}</p>
+                                                                            <c:set var="count" value="${count + 1}" />
+                                                                        </c:otherwise>
+                                                                    </c:choose>
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </td>
