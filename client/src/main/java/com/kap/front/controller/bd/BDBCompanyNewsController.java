@@ -100,10 +100,17 @@ public class BDBCompanyNewsController {
      * 통합검색 탭 재단소식 목록
      */
     @GetMapping(value="/tab/list")
-    public String getCompanyNewsTabListPage(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap) throws Exception
+    public String getCompanyNewsTabListPage(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
         {
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDBCompanyNewsDTO.setDeviceGubun("pc");
+            } else {
+                pBDBCompanyNewsDTO.setDeviceGubun("mobile");
+            }
+
             modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsTabList(pBDBCompanyNewsDTO));
         }
         catch (Exception e)

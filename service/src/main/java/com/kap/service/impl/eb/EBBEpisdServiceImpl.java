@@ -108,7 +108,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public EBBEpisdDTO selectEpisdList(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 
-
 		if (eBBEpisdDTO.getSiteGubun().equals("front")) {
 
 			eBBEpisdDTO.setTotalCount(eBBFrontEpisdMapper.selectFrontCouseListCnt(eBBEpisdDTO));
@@ -117,12 +116,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBEpisdDTO.setPageRowSize(24);
 			} else {
 				if(eBBEpisdDTO.getPageRowSize() != null){
-					 if(eBBEpisdDTO.getPageRowSize() != 10) {
-						 eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
-					 } else {
-						 eBBEpisdDTO.setPageRowSize(9);
-					 }
-				} else {
+					eBBEpisdDTO.setPageRowSize(eBBEpisdDTO.getPageRowSize());
+				}else{
 					eBBEpisdDTO.setPageRowSize(9);
 				}
 			}
@@ -137,7 +132,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			COPaginationUtil page = new COPaginationUtil();
 
-
 			page.setCurrentPageNo(eBBEpisdDTO.getPageIndex());
 			page.setRecordCountPerPage(eBBEpisdDTO.getListRowSize());
 
@@ -150,8 +144,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
 
 		}
-
-
 		return eBBEpisdDTO;
 	}
 
@@ -199,7 +191,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		excelListDto.setList(eBBEpisdMapper.selectEpisdExcelList(eBBEpisdDTO));
 		excelListDto.setTotalCount(eBBEpisdMapper.selectEpisdExcelListCnt(eBBEpisdDTO));
 
-
 		return excelListDto;
 	}
 
@@ -208,8 +199,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public HashMap<String, Object> selectEpisdDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 		HashMap<String, Object> map = new HashMap();
-
-
 
 		System.out.println("@@@ eBBEpisdDTO.getMemSeq()= " + eBBEpisdDTO.getMemSeq());
 		EBBEpisdDTO ebbDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
@@ -236,7 +225,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			}
 
 			//예산지출 상세 호출
-
 			List<EBBBdgetDTO> bdgetList = new ArrayList();
 			EBBBdgetDTO bdgetDto = new EBBBdgetDTO();
 			if (ebbDto != null) {
@@ -246,24 +234,19 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				bdgetList = eBBEpisdMapper.selectBdgetDtlList(bdgetDto);
 			}
 
-
 			EBBSrvRstDTO srvScoreDtl = eBBEpisdMapper.selectEpisdSrvScoreDtl(ebbDto);
-
 
 			//만족도결과 호출
 			EBBSrvRstDTO srvRstDtl = eBBEpisdMapper.selectEpisdSrvRstDtl(ebbDto);
-
 
 			map.put("roomDto", roomDto);//교육장정보
 			map.put("lctrDtoList", lctrDtoList);//온라인강의 목록
 			map.put("isttrList", isttrList);//강사 목록
 			map.put("bdgetList", bdgetList);//예산지출내역 목록
-
 			map.put("srvScoreDtl", srvScoreDtl);//만족도결과 점수
 			map.put("srvRstDtl", srvRstDtl);//설문 상세
 		}
 		map.put("rtnData", ebbDto);//교육차수 상세
-
 
 		return map;
 	}
@@ -275,7 +258,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		COPaginationUtil page = new COPaginationUtil();
 
-
 		eBBLctrDTO.setTotalCount(eBBEpisdMapper.selectLctrDtlListCnt(eBBLctrDTO));
 
 		int recordCountPerPage = (eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize() >= eBBLctrDTO.getTotalCount()) ? eBBLctrDTO.getTotalCount() : eBBLctrDTO.getPageIndex() * eBBLctrDTO.getPageRowSize();
@@ -284,7 +266,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBLctrDTO.setRecordCountPerPage(recordCountPerPage);
 
 		eBBLctrDTO.setList(eBBEpisdMapper.selectLctrDtlList(eBBLctrDTO));
-
 
 		return eBBLctrDTO;
 	}
@@ -306,7 +287,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.setOnlinePtcptInfo(eBBPtcptDTO);
 
 		return eBBPtcptDTO;
-
 	}
 
 	/**
@@ -314,7 +294,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public EBBPtcptDTO setPtcptList(EBBEpisdDTO ebbDto) throws Exception
 	{
-
 		List<EBBPtcptDTO> ptcptList = new ArrayList();
 		EBBPtcptDTO dto = new EBBPtcptDTO();
 
@@ -331,10 +310,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
-
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
-
 
 		return dto;
 	}
@@ -373,7 +350,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			EBBPtcptDTO tempDto = new EBBPtcptDTO();
 
-
 			for(EBBPtcptDTO orgDto: ptcptList){
 				List<EBBPtcptDTO> tempList = new ArrayList();
 //				System.out.println("@@orgDto.getPtcptSeq() = " +orgDto.getPtcptSeq());
@@ -390,11 +366,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			}
 			dto.setPtcptList(ptcptList);
-
 		}
-
-
-
 		return dto;
 	}
 
@@ -404,9 +376,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public List<EBBPtcptDTO> selectMemAtndcList(EBBPtcptDTO eBBPtcptDTO) throws Exception
 	{
 		List<EBBPtcptDTO> memAtndcList = new ArrayList();
-
 		memAtndcList = eBBEpisdMapper.selectMemAtndcDtl(eBBPtcptDTO);
-
 
 		return memAtndcList;
 	}
@@ -439,10 +409,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdDTO.setFirstIndex(0);
 		eBBEpisdDTO.setRecordCountPerPage( recordCountPerPage );
 
-
-
 		eBBEpisdDTO.setList( eBBFrontEpisdMapper.selectMypageEduList(eBBEpisdDTO) );
-
 
 		return eBBEpisdDTO;
 	}
@@ -464,15 +431,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdDTO.setModId( cOUserDetailsDTO.getId() );
 		eBBEpisdDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
-
-
-
 		int firstEdctnEpisdIdgen = edctnEpisdIdgen.getNextIntegerId();
 
 		eBBEpisdDTO.setEpisdSeq(firstEdctnEpisdIdgen);
-
-
-
 
 		//파일 처리
 		HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBBEpisdDTO.getFileList());
@@ -522,15 +483,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				int firstEdctnLctrIIdgen = edctnLctrIdgen.getNextIntegerId();
 				lctrDto.setLctrSeq(firstEdctnLctrIIdgen);
 				eBBEpisdMapper.insertLctrDtl(lctrDto);
-
-
 			}
 		}catch (Exception e){
 
 		}
 
 	}
-
 
 	/**
 	 * 교육차수를 수정한다.
@@ -567,7 +525,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			eBBEpisdMapper.deleteLctrDtl(eBBEpisdDTO);//삭제후
 			setLctrList(eBBEpisdDTO, cOUserDetailsDTO);//재등록
 		}
-
 
 		//예산지출 내역 등록
 		eBBEpisdMapper.deleteBdgetList(eBBEpisdDTO);
@@ -606,14 +563,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			//교육참여자 평가, 수료상태 수정
 			eBBEpisdMapper.updateEpisdPtcpt(eBBEpisdDTO);
-
 		}
-
-
-
 		return respCnt;
 	}
-
 
 
 	/**
@@ -625,8 +577,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		EBBEpisdDTO resultDto = new EBBEpisdDTO();
 
-
-
 		int ptcptCnt = eBBEpisdMapper.selectEpisdDeletePrevChk(eBBEpisdDTO);
 
 		if(ptcptCnt>0){
@@ -635,9 +585,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			eBBEpisdMapper.deleteEpisdDtl(eBBEpisdDTO);
 			resultDto.setRsn("S");
 		}
-
-
-
 
 		return resultDto;
 	}
@@ -674,19 +621,14 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			//선택한 교육차수의 상태를 종강(폐강)으로 변경 EDCTN_STTS_CD02
 			eBBEpisdMapper.updateEpisdStatus(eBBEpisdDTO);
 
-
-
-
 			EBBEpisdDTO tempDto = new EBBEpisdDTO();
 			tempDto = eBBEpisdMapper.selectEpisdChk(eBBEpisdDTO);
 
 		}catch (Exception e){
 
 		}
-
 		return actCnt;
 	}
-
 
 
 	/**
@@ -699,7 +641,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		tempDto = eBBEpisdMapper.selectFxnumChk(eBBEpisdDTO);
 		//정원수 비교
-
 
 		return tempDto;
 	}
@@ -744,12 +685,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setRegStat("S");
 				System.out.println("@@연계과정 없으므로 수료여부 체크없이 신청 진행");
 			}
-
 		}
-
-
 		return eBBPtcptDTO;
-
 	}
 
 	/**
@@ -759,7 +696,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public EBBPtcptDTO setPtcptInfo(EBBPtcptDTO eBBPtcptDTO) throws Exception
 	{
 		EBBPtcptDTO tempDto = new EBBPtcptDTO();
-
 		tempDto = eBBEpisdMapper.selectPtcptDtl(eBBPtcptDTO);
 
 		//이미 등록된 회원
@@ -785,7 +721,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 					eBBPtcptDTO.setRegStat("R");
 				}
 
-
 			}else{
 				eBBPtcptDTO.setRegStat("S");
 				System.out.println("@@연계과정 없으므로 수료여부 체크없이 신청 진행");
@@ -802,7 +737,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setRegIp( cOUserDetailsDTO.getLoginIp() );
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
-
 
 				int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
 				eBBPtcptDTO.setPtcptSeq(firstEdctnPtcptIdgen);
@@ -828,10 +762,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			}
 
 		}
-
-
 		return eBBPtcptDTO;
-
 	}
 
 
@@ -858,11 +789,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		int rtnCnt = 0;
 
-
 		//전달받은 회원번호로 반복문 돌림
 		//상태값이 F인경우 반환중지함?
 		List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
-
 
 		//등록전에 이미 해당 차수에 등록된 회원인지 체크한다 만일 반환된 숫자가 0이 아닐경우 모든 반복문을 취소하고 중지처리한다.
 
@@ -891,24 +820,18 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				nextPtcptDto.setModId( cOUserDetailsDTO.getId() );
 				nextPtcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
 
-
-
 				int firstEdctnPtcptIdgen = edctnPtcptSeqIdgen.getNextIntegerId();
 				nextPtcptDto.setPtcptSeq(firstEdctnPtcptIdgen);
 
 				nextPtcptDto.setEdctnSeq(eBBEpisdDTO.getEdctnSeq());//과정 순번
-
-
 				nextPtcptDto.setEpisdYear(eBBEpisdDTO.getEpisdYear());//신규 회차년도
 				nextPtcptDto.setEpisdOrd(eBBEpisdDTO.getEpisdOrd());//신규 회차정렬
-
 
 				eBBEpisdDTO.setDetailsKey(String.valueOf(eBBEpisdDTO.getEdctnSeq()));
 				EBBEpisdDTO targetDto = eBBEpisdMapper.selectEpisdDtl(eBBEpisdDTO);
 
 				nextPtcptDto.setMemSeq(prevPtcptDto.getMemSeq()); //회원번호
 				nextPtcptDto.setPtcptBsnmNo(prevPtcptDto.getPtcptBsnmNo());//회원 사업자번호
-
 				nextPtcptDto.setEdctnStrtDtm(targetDto.getEdctnStrtDtm());
 				nextPtcptDto.setEdctnEndDtm(targetDto.getEdctnEndDtm());
 				nextPtcptDto.setEpisdSeq(targetDto.getEpisdSeq());//회차순번
@@ -922,21 +845,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 					this.setAtndcList(nextPtcptDto);//교육참여 출석 상세 목록을 등록한다.
 				}
 
-
-
 				//이전차수의 참여정보 내역 교육취소 처리
 				ptcptDto.setModId( cOUserDetailsDTO.getId() );
 				ptcptDto.setModIp( cOUserDetailsDTO.getLoginIp() );
 				eBBEpisdMapper.updatePtcptStatusInfo(ptcptDto);
 				rtnCnt++;
-
 			}
-
 		}
-
-
-
-
 		return dupleChk;
 	}
 
@@ -964,7 +879,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		// 반복문을 통해 날짜 출력
 		while (!startDate.isAfter(endDate)) {
 
-
 			// 주말인지 판단하여 출력
 			if (startDate.getDayOfWeek() == DayOfWeek.SATURDAY || startDate.getDayOfWeek() == DayOfWeek.SUNDAY) {
 
@@ -982,19 +896,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				atndcDto.setModIp(eBBPtcptDTO.getModIp());
 				atndcDtoList.add(atndcDto);
 			}
-
-
-
 			startDate = startDate.plusDays(1); // 다음 날짜로 이동
-
-
-
 		}
-
 
 		eBBPtcptDTO.setPtcptList(atndcDtoList);
 		eBBEpisdMapper.insertAtndcList(eBBPtcptDTO);
-
 	}
 
 	/**
@@ -1007,7 +913,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		int rtnCnt = 0;
 		//출석 목록 호출
 		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
-
 
 		List<EBBPtcptDTO> removeList = new ArrayList();
 		for(int i=0; i < ptcptList.size(); i ++){
@@ -1049,9 +954,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			cmptnChkDto.setPtcptSeq(ptcptDto.getPtcptSeq());
 
 			setCmptnChk(cmptnChkDto);
-
 		}
-
 		return rtnCnt;
 	}
 
@@ -1066,7 +969,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		return rtnCnt;
 	}
 
-
 	/**
 	 * 설문 개수 조회
 	 */
@@ -1075,13 +977,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	{
 		return eBBEpisdMapper.checkSurveyCnt(eBBEpisdDTO);
 	}
-
-
-
-
-
-
-
 
 
 
@@ -1137,12 +1032,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell.setCellValue("기본정보1");
 		cell.setCellStyle(style_header);
 
-
-
-
 		cell = row.createCell(20);
 		cell.setCellValue("교육실적");
 		cell.setCellStyle(style_header);
+
 		cell = row.createCell(58);
 		cell.setCellValue("예산/지출");
 		cell.setCellStyle(style_header);
@@ -1153,8 +1046,6 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		CellRangeAddress row1cols58 = new CellRangeAddress(0, 0, 58, 81);//예산/지출 병합 57~80
 		sheet.addMergedRegion(row1cols0); sheet.addMergedRegion(row1cols20); sheet.addMergedRegion(row1cols58);
 		cellList.add(row1cols0); cellList.add(row1cols20); cellList.add(row1cols58);
-
-
 
 		//헤더 2층 과정분류1, 과정분류2, 과정명, 학습방식, 학습시간, 업종 년도 차수 교육일 교육기간(2), 교육장소 협력기관 정원(명) 강사1 강사2 강사3 강사4 강사5 강사6
 		//개요, 회사별 수료인원(명), 분야별 수료인원(명), 직급별 수료인원(명), 출석/평가, 만족도, 교육시간, 예산, 지출

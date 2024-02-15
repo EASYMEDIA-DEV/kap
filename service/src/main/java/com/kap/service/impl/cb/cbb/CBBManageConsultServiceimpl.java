@@ -6,6 +6,7 @@ import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
@@ -71,10 +72,11 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final MPEPartsCompanyMapper mpePartsCompanyMapper;
     private final MPAUserMapper mpaUserMapper;
-    //이메일 발송
+
+    // 이메일 발송
     private final COMessageService cOMessageService;
-
-
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
     /*로그 서비스*/
     private final COSystemLogService cOSystemLogService;
 
@@ -563,7 +565,10 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             smsDto.getReceiver().add(receiverDto);
 
             cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
-            cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
+            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+            smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드
+            cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            //cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
 
         String bfreMemSeq = pCBBManageConsultInsertDTO.getBfreMemSeq();

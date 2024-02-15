@@ -11,7 +11,7 @@
                                 <img src="${ list.webPath }" alt="">
                             </c:when>
                             <c:otherwise>
-                                <img src="/common/images/@img-news-foundation-01.jpg" alt="">
+
                             </c:otherwise>
                         </c:choose>
                     </div>

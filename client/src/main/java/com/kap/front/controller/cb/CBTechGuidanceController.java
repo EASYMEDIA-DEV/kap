@@ -7,6 +7,7 @@ import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultUpdateDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
 import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
@@ -57,6 +58,10 @@ public class CBTechGuidanceController {
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
     private final CBBManageConsultMapper cBBManageConsultMapper;
     public final COGCntsService pCOGCntsService;
+
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
+
     //이메일 발송
     private final COMessageService cOMessageService;
 
@@ -232,7 +237,7 @@ public class CBTechGuidanceController {
                     //수신자 번호
                     receiverDto.setMobile(pCBBManageConsultInsertDTO.getHpNo());
                 }
-            //신청일
+                //신청일
                 String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
                 //신청일(치환문자4)
                 receiverDto.setNote4(field2);
@@ -243,9 +248,9 @@ public class CBTechGuidanceController {
             //문자 발송
             smsDto.setTitle("컨설팅사업 신청 완료 안내");
             smsDto.getReceiver().add(receiverDto);
-
-            cOMessageService.sendSms(smsDto, "ConsultingSms.txt");
-
+            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+            smiSmsCntnDTO.setSmsCntnCd("SMS03"); // 컨설팅 신청 완료 구분 코드
+            cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
 
         }catch(Exception e){
             if (log.isErrorEnabled()) {

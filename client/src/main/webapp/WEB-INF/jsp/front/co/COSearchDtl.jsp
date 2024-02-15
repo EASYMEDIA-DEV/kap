@@ -12,7 +12,7 @@
         <form method="get">
             <!-- 페이징 버튼 사이즈 -->
             <input type="hidden" id="pageIndex" name="pageIndex" value="1"/>
-            <input type="hidden" id="pageRowSize" name="pageRowSize" value="10"/>
+            <input type="hidden" id="pageRowSize" name="pageRowSize" value="9"/>
             <input type="hidden" id="firstIndex" name="firstIndex" value="0"/>
             <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }"/>
             <input type="hidden" name="menuType" value="${menuType}"/>
@@ -174,7 +174,7 @@
                             </c:when>
                             <c:when test="${menuType == 'foundation'}">
                                 <c:set var="cnt" value="${newsCnt}"/>
-                                <c:set var="tabName" value="재단교육"/>
+                                <c:set var="tabName" value="재단소식"/>
                             </c:when>
                             <c:when test="${menuType == 'notice'}">
                                 <c:set var="cnt" value="${noticeCnt}"/>

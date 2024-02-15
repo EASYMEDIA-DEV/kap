@@ -93,8 +93,16 @@ public class BDDNewsletterController {
      * 통합검색 뉴스레터 탭 조회
      */
     @GetMapping(value = "/search/{menuType:newsletter}")
-    public String selectNewsletterTabAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap) throws Exception {
+    public String selectNewsletterTabAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
+
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDDNewsletterDTO.setDeviceGubun("pc");
+            } else {
+                pBDDNewsletterDTO.setDeviceGubun("mobile");
+            }
+
             modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterTabList(pBDDNewsletterDTO));
             int letterCnt = bDDNewsletterService.selectNewsletterListCnt(pBDDNewsletterDTO);
             modelMap.put("letterCnt", letterCnt);

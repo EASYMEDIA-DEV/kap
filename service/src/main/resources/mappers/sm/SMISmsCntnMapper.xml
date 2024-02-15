@@ -61,6 +61,7 @@
             SMS_CNTN_SEQ
              , SMS_CNTN_CD
              , CNTN
+         <if test='siteGubun != "front"'>
              , REG_ID
              , REG_IP
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
@@ -69,9 +70,12 @@
              , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
              , MOD_IP
              , MOD_DTM
+        </if>
         FROM SM_SMS_CNTN_MST A
         WHERE 1 = 1
+        <if test='siteGubun != "front"'>
           AND SMS_CNTN_SEQ = #{smsCntnSeq}
+        </if>
           AND SMS_CNTN_CD = #{smsCntnCd}
     </select>
 

@@ -830,7 +830,11 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
         ebcVisitEduDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
+
+        int resCnt = ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+
         EBCVisitEduDTO applicantDto = ebcVisitEduMapper.selectVisitEduApplyInfo(ebcVisitEduDTO);
+
         //메일 발송
         int respCnt = 0;
         String regIp = CONetworkUtil.getMyIPaddress(request);
@@ -866,13 +870,11 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         //메일 발송
         cOMessageService.sendMail(cOMailDTO, "VisitEduApplyEmailEDM.html");
 
-        int resCnt = ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
-
         return resCnt;
     }
 
     /**
-     * 방문교육 신청일시 값 조회
+     * 방문교육 신청자 정보 조회
      */
     public EBCVisitEduDTO selectVisitEduApplyInfo(EBCVisitEduDTO ebcVisitEduDTO) throws Exception {
         return ebcVisitEduMapper.selectVisitEduApplyInfo(ebcVisitEduDTO);
