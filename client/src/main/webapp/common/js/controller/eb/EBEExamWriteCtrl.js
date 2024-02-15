@@ -108,9 +108,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 },
                 msg : {
                     empty : {
-                        text : "에 응답해주세요.",
-                        radio : "에 응답해주세요.",
-                        checkbox : "에 응답해주세요.",
+                        text : " 작성해주세요.",
+                        radio : " 작성해주세요.",
+                        checkbox : " 작성해주세요.",
                     },
                     confirm : {
                         init : "제출하시겠습니까?"

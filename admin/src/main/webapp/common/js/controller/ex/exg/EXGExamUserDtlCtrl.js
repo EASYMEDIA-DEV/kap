@@ -75,9 +75,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 },
                 msg : {
                     empty : {
-                        text : "에 응답해주세요.",
-                        radio : "에 응답해주세요.",
-                        checkbox : "에 응답해주세요.",
+                        text : " 작성해주세요.",
+                        radio : " 작성해주세요.",
+                        checkbox : " 작성해주세요.",
                     },
                     confirm : {
                         init : "저장하시겠습니까?"
