@@ -194,7 +194,7 @@
                  WHERE BSN_CD = 'BSN11' AND EXPS_YN = 'Y'
              ) A
         WHERE DATE_ORD = 1
-        ORDER BY ACCS_STRT_DTM, BSN_STRT_DTM ASC
+        ORDER BY ACCS_END_DTM, BSN_STRT_DTM ASC
             LIMIT 1
     </select>
 

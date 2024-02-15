@@ -530,6 +530,7 @@
         AND EXPS_YN = 'Y'
         AND YEAR = CURDATE()
         AND ACCS_END_DTM <![CDATA[ > ]]> NOW()
+        ORDER BY ACCS_END_DTM, BSN_STRT_DTM ASC
     </select>
 
     <!--

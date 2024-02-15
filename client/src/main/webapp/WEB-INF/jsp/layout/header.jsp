@@ -405,13 +405,11 @@
 							</c:forEach>
 
 						</ul>
-						<c:if test="${empty loginMap}">
 							<div class="non-member-apply">
 								<a href="/education/apply/non-member/auth">
 									<p class="f-body1">비회원 신청내역 조회</p>
 								</a>
 							</div>
-						</c:if>
 					</c:if>
 					<div class="notice-wrap">
 						<div class="notice-rolling">
