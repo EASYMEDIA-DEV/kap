@@ -2,7 +2,10 @@ package com.kap.front.controller.eb;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COCodeDTO;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.EmfMap;
+import com.kap.core.dto.eb.EBScheduleGuideDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.eb.ebb.EBBLctrDTO;
@@ -67,6 +70,9 @@ public class EBACouseController {
 
     /** 코드 서비스 **/
     private final COCodeService cOCodeService;
+
+    /** 메일 서비스 **/
+    private final COMessageService cOMessageService;
 
     /**
      * 교육과정 신청 목록
@@ -373,6 +379,32 @@ public class EBACouseController {
                     eBBEpisdDTO.setRecordCountPerPage( page.getRecordCountPerPage() );
 
                     HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
+
+
+
+                    if(applicantDto.getName().equals("김학규")){
+                        //교육신청 메일발송 시작
+                        EBBEpisdDTO tempEpisdDTO = (EBBEpisdDTO)episdDto.get("rtnData");
+                        //메일 발송
+                        COMailDTO cOMailDTO = new COMailDTO();
+                        cOMailDTO.setSubject("[KAP] 교육신청 완료 안내");
+                        System.out.println("@@@@ 시작");
+                        COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                        receiverDto.setEmail(applicantDto.getEmail());
+                        receiverDto.setName(applicantDto.getName());
+                        receiverDto.setNote1(rtnDto.getNm());
+                        receiverDto.setNote2(tempEpisdDTO.getPlaceNm());
+                        receiverDto.setNote3(tempEpisdDTO.getEdctnStrtDtm());
+                        receiverDto.setNote4(tempEpisdDTO.getEdctnEndDtm());
+                        receiverDto.setNote5(applicantDto.getCmpnNm());
+                        cOMailDTO.getReceiver().add(receiverDto);
+
+                        cOMessageService.sendMail(cOMailDTO, "EBBEduApplyStep3.html");
+
+                        //교육신청 메일발송 끝
+                        System.out.println("@@@@ 끝");
+                    }
+
 
                     if(applicantDto.getMemCd().equals("CP")) {
                         mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
