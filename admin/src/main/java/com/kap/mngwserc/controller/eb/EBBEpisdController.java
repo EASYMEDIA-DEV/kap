@@ -633,8 +633,8 @@ public class EBBEpisdController {
 
                 COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
                 receiverDto.setEmail(ptcptEmail);
-                receiverDto.setNote1(infoFormCntn);
 
+                cOMailDTO.setEditorContents(infoFormCntn);
                 cOMailDTO.getReceiver().add(receiverDto);
 
                 cOMessageService.sendMail(cOMailDTO, "EBBInformMail.html");

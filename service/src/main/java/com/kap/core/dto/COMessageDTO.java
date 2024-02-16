@@ -52,6 +52,10 @@ public class COMessageDTO {
     private String title;
     @Schema(title="메일 제목")
     private String subject;
+
+    @Schema(title="에디터에서 입력한 메일내용")
+    private String editorContents;
+
     @Schema(title="메일 대상자들")
     private List<COMessageReceiverDTO> receiver = new ArrayList<COMessageReceiverDTO>();
     @Schema(title="첨부 파일 URL", description = "첨부파일의 URL을 보내면 DirectSend에서 파일을 download 받아 발송처리를 진행합니다. 첨부파일은 전체 10MB 이하로 발송을 해야 하며, 파일의 구분자는 '|(shift+\\)'로 사용하며 5개까지만 첨부가 가능합니다.")

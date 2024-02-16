@@ -91,6 +91,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						cmmCtrl.frmAjax(function(data){
 
+							alert("발송되었습니다.");
+							ctrl.obj.find(".close").click();
+
 						}, "/mngwserc/eb/ebb/setInformSendMail", $formObj, "post", "json")
 
 					}

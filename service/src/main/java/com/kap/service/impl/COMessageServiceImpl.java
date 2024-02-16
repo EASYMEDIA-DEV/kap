@@ -226,6 +226,7 @@ public class COMessageServiceImpl implements COMessageService {
 				vc.put("userDomain", userDomain);
 				vc.put("adminDomain", adminDomain);
 				vc.put("siteName", siteName);
+				vc.put("editorContents", cOMessageDTO.getEditorContents());
 				for (Field field : cOMessageDTO.getClass().getDeclaredFields()) {
 					field.setAccessible(true);
 					Object value = field.get(cOMessageDTO);
