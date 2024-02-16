@@ -79,6 +79,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					}
 				}
 			},
+			textAreaSbjctRply : {
+				event : {
+					click : function() {
+						// maxLength 검사
+						if ($(this).is("[maxlength]"))
+						{
+							$(this).keyup(function(event){
+								var length = cmmCtrl.checkMaxlength(this);
+								$(this).parents(".form-textarea").find(".maxlengthText").text(length);
+							});
+						}
+					}
+				}
+			},
 		},
 		immediately : function() {
 			questionSet('EDU');
