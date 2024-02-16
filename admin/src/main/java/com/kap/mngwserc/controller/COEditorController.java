@@ -53,6 +53,9 @@ public class COEditorController {
 	@Value("${app.file.videoExtns}")
 	private String videoType;
 
+	@Value("${app.user-domain}")
+	private String userDomain;
+
 	/**
 	 * 에디터 이미지를 업로드 한다.
 	 *
@@ -74,7 +77,7 @@ public class COEditorController {
 				if (result.size() > 0)
 				{
 					actCnt = result.size();
-					modelMap.addAttribute("url", result.get(0).getWebPath());
+					modelMap.addAttribute("url", userDomain+result.get(0).getWebPath());
 					modelMap.addAttribute("fileName", result.get(0).getOrgnFileNm());
 				}
 			}
