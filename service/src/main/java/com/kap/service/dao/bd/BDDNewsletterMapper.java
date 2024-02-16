@@ -65,4 +65,9 @@ public interface BDDNewsletterMapper {
      * 뉴스레터 이전, 다음 글 SEQ 조회
      */
     public BDDNewsletterDTO selectNextAndPrevSeqVal(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+
+    /**
+     * 뉴스레터 수신거부
+     */
+    public int deleteNewsletterUserInfo(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
 }

@@ -98,4 +98,17 @@
         )
     </insert>
 
+    <!--
+        쿼리명 : mphNewsLetterMapper.deleteNewsletterUserInfo
+        설  명 : 뉴스레터 수신거부
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.02.16    구은희       최초생성
+    -->
+    <select id="deleteNewsletterUserInfo" parameterType="MPHNewsLetterDTO">
+        DELETE /* mphNewsLetterMapper.deleteNewsletterUserInfo */
+        FROM co_nwslt_mst
+        WHERE email = #{email}
+    </select>
+
 </mapper>

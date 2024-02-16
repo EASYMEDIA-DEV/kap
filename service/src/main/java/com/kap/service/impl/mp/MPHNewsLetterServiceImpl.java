@@ -68,7 +68,7 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
     private String siteName;
     
     /**
-     * 강사 목록을 조회한다.
+     * 뉴스레터 신청자 목록을 조회한다.
      */
     public MPHNewsLetterDTO selectNewsLetterList(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception {
 
@@ -201,7 +201,7 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
      * @param mphNewsLetterDTO
      * @return
      */
-    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO) {
+    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception{
         return mphNewsLetterMapper.selectDupEmail(mphNewsLetterDTO);
     }
 
@@ -236,12 +236,19 @@ public class MPHNewsLetterServiceImpl implements MPHNewsLetterService {
         //수신자 정보 등록
         cOMailDTO.getReceiver().add(userReceiverDto);
         //메일 발송
-        cOMessageService.sendMail(cOMailDTO, "BDDNewsletterEmailEDM.html");
+        cOMessageService.sendMail(cOMailDTO, "BDDNewsletterEmail.html");
         
         respCnt = mphNewsLetterMapper.insertNewsletter(mphNewsLetterDTO);
         mphNewsLetterDTO.setRespCnt(respCnt);
 
         return respCnt;
+    }
+
+    /**
+     * 뉴스레터 수신거부
+     */
+    public void deleteNewsletterUserInfo(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception {
+        mphNewsLetterMapper.deleteNewsletterUserInfo(mphNewsLetterDTO);
     }
 
 }

@@ -42,12 +42,17 @@ public interface MPHNewsLetterMapper {
      * @param mphNewsLetterDTO
      * @return
      */
-    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO);
+    public int selectDupEmail(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
 
     /**
      * 뉴스레터 등록
      * @param mphNewsLetterDTO
      * @return
      */
-    public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO);    
+    public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
+
+    /**
+     * 뉴스레터 수신거부
+     */
+    public void deleteNewsletterUserInfo(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
 }

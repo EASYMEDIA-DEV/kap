@@ -1,18 +1,22 @@
 package com.kap.service.impl.bd;
 
+import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COWebUtil;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
-import com.kap.service.BDDNewsletterService;
-import com.kap.service.COFileService;
-import com.kap.service.COUserDetailsHelperService;
+import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
+import com.kap.service.*;
 import com.kap.service.dao.bd.BDDNewsletterMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 /**
@@ -44,6 +48,15 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
 
     /** Sequence **/
     private final EgovIdGnrService newsletterSeqIdgen;
+
+    /** 뉴스레터 구독 신청 관리 서비스 **/
+    public final MPHNewsLetterService mphNewsLetterService;
+
+    // 이메일 서비스
+    private final COMessageService cOMessageService;
+
+    @Value("${app.site.name}")
+    private String siteName;
 
     /**
      * 뉴스레터 조회
@@ -112,7 +125,7 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     /**
      * 뉴스레터 등록
      */
-    public int insertNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
+    public int insertNewsletter(BDDNewsletterDTO pBDDNewsletterDTO, HttpServletRequest request) throws Exception {
         //작성자
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         pBDDNewsletterDTO.setRegId(cOUserDetailsDTO.getId());
@@ -138,7 +151,42 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
 
         pBDDNewsletterDTO.setNwsltSeq(newsletterSeqIdgen.getNextIntegerId());
 
-        return bDDNewsletterMapper.insertNewsletter(pBDDNewsletterDTO);
+        int respCnt = 0;
+
+        // 뉴스레터 게시물 노출 처리한 경우만 이메일 발송
+        if(pBDDNewsletterDTO.getExpsYn().equals("Y")) {
+
+            String regIp = CONetworkUtil.getMyIPaddress(request);
+            pBDDNewsletterDTO.setRegIp(regIp);
+
+            MPHNewsLetterDTO dto = new MPHNewsLetterDTO();
+            // 뉴스레터 신청자 목록 조회
+            MPHNewsLetterDTO newMphNewsLetterDTO = mphNewsLetterService.selectNewsLetterList(dto);
+
+            // 뉴스레터 구독 신청한 회원에게 이메일 발송
+            for (MPHNewsLetterDTO userEmailDTO : newMphNewsLetterDTO.getList()) {
+                System.err.println(userEmailDTO.getEmail());
+                /* 메일 처리 */
+                COMailDTO cOMailDTO = new COMailDTO();
+                cOMailDTO.setSubject("["+siteName+"] " + pBDDNewsletterDTO.getTitl());
+                //수신자 정보
+                COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
+
+                userReceiverDto.setEmail(userEmailDTO.getEmail());
+                //치환문자1
+                userReceiverDto.setNote1(pBDDNewsletterDTO.getTitl());
+                //치환문자2
+                userReceiverDto.setNote2(pBDDNewsletterDTO.getCntn());
+                //수신자 정보 등록
+                cOMailDTO.getReceiver().add(userReceiverDto);
+                //메일 발송
+                cOMessageService.sendMail(cOMailDTO, "BDDNewsletterContentsMail.html");
+            }
+        }
+        respCnt = bDDNewsletterMapper.insertNewsletter(pBDDNewsletterDTO);
+        pBDDNewsletterDTO.setRespCnt(respCnt);
+
+        return respCnt;
     }
 
     /**

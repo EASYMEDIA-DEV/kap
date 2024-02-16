@@ -573,6 +573,7 @@
 			A.vst_seq
 			 , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = A.appctn_bsnm_no) AS cmpn_nm
 			 , (SELECT name FROM co_mem_mst WHERE mem_seq = A.mem_seq) AS name
+			 , (SELECT email FROM co_mem_mst WHERE mem_seq = A.mem_seq) AS email
 			 , A.reg_dtm
 		from ev_edctn_vst_mst A
 		where 1=1

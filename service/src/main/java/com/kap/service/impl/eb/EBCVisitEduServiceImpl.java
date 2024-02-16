@@ -819,7 +819,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         List<COFileDTO> rtnList = null;
         Map<String, MultipartFile> files = multiRequest.getFileMap();
         Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
-        MultipartFile file;
 
         rtnList = cOFileUtil.parseFileInf(files, "", 1, "", "file", 0);
 
@@ -830,8 +829,6 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
         ebcVisitEduDTO.setItrdcFileSeq(fileSeqMap.get("fileSeq"));
-
-        int resCnt = ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
 
         EBCVisitEduDTO applicantDto = ebcVisitEduMapper.selectVisitEduApplyInfo(ebcVisitEduDTO);
 
@@ -851,9 +848,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         //수신자 정보
         COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
         //이메일
-        userReceiverDto.setEmail(ebcVisitEduDTO.getEmail());
+        userReceiverDto.setEmail(applicantDto.getEmail());
         //이름
-        userReceiverDto.setName(ebcVisitEduDTO.getEmail());
+        userReceiverDto.setName(applicantDto.getName());
         //치환문자1
         userReceiverDto.setNote1("(" + ebcVisitEduDTO.getPlaceZipcode() + ") " + ebcVisitEduDTO.getPlaceBscAddr() + " " + ebcVisitEduDTO.getPlaceDtlAddr());
         //치환문자2
@@ -868,9 +865,10 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         //수신자 정보 등록
         cOMailDTO.getReceiver().add(userReceiverDto);
         //메일 발송
-        cOMessageService.sendMail(cOMailDTO, "VisitEduApplyEmailEDM.html");
-
-        return resCnt;
+        cOMessageService.sendMail(cOMailDTO, "EBCVisitEduApplyEmail.html");
+        respCnt = ebcVisitEduMapper.applyVisitEduInfo(ebcVisitEduDTO);
+        ebcVisitEduDTO.setRespCnt(respCnt);
+        return respCnt;
     }
 
     /**

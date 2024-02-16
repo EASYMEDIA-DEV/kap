@@ -92,6 +92,9 @@ public class BDDNewsletterDTO extends BaseDTO {
     @Schema(title = "최신글 여부", example = "Y")
     private String newPostYn;
 
+    @Schema(title = "뉴스레터 구독 사용자 이메일")
+    private String email;
+
     @Schema(title = "디바이스구분")
     private String deviceGubun;
 

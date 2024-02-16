@@ -2,6 +2,8 @@ package com.kap.service;
 
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * BDDNewsletterService 서비스
  *
@@ -48,7 +50,7 @@ public interface BDDNewsletterService {
     /**
      * 뉴스레터 등록
      */
-    public int insertNewsletter(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception;
+    public int insertNewsletter(BDDNewsletterDTO pBDDNewsletterDTO, HttpServletRequest request) throws Exception;
 
     /**
      * 뉴스레터 수정

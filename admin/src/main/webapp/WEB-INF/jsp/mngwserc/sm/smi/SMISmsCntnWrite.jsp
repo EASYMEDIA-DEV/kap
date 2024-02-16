@@ -35,7 +35,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">내용<span class="star"> *</span></label>
                     <div class="col-sm-11">
-                        <textarea class="form-control" id="cntn" name="cntn" title="내용" rows="5">${rtnDto.cntn}</textarea>
+                        <textarea class="form-control" id="cntn" name="cntn" title="내용" rows="20">${rtnDto.cntn}</textarea>
                     </div>
                 </div>
             </fieldset>

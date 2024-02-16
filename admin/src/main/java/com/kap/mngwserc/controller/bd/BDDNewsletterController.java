@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -130,11 +131,11 @@ public class BDDNewsletterController {
          * 뉴스레터 등록
          */
         @PostMapping(value="/insert")
-        public BDDNewsletterDTO insertNewsletter(@Valid BDDNewsletterDTO pBDDNewsletterDTO) throws Exception
+        public BDDNewsletterDTO insertNewsletter(@Valid BDDNewsletterDTO pBDDNewsletterDTO, HttpServletRequest request) throws Exception
         {
             try
             {
-                pBDDNewsletterDTO.setRespCnt(bDDNewsletterService.insertNewsletter(pBDDNewsletterDTO));
+                pBDDNewsletterDTO.setRespCnt(bDDNewsletterService.insertNewsletter(pBDDNewsletterDTO, request));
             }
             catch (Exception e)
             {

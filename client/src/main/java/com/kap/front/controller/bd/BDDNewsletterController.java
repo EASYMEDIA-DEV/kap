@@ -198,6 +198,24 @@ public class BDDNewsletterController {
             }
             return mPHNewsLetterDTO;
         }
-    }
 
+        /**
+         * 뉴스레터 수신거부
+         */
+        @GetMapping(value = "/refusal")
+        public String deleteNewsletterUserInfo(MPHNewsLetterDTO mPHNewsLetterDTO) throws Exception {
+
+            String url = "/foundation/board/newsletter/list";
+
+            try {
+                 mphNewsLetterService.deleteNewsletterUserInfo(mPHNewsLetterDTO);
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+            return "redirect:" + url;
+        }
+    }
 }

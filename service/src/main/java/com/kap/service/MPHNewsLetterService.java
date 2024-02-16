@@ -53,4 +53,8 @@ public interface MPHNewsLetterService {
      */
     public int insertNewsletter(MPHNewsLetterDTO mphNewsLetterDTO, HttpServletRequest request) throws Exception;
 
+    /**
+     * 뉴스레터 수신거부
+     */
+    public void deleteNewsletterUserInfo(MPHNewsLetterDTO mphNewsLetterDTO) throws Exception;
 }
