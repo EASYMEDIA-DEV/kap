@@ -566,7 +566,9 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+
             smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드
+            smiSmsCntnDTO.setSmsCntnSeq(4);
             cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
             //cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
