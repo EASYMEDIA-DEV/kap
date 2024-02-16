@@ -30,6 +30,17 @@
 				, episd_year
 				, episd_ord
 				, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+				, DATEDIFF(accs_end_dtm, NOW()) AS accs_order_day
+		     <if test="siteGubun == 'front'">
+				, CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[>]]> 0
+					THEN DATEDIFF(accs_end_dtm, NOW())
+					ELSE 0
+					END AS order_plus
+				, CASE WHEN DATEDIFF(accs_end_dtm, NOW()) <![CDATA[<]]> 0
+					THEN DATEDIFF(NOW(), accs_end_dtm)
+					ELSE 0
+					END AS order_minus
+			 </if>
 				, accs_strt_dtm
 				, accs_end_dtm
 				, case
@@ -220,8 +231,8 @@
 					ORDER BY stduy_dd_cd_nm desc
 				</when>
 				<when test="srchOrder == 5">
-					<!-- 교육신청 상세 페이지 - 접수 마감일 최신순으로 정렬 -->
-					ORDER BY accs_end_dtm desc
+					<!-- 교육신청 상세 페이지 -->
+					ORDER BY accs_status_order is null asc, accs_status_order ASC, order_plus asc, order_minus asc, accs_end_dtm desc
 				</when>
 				<otherwise>
 					<!-- 신청 마감순-->
