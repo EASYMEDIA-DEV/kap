@@ -266,6 +266,9 @@
                                                         <c:when test="${empty rtnData.dtlList}">
                                                             -
                                                         </c:when>
+                                                        <c:when test="${empty rtnData.dtlList[0].nm}">
+                                                            -
+                                                        </c:when>
                                                         <c:otherwise>
                                                             <c:forEach var="item" items="${rtnData.dtlList}" varStatus="status">
                                                                 <c:choose>

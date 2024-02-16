@@ -2886,6 +2886,7 @@ footer .copy-area span:last-child:after {display: none;}
 .training-view-page .training-list .img-area img {width: 100%; height: 100%; object-fit: cover;}
 .training-view-page .training-list .txt-area {display: flex; align-items: flex-start; flex-direction: column; justify-content: space-between;}
 .training-view-page .training-list:has(.img-area) .txt-area {max-width: -webkit-calc(100% - 390rem); max-width: calc(100% - 390rem);}
+.training-confirm .training-view-page .training-list:has(.img-area) .txt-area {max-width: -webkit-calc(100% - 208rem); max-width: calc(100% - 208rem);}
 .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 6rem;}
 .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 13rem; color: #06161E; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem; word-break: break-all; word-wrap: break-word;}
 .training-view-page .training-list .txt-area .top-line {max-width: 100%;}
@@ -2970,7 +2971,8 @@ footer .copy-area span:last-child:after {display: none;}
               /* 교육/세미나 > 상세 */
   .training-view-page .training-list {display: block; position: relative;}
   .training-view-page .training-list .img-area {position: relative; left: -20rem; width: 100vw; height: 243rem; margin-right: 0; margin-bottom: 32rem; border-radius: 0;}
-  .training-view-page .training-list .txt-area {max-width: unset;}
+  .training-view-page .training-list:has(.img-area) .txt-area {max-width: unset;}
+  .training-confirm .training-view-page .training-list:has(.img-area) .txt-area {max-width: unset;}
   .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 4rem;}
   .training-view-page .training-list .txt-area .training-explain-txt {margin-top: 12rem;}
   .training-view-page .training-list .txt-area .top-line {max-width: 100%;}
