@@ -89,7 +89,7 @@
                                                             <div class="form-select">
                                                                 <select id="ctgryCd" class="cleanInit" name="ctgryCd" title="구분 선택">
                                                                     <option value="">선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.COMPANY_TYPE}" varStatus="status">
                                                                         <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnInfo.ctgryCd eq cdList.cd}">selected</c:if>>
                                                                                     ${cdList.cdNm}
@@ -114,7 +114,7 @@
                                                             <div class="form-select">
                                                                 <select  id="sizeCd" class="cleanInit" name="sizeCd" title="기업규모" >
                                                                     <option value="">선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.COMPANY_TYPE}" varStatus="status">
                                                                         <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnInfo.sizeCd eq cdList.cd}">selected</c:if>>
                                                                                     ${cdList.cdNm}
@@ -206,7 +206,7 @@
                                                             <div class="form-select">
                                                                 <select id="slsYear" class="notRequired cleanInit" name="slsYear" title="연도 선택" title="매출액" >
                                                                     <option value="">연도 선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
                                                                         <option value="${cdList.cd}" <c:if test="${rtnInfo.slsYear eq cdList.cd}">selected</c:if>>
                                                                                 ${cdList.cdNm}
                                                                         </option>
@@ -280,7 +280,7 @@
                                                             <div class="form-select">
                                                                 <select id="qlty5StarYear" class="notRequired cleanInit" name="qlty5StarYear" title="품질5스타연도" >
                                                                     <option value="">연도 선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
                                                                         <option value="${cdList.cd}" <c:if test="${rtnInfo.qlty5StarYear eq cdList.cd}">selected</c:if>>
                                                                                 ${cdList.cdNm}
                                                                         </option>
@@ -303,7 +303,7 @@
                                                             <div class="form-select">
                                                                 <select  class="notRequired cleanInit" id="pay5StarCd" name="pay5StarCd" title="납입5스타등급">
                                                                     <option value="">선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.COMPANY_TYPE}" varStatus="status">
                                                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
                                                                             <option value="${cdList.cd}">
                                                                                     ${cdList.cdNm}
@@ -315,7 +315,7 @@
                                                             <div class="form-select">
                                                                 <select class="notRequired cleanInit" id="pay5StarYear" name="pay5StarYear" title="납입5스타연도" title="연도 선택">
                                                                     <option value="" selected>연도 선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
                                                                         <option value="${cdList.cd}" <c:if test="${rtnInfo.pay5StarYear eq cdList.cd}">selected</c:if>>
                                                                                 ${cdList.cdNm}
                                                                         </option>
@@ -338,7 +338,7 @@
                                                             <div class="form-select">
                                                                 <select  class="notRequired cleanInit" id="tchlg5StarCd" name="tchlg5StarCd" title="기술5스타등급">
                                                                     <option value="">선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.COMPANY_TYPE}" varStatus="status">
                                                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
                                                                             <option value="${cdList.cd}">
                                                                                     ${cdList.cdNm}
@@ -350,7 +350,7 @@
                                                             <div class="form-select">
                                                                 <select class="notRequired cleanInit" id="tchlg5StarYear" name="tchlg5StarYear" title="기술5스타연도" title="연도 선택">
                                                                     <option value="" selected>연도 선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
                                                                         <option value="${cdList.cd}">
                                                                                 ${cdList.cdNm}
                                                                         </option>
@@ -378,7 +378,7 @@
                                                                 <div class="form-select">
                                                                     <select class="notRequired cleanInit" id="year${i}" name="sqInfoList${i}" title="평가년도" title="SQ 평가 연도 선택">
                                                                         <option value="" selected>연도 선택</option>
-                                                                        <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                                        <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
                                                                             <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
                                                                                     ${cdList.cdNm}
                                                                             </option>
@@ -415,7 +415,7 @@
                                                             <div class="form-select">
                                                                 <select id="deptCd" name="mpaUserDto.deptCd" title="부서" class="notRequired cleanInit">
                                                                     <option value="" selected>선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status" >
                                                                         <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
                                                                             <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                                         </c:if>
@@ -441,7 +441,7 @@
                                                             <div class="form-select">
                                                                 <select id="pstnCd" name="mpaUserDto.pstnCd" title="직급" class="notRequired cleanInit" title="직급" >
                                                                     <option value="" selected>선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status">
                                                                         <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
                                                                             <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                                         </c:if>
@@ -519,7 +519,7 @@
                                                                 <div class="form-select">
                                                                     <select id="deptCdOld" name="mpaUserDto.deptCd" title="부서" class="notRequired cleanInit deptCd">
                                                                         <option value="" selected>선택</option>
-                                                                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
+                                                                        <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status" >
                                                                             <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
                                                                                 <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                                             </c:if>
@@ -545,7 +545,7 @@
                                                                 <div class="form-select">
                                                                     <select id="pstnCdOld" name="mpaUserDto.pstnCd" title="직급" class="notRequired cleanInit" title="직급" >
                                                                         <option value="" selected>선택</option>
-                                                                        <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                                        <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status">
                                                                             <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
                                                                                 <option value="${cdList.cd}">${cdList.cdNm}</option>
                                                                             </c:if>

@@ -85,9 +85,10 @@ public class MPHCertificationController {
         cdDtlList.add("COMPANY_TYPE");
         cdDtlList.add("");
         cdDtlList.add("MEM_CD");
+        cdDtlList.add("CO_YEAR_CD");
 
 
-        modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
+        modelMap.addAttribute("cdDtlList2",  cOCodeService.getCmmCodeBindAll(cdDtlList));
 
 
         if (!"".equals(mpaUserDto.getDetailsKey())) {
