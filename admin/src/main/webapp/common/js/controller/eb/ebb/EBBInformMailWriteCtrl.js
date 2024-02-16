@@ -91,11 +91,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						cmmCtrl.frmAjax(function(data){
 
-							alert("발송되었습니다.");
+							alert("메일이 발송되었습니다.");
 							ctrl.obj.find(".close").click();
 
 						}, "/mngwserc/eb/ebb/setInformSendMail", $formObj, "post", "json")
 
+					}
+				},
+				msg : {
+					confirm : {
+						init : "메일을 발송하시겠습니까?"
 					}
 				}
 			});

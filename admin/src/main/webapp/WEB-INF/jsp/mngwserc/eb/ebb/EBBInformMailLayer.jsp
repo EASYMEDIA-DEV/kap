@@ -12,6 +12,11 @@
                     </button>
                 </h5>
             </div>
+
+            <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;display: none;" rows="10" placeholder="" id="copyCntn" name="copyCntn" title="교육내용" oninput="cmmCtrl.checkMaxlength(this);">
+            </textarea>
+
+
             <form name="mailFrm" id="mailFrm" method="post" >
 
                 <!-- CSRF KEY -->
@@ -30,10 +35,8 @@
                     </fieldset>
 
                     <div class="form-group text-sm" >
-                        <div class="col-sm-12">
-                            <textarea maxlength="500" class="col-sm-12 pv notRequired ckeditorRequired" style="resize: vertical;" rows="10" placeholder="학습내용을 입력하세요" id="informCntn" name="informCntn" title="교육내용" oninput="cmmCtrl.checkMaxlength(this);">
+                        <div class="col-sm-12 editorArea">
 
-                            </textarea>
                         </div>
                     </div>
 

@@ -455,6 +455,27 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	}
 
+
+	//교육안내 메일 발송시 에디터 세팅, 레이어가 그려지기전에 에디터 구현을 하면 내용 수정이 안되기때문에 레이어 활성화와 같이  textarea->에디터까지 한세트로 생성해줌
+	var setMailEditor = function(){
+
+		$(".editorArea").empty();
+		var copyCntn = $("#copyCntn").clone(true);
+		copyCntn.css("display", "");
+
+		$(".editorArea").append(copyCntn);
+		$(".editorArea").find("textarea").attr("id", "informCntn");
+		$(".editorArea").find("textarea").attr("name", "informCntn");
+
+		jQuery("textarea[id='informCntn']").each(function(){
+			cmmCtrl.setEditor({
+				editor : jQuery(this).attr("id"),
+				height : 400
+			});
+		});
+
+	}
+
 	// set model
 	ctrl.model = {
 		id : {
@@ -467,12 +488,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						//교육내용 메일 발송 레이어팝업 호출
 						$(".ebbInformMailLayer").one('show.bs.modal', function() {
 
-							jQuery("textarea[id='informCntn']").each(function(){
-								cmmCtrl.setEditor({
-									editor : jQuery(this).attr("id"),
-									height : 400
-								});
-							});
+							setMailEditor();
 
 							var modal = $(this);
 							modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정
