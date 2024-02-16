@@ -552,7 +552,10 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             //이름
             receiverDto.setName(tempDto.getName());
             //사업명(치환문자1)
-            receiverDto.setNote1("2024 상주경영컨설팅");
+
+
+
+            receiverDto.setNote1(tempDto.getBsnYear() + " 상주" +tempDto.getCnstgNm());
             //부품사명(치환문자3)
             receiverDto.setNote3(tempDto.getCmpnNm());
             //신청일
@@ -569,7 +572,12 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드
             smiSmsCntnDTO.setSmsCntnSeq(4);
-            cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+
+            String temp = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn();
+            System.out.println("@@@ temp= " + temp);
+
+            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            cOMessageService.sendSms(smsDto, "");
             //cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
 
