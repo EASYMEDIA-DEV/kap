@@ -157,19 +157,19 @@ public class CBBManageConsultController {
 
     @RequestMapping(value = "/update", method= RequestMethod.POST)
     public String updateTechGuidance(CBBManageConsultInsertDTO cBBManageConsultInsertDTO, CBBManageConsultUpdateDTO cBBManageConsultUpdateDTO, ModelMap modelMap) throws Exception {
-        try {
+        /*try {*/
             COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
             cBBManageConsultInsertDTO.setRegId(cOUserDetailsDTO.getId());
             cBBManageConsultInsertDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             cBBManageConsultUpdateDTO.setBsnmNo(cBBManageConsultUpdateDTO.getBsnmNo().replace("-", ""));
 
             modelMap.addAttribute("respCnt", cBBManageConsultService.updateManageConsultDtl(cBBManageConsultInsertDTO, cBBManageConsultUpdateDTO));
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }
+        }*/
 
         return "jsonView";
     }

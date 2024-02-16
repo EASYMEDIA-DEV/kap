@@ -55,7 +55,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function() {
                         if($(this).is(":checked")){
                             $("input[name=ptcptName]").val($("input[name=rtnPtcptName]").val());
-                            $("input[name=ptcptTelno]").val($("input[name=rtnPtcptTelno]").val());
+                            /*$("input[name=ptcptTelno]").val($("input[name=rtnPtcptTelno]").val());*/
+                            $("input[name=ptcptTelno]").val($("input[name=rtnPtcptHpno]").val());
                             $("input[name=ptcptPstn]").val($("input[name=rtnPtcptPstn]").val());
                         }else{
                             $("input[name=ptcptName]").val("");

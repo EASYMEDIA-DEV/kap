@@ -45,6 +45,8 @@
                 <input type="hidden" value="${rtnData.memSeq}" name="rtnMemSeq" class="notRequired" >
                 <input type="hidden" value="${rtnData.name}" name="rtnPtcptName" class="notRequired" >
                 <input type="hidden" value="${rtnData.telNo}"  name="rtnPtcptTelno" class="notRequired" >
+                <input type="hidden" value="${loginMap.hpNo}"  name="rtnPtcptHpno" class="notRequired" >
+
                 <input type="hidden" value="${rtnData.pstnNm}"  name="rtnPtcptPstn" class="notRequired" >
                 <input type="hidden" value="${rtnData.email}" name="rtnPtcptEmail" class="notRequired" >
                 <input type="hidden" value="${rtnData.cnstgSeq}" name="rtnCnstgSeq" >
@@ -83,7 +85,7 @@
                                 <div class="data-line">
                                     <div class="form-group">
                                         <div class="form-input">
-                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처" class="phoneChk">
+                                            <input type="text" placeholder="연락처 입력" name="ptcptTelno" title="연락처" class="phoneChk" maxlength="13">
                                         </div>
                                     </div>
                                 </div>
