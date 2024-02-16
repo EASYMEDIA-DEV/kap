@@ -118,9 +118,9 @@
                                                     </c:when>
                                                     <c:when test="${qstnList.srvTypeCd eq 'QST04'}">    <!--주관식서술-->
                                                         <div class="form-textarea exmplList">
-                                                            <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="필수 응답문항" data-next-no =""></textarea>
+                                                            <textarea name="answer${qstnList.qstnSeq}" class="${notRequired} answer textAreaSbjctRply" id="" cols="" rows="" placeholder="답변을 작성해주세요." title="필수 응답문항" data-next-no ="" maxlength="2000"></textarea>
                                                             <div class="check-byte">
-                                                                <p class="txt"><span class="current-byte">0</span>자</p>
+                                                                <p class="txt"><span class="current-byte maxlengthText">0</span>자</p>
                                                                 <p class="txt"><span class="max-byte">2,000</span>자</p>
                                                             </div>
                                                         </div>
