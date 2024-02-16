@@ -250,7 +250,8 @@ public class CBTechGuidanceController {
             smsDto.getReceiver().add(receiverDto);
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
             smiSmsCntnDTO.setSmsCntnCd("SMS03"); // 컨설팅 신청 완료 구분 코드
-            cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            cOMessageService.sendSms(smsDto, "");
 
         }catch(Exception e){
             if (log.isErrorEnabled()) {
