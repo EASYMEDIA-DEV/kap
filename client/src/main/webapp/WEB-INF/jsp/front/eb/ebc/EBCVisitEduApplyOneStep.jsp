@@ -208,6 +208,9 @@
                                                                 <c:when test="${empty sqInfoList.list}">
                                                                     -
                                                                 </c:when>
+                                                                <c:when test="${empty sqInfoList.list[0].nm}">
+                                                                    -
+                                                                </c:when>
                                                                 <c:otherwise>
                                                                     <c:forEach var="item" items="${sqInfoList.list}" varStatus="status">
                                                                         <c:choose>

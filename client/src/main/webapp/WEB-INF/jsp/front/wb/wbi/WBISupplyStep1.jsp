@@ -251,6 +251,9 @@
                                                         <c:when test="${empty rtnData.sqInfoList}">
                                                             -
                                                         </c:when>
+                                                        <c:when test="${empty rtnData.sqInfoList[0].nm}">
+                                                            -
+                                                        </c:when>
                                                         <c:otherwise>
                                                             <c:forEach var="item" items="${rtnData.sqInfoList}" varStatus="status">
                                                                 <c:choose>
