@@ -34,7 +34,11 @@
                     (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
                     ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
                     ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(mng_stts_cd,'')) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd_nm,
-                    ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd_nm,
+                    CASE
+                        WHEN ( SELECT 'X' FROM cx_appctn_trnsf_dtl WHERE APPCTN_SEQ = TMP.APPCTN_SEQ AND bfre_mem_seq = #{memSeq} ORDER BY REG_DTM LIMIT 1 ) = 'X'
+                        THEN '이관'
+                        ELSE ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd)
+                    END appctn_stts_cd_nm,
                     ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
                     ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
                     ( SELECT rtrn_rsn_cntn FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rtrn_rsn_cntn,
@@ -52,7 +56,7 @@
                 (
                     SELECT * FROM cx_episd_mst
                     WHERE EXPS_YN = 'Y'
-                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
+                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND (B.MEM_SEQ = #{memSeq} OR B.MEM_SEQ = (SELECT aftr_mem_seq FROM cx_appctn_trnsf_dtl WHERE APPCTN_SEQ = B.APPCTN_SEQ AND BFRE_MEM_SEQ = #{memSeq} ORDER BY REG_DTM LIMIT 1))
                 LEFT JOIN
                 (
                     SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
@@ -84,40 +88,61 @@
     <select id="selectApplyCount" parameterType="mpbBsnSearchDTO" resultType="java.lang.Integer">
         SELECT /*MPBCoexistenceMapper.selectApplyCount*/ count(*)
         FROM (
-                SELECT  INFO.*,
-                     ( CASE
-                        WHEN bsn_end_dtm > NOW() AND bsn_cd NOT IN ('BSN07','BSN08','BSN09') THEN 1
-                        WHEN appctn_stts_cd = '사용자취소' THEN 5
-                        WHEN appctn_stts_cd IN ('미선정','부적합','탈락') THEN 4
-                        WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
-                        ELSE 3 END
-                    ) bsnStatus
-                FROM (
-                        SELECT
-                            TMP.* ,
-                            (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
-                            (SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd,
-                            (SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_cd
-                        FROM (
-                                SELECT
-                                    YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd,
-                                    B.appctn_seq, B.sbrdn_bsnm_no, B.adm_memo, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
-                                    C.*,
-                                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
-                                FROM
-                                (
-                                    SELECT * FROM cx_episd_mst WHERE EXPS_YN = 'Y'
-                                ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND B.MEM_SEQ = #{memSeq}
-                                LEFT JOIN
-                                (
-                                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
-                                    ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
-                                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
-                                ) C /* 회원-회사 JOIN 테이블 */
-                                ON C.mem_seq = B.mem_seq
-                        ) TMP
-            ) INFO
-        ) COMPANY_INFO
+        SELECT  INFO.*,
+        (CASE WHEN appctn_stts_chng_dtm >= mng_stts_chng_dtm THEN appctn_stts_chng_dtm
+        WHEN mng_stts_chng_dtm >= appctn_stts_chng_dtm THEN mng_stts_chng_dtm
+        WHEN appctn_stts_chng_dtm IS NULL THEN mng_stts_chng_dtm
+        WHEN mng_stts_chng_dtm IS NULL THEN appctn_stts_chng_dtm
+        ELSE NULL END ) AS chngDtm,
+        (CASE
+        WHEN bsn_end_dtm > NOW() AND bsn_cd NOT IN ('BSN07','BSN08','BSN09') THEN 1
+        WHEN appctn_stts_cd_nm = '사용자취소' THEN 5
+        WHEN appctn_stts_cd_nm IN ('미선정','부적합','탈락') THEN 4
+        WHEN NOW() BETWEEN BSN_STRT_DTM AND BSN_END_DTM THEN 2
+        ELSE 3 END ) bsnStatus
+        FROM ( SELECT
+        TMP.* ,
+        ( SELECT
+        ( CASE WHEN
+        (SELECT COUNT(*) FROM co_code_mst WHERE CD_ID = 'BM_CODE' AND CD  = bsn_cd) > 0
+        THEN rsume_stts_cd
+        ELSE (SELECT cd_nm FROM co_code_mst WHERE cd = rsume_stts_cd) END )
+        FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_Cd_Nm,
+        (SELECT cd_nm FROM co_code_mst WHERE cd = bsn_cd) bsn_Nm,
+        ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rsume_stts_cd,
+        ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(mng_stts_cd,'')) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_cd_nm,
+        CASE
+        WHEN ( SELECT 'X' FROM cx_appctn_trnsf_dtl WHERE APPCTN_SEQ = TMP.APPCTN_SEQ AND bfre_mem_seq = #{memSeq} ORDER BY REG_DTM LIMIT 1 ) = 'X'
+        THEN '이관'
+        ELSE ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = appctn_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd)
+        END appctn_stts_cd_nm,
+        ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) appctn_stts_chng_dtm,
+        ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) mng_stts_chng_dtm,
+        ( SELECT rtrn_rsn_cntn FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TMP.appctn_seq AND card.rsume_ord = TMP.rsumeOrd) rtrn_rsn_cntn,
+        ( SELECT CD_NM FROM co_code_mst WHERE cd_seq = ( SELECT PARNT_SEQ FROM co_code_mst WHERE CD_ID = 'win_Business' AND CD = bsn_Cd )) title
+        FROM (
+        SELECT YEAR(A.year) as year, A.episd, A.bsn_strt_Dtm, A.bsn_end_dtm, A.bsn_cd,
+        B.appctn_seq, B.sbrdn_bsnm_no, B.adm_memo, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
+        (SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+        (SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME,
+        C.*,
+        (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
+        (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
+        (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
+        FROM
+        (
+        SELECT * FROM cx_episd_mst
+        WHERE EXPS_YN = 'Y'
+        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq AND (B.MEM_SEQ = #{memSeq} OR B.MEM_SEQ = (SELECT aftr_mem_seq FROM cx_appctn_trnsf_dtl WHERE APPCTN_SEQ = B.APPCTN_SEQ AND BFRE_MEM_SEQ = #{memSeq} ORDER BY REG_DTM LIMIT 1))
+        LEFT JOIN
+        (
+        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no, b.rprsnt_nm
+        ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
+        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+        ) C /* 회원-회사 JOIN 테이블 */
+        ON C.mem_seq = B.mem_seq
+        ) TMP
+        ) INFO) COMPANY_INFO
         <include refid="selectCompanyListwhereSql" />
     </select>
 

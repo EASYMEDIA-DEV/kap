@@ -9,7 +9,7 @@
                 <c:when test="${item.appctnSttsCdNm eq '접수완료' || item.appctnSttsCdNm eq '적합' || item.appctnSttsCdNm eq '선정' }">
                     <c:set var="classType" value="accepting"/>
                 </c:when>
-                <c:when test="${item.appctnSttsCdNm eq '사용자취소'}">
+                <c:when test="${item.appctnSttsCdNm eq '사용자취소' || item.appctnSttsCdNm eq '이관'}">
                     <c:set var="classType" value="end"/>
                 </c:when>
                 <c:when test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
@@ -33,8 +33,14 @@
                                         </p>
                                     </div>
                                     <p class="training-name f-title3">
-                                        <a href="./view?bsnCd=${item.bsnCd}&appctnSeq=${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
-                                    </p>
+                                        <c:choose>
+                                            <c:when test="${item.appctnSttsCdNm eq '이관'}">
+                                                <a href="javascript:" style="cursor: default">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
+                                            </c:when>
+                                            <c:otherwise>
+                                                <a href="./view?bsnCd=${item.bsnCd}&appctnSeq=${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
+                                            </c:otherwise>
+                                        </c:choose>
                                 </div>
                                 <div class="group">
                                     <p class="index-num f-head">${item.rsumeSttsCdNm}</p>
