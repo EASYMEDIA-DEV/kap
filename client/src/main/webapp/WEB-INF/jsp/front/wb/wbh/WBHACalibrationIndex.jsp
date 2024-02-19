@@ -72,9 +72,28 @@
                                 <p class="f-title1">${sysYear} 검교정 사업 접수중 (상시접수중)</p>
                             </div>
 
+                            <div class="con-area">
+                                <div class="scroll-area">
+                                    <div class="info-line-list-w">
+                                        <div class="list">
+                                            <p class="tit">첨부파일</p>
+                                            <div class="txt">
+                                                <!-- 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
+                                                <div class="btn-wrap">
+                                                    <div class="btn-set">
+                                                        <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=${rtnRoundDtl.fileOrd}" download><span>${rtnRoundDtl.clbtnFileNm}</span></a>
+                                                    </div>
+                                                </div>
+                                                <!-- // 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                    <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=${rtnRoundDtl.fileOrd}" download title="양식 다운로드"><span>양식 다운로드</span></a>
+                                    <%--<a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=${rtnRoundDtl.fileOrd}" download title="양식 다운로드"><span>양식 다운로드</span></a>--%>
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg apply" href="javascript:"><span>신청하기</span></a>

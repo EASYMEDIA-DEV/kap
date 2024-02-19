@@ -216,13 +216,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             downloadAll : {
                 event : {
                     click : function() {
-                        /*
-                        $('.optnFile').each(function() {
-                           // location.href = "/file/download?fileSeq="+$(this).val()+"&fileOrd=0";
-                           fnSleep(3000); //각 파일별 시간 텀을 준다
-
-                        });
-                        */
                         $(".loading-area").stop().fadeIn(200);
                         var optnFiles = $('.optnFile');
                         var numFiles = optnFiles.length;

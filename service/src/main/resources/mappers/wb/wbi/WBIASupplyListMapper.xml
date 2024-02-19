@@ -413,16 +413,12 @@
        2023.11.24  오병호     최초 생성
    -->
     <select id="selectOPtnList" parameterType="wBRoundMstSearchDTO" resultType="WBAManagementOptnDTO">
-        select 	/* WBIASupplyListMapper.selectOPtnList */
-            a.file_seq as file_seq
-             , b.file_ord as optn_ord
-        from 	co_file_mst a
-                    inner
-                        join 	co_file_dtl b
-                                on 		a.file_seq = b.file_seq
-        where 	a.file_seq = 3986
-          and 	a.use_yn = 'Y'
-          and 	b.use_yn = 'Y'
+        SELECT /* WBIASupplyListMapper.selectOPtnList */
+            A.SPLYCHN_STBLZTN_FILE_SEQ as file_seq
+             , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.SPLYCHN_STBLZTN_FILE_SEQ) as optn_ord
+             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = A.SPLYCHN_STBLZTN_FILE_SEQ) FILE_NM
+        FROM SM_STY_MST A
+        WHERE TYPE_CD = 'BUSINESS02'
     </select>
 </mapper>
 

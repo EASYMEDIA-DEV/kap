@@ -569,6 +569,7 @@
         SELECT /* WBCASecurityListMapper.selectOPtnList */
               SCRTY_ENVRNMT_FILE_SEQ
              , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.SCRTY_ENVRNMT_FILE_SEQ) AS FILE_ORD
+             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = SCRTY_ENVRNMT_FILE_SEQ) FILE_NM
         FROM SM_STY_MST A
         WHERE TYPE_CD = 'BUSINESS02'
     </select>

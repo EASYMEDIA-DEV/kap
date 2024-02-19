@@ -976,6 +976,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
 
         wbgaExamSearchDTO.setFileSeq(smjFormDTO.getClbtnFileSeq());
         wbgaExamSearchDTO.setFileOrd(smjFormDTO.getClbtnFileOrd());
+        wbgaExamSearchDTO.setExamFileNm(smjFormDTO.getExamFileNm());
 
         //신청가능 매출액가져오기
         WBGAValidDTO wbgaValidDTO = new WBGAValidDTO();

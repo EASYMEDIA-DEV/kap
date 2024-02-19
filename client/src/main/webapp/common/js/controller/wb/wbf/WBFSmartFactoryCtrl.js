@@ -260,6 +260,32 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            downloadAll : {
+                event : {
+                    click : function() {
+                        $(".loading-area").stop().fadeIn(200);
+                        var optnFiles = $('.optnFile');
+                        var numFiles = optnFiles.length;
+                        var currentIndex = 0;
+
+                        function downloadFile() {
+                            var currentFile = $(optnFiles[currentIndex]);
+                            location.href = "/file/download?fileSeq="+currentFile.val()+"&fileOrd=0";
+                            // window.open("/file/download?fileSeq="+currentFile.val()+"&fileOrd=0", '_blank');
+
+                            currentIndex++;
+
+                            if (currentIndex < numFiles) {
+                                setTimeout(downloadFile, 1500); // 2초 후에 다음 파일 다운로드
+                            } else {
+                                $(".loading-area").stop().fadeOut(200);
+                            }
+                        }
+
+                        downloadFile();
+                    }
+                }
+            },
             btnCancle : {
                 event : {
                     click : function() {

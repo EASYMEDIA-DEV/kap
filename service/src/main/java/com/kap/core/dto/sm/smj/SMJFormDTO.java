@@ -82,6 +82,21 @@ public class SMJFormDTO extends BaseDTO {
     @Schema(title = "전체교육일정 파일 순번", example = "숫자")
     private Integer ttlEdctnFileSeq;
 
+    @Schema(title = "파일명", example = "숫자")
+    private String fileNm;
+
+    @Schema(title = "파일명", example = "숫자")
+    private String appctnFileNm;
+
+    @Schema(title = "파일명", example = "숫자")
+    private String scrtyFileNm;
+
+    @Schema(title = "파일명", example = "숫자")
+    private String examFileNm;
+
+    @Schema(title = "파일명", example = "숫자")
+    private String clbtnFileNm;
+
     @Schema(title = "파일순번", example = "숫자")
     private Integer fileOrd;
 

@@ -961,6 +961,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
 
         wbhaCalibrationSearchDTO.setFileSeq(smjFormDTO.getClbtnFileSeq());
         wbhaCalibrationSearchDTO.setFileOrd(smjFormDTO.getClbtnFileOrd());
+        wbhaCalibrationSearchDTO.setClbtnFileNm(smjFormDTO.getClbtnFileNm());
 
         //신청가능 매출액가져오기
         WBHAValidDTO wbhaValidDTO = new WBHAValidDTO();
