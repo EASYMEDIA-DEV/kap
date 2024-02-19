@@ -21,5 +21,7 @@ app:
     #파일 업로드 크기
     max-size: 41943040
     #템플릿 경로
-    template-file-path: D:\EGOVFRAME\project\2023\kap\admin\src\main\webapp\WEB-INF\template\
+
+
+    template-file-path: D:\EGOVFRAME\project\KAP\client\src\main\webapp\WEB-INF\template\
 #    template-file-path: D:\kap-git\client\src\main\webapp\WEB-INF\jsp\template\

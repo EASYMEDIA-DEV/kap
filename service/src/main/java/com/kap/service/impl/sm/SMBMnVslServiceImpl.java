@@ -84,7 +84,7 @@ public class SMBMnVslServiceImpl implements SMBMnVslService {
         if (!"".equals(pSMBMainVslDTO.getDetailsKey())) {
             info = sMBMnVslMapper.selectMnVslDtl(pSMBMainVslDTO);
             String fileExtn = info.getFileExtn();
-            if (fileExtn.equals("mp4")) {
+            if (fileExtn.toLowerCase().equals("mp4")) {
                 info.setVideoFileSeq(info.getFileSeq());
             } else {
                 info.setImgFileSeq(info.getFileSeq());

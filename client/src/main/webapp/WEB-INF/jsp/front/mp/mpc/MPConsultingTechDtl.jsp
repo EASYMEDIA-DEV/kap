@@ -106,6 +106,7 @@
                             </div>
                         </div>
                     </div>
+
                     <c:if test="${srvCnt > 0 && not empty rtnData.srvSeq && not empty rtnData.srvStrtDtm && not empty rtnData.srvEndDtm}"> <!-- 설문 응답 가능 기간에 포함되는 설문-->
                         <c:if test="${rspnCnt < 1 }"> <!-- 설문 조사 참여 여부 -->
                             <div class="cont-sec no-border scroll-motion">
