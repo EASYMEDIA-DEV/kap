@@ -143,6 +143,23 @@ public class BDDNewsletterController {
     }
 
     /**
+     * 뉴스레터 수신거부
+     */
+    @RequestMapping(value = "/refusal")
+    public String deleteNewsletterUserInfo(MPHNewsLetterDTO mPHNewsLetterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+
+        try {
+            mphNewsLetterService.deleteNewsletterUserInfo(mPHNewsLetterDTO);
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "redirect:./list";
+    }
+
+    /**
      * @ClassName		: BDDNewsletterRestController.java
      * @Description		: 뉴스레터 구독을 위한 REST Controller
      * @author 구은희
@@ -197,25 +214,6 @@ public class BDDNewsletterController {
                 throw new Exception(e.getMessage());
             }
             return mPHNewsLetterDTO;
-        }
-
-        /**
-         * 뉴스레터 수신거부
-         */
-        @GetMapping(value = "/refusal")
-        public String deleteNewsletterUserInfo(MPHNewsLetterDTO mPHNewsLetterDTO) throws Exception {
-
-            String url = "/foundation/board/newsletter/list";
-
-            try {
-                 mphNewsLetterService.deleteNewsletterUserInfo(mPHNewsLetterDTO);
-            } catch (Exception e) {
-                if (log.isDebugEnabled()) {
-                    log.debug(e.getMessage());
-                }
-                throw new Exception(e.getMessage());
-            }
-            return "redirect:" + url;
         }
     }
 }

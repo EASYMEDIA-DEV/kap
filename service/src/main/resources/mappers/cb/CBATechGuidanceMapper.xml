@@ -1556,7 +1556,7 @@
         A.REG_DTM,
         B.BFRE_MEM_SEQ,
         B.AFTR_MEM_SEQ,
-        CASE WHEN B.BFRE_MEM_SEQ = '50' AND A.CNSTG_SEQ = B.CNSTG_SEQ then 'Y' ELSE 'N' END AS TRNSF_YN
+        CASE WHEN B.BFRE_MEM_SEQ = #{memSeq} AND A.CNSTG_SEQ = B.CNSTG_SEQ then 'Y' ELSE 'N' END AS TRNSF_YN
         FROM CP_CNSTG_APPCTN_MST A
         LEFT JOIN cp_cnstg_appctn_trnsf_dtl B ON A.CNSTG_SEQ = B.CNSTG_SEQ
         ) TMP
