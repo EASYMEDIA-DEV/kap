@@ -268,7 +268,7 @@
                                                             <div class="form-select">
                                                                 <select class="notRequired cleanInit" id="qlty5StarCd" name="qlty5StarCd" title="품질5스타등급" >
                                                                     <option value="">선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.COMPANY_TYPE}" varStatus="status">
                                                                         <c:if test="${fn:contains(cdList, 'COMPANY030')}">
                                                                             <option value="${cdList.cd}">
                                                                                     ${cdList.cdNm}
