@@ -383,7 +383,6 @@ public class EBACouseController {
 
                     HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
 
-
                     if(applicantDto.getMemCd().equals("CP")) {
                         mpePartsCompanyDTO.setBsnmNo(COUserDetailsHelperService.getAuthenticatedUser().getBsnmNo());
                         MPEPartsCompanyDTO originList = mpePartsCompanyService.selectPartsCompanyDtl(mpePartsCompanyDTO);
@@ -537,7 +536,18 @@ public class EBACouseController {
             //교육신청 메일발송 끝
             System.out.println("@@@@ 끝");
 
+
+            //교육신청 메일발송 시작
+            //메일 발송
+            receiverDto.setMobile(applicantDto.getHpNo());
+            cOMailDTO.getReceiver().add(receiverDto);
+            cOMessageService.sendMail(cOMailDTO, "EBBEduApplyStep3.html");
+
+            //교육신청 메일발송 끝
+
+
             //SMS 발송 시작
+
             //SMS 발송
             COSmsDTO smsDto = new COSmsDTO();
 
@@ -546,6 +556,7 @@ public class EBACouseController {
             smiSmsCntnDTO.setSmsCntnCd("SMS01"); //교육신청 완료 코드
             smiSmsCntnDTO.setSmsCntnSeq(3);
             smsDto.getReceiver().add(receiverDto);
+
 
             smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
