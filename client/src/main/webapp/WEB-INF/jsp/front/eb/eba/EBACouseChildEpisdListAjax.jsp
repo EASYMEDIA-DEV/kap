@@ -9,8 +9,13 @@
             <c:if test="${list.accsStatusOrder eq 1 && floatingYn eq 'N'}">
 
 
+
+
+
+
                 <c:choose>
-                    <c:when test="${list.fxnumCnt > list.accsCnt}">
+
+                    <c:when test="${list.fxnumImpsbYn eq 'N' || list.fxnumCnt > list.accsCnt}">
                         <!--교육일수 차이 계산-->
                         <c:set var="dayVal" value=""/>
                         <c:choose>
@@ -52,9 +57,6 @@
                         </div>
                     </c:when>
                 </c:choose>
-
-
-
 
             </c:if>
         </c:forEach>
@@ -183,15 +185,25 @@
                                     <a class="btn-text-icon download" href="/file/download?fileSeq=${list.edctnNtctnFileSeq}&fileOrd=${list.fileOrd}"><span>안내문</span></a>
                                 </c:if>
                             </div>
+
                             <div class="btn-set">
                                 <c:choose>
                                     <c:when test="${list.accsStatusOrder eq 1}"><!--접수중-->
+
                                         <c:choose>
-                                            <c:when test="${list.fxnumCnt > list.accsCnt}">
-                                               <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                            <c:when test="${list.fxnumImpsbYn eq 'N'}">
+                                                <!--모집정원이 제한없음일 경우 무조건 신청하기만 출력-->
+                                                <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
                                             </c:when>
                                             <c:otherwise>
-                                                <a class="btn-solid small black-bg disabled" href="javascript:" ><span>정원마감</span></a>
+                                                <c:choose>
+                                                    <c:when test="${list.fxnumCnt > list.accsCnt}">
+                                                        <a class="btn-solid small black-bg applyStep" href="javascript:" ><span>신청하기</span></a>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <a class="btn-solid small black-bg disabled" href="javascript:" ><span>정원마감</span></a>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </c:otherwise>
                                         </c:choose>
 
