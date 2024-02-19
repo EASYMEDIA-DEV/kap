@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * <pre>
@@ -254,7 +255,7 @@ public class MPConsultingController {
             CBATechGuidanceInsertDTO rtnData = cBATechGuidanceService.selectTechGuidanceDtlCheck(cBATechGuidanceInsertDTO);
             COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
 
-            if (Integer.toString(cOLoginUserDTO.getSeq()).equals(rtnData.getMemSeq())){
+            if (Objects.equals(cOLoginUserDTO.getSeq(), Integer.valueOf(rtnData.getMemSeq()))){
 
                 if (rtnData.getRspnCnt() > 0 ){
                     modelMap.addAttribute("msg", "이미 제출한 설문입니다.");
