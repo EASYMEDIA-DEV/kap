@@ -595,7 +595,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">년도</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="50" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="50" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -611,7 +611,7 @@
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                            <select class="form-control input-sm wd-sm" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간" style="margin-left: 5px;">
+                                            <select class="form-control input-sm wd-sm notRequired" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간" style="margin-left: 5px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="cdList" items="${cdDtlList.SYSTEM_HOUR}" varStatus="status">
                                                     <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnInfo.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
@@ -624,7 +624,7 @@
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                            <select class="form-control input-sm wd-sm" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간" style="margin-left: 5px;">
+                                            <select class="form-control input-sm wd-sm notRequired" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간" style="margin-left: 5px;">
                                                 <option value="">선택</option>
                                                 <c:forEach var="cdList" items="${cdDtlList.SYSTEM_HOUR}" varStatus="status">
                                                     <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnInfo.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
@@ -639,7 +639,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">교육장소</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm " id="edctnPlace" name="edctnPlace" value="${rtnInfo.edctnPlace}" title="교육장소" maxlength="50" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="edctnPlace" name="edctnPlace" value="${rtnInfo.edctnPlace}" title="교육장소" maxlength="50" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -723,7 +723,7 @@
                                 <label class="col-sm-1 control-label">수료인원(명)</label>
                                 <div class="col-sm-10 form-inline">
                                     <fmt:formatNumber var="formatPtcptRate" value="${rtnInfo.ptcptRate * 100}" pattern="##0" />
-                                    <input type="text" class="form-control input-sm " id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="cmptnCnt" name="cmptnCnt" value="${rtnInfo.cmptnCnt}" title="수료인원" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -731,7 +731,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">참석률(%)</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? formatPtcptRate : ''}" title="참석률(%)" maxlength="50" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? formatPtcptRate : ''}" title="참석률(%)" maxlength="50" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>

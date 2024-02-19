@@ -285,7 +285,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
             ebcVisitEduDTO.setMemSeq(ebcVisitEduDTO.getAftrMemSeq());
         }
 
-        ebcVisitEduMapper.insertIsttrRel(ebcVisitEduDTO);
+        if(!ebcVisitEduDTO.getIsttrSeqList().isEmpty()) {
+            ebcVisitEduMapper.insertIsttrRel(ebcVisitEduDTO);
+        }
         ebcVisitEduMapper.insertAppctnType(ebcVisitEduDTO);
         for (EBCVisitEduDTO dto : resultOpList) {
 

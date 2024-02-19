@@ -467,6 +467,50 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                     return isValid;
                 },
+                before : function () {
+
+                    if($("#edctnSttsCd").val() == "EBC_VISIT_CD02003") {
+                        if($("input[name='rsltEndYn']:checked").val() == "") {
+                            alert("실적마감여부를 체크해주세요.");
+                            return false;
+                        }
+
+                        if($("#cnfrmdTheme").val() == "") {
+                            alert("확정주제를 입력해주세요.");
+                            return false;
+                        }
+
+                        if($("#edctnYear").val() == "") {
+                            alert("년도를 입력해주세요.");
+                            return false;
+                        }
+
+                        if($("#edctnStrtDt").val() == "" || $("#edctnStrtHour").val() == "") {
+                            alert("교육기간 시작일을 선택해주세요.");
+                            return false;
+                        }
+
+                        if($("#edctnEndDt").val() == "" || $("#edctnEndHour").val() == "") {
+                            alert("교육기간 종료일을 선택해주세요.");
+                            return false;
+                        }
+
+                        if($("#edctnPlace").val() == "") {
+                            alert("교육장소를 입력해주세요.");
+                            return false;
+                        }
+
+                        if($("#formatPtcptRate").val() == "") {
+                            alert("수료인원(명)을 입력해주세요.");
+                            return false;
+                        }
+
+                        if($("#ptcptRate").val() == "") {
+                            alert("참석률(%)을 입력해주세요.");
+                            return false;
+                        }
+                    }
+                },
                 async : {
                     use : true,
                     func : function (){
@@ -667,6 +711,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                         var cmptnCnt = $("#cmptnCnt").val();
                         var ptcptRate = $("#ptcptRate").val();
+
+
                         var lctrFileSeq = $("#lctrFileSeq").val();
                         var etcMatlsFileSeq = $("#etcMatlsFileSeq").val();
 
@@ -674,11 +720,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.cnfrmdTheme = cnfrmdTheme;
                         actForm.edctnSttsCd = edctnSttsCd;
                         actForm.edctnYear = edctnYear;
-                        actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
-                        actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
+
+                        if(edctnStrtDtm == "" || edctnEndDtm == "") {
+                            actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
+                            actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
+                        }
+
                         actForm.edctnPlace = edctnPlace;
                         actForm.cmptnCnt = cmptnCnt;
-                        actForm.ptcptRate = ptcptRate / 100;
+                        if(ptcptRate != "") {
+                            actForm.ptcptRate = ptcptRate / 100;
+                        }
                         actForm.lctrFileSeq = lctrFileSeq;
                         actForm.etcMatlsFileSeq = etcMatlsFileSeq;
 
