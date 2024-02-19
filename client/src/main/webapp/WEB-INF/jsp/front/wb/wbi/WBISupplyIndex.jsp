@@ -169,15 +169,27 @@
                                                     ${kl:convertDate(rtnRoundDtl.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}
                                                 </p>
                                             </div>
+                                            <div class="list">
+                                                <p class="tit">첨부파일</p>
+                                                <div class="txt">
+                                                    <div class="btn-wrap">
+                                                        <div class="btn-set">
+                                                            <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                                                                <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download><span>${item.fileNm}</span></a>
+                                                            </c:forEach>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="btn-wrap">
                                     <div class="btn-set">
-                                        <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                                        <%--<c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
                                             <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
-                                        </c:forEach>
+                                        </c:forEach>--%>
                                     </div>
                                     <div class="btn-set">
                                         <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>

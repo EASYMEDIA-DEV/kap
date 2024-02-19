@@ -208,4 +208,6 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     private List ctgryCdList;
     @Schema(title = "대상장비 리스트")
     private List<WBHAValidDtlDTO> validDtlDTOList;
+    @Schema(title = "파일명", example = "숫자")
+    private String clbtnFileNm;
 }

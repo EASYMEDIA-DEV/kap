@@ -254,4 +254,7 @@ public class WBGAExamSearchDTO extends BaseDTO {
     @Schema(title = "대상장비 리스트")
     private List<WBGAValidDtlDTO> validDtlDTOList;
 
+    @Schema(title = "파일명", example = "숫자")
+    private String examFileNm;
+
 }

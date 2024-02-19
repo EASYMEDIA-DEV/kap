@@ -168,19 +168,33 @@
                                                 <p class="tit">사업기간</p>
                                                 <p class="txt">${kl:convertDate(rtnRoundDtl.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')} - ${kl:convertDate(rtnRoundDtl.bsnEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
                                             </div>
+                                            <c:if test="${not empty rtnRoundForm}">
+                                                <div class="list">
+                                                    <p class="tit">첨부파일</p>
+                                                    <div class="txt">
+                                                        <!-- 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
+                                                        <div class="btn-wrap">
+                                                            <div class="btn-set">
+                                                                <a class="btn-text-icon download-bg downloadAll" href="javascript:" title="파일 다운로드" download=""><span>첨부파일 전체 다운로드</span></a>
+                                                            </div>
+                                                            <div class="btn-set">
+                                                                <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.appctnFileNm}</span></a>
+                                                                <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.scrtyFileNm}</span></a>
+                                                                <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryAppctnFileSeq}">
+                                                                <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryScrtyFileSeq}">
+                                                            </div>
+                                                        </div>
+                                                        <!-- // 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="btn-wrap">
-                                    <c:if test="${not empty rtnRoundForm}">
-                                        <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>신청서 다운로드</span></a>
-                                            <a class="btn-solid small gray-bg has-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>보안서약서 다운로드</span></a>
-                                        </div>
-                                    </c:if>
                                     <div class="btn-set">
-                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd-Seq='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
+                                        <a class="btn-btn-solid small black-bg apply" href="javascript:" data-episd-Seq='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
                                     </div>
                                 </div>
                                 <button class="btn-close btn-role-close" title="팝업 닫기" type="button"><span>닫기</span></button>

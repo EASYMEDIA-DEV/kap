@@ -168,18 +168,28 @@
                                                 <p class="tit">사업기간</p>
                                                 <p class="txt">${kl:convertDate(rtnRoundDtl.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')} - ${kl:convertDate(rtnRoundDtl.bsnEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
                                             </div>
+                                            <c:if test="${not empty rtnRoundDtl.smjList}">
+                                                <div class="list">
+                                                    <p class="tit">첨부파일</p>
+                                                    <div class="txt">
+                                                        <div class="btn-wrap">
+                                                            <div class="btn-set">
+                                                                <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
+                                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.crbnEmsnsFileSeq}&fileOrd=${item.fileOrd}" download><span>${item.fileNm}</span></a>
+                                                                </c:forEach>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </c:if>
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="btn-wrap">
-                                    <c:if test="${not empty rtnRoundDtl.smjList}">
-                                        <div class="btn-set">
-                                            <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
-                                                <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.crbnEmsnsFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
-                                            </c:forEach>
-                                        </div>
-                                    </c:if>
+                                    <div class="btn-set">
+                                        <!-- <a class="btn-solid small gray-bg has-icon download" href="javascript:" download="" title="첨부파일 전체 다운로드"><span>첨부파일 전체 다운로드</span></a> --><!-- 2024-01-24 다운로드 버튼 삭제-->
+                                    </div>
                                     <div class="btn-set">
                                         <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
                                     </div>
