@@ -41,8 +41,8 @@
                                 <div class="training-view-page">
                                     <div class="training-list">
                                         <div class="img-area">
-                                            <c:if test="${not empty list.webPath}">
-                                                <img src="${list.webPath}" alt="${list.fileDsc}">
+                                            <c:if test="${not empty rtnData.webPath}">
+                                                <img src="${rtnData.webPath}" alt="${rtnData.fileDsc}">
                                             </c:if>
                                         </div>
 
