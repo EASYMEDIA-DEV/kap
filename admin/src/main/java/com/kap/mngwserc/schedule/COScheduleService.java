@@ -3,10 +3,13 @@ package com.kap.mngwserc.schedule;
 import com.kap.common.utility.CODateUtil;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
+import com.kap.core.dto.COSmsDTO;
 import com.kap.core.dto.eb.EBScheduleGuideDTO;
 import com.kap.core.dto.eb.ebd.EBDSqCertiListDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.service.COMessageService;
 import com.kap.service.EBDSqCertiReqService;
+import com.kap.service.SMISmsCntnService;
 import com.kap.service.dao.COScheduleMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -42,6 +45,9 @@ public class COScheduleService {
     private final EBDSqCertiReqService eBDSqCertiReqService;
     /** 메일 서비스 **/
     private final COMessageService cOMessageService;
+
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
 
     /** 스케줄러 Mapper **/
     private final COScheduleMapper cOScheduleMapper;
@@ -125,6 +131,50 @@ public class COScheduleService {
             cOMessageService.sendMail(cOMailDTO, "EBBScheduleGuide.html");
 
             log.info("EP_EDCTN_SCHEDULE_GUIDE_CRTFN Schedule End");
+        }
+    }
+
+    /**
+     * 교육 시작 3일 전 교육 일정 안내 메일 발송 (매일 오전 09시 30분)
+     */
+    @Scheduled(cron = "0 30 9 * * ?") // 초(0~59) 분(0~59) 시(0~23) 일(1~31) 월(1~12) 요일(1~7, 일요일 : 1) 연도(생략가능)
+    @SchedulerLock(name = "EP_EDCTN_SCHEDULE_GUIDE_CRTFN_SMS", lockAtLeastFor = ONE_MIN, lockAtMostFor = ONE_MIN)
+    public void selectEdctnScheduleGuideCrtfnSms() throws Exception {
+        log.info("EP_EDCTN_SCHEDULE_GUIDE_CRTFN Schedule Start");
+
+        List<EBScheduleGuideDTO> subjectList = cOScheduleMapper.selectSubjectList();
+
+        //SMS 발송
+        COSmsDTO smsDto = new COSmsDTO();
+        smsDto.setTitle("컨설팅사업 탈락 안내");
+        if (subjectList != null && subjectList.size() > 0) {
+            //메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("[KAP] 교육일정 안내");
+            for (EBScheduleGuideDTO data : subjectList) {
+                COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                receiverDto.setEmail(data.getEmail());
+                receiverDto.setName(data.getName());//신청자
+                receiverDto.setNote1(data.getNm());//과정명
+                receiverDto.setNote2(data.getPlaceNm());//교육장소
+                receiverDto.setNote3(data.getEdctnStrtDtm());//교육시작일SMS02
+                receiverDto.setNote4(data.getEdctnEndDtm());//교육종료일
+                receiverDto.setNote5(data.getCmpnNm());//부품사명
+                cOMailDTO.getReceiver().add(receiverDto);
+
+                smsDto.getReceiver().add(receiverDto);
+            }
+
+            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+
+            smiSmsCntnDTO.setSmsCntnCd("SMS02"); //교육시작 3일전 코드
+            smiSmsCntnDTO.setSmsCntnSeq(5);
+
+            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+
+            cOMessageService.sendSms(smsDto, "");
+
+            log.info("EP_EDCTN_SCHEDULE_GUIDE_CRTFN_SMS Schedule End");
         }
     }
 

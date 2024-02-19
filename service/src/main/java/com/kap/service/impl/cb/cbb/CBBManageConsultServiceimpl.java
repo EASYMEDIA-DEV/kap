@@ -574,7 +574,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             smiSmsCntnDTO.setSmsCntnSeq(4);
 
             String temp = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn();
-            System.out.println("@@@ temp= " + temp);
+
 
             smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
             cOMessageService.sendSms(smsDto, "");
