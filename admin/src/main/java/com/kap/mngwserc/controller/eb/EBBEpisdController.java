@@ -450,7 +450,14 @@ public class EBBEpisdController {
     {
         try
         {
+            //페이징 처리시 episdYear값이 없는경우가 있음, 그래서 org의 값을 넣어줌
+            if(eBBEpisdDTO.getEpisdYear() == null){
+                eBBEpisdDTO.setEpisdYear(eBBEpisdDTO.getOrgEpisdYear());
+            }
 
+            if(!eBBEpisdDTO.getEpisdOrd().equals(eBBEpisdDTO.getOrgEpisdOrd())){
+                eBBEpisdDTO.setEpisdOrd(eBBEpisdDTO.getOrgEpisdOrd());
+            }
             modelMap.addAttribute("rtnData", eBBEpisdService.setPtcptList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }

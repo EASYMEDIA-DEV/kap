@@ -586,7 +586,9 @@
                                                     <p class="tit">첨부파일</p>
                                                     <div class="txt">
                                                         <div class="btn-wrap">
-                                                            <a class="btn-text-icon download" href="javascript:" download><span class="floatingedctnNtctnFileNm">㈜이지미디어_회사소개서_최신본.pdf</span></a>
+                                                            <div class="btn-set">
+                                                                <a class="btn-text-icon download" href="javascript:" download><span class="floatingedctnNtctnFileNm">㈜이지미디어_회사소개서_최신본.pdf</span></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

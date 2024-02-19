@@ -395,7 +395,9 @@
                                                     <p class="tit">첨부파일</p>
                                                     <div class="txt">
                                                         <div class="btn-wrap">
-                                                            <a class="btn-text-icon download" href="javascript:" data-file="/file/download?fileSeq=${ rtnData.edctnNtctnFileSeq }&fileOrd=0"><span>${ rtnData.orgnFileNm }</span></a>
+                                                            <div class="btn-set">
+                                                                <a class="btn-text-icon download" href="javascript:" data-file="/file/download?fileSeq=${ rtnData.edctnNtctnFileSeq }&fileOrd=0"><span>${ rtnData.orgnFileNm }</span></a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>

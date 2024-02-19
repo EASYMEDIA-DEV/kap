@@ -42,7 +42,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListLayerContainer", "ptcptPagingLayerContainer");
 
-			$(".ptcptField").find("ul.pagination").find("li").on("click", function(){
+			$(".ebbAtndcSrchLayer").find("ul.pagination").find("li").on("click", function(){
 				if(!confirm("다른 페이지로 이동 시 입력한 값은 저장되지 않습니다. 이동하시겠습니까?")){
 					return false;
 				}

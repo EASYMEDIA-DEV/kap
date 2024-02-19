@@ -145,7 +145,9 @@
                                             <p class="tit">첨부파일</p>
                                             <div class="txt">
                                                 <div class="btn-wrap">
-                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                                    <div class="btn-set">
+                                                        <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" download><span>개선활동 추진계획서 다운로드</span></a>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

@@ -68,25 +68,28 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			$(".ptcptField").find(".btnMemAtndc").on("click", function(){
 				memAtndcLayer(this);
-
 			});
 			console.log(totCnt);
 
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
 
-			$(".ptcptField").find("ul.pagination").find("li").on("click", function(){
-				if(!confirm("다른 페이지로 이동 시 입력한 값은 저장되지 않습니다. 이동하시겠습니까?")){
-					return false;
-				}
+			if(totCnt>10){
+				$(".ptcptField").find("ul.pagination").find("li").on("click", function(){
+					if(!confirm("다른 페이지로 이동 시 입력한 값은 저장되지 않습니다. 이동하시겠습니까?")){
+						return false;
+					}
+				});
+			}
 
-			});
+
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
 
 	}
 
 
+	//출석부 레이어 세팅
 	var memAtndcLayer = function(e){
 
 		var edctnSeq =  $(e).data("edctnseq");
