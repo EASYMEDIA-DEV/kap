@@ -949,6 +949,16 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     public int deleteSurveyRspn(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception
     {
         int rtnCnt = cBATechGuidanceMapper.deleteSurveyRspn(pCBATechGuidanceUpdateDTO);
+
+        if(rtnCnt > 0) {
+            CBATechGuidanceInsertDTO temp = new CBATechGuidanceInsertDTO();
+            List<String> tmp = new ArrayList<>();
+            tmp.add(pCBATechGuidanceUpdateDTO.getCnstgSeq().toString());
+            temp.setDelValueList(tmp);
+
+            cBATechGuidanceMapper.deleteConsultSrvRsltDtl(temp);
+        }
+
         return rtnCnt;
     }
 
