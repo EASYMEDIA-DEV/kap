@@ -1149,6 +1149,16 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     public int deleteSurveyRspn(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception
     {
         int rtnCnt = cBBManageConsultMapper.deleteSurveyRspn(pCBBManageConsultUpdateDTO);
+
+        if(rtnCnt > 0) {
+            CBBManageConsultSearchDTO temp = new CBBManageConsultSearchDTO();
+            List<String> tmp = new ArrayList<>();
+            tmp.add(pCBBManageConsultUpdateDTO.getCnstgSeq().toString());
+            temp.setDelValueList(tmp);
+
+            cBBManageConsultMapper.deleteConsultSrvRsltDtl(temp);
+        }
+
         return rtnCnt;
     }
 
