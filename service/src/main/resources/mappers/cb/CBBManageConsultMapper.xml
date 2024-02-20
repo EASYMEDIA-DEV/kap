@@ -1515,4 +1515,39 @@
             </choose>
         </where>
     </delete>
+
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.deleteSurveyRspn
+         설  명 : 응답 삭제(초기화)
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.02.20   장두석       최초생성
+    -->
+    <delete id="deleteSurveyRspn" parameterType="CBBManageConsultUpdateDTO">
+        delete /* CBBManageConsultMapper.deleteSurveyRspn */
+        sv_rspn_mst , sv_sbjct_rspn_dtl , sv_mtlcc_rspn_dtl
+		from sv_rspn_mst
+		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
+		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
+		where sv_rspn_mst.srv_seq = #{srvSeq}
+    </delete>
+
+    <!--
+         쿼리명 : CBBManageConsultMapper.checkSurveyCnt
+         설  명 : 설문 개수 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.02.01   장두석       최초생성
+    -->
+    <select id="checkSurveyCnt" parameterType="CBBManageConsultUpdateDTO" resultType="java.lang.Integer">
+        select /* CBBManageConsultMapper.checkSurveyCnt */
+            COUNT(*)
+        from
+            sv_rspn_mst a
+        where
+            srv_seq = #{srvSeq}
+          AND rfnc_seq = #{cnstgSeq}
+    </select>
+
 </mapper>

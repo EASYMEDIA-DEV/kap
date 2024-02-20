@@ -85,5 +85,15 @@ public interface CBBManageConsultService {
      */
     public CBBManageConsultInsertDTO selectOneCnstgPicInfo(CBBManageConsultInsertDTO cbbManageConsultInsertDTO) throws Exception;
 
+    /**
+     * 설문초기화 한다.
+     */
+    public int deleteSurveyRspn(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
+    /**
+     * 설문 개수 조회
+     */
+    public int checkSurveyCnt(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
 
 }

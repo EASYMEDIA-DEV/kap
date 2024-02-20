@@ -269,4 +269,14 @@ public interface CBATechGuidanceMapper {
      */
     public int updAdmMemo(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
 
+    /**
+     * 기술지도 - 설문초기화
+     */
+    public int deleteSurveyRspn(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception;
+
+    /**
+     * 기술지도 - 설문 응답 개수
+     */
+    public int checkSurveyCnt(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception;
+
 }

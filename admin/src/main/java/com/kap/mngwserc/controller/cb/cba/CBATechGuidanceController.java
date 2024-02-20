@@ -12,6 +12,7 @@ import com.kap.service.CBATechGuidanceService;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.SVASurveyService;
+import io.swagger.v3.oas.annotations.Operation;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -270,6 +271,46 @@ public class CBATechGuidanceController {
         }
     }
 
+    @Operation(summary = "설문 초기화", tags = "", description = "")
+    @PostMapping(value="/deleteSurveyRspn")
+    public String deleteSurveyRspn(@Valid @RequestBody CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.deleteSurveyRspn(pCBATechGuidanceUpdateDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    @Operation(summary = "설문 개수 조회", tags = "", description = "")
+    @PostMapping(value="/checkSurveyCnt")
+    public String checkSurveyCnt(@RequestBody CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", cBATechGuidanceService.checkSurveyCnt(pCBATechGuidanceUpdateDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+
+
     @RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/mngwserc/cb/cba")
@@ -335,6 +376,7 @@ public class CBATechGuidanceController {
             }
             return cBATechGuidanceInsertDTO;
         }
+
     }
 }
 

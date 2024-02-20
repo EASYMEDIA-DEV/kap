@@ -11,6 +11,7 @@ import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -295,6 +296,44 @@ public class CBBManageConsultController {
             throw new Exception(e.getMessage());
         }
         return "mngwserc/cb/cbb/CBBManageConsultsTrsfListAjax";
+    }
+
+    @Operation(summary = "설문 초기화", tags = "", description = "")
+    @PostMapping(value="/deleteSurveyRspn")
+    public String deleteSurveyRspn(@Valid @RequestBody CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO, HttpServletRequest request, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", cBBManageConsultService.deleteSurveyRspn(pCBBManageConsultUpdateDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    @Operation(summary = "설문 개수 조회", tags = "", description = "")
+    @PostMapping(value="/checkSurveyCnt")
+    public String checkSurveyCnt(@RequestBody CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", cBBManageConsultService.checkSurveyCnt(pCBBManageConsultUpdateDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
     }
 
     @RestController

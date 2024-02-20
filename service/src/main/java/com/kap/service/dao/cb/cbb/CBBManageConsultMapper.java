@@ -242,4 +242,14 @@ public interface CBBManageConsultMapper {
      *  마이페이지 컨설팅신청내역 담당 임원 정보 조회
      */
     public CBBManageConsultInsertDTO selectOneCnstgPicInfo(CBBManageConsultInsertDTO cbbManageConsultInsertDTO) throws Exception;
+
+    /**
+     * 기술지도 - 설문초기화
+     */
+    public int deleteSurveyRspn(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
+
+    /**
+     * 기술지도 - 설문 응답 개수
+     */
+    public int checkSurveyCnt(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception;
 }

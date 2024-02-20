@@ -383,7 +383,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         HashMap cnstgDlyvMap = new HashMap();
 
         List delValueList = new ArrayList();
-        delValueList.add(pCBATechGuidanceInsertDTO.getCnstgSeq());
+        delValueList.add(pCBATechGuidanceInsertDTO.getCnstgSeq().toString());
         pCBATechGuidanceInsertDTO.setDelValueList(delValueList);
         cBATechGuidanceMapper.deleteConsultDlvryDtl(pCBATechGuidanceInsertDTO);
 
@@ -940,5 +940,26 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         return respCnt;
     }
+
+
+    /**
+     * 등록된 설문 초기화 (삭제)
+     */
+    @Transactional
+    public int deleteSurveyRspn(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception
+    {
+        int rtnCnt = cBATechGuidanceMapper.deleteSurveyRspn(pCBATechGuidanceUpdateDTO);
+        return rtnCnt;
+    }
+
+    /**
+     * 등록된 설문 개수 조회
+     */
+    @Transactional
+    public int checkSurveyCnt(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception
+    {
+        return cBATechGuidanceMapper.checkSurveyCnt(pCBATechGuidanceUpdateDTO);
+    }
+
 }
 

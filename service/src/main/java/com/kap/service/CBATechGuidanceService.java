@@ -101,4 +101,14 @@ public interface CBATechGuidanceService {
      *  관리자 메모 수정
      */
     public int updAdmMemo(CBATechGuidanceInsertDTO cBATechGuidanceService) throws Exception;
+
+    /**
+     * 설문초기화 한다.
+     */
+    public int deleteSurveyRspn(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception;
+
+    /**
+     * 설문 개수 조회
+     */
+    public int checkSurveyCnt(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception;
 }

@@ -408,7 +408,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
         CBBManageConsultSearchDTO cBBManageConsultSearchDTO = new CBBManageConsultSearchDTO();
         List delValueList = new ArrayList();
-        delValueList.add(pCBBManageConsultInsertDTO.getCnstgSeq());
+        delValueList.add(pCBBManageConsultInsertDTO.getCnstgSeq().toString());
         cBBManageConsultSearchDTO.setDelValueList(delValueList);
 
         cBBManageConsultMapper.deleteConsultDlvryDtl(cBBManageConsultSearchDTO);
@@ -1140,4 +1140,25 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
     {
         return cBBManageConsultMapper.selectOneCnstgPicInfo(cbbManageConsultInsertDTO);
     }
+
+
+    /**
+     * 등록된 설문 초기화 (삭제)
+     */
+    @Transactional
+    public int deleteSurveyRspn(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception
+    {
+        int rtnCnt = cBBManageConsultMapper.deleteSurveyRspn(pCBBManageConsultUpdateDTO);
+        return rtnCnt;
+    }
+
+    /**
+     * 등록된 설문 개수 조회
+     */
+    @Transactional
+    public int checkSurveyCnt(CBBManageConsultUpdateDTO pCBBManageConsultUpdateDTO) throws Exception
+    {
+        return cBBManageConsultMapper.checkSurveyCnt(pCBBManageConsultUpdateDTO);
+    }
+
 }
