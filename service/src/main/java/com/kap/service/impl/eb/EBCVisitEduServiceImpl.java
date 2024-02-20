@@ -8,6 +8,7 @@ import com.kap.core.dto.eb.ebc.EBCVisitEduDTO;
 import com.kap.core.dto.eb.ebc.EBCVisitEduExcelDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
 import com.kap.service.dao.eb.EBCVisitEduMapper;
@@ -97,6 +98,9 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
 
     // 이메일 서비스
     private final COMessageService cOMessageService;
+
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
 
     @Value("${app.site.name}")
     private String siteName;
@@ -857,7 +861,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         //이름
         userReceiverDto.setName(applicantDto.getName());
         //치환문자1
-        userReceiverDto.setNote1("(" + ebcVisitEduDTO.getPlaceZipcode() + ") " + ebcVisitEduDTO.getPlaceBscAddr() + " " + ebcVisitEduDTO.getPlaceDtlAddr());
+        userReceiverDto.setNote1(ebcVisitEduDTO.getPlaceBscAddr() + " " + ebcVisitEduDTO.getPlaceDtlAddr());
         //치환문자2
         userReceiverDto.setNote2(ebcVisitEduDTO.getHopeDt());
         //치환문자3
@@ -871,6 +875,21 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         cOMailDTO.getReceiver().add(userReceiverDto);
         //메일 발송
         cOMessageService.sendMail(cOMailDTO, "EBCVisitEduApplyEmail.html");
+
+        //SMS 발송 시작
+
+        //SMS 발송
+        userReceiverDto.setMobile(applicantDto.getHpNo());
+        COSmsDTO smsDto = new COSmsDTO();
+        SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+        smiSmsCntnDTO.setSmsCntnCd("SMS09"); //방문교육신청 완료 코드
+        smsDto.getReceiver().add(userReceiverDto);
+
+        smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+
+        cOMessageService.sendSms(smsDto, "");
+        //SMS 발송 끝
+
         return respCnt;
     }
 
