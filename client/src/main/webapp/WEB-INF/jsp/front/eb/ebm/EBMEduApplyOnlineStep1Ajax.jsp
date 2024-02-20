@@ -77,7 +77,8 @@
                 </div>
                 <div class="btn-area">
                     <div class="btn-wrap">
-                        <c:choose>
+                        <button class="btn-text-icon black-arrow onlineStep" data-lctrSeq="${list.lctrSeq}" type="button"><span>수강하기</span></button>
+                        <%--<c:choose>
                             <c:when test="${not empty list.lctrDtm}">
                                 <p class="hyphen">-</p>
                             </c:when>
@@ -86,7 +87,7 @@
                                 <button class="btn-text-icon black-arrow onlineStep" data-lctrSeq="${list.lctrSeq}" type="button"><span>수강하기</span></button>
 
                             </c:otherwise>
-                        </c:choose>
+                        </c:choose>--%>
                     </div>
                 </div>
             </li>
