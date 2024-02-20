@@ -58,6 +58,10 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
     @Value("${app.site.name}")
     private String siteName;
 
+    //사용자 http 경로
+    @Value("${app.user-domain}")
+    private String appUserDomain;
+
     /**
      * 뉴스레터 조회
      */
@@ -177,6 +181,8 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
                 userReceiverDto.setNote1(pBDDNewsletterDTO.getTitl());
                 //치환문자2
                 userReceiverDto.setNote2(pBDDNewsletterDTO.getCntn());
+                //치환문자3
+                userReceiverDto.setNote3(appUserDomain);
                 //수신자 정보 등록
                 cOMailDTO.getReceiver().add(userReceiverDto);
                 //메일 발송
