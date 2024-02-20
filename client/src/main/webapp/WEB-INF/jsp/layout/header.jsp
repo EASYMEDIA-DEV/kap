@@ -403,14 +403,9 @@
 									</li>
 								</c:if>
 							</c:forEach>
-
 						</ul>
-							<div class="non-member-apply">
-								<a href="/education/apply/non-member/auth">
-									<p class="f-body1">비회원 신청내역 조회</p>
-								</a>
-							</div>
 					</c:if>
+
 					<div class="notice-wrap">
 						<div class="notice-rolling">
 							<ul>
@@ -440,6 +435,14 @@
 							</ul>
 						</div>
 					</div>
+
+					<c:if test="${ not empty gnbMenuList}">
+						<div class="non-member-apply">
+							<a href="/education/apply/non-member/auth">
+								<p class="f-body1">비회원 신청내역 조회</p>
+							</a>
+						</div>
+					</c:if>
 
 				</div>
 			</div>
