@@ -13,6 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <pre>
@@ -66,6 +71,28 @@ public class COMypageController
             //1년간 상생 사업신청내역 호출
             MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
             mpbBnsSearchDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
+
+            Date today = new Date();
+            SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(today);
+            calendar.add(Calendar.YEAR, -1);
+
+            Date oneYearAgo = calendar.getTime();
+
+            String strtDt = df.format(oneYearAgo);
+            String endDt = df.format(today);
+
+            mpbBnsSearchDTO.setDateType("2");
+            mpbBnsSearchDTO.setStrtDt(strtDt);
+            mpbBnsSearchDTO.setEndDt(endDt);
+            List<String> status = new ArrayList<>();
+            status.add("1");
+            status.add("2");
+            status.add("3");
+            status.add("4");
+            mpbBnsSearchDTO.setStatusChk(status);
 
             modelMap.addAttribute("coeYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO));
 
