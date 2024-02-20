@@ -232,6 +232,8 @@
 
                                 <div class="btn-wrap">
                                     <div class="btn-set">
+                                    </div>
+                                    <div class="btn-set">
                                         <a class="btn-solid small black-bg apply" href="javascript:"  data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
                                     </div>
                                 </div>
