@@ -146,7 +146,7 @@ public class COScheduleService {
 
         //SMS 발송
         COSmsDTO smsDto = new COSmsDTO();
-        smsDto.setTitle("컨설팅사업 탈락 안내");
+        smsDto.setTitle("[KAP] 교육일정 안내");
         if (subjectList != null && subjectList.size() > 0) {
             //메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
