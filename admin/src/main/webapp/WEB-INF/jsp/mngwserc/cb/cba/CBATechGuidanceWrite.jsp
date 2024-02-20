@@ -848,7 +848,7 @@
                                     <label class="col-sm-1 control-label">지도착수일</label>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${rtnDto.guideBgnDt}" title="지도착수일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" id="guideBgnDt" name="guideBgnDt" value="${rtnDto.guideBgnDt}" title="지도착수일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -859,7 +859,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-3">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${rtnDto.guideKickfDt}" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" id="guideKickfDt" name="guideKickfDt" value="${rtnDto.guideKickfDt}" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1088,7 +1088,7 @@
                                         <label class="col-sm-1 control-label">초도방문일</label>
                                         <div class="col-sm-5">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${not empty rsumeList.vstDt ? kl:convertDate(rsumeList.vstDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="초도방문일" value="${rsumeList.vstDt}"/>
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" value="${kl:convertDate(rsumeList.vstDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="초도방문일" value="${rsumeList.vstDt}"/>
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1149,7 +1149,7 @@
                                         <label class="col-sm-1 control-label">지도착수일</label>
                                         <div class="col-sm-3">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="guideBgnDt" value="${not empty rsumeList.guideBgnDt ? kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도착수일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" id="guideBgnDt" name="guideBgnDt" value="${kl:convertDate(rsumeList.guideBgnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="지도착수일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1160,7 +1160,7 @@
                                         <label class="col-sm-1 control-label">킥오프일</label>
                                         <div class="col-sm-3">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guideKickfDt" value="${not empty rsumeList.guideKickfDt ? kl:convertDate(rsumeList.guideKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="킥오프일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" id="guideKickfDt" name="guideKickfDt" value="${kl:convertDate(rsumeList.guideKickfDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1182,7 +1182,7 @@
                                             </select>
                                         </div>
                                         <div class="input-group col-sm-3" style="z-index:0; width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${not empty rsumeList.guidePscndDt ? kl:convertDate(rsumeList.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="지도현황" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="guidePscndDt" value="${kl:convertDate(rsumeList.guidePscndDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" title="지도현황" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>

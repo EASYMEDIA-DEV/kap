@@ -850,7 +850,7 @@
                                         <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="${not empty rsumeList.vstDt ? rsumeList.vstDt : today}" title="방문일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="vstDt" id="vstDt" value="${rsumeList.vstDt}" title="방문일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -929,7 +929,7 @@
                                         <label class="col-sm-1 control-label">킥오프일</label>
                                         <div class="col-sm-4">
                                             <div class="input-group" style="z-index:0;width: 220px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt guideKickfDt" name="guideKickfDt" value="${rsumeList.guideKickfDt}" title="킥오프일" />
+                                                <input type="text" class="form-control datetimepicker_strtDt guideKickfDt" id="guideKickfDt" name="guideKickfDt" value="${rsumeList.guideKickfDt}" title="킥오프일" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -946,7 +946,7 @@
                                                 </c:forEach>
                                             </select>
                                             <div class="input-group" style="width: 150px;">
-                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${today}" title="컨설팅현황일자" />
+                                                <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${rsumeList.cnstgPscndDt}" title="컨설팅현황일자" />
                                                 <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1133,7 +1133,7 @@
                                     <label class="col-sm-1 control-label" style="z-index:0;">방문일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="${not empty rsumeList.vstDt ? rsumeList.vstDt : today}" title="방문일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="vstDt" id="vstDt" value="${rsumeList.vstDt}" title="방문일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1144,7 +1144,7 @@
                                     <label class="col-sm-1 control-label">컨설팅<br/>완료예정일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${not empty rsumeList.cnstgCmpltnSchdlDt ? rsumeList.cnstgCmpltnSchdlDt : today}" title="컨설팅 완료예정일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired"  name="cnstgCmpltnSchdlDt" id="cnstgCmpltnSchdlDt" value="${rsumeList.cnstgCmpltnSchdlDt}" title="컨설팅 완료예정일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1212,7 +1212,7 @@
                                     <label class="col-sm-1 control-label">킥오프일</label>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="z-index:0;width: 220px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" value="${not empty rsumeList.guideKickfDt ? rsumeList.guideKickfDt : today}" name="guideKickfDt" title="킥오프일" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" value="${rsumeList.guideKickfDt}" id="guideKickfDt" name="guideKickfDt" title="킥오프일" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1231,7 +1231,7 @@
                                     </div>
                                     <div class="col-sm-4">
                                         <div class="input-group" style="width: 150px;">
-                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${not empty rsumeList.cnstgPscndDt ? rsumeList.cnstgPscndDt : today}"title="컨설팅현황일자" />
+                                            <input type="text" class="form-control datetimepicker_strtDt notRequired" name="cnstgPscndDt" id="cnstgPscndDt" value="${rsumeList.cnstgPscndDt}"title="컨설팅현황일자" />
                                             <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>

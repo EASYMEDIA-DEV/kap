@@ -239,10 +239,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     $(".rsumeSttsCd").val("MNGCNSLT_STATUS05");
                 }
             }else{
-                if(initVstRsltCd == 'BF_JDGMT_RSLT01'){
+                if(initVstRsltCd == 'INIT_VST_RSLT01'){
                     $(".rsumeSttsNm").text("지도승인");
                     $(".rsumeSttsCd").val("MNGCNSLT_STATUS07");
-                }else if(initVstRsltCd == 'BF_JDGMT_RSLT02'){
+                }else if(initVstRsltCd == 'INIT_VST_RSLT02'){
                     $(".rsumeSttsNm").text("지도불가");
                     $(".rsumeSttsCd").val("MNGCNSLT_STATUS08");
                 }else if(initVstRsltCd == 'BF_JDGMT_RSLT04'){
@@ -392,6 +392,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             var cMonth = cDay*30;
                             $(".cnstgTerm").val(parseInt(difDt/cMonth));
                         }
+                    }
+                }
+            },
+            guideKickfDt : {
+                event : {
+                    change : function(){
+                        changeStts();
                     }
                 }
             },
