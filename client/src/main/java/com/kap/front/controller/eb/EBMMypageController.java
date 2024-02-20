@@ -594,7 +594,7 @@ public class EBMMypageController
                 //수료여부 체크
                 EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
                 System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
-                if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+                if("LCNS_CNNCT03".equals(lcnsCnnctCdDto.getLcnsCnnctCd()) && lcnsCnnctCdDto.getCmptnYn().equals("Y")){
                     System.out.println("@@@ SQ 갱신");
                     eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
                 }
@@ -644,7 +644,7 @@ public class EBMMypageController
             //수료여부 체크
             EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
             System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
-            if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+            if("LCNS_CNNCT03".equals(lcnsCnnctCdDto.getLcnsCnnctCd()) && lcnsCnnctCdDto.getCmptnYn().equals("Y")){
                 System.out.println("@@@ SQ 갱신");
                 eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
             }
@@ -913,7 +913,7 @@ public class EBMMypageController
                     //수료여부 체크
                     EBBEpisdDTO lcnsCnnctCdDto= eBBEpisdService.setCmptnChk(rtnDto);
                     System.out.println("@@@ lcnsCnnctCdDto.getLcnsCnnctCd()= " + lcnsCnnctCdDto.getLcnsCnnctCd());
-                    if(!"LCNS_CNNCT01".equals(lcnsCnnctCdDto.getLcnsCnnctCd())){
+                    if("LCNS_CNNCT03".equals(lcnsCnnctCdDto.getLcnsCnnctCd()) && lcnsCnnctCdDto.getCmptnYn().equals("Y")){
                         System.out.println("@@@ SQ 갱신");
                         eBDSqCertiReqService.updateCertiValid(rtnDto.getEdctnSeq());
                     }

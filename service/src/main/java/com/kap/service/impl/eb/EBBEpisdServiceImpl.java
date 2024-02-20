@@ -1894,8 +1894,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			System.out.println("@@@ 수료완료 = " + cmptnNo.getCrtfctNo());
 			eBBEpisdMapper.updatePtcptCmptnInfo(eBBEpisdDTO);
 
-			if(!"LCNS_CNNCT01".equals(cmptnDto.getLcnsCnnctCd())){
+			if("LCNS_CNNCT03".equals(cmptnDto.getLcnsCnnctCd())){
 				System.out.println("@@@ SQ 갱신");
+				eBBEpisdDTO.setCmptnYn("Y");
 				//eBDSqCertiReqService.updateCertiValid(cmptnDto.getEdctnSeq());
 			}
 		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "Y".equals(cmptnDto.getCmptnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn()) ){
