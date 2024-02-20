@@ -704,18 +704,18 @@
 		, case when trnsf_yn = 'N' then
 					case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-					case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '2'
-					when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '3'
-					when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '4'
+					case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '3'
+					when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '4'
+					when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '5'
 				end
-				when stts_cd = 'EDU_STTS_CD02' then '5'
-				when stts_cd = 'EDU_STTS_CD04' then '1'
-				when stts_cd = 'EDU_STTS_CD05' then '7'
-				when stts_cd = 'EDU_STTS_CD06' then '5'
+				when stts_cd = 'EDU_STTS_CD02' then '6'
+				when stts_cd = 'EDU_STTS_CD04' then '2'
+				when stts_cd = 'EDU_STTS_CD05' then '8'
+				when stts_cd = 'EDU_STTS_CD06' then '6'
 				end
-				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '5'  /*폐강일 경우*/
+				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '6'  /*폐강일 경우*/
 			end
-		else '6'
+		else '7'
 		end as edu_stat_order
 
 		, ptcpt_dtm
@@ -881,12 +881,16 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
-		,  CASE edctn_stts_cd
-			WHEN 'EBC_VISIT_CD02001' THEN '2'
-			WHEN 'EBC_VISIT_CD02002' THEN '2'
-			WHEN 'EBC_VISIT_CD02003' THEN '4'
-			WHEN 'EBC_VISIT_CD02004' THEN '5'
-		END AS edu_stat_order
+		, case when TRNSF_YN = 'N'
+			then
+				CASE edctn_stts_cd
+					WHEN 'EBC_VISIT_CD02001' THEN '1'
+					WHEN 'EBC_VISIT_CD02002' THEN '1'
+					WHEN 'EBC_VISIT_CD02003' THEN '5'
+					WHEN 'EBC_VISIT_CD02004' THEN '6'
+				END
+			else '7'
+		end AS edu_stat_order
 		,  ptcpt_dtm
 		,  web_path
 		,  file_dsc
@@ -1402,18 +1406,18 @@
 		, case when trnsf_yn = 'N' then
 			case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
 			case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-			case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '2'
-			when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '3'
-			when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '4'
+			case when NOW()   <![CDATA[<]]>  edctn_strt_dtm then '3'
+			when edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   edctn_end_dtm  then '4'
+			when edctn_end_dtm  <![CDATA[<]]>  NOW()  then '5'
 			end
-			when stts_cd = 'EDU_STTS_CD02' then '5'
-			when stts_cd = 'EDU_STTS_CD04' then '1'
-			when stts_cd = 'EDU_STTS_CD05' then '7'
-			when stts_cd = 'EDU_STTS_CD06' then '5'
+			when stts_cd = 'EDU_STTS_CD02' then '6'
+			when stts_cd = 'EDU_STTS_CD04' then '2'
+			when stts_cd = 'EDU_STTS_CD05' then '8'
+			when stts_cd = 'EDU_STTS_CD06' then '6'
 			end
-			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '5'  /*폐강일 경우*/
+			when edctn_stts_cd = 'EDCTN_STTS_CD02' then '6'  /*폐강일 경우*/
 			end
-			else '6'
+			else '7'
 		end as edu_stat_order
 		, ptcpt_dtm
 		, web_path
@@ -1576,12 +1580,17 @@
 		WHEN 'EBC_VISIT_CD02003' THEN '교육종료'
 		WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
 		END AS edu_stat
-		,  CASE edctn_stts_cd
-			WHEN 'EBC_VISIT_CD02001' THEN '2'
-			WHEN 'EBC_VISIT_CD02002' THEN '2'
-			WHEN 'EBC_VISIT_CD02003' THEN '4'
-			WHEN 'EBC_VISIT_CD02004' THEN '5'
-		END AS edu_stat_order
+
+		, case when TRNSF_YN = 'N'
+		    then
+			CASE edctn_stts_cd
+				WHEN 'EBC_VISIT_CD02001' THEN '1'
+				WHEN 'EBC_VISIT_CD02002' THEN '1'
+				WHEN 'EBC_VISIT_CD02003' THEN '5'
+				WHEN 'EBC_VISIT_CD02004' THEN '6'
+			END
+		    else '7'
+		end AS edu_stat_order
 		,  ptcpt_dtm
 		,  web_path
 		, bfre_mem_seq
