@@ -316,7 +316,7 @@
                                                             <div class="form-select">
                                                                 <select title="부서" class="notRequired deptCd deptCdOld deptCdPar">
                                                                     <option value="" selected>선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status" >
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status" >
                                                                         <c:if test="${fn:contains(cdList, 'MEM_CD020')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnDtl.deptCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                                                         </c:if>
@@ -342,7 +342,7 @@
                                                             <div class="form-select">
                                                                 <select   title="직급" class="notRequired pstnCd pstnCdOld" title="직급">
                                                                     <option value="" selected>선택</option>
-                                                                    <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
+                                                                    <c:forEach var="cdList" items="${cdDtlList2.MEM_CD}" varStatus="status">
                                                                         <c:if test="${fn:contains(cdList, 'MEM_CD010')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnDtl.pstnCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
                                                                         </c:if>
