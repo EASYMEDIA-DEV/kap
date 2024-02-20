@@ -1,0 +1,269 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.kap.service.dao.bd.BDFOnlineMapper">
+    <!--
+     쿼리명 : BDFOnlineMapper.selectOnlineList
+     설  명 : Online 리스트
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.02.20  오병호     최초 생성
+    -->
+    <select id="selectOnlineList" parameterType="BDFOnlineDTO" resultType="BDFOnlineDTO">
+        SELECT /* BDFOnlineMapper.selectOnlineList */
+            MNL_SEQ
+            , CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD) CTGRY_NAME
+            , TITL
+            , CNTN
+            , READ_CNT
+            , EXPS_YN
+            , FILE_SEQ
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        FROM
+            BD_MNL_MST A
+        WHERE 1=1
+          <include refid="selectOnlineListwhereSql" />
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
+    쿼리명 : BDFOnlineMapper.getOnlineListCnt
+    설  명 : Online 목록 개수 카운
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.02.20    오병호       최초생성
+    -->
+    <select id="getOnlineListTotCnt" parameterType="BDFOnlineDTO" resultType="java.lang.Integer">
+        SELECT /* BDFOnlineMapper.getOnlineListCnt */
+            COUNT(*)
+        FROM
+            BD_MnL_MST A
+        WHERE 1 = 1
+            <include refid="selectOnlineListwhereSql" />
+    </select>
+
+    <select id="selectOnlineDtl" parameterType="BDFOnlineDTO" resultType="BDFOnlineDTO">
+        SELECT /* BDFOnlineMapper.selectOnlineDtl */
+            MNL_SEQ
+            , CTGRY_CD
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , EXPS_YN
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
+        FROM
+            BD_MNL_MST A
+        WHERE
+            MNL_SEQ = #{detailsKey}
+    </select>
+
+    <insert id="insertOnline" parameterType="BDFOnlineDTO">
+        INSERT /* BDFOnlineMapper.insertOnline */ INTO BD_MNL_MST
+            (
+            MNL_SEQ
+            , CTGRY_CD
+            , TITL
+            , CNTN
+            , FILE_SEQ
+            , READ_CNT
+            , EXPS_YN
+            , REG_ID
+            , REG_IP
+            , REG_DTM
+            )
+            VALUES
+            (
+            #{mnlSeq}
+            , #{ctgryCd}
+            , #{titl}
+            , #{cntn}
+            , #{fileSeq}
+            , 0
+            , #{expsYn}
+            , #{regId}
+            , #{regIp}
+            , NOW()
+            )
+    </insert>
+
+    <!--
+    쿼리명 : BDFOnlineMapper.updateOnline
+    설  명 : Online 수정
+     수정일	 수정자     수정내용
+    ==========   ======   =============
+    2024.02.20   오병호     최초생성
+	-->
+    <update id="updateOnline" parameterType="BDFOnlineDTO">
+        UPDATE  /*BDFOnlineMapper.updateOnline*/
+            BD_MNL_MST
+        SET
+            CTGRY_CD = #{ctgryCd}
+            , TITL = #{titl}
+            , CNTN = #{cntn}
+            , FILE_SEQ = #{fileSeq}
+            , EXPS_YN = #{expsYn}
+            , MOD_ID = #{modId}
+            , MOD_IP = #{modIp}
+            , MOD_DTM = NOW()
+        WHERE 1 = 1
+            AND MNL_SEQ = #{detailsKey}
+    </update>
+
+    <!--
+         쿼리명 : BDFOnlineMapper.selectOnlineFileList
+         설  명 : [사용자] Online 첨부파일 목록 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.01.24   구은희       최초생성
+    -->
+    <select id="selectOnlineFileList" parameterType="BDFOnlineDTO">
+        SELECT /* BDFOnlineMapper.selectOnlineFileList */
+            A.MNL_SEQ
+             , B.FILE_ORD
+             , B.FILE_SEQ
+             , B.FILE_NAME
+        FROM
+            (
+                SELECT MNL_SEQ, FILE_SEQ
+                FROM BD_MNL_MST
+                WHERE EXPS_YN = 'Y'
+            ) A
+                LEFT JOIN
+            (
+                SELECT
+                    FILE_ORD
+                     , FILE_SEQ
+                     , ORGN_FILE_NM AS FILE_NAME
+                FROM CO_FILE_DTL
+                WHERE USE_YN = 'Y'
+            ) B
+            ON A.FILE_SEQ = B.FILE_SEQ
+    </select>
+
+    <!--
+         쿼리명 : BDFOnlineMapper.deleteOnline
+         설  명 : Online 삭제
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.02.20   오병호       최초생성
+        -->
+    <delete id="deleteOnline" parameterType="BDFOnlineDTO">
+        DELETE /* BDFOnlineMapper.deleteOnline */
+        FROM
+        BD_MNL_MST
+        <where>
+            <choose>
+                <when test="delValueList != null and delValueList.size() > 0">
+                    MNL_SEQ IN
+                    <foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
+                        #{delValueList}
+                    </foreach>
+                </when>
+                <otherwise>
+                    MNL_SEQ = #{detailsKey}
+                </otherwise>
+            </choose>
+        </where>
+    </delete>
+
+    <!--
+    쿼리명 : selectOnlineListwhereSql
+    설  명 : Online 관리 where Sql
+      수정일      수정자       수정내용
+    ==========   ========   ==============
+    2024.02.20    오병호       최초생성
+    2024.01.05    이옥정       사용자 노출을 위한 예외 조건문 추가
+    -->
+    <sql id="selectOnlineListwhereSql">
+        <if test='siteGubun == "front"'>
+            AND EXPS_YN = 'Y'
+            <if test="srchVal != null and srchVal != ''">
+                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+            </if>
+            <if test="ctgryCd != null and ctgryCd != ''">
+                AND CTGRY_CD = #{ctgryCd}
+            </if>
+        </if>
+        <if test="strtDt != null and strtDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                </when>
+            </choose>
+        </if>
+        <if test="endDt != null and endDt != ''">
+            <choose>
+                <when test="srchDate == 1">
+                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+                <when test="srchDate == 2">
+                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                </when>
+            </choose>
+        </if>
+        <if test="ctgryCdList != null and ctgryCdList.size() > 0">
+            AND (
+            <foreach collection="ctgryCdList" item="ctgryCd" index="index" open="" close="" separator=" OR ">
+                CTGRY_CD = #{ctgryCd}
+            </foreach>
+            )
+        </if>
+        <if test="expsYnList != null and expsYnList.size() > 0">
+            AND (
+            <foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
+                EXPS_YN = #{expsYn}
+            </foreach>
+            )
+        </if>
+        <if test="q != null and q != ''">
+            <choose>
+                <when test="f == 1">
+                    AND TITL LIKE CONCAT('%', #{q}, '%')
+                </when>
+                <when test="f == 2">
+                    AND (
+                    REG_ID LIKE CONCAT('%', #{q}, '%') OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                    )
+                </when>
+                <when test="f == 3">
+                    AND (
+                    MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                    )
+                </when>
+                <otherwise>
+                    AND (
+                    TITL LIKE CONCAT('%', #{q}, '%') OR
+                    REG_ID LIKE CONCAT('%', #{q}, '%') OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%')) OR
+                    MOD_ID LIKE CONCAT('%', #{q}, '%') OR
+                    EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                    )
+                </otherwise>
+            </choose>
+        </if>
+        ORDER BY
+            REG_DTM DESC
+    </sql>
+</mapper>
+
+

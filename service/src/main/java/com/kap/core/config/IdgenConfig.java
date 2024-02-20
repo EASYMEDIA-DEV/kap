@@ -1063,4 +1063,17 @@ public class IdgenConfig {
                 .setCipers(13)
                 .build();
     }
+
+    /** 온라인메뉴얼 관리
+     * @return
+     */
+    @Bean(destroyMethod = "destroy")
+    public EgovTableIdGnrServiceImpl mnlSeqIdgen() {
+        return new IdGnrBuilder().setDataSource(dataSource).setEgovIdGnrStrategyImpl(new EgovIdGnrStrategyImpl())
+                .setBlockSize(1)
+                .setTable("co_seq_mst")
+                .setTableName("MNL_SEQ")
+                .setCipers(13)
+                .build();
+    }
 }
