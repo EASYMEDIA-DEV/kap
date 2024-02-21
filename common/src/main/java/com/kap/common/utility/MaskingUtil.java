@@ -73,7 +73,9 @@ public class MaskingUtil {
             int length = target.length();
             char[] c = new char[length];
             Arrays.fill(c, '*');
-            return phoneNo.replace(target, String.valueOf(c));
+            
+            //replace함수를 사용하면 앞뒤 같은 번호가 들어갔을때  010-****-****같이 마스킹 되버려서 replaceFirst함수로 변경
+            return phoneNo.replaceFirst(target, String.valueOf(c));
         }
         return phoneNo;
     }
