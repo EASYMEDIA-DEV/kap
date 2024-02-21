@@ -90,26 +90,26 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 				log.error(COSeedCipherUtil.encryptPassword(cOLoginDTO.getPassword(), cOLoginDTO.getId()));
 				rtnCOUserDto.setPasswordConfirm(COSeedCipherUtil.encryptPassword(cOLoginDTO.getPassword(), cOLoginDTO.getId()));
 
-				//정보 업데이트 TODO 양현우 오픈일 수정 가능
+				//정보 업데이트 TODO 양현우 오픈일 25일 마지막 로그인이 null 아니고 오픈일 보다 적을 경우
 				int dateResult = 0;
 				if(!"".equals(rtnCOUserDto.getLastLgnDtm()) && rtnCOUserDto.getLastLgnDtm() != null) {
 					SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-					SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+					SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 					try {
 						Date date1 = dateFormat.parse(rtnCOUserDto.getLastLgnDtm());
-						Date date2 = dateFormat2.parse("2024-03-27");
+						Date date2 = dateFormat2.parse("2024-03-25 10:00:00");
 						dateResult = date1.compareTo(date2);
 					} catch (ParseException e) {
 						e.printStackTrace();
 					}
 				}
 				//TODO 24-01-22 이 부분은 반영시 삭제 해야 함
-				LocalDate currentDate = LocalDate.now();
-				LocalDate targetDate = LocalDate.parse("2024-03-27");
-				if(currentDate.isBefore(targetDate)) {
-					dateResult = 0;
-				}
+//				LocalDate currentDate = LocalDate.now();
+//				LocalDate targetDate = LocalDate.parse("2024-02-25");
+//				if(currentDate.isBefore(targetDate)) {
+//					dateResult = 0;
+//				}
 				//로그인 5회 체크
 				if (rtnCOUserDto.getLgnFailCnt() < 5)
 				{
