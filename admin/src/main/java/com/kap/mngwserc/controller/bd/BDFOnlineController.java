@@ -58,7 +58,6 @@ public class BDFOnlineController {
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
 
             modelMap.addAttribute("rtnData", bDFOnlineDTO);
-            System.err.println("bDFOnlineDTO   :::  " + bDFOnlineDTO);
         }
         catch (Exception e)
         {
