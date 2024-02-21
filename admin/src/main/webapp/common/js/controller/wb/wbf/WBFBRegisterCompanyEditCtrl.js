@@ -12,6 +12,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let width = 500; //팝업의 너비
     let height = 600; //팝업의 높이
+    var workChk = true;
 
     var $formObj = ctrl.obj.find("#frmData").eq(0);
 
@@ -319,10 +320,58 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
+            offerBsnmNo : {
+                event : {
+                    input : function() {
+                        workChk = false;
+                    }
+                }
+            },
             bsnmNoAuth :{
                 event : {
                     click : function() {
                         if($('#offerBsnmNo').val() != '') {
+                            jQuery.ajax({
+                                url : "/mngwserc/nice/comp-chk",
+                                type : "post",
+                                data :
+                                    {
+                                        "compNum" : $("#offerBsnmNo").val()
+                                    },
+                                success : function(data)
+                                {
+                                    if(data.rsp_cd=='P000') {
+                                        if(data.result_cd == '01') {
+                                            if(data.comp_status == '1') {
+                                                $("#offerCmpnNm").val(data.comp_name);
+                                                workChk = true;
+                                            } else {
+                                                alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                                $("#offerCmpnNm").val("");
+                                                $("#offerBsnmNo").val("");
+                                                workChk = false;
+                                            }
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                            $("#offerCmpnNm").val("");
+                                            $("#offerBsnmNo").val("");
+                                            workChk = false;
+                                        }
+                                    } else {
+                                        alert(msgCtrl.getMsg("fail.mp.mpa.al_015"));
+                                        $("#offerCmpnNm").val("");
+                                        $("#offerBsnmNo").val("");
+                                        workChk = false;
+                                    }
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+
+                            /*
                             var wBFBRegisterSearchDTO = {}
                             wBFBRegisterSearchDTO.offerBsnmNo = $('#offerBsnmNo').val();
                             cmmCtrl.jsonAjax(function(respObj) {
@@ -335,6 +384,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     $dataRsumeTask.find('#offerCmpnNm').val(rtnData.cmpnNm);
                                 }
                             }, "/mngwserc/wb/wbfb/getBsnmNoCheck", wBFBRegisterSearchDTO, "text")
+                            */
+
                         }
                     }
                 }

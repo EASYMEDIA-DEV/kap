@@ -130,6 +130,17 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         });
     }
 
+    let chkOfferBsnmNo = function(e) {
+        let patten = eval("/^[0-9]+$/g");
+
+        let regResult = patten.test($(e).val());
+        if(!regResult) {
+            alert("숫자만 입력가능합니다.");
+            $('#offerCmpnNm').val('');
+            $('#offerBsnmNo').val('');
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -137,8 +148,51 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         var $formObj = $(this).closest('form');
-
                         if($formObj.find('#offerBsnmNo').val() != '') {
+                            jQuery.ajax({
+                                url : "/nice/comp-chk",
+                                type : "POST",
+                                data :
+                                    {
+                                        "compNum" : $formObj.find('#offerBsnmNo').val()
+                                    },
+                                success : function(data)
+                                {
+                                    if(data.rsp_cd=='P000') {
+                                        if(data.result_cd == '01') {
+                                            if(data.comp_status == '1') {
+                                                $("#offerCmpnNm").val(data.comp_name);
+                                                offerBsnmNoCheck = true;
+                                            } else {
+                                                alert(msgCtrl.getMsg("fail.eb.ebi.step.al_002"));
+                                                $("#offerBsnmNo").val("");
+                                                $("#offerCmpnNm").val("");
+                                                offerBsnmNoCheck = false;
+                                                return false;
+                                            }
+                                        } else {
+                                            alert(msgCtrl.getMsg("fail.eb.ebi.step.al_002"));
+                                            $("#offerBsnmNo").val("");
+                                            $("#offerCmpnNm").val("");
+                                            offerBsnmNoCheck = false;
+                                            return false;
+                                        }
+                                    } else {
+                                        alert(msgCtrl.getMsg("fail.eb.ebi.step.al_002"));
+                                        $("#offerBsnmNo").val("");
+                                        $("#offerCmpnNm").val("");
+                                        offerBsnmNoCheck = false;
+                                        return false;
+                                    }
+                                },
+                                error : function(xhr, ajaxSettings, thrownError)
+                                {
+                                    cmmCtrl.errorAjax(xhr);
+                                    jQuery.jstree.rollback(data.rlbk);
+                                }
+                            });
+
+                            /*
                             var mPBBsnSearchDTO = {}
                             mPBBsnSearchDTO.offerBsnmNo = $formObj.find('#offerBsnmNo').val();
 
@@ -152,9 +206,11 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     offerBsnmNoCheck = true;
                                     $formObj.find('#offerCmpnNm').val(rtnData.cmpnNm);
                                 }
-                            }, "./getBsnmNoCheck", mPBBsnSearchDTO, "text")
+                            }, "./getBsnmNoCheck", mPBBsnSearchDTO, "text")*/
+
                         } else {
                             offerBsnmNoCheck = false;
+                            $("#offerCmpnNm").val("");
                             alert(msgCtrl.getMsg("fail.mp.join.al_018"));
                         }
                     }
@@ -162,10 +218,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             },
             offerBsnmNo : {
                 event : {
-                    change : function() {
-                        offerBsnmNoCheck = false;
-                    },
                     keyup : function() {
+                        chkOfferBsnmNo(this);
                         offerBsnmNoCheck = false;
                     }
                 },

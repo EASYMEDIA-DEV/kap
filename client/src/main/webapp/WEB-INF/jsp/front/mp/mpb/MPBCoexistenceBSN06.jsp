@@ -320,7 +320,7 @@
                                                     <p class="data-title f-body1">└ 사업자등록번호<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="numberChk" id="offerBsnmNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerBsnmNo" placeholder="사업자등록번호" value="${rsumeTaskDtl[1].offerBsnmNo}">
+                                                            <input type="text" id="offerBsnmNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerBsnmNo" placeholder="사업자등록번호" value="${rsumeTaskDtl[1].offerBsnmNo}">
                                                             <button type="button" class="btn-solid small gray-bg" id="bsnmNoAuth" href="javascript:void(0);"><span>인증</span></button>
                                                         </div>
                                                     </div>
@@ -337,7 +337,7 @@
                                                     <p class="data-title f-body1">└ 담당자 휴대폰<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" placeholder="담당자 휴대폰" id="offerPicHpNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicHpNo" value="${rsumeTaskDtl[1].offerPicHpNo}">
+                                                            <input type="text" placeholder="담당자 휴대폰" class="mobileChk" id="offerPicHpNo" name="wBFBRegisterDTO.rsumeTaskDtl.offerPicHpNo" value="${rsumeTaskDtl[1].offerPicHpNo}">
                                                         </div>
                                                     </div>
                                                 </div>

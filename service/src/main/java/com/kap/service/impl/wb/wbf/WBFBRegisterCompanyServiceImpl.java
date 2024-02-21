@@ -1437,6 +1437,10 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02001_01_003");
                         wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02001_02_001");
                         break;
+                    case "PRO_TYPE02002_01_001":
+                        wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02002_01_002");
+                        wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02002_02_002");
+                        break;
                     case "PRO_TYPE02002_01_003":
                         wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02002_01_004");
                         wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02002_02_002");

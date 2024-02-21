@@ -189,7 +189,11 @@
     -->
     <select id="getBsnmNoCheck" parameterType="WBFBRegisterSearchDTO" >
         SELECT /*WBFASmartRoundMapper.getBsnmNoCheck*/
-            COUNT(*) as cmpn_count, bsnm_no, cmpn_nm
+            COUNT(*) as cmpn_count
+            , bsnm_no
+            , cmpn_nm
+            , rprsnt_nm
+            , ctgry_cd
         FROM cp_cmpn_mst
         WHERE bsnm_no = #{bsnmNo}
     </select>
@@ -756,8 +760,10 @@
         UPDATE cx_appctn_rsume_dtl /*WBFBRegisterCompanyMapper.updRsumeDtl*/
         SET
             appctn_stts_cd = #{appctnSttsCd}
-            <if test='siteGubun == "front"'>,appctn_stts_chng_dtm = now()</if>
             ,mng_stts_cd = #{mngSttsCd}
+            <if test='siteGubun == "front"'>
+                ,appctn_stts_chng_dtm = now()
+            </if>
             <if test='siteGubun == "admin"'>
                 ,mng_stts_chng_dtm = now()
                 ,rtrn_rsn_cntn = #{rtrnRsnCntn}

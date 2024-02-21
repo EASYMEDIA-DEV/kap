@@ -1530,7 +1530,7 @@
                                                         <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
-                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cdNm}">selected</c:if> >
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cd}">selected</c:if> >
                                                                             ${cdList.cdNm}
                                                                     </option>
                                                                 </c:if>
