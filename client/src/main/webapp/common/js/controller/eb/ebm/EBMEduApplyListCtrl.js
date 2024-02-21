@@ -234,16 +234,21 @@ define(["ezCtrl"], function(ezCtrl) {
 							alert("양도된 내역입니다.");
 							return false;
 						}
-
-
 					}
 				}
 			},
 			visitEduDtl : {
 				event : {
 					click : function() {
-						var vstSeq = $(this).data("edctnseq");
-						location.href="./visit-edu-detail?vstSeq="+vstSeq;
+						var trnsfyn = $(this).data("trnsfyn");
+
+						if(trnsfyn == "N"){
+							var vstSeq = $(this).data("edctnseq");
+							location.href="./visit-edu-detail?vstSeq="+vstSeq;
+						}else{
+							alert("이관된 내역입니다.");
+							return false;
+						}
 					}
 				}
 			},

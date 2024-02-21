@@ -151,7 +151,7 @@
                     </div>
                 </c:when>
                 <c:otherwise>
-                    <div class="training-confirm visitEduDtl" data-edctnseq="${list.edctnSeq}">
+                    <div class="training-confirm visitEduDtl" data-edctnseq="${list.edctnSeq}" data-trnsfYn="${list.trnsfYn}">
                         <div class="top-info">
                             <div class="training-view-page">
                                 <div class="training-list">

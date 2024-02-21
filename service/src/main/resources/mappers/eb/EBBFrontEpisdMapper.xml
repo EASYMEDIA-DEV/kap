@@ -902,7 +902,7 @@
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
-		A.vst_seq -- 방문순번
+		DISTINCT A.vst_seq -- 방문순번
 		, A.mem_seq -- 회원순번
 		, A.appctn_bsnm_no -- 신청당시 사업자등록번호
 		, A.appctn_fld_cd -- 신청분야 코드
@@ -1014,15 +1014,8 @@
 		,  A.reg_dtm AS ptcpt_dtm
 		,  null AS web_path
 		,  null AS file_dsc
-		, CASE
-			WHEN (SELECT COUNT(*)
-			FROM ev_edctn_trnsf_dtl
-			WHERE mem_seq = A.mem_seq
-			AND bfre_mem_seq = A.mem_seq
-			AND vst_seq = A.vst_seq) > 0 THEN 'Y'
-			ELSE 'N'
-		  END AS TRNSF_YN
-		, 0 AS bfre_mem_seq
+		, CASE WHEN A.vst_seq = E.vst_seq then 'Y' ELSE 'N' END AS TRNSF_YN
+		, E.bfre_mem_seq
 		, 0 AS ptcpt_seq
 		FROM
 		(
@@ -1114,6 +1107,7 @@
 		)D
 		ON A.vst_seq = D.vst_seq
 		AND A.mem_seq = D.mem_seq
+		LEFT JOIN ev_edctn_trnsf_dtl E ON A.vst_seq = E.vst_seq
 		ORDER BY
 		A.reg_dtm DESC
 		)AA
@@ -1601,7 +1595,7 @@
 		from
 		(
 		SELECT /*EBCVisitEduMapper.selectVisitEduDtl*/
-		A.vst_seq -- 방문순번
+		DISTINCT A.vst_seq -- 방문순번
 		, A.mem_seq -- 회원순번
 		, A.appctn_bsnm_no -- 신청당시 사업자등록번호
 		, A.appctn_fld_cd -- 신청분야 코드
@@ -1712,15 +1706,8 @@
 		,  null AS cmptn_dtm
 		,  null AS ptcpt_dtm
 		,  null AS web_path
-		, CASE
-		WHEN (SELECT COUNT(*)
-		FROM ev_edctn_trnsf_dtl
-		WHERE mem_seq = A.mem_seq
-		AND bfre_mem_seq = A.mem_seq
-		AND vst_seq = A.vst_seq) > 0 THEN 'Y'
-		ELSE 'N'
-		END AS TRNSF_YN
-		, 0 AS bfre_mem_seq
+		, CASE WHEN A.vst_seq = E.vst_seq then 'Y' ELSE 'N' END AS TRNSF_YN
+		, E.bfre_mem_seq
 		, 0 AS ptcpt_seq
 		FROM
 		(
@@ -1812,6 +1799,7 @@
 		)D
 		ON A.vst_seq = D.vst_seq
 		AND A.mem_seq = D.mem_seq
+		LEFT JOIN ev_edctn_trnsf_dtl E ON A.vst_seq = E.vst_seq
 		ORDER BY
 		A.reg_dtm DESC
 		)AA
