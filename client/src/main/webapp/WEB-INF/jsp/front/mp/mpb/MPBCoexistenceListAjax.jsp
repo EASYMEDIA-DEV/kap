@@ -35,7 +35,7 @@
                                     <p class="training-name f-title3">
                                         <c:choose>
                                             <c:when test="${item.appctnSttsCdNm eq '이관'}">
-                                                <a href="javascript:" style="cursor: default">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
+                                                <a href="javascript:" style="cursor: default" class="transfer">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->
                                             </c:when>
                                             <c:otherwise>
                                                 <a href="./view?bsnCd=${item.bsnCd}&appctnSeq=${item.appctnSeq}">${item.year} ${item.episd}차 ${item.bsnNm}</a></p><!-- 2024-01-19 a태그 추가 -->

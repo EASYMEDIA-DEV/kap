@@ -30,6 +30,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             },
         },
         classname : {
+
+            //이관된 신청 내역 클릭 시
+            transfer : {
+                event : {
+                    click : function() {
+                        alert("이관된 내역입니다.");
+                    }
+                }
+            },
+
             addMore : {
                 event : {
                     click : function() {
