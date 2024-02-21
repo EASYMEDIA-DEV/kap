@@ -88,7 +88,6 @@
     <select id="selectNoticeDtl" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
         SELECT /* BDANoticeMapper.selectNoticeDtl */
             NTFY_SEQ
-            , NTFY_YN
             , EXPS_STRT_DTM
             , EXPS_END_DTM
             , ODTM_YN
@@ -96,8 +95,14 @@
             , CNTN
             , FILE_SEQ
             , EXPS_YN
+        <if test='siteGubun != "front"'>
+            , NTFY_YN
+        </if>
         <if test='siteGubun == "front"'>
             , #{srchVal} AS SRCH_VAL
+            , CASE WHEN NTFY_YN = 'Y'
+            AND ((exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR odtm_yn ='Y') AND EXPS_YN = 'Y' then 'Y'
+            ELSE 'N' END  AS NTFY_YN
         </if>
             , REG_ID
             , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
