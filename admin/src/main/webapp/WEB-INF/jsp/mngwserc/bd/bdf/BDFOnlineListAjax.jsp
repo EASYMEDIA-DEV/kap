@@ -12,12 +12,10 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${ list.ctgryName }</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.mnlSeq}">${list.titl}</a></td>
-<%--                <td class="text-center">${ list.readCnt }</td>--%>
                 <td class="text-center">${ list.regName }(${ list.regId })</td>
                 <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
                 <td class="text-center">${ empty list.modName ? '-' : list.modName += '(' += list.modId += ')' }</td>
                 <td class="text-center">${ kl:decode(list.modDtm, "", "-", kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')) }</td>
-                <td class="text-center">${ list.expsYn eq 'Y' ? '노출' : '미노출' }</td>
             </tr>
         </c:forEach>
     </c:when>

@@ -18,7 +18,7 @@
                         <select class="form-control input-sm" id="ctgryCd" name="ctgryCd" title="FAQ 구분" style="width:auto; display:inline-block;">
                             <option value="">선택</option>
                             <c:forEach var="cdList" items="${cdDtlList.BOARD_TYPE_CD}" varStatus="status">
-                                <c:if test="${fn:contains(cdList.cd, 'FAQ0')}">
+                                <c:if test="${fn:contains(cdList.cd, 'ONLINE')}">
                                 <option value="${cdList.cd}" <c:if test="${rtnDto.ctgryCd eq cdList.cd}">selected</c:if>>
                                         ${cdList.cdNm}
                                 </option>
@@ -59,22 +59,6 @@
                         <p class="text-bold mt">
                             ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                         </p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="last-child">
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
-                    <div class="col-sm-11">
-                        <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-record"></span> 노출
-                        </label>
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
-                            <span class="ion-record"></span> 미노출
-                        </label>
                     </div>
                 </div>
             </fieldset>

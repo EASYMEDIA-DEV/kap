@@ -189,16 +189,6 @@
     2024.01.05    이옥정       사용자 노출을 위한 예외 조건문 추가
     -->
     <sql id="selectOnlineListwhereSql">
-        <if test='siteGubun == "front"'>
-            AND EXPS_YN = 'Y'
-            <if test="srchVal != null and srchVal != ''">
-                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
-                CNTN LIKE CONCAT('%', #{srchVal}, '%')
-            </if>
-            <if test="ctgryCd != null and ctgryCd != ''">
-                AND CTGRY_CD = #{ctgryCd}
-            </if>
-        </if>
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">
@@ -223,13 +213,6 @@
             AND (
             <foreach collection="ctgryCdList" item="ctgryCd" index="index" open="" close="" separator=" OR ">
                 CTGRY_CD = #{ctgryCd}
-            </foreach>
-            )
-        </if>
-        <if test="expsYnList != null and expsYnList.size() > 0">
-            AND (
-            <foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
-                EXPS_YN = #{expsYn}
             </foreach>
             )
         </if>

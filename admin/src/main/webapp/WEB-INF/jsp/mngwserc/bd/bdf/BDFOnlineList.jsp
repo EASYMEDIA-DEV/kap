@@ -16,6 +16,7 @@
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정일" />
+                <jsp:param name="srchType" value="onlineManual" />
             </jsp:include>
             <!--기간 검색 종료-->
             <%--구분 시작--%>
@@ -28,7 +29,7 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <c:forEach var="cdList" items="${cdDtlList.BOARD_TYPE_CD}" varStatus="status">
-                            <c:if test="${fn:contains(cdList.cd, 'FAQ0')}">
+                            <c:if test="${fn:contains(cdList.cd, 'ONLINE')}">
                                 <label class="checkbox-inline c-checkbox">
                                     <input type="checkbox" class="checkboxSingle" name="ctgryCdList" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if> />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
@@ -39,27 +40,6 @@
                 </div>
             </fieldset>
             <%--구분 종료--%>
-            <%--노출 여부 시작--%>
-            <fieldset>
-                <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부</label>
-                    <div class="col-sm-11">
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxAll" />
-                            <span class="ion-checkmark-round"></span> 전체
-                        </label>
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" name="expsYnList" data-name="expsYnList" value="Y" <c:if test="${fn:contains(rtnData.expsYnList, 'Y')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 노출
-                        </label>
-                        <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" name="expsYnList" data-name="expsYnList" value="N" <c:if test="${fn:contains(rtnData.expsYnList, 'N')}">checked</c:if> />
-                            <span class="ion-checkmark-round"></span> 미노출
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-            <%--노출 여부 종료--%>
             <%--검색 키워드 시작--%>
             <fieldset class="last-child">
                 <div class="form-group text-sm">
@@ -123,7 +103,6 @@
                             <th class="text-center">최초 등록일시</th>
                             <th class="text-center">최종 수정자</th>
                             <th class="text-center">최종 수정일시</th>
-                            <th class="text-center">노출여부</th>
                         </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

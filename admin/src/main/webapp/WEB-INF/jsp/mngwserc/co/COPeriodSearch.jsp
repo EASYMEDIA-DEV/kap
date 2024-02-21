@@ -81,7 +81,7 @@
 							</c:choose>
 
 						</c:when>
-						<c:when test="${param.srchType eq 'defaultBoard'}">
+						<c:when test="${param.srchType eq 'defaultBoard' or param.srchType eq 'onlineManual'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
@@ -111,7 +111,7 @@
 
 
 						</c:when>
-						<c:when test="${param.srchType eq 'defaultBoard'}">
+						<c:when test="${param.srchType eq 'defaultBoard' or param.srchType eq 'onlineManual'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
