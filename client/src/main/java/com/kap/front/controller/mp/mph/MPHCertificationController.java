@@ -69,7 +69,7 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @RequestMapping("/modify-page")
-    public String getMemberJoinChk(ModelMap modelMap) throws Exception {
+    public String getMemberJoinChk(ModelMap modelMap, String ci) throws Exception {
         String url = "";
         MPAUserDto mpaUserDto = new MPAUserDto();
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -77,6 +77,12 @@ public class MPHCertificationController {
 
         if(cOUserDetailsDTO.getRespCd().equals("1310")) {
             coUserLgnService.setLastLgnDtm(cOUserDetailsDTO);
+            MPAUserDto mpaUserDto1 = new MPAUserDto();
+            mpaUserDto1.setMemSeq(cOUserDetailsDTO.getSeq());
+            mpaUserDto1.setId(cOUserDetailsDTO.getId());
+            mpaUserDto1.setCi(ci);
+            coUserLgnService.setCiUpd(mpaUserDto1);
+
         }
 
         // 공통코드 배열 셋팅

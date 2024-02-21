@@ -70,4 +70,12 @@ public interface COUserLgnMapper {
 	 * 패스워드를 비교 한다.
 	 */
 	int getPasswordChk(MPAUserDto mpaUserDto) throws Exception;
+
+	/**
+	 * 정보 업데이트 시 ci 값 변경
+	 * @param mpaUserDto
+	 * @return
+	 * @throws Exception
+	 */
+	int updateCi(MPAUserDto mpaUserDto) throws 	Exception;
 }

@@ -61,4 +61,12 @@ public interface COUserLgnService {
 
 	int setLastLgnDtm(COUserDetailsDTO cOUserDetailsDTO) throws Exception;
 
+	/**
+	 * 정보 업데이트 시 ci 값 변경
+	 * @param mpaUserDto
+	 * @return
+	 * @throws Exception
+	 */
+	int setCiUpd(MPAUserDto mpaUserDto) throws Exception;
+
 }

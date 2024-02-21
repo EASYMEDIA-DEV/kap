@@ -105,11 +105,11 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 					}
 				}
 				//TODO 24-01-22 이 부분은 반영시 삭제 해야 함
-//				LocalDate currentDate = LocalDate.now();
-//				LocalDate targetDate = LocalDate.parse("2024-02-25");
-//				if(currentDate.isBefore(targetDate)) {
-//					dateResult = 0;
-//				}
+				LocalDate currentDate = LocalDate.now();
+				LocalDate targetDate = LocalDate.parse("2024-03-25");
+				if(currentDate.isBefore(targetDate)) {
+					dateResult = 0;
+				}
 				//로그인 5회 체크
 				if (rtnCOUserDto.getLgnFailCnt() < 5)
 				{
@@ -179,6 +179,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 			COUserDetailsDTO cOUserDetailsDTO = null;
 			if (rtnCode.endsWith("00") || rtnCode.endsWith("10"))
 			{
+
 				cOUserDetailsDTO = cOUserLgnMapper.actionLogin(rtnCOUserDto);
 				//추가 로그인일시가 없을경우 현재 시간을 보여줌
 				if(cOUserDetailsDTO.getLastLgnDtm() == null) {
@@ -381,6 +382,17 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 	@Override
 	public int setLastLgnDtm(COUserDetailsDTO cOUserDetailsDTO) throws Exception {
 		return	cOUserLgnMapper.updateLastLgnDtm(cOUserDetailsDTO);
+	}
+
+	/**
+	 * 정보 업데이트 시 ci 값 변경
+	 * @param mpaUserDto
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public int setCiUpd(MPAUserDto mpaUserDto) throws Exception {
+		return cOUserLgnMapper.updateCi(mpaUserDto);
 	}
 
 

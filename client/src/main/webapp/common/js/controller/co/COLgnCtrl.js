@@ -201,7 +201,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			myInfoUpd : {
 				event : {
 					click : function() {
-							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page&ciChk&"+$("#ci").val());
+							cmmCtrl.niceCertification( "/my-page/member/intrduction/modify-page&updChk&"+$("#birth").val().replaceAll("-",'')+"&"+encodeURI($("#name").val())+"&"+$("#hpNo").val().replaceAll("-",''));
 					}
 				}
 			},

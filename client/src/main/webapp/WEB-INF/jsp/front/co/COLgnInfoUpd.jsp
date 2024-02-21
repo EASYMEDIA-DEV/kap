@@ -44,6 +44,10 @@
 <div id="wrap" data-controller="controller/co/COLgnCtrl">
     <input type="hidden" id="authCd" name="authCd" value="${tmpLgnVO.authCd}" />
     <input type="hidden" id="ci" name="ci" value="${rtnDtl.ci}" />
+    <input type="hidden" id="birth" name="birth" value="${tmpLgnVO.birthdate}" />
+    <input type="hidden" id="name" name="name" value="${tmpLgnVO.name}" />
+    <input type="hidden" id="hpNo" name="hpNo" value="${tmpLgnVO.hpNo}" />
+
     <!-- content 영역 start -->
     <!--
 @ 정보 업데이트 안내 : infoup 클래스 추가
