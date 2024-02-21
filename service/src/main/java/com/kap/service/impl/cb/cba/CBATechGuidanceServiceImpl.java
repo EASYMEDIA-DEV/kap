@@ -499,7 +499,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             COMailDTO cOMailDTO = new COMailDTO();
             //SMS 발송
             COSmsDTO smsDto = new COSmsDTO();
-            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 신청 완료 안내");
+            cOMailDTO.setSubject("["+siteName+"] 컨설팅사업 탈락 안내");
             //수신자 정보
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
             CBATechGuidanceInsertDTO tempDto = new CBATechGuidanceInsertDTO();
@@ -511,11 +511,13 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             tempDto = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
             //탈락 사유(치환문자2)
             if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
-                receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getBfreJdgmtRsltCntn());
+                cOMailDTO.setEditorContents(pCBATechGuidanceupUpdateDTO.getBfreJdgmtRsltCntn());
+                //receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getBfreJdgmtRsltCntn());
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("사전심사결과");
             }else if(rsumeSttsCd.equals("MNGTECH_STATUS_07")){
-                receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getInitVstRsltCntn());
+                cOMailDTO.setEditorContents(pCBATechGuidanceupUpdateDTO.getInitVstRsltCntn());
+                //receiverDto.setNote2(pCBATechGuidanceupUpdateDTO.getInitVstRsltCntn());
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("초도방문결과");
             }
@@ -526,7 +528,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             //이름
             receiverDto.setName(tempDto.getName());
             //사업명(치환문자1)
-            receiverDto.setNote1("2024 상주기술지도");
+            //receiverDto.setNote1("2024 상주기술지도");
+            receiverDto.setNote1(tempDto.getBsnYear() + " 상주" +tempDto.getCnstgNm());
             //부품사명(치환문자3)
             receiverDto.setNote3(tempDto.getCmpnNm());
             //신청일
@@ -538,11 +541,30 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             smsDto.setTitle("컨설팅사업 탈락 안내");
             smsDto.getReceiver().add(receiverDto);
 
-            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+
             smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드
-            cOMessageService.sendSms(smsDto, smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
-            //cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
+            smiSmsCntnDTO.setSmsCntnSeq(4);
+
+            String cntn = "";
+            if(rsumeSttsCd.equals("MNGTECH_STATUS_04")){
+                SMISmsCntnDTO cntnDto = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO);
+
+                cntn = cntnDto.getCntn();
+                cntn = cntn.replace("${editorContents}", pCBATechGuidanceupUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("사전심사결과");
+            }else if(rsumeSttsCd.equals("MNGTECH_STATUS_07")){
+                SMISmsCntnDTO cntnDto = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO);
+
+                cntn = cntnDto.getCntn();
+                cntn = cntn.replace("${editorContents}", pCBATechGuidanceupUpdateDTO.getInitVstRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("초도방문결과");
+            }
+            smsDto.setMessage(cntn);
+
+            cOMessageService.sendSms(smsDto, "");
         }
 
         String bfreMemSeq = pCBATechGuidanceInsertDTO.getBfreMemSeq();

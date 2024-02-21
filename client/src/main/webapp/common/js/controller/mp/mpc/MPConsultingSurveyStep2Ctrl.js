@@ -101,7 +101,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         classname : {
             answer : {
                 event : {
-                    click : function() {/*
+                    click : function() {
                         var surveyList = $(this).closest('.survey-list');
                         var surveyListInner = $(this).closest('.survey-list-inner');
 
@@ -126,8 +126,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 surveyList.find('.'+nextNo).show();
                                 surveyList.find('.'+nextNo).find('.answer').removeClass("notRequired");
                             }
-                        }*/
-                    }, input : function(event){
+                        }
+                    }/*, input : function(event){
 
                         event.preventDefault();
                         var surveyCon = $(this).closest(".survey-con");
@@ -156,6 +156,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             return false;
                         };
 
+                    }*/
+                }
+            },
+            textAreaSbjctRply : {
+                event : {
+                    click : function() {
+                        // maxLength 검사
+                        if ($(this).is("[maxlength]"))
+                        {
+                            $(this).keyup(function(event){
+                                var length = cmmCtrl.checkMaxlength(this);
+                                $(this).parents(".form-textarea").find(".maxlengthText").text(length);
+                            });
+                        }
                     }
                 }
             },

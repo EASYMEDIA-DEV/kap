@@ -537,11 +537,13 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             tempDto = cBBManageConsultMapper.selectManageConsultDtl(pCBBManageConsultInsertDTO);
             //탈락 사유(치환문자2)
             if(rsumeSttsCd.equals("MNGCNSLT_STATUS04")){
-                receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                cOMailDTO.setEditorContents(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("사전심사결과");
             }else if(rsumeSttsCd.equals("MNGCNSLT_STATUS08")){
-                receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                cOMailDTO.setEditorContents(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //receiverDto.setNote2(pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("초도방문결과");
             }
@@ -573,12 +575,27 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드
             smiSmsCntnDTO.setSmsCntnSeq(4);
 
-            String temp = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn();
+            String cntn = "";
 
+            if(rsumeSttsCd.equals("MNGCNSLT_STATUS04")){
+                SMISmsCntnDTO cntnDto = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO);
 
-            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+                cntn = cntnDto.getCntn();
+                cntn = cntn.replace("${editorContents}", pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("사전심사결과");
+            }else if(rsumeSttsCd.equals("MNGCNSLT_STATUS08")){
+                SMISmsCntnDTO cntnDto = smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO);
+
+                cntn = cntnDto.getCntn();
+                cntn = cntn.replace("${editorContents}", pCBBManageConsultUpdateDTO.getBfreJdgmtRsltCntn());
+                //사업 진행 단계(치환문자4)
+                receiverDto.setNote4("초도방문결과");
+            }
+
+            smsDto.setMessage(cntn);
+
             cOMessageService.sendSms(smsDto, "");
-            //cOMessageService.sendSms(smsDto, "ConsultingFailSms.txt");
         }
 
         String bfreMemSeq = pCBBManageConsultInsertDTO.getBfreMemSeq();

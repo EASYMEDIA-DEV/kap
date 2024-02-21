@@ -298,7 +298,7 @@
                                                     <div class="form-select">
                                                         <select id="slsYear" class="notRequired" name="slsYear" title="연도 선택" title="매출액">
                                                             <option value="">연도 선택</option>
-                                                            <c:forEach var="cdList" items="${cdDtlList2.CO_YEAR_CD}">
+                                                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
                                                                 <option value="${cdList.cd}" <c:if test="${rtnInfo.slsYear eq cdList.cd}">selected</c:if>>
                                                                         ${cdList.cdNm}
                                                                 </option>
