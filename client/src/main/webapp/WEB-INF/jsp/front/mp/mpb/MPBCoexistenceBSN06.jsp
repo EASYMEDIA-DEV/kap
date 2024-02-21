@@ -547,7 +547,8 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input calendar">
-                                                                                            <input class="datetimepicker_input accsDt" type="text" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[0].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택" readonly="">
+                                                                                            <input class="datetimepicker_input accsDt" type="text" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[0].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택">
+
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -784,7 +785,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input calendar">
-                                                                                        <input type="text" class="datetimepicker_input accsDt" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[1].accsDt}" readonly="" placeholder="날짜 선택">
+                                                                                        <input type="text" class="datetimepicker_input accsDt" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" onclick="cmmCtrl.initCalendar(this);" value="${empty spprtDtl[1].accsDt ? today : spprtDtl[1].accsDt}"  placeholder="날짜 선택">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1019,7 +1020,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input calendar">
-                                                                                        <input type="text" class="datetimepicker_input" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[2].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택" readonly="">
+                                                                                        <input type="text" class="datetimepicker_input" name="wBFBRegisterDTO.spprtDtlList[0].accsDt" value="${empty spprtDtl[2].accsDt ? today : spprtDtl[0].accsDt}" onclick="cmmCtrl.initCalendar(this);" placeholder="날짜 선택">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
