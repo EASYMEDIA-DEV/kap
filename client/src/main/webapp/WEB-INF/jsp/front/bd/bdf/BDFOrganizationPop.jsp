@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <!-- 위원 상세 팝업 -->
-<div class="layer-popup memberDetailsPopup">
+<div class="layer-popup memberDetailsPopup" data-detailskey="${rtnData.detailsKey}">
     <div class="for-center">
         <div class="pop-wrap">
             <div class="pop-con-area">

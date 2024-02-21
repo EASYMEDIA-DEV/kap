@@ -1,7 +1,12 @@
 package com.kap.front.controller.bd;
 
+import com.kap.core.dto.COGCntsDTO;
+import com.kap.core.dto.COMenuDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.COCodeService;
+import com.kap.service.COGCntsService;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -12,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,12 +48,37 @@ public class BDFOrganizationController {
     /** Service **/
     private final MPAUserService mpaUserService;
     private final COCodeService cOCodeService;
+    private final COGCntsService cOGCntsService;
 
     /**
      * 위원 목록 페이지
      */
-    @GetMapping(value = "/index")
-    public String getPartUserListPage(MPAUserDto mpaUserDto, ModelMap modelMap) throws Exception {
+    @GetMapping(value = "/content")
+    public String getPartUserListPage(MPAUserDto mpaUserDto, ModelMap modelMap, HttpServletRequest request) throws Exception {
+
+        // get Menu Sequance
+        Integer menuSeq = -1;
+        String uri = request.getRequestURI();
+        List<COMenuDTO> parntMenuList = (List<COMenuDTO>) request.getAttribute("parntMenuList");
+        for(COMenuDTO value : parntMenuList) {
+            if(uri.equals(value.getUserUrl())) {
+                menuSeq = value.getMenuSeq();
+            }
+        }
+
+        // get CMS Data
+        COGCntsDTO pCOGCntsDTO = new COGCntsDTO();
+        pCOGCntsDTO.setMenuSeq(menuSeq);
+        pCOGCntsDTO.setUserYn("Y");
+        COGCntsDTO rtnData = cOGCntsService.selectCntsDtl(pCOGCntsDTO);
+        modelMap.addAttribute("rtnData", rtnData);
+
+        COUserDetailsDTO lgnData = COUserDetailsHelperService.getAuthenticatedUser();
+        if(lgnData != null) {
+            rtnData.setDetailsKey(lgnData.getSeq().toString());
+        }
+
+
 
         ArrayList<String> cdDtlList = new ArrayList<String>();
         // 코드 set

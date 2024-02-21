@@ -94,6 +94,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     ctrl.model = {
         id : {
 
+            goQa : {
+                event : {
+                    click : function() {
+                        var memSeq = $(".memberDetailsPopup").data("detailskey");
+
+                        if(memSeq == "" || memSeq === undefined || memSeq == null){
+                            if(confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
+                                location.href = $("#goQa").data("url");
+                            } else {
+                                return false;
+                            }
+                        }
+                        else {
+                            location.href = $("#goQa").data("url");
+                        }
+                    }
+                }
+            }
+
         },
         classname : {
 
@@ -237,7 +256,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         $(".memberDetailsPopup #cmssrCnstgFldCntn").text("-");
                                     }
                                     // $(".memberDetailsPopup #goQa span").text("/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
-                                    $(".memberDetailsPopup #goQa").attr("href", "/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
+                                    $(".memberDetailsPopup #goQa").attr("data-url", "/foundation/cs/qa/index?inqSec=" + rtnData.cmssrCbsnCdNm);
 
                                     openPopup('memberDetailsPopup');
                                     // $(".memberDetailsPopup").css("display", "block");

@@ -23,7 +23,10 @@
         <div class="right-con-area">
             <div class="cont-sec-w">
 
-                <jsp:include page="/WEB-INF/jsp/front/bd/bdf/BDFOrganizationMemberInclude.jsp" />
+                <%--<jsp:include page="/WEB-INF/jsp/front/bd/bdf/BDFOrganizationMemberInclude.jsp" />--%>
+                <%--CMS 시작--%>
+                ${rtnData.cnts}
+                <%--CMS 끝--%>
 
                 <div class="cont-sec no-border scroll-motion"><!-- @ s-margin : margin이 기본보다 작은 값일 때 추가 -->
                     <div class="tab-con-w">
