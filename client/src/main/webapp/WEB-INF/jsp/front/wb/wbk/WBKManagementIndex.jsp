@@ -58,7 +58,7 @@
                                         <div class="info-line-list-w">
                                             <div class="list">
                                                 <p class="tit">접수기간</p>
-                                                <p class="txt">${rtnRoundDtl.accsStrtDtm} ~ ${rtnRoundDtl.accsEndDtm}</p>
+                                                <p class="txt">${kl:convertDate(rtnRoundDtl.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')} ~ ${kl:convertDate(rtnRoundDtl.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                                             </div>
                                             <div class="list">
                                                 <p class="tit">사업기간</p>

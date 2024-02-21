@@ -61,9 +61,9 @@
         </if>
         <if test='siteGubun != "admin"'>
             ORDER BY STATUS_ORD,
-            CASE WHEN STATUS_ORD = 1 THEN ACCS_END_DTM
-            WHEN STATUS_ORD = 2 THEN ACCS_STRT_DTM
-            WHEN STATUS_ORD = 3 THEN
+            CASE WHEN STATUS_ORD = 1 THEN ACCS_END_DTM END,
+            CASE WHEN STATUS_ORD = 2 THEN ACCS_STRT_DTM END,
+            CASE WHEN STATUS_ORD = 3 THEN
             CASE WHEN BSN_END_DTM IS NULL THEN ACCS_END_DTM ELSE BSN_END_DTM END
             END DESC
         </if>

@@ -122,7 +122,7 @@
                                     <div class="info-line-list-w">
                                         <div class="list">
                                             <p class="tit">접수기간</p>
-                                            <p class="txt">${rtnData.accsStrtDtm} ~ ${rtnData.accsEndDtm}</p>
+                                            <p class="txt">${kl:convertDate(rtnData.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')} ~ ${kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                                         </div>
                                     </div>
                                 </div>

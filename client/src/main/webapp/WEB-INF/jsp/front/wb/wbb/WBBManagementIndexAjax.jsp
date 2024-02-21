@@ -36,11 +36,11 @@
                 <div class="info-list-w">
                     <div class="info-list">
                         <p class="tit f-caption2">접수기간</p>
-                        <p class="txt f-body2">${item.accsStrtDtm} ~ <br class="only-pc"/>${item.accsEndDtm}</p>
+                        <p class="txt f-body2">${kl:convertDate(item.accsStrtDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')} ~ <br class="only-pc"/>${kl:convertDate(item.accsEndDtm, 'yyyy-MM-dd HH:mm', 'yyyy.MM.dd HH:mm', '')}</p>
                     </div>
                     <div class="info-list">
                         <p class="tit f-caption2">사업기간</p>
-                        <p class="txt f-body2">${kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')} ~ ${kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</p>
+                        <p class="txt f-body2">${kl:convertDate(item.bsnStrtDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')} ~ ${kl:convertDate(item.bsnEndDtm, 'yyyy-MM-dd', 'yyyy.MM.dd', '')}</p>
                     </div>
                 </div>
                 <div class="btn-wrap">

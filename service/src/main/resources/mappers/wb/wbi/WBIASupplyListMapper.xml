@@ -51,10 +51,10 @@
         <choose>
             <when test="ordFlag == 1">
                 ORDER BY DATE_ORD,
-                CASE WHEN DATE_ORD = 1 THEN ACCS_END_DTM
-                WHEN DATE_ORD = 2 THEN ACCS_STRT_DTM
-                WHEN DATE_ORD = 3 THEN
-                CASE WHEN BSN_END_DTM IS NULL THEN ACCS_END_DTM ELSE BSN_END_DTM END
+                CASE WHEN DATE_ORD = 1 THEN ACCS_END_DTM END,
+                CASE WHEN DATE_ORD = 2 THEN ACCS_STRT_DTM END,
+                CASE WHEN DATE_ORD = 3 THEN
+                    CASE WHEN BSN_END_DTM IS NULL THEN ACCS_END_DTM ELSE BSN_END_DTM END
                 END DESC
             </when>
             <otherwise>
@@ -234,8 +234,6 @@
         ,EPISD
         ,ACCS_STRT_DTM
         ,ACCS_END_DTM
-        ,BSN_STRT_DTM
-        ,BSN_END_DTM
         ,EXPS_YN
         ,REG_ID
         ,REG_IP
@@ -249,8 +247,6 @@
             ,#{episd}
             ,#{accsStrtDtm}
             ,#{accsEndDtm}
-            ,#{bsnStrtDtm}
-            ,#{bsnEndDtm}
             ,#{expsYn}
             ,#{regId}
             ,#{regIp}
