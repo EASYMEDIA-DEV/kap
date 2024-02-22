@@ -1346,9 +1346,11 @@
     -->
     <select id="getBsnmNoCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
         AND APPCTN_BSNM_NO = #{bsnmNo}
+      AND APPCTN_STTS_CD != 'PRO_TYPE01001_01_006'
     </select>
 
     <!--
@@ -1360,10 +1362,12 @@
     -->
     <select id="getSbrdnBsnmNoCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getSbrdnBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
         AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
         AND APPCTN_BSNM_NO = #{bsnmNo}
+        AND APPCTN_STTS_CD != 'PRO_TYPE01001_01_006'
     </select>
 
     <!--
@@ -1375,10 +1379,12 @@
     -->
     <select id="getBsnmNoSeqCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getBsnmNoSeqCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
           AND APPCTN_BSNM_NO = #{bsnmNo}
           AND MEM_SEQ = #{memSeq}
+          AND APPCTN_STTS_CD != 'PRO_TYPE01001_01_006'
     </select>
 
     <!--
@@ -1390,11 +1396,13 @@
     -->
     <select id="getSbrdnBsnmNoSeqCnt" parameterType="wBCBSecurityMstInsertDTO" resultType="java.lang.Integer">
         SELECT /* WBCBSecurityMapper.getSbrdnBsnmNoSeqCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+         JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
           AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
           AND APPCTN_BSNM_NO = #{bsnmNo}
           AND MEM_SEQ = #{memSeq}
+          AND APPCTN_STTS_CD != 'PRO_TYPE01001_01_006'
     </select>
 
     <!--

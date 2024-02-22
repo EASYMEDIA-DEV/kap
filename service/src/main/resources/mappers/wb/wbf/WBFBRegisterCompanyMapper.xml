@@ -1227,9 +1227,11 @@
     -->
     <select id="getBsnmNoCnt" parameterType="wBFBRegisterDTO" resultType="java.lang.Integer">
         SELECT /* WBFBRegisterCompanyMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
           AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND APPCTN_STTS_CD != 'PRO_TYPE02001_01_004'
     </select>
 
     <!--
@@ -1241,10 +1243,12 @@
     -->
     <select id="getSbrdnBsnmNoCnt" parameterType="wBFBRegisterDTO" resultType="java.lang.Integer">
         SELECT /* WBFBRegisterCompanyMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST B
+        JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
         WHERE EPISD_SEQ = #{episdSeq}
           AND SBRDN_BSNM_NO = #{sbrdnBsnmNo}
           AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND APPCTN_STTS_CD != 'PRO_TYPE02001_01_004'
     </select>
 
 </mapper>
