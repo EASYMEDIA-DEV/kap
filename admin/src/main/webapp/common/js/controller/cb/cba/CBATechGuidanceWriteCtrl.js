@@ -8,6 +8,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     };
 
     var $formObj = jQuery("#frmData");
+    var $formObjTrsf = jQuery("#frmDataTrsf");
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
@@ -73,7 +74,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
-        }, "/mngwserc/cb/cba/trsfList", $formObj, "GET", "html");
+        }, "/mngwserc/cb/cba/trsfList", $formObjTrsf, "GET", "html");
     }
 
     var changeStts = function(){

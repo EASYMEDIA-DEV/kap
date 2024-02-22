@@ -1625,5 +1625,11 @@
     </jsp:include>
     <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpd/MPDCmtSrchLayer.jsp"></jsp:include>
 
+    <form class="form-horizontal" id="frmDataTrsf" name="frmData" method="post">
+        <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+        <input type="hidden" class="notRequired" name="detailsKey" value="${rtnDto.cnstgSeq}" />
+        <input type="hidden" name="rsumeSttsCd" class="rsumeSttsCd" value="${rtnDto.rsumeSttsCd}">
+    </form>
+
 <!--설문검색-->
 

@@ -8,6 +8,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     };
 
     var $formObj = jQuery("#frmData");
+    var $formObjTrsf = jQuery("#frmDataTrsf");
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
@@ -16,6 +17,33 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
     var height = 600; //팝업의 높이
     var valChk = 'N';
     var idNum = 0;
+
+    //설문 개수 조회
+    var svCntCheck = function () {
+        var srvSeq = $("#srvSeq").val();
+
+        if(!srvSeq) {
+            return false;
+        }
+
+        var svMst = {};
+        svMst.srvSeq = srvSeq;
+        svMst.cnstgSeq = $("#detailsKey").val();
+
+        cmmCtrl.jsonAjax(function(data){
+            var rtn = JSON.parse(data);
+
+            // alert(rtn.respCnt);
+            if(rtn.respCnt == 0 ){
+                $(".srvSearch").attr("disabled", false); //만족도조사 추가버튼 사용 가능
+                $("#srvStrtDtm, #srvEndDtm").attr("disabled", false); //설문, 시험 달력 사용 가능
+            }
+            else {
+                $(".srvSearch").attr("disabled", true);
+                $("#srvStrtDtm, #srvEndDtm").attr("disabled", true);
+            }
+        }, './checkSurveyCnt', svMst, "text")
+    }
 
     var search = function (page){
         //data로 치환해주어야한다.
@@ -40,7 +68,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
 
-        }, "/mngwserc/cb/cbb/trsfList", $formObj, "GET", "html");
+        }, "/mngwserc/cb/cbb/trsfList", $formObjTrsf, "GET", "html");
     }
 
     var callbackAjaxDelete = function (data) {
@@ -742,6 +770,35 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }
         },
         classname: {
+
+            //설문 초기화
+            srvReset : {
+                event : {
+                    click : function(){
+                        if(confirm("응답 내용이 즉시 삭제됩니다. 초기화 하시겠습니까?")){
+
+                            var srvSeq = $("#srvSeq").val();
+
+                            if (srvSeq!=''){
+                                var svMst = {};
+                                svMst.srvSeq = srvSeq;
+                                svMst.cnstgSeq = $("#detailsKey").val();
+
+                                cmmCtrl.jsonAjax(function(data){
+                                    var rtn = JSON.parse(data);
+                                    if(rtn.respCnt > -1 ){
+                                        alert('설문 응답이 초기화되었습니다.');
+                                        /*location.reload();*/
+                                        svCntCheck();
+                                    }
+                                }, './deleteSurveyRspn', svMst, "text")
+
+                            }
+                        }
+                    }
+                }
+            },
+
             searchPostCode: {
                 event: {
                     click: function () {
@@ -1034,6 +1091,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             }
         },
         immediately: function () {
+
+            svCntCheck();
 
             questionSet();
             changeStts();

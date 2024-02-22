@@ -178,35 +178,6 @@ define(["ezCtrl"], function(ezCtrl) {
             },
         },
         classname : {
-
-            //설문 초기화
-            srvReset : {
-                event : {
-                    click : function(){
-                        if(confirm("응답 내용이 즉시 삭제됩니다. 초기화 하시겠습니까?")){
-
-                            var srvSeq = $("#srvSeq").val();
-
-                            if (srvSeq!=''){
-                                var svMst = {};
-                                svMst.srvSeq = srvSeq;
-                                svMst.cnstgSeq = $("#detailsKey").val();
-
-                                cmmCtrl.jsonAjax(function(data){
-                                    var rtn = JSON.parse(data);
-                                    if(rtn.respCnt > -1 ){
-                                        alert('설문 응답이 초기화되었습니다.');
-                                        /*location.reload();*/
-                                        svCntCheck();
-                                    }
-                                }, './deleteSurveyRspn', svMst, "text")
-
-                            }
-                        }
-                    }
-                }
-            },
-
             // 페이징 처리
             pageSet : {
                 event : {
@@ -262,8 +233,6 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
-
-            svCntCheck();
 
             // 리스트 조회
             cmmCtrl.setFormData($formObj);
