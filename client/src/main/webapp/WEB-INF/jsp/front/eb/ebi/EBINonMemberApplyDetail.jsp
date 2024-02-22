@@ -1,11 +1,4 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-<script type="text/javascript">
-    window.history.pushState(null, '', '');
-    window.onpopstate = () => {
-        $("#frmSearch").attr("action", "./list");
-        $("#frmSearch").submit();
-    }
-</script>
 
 <c:set var="rtnData" value="${rtnInfo.rtnData}" />
 <c:set var="roomDto" value="${rtnInfo.roomDto}" />
@@ -49,7 +42,7 @@
 <c:set var="edctnEndDtm" value="${ kl:convertDate(rtnData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }" />
 
 <div data-controller="controller/eb/ebi/EBINonMemberApplyDetailCtrl">
-    <form name="frmSearch" method="post" action="" data-del-type="none">
+    <form name="frmSearch" id="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <input type="hidden" class="notRequired" id="email" name="email" value="${ rtnDto.email }" />
         <input type="hidden" class="notRequired" id="name" name="name" value="${ rtnDto.name }" />
@@ -221,7 +214,7 @@
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-solid small black-bg goList" href="javascript:" data-url="./list"><span>목록</span></a>
+                                            <a class="btn-solid small black-bg goList" href="javascript:" data-url="./list" data-str-pam="${strPam}"><span>목록</span></a>
                                         </div>
                                     </div>
                                 </div>

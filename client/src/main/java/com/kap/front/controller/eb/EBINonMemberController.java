@@ -1,5 +1,6 @@
 package com.kap.front.controller.eb;
 
+import com.kap.common.utility.seed.COSeedCipherUtil;
 import com.kap.core.dto.COMenuDTO;
 import com.kap.core.dto.eb.ebi.EBINonMemberDTO;
 import com.kap.service.COBUserMenuService;
@@ -15,9 +16,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 
+import javax.crypto.Cipher;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Base64;
+import java.util.List;
 
 /**
  * <pre>
@@ -73,8 +77,13 @@ public class EBINonMemberController {
 
         modelMap.addAttribute("parntMenuList", cOBUserMenuService.getMenuList(pCOMenuDTO));
 
-//        modelMap.addAttribute("rtnData", eBINonMemberService.selectNonMemberApplyList(pEBINonMemberDTO));
+        //modelMap.addAttribute("rtnData", eBINonMemberService.selectNonMemberApplyList(pEBINonMemberDTO));
         pEBINonMemberDTO.setTotalCount(eBINonMemberService.searchPtcptCnt(pEBINonMemberDTO));
+
+        pEBINonMemberDTO.setEmail(COSeedCipherUtil.encrypt(pEBINonMemberDTO.getEmail(), "UTF-8"));
+        pEBINonMemberDTO.setName(COSeedCipherUtil.encrypt(pEBINonMemberDTO.getName(), "UTF-8"));
+        pEBINonMemberDTO.setHpNo(COSeedCipherUtil.encrypt(pEBINonMemberDTO.getHpNo(), "UTF-8"));
+
         modelMap.addAttribute("rtnDto", pEBINonMemberDTO);
 
         return "front/eb/ebi/EBINonMemberApplyList.front";
@@ -90,7 +99,18 @@ public class EBINonMemberController {
 
 //        modelMap.addAttribute("parntMenuList", cOBUserMenuService.getMenuList(pCOMenuDTO));
 
-        modelMap.addAttribute("rtnData", eBINonMemberService.selectNonMemberApplyList(pEBINonMemberDTO));
+        pEBINonMemberDTO.setEmail(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getEmail().replace(" ", "+"), "UTF-8"));
+        pEBINonMemberDTO.setName(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getName().replace(" ", "+"), "UTF-8"));
+        pEBINonMemberDTO.setHpNo(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getHpNo().replace(" ", "+"), "UTF-8"));
+
+        EBINonMemberDTO tempList = eBINonMemberService.selectNonMemberApplyList(pEBINonMemberDTO);
+
+        for(EBINonMemberDTO temp : tempList.getList()){
+            temp.setEnEdctnSeq(COSeedCipherUtil.encrypt(String.valueOf(temp.getEdctnSeq()), "UTF-8"));
+            temp.setEnPtcptSeq(COSeedCipherUtil.encrypt(String.valueOf(temp.getPtcptSeq()), "UTF-8"));
+        }
+
+        modelMap.addAttribute("rtnData", tempList);
 
         return "front/eb/ebi/EBINonMemberApplyListAjax";
     }
@@ -98,14 +118,24 @@ public class EBINonMemberController {
     /**
      *  비회원 교육 과정 신청 내역 상세
      */
-    @PostMapping(value="/ptcptDetail")
+    @GetMapping(value="/ptcptDetail")
     public String selectNonMemberApplyDetail(EBINonMemberDTO pEBINonMemberDTO, COMenuDTO pCOMenuDTO, ModelMap modelMap) throws Exception
     {
         pCOMenuDTO.setMenuSeq(613);
 
         modelMap.addAttribute("parntMenuList", cOBUserMenuService.getMenuList(pCOMenuDTO));
 
-        pEBINonMemberDTO.setEdctnSeq(Integer.parseInt(pEBINonMemberDTO.getDetailsKey()));
+        //pEBINonMemberDTO.setEdctnSeq(Integer.parseInt(pEBINonMemberDTO.getDetailsKey()));
+
+        pEBINonMemberDTO.setEdctnSeq(Integer.parseInt(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getEnEdctnSeq().replace(" ", "+"), "UTF-8")));
+        pEBINonMemberDTO.setDetailsKey(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getEnEdctnSeq().replace(" ", "+"), "UTF-8"));
+        pEBINonMemberDTO.setPtcptSeq(Integer.parseInt(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getEnPtcptSeq().replace(" ", "+"), "UTF-8")));
+
+        pEBINonMemberDTO.setEmail(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getEmail().replace(" ", "+"), "UTF-8"));
+        pEBINonMemberDTO.setName(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getName().replace(" ", "+"), "UTF-8"));
+        pEBINonMemberDTO.setHpNo(COSeedCipherUtil.decrypt(pEBINonMemberDTO.getHpNo().replace(" ", "+"), "UTF-8"));
+
+
 
         modelMap.addAttribute("rtnInfo", eBINonMemberService.selectNonMemberDtl(pEBINonMemberDTO));
 
@@ -122,6 +152,7 @@ public class EBINonMemberController {
     @GetMapping(value="/detail")
     public String getNonMemberDetial(EBINonMemberDTO pEBINonMemberDTO, COMenuDTO pCOMenuDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
+
         DeviceResolver deviceResolver = new LiteDeviceResolver();
         Device device = deviceResolver.resolveDevice(request);
 

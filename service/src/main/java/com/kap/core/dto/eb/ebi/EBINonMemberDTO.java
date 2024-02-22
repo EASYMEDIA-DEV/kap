@@ -468,10 +468,17 @@ public class EBINonMemberDTO extends BaseDTO {
     @Builder.Default
     private String pmtB11 = "-";
 
+    @Schema(title = "비고", example = "문자")
+
+    private String enDetil = "-";
 
 
-    //로그인세션ID
-    private String lgnSsnId;
+    @Schema(title = "교육과정 번호 암호화", example = "문자")
+    private String enEdctnSeq;
+    @Schema(title = "참여자번호 암호화", example = "문자")
+    private String enPtcptSeq;
+
+
 
 
     @Schema(title = "게시판 목록", example = "DTO의 리스트")

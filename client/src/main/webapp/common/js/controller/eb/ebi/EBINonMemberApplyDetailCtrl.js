@@ -158,6 +158,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         $formObj.attr("action", url);
 
                         $formObj.submit();
+
+                        debugger
+                        $("#frmSearch").attr("action", url);
+                        $("#frmSearch").submit();
+
+                        /*var strPam = $(this).data("strPam");
+
+                        location.href="./list?"+strPam;*/
                     }
                 }
             },

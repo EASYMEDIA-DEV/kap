@@ -74,12 +74,27 @@ define(["ezCtrl"], function(ezCtrl) {
 						//상세보기
 						var detailsKey = $(this).data("detailsKey");
 						var ptcptSeq = $(this).data("ptcptSeq");
+
+						var email = $formObj.find("#email").val();
+						var hpNo = $formObj.find("#hpNo").val();
+						var name = $formObj.find("#name").val();
+
+
+
+						var enEdctnSeq = $(this).data("enEdctnSeq");
+						var enPtcptSeq = $(this).data("enPtcptSeq");
+
 						$formObj.find("#detailsKey").val(detailsKey);
 						$formObj.find("#ptcptSeq").val(ptcptSeq);
 
 						// location.href = "./write?" + $formObj.serialize();
-						$formObj.attr("action", "ptcptDetail");
-						$formObj.submit();
+						/*$formObj.attr("action", "ptcptDetail");
+						$formObj.submit();*/
+
+						//location.href="./detail?"+$formObj.serialize();
+						location.href="./ptcptDetail?enEdctnSeq="+enEdctnSeq+"&enPtcptSeq="+enPtcptSeq+"&email="+email+"&hpNo="+hpNo+"&name="+name;
+
+
 					}
 				}
 			},
