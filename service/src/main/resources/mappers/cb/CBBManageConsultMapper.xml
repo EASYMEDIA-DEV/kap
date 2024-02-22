@@ -708,7 +708,7 @@
              , GUIDE_PSCND_CD
              , GUIDE_PSCND_DT
              , GUIDE_BGN_DT
-             , GUIDE_KICKF_DT
+             , CNSTG_KICKF_DT
              , CNSTG_PSCND_CD
              , CNSTG_PSCND_DT
              , XTNSN_CNCL_RSN
@@ -905,7 +905,7 @@
             #{initVstRsltCd} ,
             #{initVstOpnnCntn} ,
             #{cmssrSeq},
-            #{guideKickfDt},
+            #{cnstgKickfDt},
             #{cnstgPscndDt},
             #{cnstgPscndCd},
             #{cnstgXtnsnRsltCnt},
@@ -913,7 +913,7 @@
             #{guideTypeCd} ,
             #{guidePscndCd} ,
             #{guidePscndDt} ,
-            #{guideKickfDt} ,
+            #{cnstgKickfDt} ,
             #{cnstgTerm} ,
             #{xtnsnCnclRsn} ,
             #{initVstFileSeq} ,
@@ -956,7 +956,7 @@
             CNSTG_PSCND_DT = #{cnstgPscndDt},
             GUIDE_PSCND_DT =  #{guidePscndDt},
             GUIDE_BGN_DT =  #{guideBgnDt},
-            GUIDE_KICKF_DT =  #{guideKickfDt},
+            CNSTG_KICKF_DT =  #{cnstgKickfDt},
             CNSTG_TERM = #{cnstgTerm},
             XTNSN_CNCL_RSN =  #{xtnsnCnclRsn},
             INIT_VST_FILE_SEQ =  #{initVstFileSeq},

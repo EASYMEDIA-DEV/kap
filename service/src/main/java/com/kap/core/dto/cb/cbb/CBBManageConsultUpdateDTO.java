@@ -63,8 +63,10 @@ public class CBBManageConsultUpdateDTO extends BaseDTO {
     private String guidePscndDt;
     @Schema(title = "지도착수일")
     private String guideBgnDt;
-    @Schema(title = "킥오프일")
+    @Schema(title = "기술지도 킥오프일")
     private String guideKickfDt;
+    @Schema(title = "경영컨설팅 킥오프일")
+    private String cnstgKickfDt;
     @Schema(title = "연기/취소 사유")
     private String xtnsnCnclRsn;
     @Schema(title = "컨설팅완료예정일")

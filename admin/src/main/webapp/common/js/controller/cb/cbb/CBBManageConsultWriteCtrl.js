@@ -197,11 +197,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var bfJdgmtRslt = $("#bfJdgmtRslt").val();
         var initVstRsltCd = $("#initVstRsltCd").val();
         var cnstgPscndCd = $("#cnstgPscndCd").val();
-        var guideKickfDt = $('input[name="guideKickfDt"]').val();
+        var cnstgKickfDt = $('input[name="cnstgKickfDt"]').val();
         var vstDt = $("#vstDt").val(); // 킥오프시작(방문일)
         var vstDtFormat = new Date(vstDt);// 킥오프시작(방문일)
         var today = new Date();
-        var gbDt = new Date(guideKickfDt);
+        var gbDt = new Date(cnstgKickfDt);
         var bfGbDt = (gbDt-today)/(24*60*60*1000);
         var vstDtFormat = (vstDtFormat - today)/(24*60*60*1000);
         var initVstOpnnCntn = $("#initVstOpnnCntn").val();
@@ -382,11 +382,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     change : function(){
                         changeStts();
                         var bfCmplDt = $("#cnstgPscndDt").val().split("-");
-                        var guideKickfDt = $(".guideKickfDt").val().split("-");
+                        var cnstgKickfDt = $(".cnstgKickfDt").val().split("-");
                         var cnstgPscndCd = $("#cnstgPscndCd").val();
                         if(cnstgPscndCd == "CNSTG_PSCND03"){
                             var afCmplDt = new Date(bfCmplDt[0], bfCmplDt[1], bfCmplDt[2]);
-                            var afRegDt = new Date(guideKickfDt[0], guideKickfDt[1], guideKickfDt[2]);
+                            var afRegDt = new Date(cnstgKickfDt[0], cnstgKickfDt[1], cnstgKickfDt[2]);
                             var difDt =  afCmplDt - afRegDt;
                             var cDay = 24*60*60*1000;
                             var cMonth = cDay*30;
@@ -395,7 +395,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                     }
                 }
             },
-            guideKickfDt : {
+            cnstgKickfDt : {
                 event : {
                     change : function(){
                         changeStts();
@@ -653,9 +653,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("input[name='vstDt']").prop("disabled", true);
                         }
 
-                        var guidePscndDt = $("input[name='guidePscndDt']").val();
-                        if (!guidePscndDt) {
-                            $("input[name='guidePscndDt']").prop("disabled", true);
+                        var cnstgPscndDt = $("input[name='cnstgPscndDt']").val();
+                        if (!cnstgPscndDt) {
+                            $("input[name='cnstgPscndDt']").prop("disabled", true);
                         }
 
                         var guideBgnDt = $("input[name='guideBgnDt']").val();
@@ -663,9 +663,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                             $("input[name='guideBgnDt']").prop("disabled", true);
                         }
 
-                        var guideKickfDt = $("input[name='guideKickfDt']").val();
-                        if (!guideKickfDt) {
-                            $("input[name='guideKickfDt']").prop("disabled", true);
+                        var cnstgKickfDt = $("input[name='cnstgKickfDt']").val();
+                        if (!cnstgKickfDt) {
+                            $("input[name='cnstgKickfDt']").prop("disabled", true);
                         }
 
                         var srvStrtDtm = $("input[name='srvStrtDtm']").val();
@@ -686,7 +686,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         if (!cnstgXtnsnRsltMnth) {
                             $("input[name='cnstgXtnsnRsltMnth']").prop("disabled", true);
                         }
-                        var cnstgPscndDt = $("input[name='cnstgPscndDt']:checked").val();
+                        var cnstgPscndDt = $("input[name='cnstgPscndDt']").val();
                         if (!cnstgPscndDt) {
                             $("input[name='cnstgPscndDt']").prop("disabled", true);
                         }
@@ -1139,17 +1139,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         if (!vstDt) {
                             $("input[name='vstDt']").prop("disabled", true);
                         }
-                        var guidePscndDt = $("input[name='guidePscndDt']").val();
-                        if (!guidePscndDt) {
-                            $("input[name='guidePscndDt']").prop("disabled", true);
+                        var cnstgPscndDt = $("input[name='cnstgPscndDt']").val();
+                        if (!cnstgPscndDt) {
+                            $("input[name='cnstgPscndDt']").prop("disabled", true);
                         }
                         var guideBgnDt = $("input[name='guideBgnDt']").val();
                         if (!guideBgnDt) {
                             $("input[name='guideBgnDt']").prop("disabled", true);
                         }
-                        var guideKickfDt = $("input[name='guideKickfDt']").val();
-                        if (!guideKickfDt) {
-                            $("input[name='guideKickfDt']").prop("disabled", true);
+                        var cnstgKickfDt = $("input[name='cnstgKickfDt']").val();
+                        if (!cnstgKickfDt) {
+                            $("input[name='cnstgKickfDt']").prop("disabled", true);
                         }
                         var srvStrtDtm = $("input[name='srvStrtDtm']").val();
                         if (!srvStrtDtm) {
