@@ -8,6 +8,7 @@ import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -80,8 +81,10 @@ public class MPHCertificationController {
             MPAUserDto mpaUserDto1 = new MPAUserDto();
             mpaUserDto1.setMemSeq(cOUserDetailsDTO.getSeq());
             mpaUserDto1.setId(cOUserDetailsDTO.getId());
-            mpaUserDto1.setCi(ci);
-            coUserLgnService.setCiUpd(mpaUserDto1);
+            if(!StringUtils.isEmpty(ci)) {
+                mpaUserDto1.setCi(ci);
+                coUserLgnService.setCiUpd(mpaUserDto1);
+            }
 
         }
 
