@@ -64,6 +64,16 @@ public class COMenuInterceptor implements HandlerInterceptor{
             if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) != null){
                 RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", 47, RequestAttributes.SCOPE_SESSION);
             }
+        }else{
+
+            if((int)RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) == 47){
+                //뭔진 모르지만 대시보드에서 앞으로가기 할때 시퀀스가 47로 남아있음, 이거때문에 새로 받아야할 목록 갱신이 안되서 null뜸
+                System.out.println("@@@여기 온다");
+                RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", 48, RequestAttributes.SCOPE_SESSION);
+                //RequestContextHolder.getRequestAttributes().removeAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION);
+            }
+
+
         }
 
         //dirve 메뉴 목록을 조회한다.
@@ -146,7 +156,6 @@ public class COMenuInterceptor implements HandlerInterceptor{
                 break;
             }
         }
-
 
         // 메뉴 접근 권한
         if (pageNo == -1 && !appLogin)
