@@ -208,11 +208,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             $("#deptCd").focus();
                             return false;
                         }
-                        if ($("#deptDtlNm").val() == '') {
+                        /*if ($("#deptDtlNm").val() == '') {
                             alert("부서 상세를 입력해 주세요.");
                             $("#deptDtlNm").focus();
                             return false;
-                        }
+                        }*/
                         if ($("#pstnCd").val() == '') {
                             alert(msgCtrl.getMsg("fail.eb.ebi.step.al_006"));
                             $("#pstnCd").focus();

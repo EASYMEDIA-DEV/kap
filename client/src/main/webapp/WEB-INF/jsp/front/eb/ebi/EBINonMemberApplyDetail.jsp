@@ -196,7 +196,7 @@
                                                 </tr>
                                                 <tr>
                                                     <th>부서</th>
-                                                    <td>${ ptcptData.deptCdNm } (${ ptcptData.deptDtlNm })</td>
+                                                    <td>${ ptcptData.deptCdNm } ${ not empty ptcptData.deptDtlNm ? '(' += ptcptData.deptDtlNm += ')' : '' }</td>
                                                 </tr>
                                                 <tr>
                                                     <th>직급</th>

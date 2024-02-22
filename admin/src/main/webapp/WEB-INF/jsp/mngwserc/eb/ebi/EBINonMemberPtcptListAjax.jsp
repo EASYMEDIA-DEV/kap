@@ -13,8 +13,8 @@
         <td class="text-center">${ptcptList.name}</td><!--이름-->
         <td class="text-center">${ptcptList.ptcptCmpnNm}</td><!--부품사명-->
         <td class="text-center">${kl:bsnmNoConvert(ptcptList.ptcptBsnmNo)}</td><!--사업자등록번호-->
-        <td class="text-center">${ptcptList.deptCdNm} ${ptcptList.deptDtlNm == '' ? '' : '('+=ptcptList.deptDtlNm+=')'} </td><!-- 부서 -->
-        <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
+        <td class="text-center">${ptcptList.deptCdNm} ${empty ptcptList.deptDtlNm ? '' : '('+=ptcptList.deptDtlNm+=')'}</td><!-- 부서 -->
+        <td class="text-center">${ptcptList.pstnCdNm} ${fn:contains(ptcptList.pstnCd, 'MEM_CD01007') ? '('+=ptcptList.pstnNm+=')' : ''}</td><!-- 직급 -->
         <td class="text-center">${kl:hpNum(ptcptList.hpNo)}</td><!-- 휴대폰번호 -->
         <td class="text-center">${ptcptList.email}</td><!-- 이메일 -->
         <td class="text-center">

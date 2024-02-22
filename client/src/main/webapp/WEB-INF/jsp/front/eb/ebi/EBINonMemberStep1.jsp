@@ -239,7 +239,7 @@
                                                                 </select>
                                                             </div>
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="부서 상세 입력" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50">
+                                                                <input type="text" class="notRequired" placeholder="부서 상세 입력" id="deptDtlNm" name="deptDtlNm" title="부서 상세" maxlength="50">
                                                             </div>
                                                         </div>
                                                     </div>

@@ -263,6 +263,11 @@
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- 2024-02-22 안내 문구 추가 -->
+                                    <div class="info-sec">
+                                        <p class="exclamation-txt f-body1">비회원 교육 신청내역은 교육 신청 목록 > <a href="/education/apply/non-member/auth">비회원 신청 내역 조회</a>에서 가능합니다.</p>
+                                    </div>
+                                    <!-- // 2024-02-22 안내 문구 추가 -->
                                     <div class="trainings-list-w" id="listContainer">
 
                                     </div>
