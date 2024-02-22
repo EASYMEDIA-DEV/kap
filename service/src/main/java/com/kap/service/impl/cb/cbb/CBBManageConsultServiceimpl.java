@@ -565,11 +565,12 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
 
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
+
             //문자 발송
             smsDto.setTitle("컨설팅사업 탈락 안내");
             smsDto.getReceiver().add(receiverDto);
 
-            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
 
             smiSmsCntnDTO.setSmsCntnCd("SMS08"); // 컨설팅사업 탈락 구분 코드

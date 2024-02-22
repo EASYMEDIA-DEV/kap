@@ -506,7 +506,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             tempDto.setRegId(pCBATechGuidanceInsertDTO.getRegId());
             tempDto.setRegIp(pCBATechGuidanceInsertDTO.getRegIp());
             tempDto.setMemSeq(String.valueOf(pCBATechGuidanceInsertDTO.getMemSeq()));
-            tempDto.setRsumeSttsCd("MNGCNSLT_STATUS01");
+            tempDto.setRsumeSttsCd("MNGTECH_STATUS01");
             tempDto.getDetailsKey();
             tempDto = cBATechGuidanceMapper.selectTechGuidanceDtl(pCBATechGuidanceInsertDTO);
             //탈락 사유(치환문자2)
@@ -536,6 +536,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             String field2 = CODateUtil.convertDate(CODateUtil.getToday("yyyyMMddHHmm"),"yyyyMMddHHmm", "yyyy-MM-dd HH:mm", "");
             //수신자 정보 등록
             cOMailDTO.getReceiver().add(receiverDto);
+
+            cOMessageService.sendMail(cOMailDTO, "CBTechGuidanceFailEmail.html");
 
             //문자 발송
             smsDto.setTitle("컨설팅사업 탈락 안내");

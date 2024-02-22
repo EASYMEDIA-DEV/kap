@@ -59,21 +59,23 @@ public class COMenuInterceptor implements HandlerInterceptor{
         List<COMenuDTO> menuList = null;
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-        //대시보드 다른 드라이브에서 뒤로가기시 오류예외 처리
-        if(request.getRequestURI().indexOf("/mngwserc/co/coz/dashboard") > -1){
+        //대시보드 및 시스템관리 다른 드라이브에서 뒤로가기시 오류예외 처리
+        if(
+            request.getRequestURI().indexOf("/mngwserc/co/coz/dashboard") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/coa") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/cob/coba") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/coc") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/cod") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/coe") > -1 ||
+            request.getRequestURI().indexOf("/mngwserc/co/cof") > -1
+        ){
             if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) != null){
                 RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", 47, RequestAttributes.SCOPE_SESSION);
             }
         }else{
-
-            if((int)RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) == 47){
-                //뭔진 모르지만 대시보드에서 앞으로가기 할때 시퀀스가 47로 남아있음, 이거때문에 새로 받아야할 목록 갱신이 안되서 null뜸
-                System.out.println("@@@여기 온다");
+            if (RequestContextHolder.getRequestAttributes().getAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION) != null){
                 RequestContextHolder.getRequestAttributes().setAttribute("driveMenuSeq", 48, RequestAttributes.SCOPE_SESSION);
-                //RequestContextHolder.getRequestAttributes().removeAttribute("driveMenuSeq", RequestAttributes.SCOPE_SESSION);
             }
-
-
         }
 
         //dirve 메뉴 목록을 조회한다.
