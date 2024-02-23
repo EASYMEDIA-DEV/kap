@@ -1103,6 +1103,7 @@
         UPDATE /* WBHACalibrationMapper.updateApply */ CX_APPCTN_MST
         SET
             MEM_SEQ = #{memSeq},
+            PIC_CMSSR_SEQ = #{picCmssrSeq},
             MOD_ID = #{modId},
             MOD_IP = #{modIp},
             MOD_DTM = NOW()

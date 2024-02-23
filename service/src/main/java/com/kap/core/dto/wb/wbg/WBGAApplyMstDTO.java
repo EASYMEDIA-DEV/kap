@@ -46,7 +46,10 @@ public class WBGAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "신청사업자번호")
     private String appctnBsnmNo;
-    
+
+    @Schema(title = "담당위원번호")
+    private String picCmssrSeq;
+
     @Schema(title = "담당위원번호")
     private String chkCmssrSeq;
 
