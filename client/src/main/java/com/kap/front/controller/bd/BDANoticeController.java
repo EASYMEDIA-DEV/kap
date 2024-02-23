@@ -70,7 +70,7 @@ public class BDANoticeController {
     {
         try
         {
-            if(!"".equals(pBDANoticeDTO.getDetailsKey())){
+            if(pBDANoticeDTO.getDetailsKey() != null && !pBDANoticeDTO.getDetailsKey().isEmpty()) {
                 modelMap.addAttribute("rtnInfo", bDANoticeService.selectNoticeDtl(pBDANoticeDTO));
                 modelMap.addAttribute("fileList", bDANoticeService.selectNoticeFileList(pBDANoticeDTO));
 

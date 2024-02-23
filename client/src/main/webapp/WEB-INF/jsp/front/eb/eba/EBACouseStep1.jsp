@@ -260,11 +260,6 @@
                                     <div class="divide-box">
                                         <p class="exclamation-txt f-sub-head">회원가입시 등록된 부품사 및 정보를 기본으로 신청합니다. 변경 사항이 있으면 수정 후 신청 바랍니다.<br>정확한 신청을 위해 각 항목을 확인하시고 현재 정보를 정확히 입력해 주십시오.</p>
                                     </div>
-                                    <div class="divide-box">
-                                        <div class="btn-wrap">
-                                            <a class="btn-text-icon download" href="javascript:" title="신청서 작성예시 파일 다운로드" download=""><span>신청서 작성예시</span></a>
-                                        </div>
-                                    </div>
                                 </div>
                                 <div class="sec-tit-area">
                                     <p class="f-title3">신청자 기본정보를 확인해주세요</p>

@@ -160,7 +160,7 @@
 					<div class="list headerNtfyButtonContainer">
 						<c:set var="curDate"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 						<c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
-							<a href="/board/notice?detailsKey=${ntfyList.ntfySeq}" title="링크 이동">
+							<a href="/foundation/board/notice/view?detailsKey=${ntfyList.ntfySeq}&mainPostYn=N" title="링크 이동">
 								<c:set var="daysDiff" value="${kl:getDaysDiff(curDate, kl:convertDate(ntfyList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyyMMdd', ''))}" />
 								<p class="tit f-body2">
 									<c:if test="${ daysDiff >= -3 }">
