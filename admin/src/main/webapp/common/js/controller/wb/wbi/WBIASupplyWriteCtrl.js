@@ -84,6 +84,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         wbRoundMstDTO.accsStrtDtm = ctrl.obj.find("#accsStrtDtm").val() +" "+ctrl.obj.find("#accsStrtHour").val() +":00:00";
                         wbRoundMstDTO.accsEndDtm = ctrl.obj.find("#accsEndDtm").val() +" "+ctrl.obj.find("#accsEndHour").val()+":00:00";
 
+                        wbRoundMstDTO.bsnStrtDtm = ctrl.obj.find("#year").val() + "-01-01 00:00:00";
+                        wbRoundMstDTO.bsnEndDtm = ctrl.obj.find("#year").val() +"-12-31 23:59:59 ";
+
                         wbRoundMstDTO.expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
 
                         wbRoundMstDTO.giveList = new Array();

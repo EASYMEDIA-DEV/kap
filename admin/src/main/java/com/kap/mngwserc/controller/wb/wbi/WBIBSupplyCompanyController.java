@@ -199,7 +199,7 @@ public class WBIBSupplyCompanyController {
             wBIBSupplyDTO.setBsnCd("BSN09"); /* 공급망 */
 
             COCodeDTO cOCodeDTO = new COCodeDTO();
-            /* 공급망안정화기금 공장 구축 - 신청 코드 값*/
+            /* 공급망안정화기금 - 신청 코드 값*/
             cOCodeDTO.setCd("PRO_TYPE06");
             String rsumeSttsCd = cOCodeService.getCdIdList(cOCodeDTO).get(0).getCd();
             wBIBSupplyDTO.setRsumeSttsCd(rsumeSttsCd);
