@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbc.*;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
@@ -11,6 +12,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBCBSecurityService;
 import com.kap.service.dao.wb.wbc.WBCBSecurityMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -56,6 +58,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
     //파일 서비스
     private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /**
      * 신청 목록
@@ -260,6 +263,13 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityMapper.insertAppctnSpprt(wBCBSecuritySpprtDTO);
         }
 
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBCBSecurityMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBCBSecurityMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
+
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -308,6 +318,32 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         wBCBSecurityDtlDTO.setRsumeOrd(maxRsumeOrd);
         wBCBSecurityDtlDTO.setModId(coaAdmDTO.getId());
         wBCBSecurityDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBCBSecurityMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBCBSecurityMstInsertDTO.getEpisdSeq());
+        wbSendDTO.setStageNm(wBCBSecurityMstInsertDTO.getStageNm());
+        wbSendDTO.setReason(wBCBSecurityDtlDTO.getRtrnRsnCntn());
+        wbSendDTO.setRsumeSeq(wBCBSecurityDtlDTO.getRsumeSeq());
+        wbSendDTO.setRsumeOrd(wBCBSecurityDtlDTO.getRsumeOrd());
+        wbSendDTO.setMngSttdCd(wBCBSecurityDtlDTO.getMngSttsCd());
+
+        //EDM,SMS발송
+        if("PRO_TYPE01001_02_005".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_005".equals(wBCBSecurityDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_003".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_005".equals(wBCBSecurityDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_003".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_003".equals(wBCBSecurityDtlDTO.getMngSttsCd())) {
+            //선정
+            wbbbCompanyService.send(wbSendDTO,"SMS05");
+        } else if ("PRO_TYPE01001_02_004".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_004".equals(wBCBSecurityDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_004".equals(wBCBSecurityDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd())) {
+            //미선정 및 부적합
+            wbbbCompanyService.send(wbSendDTO,"SMS07");
+        } else if ("PRO_TYPE01001_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01004_02_002".equals(wBCBSecurityDtlDTO.getMngSttsCd())) {
+            //보완요청
+            wbbbCompanyService.send(wbSendDTO,"SMS06");
+        }
 
         wBCBSecurityMapper.updateAppctnDtl(wBCBSecurityDtlDTO);
 
@@ -551,7 +587,6 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
             wBCBSecurityMapper.insertAppctnPbsnDtl(wBCBSecurityPbsnDtlDTO);
         }
-
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
@@ -1054,6 +1089,13 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecuritySpprtDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             wBCBSecurityMapper.insertAppctnSpprt(wBCBSecuritySpprtDTO);
         }
+
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBCBSecurityMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBCBSecurityMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 

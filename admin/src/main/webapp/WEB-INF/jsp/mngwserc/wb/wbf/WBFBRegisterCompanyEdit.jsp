@@ -2195,6 +2195,8 @@
 
         <form id="sendForm" style="display: none">
             <input type="hidden" class="notRequired" name="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}" />
+            <input type="hidden" class="notRequired" name="episdSeq" value="${registerDtl.episdSeq}" />
+            <input type="hidden" class="notRequired" name="stageNm" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCdNm}"/>
         </form>
 
         <%-- 부품사 회원 검색 모달 --%>

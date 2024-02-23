@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbd.*;
@@ -13,6 +14,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBDBSafetyService;
 import com.kap.service.dao.wb.wbd.WBDBSafetyMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -58,6 +60,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     //파일 서비스
     private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /**
      * 신청 목록
@@ -263,6 +266,13 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetyMapper.insertAppctnSpprt(wBDBSafetySpprtDTO);
         }
 
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBDBSafetyMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
+
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -311,6 +321,32 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd);
         wBDBSafetyDtlDTO.setModId(coaAdmDTO.getId());
         wBDBSafetyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBDBSafetyMstInsertDTO.getEpisdSeq());
+        wbSendDTO.setStageNm(wBDBSafetyMstInsertDTO.getStageNm());
+        wbSendDTO.setReason(wBDBSafetyDtlDTO.getRtrnRsnCntn());
+        wbSendDTO.setRsumeSeq(wBDBSafetyDtlDTO.getRsumeSeq());
+        wbSendDTO.setRsumeOrd(wBDBSafetyDtlDTO.getRsumeOrd());
+        wbSendDTO.setMngSttdCd(wBDBSafetyDtlDTO.getMngSttsCd());
+
+        //EDM,SMS발송
+        if("PRO_TYPE01001_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())) {
+            //선정
+            wbbbCompanyService.send(wbSendDTO,"SMS05");
+        } else if ("PRO_TYPE01001_02_004".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_004".equals(wBDBSafetyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_004".equals(wBDBSafetyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd())) {
+            //미선정 및 부적합
+            wbbbCompanyService.send(wbSendDTO,"SMS07");
+        } else if ("PRO_TYPE01001_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01004_02_002".equals(wBDBSafetyDtlDTO.getMngSttsCd())) {
+            //보완요청
+            wbbbCompanyService.send(wbSendDTO,"SMS06");
+        }
 
         wBDBSafetyMapper.updateAppctnDtl(wBDBSafetyDtlDTO);
 
@@ -1057,6 +1093,13 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetySpprtDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             wBDBSafetyMapper.insertAppctnSpprt(wBDBSafetySpprtDTO);
         }
+
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBDBSafetyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBDBSafetyMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
 
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 

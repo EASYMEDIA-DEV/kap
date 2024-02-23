@@ -6,6 +6,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbh.*;
 import com.kap.core.utility.COFileUtil;
@@ -14,6 +15,7 @@ import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBHACalibrationService;
 import com.kap.service.dao.sm.SMJFormMapper;
 import com.kap.service.dao.wb.wbh.WBHACalibrationMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -64,6 +66,7 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
     //파일 업로드 유틸
     private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -664,6 +667,13 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
 
                 wbhaCalibrationMapper.updatePartsCompany(wbhaCompanyDTO);
                 // 부품사 수정 End
+
+                //EDM,SMS발송
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wbhaApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wbhaApplyMstDTO.getEpisdSeq());
+
+                wbbbCompanyService.send(wbSendDTO,"SMS04");
             }
 
         } catch (Exception e) {
@@ -724,8 +734,32 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                     wbhaCalibrationMapper.insertEuipment(wbhaEuipmentDTO);
                 }
 
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wbhaApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wbhaApplyMstDTO.getEpisdSeq());
+                wbSendDTO.setStageNm(wbhaApplyMstDTO.getStageNm());
+                wbSendDTO.setReason(wbhaApplyMstDTO.getRtrnRsnCntn());
+                wbSendDTO.setRsumeSeq(wbhaApplyDtlDTO.getRsumeSeq());
+                wbSendDTO.setRsumeOrd(wbhaApplyDtlDTO.getRsumeOrd());
+                wbSendDTO.setMngSttdCd(wbhaApplyDtlDTO.getMngSttsCd());
+
+                //EDM,SMS발송
+                if("PRO_TYPE07001_02_006".equals(wbhaApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_006".equals(wbhaApplyDtlDTO.getMngSttsCd())
+                        || "PRO_TYPE07001_06_006".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
+                    //선정
+                    wbbbCompanyService.send(wbSendDTO,"SMS05");
+                } else if ("PRO_TYPE07001_02_005".equals(wbhaApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_005".equals(wbhaApplyDtlDTO.getMngSttsCd())
+                        || "PRO_TYPE07001_06_005".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
+                    //미선정 및 부적합
+                    wbbbCompanyService.send(wbSendDTO,"SMS07");
+                } else if ("PRO_TYPE07001_02_002".equals(wbhaApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_003".equals(wbhaApplyDtlDTO.getMngSttsCd())
+                        || "PRO_TYPE07001_06_003".equals(wbhaApplyDtlDTO.getMngSttsCd())) {
+                    //보완요청
+                    wbbbCompanyService.send(wbSendDTO,"SMS06");
+                }
+
                 //단계별 프로세스
-                wbhaApplyDtlDTO = stepUpdateProcess(wbhaApplyMstDTO,wbhaApplyDtlDTO, wbhaMsEuipmentDTO);
+                stepUpdateProcess(wbhaApplyMstDTO,wbhaApplyDtlDTO, wbhaMsEuipmentDTO);
 
                 //신청자 변경
                 if ("Y".equals(wbhaApplyMstDTO.getUserLogYn())) {
@@ -1190,6 +1224,14 @@ public class WBHACalibrationServiceImpl implements WBHACalibrationService {
                                 wbhaCalibrationMapper.insertFileInfo(wbhaApplyDtlDTO);
                             }
                         }
+
+                        //EDM,SMS발송
+                        WBSendDTO wbSendDTO = new WBSendDTO();
+                        wbSendDTO.setMemSeq(wbhaApplyMstDTO.getMemSeq());
+                        wbSendDTO.setEpisdSeq(wbhaApplyMstDTO.getEpisdSeq());
+
+                        wbbbCompanyService.send(wbSendDTO,"SMS04");
+
                     }
                 }
         } catch (Exception e) {

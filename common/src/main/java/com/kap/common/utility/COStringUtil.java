@@ -405,4 +405,18 @@ public class COStringUtil {
         rtn = rtn + "/";
         return rtn;
     }
+
+    public static String replaceHTML(String str) {
+        String result = "";
+
+        if (str != null) {
+            result = str;
+
+            result = result.replaceAll("&lt;","<");
+            result = result.replaceAll("&gt;",">");
+            result = result.replaceAll("&amp;","&");
+
+        }
+        return result;
+    }
 }

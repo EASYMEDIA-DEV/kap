@@ -208,7 +208,6 @@ public class WBBBCompanyController {
         try
         {
             int respCnt = wbbbCompanyService.update(wbbCompanyDTO, wbbApplyMstDTO, request);
-
             modelMap.addAttribute("respCnt", respCnt);
         }
         catch (Exception e)

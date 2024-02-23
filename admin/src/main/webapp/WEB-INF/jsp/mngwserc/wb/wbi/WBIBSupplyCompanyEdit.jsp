@@ -24,7 +24,7 @@
                 <input type="hidden" class="notRequired" name="userLogYn" value=""/>
                 <input type="hidden" class="notRequired" name="bfreMemSeq" value="${rtnInfo.memSeq}"/>
                 <input type="hidden" class="notRequired" name="aftrMemSeq"/>
-
+                <input type="hidden" class="notRequired" name="episdSeq" value="${rtnInfo.episdSeq}"/>
                 <%--<h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>
 
                 <fieldset>
@@ -507,7 +507,7 @@
                                     신청
                                 </a>
                             </div>
-                            <div id="addEx1" class="panel-collapse collapse" role="tabpanel">
+                            <div id="addEx1" class="panel-collapse collapse in" role="tabpanel">
                                 <div class="panel-body">
 
                                     <h6 class="mt0">신청자</h6>

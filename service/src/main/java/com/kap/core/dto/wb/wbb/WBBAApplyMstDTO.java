@@ -65,7 +65,7 @@ public class  WBBAApplyMstDTO extends BaseDTO {
     private List<Integer> optnSeq;
     
     @Schema(title = "단계명")
-    private Integer stageNm;
+    private String stageNm;
 
     @Schema(title = "단계순번")
     private Integer stageOrd;

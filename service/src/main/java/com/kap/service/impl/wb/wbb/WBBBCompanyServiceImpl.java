@@ -1,16 +1,19 @@
 package com.kap.service.impl.wb.wbb;
 
+import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COFileDTO;
-import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.common.utility.COStringUtil;
+import com.kap.core.dto.*;
+import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
-import com.kap.service.COFileService;
-import com.kap.service.COUserDetailsHelperService;
-import com.kap.service.WBBBCompanyService;
+import com.kap.service.*;
+import com.kap.service.dao.COUserLgnMapper;
 import com.kap.service.dao.wb.wbb.WBBARoundMapper;
 import com.kap.service.dao.wb.wbb.WBBBCompanyMapper;
 import lombok.RequiredArgsConstructor;
@@ -62,6 +65,11 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
     //파일 업로드 유틸
     private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
+
+    //이메일 발송
+    private final COMessageService cOMessageService;
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
 
     /* 시퀀스 */
     //상생신청 마스터 시퀀스
@@ -236,6 +244,13 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     wbbbCompanyMapper.insertFileInfo(wbbApplyDtlDTO);
                 }
 
+                //EDM,SMS발송
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wbbaApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wbbaApplyMstDTO.getEpisdSeq());
+
+                send(wbSendDTO,"SMS04");
+                
                 wbbaCompanyDTO.setRegId(regId);
                 wbbaCompanyDTO.setRegIp(regIp);
                 wbbaCompanyDTO.setModId(regId);
@@ -353,6 +368,16 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbbCompanyMapper.insertFileInfo(wbbApplyDtlDTO);
                     }
                 }
+                
+                //EDM & SMS 셋팅
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wbbaApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wbbaApplyMstDTO.getEpisdSeq());
+                wbSendDTO.setStageNm(wbbaApplyMstDTO.getStageNm());
+                wbSendDTO.setReason(wbbaApplyMstDTO.getRtrnRsnCntn());
+                wbSendDTO.setRsumeSeq(wbbaApplyMstDTO.getRsumeSeq());
+                wbSendDTO.setRsumeOrd(wbbaApplyMstDTO.getRsumeOrd());
+                wbSendDTO.setMngSttdCd(wbbaApplyMstDTO.getMngSttsCd());
 
                 if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                     //적합(PRO_TYPE04_1_6), 선정(PRO_TYPE04_1_8)의 경우 다음단계 생성
@@ -361,6 +386,9 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     } else if ("PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_9");
                     }
+
+                    send(wbSendDTO,"SMS05");
+
                     wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
 
                     //다음 스텝 생성
@@ -379,14 +407,20 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                 } else if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())
                         || "PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                     //사용자취소(PRO_TYPE04_1_4), 부적합(PRO_TYPE04_1_5), 미선정(PRO_TYPE04_1_7) 의 경우 종료
+
                     if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_5");
                     } else if ("PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_6");
+
+                        send(wbSendDTO,"SMS07");
+
                     } else if ("PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
                         wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_8");
+
+                        send(wbSendDTO,"SMS07");
                     }
                     wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
 
@@ -394,6 +428,9 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     //보안요청(PRO_TYPE04_1_2)의 경우 사용자 보안요청 코드 삽입
                     wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_3");
                     wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
+
+                    send(wbSendDTO,"SMS06");
+
                     wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
                 }
 
@@ -845,6 +882,12 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         }
                     }
 
+                    //EDM,SMS발송
+                    WBSendDTO wbSendDTO = new WBSendDTO();
+                    wbSendDTO.setMemSeq(wbbaApplyMstDTO.getMemSeq());
+                    wbSendDTO.setEpisdSeq(wbbaApplyMstDTO.getEpisdSeq());
+
+                    send(wbSendDTO,"SMS04");
                 }
             }
 
@@ -986,5 +1029,94 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         respCnt = wbbbCompanyMapper.updAdmMemo(wBBACompanySearchDTO);
 
         return respCnt;
+    }
+
+    public void send(WBSendDTO sendDto, String typeCode) throws Exception {
+
+        String beforeMngSttdCd = "";
+        //이전 상태값과 현재 상태값을 비교하여 발송, 값이 같을 시 미발송
+        if(!"SMS04".equals(typeCode)) {
+            beforeMngSttdCd = wbbbCompanyMapper.getMngSttdCd(sendDto);
+        }
+
+        if (!beforeMngSttdCd.equals(sendDto.getMngSttdCd()) || "SMS04".equals(typeCode)) {
+            //EDM & SMS setting
+            COMailDTO cOMailDTO = new COMailDTO();
+            COSmsDTO smsDto = new COSmsDTO();
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            String templitFile = "";
+
+            WBSendDTO wbSendDTO = new WBSendDTO();
+            wbSendDTO = wbbbCompanyMapper.getReceiverInfo(sendDto);
+
+            receiverDto.setEmail(wbSendDTO.getEmail());
+            receiverDto.setName(wbSendDTO.getName());
+            receiverDto.setMobile(wbSendDTO.getHpNo());
+
+            wbSendDTO.setStageNm(sendDto.getStageNm());
+            wbSendDTO.setReason(sendDto.getReason());
+
+            if ("SMS04".equals(typeCode)) {
+                //신청완료
+                cOMailDTO.setSubject("[KAP] 상생사업 신청 완료 안내");
+                smsDto.setTitle("[KAP] 상생사업 신청 완료 안내");
+
+                receiverDto.setNote1(wbSendDTO.getCmpnNm());
+                receiverDto.setNote2(wbSendDTO.getTitle());
+                receiverDto.setNote3(CODateUtil.convertDate(wbSendDTO.getBsnStrtDtm(),"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+                receiverDto.setNote4(CODateUtil.convertDate(wbSendDTO.getBsnEndDtm(),"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+                receiverDto.setNote5(CODateUtil.convertDate(wbSendDTO.getRegDtm(),"yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd", "-"));
+
+                templitFile = "WinBusinessApply.html";
+            } else if("SMS05".equals(typeCode)) {
+                //승인안내
+                cOMailDTO.setSubject("[KAP] 상생사업 승인 완료 안내");
+                smsDto.setTitle("[KAP] 상생사업 승인 완료 안내");
+                //사업명, 단계, 사업명, 단계
+                receiverDto.setNote1(wbSendDTO.getTitle());
+                receiverDto.setNote2(wbSendDTO.getStageNm());
+
+                templitFile = "WinBusinessApproval.html";
+            } else if ("SMS06".equals(typeCode)) {
+                //반려안내
+                //사업명, 단계, 사업명, 단계, 사유
+                cOMailDTO.setSubject("[KAP] 상생사업 보완요청 안내");
+                smsDto.setTitle("[KAP] 상생사업 보완요청 안내");
+
+                receiverDto.setNote1(wbSendDTO.getTitle());
+                receiverDto.setNote2(wbSendDTO.getStageNm());
+                receiverDto.setNote3(wbSendDTO.getReason());
+
+                templitFile = "WinBusinessRejection.html";
+            } else if ("SMS07".equals(typeCode)) {
+                //탈락안내
+                //사업명, 단계 사업명, 단계, 사유
+                cOMailDTO.setSubject("[KAP] 상생사업 탈락 안내");
+                smsDto.setTitle("[KAP] 상생사업 탈락 안내");
+
+                receiverDto.setNote1(wbSendDTO.getTitle());
+                receiverDto.setNote2(wbSendDTO.getStageNm());
+                receiverDto.setNote3(wbSendDTO.getReason());
+
+                templitFile = "WinBusinessFail.html";
+            }
+
+            cOMailDTO.getReceiver().add(receiverDto);
+
+
+            cOMessageService.sendMail(cOMailDTO, templitFile);
+            //EMD 발송 끝
+
+            //SMS발송 시작
+            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+            smiSmsCntnDTO.setSmsCntnCd(typeCode);
+            smiSmsCntnDTO.setSiteGubun("front");
+            smsDto.getReceiver().add(receiverDto);
+
+            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+
+            cOMessageService.sendSms(smsDto, "");
+            //SMS발송 끝
+        }
     }
 }

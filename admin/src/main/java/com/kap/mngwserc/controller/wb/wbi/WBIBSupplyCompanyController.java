@@ -285,11 +285,12 @@ public class WBIBSupplyCompanyController {
             modelMap.addAttribute("respCnt", wBIBSupplyCompanyService.updateSupplyCompany(wBIBSupplyDTO, wBIBSupplyMstDTO, request));
         }catch (Exception e)
         {
-            if (log.isDebugEnabled())
+            e.printStackTrace();
+            /*if (log.isDebugEnabled())
             {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());
+            throw new Exception(e.getMessage());*/
         }
 
         return "jsonView";

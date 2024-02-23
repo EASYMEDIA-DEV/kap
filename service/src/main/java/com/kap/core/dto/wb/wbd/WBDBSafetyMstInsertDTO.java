@@ -111,4 +111,7 @@ public class WBDBSafetyMstInsertDTO extends BaseDTO {
 
     @Schema(title = "파일리스트", example = "")
     private List<Integer> fileSeqList;
+
+    @Schema(title = "단계명", example = "")
+    private String stageNm;
 }

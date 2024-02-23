@@ -921,6 +921,50 @@
           ,adm_memo_mod_dtm = now()
         WHERE appctn_seq = #{appctnSeq}
     </update>
+
+    <!--
+         쿼리명 : WBBBCompanyMapper.getReceiverInfo
+         설  명 : EDM, SNS 정보 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getReceiverInfo" parameterType="wbSendDTO" resultType="wbSendDTO">
+        SELECT
+                (SELECT cd_nm FROM co_code_mst WHERE cd = BSN_CD) BSN_NM,
+                BSN_STRT_DTM,
+                BSN_END_DTM,
+                (SELECT NAME FROM co_mem_mst WHERE mem_seq = #{memSeq}) NAME,
+                (SELECT EMAIL FROM co_mem_mst WHERE mem_seq = #{memSeq}) EMAIL,
+                (SELECT HP_NO FROM co_mem_mst WHERE mem_seq = #{memSeq}) HP_NO,
+                (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no =  (SELECT work_bsnm_no FROM co_mem_mst WHERE mem_seq = #{memSeq})) CMPN_NM,
+                CONCAT(YEAR,' ',episd,'차 ',(SELECT cd_nm FROM co_code_mst WHERE cd = BSN_CD)) TITLE,
+                NOW() AS REG_DTM
+        FROM cx_episd_mst
+        WHERE episd_seq = #{episdSeq}
+    </select>
+
+    <!--
+         쿼리명 : WBBBCompanyMapper.getReceiverInfo
+         설  명 : EDM, SNS 정보 조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getMngSttdCd" parameterType="wbSendDTO" resultType="java.lang.String">
+        SELECT
+            mng_stts_cd
+        FROM cx_appctn_rsume_dtl
+        WHERE 1 = 1
+        <choose>
+            <when test="appctnSeq != null and appctnSeq != ''.toString()">
+                AND appctn_seq = #{appctnSeq}
+            </when>
+            <otherwise>
+                AND rsume_seq = #{rsumeSeq} AND rsume_ord = #{rsumeOrd}
+            </otherwise>
+        </choose>
+    </select>
 </mapper>
 
 

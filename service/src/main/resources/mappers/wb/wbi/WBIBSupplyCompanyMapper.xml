@@ -449,6 +449,7 @@
             C.TEL_NO,
             D.YEAR,
             D.EPISD,
+            D.EPISD_SEQ,
             A.ADM_MEMO,
             A.ADM_MEMO_MOD_DTM,
             A.MEM_SEQ,

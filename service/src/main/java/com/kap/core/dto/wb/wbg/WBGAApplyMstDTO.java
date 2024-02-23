@@ -121,4 +121,7 @@ public class WBGAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "담당위원업체명")
     private String picCmssrCmpnNm;
+
+    @Schema(title = "단계명", example = "")
+    private String stageNm;
 }

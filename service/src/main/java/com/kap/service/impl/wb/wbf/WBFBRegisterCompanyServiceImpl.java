@@ -16,6 +16,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBFBRegisterCompanyService;
 import com.kap.service.dao.wb.wbf.WBFBRegisterCompanyMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -71,6 +72,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     //파일 서비스
     private final COFileService cOFileService;
     private final COFileUtil cOFileUtil;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /* 회사 상세 시퀀스 - SQ */
     private final EgovIdGnrService mpePartsCompanyDtlIdgen;
@@ -267,6 +269,13 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /* 상생신청 스마트 상세 */
         wBFBRegisterDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
         respCnt = wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(wBFBRegisterDTO);
+
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(Integer.valueOf(wBFBRegisterDTO.getMemSeq()));
+        wbSendDTO.setEpisdSeq(wBFBRegisterDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
 
         return respCnt;
     }
@@ -599,6 +608,32 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 case "PRO_TYPE02007_02_003":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_02_003"); break;
             }
+        }
+
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(Integer.valueOf(wBFBRegisterDTO.getMemSeq()));
+        wbSendDTO.setEpisdSeq(wBFBRegisterDTO.getEpisdSeq());
+        wbSendDTO.setStageNm(wBFBRegisterDTO.getStageNm());
+        wbSendDTO.setReason(rsumeTaskDTO.getRtrnRsnCntn());
+        wbSendDTO.setRsumeSeq(rsumeTaskDTO.getRsumeSeq());
+        wbSendDTO.setRsumeOrd(rsumeTaskDTO.getRsumeOrd());
+        wbSendDTO.setMngSttdCd(rsumeTaskDTO.getMngSttsCd());
+
+        //EDM,SMS발송
+        if("PRO_TYPE02001_02_005".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02002_02_005".equals(rsumeTaskDTO.getMngSttsCd())
+                || "PRO_TYPE02003_02_003".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02004_02_003".equals(rsumeTaskDTO.getMngSttsCd())
+                || "PRO_TYPE02005_02_003".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02006_02_002".equals(rsumeTaskDTO.getMngSttsCd())
+                || "PRO_TYPE02007_02_003".equals(rsumeTaskDTO.getMngSttsCd())) {
+            //선정
+            wbbbCompanyService.send(wbSendDTO,"SMS05");
+        } else if ("PRO_TYPE02001_02_004".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02002_02_004".equals(rsumeTaskDTO.getMngSttsCd())
+                || "PRO_TYPE02003_02_002".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02004_02_002".equals(rsumeTaskDTO.getMngSttsCd())
+                || "PRO_TYPE02005_02_002".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02007_02_002".equals(rsumeTaskDTO.getMngSttsCd())) {
+            //미선정 및 부적합
+            wbbbCompanyService.send(wbSendDTO,"SMS07");
+        } else if ("PRO_TYPE02001_02_002".equals(rsumeTaskDTO.getMngSttsCd()) || "PRO_TYPE02002_02_003".equals(rsumeTaskDTO.getMngSttsCd())) {
+            //보완요청
+            wbbbCompanyService.send(wbSendDTO,"SMS06");
         }
 
         /* 상생신청진행상세 */

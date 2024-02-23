@@ -983,6 +983,8 @@
             <input type="hidden" class="notRequired" name="wbbTransDTO.bfreMemSeq" />
             <input type="hidden" class="notRequired" name="wbbTransDTO.aftrMemSeq" />
             <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}">
+            <input type="hidden" class="notRequired" name="stageNm" value="${rtnData.rsumeSttsNm}">
+            <input type="hidden" class="notRequired" name="episdSeq" value="${rtnData.episdSeq}">
             <%--<input type="hidden" class="notRequired" name="maxStage" value="${rtnInfo.maxStage}" />--%>
         </form >
         <%-- 부품사 회원 검색 모달 --%>

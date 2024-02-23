@@ -595,12 +595,14 @@
             <input type="hidden" class="notRequired" name="memSeq" value="${userInfo.memSeq}" />
             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" name="detailsKey" value="${rtnInfo.appctnSeq}" />
+            <input type="hidden" class="notRequired" name="stageNm" value="" />
             <input type="hidden" class="notRequired" name="nextStageNm" value="" />
             <input type="hidden" class="notRequired" name="userLogYn" />
             <input type="hidden" class="notRequired" name="wbbTransDTO.bfreMemSeq" />
             <input type="hidden" class="notRequired" name="wbbTransDTO.aftrMemSeq" />
             <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}">
             <input type="hidden" class="notRequired" name="maxStage" value="${rtnInfo.maxStage}" />
+            <input type="hidden" class="notRequired" name="episdSeq" value="${rtnInfo.episdSeq}" />
         </form >
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>

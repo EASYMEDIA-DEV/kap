@@ -43,6 +43,7 @@
             <input type="hidden" id="rsumeSeq" name="rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
             <input type="hidden" id="maxRsumeOrd" name="maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
             <input type="hidden" id="episdSeq" name="episdSeq" value="${rtnData.episdSeq}"/>
+            <input type="hidden" id="episdSeq" name="stageNm" value="${rtnDtl[maxRsumeOrd-1].rsumeSttsNm }"/>
 
             <input type="hidden" id="episd" name="episd" value="${rtnData.episd}"/>
             <input type="hidden" id="year" name="year" value="${rtnData.year}"/>

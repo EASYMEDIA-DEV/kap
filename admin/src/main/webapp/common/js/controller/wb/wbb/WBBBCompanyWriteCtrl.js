@@ -409,9 +409,11 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             var tabIndex = $('#tabIndex').val();
                             var tabDiv = $('#tabIndex'+tabIndex);
                             var companyDiv = $('#compnayDiv');
+                            var stageNm = tabDiv.find('.panel-heading').text();
                             var nextStepNm = tabDiv.next().find('.panel-heading').text();
 
                             //다음 단계명 넣기
+                            $('input[name=stageNm]').val(stageNm.trim());
                             $('input[name=nextStageNm]').val(nextStepNm.trim());
 
                             var beforeUser = $formObj.find("input[name='bfreMemSeq']").val();

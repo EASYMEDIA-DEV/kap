@@ -1,5 +1,6 @@
 package com.kap.service.dao.wb.wbb;
 
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbb.*;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
@@ -207,4 +208,13 @@ public interface WBBBCompanyMapper {
      */
     public int updAdmMemo(WBBACompanySearchDTO wBBACompanySearchDTO) throws Exception;
 
+    /**
+     * EDM, SNS 정보 조회
+     */
+    public WBSendDTO getReceiverInfo(WBSendDTO wbSendDTO);
+
+    /**
+     * 관리자 상태값 조회
+     */
+    public String getMngSttdCd(WBSendDTO wbSendDTO);
 }

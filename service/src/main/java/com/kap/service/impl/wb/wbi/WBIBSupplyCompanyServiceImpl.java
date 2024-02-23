@@ -5,6 +5,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyChangeDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplyMstDTO;
@@ -14,6 +15,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBIBSupplyCompanyService;
 import com.kap.service.dao.wb.wbi.WBIBSupplyCompanyMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -62,6 +64,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
     //파일 서비스
     private final COFileService cOFileService;
     private final COFileUtil cOFileUtil;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     //파일 업로드 위치
     @Value("${app.file.upload-path}")
@@ -213,6 +216,13 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         wBIBSupplyDTO.setFileSeq(fileSeqMap.get("appctnSeq")); /* 파일 시퀀스 */
         respCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
 
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(Integer.valueOf(wBIBSupplyDTO.getMemSeq()));
+        wbSendDTO.setEpisdSeq(Integer.valueOf(wBIBSupplyDTO.getEpisdSeq()));
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
+
         return respCnt;
     }
 
@@ -243,6 +253,25 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         String detailsKey = wBIBSupplyDTO.getDetailsKey();
         int respCnt = 1;
         wBIBSupplyDTO.setDetailsKey(detailsKey);
+
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(Integer.valueOf(wBIBSupplyDTO.getMemSeq()));
+        wbSendDTO.setEpisdSeq(Integer.valueOf(wBIBSupplyDTO.getEpisdSeq()));
+        wbSendDTO.setStageNm("신청");
+        wbSendDTO.setReason(wBIBSupplyDTO.getRtrnRsnCntn());
+        wbSendDTO.setAppctnSeq(wBIBSupplyDTO.getAppctnSeq());
+        wbSendDTO.setMngSttdCd(wBIBSupplyDTO.getMngSttsCd());
+
+        if("PRO_TYPE06001_02_004".equals(wBIBSupplyDTO.getMngSttsCd())) {
+            //선정
+            wbbbCompanyService.send(wbSendDTO,"SMS05");
+        } else if("PRO_TYPE06001_02_003".equals(wBIBSupplyDTO.getMngSttsCd())) {
+            //부적합
+            wbbbCompanyService.send(wbSendDTO,"SMS07");
+        } else if ("PRO_TYPE06001_02_002".equals(wBIBSupplyDTO.getMngSttsCd())) {
+            //보완요청
+            wbbbCompanyService.send(wbSendDTO,"SMS06");
+        }
         respCnt *= wBIBSupplyCompanyMapper.updAppctnRsumeDtl(wBIBSupplyDTO);
 
         String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
@@ -603,6 +632,13 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
                 HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
                 wBIBSupplyDTO.setFileSeq(fileSeqMap.get("atchFile")); /* 파일 시퀀스 */
                 rtnCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
+
+                //EDM,SMS발송
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(Integer.valueOf(wBIBSupplyDTO.getMemSeq()));
+                wbSendDTO.setEpisdSeq(Integer.valueOf(wBIBSupplyDTO.getEpisdSeq()));
+
+                wbbbCompanyService.send(wbSendDTO,"SMS04");
             }
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
 import com.kap.core.dto.wb.wbg.*;
 import com.kap.core.utility.COFileUtil;
@@ -14,6 +15,7 @@ import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBGAExamService;
 import com.kap.service.dao.sm.SMJFormMapper;
 import com.kap.service.dao.wb.wbg.WBGAExamMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -64,6 +66,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
     //파일 업로드 유틸
     private final COFileService cOFileService;
     private final COFileUtil cOFileUtil;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -674,6 +677,13 @@ public class WBGAExamServiceImpl implements WBGAExamService {
 
                 wBGAExamMapper.updatePartsCompany(wBGACompanyDTO);
                 // 부품사 수정 End
+
+                //EDM,SMS발송
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wBGAApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wBGAApplyMstDTO.getEpisdSeq());
+
+                wbbbCompanyService.send(wbSendDTO,"SMS04");
             }
 
         } catch (Exception e) {
@@ -732,6 +742,30 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                     wBGAEuipmentDTO.setRegIp(modIp);
 
                     wBGAExamMapper.insertEuipment(wBGAEuipmentDTO);
+                }
+
+                WBSendDTO wbSendDTO = new WBSendDTO();
+                wbSendDTO.setMemSeq(wBGAApplyMstDTO.getMemSeq());
+                wbSendDTO.setEpisdSeq(wBGAApplyMstDTO.getEpisdSeq());
+                wbSendDTO.setStageNm(wBGAApplyMstDTO.getStageNm());
+                wbSendDTO.setReason(wBGAApplyMstDTO.getRtrnRsnCntn());
+                wbSendDTO.setRsumeSeq(wBGAApplyDtlDTO.getRsumeSeq());
+                wbSendDTO.setRsumeOrd(wBGAApplyDtlDTO.getRsumeOrd());
+                wbSendDTO.setMngSttdCd(wBGAApplyDtlDTO.getMngSttsCd());
+
+                //EDM,SMS발송
+                if("PRO_TYPE07001_02_006".equals(wBGAApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_006".equals(wBGAApplyDtlDTO.getMngSttsCd())
+                    || "PRO_TYPE07001_06_006".equals(wBGAApplyDtlDTO.getMngSttsCd())) {
+                    //선정
+                    wbbbCompanyService.send(wbSendDTO,"SMS05");
+                } else if ("PRO_TYPE07001_02_005".equals(wBGAApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_005".equals(wBGAApplyDtlDTO.getMngSttsCd())
+                        || "PRO_TYPE07001_06_005".equals(wBGAApplyDtlDTO.getMngSttsCd())) {
+                    //미선정 및 부적합
+                    wbbbCompanyService.send(wbSendDTO,"SMS07");
+                } else if ("PRO_TYPE07001_02_002".equals(wBGAApplyDtlDTO.getMngSttsCd()) || "PRO_TYPE07001_04_003".equals(wBGAApplyDtlDTO.getMngSttsCd())
+                        || "PRO_TYPE07001_06_003".equals(wBGAApplyDtlDTO.getMngSttsCd())) {
+                    //보완요청
+                    wbbbCompanyService.send(wbSendDTO,"SMS06");
                 }
 
                 //단계별 프로세스
@@ -1202,6 +1236,13 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                             wBGAExamMapper.insertFileInfo(wbgaApplyDtlDTO);
                         }
                     }
+
+                    //EDM,SMS발송
+                    WBSendDTO wbSendDTO = new WBSendDTO();
+                    wbSendDTO.setMemSeq(wbgaApplyMstDTO.getMemSeq());
+                    wbSendDTO.setEpisdSeq(wbgaApplyMstDTO.getEpisdSeq());
+
+                    wbbbCompanyService.send(wbSendDTO,"SMS04");
                 }
             }
         } catch (Exception e) {

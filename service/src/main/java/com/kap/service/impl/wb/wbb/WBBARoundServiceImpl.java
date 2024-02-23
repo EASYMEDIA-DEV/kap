@@ -195,6 +195,7 @@ public class WBBARoundServiceImpl implements WBBARoundService {
 
                 if ("COMPANY01001".equals(wbbaCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wbbaCompanyDTO.getCtgryCd())) {
                     wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    wBRoundMstSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
                     int cnt = wBBARoundMapper.getApplyCount(wBRoundMstSearchDTO);
 
                     if (cnt > 0) {

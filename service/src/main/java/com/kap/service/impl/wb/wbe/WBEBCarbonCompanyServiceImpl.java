@@ -4,6 +4,7 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbe.*;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
@@ -11,6 +12,7 @@ import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBEBCarbonCompanyService;
 import com.kap.service.dao.wb.wbe.WBEBCarbonCompanyMapper;
+import com.kap.service.impl.wb.wbb.WBBBCompanyServiceImpl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
@@ -56,6 +58,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
     //파일 서비스
     private final COFileUtil cOFileUtil;
     private final COFileService cOFileService;
+    private final WBBBCompanyServiceImpl wbbbCompanyService;
 
     /**
      * 신청 목록
@@ -261,6 +264,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyMapper.insertAppctnSpprt(wBEBCarbonCompanySpprtDTO);
         }
 
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBEBCarbonCompanyMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
+
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
@@ -309,6 +319,32 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd);
         wBEBCarbonCompanyDtlDTO.setModId(coaAdmDTO.getId());
         wBEBCarbonCompanyDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBEBCarbonCompanyMstInsertDTO.getEpisdSeq());
+        wbSendDTO.setStageNm(wBEBCarbonCompanyMstInsertDTO.getStageNm());
+        wbSendDTO.setReason(wBEBCarbonCompanyDtlDTO.getRtrnRsnCntn());
+        wbSendDTO.setRsumeSeq(wBEBCarbonCompanyDtlDTO.getRsumeSeq());
+        wbSendDTO.setRsumeOrd(wBEBCarbonCompanyDtlDTO.getRsumeOrd());
+        wbSendDTO.setMngSttdCd(wBEBCarbonCompanyDtlDTO.getMngSttsCd());
+
+        //EDM,SMS발송
+        if("PRO_TYPE01001_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())) {
+            //선정
+            wbbbCompanyService.send(wbSendDTO,"SMS05");
+        } else if ("PRO_TYPE01001_02_004".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_004".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01003_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01004_02_004".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01005_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01006_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())) {
+            //미선정 및 부적합
+            wbbbCompanyService.send(wbSendDTO,"SMS07");
+        } else if ("PRO_TYPE01001_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd()) || "PRO_TYPE01002_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())
+                || "PRO_TYPE01004_02_002".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())) {
+            //보완요청
+            wbbbCompanyService.send(wbSendDTO,"SMS06");
+        }
 
         wBEBCarbonCompanyMapper.updateAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
@@ -1055,6 +1091,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanySpprtDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
             wBEBCarbonCompanyMapper.insertAppctnSpprt(wBEBCarbonCompanySpprtDTO);
         }
+
+        //EDM,SMS발송
+        WBSendDTO wbSendDTO = new WBSendDTO();
+        wbSendDTO.setMemSeq(wBEBCarbonCompanyMstInsertDTO.getMemSeq());
+        wbSendDTO.setEpisdSeq(wBEBCarbonCompanyMstInsertDTO.getEpisdSeq());
+
+        wbbbCompanyService.send(wbSendDTO,"SMS04");
 
         wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
