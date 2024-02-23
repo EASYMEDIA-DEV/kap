@@ -713,7 +713,7 @@ public class EBMMypageController
 
 
     /**
-     * 교육/세미나 사업 신청내역 상세/my-page/edu-apply/detail
+     * 설문step1
      */
     @GetMapping("/my-page/edu-apply/srvStep1")
     public String getApplySrvStep1(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
@@ -722,10 +722,7 @@ public class EBMMypageController
         eBBEpisdDTO.setMypageYn("Y");
         eBBEpisdDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
         EBBEpisdSurveyDTO rtnData = eBBEpisdService.selectEpisdDtlCheck(eBBEpisdDTO);
-
-
         modelMap.addAttribute("rtnData", rtnData);
-
 
         return "front/eb/ebm/EBMEduApplySrvStep1.front";
     }

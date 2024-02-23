@@ -1577,10 +1577,7 @@
                 ORDER BY TMP.MOD_DTM DESC
             </otherwise>
         </choose>
-
-        <if test="siteGubun != 'front'.toString() ">
-            limit #{firstIndex}, #{recordCountPerPage}
-        </if>
+        limit #{firstIndex}, #{recordCountPerPage}
     </select>
 
 

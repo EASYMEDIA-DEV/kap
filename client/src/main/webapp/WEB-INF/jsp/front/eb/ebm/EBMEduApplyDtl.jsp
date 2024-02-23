@@ -369,8 +369,11 @@
                                                     </c:when>
                                                 </c:choose>
 
+                                                <c:set var="examStart" value="" />
+
                                                 <c:if test="${rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
+                                                    <c:set var="examStart" value="examStart" />
                                                 </c:if>
 
                                                 <c:choose>
@@ -817,77 +820,25 @@
                                         <div class="sec-tit-area">
                                             <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
                                         </div>
-                                        <div class="sec-con-area">
+                                        <div class="sec-con-area srvListStart" data-episdseq="${rtnData.episdSeq}" data-edctnseq="${rtnData.edctnSeq}" data-episdyear="${rtnData.episdYear}" data-episdord="${rtnData.episdOrd}" data-srvseq="${rtnData.srvSeq}">
                                             <div class="gray-bg-sec">
-                                                <div class="con-list-box-w">
-                                                    <div class="con-list-box">
-                                                        <p class="f-head">교육 만족도 설문 조사</p>
-                                                        <div class="ul-txt-w info">
-                                                            <div class="ul-txt-list">
-                                                                <div class="ul-txt">
-                                                                    <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
-                                                                    <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.srvDtm ? '-' : kl:convertDate(rtnData.srvDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <c:choose>
-                                                    <c:when test="${rtnData.srvYn eq 'Y'}">
-                                                        <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                            <p class="txt f-body1">참여완료</p>
-                                                        </div>
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                            <p class="txt f-body1">미참여</p>
-                                                        </div>
-                                                    </c:otherwise>
-
-                                                </c:choose>
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <c:if test="${rtnData.trnsfYn eq 'N' && (not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01'}">
-                                    <div class="cont-sec no-border scroll-motion">
-                                        <div class="for-motion">
-                                            <div class="sec-tit-area">
-                                                <p class="f-title3">수료 평가 참여내역</p>
-                                            </div>
-                                            <div class="sec-con-area">
-                                                <div class="gray-bg-sec">
+                                                <!-- 2024-02-23 a태그 감싸기 -->
+                                                <a href="javascript:">
                                                     <div class="con-list-box-w">
                                                         <div class="con-list-box">
-                                                            <p class="f-head">평가</p>
+                                                            <p class="f-head">교육 만족도 설문 조사</p>
                                                             <div class="ul-txt-w info">
                                                                 <div class="ul-txt-list">
                                                                     <div class="ul-txt">
-                                                                        <dl><dt class="f-caption2">평가점수</dt>
-                                                                            <dd class="f-caption1">
-                                                                                <c:choose>
-                                                                                    <c:when test="${not empty rtnData.examScore}">
-                                                                                        ${rtnData.examScore}점
-                                                                                    </c:when>
-                                                                                    <c:otherwise>
-                                                                                        -
-                                                                                    </c:otherwise>
-                                                                                </c:choose>
-                                                                            </dd>
-                                                                        </dl>
-                                                                        <dl><dt class="f-caption2">등록일시</dt>
-                                                                            <dd class="f-caption1">
-                                                                                    ${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }
-                                                                            </dd></dl>
+                                                                        <!-- <dl><dt class="f-caption2">평가점수</dt><dd class="f-caption1">95점</dd></dl> -->
+                                                                        <dl><dt class="f-caption2">등록일시</dt><dd class="f-caption1">${ empty rtnData.srvDtm ? '-' : kl:convertDate(rtnData.srvDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }</dd></dl>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <c:choose>
-                                                        <c:when test="${(examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01' && not empty rtnData.examScore || (rtnData.otsdExamPtcptYn eq 'Y' && not empty rtnData.examPtcptDtm))}">
+                                                        <c:when test="${rtnData.srvYn eq 'Y'}">
                                                             <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
                                                                 <p class="txt f-body1">참여완료</p>
                                                             </div>
@@ -897,10 +848,63 @@
                                                                 <p class="txt f-body1">미참여</p>
                                                             </div>
                                                         </c:otherwise>
-
                                                     </c:choose>
+                                                </a><!-- // 2024-02-23 a태그 감싸기 -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-
+                                <c:if test="${rtnData.trnsfYn eq 'N' && (not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01' }">
+                                    <div class="cont-sec no-border scroll-motion">
+                                        <div class="for-motion">
+                                            <div class="sec-tit-area">
+                                                <p class="f-title3">수료 평가 참여내역</p>
+                                            </div>
+                                            <div class="sec-con-area ${examStart}">
+                                                <div class="gray-bg-sec">
+                                                    <!-- 2024-02-23 a태그 감싸기 -->
+                                                    <a href="javascript:">
+                                                        <div class="con-list-box-w">
+                                                            <div class="con-list-box">
+                                                                <p class="f-head">평가</p>
+                                                                <div class="ul-txt-w info">
+                                                                    <div class="ul-txt-list">
+                                                                        <div class="ul-txt">
+                                                                            <dl><dt class="f-caption2">평가점수</dt>
+                                                                                <dd class="f-caption1">
+                                                                                    <c:choose>
+                                                                                        <c:when test="${not empty rtnData.examScore}">
+                                                                                            ${rtnData.examScore}점
+                                                                                        </c:when>
+                                                                                        <c:otherwise>
+                                                                                            -
+                                                                                        </c:otherwise>
+                                                                                    </c:choose>
+                                                                                </dd>
+                                                                            </dl>
+                                                                            <dl><dt class="f-caption2">등록일시</dt>
+                                                                                <dd class="f-caption1">
+                                                                                        ${ empty rtnData.examPtcptDtm ? '-' : kl:convertDate(rtnData.examPtcptDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }
+                                                                                </dd></dl>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <c:choose>
+                                                            <c:when test="${(examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01' && not empty rtnData.examScore || (rtnData.otsdExamPtcptYn eq 'Y' && not empty rtnData.examPtcptDtm))}">
+                                                                <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                                    <p class="txt f-body1">참여완료</p>
+                                                                </div>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                                    <p class="txt f-body1">미참여</p>
+                                                                </div>
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </a><!-- // 2024-02-23 a태그 감싸기 -->
                                                 </div>
                                             </div>
                                         </div>

@@ -16,8 +16,12 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
 
     var dupEmailChk = true;
 
-    var tabTwo = function () {
+    var tabTwo = function (page) {
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
         cmmCtrl.listFrmAjax(function(respObj) {
+            $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
             //CALLBACK 처리
             ctrl.obj.find("#listContainer").html(respObj);
             //전체 갯수
@@ -30,7 +34,10 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
         }, "/mngwserc/mp/mpc/selectEduList", $formObj, "GET", "html",'',false);
     }
 
-    var tabThree = function () {
+    var tabThree = function (page) {
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
             ctrl.obj.find("#winBusinessListContainer").html(respObj);
@@ -185,6 +192,22 @@ define(["ezCtrl","ezVald"], function(ezCtrl) {
                         //리스트 갯수 변경
                         $formObj.find("input[name=listRowSize]").val($(this).val());
                         tabReload(activeTab,1);
+                    }
+                }
+            },
+            pageSet : {
+                event : {
+                    click : function() {
+                        var activeTab = $('#myTabs li.active a').attr('href').substring(1);
+                        if(activeTab == "edu") {
+                            if( $(this).attr("value") != "null" ){
+                                tabTwo($(this).attr("value"));
+                            }
+                        } else {
+                            if( $(this).attr("value") != "null" ){
+                                tabThree($(this).attr("value"));
+                            }
+                        }
                     }
                 }
             }

@@ -202,73 +202,55 @@
     -->
     <select id="selectWinBusinessList" parameterType="MPCLecturerDTO">
         SELECT /*MPCLecturerMapper.selectWinBusinessList*/
-            B.APPCTN_SEQ
-             , A.YEAR -- 사업연도
-             , C.rsume_stts_cd -- 진행상태코드
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = C.rsume_stts_cd) as rsume_stts_nm -- 진행상태명
-             , A.bsn_strt_dtm -- 사업시작일시
-             , A.bsn_end_dtm -- 사업종료일시
-             , A.episd -- 회차
-             , A.bsn_cd -- 사업코드
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = A.bsn_cd) as bsn_nm -- 사업코드명
-             , (select cd_nm from co_code_mst where cd = G.optn_cd)  as type_cd_nm-- 사업구분명
-             , F.CMPN_NM -- 부품사명
-             , F.BSNM_NO -- 사업자등록번호
-             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM -- 구분명
-             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM -- 규모명
-             , B.REG_DTM -- 신청일
-
-        FROM CX_EPISD_MST A
-                 JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-                 JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-                 JOIN CO_MEM_MST D ON B.MEM_SEQ = D.MEM_SEQ
-                 JOIN CP_CMPN_MST F ON  D.WORK_BSNM_NO = F.BSNM_NO
-                 LEFT JOIN CX_APPCTN_RSUME_TCHLG_DTL V ON C.RSUME_SEQ = V.RSUME_SEQ
-                 LEFT JOIN cx_episd_bsn_optn_dtl G ON A.episd_seq  = G.episd_seq
-                 INNER JOIN (
-            SELECT C.APPCTN_SEQ, MAX(C.RSUME_ORD) AS RSUME_ORD
+            appctn_seq
+             , year -- 사업연도
+             , episd -- 회차
+             , bsn_cd
+             , bsn_nm -- 사업명
+             , rsume_stts_nm -- 진행상태
+             , cmpn_nm -- 부품사명
+             , bsnm_no -- 사업자등록번호
+             , ctgry_cd
+             , ctgry_nm -- 구분명
+             , size_cd
+             , size_nm -- 규모명
+             , reg_dtm -- 신청일
+             , bsn_strt_dtm -- 사업시작일
+             , bsn_end_dtm -- 사업종료일
+        FROM
+            (
+            SELECT
+            DISTINCT B.appctn_seq
+                , A.year -- 사업연도
+                , A.episd -- 회차
+                , A.bsn_cd
+                , (SELECT cd_nm FROM co_code_mst WHERE cd = A.bsn_cd) AS bsn_nm -- 사업명
+                , (SELECT cd_nm FROM co_code_mst WHERE cd = C.rsume_stts_cd) AS rsume_stts_nm -- 진행상태
+                , C.rsume_ord
+                , D.cmpn_nm -- 부품사명
+                , B.appctn_bsnm_no AS bsnm_no -- 사업자등록번호
+                , D.ctgry_cd
+                , (SELECT cd_nm FROM co_code_mst WHERE cd = D.ctgry_cd) AS ctgry_nm -- 구분명
+                , D.size_cd
+                , (SELECT cd_nm FROM co_code_mst WHERE cd = D.size_cd) AS size_nm -- 규모명
+                , B.reg_dtm -- 신청일
+                , A.bsn_strt_dtm -- 사업시작일
+                , A.bsn_end_dtm -- 사업종료일
             FROM CX_EPISD_MST A
-                     JOIN CX_APPCTN_MST B ON A.EPISD_SEQ = B.EPISD_SEQ
-                     JOIN CX_APPCTN_RSUME_DTL C ON B.APPCTN_SEQ = C.APPCTN_SEQ
-                     INNER JOIN cp_isttr_mst E ON B.pic_cmssr_seq = E.isttr_seq
-            WHERE E.isttr_seq = #{isttrSeq}
-            GROUP BY APPCTN_SEQ
-        ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
-        WHERE A.bsn_cd IN ('INQ07003', 'INQ07004', 'INQ07005', 'INQ07006')
-        ORDER BY A.YEAR DESC, B.APPCTN_SEQ DESC
+            INNER JOIN  CX_APPCTN_MST B
+            ON A.episd_seq = B.episd_seq
+            INNER JOIN cx_appctn_rsume_dtl C
+            ON B.appctn_seq = C.appctn_seq
+            INNER JOIN cp_cmpn_mst D
+            ON B.appctn_bsnm_no = D.bsnm_no
+            WHERE 1=1
+                AND B.pic_cmssr_seq = #{isttrSeq}
+                AND A.bsn_cd IN ("BSN03", "BSN05", "BSN04", "BSN06")
+                AND C.rsume_ord = (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq)
+            ) TB
+        ORDER BY reg_dtm DESC
         LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
-
-    <!--select A.episd_seq as san_ctn_seq  /*MPCLecturerMapper.selectWinBusinessList */
-        , A.year&#45;&#45; 사업년도
-        , A.episd&#45;&#45; 회차
-        , B.pic_cmssr_seq &#45;&#45; 위원 seq
-        , (select cd_nm from co_code_mst where  cd=D.optn_cd )  as type_cd_nm&#45;&#45; 사업구분
-        , D.optn_nm as bsnCdNm
-        , (select cd_nm from co_code_mst where  cd=E.rsume_stts_cd )  as status &#45;&#45; 진행상태
-        , C.cmpn_nm &#45;&#45; 부품사명
-        , C.bsnm_no &#45;&#45; 사업자등록번호
-        , (select cd_nm from co_code_mst where  cd=C.ctgry_cd ) as ctgry_cd_nm &#45;&#45; 구분
-        , (select cd_nm from co_code_mst where  cd=C.size_cd ) as cmpn_size_cd_nm &#45;&#45; 규모
-        , B.appctn_bsnm_no&#45;&#45; 사업자등록번호
-        , (select name from co_mem_mst where mem_seq=B.pic_cmssr_seq) as name &#45;&#45; 담당위원
-        , B.reg_dtm&#45;&#45; 신청일
-        , A.bsn_strt_dtm &#45;&#45; 사업시작일시
-        , A.bsn_end_dtm &#45;&#45; 사업종료일시
-    from cx_episd_mst A
-    inner join cx_appctn_mst B
-    on A.episd_seq = B.episd_seq
-    inner join cp_cmpn_mst C
-    on B.appctn_bsnm_no  = C.bsnm_no
-    inner join cx_episd_bsn_optn_dtl D
-    on A.episd_seq  = D.episd_seq
-    inner join cx_appctn_rsume_dtl E
-    on B.appctn_seq = E.appctn_seq
-    INNER JOIN cp_isttr_mst F
-    ON B.pic_cmssr_seq = F.isttr_seq
-    WHERE F.isttr_seq = '23'
-    order by A.episd_seq desc
-    limit 0, 10-->
 
     <!--
          쿼리명 : MPCLecturerMapper.selectWinBusinessCnt
@@ -279,27 +261,38 @@
     -->
     <select id="selectWinBusinessCnt" parameterType="MPCLecturerDTO" resultType="java.lang.Integer">
         SELECT /* MPCLecturerMapper.selectWinBusinessCnt*/
-            count(A.episd_seq)
+            count(appctn_seq)
         FROM
             (
-                SELECT * FROM cx_episd_mst
-                WHERE bsn_cd IN ('INQ07003', 'INQ07004', 'INQ07005', 'INQ07006')
-                -- 강사 및 위탁위원관리에서는 보안솔루션구축, 안전설비구축, 탄소배출저감, 스마트공장구축만 노출
-            ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
-                INNER JOIN
-            (
-                SELECT A.mem_seq, B.cmpn_nm, B.ctgry_cd, B.size_cd, B.bsnm_no
-                FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON A.work_bsnm_no = B.bsnm_no
-            ) C
-            ON C.mem_seq = B.mem_seq
-                INNER JOIN
-            (
-                SELECT appctn_seq, rsume_stts_cd
-                FROM cx_appctn_rsume_dtl
-            ) D
-            ON B.appctn_seq = D.appctn_seq
-                INNER JOIN cp_isttr_mst E ON B.pic_cmssr_seq = E.isttr_seq
-        ORDER BY year DESC, episd DESC
+                SELECT
+                    DISTINCT B.appctn_seq
+                           , A.year -- 사업연도
+                           , A.episd -- 회차
+                           , A.bsn_cd
+                           , (SELECT cd_nm FROM co_code_mst WHERE cd = A.bsn_cd) AS bsn_nm -- 사업명
+                           , (SELECT cd_nm FROM co_code_mst WHERE cd = C.rsume_stts_cd) AS rsume_stts_nm -- 진행상태
+                           , C.rsume_ord
+                           , D.cmpn_nm -- 부품사명
+                           , B.appctn_bsnm_no AS bsnm_no -- 사업자등록번호
+                           , D.ctgry_cd
+                           , (SELECT cd_nm FROM co_code_mst WHERE cd = D.ctgry_cd) AS ctgry_nm -- 구분명
+                           , D.size_cd
+                           , (SELECT cd_nm FROM co_code_mst WHERE cd = D.size_cd) AS size_nm -- 규모명
+                           , B.reg_dtm -- 신청일
+                           , A.bsn_strt_dtm -- 사업시작일
+                           , A.bsn_end_dtm -- 사업종료일
+                FROM CX_EPISD_MST A
+                INNER JOIN  CX_APPCTN_MST B
+                ON A.episd_seq = B.episd_seq
+                INNER JOIN cx_appctn_rsume_dtl C
+                ON B.appctn_seq = C.appctn_seq
+                INNER JOIN cp_cmpn_mst D
+                ON B.appctn_bsnm_no = D.bsnm_no
+                WHERE 1=1
+                  AND B.pic_cmssr_seq = #{isttrSeq}
+                  AND A.bsn_cd IN ("BSN03", "BSN05", "BSN04", "BSN06")
+                  AND C.rsume_ord = (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq)
+            ) TB
     </select>
 
     <!--

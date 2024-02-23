@@ -628,33 +628,37 @@
                                 <div class="sec-tit-area">
                                     <p class="f-title3">컨설팅 만족도 설문조사 참여내역</p>
                                 </div>
-                                <div class="sec-con-area">
+                                <div class="sec-con-area survey" data-seq="${rtnData.cnstgSeq}">
                                     <c:forEach var="srvList" items="${rtnData.rsumeList}" varStatus="status">
                                         <div class="gray-bg-sec">
-                                            <div class="con-list-box-w">
-                                                <div class="con-list-box">
-                                                    <p class="f-head">컨설팅 만족도 설문</p>
-                                                    <div class="ul-txt-w info">
-                                                        <div class="ul-txt-list">
-                                                            <div class="ul-txt">
-                                                                <dl><dt class="f-caption2">등록일시</dt>
-                                                                    <dd class="f-caption1">${ kl:convertDate(srvList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</dd>
-                                                                </dl>
+                                            <!-- 2024-02-23 a태그 감싸기 -->
+                                            <a href="javascript:">
+                                                <div class="con-list-box-w">
+                                                    <div class="con-list-box">
+                                                        <p class="f-head">컨설팅 만족도 설문</p>
+                                                        <div class="ul-txt-w info">
+                                                            <div class="ul-txt-list">
+                                                                <div class="ul-txt">
+                                                                    <dl><dt class="f-caption2">등록일시</dt>
+                                                                        <dd class="f-caption1">${ kl:convertDate(srvList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</dd>
+                                                                    </dl>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <c:if test="${rspnCnt != 1 }"> <!-- 설문 조사 참여 여부 -->
-                                                <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                    <p class="txt f-body1">미참여</p>
-                                                </div>
-                                            </c:if>
-                                            <c:if test="${rspnCnt == 1 }">
-                                                <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
-                                                    <p class="txt f-body1">참여완료</p>
-                                                </div>
-                                            </c:if>
+                                                <c:if test="${rspnCnt != 1 }"> <!-- 설문 조사 참여 여부 -->
+                                                    <div class="status-circle"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                        <p class="txt f-body1">미참여</p>
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${rspnCnt == 1 }">
+                                                    <div class="status-circle on"><!-- @ 기본: 미참여, on 클래스: 참여 -->
+                                                        <p class="txt f-body1">참여완료</p>
+                                                    </div>
+                                                </c:if>
+                                            </a>
+                                            <!-- // 2024-02-23 a태그 감싸기 -->
                                         </div>
                                     </c:forEach>
                                 </div>

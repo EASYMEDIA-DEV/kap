@@ -54,7 +54,7 @@ define(["ezCtrl"], function(ezCtrl) {
             }
 
             $(".article-total-count.f-body2").find("span").text(totCnt);
-
+            commonScript.formFn();
 
             //$(".item-count").text(totCnt);
 
@@ -190,6 +190,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 var data = {};
                 for(var i=0; i<seqLength; i++){
                     arr[i] = $(".cnstgSeq").eq(i).val();
+                    console.log($(".cnstgSeq").eq(i).val());
                     data.cnstgSeq =  $(".cnstgSeq").eq(i).val();
                     data.cnstgCd =  $(".cnstgCd").eq(i).val();
                     cmmCtrl.jsonAjax(function(data){

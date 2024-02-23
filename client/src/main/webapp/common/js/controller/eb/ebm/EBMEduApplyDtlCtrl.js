@@ -246,11 +246,9 @@ define(["ezCtrl"], function(ezCtrl) {
 					}
 				}
 			},
-
 			srvStart : {
 				event : {
 					click : function() {
-
 
 						//미참여라서 설문참여 진행
 						if($("#srvYn").val() == "N"){
@@ -264,8 +262,22 @@ define(["ezCtrl"], function(ezCtrl) {
 						}else{
 							alert("이미 설문에 참여 하였습니다.");
 						}
+					}
+				}
+			},
+			srvListStart : {
+				event : {
+					click : function() {
 
+						//미참여라서 설문참여 진행
+						if($("#srvYn").val() == "N"){
+							var edctnSeq = $(this).data("edctnseq");
+							var episdYear = $(this).data("episdyear");
+							var episdOrd = $(this).data("episdord");
+							var srvSeq = $(this).data("srvseq");
 
+							location.href="./srvStep1?detailsKey="+edctnSeq+"&episdYear="+episdYear+"&episdOrd="+episdOrd+"&srvSeq="+srvSeq+"&ptcptSeq="+$("#ptcptSeq").val();
+						}
 					}
 				}
 			},

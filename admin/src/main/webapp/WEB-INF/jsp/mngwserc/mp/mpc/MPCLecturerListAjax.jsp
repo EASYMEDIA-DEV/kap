@@ -10,19 +10,19 @@
                     </label>
                 </td>
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
-                <td class="text-center" data-isttr-seq="${list.isttrSeq}" data-spclCntn="${list.spclCntn}">${list.name}</td>
                 <td class="text-center srchListView">
                     <c:choose>
                         <c:when test="${ lecturerDto.srchLayer eq 'Y'}">
-                            ${list.ffltnNm}
+                            ${list.name}
                         </c:when>
                         <c:otherwise>
                             <a href="javascript:" class="listView" data-details-key="${list.isttrSeq}">
-                               ${list.ffltnNm}
+                                    ${list.name}
                             </a>
                         </c:otherwise>
                     </c:choose>
                 </td>
+                <td class="text-center" data-isttr-seq="${list.isttrSeq}" data-spclCntn="${list.spclCntn}">${list.ffltnNm}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${ list.deptNm ne ''}">

@@ -7,7 +7,7 @@
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center">${list.year}</td>
                 <td class="text-center">${list.episd}</td>
-                <td class="text-center">${list.typeCdNm}</td>
+                <td class="text-center">경쟁력향상지원</td>
                 <td class="text-center">${list.bsnNm}</td>
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.cmpnNm}</td>
