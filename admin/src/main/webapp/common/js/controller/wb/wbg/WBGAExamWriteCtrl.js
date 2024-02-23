@@ -317,6 +317,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     click: function () {
                         cmmCtrl.getCmtSrchPop(function (data) {
                             $formObj.find('#chkCmssrSeq').val(data.seq);
+                            $formObj.find('#picCmssrSeq').val(data.seq);
                             $formObj.find('#chkCmssrNm').val(data.name);
                         });
                     }
