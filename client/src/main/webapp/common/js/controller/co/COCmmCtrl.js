@@ -1144,9 +1144,17 @@ var cmmCtrl = (function(){
 				scrollTime : false,
 				todayButton: false,
 			}).on('change',function(e){
+				var strtDtObj = jQuery(".datetimepicker_strtDt");
 				var strtDt   = new Date($(this).val());
 				var endDtObj = jQuery(".datetimepicker_endDt");
 				var endDt	 = new Date(endDtObj.val());
+
+				// 종료 날짜가 선택된 경우에만 시작 날짜의 최대 선택 가능 날짜 설정
+				if(endDt.getTime() > 0) {
+					strtDtObj.datetimepicker("setOptions", { maxDate: endDt });
+				} else { // 종료 날짜가 선택되지 않은 경우 시작 날짜의 최대 선택 가능 날짜 제거
+					strtDtObj.datetimepicker("setOptions", { maxDate: false });
+				}
 
 				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
 				{
@@ -1169,9 +1177,17 @@ var cmmCtrl = (function(){
 				scrollTime : false,
 				todayButton: false,
 			}).on('change',function(e){
+				var strtDtObj = jQuery(".datetimepicker_strtDt");
 				var strtDt   = new Date($(this).val());
 				var endDtObj = jQuery(".datetimepicker_endDt");
 				var endDt	 = new Date(endDtObj.val());
+
+				// 종료 날짜가 선택된 경우에만 시작 날짜의 최대 선택 가능 날짜 설정
+				if(endDt.getTime() > 0) {
+					strtDtObj.datetimepicker("setOptions", { maxDate: endDt });
+				} else { // 종료 날짜가 선택되지 않은 경우 시작 날짜의 최대 선택 가능 날짜 제거
+					strtDtObj.datetimepicker("setOptions", { maxDate: false });
+				}
 
 				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
 				{

@@ -31,6 +31,24 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
         },
         classname : {
 
+            //툴팁박스 표시 버튼
+            tooltipOn : {
+                event : {
+                    click : function() {
+                        $(this).closest(".tooltip-wrap").find(".tooltip-box").css("display", "block");
+                    }
+                }
+            },
+
+            //툴팁박스 닫기 버튼
+            tooltipOff : {
+                event : {
+                    click : function() {
+                        $(this).closest(".tooltip-box").css("display", "none");
+                    }
+                }
+            },
+
             //이관된 신청 내역 클릭 시
             transfer : {
                 event : {
@@ -106,6 +124,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         $('input[name=q]').val('');
                         $('input[name=strtDt]').val('');
                         $('input[name=endDt]').val('');
+
+                        $('.datetimepicker_strtDt').datetimepicker("setOptions", { value: null });
+                        $('.datetimepicker_endDt').datetimepicker("setOptions", { value: null });
 
                         //검색 로직 실행
                         cmmCtrl.setFormData($formObj);

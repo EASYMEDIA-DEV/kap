@@ -49,10 +49,10 @@
                                     </div>
                                     <c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
                                         <div class="tooltip-wrap">
-                                            <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                            <button class="tooltip-btn btn-icon tooltipOn" type="button" title="툴팁 보기"></button>
                                             <div class="tooltip-box">
                                                 <p class="txt">${item.rtrnRsnCntn}</p>
-                                                <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                <button class="btn-close tooltipOff" title="툴팁 닫기" type="button"></button>
                                             </div>
                                         </div>
                                     </c:if>
