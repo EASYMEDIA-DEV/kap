@@ -33,12 +33,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function () {
                         pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
-                        var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
-                        if(pageCnt <= page){
+                        var openCnt = parseInt($("#infoCard").find(".open").length) // 보이는 게시물
+                        if(pageCnt < page){
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
-                            $(".cntText").text("(" + openCnt+9 +"/"+ chilCnt + ")");
+                            openCnt = openCnt + 9;
+                            $(".cntText").text("(" + openCnt +"/"+ chilCnt + ")");
                         }else{
                             $("#infoCard").find(".close").show();
                             $(".moreBtn").hide();
@@ -63,7 +64,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $("#infoCard").children("a").slice(9,chilCnt).hide();
                 $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");
                 $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
-                var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
+                var openCnt = parseInt($("#infoCard").find(".open").length) // 보이는 게시물
                 $(".cntText").text("(" + openCnt + "/" + chilCnt + ")");
             }else{
                 $(".moreBtn").hide();

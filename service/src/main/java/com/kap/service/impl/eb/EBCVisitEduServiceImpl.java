@@ -876,15 +876,52 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         //메일 발송
         cOMessageService.sendMail(cOMailDTO, "EBCVisitEduApplyEmail.html");
 
-        //SMS 발송 시작
+        /* 담당자에게 보내는 메일 처리 */
+        COMessageReceiverDTO mngReceiverDto = new COMessageReceiverDTO();
 
+        COMailDTO toMngMailForm = new COMailDTO();
+        toMngMailForm.setSubject("현장방문교육이 접수 되었습니다");
+
+        //이메일 //담당자 이상훈 : skill@kapkorea.org //개발서버 테스트 후 변경 필요
+        mngReceiverDto.setEmail("eghee@easymedia.net");
+        // 신청자명
+        mngReceiverDto.setName(applicantDto.getName());
+        //치환문자1 부품사명
+        mngReceiverDto.setNote1(applicantDto.getCmpnNm());
+
+        String bsnmNo = applicantDto.getAppctnBsnmNo();
+        StringBuilder newBsnmNo = new StringBuilder();
+
+        // '-' 추가
+        int length = bsnmNo.length();
+        for (int j = 0; j < length; j++) {
+            newBsnmNo.append(bsnmNo.charAt(j));
+            if (j == 2 || j == 4) {
+                newBsnmNo.append("-");
+            }
+        }
+
+        //치환문자2 사업자등록번호
+        mngReceiverDto.setNote2(String.valueOf(newBsnmNo));
+        //치환문자3 신청분야
+        mngReceiverDto.setNote3(applicantDto.getAppctnFldName());
+        //치환문자4 교육신청인원
+        mngReceiverDto.setNote4(String.valueOf(applicantDto.getPtcptCnt()));
+        //치환문자5 교육희망일
+        mngReceiverDto.setNote5(applicantDto.getHopeDt());
+
+        //수신자 정보 등록
+        toMngMailForm.getReceiver().add(mngReceiverDto);
+        //메일 발송
+         cOMessageService.sendMail(toMngMailForm, "EBCVisitEduApplyEmailToMng.html");
+
+        //SMS 발송 시작
         //SMS 발송
         userReceiverDto.setMobile(applicantDto.getHpNo());
         COSmsDTO smsDto = new COSmsDTO();
         SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
         smiSmsCntnDTO.setSmsCntnCd("SMS09"); //방문교육신청 완료 코드
         smsDto.getReceiver().add(userReceiverDto);
-
         smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
         cOMessageService.sendSms(smsDto, "");

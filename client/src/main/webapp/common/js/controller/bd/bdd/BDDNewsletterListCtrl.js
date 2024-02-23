@@ -88,11 +88,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     click : function(){
                         pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
                         var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
-                        if(pageCnt <= page){
+                        if(pageCnt < page){
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
                             $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
-                            $(".cntText").text("(" + openCnt+9 +"/"+ chilCnt + ")");
+                            openCnt = openCnt + 9;
+                            $(".cntText").text("(" + openCnt +"/"+ chilCnt + ")");
                         }else{
                             $("#infoCard").find(".close").show();
                             $(".moreBtn").hide();

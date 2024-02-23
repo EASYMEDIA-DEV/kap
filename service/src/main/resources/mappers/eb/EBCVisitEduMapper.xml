@@ -569,18 +569,22 @@
         2024.02.15   구은희       최초생성
     -->
 	<select id="selectVisitEduApplyInfo" parameterType="EBCVisitEduDTO" resultType="EBCVisitEduDTO">
-		select /*EBCVisitEduMapper.selectVisitEduApplyInfo*/
+		SELECT /*EBCVisitEduMapper.selectVisitEduApplyInfo*/
 			A.vst_seq
 			 , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = A.appctn_bsnm_no) AS cmpn_nm
+			 , appctn_bsnm_no
+			 , (SELECT cd_nm FROM co_code_mst WHERE cd = A.appctn_fld_cd) AS appctn_fld_name
 			 , (SELECT name FROM co_mem_mst WHERE mem_seq = A.mem_seq) AS name
 			 , (SELECT email FROM co_mem_mst WHERE mem_seq = A.mem_seq) AS email
 			 , (SELECT hp_no FROM co_mem_mst WHERE mem_seq = A.mem_seq) AS hp_no
+			 , ptcpt_cnt
+			 , hope_dt
 			 , A.reg_dtm
-		from ev_edctn_vst_mst A
-		where 1=1
-		  and mem_seq = #{memSeq}
-		order by reg_dtm desc
-		limit 1
+		FROM ev_edctn_vst_mst A
+		WHERE 1=1
+		  AND mem_seq = #{memSeq}
+		ORDER BY reg_dtm desc
+		LIMIT 1
 	</select>
 
 	<!--
