@@ -633,7 +633,7 @@
                                     <c:forEach var="srvList" items="${rtnData.rsumeList}" varStatus="status">
                                         <div class="gray-bg-sec">
                                             <!-- 2024-02-23 a태그 감싸기 -->
-                                            <a href="javascript:">
+                                            <a ${empty survey ? "" : 'href="javascript:"'}>
                                                 <div class="con-list-box-w">
                                                     <div class="con-list-box">
                                                         <p class="f-head">컨설팅 만족도 설문</p>

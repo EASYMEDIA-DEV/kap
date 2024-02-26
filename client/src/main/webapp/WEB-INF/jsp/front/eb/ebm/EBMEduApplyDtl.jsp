@@ -829,7 +829,7 @@
                                         <div class="sec-con-area ${srvListStart}" data-episdseq="${rtnData.episdSeq}" data-edctnseq="${rtnData.edctnSeq}" data-episdyear="${rtnData.episdYear}" data-episdord="${rtnData.episdOrd}" data-srvseq="${rtnData.srvSeq}">
                                             <div class="gray-bg-sec">
                                                 <!-- 2024-02-23 a태그 감싸기 -->
-                                                <a href="javascript:">
+                                                <a ${empty srvListStart ? "" : 'href="javascript:"'}>
                                                     <div class="con-list-box-w">
                                                         <div class="con-list-box">
                                                             <p class="f-head">교육 만족도 설문 조사</p>
@@ -870,7 +870,7 @@
                                             <div class="sec-con-area ${examStart}">
                                                 <div class="gray-bg-sec">
                                                     <!-- 2024-02-23 a태그 감싸기 -->
-                                                    <a href="javascript:">
+                                                    <a ${empty examStart ? "" : 'href="javascript:"'}>
                                                         <div class="con-list-box-w">
                                                             <div class="con-list-box">
                                                                 <p class="f-head">평가</p>
