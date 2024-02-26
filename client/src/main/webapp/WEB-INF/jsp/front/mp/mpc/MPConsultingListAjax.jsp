@@ -201,7 +201,7 @@
                                     </div>
                                     <div class="info-list">
                                         <p class="tit f-caption2">신청사항</p>
-                                        <p class="txt f-body2 ${appctnList.cnstgSeq}appctnCd" style="text-overflow: ellipsis"></p>
+                                        <p class="txt f-body2" style="text-overflow: ellipsis">${not empty appctnList.appctnTypeNm ? appctnList.appctnTypeNm : ""}</p>
                                     </div>
                                     <div class="info-list">
                                         <p class="tit f-caption2">신청일자</p>

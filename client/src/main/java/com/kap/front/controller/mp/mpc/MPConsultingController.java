@@ -12,21 +12,21 @@ import com.kap.core.dto.sv.sva.SVASurveyRspnMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyRspnScoreDTO;
 import com.kap.service.*;
 import com.kap.service.dao.cb.cba.CBATechGuidanceMapper;
-import com.kap.service.dao.cb.cbb.CBBManageConsultMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 /**
@@ -60,11 +60,7 @@ public class MPConsultingController {
     private final CBBManageConsultService cBBManageConsultService;
     private final MPEPartsCompanyService mPEPartsCompanyService;
     private final CBATechGuidanceMapper cBATechGuidanceMapper;
-
     private final MPConsultingService mPConsultingService;
-
-
-
     private final SVASurveyService sVSurveyService;
 
     /**
@@ -207,16 +203,16 @@ public class MPConsultingController {
         return "front/mp/mpc/MPConsultingSurveyIndex.front";
     }
 
-    @RestController
+    /*@RestController
     @RequiredArgsConstructor
     @RequestMapping(value="/my-page/consulting")
     public class MPConsultingRestController {
 
         private final CBATechGuidanceMapper cBATechGuidanceMapper;
         private final CBBManageConsultMapper cBBManageConsultMapper;
-        /**
+        *//**
          *  신청 분야 상세
-         */
+         *//*
         @PostMapping(value = "/appctnType")
         @ResponseBody
         public List<CBATechGuidanceInsertDTO> selectAppctnType(@RequestBody CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO) throws Exception {
@@ -240,7 +236,7 @@ public class MPConsultingController {
             }
             return detailList;
         }
-    }
+    }*/
 
 
     /**

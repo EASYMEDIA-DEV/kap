@@ -32,6 +32,8 @@
             <input type="hidden" id="bsnmNos" name="bsnmNo"  class="notRequired" value="${rtnDtl.workBsnmNo}"/>
             <input type="hidden" id="bsnmNosOld" name="bsnmNoOld"  class="notRequired" value="${rtnDtl.workBsnmNo}"/>
             <input type="hidden" id="partTypeChg" name="partTypeChg"  class="notRequired" value="no"/>
+            <%-- 교육, 컨설팅, 상생 신청 페이지 > 부품사정보변경 url 이동여부 체크(레이어 trigger)--%>
+            <input type="hidden" id="applyYn" name="applyYn" class="applyYn" value="${applyYn}"/>
 
             <input type="hidden" id="cmpnNm" name="mpePartsCompanyDTO.cmpnNm"  class="notRequired cmpnNm"/>
             <input type="hidden" id="rprsntNm" name="mpePartsCompanyDTO.rprsntNm"  class="notRequired rprsntNm"/>
@@ -58,7 +60,6 @@
             <input type="hidden" id="popSqInfoList1" name="mpePartsCompanyDTO.sqInfoList1" class="notRequired sqInfoList1"/>
             <input type="hidden" id="popSqInfoList2" name="mpePartsCompanyDTO.sqInfoList2"  class="notRequired sqInfoList2"/>
             <input type="hidden" id="popSqInfoList3"  name="mpePartsCompanyDTO.sqInfoList3"  class="notRequired sqInfoList3"/>
-
 
 
             <!-- content 영역 start -->
