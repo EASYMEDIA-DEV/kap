@@ -1,16 +1,23 @@
 package com.kap.service.impl.wb.wbi;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
+import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
+import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBIASupplyListService;
 import com.kap.service.dao.COGCntsMapper;
+import com.kap.service.dao.wb.wbb.WBBBCompanyMapper;
 import com.kap.service.dao.wb.wbi.WBIASupplyListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
@@ -44,6 +51,7 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
     //Mapper
     private final WBIASupplyListMapper wBIASupplyListMapper;
     private final COGCntsMapper cOGCntsMapper;
+    private final WBBBCompanyMapper wbbbCompanyMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -187,5 +195,63 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
         }
 
         return wBRoundMstSearchDTO;
+    }
+
+    /**
+     * 최신 회차 상세 조회
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
+
+        int rtnCode = 0;
+
+        COUserDetailsDTO cOUserDetailsDTO = null;
+
+        if (!COUserDetailsHelperService.isAuthenticated())
+        {
+            //비로그인 코드 999
+            rtnCode = 999;
+        }
+        else
+        {
+            cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+
+            if (!"CP".equals(cOUserDetailsDTO.getAuthCd())) {
+                if ("CS".equals(cOUserDetailsDTO.getAuthCd())) {
+                    //위원인 경우 150
+                    rtnCode = 150;
+                } else {
+                    //부품사회원이 아닌경우 100
+                    rtnCode = 100;
+                }
+            } else if ("CP".equals(cOUserDetailsDTO.getAuthCd())) {
+
+                WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
+                wbbaCompanySearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                WBBACompanyDTO wbbaCompanyDTO = new WBBACompanyDTO();
+                wbbaCompanyDTO = wbbbCompanyMapper.getCompanyInfo(wbbaCompanySearchDTO);
+
+                if ("COMPANY01001".equals(wbbaCompanyDTO.getCtgryCd()) || "COMPANY01002".equals(wbbaCompanyDTO.getCtgryCd())) {
+                    wBRoundMstSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                    wBRoundMstSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+                    int cnt = wBIASupplyListMapper.getApplyCount(wBRoundMstSearchDTO);
+
+                    if (cnt > 0) {
+                        //신청여부 존재 코드 300
+                        rtnCode = 300;
+                    } else {
+                        //신청가능 코드 200
+                        rtnCode = 200;
+                        RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
+                    }
+                } else {
+                    //부품사가 1차 2차가 아닐떄,
+                    rtnCode = 190;
+                }
+
+            }
+        }
+
+        return rtnCode;
     }
 }

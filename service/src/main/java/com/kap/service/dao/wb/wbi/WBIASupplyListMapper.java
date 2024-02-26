@@ -70,4 +70,9 @@ public interface WBIASupplyListMapper {
      */
     public List<WBAManagementOptnDTO> selectOPtnList(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
+    /**
+     * 회차 신청여부 조회
+     */
+    public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
 }

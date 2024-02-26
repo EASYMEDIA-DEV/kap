@@ -86,7 +86,7 @@ public interface WBIBSupplyCompanyService {
      * 신청자를 등록한다.
      * @return
      */
-    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request) throws Exception;
+    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 최신 게시물 조회

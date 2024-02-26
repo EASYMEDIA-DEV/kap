@@ -602,7 +602,7 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
      * 부품사 신청자를 등록한다.
      */
     @Transactional
-    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request) throws Exception {
+    public int insertApply(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception {
 
         int rtnCnt = 0;
 
@@ -628,10 +628,52 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
                 wBIBSupplyCompanyMapper.insertApplyDtl(wBIBSupplyDTO);
 
                 //신청파일 넣기
-                /* 상생신청파일 상세 */
-                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBIBSupplyDTO.getFileList());
-                wBIBSupplyDTO.setFileSeq(fileSeqMap.get("atchFile")); /* 파일 시퀀스 */
-                rtnCnt *= wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
+                List<COFileDTO> rtnList = null;
+                Map<String, MultipartFile> files = multiRequest.getFileMap();
+                Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                MultipartFile file;
+                int atchFileCnt = 0;
+
+                while (itr.hasNext()) {
+                    Map.Entry<String, MultipartFile> entry = itr.next();
+                    file = entry.getValue();
+
+                    if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                        atchFileCnt++;
+                    }
+                }
+
+                if (!files.isEmpty()) {
+                    List<WBIBSupplyDTO> optinList = null;
+                    rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                    if (rtnList.size() > 0) {
+                        WBIBSupplySearchDTO wBIBSupplySearchDTO = new  WBIBSupplySearchDTO();
+                        int stageSeq = 0;
+
+                        wBIBSupplySearchDTO.setBsnCd(wBIBSupplyDTO.getBsnCd());
+                    }
+
+                    for (int i = 0; i < rtnList.size() ; i++) {
+
+                        List<COFileDTO> fileList = new ArrayList();
+                        Integer fileSeq;
+
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wBIBSupplyDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
+
+                        wBIBSupplyDTO.setFileSeq(fileSeq);
+                        wBIBSupplyCompanyMapper.putAppctnFileDtl(wBIBSupplyDTO);
+                    }
+                }
 
                 //EDM,SMS발송
                 WBSendDTO wbSendDTO = new WBSendDTO();

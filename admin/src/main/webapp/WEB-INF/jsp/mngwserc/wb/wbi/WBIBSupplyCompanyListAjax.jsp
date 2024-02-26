@@ -13,7 +13,7 @@
                 <td class="text-center">${list.year}</td>
                 <td class="text-center">${list.episd}</td>
                 <td class="text-center">${list.mngSttsCd}</td>
-                <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.appctnSeq}" value="${list.bsnmNo}">${list.cmpnNm}</a></td>
+                <td class="text-center"><a href="javascript:" class="listView" data-details-key="${list.appctnSeq}" value="${list.bsnmNo} data-mem-Seq="${list.memSeq}">${list.cmpnNm}</a></td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>

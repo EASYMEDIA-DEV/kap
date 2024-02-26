@@ -72,7 +72,7 @@
                           </div>
                           <div class="file-btn-area">
                             <input type="hidden" class="notRequired" name="fileCd" value="ATTACH_FILE_TYPE01" title="첨부파일유형"/>
-                            <input type="file" class="searchFile" id="searchFile" name="atchFile" data-file-field-nm="atchFile" accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
+                            <input type="file" id="searchFile" name="atchFile" class="searchFile"/>
                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                           </div>
                           <div class="btn-wrap btn-down-wrap">
