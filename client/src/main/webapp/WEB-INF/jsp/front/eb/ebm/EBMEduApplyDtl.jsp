@@ -376,6 +376,12 @@
                                                     <c:set var="examStart" value="examStart" />
                                                 </c:if>
 
+                                                <c:set var="srvListStart" value="" />
+
+                                                <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate)}">
+                                                    <c:set var="srvListStart" value="srvListStart" />
+                                                </c:if>
+
                                                 <c:choose>
                                                     <c:when test="${rtnData.trnsfYn eq 'N' && (currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm)  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
                                                         <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
@@ -820,7 +826,7 @@
                                         <div class="sec-tit-area">
                                             <p class="f-title3">교육 만족도 설문 조사 참여내역</p>
                                         </div>
-                                        <div class="sec-con-area srvListStart" data-episdseq="${rtnData.episdSeq}" data-edctnseq="${rtnData.edctnSeq}" data-episdyear="${rtnData.episdYear}" data-episdord="${rtnData.episdOrd}" data-srvseq="${rtnData.srvSeq}">
+                                        <div class="sec-con-area ${srvListStart}" data-episdseq="${rtnData.episdSeq}" data-edctnseq="${rtnData.edctnSeq}" data-episdyear="${rtnData.episdYear}" data-episdord="${rtnData.episdOrd}" data-srvseq="${rtnData.srvSeq}">
                                             <div class="gray-bg-sec">
                                                 <!-- 2024-02-23 a태그 감싸기 -->
                                                 <a href="javascript:">

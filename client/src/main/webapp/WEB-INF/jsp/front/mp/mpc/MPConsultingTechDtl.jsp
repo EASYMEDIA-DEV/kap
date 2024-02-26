@@ -106,9 +106,10 @@
                             </div>
                         </div>
                     </div>
-
+                    <c:set var="survey" value="" />
                     <c:if test="${srvCnt > 0 && not empty rtnData.srvSeq && not empty rtnData.srvStrtDtm && not empty rtnData.srvEndDtm}"> <!-- 설문 응답 가능 기간에 포함되는 설문-->
                         <c:if test="${rspnCnt < 1 }"> <!-- 설문 조사 참여 여부 -->
+                            <c:set var="survey" value="survey" />
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">
                                     <div class="sec-tit-area">
@@ -628,7 +629,7 @@
                                 <div class="sec-tit-area">
                                     <p class="f-title3">컨설팅 만족도 설문조사 참여내역</p>
                                 </div>
-                                <div class="sec-con-area survey" data-seq="${rtnData.cnstgSeq}">
+                                <div class="sec-con-area ${survey}" data-seq="${rtnData.cnstgSeq}">
                                     <c:forEach var="srvList" items="${rtnData.rsumeList}" varStatus="status">
                                         <div class="gray-bg-sec">
                                             <!-- 2024-02-23 a태그 감싸기 -->
