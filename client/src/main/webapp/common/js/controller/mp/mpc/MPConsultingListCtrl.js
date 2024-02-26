@@ -184,22 +184,6 @@ define(["ezCtrl"], function(ezCtrl) {
             cmmCtrl.setFormData($formObj);
             search();
 
-            $(window).ready(function(){
-                var seqLength = $(".cnstgSeq").length;
-                var arr = new Array(seqLength);
-                var data = {};
-                for(var i=0; i<seqLength; i++){
-                    arr[i] = $(".cnstgSeq").eq(i).val();
-                    console.log($(".cnstgSeq").eq(i).val());
-                    data.cnstgSeq =  $(".cnstgSeq").eq(i).val();
-                    data.cnstgCd =  $(".cnstgCd").eq(i).val();
-                    cmmCtrl.jsonAjax(function(data){
-                        var str = data[0].appctnTypeCd;
-                        $("."+arr[i]+"appctnCd").text(str.slice(1));
-                    }, "./appctnType", data, "json")
-                }
-            });
-
             $(document).on('keydown', function(event) {
                 // 필터 검색 인지 확인
                 if($('.all-srch').css('display') !== 'block') {
@@ -214,12 +198,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             });
-
-            // 신청내역 확인에서 신청사항에서 마지막 '/' 삭제
-            var appctnType = $("#appctnType").text();
-            if(appctnType != '' || appctnType != 'undefined'){
-                $("#appctnType").text($("#appctnType").text().slice(0, -1));
-            }
         }
     };
 

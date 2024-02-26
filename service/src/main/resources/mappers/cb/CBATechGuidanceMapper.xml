@@ -1520,49 +1520,65 @@
         ==========   ======    ==============
         2024.01.02   임서화       최초생성
         2024.02.13   구은희       사용자 이관여부 조회 추가
+        2024.02.26   구은희       신청사항 조회 추가
     -->
     <select id="selectMemSeqAppctnMst" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /*CBATechGuidanceMapper.selectMemSeqAppctnMst*/
-        CNSTG_SEQ,
-        CNSTG_CD,
-        APPCTN_MEM_SEQ,
-        CNSTG_NM,
-        RSUME_STTS_CD,
-        RSUME_STTS_NM,
-        RSLT_CNTN,
-        APPCTN_FLD_NM,
-        APPCTN_DT,
-        BSN_YEAR,
-        CBSN_CD,
-        CBSN_NM,
-        MOD_DTM,
-        REG_DTM,
-        BFRE_MEM_SEQ,
-        AFTR_MEM_SEQ,
-        TRNSF_YN
+            TMP.CNSTG_SEQ,
+            CNSTG_CD,
+            DTL.APPCTN_TYPE_NM,
+            APPCTN_MEM_SEQ,
+            CNSTG_NM,
+            RSUME_STTS_CD,
+            RSUME_STTS_NM,
+            RSLT_CNTN,
+            APPCTN_FLD_NM,
+            APPCTN_DT,
+            BSN_YEAR,
+            CBSN_CD,
+            CBSN_NM,
+            MOD_DTM,
+            REG_DTM,
+            BFRE_MEM_SEQ,
+            AFTR_MEM_SEQ,
+            TRNSF_YN
 
         FROM (
-        SELECT
-        A.CNSTG_SEQ,
-        A.CNSTG_CD,
-        A.APPCTN_MEM_SEQ,
-        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
-        A.RSUME_STTS_CD,
-        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) RSUME_STTS_NM,
-        (SELECT BFRE_JDGMT_RSLT_CNTN FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ) RSLT_CNTN,
-        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM,
-        A.APPCTN_DT,
-        A.BSN_YEAR,
-        (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
-        (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
-        A.MOD_DTM,
-        A.REG_DTM,
-        B.BFRE_MEM_SEQ,
-        B.AFTR_MEM_SEQ,
-        CASE WHEN B.BFRE_MEM_SEQ = #{memSeq} AND A.CNSTG_SEQ = B.CNSTG_SEQ then 'Y' ELSE 'N' END AS TRNSF_YN
-        FROM CP_CNSTG_APPCTN_MST A
-        LEFT JOIN cp_cnstg_appctn_trnsf_dtl B ON A.CNSTG_SEQ = B.CNSTG_SEQ
+            SELECT
+                A.CNSTG_SEQ,
+                A.CNSTG_CD,
+                A.APPCTN_MEM_SEQ,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CNSTG_CD) CNSTG_NM,
+                A.RSUME_STTS_CD,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) RSUME_STTS_NM,
+                (SELECT BFRE_JDGMT_RSLT_CNTN FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = A.CNSTG_SEQ) RSLT_CNTN,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM,
+                A.APPCTN_DT,
+                A.BSN_YEAR,
+                (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = A.CNSTG_SEQ) CBSN_CD,
+                (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CBSN_CD) CBSN_NM,
+                A.MOD_DTM,
+                A.REG_DTM,
+                B.BFRE_MEM_SEQ,
+                B.AFTR_MEM_SEQ,
+                CASE WHEN B.BFRE_MEM_SEQ = #{memSeq} AND A.CNSTG_SEQ = B.CNSTG_SEQ then 'Y' ELSE 'N' END AS TRNSF_YN
+            FROM CP_CNSTG_APPCTN_MST A
+            LEFT JOIN cp_cnstg_appctn_trnsf_dtl B ON A.CNSTG_SEQ = B.CNSTG_SEQ
         ) TMP
+        LEFT JOIN
+        (
+            SELECT CNSTG_SEQ, CD, GROUP_CONCAT(APPCTN_TYPE_NM SEPARATOR '/ ') AS APPCTN_TYPE_NM
+            FROM
+            (
+                SELECT
+                    CNSTG_SEQ
+                    , CD
+                    , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CD) AS APPCTN_TYPE_NM
+                FROM CP_CNSTG_APPCTN_TYPE_DTL A
+            ) TB
+            GROUP BY TB.cnstg_seq
+        ) DTL
+        ON TMP.CNSTG_SEQ = DTL.CNSTG_SEQ
 
         <include refid="selectMemSeqAppctnWhereSql" />
 

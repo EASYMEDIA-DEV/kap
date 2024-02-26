@@ -5,7 +5,7 @@
         <form name="formPasswordConfirm" id="formPasswordConfirm" method="post">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="typeChk"  value="${data}" />
-
+            <input type="hidden" class="notRequired" id="applyYn"  value="${applyYn}" />
             <!--
               신청 페이지: apply-page 클래스 추가
               그 외 페이지: basic-page 클래스 추가

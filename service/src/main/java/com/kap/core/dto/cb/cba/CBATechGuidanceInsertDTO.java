@@ -267,7 +267,7 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String appctnRsnCd;
     @Schema(title = "신청분야코드")
     private String appctnTypeCd;
-    @Schema(title = "신청분야코드")
+    @Schema(title = "신청분야코드명")
     private String appctnTypeNm;
     @Schema(title = "요청내용, 신청사항")
     private String rqstCntn;

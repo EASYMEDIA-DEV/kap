@@ -32,6 +32,7 @@ import java.util.ArrayList;
  * 		since			author				  description
  *    ==========    ==============    =============================
  *    2023.12.12		양현우				   최초 생성
+ *    2024.02.26		구은희		     부품사 정보 변경 applyYn 변수 추가
  * </pre>
  */
 @Slf4j
@@ -56,11 +57,11 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @GetMapping("/certification")
-    public String getMemberPasswordChk(ModelMap modelMap) throws Exception {
+    public String getMemberPasswordChk(ModelMap modelMap, String applyYn) throws Exception {
         modelMap.addAttribute("data", "modify");
+        modelMap.addAttribute("applyYn", applyYn);
 
         return "/front/mp/mph/MPHCertification.front";
-
     }
 
     /**
@@ -70,7 +71,7 @@ public class MPHCertificationController {
      * @throws Exception
      */
     @RequestMapping("/modify-page")
-    public String getMemberJoinChk(ModelMap modelMap, String ci) throws Exception {
+    public String getMemberJoinChk(ModelMap modelMap, String ci, String applyYn) throws Exception {
         String url = "";
         MPAUserDto mpaUserDto = new MPAUserDto();
         COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
@@ -98,7 +99,10 @@ public class MPHCertificationController {
 
 
         modelMap.addAttribute("cdDtlList2",  cOCodeService.getCmmCodeBindAll(cdDtlList));
-
+        // 교육, 컨설팅, 상생 신청 페이지에서 넘어온 부품사정보변경인지 체크
+        if(applyYn != null) {
+            modelMap.addAttribute("applyYn", "Y");
+        }
 
         if (!"".equals(mpaUserDto.getDetailsKey())) {
             MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
@@ -109,8 +113,7 @@ public class MPHCertificationController {
         }
 
         return "/front/mp/mph/MPHUserModify.front";
-
-    }
+   }
 
     /**
      * 비밀번호 체크
