@@ -14,7 +14,6 @@ import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.service.*;
 import com.kap.service.mp.mpa.MPAUserService;
-import io.netty.util.internal.StringUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -513,13 +512,10 @@ public class EBACouseController {
             //교육신청 메일발송 시작
 
             HashMap<String, Object> episdDto = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
-
             EBBEpisdDTO tempEpisdDTO = (EBBEpisdDTO)episdDto.get("rtnData");
             //메일 발송
             COMailDTO cOMailDTO = new COMailDTO();
             cOMailDTO.setSubject("[KAP] 교육신청 완료 안내");
-            System.out.println("@@@@ 시작");
-
 
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
             receiverDto.setEmail(applicantDto.getEmail());
@@ -534,30 +530,16 @@ public class EBACouseController {
             cOMessageService.sendMail(cOMailDTO, "EBBEduApplyStep3.html");
 
             //교육신청 메일발송 끝
-            System.out.println("@@@@ 끝");
-
-
-            //교육신청 메일발송 시작
-            //메일 발송
-            receiverDto.setMobile(applicantDto.getHpNo());
-            cOMailDTO.getReceiver().add(receiverDto);
-            cOMessageService.sendMail(cOMailDTO, "EBBEduApplyStep3.html");
-
-            //교육신청 메일발송 끝
-
 
             //SMS 발송 시작
-
             //SMS 발송
+            receiverDto.setMobile(applicantDto.getHpNo());
             COSmsDTO smsDto = new COSmsDTO();
 
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
-
             smiSmsCntnDTO.setSmsCntnCd("SMS01"); //교육신청 완료 코드
             smiSmsCntnDTO.setSmsCntnSeq(3);
             smsDto.getReceiver().add(receiverDto);
-
-
             smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
             cOMessageService.sendSms(smsDto, "");
@@ -565,6 +547,7 @@ public class EBACouseController {
 
             modelMap.addAttribute("rtnPtcptDto", rtnPtcptDto);
             modelMap.addAttribute("rtnData", rtnDto);
+
         }catch (Exception e){
 
             if (log.isDebugEnabled())

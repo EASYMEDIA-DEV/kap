@@ -1048,7 +1048,7 @@
                                                 <fmt:parseNumber var= "tPer6" integerOnly= "true" value= "${(srvRstDtl.t6/rtnDto.srvMemCnt)*100}" />
                                                 <fmt:parseNumber var= "tPer7" integerOnly= "true" value= "${(srvRstDtl.t7/rtnDto.srvMemCnt)*100}" />
                                                 <fmt:parseNumber var= "tPer8" integerOnly= "true" value= "${(srvRstDtl.t8/rtnDto.srvMemCnt)*100}" />
-                                                <fmt:parseNumber var= "tPer9" integerOnly= "true" value= "${(srvRstDtl.t9/rtnDto.srvMemCnt)*100}" />
+                                                <fmt:parseNumber var= "tPer9" integerOnly= "true" value= "${((srvRstDtl.t7 + srvRstDtl.t8 + srvRstDtl.t9) /rtnDto.srvMemCnt)*100}" />
 
                                                 <fmt:parseNumber var= "aPer1" integerOnly= "true" value= "${(srvRstDtl.a1/rtnDto.srvMemCnt)*100}" />
                                                 <fmt:parseNumber var= "aPer2" integerOnly= "true" value= "${(srvRstDtl.a2/rtnDto.srvMemCnt)*100}" />
@@ -1066,7 +1066,7 @@
                                                     <td class="text-center">${srvRstDtl.t6}명(${tPer6}%)</td>
                                                     <td class="text-center">${srvRstDtl.t7}명(${tPer7}%)</td>
                                                     <td class="text-center">${srvRstDtl.t8}명(${tPer8}%)</td>
-                                                    <td class="text-center">${srvRstDtl.t9}명(${tPer9}%)</td>
+                                                    <td class="text-center">${srvRstDtl.t7 + srvRstDtl.t8 + srvRstDtl.t9}명(${tPer9}%)</td>
 
                                                     <td class="text-center">${srvRstDtl.a1}명(${aPer1}%)</td>
                                                     <td class="text-center">${srvRstDtl.a2}명(${aPer2}%)</td>

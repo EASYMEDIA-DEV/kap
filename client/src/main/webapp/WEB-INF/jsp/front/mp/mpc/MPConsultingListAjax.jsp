@@ -76,6 +76,13 @@
                                                         <span>${appctnList.rsumeSttsNm}</span>
                                                     </p>
                                                 </div>
+                                                <div class="tooltip-wrap">
+                                                    <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                                    <div class="tooltip-box">
+                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                        <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                    </div>
+                                                </div>
                                             </c:if>
                                             <c:if test="${appctnList.rsumeSttsNm eq '사전심사선정' or appctnList.rsumeSttsNm eq '지도승인' or appctnList.rsumeSttsNm eq '지도중'}">
                                                 <div class="status-info-w">
@@ -143,6 +150,13 @@
                                                 <p class="box-label bigger arr">
                                                     <span>${appctnList.rsumeSttsNm}</span>
                                                 </p>
+                                            </div>
+                                            <div class="tooltip-wrap">
+                                                <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                                <div class="tooltip-box">
+                                                    <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                    <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                                </div>
                                             </div>
                                         </c:if>
                                         <c:if test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">

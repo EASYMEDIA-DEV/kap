@@ -167,22 +167,22 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
             // 뉴스레터 신청자 목록 조회
             MPHNewsLetterDTO newMphNewsLetterDTO = mphNewsLetterService.selectNewsLetterList(dto);
 
+            String infoFormCntn = pBDDNewsletterDTO.getCntn();
+            infoFormCntn = COWebUtil.clearXSSMinimum(infoFormCntn);
+
             // 뉴스레터 구독 신청한 회원에게 이메일 발송
             for (MPHNewsLetterDTO userEmailDTO : newMphNewsLetterDTO.getList()) {
                 System.err.println(userEmailDTO.getEmail());
                 /* 메일 처리 */
                 COMailDTO cOMailDTO = new COMailDTO();
                 cOMailDTO.setSubject("["+siteName+"] " + pBDDNewsletterDTO.getTitl());
+                cOMailDTO.setEditorContents(infoFormCntn);
                 //수신자 정보
                 COMessageReceiverDTO userReceiverDto = new COMessageReceiverDTO();
 
                 userReceiverDto.setEmail(userEmailDTO.getEmail());
                 //치환문자1
                 userReceiverDto.setNote1(pBDDNewsletterDTO.getTitl());
-                //치환문자2
-                userReceiverDto.setNote2(pBDDNewsletterDTO.getCntn());
-                //치환문자3
-                userReceiverDto.setNote3(appUserDomain);
                 //수신자 정보 등록
                 cOMailDTO.getReceiver().add(userReceiverDto);
                 //메일 발송
