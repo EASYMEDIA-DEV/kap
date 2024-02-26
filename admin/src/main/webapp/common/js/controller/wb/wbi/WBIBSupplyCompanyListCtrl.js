@@ -135,8 +135,13 @@ define(["ezCtrl"], function(ezCtrl) {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
                         var bsnmNo = $(this).attr('value');
+                        var memSeq = $(this).data("memSeq");
+
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
                         $formObj.find("input[name=workBsnmNo]").val(bsnmNo);
+                        $formObj.find("input[name=bsnmNo]").val(bsnmNo);
+                        $formObj.find("input[name=memSeq]").val(memSeq);
+
                         location.href = "./edit?" + $formObj.serialize();
                     }
                 }

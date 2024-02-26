@@ -416,6 +416,20 @@
         FROM SM_STY_MST A
         WHERE TYPE_CD = 'BUSINESS02'
     </select>
+
+    <!--
+       쿼리명 : WBBARoundMapper.getApplyCount
+       설  명 : 회차사업 참여 카운트
+       수정일     수정자     수정내용
+      ==========  ======  ==============
+      2023.11.24  김태훈     최초 생성
+  -->
+    <select id="getApplyCount" parameterType="wBRoundMstSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBBARoundMapper.getApplyCount */ COUNT(*)
+        FROM CX_APPCTN_MST A
+                 JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE06001_01_004'
+    </select>
 </mapper>
 
 

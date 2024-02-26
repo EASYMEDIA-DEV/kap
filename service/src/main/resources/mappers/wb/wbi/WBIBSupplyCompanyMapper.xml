@@ -402,30 +402,17 @@
                 )
             </if>
             <if test="q != null and q != ''.toString() ">
-                <choose>
-                    <when test="f == 1">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <when test="f == 2">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <when test="f == 3">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <when test="f == 4">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <when test="f == 5">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <otherwise>
-                        AND (
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                AND (
+                        CMPN_NM LIKE CONCAT('%', #{q}, '%')
                         OR
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                        )
-                    </otherwise>
-                </choose>
+                        HP_NO LIKE CONCAT('%', #{q}, '%')
+                        OR
+                        BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                        OR
+                        NAME LIKE CONCAT('%', #{q}, '%')
+                        OR
+                        REG_ID LIKE CONCAT('%', #{q}, '%')
+                )
             </if>
         </where>
     </sql>
@@ -898,9 +885,11 @@
     -->
     <select id="getBsnmNoCnt" parameterType="wBIBSupplyMstDTO" resultType="java.lang.Integer">
         SELECT /* WBIBSupplyCompanyMapper.getBsnmNoCnt*/ COUNT(*)
-        FROM CX_APPCTN_MST
+        FROM CX_APPCTN_MST A
+                JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
         WHERE EPISD_SEQ = #{episdSeq}
           AND APPCTN_BSNM_NO = #{bsnmNo}
+          AND APPCTN_STTS_CD != 'PRO_TYPE06001_01_004'
     </select>
 
     <!--
