@@ -585,6 +585,10 @@ define(["ezCtrl"], function(ezCtrl) {
                                         $(".gubun").text(datas.ctgryNm);
                                         $(".addr").text("("+datas.zipcode+")"+" "+datas.bscAddr+" "+datas.dtlAddr);
 
+                                        $("#tempZipcode").val(datas.zipcode);
+                                        $("#tempBscAddr").val(datas.bscAddr);
+                                        $("#tempDtlAddr").val(+datas.dtlAddr);
+
                                         if($("#bsnmNosOld").val() != "") {
                                             $(".chng").hide();
                                         }
