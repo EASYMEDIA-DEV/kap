@@ -218,7 +218,7 @@
                                                 <p class="data-title f-body1">지원금 ①<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="spprtPmt" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}">
+                                                        <input type="text" id="spprtPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,7 +226,7 @@
                                                 <p class="data-title f-body1">자부담 ②<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="phswPmt" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}">
+                                                        <input type="text" id="phswPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -234,7 +234,7 @@
                                                 <p class="data-title f-body1">총금액 ① + ②<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="sum"placeholder="총금액 입력" value="${rtnPbsn[1].ttlPmt}" readonly>
+                                                        <input type="text" id="sum" class="comma" placeholder="총금액 입력" value="${rtnPbsn[1].ttlPmt}" readonly>
                                                         <input type="hidden" class="notRequired" id="ttlPmt" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].ttlPmt" value="${rtnPbsn[1].ttlPmt}"/>
                                                     </div>
                                                 </div>
