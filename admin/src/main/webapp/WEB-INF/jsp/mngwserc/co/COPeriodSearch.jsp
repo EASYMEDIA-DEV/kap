@@ -87,6 +87,16 @@
 						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
+						<c:when test="${param.srchType eq 'ima'}">
+							<c:choose>
+								<c:when test="${not empty param.dashBoardType}">
+									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+								</c:when>
+								<c:otherwise>
+									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+								</c:otherwise>
+							</c:choose>
+						</c:when>
 						<c:otherwise>
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-365'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:otherwise>
@@ -98,7 +108,7 @@
 					</span>
 					<span class="input-group-addon bg-white b0">~</span>
 					<c:choose>
-						<c:when test="${param.srchType eq 'episd'}">
+						<c:when test="${param.srchType eq 'episd' or param.srchType eq 'cnstg' or param.srchType eq 'ima'}">
 
 							<c:choose>
 								<c:when test="${not empty param.dashBoardType}">

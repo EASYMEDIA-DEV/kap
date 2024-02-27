@@ -2,6 +2,7 @@ package com.kap.core.dto.im.ima;
 
 import com.kap.core.dto.BaseDTO;
 import com.kap.core.dto.COFileDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -31,52 +32,56 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 public class IMAQaDTO extends BaseDTO {
 
-    //QA순번
+    @Schema(title = "QA순번", example = "")
     private Integer qaSeq;
 
-    //회원(작성자) 순번
+    @Schema(title = "회원(작성자) 순번", example = "")
     private Integer memSeq;
 
-    //QA답변 순번
+    @Schema(title = "QA답변 순번", example = "")
     private int qaRplySeq;
 
-    //진행코드
+    @Schema(title = "진행코드", example = "")
     private String rsumeCd;
 
-    //이메일
+    @Schema(title = "이메일", example = "")
     private String email;
 
-    //휴대전화 번호
+    @Schema(title = "휴대전화 번호", example = "")
     private String hpNo;
 
-    //제목
+    @Schema(title = "제목", example = "")
     private String titl;
 
-    //내용
+    @Schema(title = "내용", example = "")
     private String cntn;
 
-    //QA 파일 순번
+    @Schema(title = "QA 파일 순번", example = "")
     private Integer fileSeq;
 
-    //부모 카테고리 코드
+    @Schema(title = "부모 카테고리 코드", example = "")
     private String parntCtgryCd;
+
+    @Schema(title = "부모 카테고리명", example = "")
     private String parntCtgryNm;
 
-    //카테고리 코드
+    @Schema(title = "카테고리 코드", example = "")
     private String ctgryCd;
+
+    @Schema(title = "카테고리명", example = "")
     private String ctgryNm;
 
-    //깊이
+    @Schema(title = "깊이", example = "")
     private int dpth;
 
-    //QA답변 내용
+    @Schema(title = "QA답변 내용", example = "")
     @NotNull
     private String rplyCntn;
 
-    //QA답변 파일 순번
+    @Schema(title = "QA답변 파일 순번", example = "")
     private Integer rplyFileSeq;
 
-    //QA답면 파일 리스트
+    @Schema(title = "QA답변 파일 리스트", example = "")
     private List<COFileDTO> rplyFileList;
 
     //검색 리스트
@@ -85,18 +90,21 @@ public class IMAQaDTO extends BaseDTO {
     private List<String> rsumeCdList;
     private String srchDate;
 
-    //테이블 이름
+    @Schema(title = "테이블 이름", example = "")
     private String tableNm;
 
-    //조회 리스트
+    @Schema(title = "조회 리스트", example = "")
     private List<IMAQaDTO> list;
 
-    //마이페이지 여부
+    @Schema(title = "마이페이지 여부", example = "")
     private String mypageYn;
 
-    //마이페이지 메인 여부
+    @Schema(title = "마이페이지 메인 여부", example = "")
     private String mypageMainYn;
 
-    //나의 1:1 문의 검색어
+    @Schema(title = "나의 1:1 문의 검색어", example = "")
     private String searchText;
+
+    @Schema(title = "대시보드 검색타입", example = "A/B")
+    private String dashBoardType;
 }
