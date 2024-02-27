@@ -255,7 +255,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var date = today.getFullYear() +""+ today.getMonth()+1 +""+ today.getDate();
 
 
-                        var fileName = "탄소배출저감_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
+                        var fileName = "안전설비구축_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
                         cmmCtrl.getAppctnPdfDownload(fileName);
                     }
                 }
@@ -553,7 +553,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }else if($(this).val() == "PRO_TYPE01001_02_004"){
                                 $(this).next().val("PRO_TYPE01001_01_004");
                             }else if($(this).val() == "PRO_TYPE01001_02_005"){
-                                $(this).next().val("PRO_TYPE01002_01_003");
+                                $(this).next().val("PRO_TYPE01001_01_005");
                             }
 
                             else if($(this).val() == "PRO_TYPE01002_01_003"){

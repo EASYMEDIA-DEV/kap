@@ -1312,8 +1312,8 @@
                                                 <!-- 리스트 목록 결과 -->
                                                 <tbody id="listContainer3">
                                                 <tr>
+                                                    <td class="text-center">컨설팅 만족도 조사</td>
                                                     <td class="text-center">${rsumeList.srvNm}</td>
-                                                    <td class="text-center">${rsumeList.typeNm}</td>
                                                     <td class="text-center">
                                                         <div class="input-group form-date-group mr-sm">
                                                             <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rsumeList.srvSeq}">

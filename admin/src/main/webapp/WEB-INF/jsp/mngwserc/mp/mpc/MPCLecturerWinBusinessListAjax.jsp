@@ -11,7 +11,7 @@
                 <td class="text-center">${list.bsnNm}</td>
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.cmpnNm}</td>
-                <td class="text-center">${list.bsnmNo}</td>
+                <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center">${list.ctgryNm}</td>
                 <td class="text-center">${list.sizeNm}</td>
                 <td class="text-center">${kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>

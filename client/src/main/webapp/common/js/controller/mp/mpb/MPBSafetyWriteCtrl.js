@@ -76,18 +76,21 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             spprtPmt : {
                 event : {
                     change : function() {
+                        var a = parseInt($(this).val().replaceAll(",",""));
+                        var b = parseInt($("#phswPmt").val().replaceAll(",",""));
 
-                        var a = parseInt($(this).val());
-                        var b = parseInt($("#phswPmt").val());
                         if(isNaN(a)){
                             a=0;
-                        }else if(isNaN(b)){
+                        }
+                        if(isNaN(b)){
                             b=0;
                         }
 
                         var sum = a + b;
 
                         $("#sum").val(sum);
+                        $("#sum").keyup();
+
                         $("#ttlPmt").val(sum);
                     }
                 }
@@ -95,18 +98,21 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             phswPmt : {
                 event : {
                     change : function() {
-                        var a = parseInt($(this).val());
-                        var b = parseInt($("#spprtPmt").val());
+                        var a = parseInt($(this).val().replaceAll(",",""));
+                        var b = parseInt($("#spprtPmt").val().replaceAll(",",""));
 
                         if(isNaN(a)){
                             a=0;
-                        }else if(isNaN(b)){
+                        }
+                        if(isNaN(b)){
                             b=0;
                         }
 
                         var sum = a + b ;
 
                         $("#sum").val(sum);
+                        $("#sum").keyup();
+
                         $("#ttlPmt").val(sum);
 
                     }

@@ -11,7 +11,6 @@
 				<input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
 				<!-- CSRF KEY -->
 				<input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-				<input type="hidden" class="notRequired" id="lgnSsnId" value="${rtnData.lgnSsnId}">
 
 				<!--복사유무-->
 				<input type="hidden" id="copyYn" name="copyYn" value="N" />
@@ -207,7 +206,11 @@
 								<th class="text-center">번호</th>
 								<th class="text-center">과정분류</th>
 								<th class="text-center">과정명</th>
+								<th class="text-center">접수기간</th>
+								<th class="text-center">교육기간</th>
 								<th class="text-center">학습시간</th>
+								<th class="text-center">신청인원</th>
+								<th class="text-center">정원</th>
 								<th class="text-center">최초 등록자</th>
 								<th class="text-center">최초 등록일시</th>
 								<th class="text-center">최종 수정자</th>

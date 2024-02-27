@@ -316,7 +316,7 @@
                                     </table>
                                 </div>
                                 <div class="btn-wrap align-right">
-                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>부품사 기본정보 수정</span></a>
+                                    <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification?applyYn=Y"><span>부품사 기본정보 수정</span></a>
                                 </div>
                             </div>
                         </div>

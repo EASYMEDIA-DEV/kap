@@ -35,7 +35,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     function callbackAjaxLogin(data) {
         if(data.data.passwordChk) {
             if($("#typeChk").val() == 'modify') {
-                location.replace('/my-page/member/intrduction/modify-page');
+                // applyYn : 교육, 컨설팅, 상생 신청 페이지에서 넘어온 부품사정보변경 이동인지 체크
+                if($("#applyYn").val() == "Y") {
+                    location.replace('/my-page/member/intrduction/modify-page?applyYn=Y');
+                } else {
+                    location.replace('/my-page/member/intrduction/modify-page');
+                }
             } else if($("#typeChk").val() == 'wthdrw') {
                 location.replace('/my-page/member/wthdrw/wthdrw-page')
             }
@@ -282,8 +287,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         if($("#bsnmNosOld").val()!= "") {
-
-                            $(".loading-area").stop().fadeIn(200);
+                            if($("#applyYn").val() == "" && $("#applyYn").val() != "Y") {
+                                $(".loading-area").stop().fadeIn(200);
+                            }
 
                             $(".btnChks").text("부품사 정보 변경");
                             $("#partTypeChg").val("chg");
@@ -456,6 +462,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         },
 
         immediately : function() {
+            // 교육, 컨설팅, 상생 신청 페이지 > 부품사 기본정보 수정 이동인지 체크
+            if($("#applyYn").val() != "" && $("#applyYn").val() == "Y") {
+                $("a#btnParts").trigger("click");
+            }
+
             if($(".pstnCd").val() == "MEM_CD01007") {
                 $(".form-display").show();
             } else {

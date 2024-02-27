@@ -14,9 +14,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -107,7 +109,7 @@ public class WBISupplyController {
     @RequestMapping(value = "/applyChecked")
     public String applyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO, ModelMap modelMap) throws Exception {
         try {
-            modelMap.addAttribute("resultCode", wbbaRoundService.getApplyChecked(wBRoundMstSearchDTO));
+            modelMap.addAttribute("resultCode", wBIASupplyListService.getApplyChecked(wBRoundMstSearchDTO));
 
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -187,8 +189,8 @@ public class WBISupplyController {
     /**
      * 사업신청 신청
      */
-    @RequestMapping(value = "/insert")
-    public String insert(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, ModelMap modelMap) throws Exception {
+    @PostMapping(value = "/insert")
+    public String insert(WBIBSupplyDTO wBIBSupplyDTO, WBIBSupplyMstDTO wBIBSupplyMstDTO, HttpServletRequest request, ModelMap modelMap, MultipartHttpServletRequest multiRequest) throws Exception {
         try {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
@@ -196,7 +198,7 @@ public class WBISupplyController {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 return "redirect:/";
             } else {
-                wBIBSupplyDTO.setBsnCd("BUSUNESS_TYPE09"); /* 공급망 */
+                wBIBSupplyDTO.setBsnCd("BSN09"); /* 공급망 */
 
                 COCodeDTO cOCodeDTO = new COCodeDTO();
                 /* 공급망 안정화 기금 - 신청 코드 값*/
@@ -214,8 +216,7 @@ public class WBISupplyController {
                 getCode = cOCodeService.getCdIdList(cOCodeDTO);
                 wBIBSupplyDTO.setMngSttsCd(getCode.get(0).getCd());
 
-                modelMap.addAttribute("actCnt", wBIBSupplyCompanyService.insertApply(wBIBSupplyDTO, wBIBSupplyMstDTO, request));
-
+                modelMap.addAttribute("actCnt", wBIBSupplyCompanyService.insertApply(wBIBSupplyDTO, wBIBSupplyMstDTO, request, multiRequest));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {

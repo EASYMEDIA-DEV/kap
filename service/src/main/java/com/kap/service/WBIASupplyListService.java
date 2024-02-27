@@ -3,6 +3,7 @@ package com.kap.service;
 
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
+import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -60,4 +61,9 @@ public interface WBIASupplyListService {
      * 최신 회차 목록을 조회한다.
      */
     public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 신청가능여부 코드를 조회한다.
+     */
+    public int getApplyChecked(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 }

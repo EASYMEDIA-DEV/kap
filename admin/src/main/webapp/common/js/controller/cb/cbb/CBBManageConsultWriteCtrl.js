@@ -992,7 +992,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         }).modal();
                     }
                 }
-            },tabClick : {
+            },
+            tabClick : {
                 event : {
                     click : function (e){
                         if(e.target.getAttribute('href') == "#techGuidance") {

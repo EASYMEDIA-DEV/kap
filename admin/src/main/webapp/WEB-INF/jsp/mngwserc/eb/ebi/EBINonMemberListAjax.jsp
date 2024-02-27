@@ -15,7 +15,11 @@
           <a href="javascript:" class="listView" data-details-key="${list.edctnSeq}">
             ${list.nm}
           </a></td><!--과정명-->
+        <td class="text-center">${ kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--접수기간-->
+        <td class="text-center">${ kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') } ~ ${ kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--교육기간-->
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
+        <td class="text-center">${list.accsCnt}</td><!--신청인원-->
+        <td class="text-center">${list.fxnumCnt}</td><!--정원-->
         <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
         <td class="text-center">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->
         <td class="text-center">${ empty list.modName ? '-' : list.modName += '(' += list.modId += ')' }</td><!--최종수정자-->

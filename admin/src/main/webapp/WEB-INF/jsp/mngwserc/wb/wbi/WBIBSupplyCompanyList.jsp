@@ -13,6 +13,10 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+            <input type="hidden" id="bsnmNo" name="bsnmNo" value="" />
+            <input type="hidden" id="memSeq" name="memSeq" value="" />
+            <input type="hidden" id="bsnCd" name="bsnCd" value="${bsnCd}" />
+
             <input type="hidden" id="workBsnmNo" name="workBsnmNo" value="" />
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">

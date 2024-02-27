@@ -23,9 +23,11 @@
     String sizeCd = request.getParameter("sizeCd");   //규모코드
     String stbsmDt = request.getParameter("stbsmDt");   //설립일자
     String cmpnTel = request.getParameter("telNo");   //전화번호
-    String cmpnZipcode = request.getParameter("zipcode");   //우편번호
-    String cmpnBscAddr = request.getParameter("bscAddr");   //기본주소
-    String cmpnDtlAddr = request.getParameter("dtlAddr");   //상세주소
+
+    String cmpnZipcode = (request.getParameter("zipcode") !=null && request.getParameter("zipcode") != "") ? request.getParameter("zipcode") : request.getParameter("tempZipcode");   //우편번호
+    String cmpnBscAddr = (request.getParameter("bscAddr") !=null && request.getParameter("bscAddr") != "") ? request.getParameter("bscAddr") : request.getParameter("tempBscAddr");   //기본주소
+    String cmpnDtlAddr = (request.getParameter("dtlAddr") !=null && request.getParameter("dtlAddr") != "") ? request.getParameter("dtlAddr") : request.getParameter("tempDtlAddr");   //상세주소
+
     String slsPmt = request.getParameter("slsPmt");   //매출액
     String slsYear = request.getParameter("slsYear");   //매출연도
     String mpleCnt = request.getParameter("mpleCnt");   //직원수
@@ -198,7 +200,7 @@
                                         <div class="for-status-chk for-status-chk-id"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                             <div class="form-group">
                                                 <div class="form-input">
-                                                    <input type="text" placeholder="아이디 입력"  id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
+                                                    <input type="text" placeholder="영문 아이디 입력"  id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
                                                 </div>
                                                 <div class="btn-wrap">
                                                     <button class="btn-solid small gray-bg" type="button" id="dupId"><span>중복확인</span></button>
@@ -311,10 +313,10 @@
                                                     <div class="form-address">
                                                         <div class="form-group">
                                                             <div class="form-input w-shortest">
-                                                                <input type="text" placeholder="우편번호" readonly id="zipcode" title="우편번호" name="mpaUserDto.zipcode" >
+                                                                <input type="text" placeholder="우편번호" readonly id="zipcode" title="우편번호" name="mpaUserDto.zipcode" value="<%=nullChk(cmpnZipcode)%>">
                                                             </div>
                                                             <div class="form-input">
-                                                                <input type="text" placeholder="기본주소" readonly id="bscAddr" name="mpaUserDto.bscAddr" title="기본주소" >
+                                                                <input type="text" placeholder="기본주소" readonly id="bscAddr" name="mpaUserDto.bscAddr" title="기본주소"  value="<%=nullChk(cmpnBscAddr)%>">
                                                             </div>
                                                             <div class="btn-wrap">
                                                                 <button class="btn-solid small gray-bg" type="button" id="searchPostCode"><span>우편번호 찾기</span></button>
@@ -322,7 +324,7 @@
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-input w-longer">
-                                                                <input type="text" placeholder="상세주소 입력" id="dtlAddr" name="mpaUserDto.dtlAddr" title="상세주소" >
+                                                                <input type="text" placeholder="상세주소 입력" id="dtlAddr" name="mpaUserDto.dtlAddr" title="상세주소"  value="<%=nullChk(cmpnDtlAddr)%>">
                                                             </div>
                                                         </div>
                                                     </div>

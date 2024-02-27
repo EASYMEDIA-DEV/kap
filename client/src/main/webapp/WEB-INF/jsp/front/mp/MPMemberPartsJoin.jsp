@@ -536,6 +536,9 @@
                                 <div class="row old" style="display: none;">
                                     <div class="th">
                                         <p class="title f-head">본사주소<span class="essential-mark color-sky">*</span></p>
+                                        <input type="hidden" name="tempZipcode" id="tempZipcode" value=""/>
+                                        <input type="hidden" name="tempBscAddr" id="tempBscAddr" value=""/>
+                                        <input type="hidden" name="tempDtlAddr" id="tempDtlAddr" value=""/>
                                     </div>
                                     <div class="td">
                                         <div class="data-line-w">

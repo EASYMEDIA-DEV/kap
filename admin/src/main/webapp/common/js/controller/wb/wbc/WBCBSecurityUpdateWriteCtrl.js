@@ -232,7 +232,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var date = today.getFullYear() +""+ today.getMonth()+1 +""+ today.getDate();
 
 
-                        var fileName = "탄소배출저감_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
+                        var fileName = "보안환경구축_사업현황_"+ cmpnNm +"_"+ date + ".pdf";
                         cmmCtrl.getAppctnPdfDownload(fileName);
                     }
                 }

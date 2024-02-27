@@ -125,8 +125,8 @@
                                             <div class="training-view-page">
                                                 <div class="training-list">
                                                     <div class="img-area">
-                                                        <c:if test="${not empty list.webPath}">
-                                                            <img src="${list.webPath}" alt="${list.fileDsc}">
+                                                        <c:if test="${not empty rtnData.webPath}">
+                                                            <img src="${rtnData.webPath}" alt="${rtnData.fileDsc}">
                                                         </c:if>
                                                     </div>
                                                     <div class="txt-area">
@@ -520,7 +520,7 @@
                                             </table>
                                         </div>
                                         <div class="btn-wrap align-right">
-                                            <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification"><span>부품사 기본정보 수정</span></a>
+                                            <a class="btn-text-icon black-circle" href="/my-page/member/intrduction/certification?applyYn=Y"><span>부품사 기본정보 수정</span></a>
                                         </div>
                                     </div>
                                 </div>
