@@ -93,6 +93,14 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     private final COCodeService cOCodeService;
 
     /**
+     * 신청 단계
+     * 신청-사업계획-최초점검-원가계산-협약-중간점검-완료보고-최종점검
+     */
+    private final static LinkedList<String> appctnList = new LinkedList<>(Arrays.asList(
+            "PRO_TYPE02001", "PRO_TYPE02002", "PRO_TYPE02003", "PRO_TYPE02005", "PRO_TYPE02006", "PRO_TYPE02004","PRO_TYPE02008", "PRO_TYPE02007"
+    ));
+
+    /**
      *  사업회차 연도 검색
      */
     public List<String> getOptYearList(WBFBRegisterSearchDTO wBFBRegisterSearchDTO) {
@@ -329,6 +337,12 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         WBFBRsumeTaskDtlDTO rsumeTaskDTO = rsumeTaskDtlList.get(0);
         rsumeTaskDTO.setAppctnFileInfo(wBFBRegisterCompanyMapper.getDtlFileList(rsumeTaskDTO));
         rsumeTaskDtlList.set(0, rsumeTaskDTO);
+
+        if(rsumeTaskDtlList.size() > 6) {
+            rsumeTaskDTO = rsumeTaskDtlList.get(6);
+            rsumeTaskDTO.setAppctnFileInfo(wBFBRegisterCompanyMapper.getDtlFileList(rsumeTaskDTO));
+            rsumeTaskDtlList.set(6, rsumeTaskDTO);
+        }
 
         /* ReBuilding */
         wBFBRegisterSearchDTO.setRsumeTaskDtl(rsumeTaskDtlList);
@@ -593,20 +607,44 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             switch (rsumeTaskDTO.getMngSttsCd()) {
                 case "PRO_TYPE02005_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02005_01_002"); break;
-                case "PRO_TYPE03005_02_003":
+                case "PRO_TYPE02005_02_003":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02005_01_003"); break;
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02006")) { /* 협약 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
-                case "PRO_TYPE03006_02_002":
-                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE03006_01_002"); break;
+                case "PRO_TYPE02006_02_002":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02006_01_002"); break;
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02007")) { /* 최종점검 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
                 case "PRO_TYPE02007_02_002":
-                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_02_002"); break;
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_01_002"); break;
                 case "PRO_TYPE02007_02_003":
-                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_02_003"); break;
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_01_003"); break;
+            }
+        } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02008")) { /* 완료보고 */
+
+            wBFBRegisterCompanyMapper.delAppctnFileDtl(rsumeTaskDTO);
+            List<WBRsumeFileDtlDTO> fileList = rsumeTaskDTO.getAppctnFileInfo();
+
+            for(int fileIdx=0; fileIdx< fileList.size(); fileIdx++) {
+                WBRsumeFileDtlDTO fileInfo = fileList.get(fileIdx);
+                fileInfo.setRsumeSeq(rsumeTaskDTO.getRsumeSeq());
+                fileInfo.setRsumeOrd(rsumeTaskDTO.getRsumeOrd());
+                fileInfo.setFileCd(fileInfo.getType()); /*파일타입*/
+                fileInfo.setFileSeq(fileSeqMap.get(fileInfo.getSeqNm())); /*파일 시퀀스*/
+                fileInfo.setRegId(wBFBRegisterDTO.getRegId());
+                fileInfo.setRegIp(wBFBRegisterDTO.getRegIp());
+                wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+            }
+
+            switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02008_02_003":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_003"); break;
+                case "PRO_TYPE02008_02_004":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_005"); break;
+                case "PRO_TYPE02008_02_005":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_006"); break;
             }
         }
 
@@ -652,27 +690,16 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
         /* 관리자 최종 상태 값인지 확인 */
         if(lastMngSttsCd.equals(rsumeTaskDTO.getMngSttsCd())) {
-            cOCodeDTO.setCd("PRO_TYPE02"); // 스마트 공장 코드
-            /* 단계 코드 리스트 */
-            List<COCodeDTO> stateList = cOCodeService.getCdIdList(cOCodeDTO);
-            List<COCodeDTO> selStatelist = stateList.stream().filter(ele -> ele.getDpth() == 3).collect(Collectors.toList());
 
-            /* 다음 진행 상태 */
-            String nextRsumeSttsCd = "";
-            for (int codeIdx=0; codeIdx<selStatelist.size(); codeIdx++) {
-                if (selStatelist.get(codeIdx).getCd().equals(wBFBRegisterDTO.getNowRsumeTaskCd())
-                        && codeIdx != (selStatelist.size()-1)) {
-                    nextRsumeSttsCd = selStatelist.get((codeIdx + 1)).getCd();
-                }
-            }
+            int nowIdx = appctnList.indexOf(wBFBRegisterDTO.getNowRsumeTaskCd());
 
-            /* 다음 진행 상태 값이 있을 경우 단계 생성*/
-            if(!nextRsumeSttsCd.equals("")){
-
+            if(appctnList.size()-1 > nowIdx) {
+                String nextRsumeSttsCd = appctnList.get(nowIdx+1);
                 /* 상생신청 진행상세 */
                 WBFBRegisterDTO registerDTO = new WBFBRegisterDTO();
                 int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); /* 진행순번 */
+                /* 진행순번 */
+                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
                 registerDTO.setRsumeOrd(rsumeTaskDTO.getRsumeOrd() + 1);
                 registerDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
                 registerDTO.setRsumeSttsCd(nextRsumeSttsCd);
@@ -686,6 +713,45 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
                 wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(registerDTO);
             }
+
+
+            /*cOCodeDTO.setCd("PRO_TYPE02"); // 스마트 공장 코드
+             *//* 단계 코드 리스트 *//*
+            List<COCodeDTO> stateList = cOCodeService.getCdIdList(cOCodeDTO);
+            List<COCodeDTO> selStatelist = stateList.stream()
+                    .filter(ele -> ele.getDpth() == 3)
+                    .sorted(Comparator.comparing(COCodeDTO::getLftVal))
+                    .collect(Collectors.toList());
+
+            *//* 다음 진행 상태 *//*
+            String nextRsumeSttsCd = "";
+            for (int codeIdx=0; codeIdx<selStatelist.size(); codeIdx++) {
+                if (selStatelist.get(codeIdx).getCd().equals(wBFBRegisterDTO.getNowRsumeTaskCd())
+                        && codeIdx != (selStatelist.size()-1)) {
+                    nextRsumeSttsCd = selStatelist.get((codeIdx + 1)).getCd();
+                }
+            }
+
+            *//* 다음 진행 상태 값이 있을 경우 단계 생성*//*
+            if(!nextRsumeSttsCd.equals("")){
+
+                *//* 상생신청 진행상세 *//*
+                WBFBRegisterDTO registerDTO = new WBFBRegisterDTO();
+                int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); *//* 진행순번 *//*
+                registerDTO.setRsumeOrd(rsumeTaskDTO.getRsumeOrd() + 1);
+                registerDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
+                registerDTO.setRsumeSttsCd(nextRsumeSttsCd);
+                registerDTO.setAppctnSttsCd(nextRsumeSttsCd + "_01_001");
+                registerDTO.setMngSttsCd(nextRsumeSttsCd + "_02_001");
+                registerDTO.setRegId(wBFBRegisterDTO.getRegId());
+                registerDTO.setRegIp(wBFBRegisterDTO.getRegIp());
+                wBFBRegisterCompanyMapper.putStepAppctnRsumeDtl(registerDTO);
+
+                *//* 상생신청 스마트 상세 *//*
+                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
+                wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(registerDTO);
+            }*/
         }
 
         return respCnt;
@@ -1452,6 +1518,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
      * 부품사 신청 정보를 수정한다.
      * @return
      */
+    @Transactional
     public int updInfoUser(WBFBRegisterDTO wBFBRegisterDTO, MultipartHttpServletRequest multiRequest, HttpServletRequest request) throws Exception {
         int respCnt = 0;
 
@@ -1480,10 +1547,19 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02002_01_004");
                         wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02002_02_002");
                         break;
+                    case "PRO_TYPE02008_01_001":
+                        wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02008_01_002");
+                        wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02008_02_002");
+                        break;
+                    case "PRO_TYPE02008_01_003":
+                        wBFBRegisterDTO.setAppctnSttsCd("PRO_TYPE02008_01_004");
+                        wBFBRegisterDTO.setMngSttsCd("PRO_TYPE02008_02_002");
+                        break;
                 }
 
                 /* 공통 - 상태값 변경*/
-                WBFBRsumeTaskDtlDTO rsumeTaskDtlDTO = WBFBRsumeTaskDtlDTO.builder()
+                wBFBRegisterCompanyMapper.updRsumeDtl(
+                        WBFBRsumeTaskDtlDTO.builder()
                         .appctnSttsCd(wBFBRegisterDTO.getAppctnSttsCd())
                         .mngSttsCd(wBFBRegisterDTO.getMngSttsCd())
                         .modId(modId)
@@ -1491,9 +1567,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         .rsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq())
                         .rsumeOrd(wbfbRsumeTaskDtlDTO.getRsumeOrd())
                         .appctnSeq(wBFBRegisterDTO.getAppctnSeq())
-                        .build();
-
-                wBFBRegisterCompanyMapper.updRsumeDtl(rsumeTaskDtlDTO);
+                        .build()
+                );
 
                 if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02001")) {
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = WBFBRegisterSearchDTO.builder()
@@ -1507,18 +1582,18 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         respCnt = 300;
                     } else {
                         /* 신청 */
-                        WBFBRegisterDTO registerDTO = WBFBRegisterDTO.builder()
-                                .appctnSpprtSeq(wBFBRegisterDTO.getAppctnSeq())
-                                .taskCd(wbfbRsumeTaskDtlDTO.getTaskCd())
-                                .bsnTypeCd(wbfbRsumeTaskDtlDTO.getBsnTypeCd())
-                                .smtfnPrsntCd(wbfbRsumeTaskDtlDTO.getSmtfnPrsntCd())
-                                .smtfnTrgtCd(wbfbRsumeTaskDtlDTO.getSmtfnTrgtCd())
-                                .modId(modId)
-                                .modIp(modIp)
-                                .build();
-
                         /* 사업, 과제, 스마트 만 수정 */
-                        respCnt = wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(registerDTO);
+                        respCnt = wBFBRegisterCompanyMapper.updRsumeTaskDtlSub(
+                                WBFBRegisterDTO.builder()
+                                        .appctnSeq(wBFBRegisterDTO.getAppctnSeq())
+                                        .taskCd(wbfbRsumeTaskDtlDTO.getTaskCd())
+                                        .bsnTypeCd(wbfbRsumeTaskDtlDTO.getBsnTypeCd())
+                                        .smtfnPrsntCd(wbfbRsumeTaskDtlDTO.getSmtfnPrsntCd())
+                                        .smtfnTrgtCd(wbfbRsumeTaskDtlDTO.getSmtfnTrgtCd())
+                                        .modId(modId)
+                                        .modIp(modIp)
+                                        .build()
+                        );
 
                         /* 신청 파일 삭제 */
                         wBFBRegisterCompanyMapper.delAppctnFileDtl(wbfbRsumeTaskDtlDTO);
@@ -1533,7 +1608,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                             Map.Entry<String, MultipartFile> entry = itr.next();
                             file = entry.getValue();
 
-                            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                            if (file.getName().indexOf("atchFile") > -1 && file.getSize() > 0) {
                                 atchFileCnt++;
                             }
                         }
@@ -1541,7 +1616,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         if (!files.isEmpty()) {
                             rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-                            for (int i = 0; i < rtnList.size() ; i++) {
+                            for (int i = 0; i < rtnList.size(); i++) {
 
                                 List<COFileDTO> fileList = new ArrayList();
                                 Integer fileSeq;
@@ -1560,10 +1635,15 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                                 WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
                                 fileInfo.setRsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq());
                                 fileInfo.setRsumeOrd(wbfbRsumeTaskDtlDTO.getRsumeOrd());
-                                if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE01"); }
-                                else if(i == 1) { fileInfo.setFileCd("ATTACH_FILE_TYPE02"); }
-                                else if(i == 2) { fileInfo.setFileCd("ATTACH_FILE_TYPE03"); }
-                                else if(i == 3) { fileInfo.setFileCd("ATTACH_FILE_TYPE04"); }
+                                if (i == 0) {
+                                    fileInfo.setFileCd("ATTACH_FILE_TYPE01");
+                                } else if (i == 1) {
+                                    fileInfo.setFileCd("ATTACH_FILE_TYPE02");
+                                } else if (i == 2) {
+                                    fileInfo.setFileCd("ATTACH_FILE_TYPE03");
+                                } else if (i == 3) {
+                                    fileInfo.setFileCd("ATTACH_FILE_TYPE04");
+                                }
                                 fileInfo.setFileSeq(fileSeq);
                                 fileInfo.setRegId(modId);
                                 fileInfo.setRegIp(modIp);
@@ -1575,6 +1655,55 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 } else if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02002")) {
                     /* 사업계획 */
                     respCnt = wBFBRegisterCompanyMapper.updRsumeTaskDtl(wbfbRsumeTaskDtlDTO);
+                } else if(wbfbRsumeTaskDtlDTO.getRsumeSttsCd().equals("PRO_TYPE02008")) {
+                    /* 신청 파일 삭제 */
+                    wBFBRegisterCompanyMapper.delAppctnFileDtl(wbfbRsumeTaskDtlDTO);
+                    // 신청파일 등록
+                    List<COFileDTO> rtnList = null;
+                    Map<String, MultipartFile> files = multiRequest.getFileMap();
+                    Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+                    MultipartFile file;
+                    int atchFileCnt = 0;
+
+                    while (itr.hasNext()) {
+                        Map.Entry<String, MultipartFile> entry = itr.next();
+                        file = entry.getValue();
+
+                        if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                            atchFileCnt++;
+                        }
+                    }
+
+                    if (!files.isEmpty()) {
+                        rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+
+                        for (int i = 0; i < rtnList.size() ; i++) {
+
+                            List<COFileDTO> fileList = new ArrayList();
+                            Integer fileSeq;
+
+                            if ("99".equals(rtnList.get(i).getRespCd())) {
+                                fileSeq = wBFBRegisterDTO.getFileSeqList().get(i);
+                            } else {
+                                rtnList.get(i).setStatus("success");
+                                rtnList.get(i).setFieldNm("fileSeq");
+                                fileList.add(rtnList.get(i));
+                                HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                                fileSeq = fileSeqMap.get("fileSeq");
+                            }
+
+                            WBRsumeFileDtlDTO fileInfo = new WBRsumeFileDtlDTO();
+                            fileInfo.setRsumeSeq(wbfbRsumeTaskDtlDTO.getRsumeSeq());
+                            fileInfo.setRsumeOrd(wbfbRsumeTaskDtlDTO.getRsumeOrd());
+                            if(i == 0) { fileInfo.setFileCd("ATTACH_FILE_TYPE10"); }
+                            fileInfo.setFileSeq(fileSeq);
+                            fileInfo.setRegId(modId);
+                            fileInfo.setRegIp(modIp);
+
+                            wBFBRegisterCompanyMapper.putAppctnFileDtl(fileInfo);
+                        }
+                    }
                 }
             }
 

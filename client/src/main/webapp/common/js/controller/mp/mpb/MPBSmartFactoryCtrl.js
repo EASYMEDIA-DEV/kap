@@ -112,7 +112,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     }
 
     let setDistable = function() {
-        let rsumeBlockCd = ['PRO_TYPE02001_02_002', 'PRO_TYPE02002_02_001', 'PRO_TYPE02002_02_003'];
+        let rsumeBlockCd = ['PRO_TYPE02001_02_002', 'PRO_TYPE02002_02_001', 'PRO_TYPE02002_02_003', "PRO_TYPE02008_02_001", "PRO_TYPE02008_02_003"];
         let spprtBlockCd = ['PRO_TYPE03001_02_001', 'PRO_TYPE03001_02_003','PRO_TYPE03002_02_001','PRO_TYPE03002_02_003','PRO_TYPE03003_02_001','PRO_TYPE03003_02_003'];
 
         $('#contArea').find('.acco-hide-area').each(function(idx, el) {
@@ -333,7 +333,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             if(confirm("저장 후 내용을 수정할 수 없습니다.\n저장하시겠습니까?")) {
                                 removeComma($formObj);
-                                //이용약관 체크여부
                                 cmmCtrl.fileFrm(function (data) {
                                     if (data.respCnt == 100) {
                                         alert("잘못된 접근입니다. 다시 시도바랍니다.");

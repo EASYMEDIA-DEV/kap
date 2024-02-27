@@ -254,7 +254,7 @@
             A.*
             ,B.task_cd,B.bsn_type_cd,B.smtfn_prsnt_cd,B.smtfn_trgt_cd,B.aprnc_cmpn_cd,B.offer_cmpn_nm,B.offer_bsnm_no,B.offer_pic_nm,B.offer_pic_hp_no,B.offer_pic_email
             ,B.ttl_bsn_pmt,B.task_no,B.chk_cmssr_seq,B.chk_plan_dt,B.chk_implmn_dt,B.exam_score,B.smtfn_lvl_chk_cd,B.prmcst_clcltn_instt,B.rqst_dt,B.rply_dt
-            ,B.gvmnt_spprt_pmt,B.mjcmn_aprnc_pmt,B.ntdcn_cmpn_brdn_pmt,B.ttl_pmt,B.ttl_bsn_pmt,B.agrmt_dt,B.agrmt_term_dt,B.pmndv_pmt_yn,B.accs_dt,B.bank_nm,B.acnt_no,B.dpsit_nm,B.give_dt,B.give_seq,B.cmssn_pmt
+            ,B.gvmnt_spprt_pmt,B.mjcmn_aprnc_pmt,B.ntdcn_cmpn_brdn_pmt,B.ttl_pmt,B.ttl_bsn_pmt,B.agrmt_dt,B.agrmt_term_dt,B.pmndv_pmt_yn,B.accs_dt,B.bank_nm,B.acnt_no,B.dpsit_nm,B.give_dt,B.give_seq,B.cmssn_pmt, B.cmpltn_brfng_dtm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.rsume_stts_cd) as rsume_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.appctn_stts_cd) as appctn_stts_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = A.mng_stts_cd) as mng_stts_cd_nm
@@ -262,7 +262,7 @@
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.bsn_type_cd) as bsn_type_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.smtfn_prsnt_cd) as smtfn_prsnt_cd_nm
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = B.smtfn_trgt_cd) as smtfn_trgt_cd_nm
-            ,(SELECT name FROM co_mem_mst WHERE mem_seq = B.chk_cmssr_seq) as chk_cmssr_nm
+            ,(SELECT name FROM cp_isttr_mst WHERE isttr_seq = B.chk_cmssr_seq) as chk_cmssr_nm
             ,DATE_FORMAT(B.chk_plan_dt, '%m/%d') AS chk_plan_dt_fmt
             ,DATE_FORMAT(B.chk_implmn_dt, '%m/%d') AS chk_implmn_dt_fmt
             ,DATE_FORMAT(B.rqst_dt, '%m/%d') AS rqst_dt_fmt
@@ -311,7 +311,7 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getOptYearList" parameterType="WBFBRegisterSearchDTO">
-        SELECT DISTINCT YEAR(year)
+        SELECT DISTINCT YEAR(year) /*WBFBRegisterCompanyMapper.getOptYearList*/
         FROM cx_episd_mst
         WHERE bsn_cd = #{bsnCd}
         ORDER BY year ASC
@@ -325,7 +325,7 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getOptEpisdList" parameterType="WBFBRegisterSearchDTO">
-        SELECT DISTINCT episd
+        SELECT DISTINCT episd /*WBFBRegisterCompanyMapper.getOptEpisdList*/
         FROM cx_episd_mst
         WHERE bsn_cd = #{bsnCd}
         AND year = #{year}
@@ -340,7 +340,7 @@
         2023.11.16  김동현     최초 생성
     -->
     <select id="getOptnList" parameterType="WBFBRegisterSearchDTO" resultType="WBRoundOptnMstDTO">
-        SELECT bsn_optn_seq, optn_cd, optn_nm, optn_ord
+        SELECT bsn_optn_seq, optn_cd, optn_nm, optn_ord /*WBFBRegisterCompanyMapper.selRoundYear*/
         FROM cx_episd_bsn_optn_dtl
         WHERE episd_seq = #{episdSeq}
         AND optn_cd = #{optnCd}
@@ -852,6 +852,7 @@
             ,ttl_pmt = #{ttlPmt}
             ,agrmt_dt = #{agrmtDt}
             ,agrmt_term_dt = #{agrmtTermDt}
+            ,cmpltn_brfng_dtm = #{cmpltnBrfngDtm}
         </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}

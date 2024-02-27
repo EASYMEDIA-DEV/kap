@@ -104,6 +104,8 @@ public class WBFBRsumeTaskDtlDTO extends BaseDTO {
     private Integer ttlPmt;
     @Schema(title = "수수료", example = "")
     private Integer cmssnPmt;
+    @Schema(title = "완료보고일", example = "")
+    private String cmpltnBrfngDtm;
     @Schema(title = "등록ID", example = "숫자")
     private String regId;
     @Schema(title = "등록IP", example = "숫자")

@@ -111,6 +111,8 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private String offerCmpnCdNm;
     @Schema(title = "공급업체 사업자등록번호", example = "")
     private String offerBsnmNo;
+    @Schema(title = "완료보고일", example = "")
+    private String cmpltnBrfngDtm;
 
     private Integer cmpnCount;
 

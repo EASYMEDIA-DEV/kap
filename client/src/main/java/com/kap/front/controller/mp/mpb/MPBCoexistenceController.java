@@ -202,6 +202,7 @@ public class MPBCoexistenceController {
                     /* 진행 단계 별 신청 정보*/
                     WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
                     wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
+                    wBFBRegisterSearchDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
                     modelMap.addAttribute("rtnDto", mpbBsnSearchDTO);
                     modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
                     modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
@@ -359,6 +360,7 @@ public class MPBCoexistenceController {
                         respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
                     } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                         mpbBsnMstDTO.getWBFBRegisterDTO().setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        mpbBsnMstDTO.getWBFBRegisterDTO().setBsnCd(mpbBsnSearchDTO.getBsnCd());
                         respCnt = wBFBRegisterCompanyService.updInfoUser(mpbBsnMstDTO.getWBFBRegisterDTO(), multiRequest, request);
                     } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
                         WBGAApplyDtlDTO wbgaApplyDtlDTO = new WBGAApplyDtlDTO();

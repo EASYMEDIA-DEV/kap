@@ -45,7 +45,6 @@
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
@@ -169,9 +168,9 @@
                                                         </c:if>
                                                         <div class="file-prev-area">
                                                             <a
-                                                                href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[0].fileOrd}"
-                                                                download=""
-                                                                title="파일 다운로드"
+                                                                    href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[0].fileOrd}"
+                                                                    download=""
+                                                                    title="파일 다운로드"
                                                             >${rsumeTaskDtl[0].appctnFileInfo[0].orgnFileNm}</a>
                                                         </div>
                                                     </div>
@@ -193,9 +192,9 @@
                                                             </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
-                                                                    href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[1].fileOrd}"
-                                                                    download=""
-                                                                    title="파일 다운로드"
+                                                                        href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[1].fileOrd}"
+                                                                        download=""
+                                                                        title="파일 다운로드"
                                                                 >${rsumeTaskDtl[0].appctnFileInfo[1].orgnFileNm}</a>
                                                             </div>
                                                         </div>
@@ -217,9 +216,9 @@
                                                             </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
-                                                                    href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[2].fileOrd}"
-                                                                    download=""
-                                                                    title="파일 다운로드"
+                                                                        href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[2].fileOrd}"
+                                                                        download=""
+                                                                        title="파일 다운로드"
                                                                 >${rsumeTaskDtl[0].appctnFileInfo[2].orgnFileNm}</a>
                                                             </div>
                                                         </div>
@@ -242,9 +241,9 @@
                                                             </c:if>
                                                             <div class="file-prev-area">
                                                                 <a
-                                                                    href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[3].fileOrd}"
-                                                                    download=""
-                                                                    title="파일 다운로드"
+                                                                        href="/file/download?fileSeq=${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}&fileOrd=${rsumeTaskDtl[0].appctnFileInfo[3].fileOrd}"
+                                                                        download=""
+                                                                        title="파일 다운로드"
                                                                 >${rsumeTaskDtl[0].appctnFileInfo[3].orgnFileNm}</a>
                                                             </div>
                                                         </div>
@@ -288,7 +287,6 @@
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.bsnCd" value="BSN06" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[1].appctnSttsCd}" />
                                 <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}" />
@@ -395,7 +393,7 @@
                     <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02004'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
-                                <p class="tit f-head">중간점검</p>
+                                <p class="tit f-head">원가계산</p>
                             </div>
                             <c:if test="${not empty rsumeTaskDtl[3].appctnSttsCdNm}">
                                 <c:choose>
@@ -415,21 +413,18 @@
                             </c:if>
                         </a>
                     </div>
-                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02005'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02006'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
-                                <p class="tit f-head">원가계산</p>
+                                <p class="tit f-head">협약</p>
                             </div>
                             <c:if test="${not empty rsumeTaskDtl[4].appctnSttsCdNm}">
                                 <c:choose>
                                     <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '대기'}">
                                         <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '적합'}">
+                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '협약완료'}">
                                         <c:set var="classType" value="accepting" />
-                                    </c:when>
-                                    <c:when test="${rsumeTaskDtl[4].appctnSttsCdNm eq '부적합'}">
-                                        <c:set var="classType" value="arr" />
                                     </c:when>
                                 </c:choose>
                                 <p class="box-label bigger ${classType}"><span>
@@ -438,18 +433,21 @@
                             </c:if>
                         </a>
                     </div>
-                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02006'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02004'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
-                                <p class="tit f-head">협약</p>
+                                <p class="tit f-head">중간점검</p>
                             </div>
                             <c:if test="${not empty rsumeTaskDtl[5].appctnSttsCdNm}">
                                 <c:choose>
                                     <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '대기'}">
                                         <c:set var="classType" value="waiting" />
                                     </c:when>
-                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '협약완료'}">
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '적합'}">
                                         <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[5].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
                                     </c:when>
                                 </c:choose>
                                 <p class="box-label bigger ${classType}"><span>
@@ -458,10 +456,10 @@
                             </c:if>
                         </a>
                     </div>
-                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02007'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02008'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
-                                <p class="tit f-head">최종점검</p>
+                                <p class="tit f-head">완료보고</p>
                             </div>
                             <c:if test="${not empty rsumeTaskDtl[6].appctnSttsCdNm}">
                                 <c:choose>
@@ -477,6 +475,88 @@
                                 </c:choose>
                                 <p class="box-label bigger ${classType}"><span>
                                         ${rsumeTaskDtl[6].appctnSttsCdNm}
+                                </span></p>
+                            </c:if>
+                        </a>
+
+                        <div class="acco-hide-area">
+                            <form name="frmData" enctype="multipart/form-data">
+                                <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[6].appctnSttsCd}" />
+                                <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[6].mngSttsCd}" />
+                                <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[6].rsumeSttsCd}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[6].rsumeSeq}" />
+                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[6].rsumeOrd}" />
+
+                                <div class="data-enter-form">
+                                    <div class="row">
+                                        <div class="th">
+                                            <p class="title f-head">첨부파일</p>
+                                        </div>
+                                        <div class="td">
+                                            <div class="data-line-w">
+                                                <div class="data-line">
+                                                    <div class="noti-txt-w">
+                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
+                                                    </div>
+                                                </div>
+                                                <div class="data-line">
+                                                    <div class="inner-line">
+                                                        <p class="data-title f-body1">완료보고서<span class="essential-mark color-sky">*</span></p>
+                                                        <div class="form-group">
+                                                            <c:if test="${rsumeTaskDtl[6].appctnSttsCd eq 'PRO_TYPE02008_01_003' or rsumeTaskDtl[6].appctnSttsCd eq 'PRO_TYPE02008_01_001'}">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                    <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                </div>
+                                                                <div class="file-btn-area">
+                                                                    <input type="file" id="searchFile14" class="searchFile" name="atchFile1">
+                                                                    <input type="hidden" name="fileSeqList" value="${rsumeTaskDtl[6].appctnFileInfo[0].fileSeq}"/>
+                                                                    <label class="btn-solid gray-bg" for="searchFile14">파일 찾기</label>
+                                                                </div>
+                                                            </c:if>
+                                                            <div class="file-prev-area">
+                                                                <a
+                                                                        href="/file/download?fileSeq=${rsumeTaskDtl[6].appctnFileInfo[0].fileSeq}&fileOrd=${rsumeTaskDtl[6].appctnFileInfo[0].fileOrd}"
+                                                                        download=""
+                                                                        title="파일 다운로드"
+                                                                >${rsumeTaskDtl[6].appctnFileInfo[0].orgnFileNm}</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <c:if test="${rsumeTaskDtl[6].appctnSttsCd eq 'PRO_TYPE02008_01_001' or rsumeTaskDtl[6].appctnSttsCd eq 'PRO_TYPE02008_01_003'}">
+                                    <div class="btn-wrap align-right">
+                                        <a class="btn-solid small black-bg btnUpdate" data-Status="${rsumeTaskDtl[6].appctnSttsCdNm}" href="javascript:"><span>저장</span></a>
+                                    </div>
+                                </c:if>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02007'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                        <a class="acco-click-area" href="javascript:">
+                            <div class="txt-box">
+                                <p class="tit f-head">최종점검</p>
+                            </div>
+                            <c:if test="${not empty rsumeTaskDtl[7].appctnSttsCdNm}">
+                                <c:choose>
+                                    <c:when test="${rsumeTaskDtl[7].appctnSttsCdNm eq '대기'}">
+                                        <c:set var="classType" value="waiting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[7].appctnSttsCdNm eq '적합'}">
+                                        <c:set var="classType" value="accepting" />
+                                    </c:when>
+                                    <c:when test="${rsumeTaskDtl[7].appctnSttsCdNm eq '부적합'}">
+                                        <c:set var="classType" value="arr" />
+                                    </c:when>
+                                </c:choose>
+                                <p class="box-label bigger ${classType}"><span>
+                                        ${rsumeTaskDtl[7].appctnSttsCdNm}
                                 </span></p>
                             </c:if>
                         </a>
@@ -674,32 +754,6 @@
                                                                 <div class="data-enter-form">
                                                                     <div class="row">
                                                                         <div class="th">
-                                                                            <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
-                                                                        </div>
-                                                                        <div class="td">
-                                                                            <div class="data-line-w">
-                                                                                <div class="data-line">
-                                                                                    <div class="form-group">
-                                                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                            <p class="empty-txt">선택된 파일 없음</p>
-                                                                                            <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                        </div>
-                                                                                        <div class="file-btn-area">
-                                                                                            <input type="file" id="searchFile5" class="searchFile" name="atchFile1">
-                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].spprtAppctnFileSeq}">
-                                                                                            <label class="btn-solid gray-bg" for="searchFile5">파일 찾기</label>
-                                                                                        </div>
-                                                                                        <div class="file-prev-area">
-                                                                                            <a class="btnDownload" data-file-seq="${spprtDtl[0].spprtAppctnFileSeq}" href="javascript:void(0);"
-                                                                                               download="" title="파일 다운로드">${spprtDtl[0].spprtAppctnFileNm}</a><!-- 204-01-03 속성 변경 -->
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="row">
-                                                                        <div class="th">
                                                                             <p class="title f-body1">계좌이체약정서<span class="essential-mark color-sky">*</span></p>
                                                                         </div>
                                                                         <div class="td">
@@ -743,6 +797,32 @@
                                                                                         <div class="file-prev-area">
                                                                                             <a class="btnDownload" data-file-seq="${spprtDtl[0].bnkbkFileSeq}" href="javascript:void(0);"
                                                                                                download="" title="파일 다운로드">${spprtDtl[0].bnkbkFileNm}</a>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="row">
+                                                                        <div class="th">
+                                                                            <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
+                                                                        </div>
+                                                                        <div class="td">
+                                                                            <div class="data-line-w">
+                                                                                <div class="data-line">
+                                                                                    <div class="form-group">
+                                                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                            <p class="empty-txt">선택된 파일 없음</p>
+                                                                                            <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                        </div>
+                                                                                        <div class="file-btn-area">
+                                                                                            <input type="file" id="searchFile5" class="searchFile" name="atchFile1">
+                                                                                            <input type="hidden" name="fileSeqList" value="${spprtDtl[0].spprtAppctnFileSeq}">
+                                                                                            <label class="btn-solid gray-bg" for="searchFile5">파일 찾기</label>
+                                                                                        </div>
+                                                                                        <div class="file-prev-area">
+                                                                                            <a class="btnDownload" data-file-seq="${spprtDtl[0].spprtAppctnFileSeq}" href="javascript:void(0);"
+                                                                                               download="" title="파일 다운로드">${spprtDtl[0].spprtAppctnFileNm}</a><!-- 204-01-03 속성 변경 -->
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -911,32 +991,6 @@
                                                             <div class="data-enter-form">
                                                                 <div class="row">
                                                                     <div class="th">
-                                                                        <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
-                                                                    </div>
-                                                                    <div class="td">
-                                                                        <div class="data-line-w">
-                                                                            <div class="data-line">
-                                                                                <div class="form-group">
-                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                        <p class="empty-txt">선택된 파일 없음</p>
-                                                                                        <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                    </div>
-                                                                                    <div class="file-btn-area">
-                                                                                        <input type="file" id="searchFile8" class="searchFile" name="atchFile1">
-                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
-                                                                                        <label class="btn-solid gray-bg" for="searchFile8">파일 찾기</label>
-                                                                                    </div>
-                                                                                    <div class="file-prev-area">
-                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[1].spprtAppctnFileSeq}" href="javascript:void(0);"
-                                                                                           download="" title="파일 다운로드">${spprtDtl[1].spprtAppctnFileNm}</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="th">
                                                                         <p class="title f-body1">계좌이체약정서<span class="essential-mark color-sky">*</span></p>
                                                                     </div>
                                                                     <div class="td">
@@ -980,6 +1034,32 @@
                                                                                     <div class="file-prev-area">
                                                                                         <a class="btnDownload" data-file-seq="${spprtDtl[1].bnkbkFileSeq}" href="javascript:void(0);"
                                                                                            download="" title="파일 다운로드">${spprtDtl[1].bnkbkFileNm}</a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="th">
+                                                                        <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
+                                                                    </div>
+                                                                    <div class="td">
+                                                                        <div class="data-line-w">
+                                                                            <div class="data-line">
+                                                                                <div class="form-group">
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                        <p class="empty-txt">선택된 파일 없음</p>
+                                                                                        <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                    </div>
+                                                                                    <div class="file-btn-area">
+                                                                                        <input type="file" id="searchFile8" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
+                                                                                        <label class="btn-solid gray-bg" for="searchFile8">파일 찾기</label>
+                                                                                    </div>
+                                                                                    <div class="file-prev-area">
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[1].spprtAppctnFileSeq}" href="javascript:void(0);"
+                                                                                           download="" title="파일 다운로드">${spprtDtl[1].spprtAppctnFileNm}</a>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -1054,32 +1134,6 @@
                                                             <div class="data-enter-form">
                                                                 <div class="row">
                                                                     <div class="th">
-                                                                        <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
-                                                                    </div>
-                                                                    <div class="td">
-                                                                        <div class="data-line-w">
-                                                                            <div class="data-line">
-                                                                                <div class="form-group">
-                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                        <p class="empty-txt">선택된 파일 없음</p>
-                                                                                        <!-- 파일 첨부되면 file-list 영역 생성 -->
-                                                                                    </div>
-                                                                                    <div class="file-btn-area">
-                                                                                        <input type="file" id="searchFile11" class="searchFile" name="atchFile1">
-                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
-                                                                                        <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
-                                                                                    </div>
-                                                                                    <div class="file-prev-area">
-                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[2].spprtAppctnFileSeq}" javascript:void(0);
-                                                                                           download="" title="파일 다운로드">${spprtDtl[2].spprtAppctnFileNm}</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row">
-                                                                    <div class="th">
                                                                         <p class="title f-body1">기술임치증<span class="essential-mark color-sky">*</span></p>
                                                                     </div>
                                                                     <div class="td">
@@ -1126,6 +1180,32 @@
                                                                                            download="" title="파일 다운로드">${spprtDtl[2].lsePayFileNm}</a>
                                                                                     </div>
                                                                                     <!-- // 2023-12-20 추가 -->
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="th">
+                                                                        <p class="title f-body1">지원금신청서<span class="essential-mark color-sky">*</span></p>
+                                                                    </div>
+                                                                    <div class="td">
+                                                                        <div class="data-line-w">
+                                                                            <div class="data-line">
+                                                                                <div class="form-group">
+                                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                        <p class="empty-txt">선택된 파일 없음</p>
+                                                                                        <!-- 파일 첨부되면 file-list 영역 생성 -->
+                                                                                    </div>
+                                                                                    <div class="file-btn-area">
+                                                                                        <input type="file" id="searchFile11" class="searchFile" name="atchFile1">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
+                                                                                        <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
+                                                                                    </div>
+                                                                                    <div class="file-prev-area">
+                                                                                        <a class="btnDownload" data-file-seq="${spprtDtl[2].spprtAppctnFileSeq}" javascript:void(0);
+                                                                                           download="" title="파일 다운로드">${spprtDtl[2].spprtAppctnFileNm}</a>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

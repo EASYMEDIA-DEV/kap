@@ -735,25 +735,6 @@
                                             </div>
                                         </div>
                                     </fieldset>
-
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
-                                            <div class="col-sm-10 col-md-11">
-                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile1" value="${spprtDtl[0].spprtAppctnFileSeq}">
-                                                    <div class="dz-default dz-message">
-                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                    </div>
-                                                </div>
-                                                <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
@@ -780,6 +761,24 @@
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
                                                     <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile3" value="${spprtDtl[0].bnkbkFileSeq}">
+                                                    <div class="dz-default dz-message">
+                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-bold mt">
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
+                                            <div class="col-sm-10 col-md-11">
+                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile1" value="${spprtDtl[0].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -963,25 +962,6 @@
                                             </div>
                                         </div>
                                     </fieldset>
-
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
-                                            <div class="col-sm-10 col-md-11">
-                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile4" value="${spprtDtl[1].spprtAppctnFileSeq}">
-                                                    <div class="dz-default dz-message">
-                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                    </div>
-                                                </div>
-                                                <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
@@ -1008,6 +988,24 @@
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile6" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile6" value="${spprtDtl[1].bnkbkFileSeq}">
+                                                    <div class="dz-default dz-message">
+                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-bold mt">
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
+                                            <div class="col-sm-10 col-md-11">
+                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile4" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1142,25 +1140,6 @@
                                             </div>
                                         </div>
                                     </fieldset>
-
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
-                                            <div class="col-sm-10 col-md-11">
-                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile7" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile7" value="${spprtDtl[2].spprtAppctnFileSeq}">
-                                                    <div class="dz-default dz-message">
-                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
-                                                    </div>
-                                                </div>
-                                                <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">기술임치증<span class="star"> *</span></label>
@@ -1187,6 +1166,24 @@
                                                 <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile9" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="임치료 납입 영수증">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile9" value="${spprtDtl[2].lsePayFileSeq}">
+                                                    <div class="dz-default dz-message">
+                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-bold mt">
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
+                                            <div class="col-sm-10 col-md-11">
+                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile7" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile7" value="${spprtDtl[2].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1317,18 +1314,6 @@
                                             </div>
                                         </div>
                                     </fieldset>
-                                    <%-- 파일 검색 --%>
-                                    <c:set var="rsumeFileList" value="${rsumeTaskDtl[0].appctnFileInfo}" />
-                                    <c:set var="rsumeTaskFile1" value=""/>
-                                    <c:set var="rsumeTaskFile2" value=""/>
-                                    <c:set var="rsumeTaskFile3" value=""/>
-                                    <c:set var="rsumeTaskFile4" value=""/>
-                                    <c:forEach var="list" items="${rsumeFileList}">
-                                        <c:if test="${list.fileCd eq 'ATTACH_FILE_TYPE01'}" ><c:set var="rsumeTaskFile1" value="${list.fileSeq}"/></c:if>
-                                        <c:if test="${list.fileCd eq 'ATTACH_FILE_TYPE02'}" ><c:set var="rsumeTaskFile2" value="${list.fileSeq}"/></c:if>
-                                        <c:if test="${list.fileCd eq 'ATTACH_FILE_TYPE03'}" ><c:set var="rsumeTaskFile3" value="${list.fileSeq}"/></c:if>
-                                        <c:if test="${list.fileCd eq 'ATTACH_FILE_TYPE04'}" ><c:set var="rsumeTaskFile4" value="${list.fileSeq}"/></c:if>
-                                    </c:forEach>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-1 control-label">신청서<span class="star"> *</span></label>
@@ -1338,7 +1323,7 @@
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="신청서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE01">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile1">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="1" data-fileType='ATTACH_FILE_TYPE01' name="rsumeTaskFile1" value="${rsumeTaskFile1}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="1" data-fileType='ATTACH_FILE_TYPE01' name="rsumeTaskFile1" value="${rsumeTaskDtl[0].appctnFileInfo[0].fileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1358,7 +1343,7 @@
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="보안서약서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE02">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].seqNm" value="rsumeTaskFile2">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="2" data-fileType='ATTACH_FILE_TYPE02' name="rsumeTaskFile2" value="${rsumeTaskFile2}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="2" data-fileType='ATTACH_FILE_TYPE02' name="rsumeTaskFile2" value="${rsumeTaskDtl[0].appctnFileInfo[1].fileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1378,7 +1363,7 @@
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="중소기업확인서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE03">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].seqNm" value="rsumeTaskFile3">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="3" data-fileType='ATTACH_FILE_TYPE03' name="rsumeTaskFile3" value="${rsumeTaskFile3}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="3" data-fileType='ATTACH_FILE_TYPE03' name="rsumeTaskFile3" value="${rsumeTaskDtl[0].appctnFileInfo[2].fileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1398,7 +1383,7 @@
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE04">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="rsumeTaskFile4">
-                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE04' name="rsumeTaskFile4" value="${rsumeTaskFile4}">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE04' name="rsumeTaskFile4" value="${rsumeTaskDtl[0].appctnFileInfo[3].fileSeq}">
                                                     <div class="dz-default dz-message">
                                                         <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                     </div>
@@ -1481,7 +1466,7 @@
                                             <label class="col-sm-2 control-label">총 사업비</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired" name="rsumeTaskDtl.ttlBsnPmt" value="${rsumeTaskDtl[1].ttlBsnPmt}" title="총 사업비" maxlength="50" placeholder="총 사업비">
+                                                    <input type="text" class="form-control input-sm comma notRequired" name="rsumeTaskDtl.ttlBsnPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[1].ttlBsnPmt}' pattern='#,###'/>" title="총 사업비" maxlength="50" placeholder="총 사업비">
                                                 </div>
                                             </div>
                                         </div>
@@ -1681,9 +1666,9 @@
                         </div>
 
                         <%-- 영역 4 --%>
-                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02004">
+                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02005">
                             <div class="panel-heading" role="tab">
-                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx4" aria-constrols="accEx4">중간점검</a>
+                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx4" aria-constrols="accEx4">원가계산</a>
                             </div>
                             <div id="accEx4" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
@@ -1696,7 +1681,7 @@
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                 <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[3].appctnSttsCd}">
-                                                <p class="form-control-static" >${rsumeTaskDtl[3].appctnSttsCdNm}</p>
+                                                <p class="form-control-static">${rsumeTaskDtl[3].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1714,44 +1699,80 @@
                                     <h6 class="mt0">관리자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검위원</label>
+                                            <label class="col-sm-2 control-label">원가계산기관</label>
                                             <div class="col-sm-6" >
                                                 <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[3].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[3].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
+                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.prmcstClcltnInstt" value="${rsumeTaskDtl[3].prmcstClcltnInstt}" title="원가계산기관" maxlength="50" placeholder="원가계산기관">
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검계획일</label>
+                                            <label class="col-sm-2 control-label">의뢰일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[3].chkPlanDt ? today : rsumeTaskDtl[3].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rqstDt" value="${empty rsumeTaskDtl[3].rqstDt ? today : rsumeTaskDtl[3].rqstDt}" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
-                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                        <em class="ion-calendar"></em>
-                                                    </button>
-                                                </span>
+                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검실시일</label>
+                                            <label class="col-sm-2 control-label">회신일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[3].chkImplmnDt ? today : rsumeTaskDtl[3].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rplyDt" value="${empty rsumeTaskDtl[3].rplyDt ? today : rsumeTaskDtl[3].rplyDt}" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
-                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                        <em class="ion-calendar"></em>
-                                                    </button>
-                                                </span>
+                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                    <em class="ion-calendar"></em>
+                                                </button>
+                                            </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">정부지원금(①)</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.gvmntSpprtPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[3].gvmntSpprtPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="정부지원금">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">대기업출연금(②)</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.mjcmnAprncPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[3].mjcmnAprncPmt}' pattern='#,###'/>" title="대기업출연금" maxlength="50" placeholder="대기업출연금">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">도입기업부담금(③)</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.ntdcnCmpnBrdnPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[3].ntdcnCmpnBrdnPmt}' pattern='#,###'/>" title="도입기업부담금" maxlength="50" placeholder="도입기업부담금">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">총금액(①+②+③)</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="text" class="form-control input-sm comma notRequired ttlPmt" name="rsumeTaskDtl.ttlPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[3].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -1761,8 +1782,8 @@
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
                                                 <c:choose>
-                                                    <c:when test="${rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02004_02_002'
-                                                        or rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02004_02_003'}"
+                                                    <c:when test="${rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02005_02_002'
+                                                        or rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02005_02_003'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[3].mngSttsCdNm}</p>
                                                         <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[3].mngSttsCd}">
@@ -1770,8 +1791,8 @@
                                                     <c:otherwise>
                                                         <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
-                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                             ${cdList.cdNm}
                                                                     </option>
                                                                 </c:if>
@@ -1786,20 +1807,21 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static" >
+                                                <p class="form-control-static">
                                                     ${ kl:convertDate(rsumeTaskDtl[3].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                                 </p>
                                             </div>
                                         </div>
                                     </fieldset>
+
                                 </div>
                             </div>
                         </div>
 
                         <%-- 영역 5 --%>
-                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02005">
+                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02006">
                             <div class="panel-heading" role="tab">
-                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx5" aria-constrols="accEx5">원가계산</a>
+                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx5" aria-constrols="accEx5">협약</a>
                             </div>
                             <div id="accEx5" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
@@ -1830,20 +1852,10 @@
                                     <h6 class="mt0">관리자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">원가계산기관</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm notRequired" name="rsumeTaskDtl.prmcstClcltnInstt" value="${rsumeTaskDtl[4].prmcstClcltnInstt}" title="원가계산기관" maxlength="50" placeholder="원가계산기관">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">의뢰일</label>
+                                            <label class="col-sm-2 control-label">협약일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rqstDt" value="${empty rsumeTaskDtl[4].rqstDt ? today : rsumeTaskDtl[4].rqstDt}" title="의뢰일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtDt" value="${empty rsumeTaskDtl[4].agrmtDt ? today : rsumeTaskDtl[4].agrmtDt}"  title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
@@ -1855,55 +1867,15 @@
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">회신일</label>
+                                            <label class="col-sm-2 control-label">기간</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.rplyDt" value="${empty rsumeTaskDtl[4].rplyDt ? today : rsumeTaskDtl[4].rplyDt}" title="회신일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtTermDt" value="${empty rsumeTaskDtl[4].agrmtTermDt ? today : rsumeTaskDtl[4].agrmtTermDt}" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                     <em class="ion-calendar"></em>
                                                 </button>
                                             </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">정부지원금(①)</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.gvmntSpprtPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].gvmntSpprtPmt}' pattern='#,###'/>" title="정부지원금" maxlength="50" placeholder="정부지원금">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">대기업출연금(②)</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.mjcmnAprncPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].mjcmnAprncPmt}' pattern='#,###'/>" title="대기업출연금" maxlength="50" placeholder="대기업출연금">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">도입기업부담금(③)</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma priceVal notRequired" name="rsumeTaskDtl.ntdcnCmpnBrdnPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].ntdcnCmpnBrdnPmt}' pattern='#,###'/>" title="도입기업부담금" maxlength="50" placeholder="도입기업부담금">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">총금액(①+②+③)</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="text" class="form-control input-sm comma notRequired ttlPmt" name="rsumeTaskDtl.ttlPmt" value="<fmt:formatNumber value='${rsumeTaskDtl[4].ttlPmt}' pattern='#,###'/>" title="총금액" maxlength="50" placeholder="총금액" readonly style="background: #eee">
                                                 </div>
                                             </div>
                                         </div>
@@ -1913,16 +1885,14 @@
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
                                                 <c:choose>
-                                                    <c:when test="${rsumeTaskDtl[4].mngSttsCd eq 'PRO_TYPE02005_02_002'
-                                                        or rsumeTaskDtl[4].mngSttsCd eq 'PRO_TYPE02005_02_003'}"
-                                                    >
+                                                    <c:when test="${rsumeTaskDtl[4].mngSttsCd eq 'PRO_TYPE02006_02_002'}">
                                                         <p class="form-control-static">${rsumeTaskDtl[4].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[4].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[4].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[4].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                             ${cdList.cdNm}
                                                                     </option>
@@ -1938,21 +1908,20 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
                                             <div class="col-sm-6 form-inline">
-                                                <p class="form-control-static">
+                                                <p class="form-control-static" >
                                                     ${ kl:convertDate(rsumeTaskDtl[4].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                                 </p>
                                             </div>
                                         </div>
                                     </fieldset>
-
                                 </div>
                             </div>
                         </div>
 
                         <%-- 영역 6 --%>
-                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02006">
+                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02004">
                             <div class="panel-heading" role="tab">
-                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx6" aria-constrols="accEx6">협약</a>
+                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx6" aria-constrols="accEx6">중간점검</a>
                             </div>
                             <div id="accEx6" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
@@ -1965,7 +1934,7 @@
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
                                             <div class="col-sm-6 form-inline">
                                                 <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[5].appctnSttsCd}">
-                                                <p class="form-control-static">${rsumeTaskDtl[5].appctnSttsCdNm}</p>
+                                                <p class="form-control-static" >${rsumeTaskDtl[5].appctnSttsCdNm}</p>
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1983,30 +1952,44 @@
                                     <h6 class="mt0">관리자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">협약일</label>
-                                            <div class="col-sm-6 form-inline" >
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtDt" value="${empty rsumeTaskDtl[5].agrmtDt ? today : rsumeTaskDtl[5].agrmtDt}"  title="협약일" readonly="" onclick="cmmCtrl.initCalendar(this);">
-                                                    <span class="input-group-btn" style="z-index:0;">
-                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                    <em class="ion-calendar"></em>
-                                                </button>
-                                            </span>
+                                            <label class="col-sm-2 control-label">점검위원</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[5].chkCmssrSeq}" />
+                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[5].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
                                                 </div>
                                             </div>
                                         </div>
                                     </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">기간</label>
+                                            <label class="col-sm-2 control-label">점검계획일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.agrmtTermDt" value="${empty rsumeTaskDtl[5].agrmtTermDt ? today : rsumeTaskDtl[5].agrmtTermDt}" title="기간" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[5].chkPlanDt ? today : rsumeTaskDtl[5].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
-                                                <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                    <em class="ion-calendar"></em>
-                                                </button>
-                                            </span>
+                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">점검실시일</label>
+                                            <div class="col-sm-6 form-inline" >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[5].chkImplmnDt ? today : rsumeTaskDtl[5].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                    <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                        <em class="ion-calendar"></em>
+                                                    </button>
+                                                </span>
                                                 </div>
                                             </div>
                                         </div>
@@ -2016,15 +1999,17 @@
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
                                                 <c:choose>
-                                                    <c:when test="${rsumeTaskDtl[5].mngSttsCd eq 'PRO_TYPE02006_02_001'}">
+                                                    <c:when test="${rsumeTaskDtl[5].mngSttsCd eq 'PRO_TYPE02004_02_002'
+                                                        or rsumeTaskDtl[5].mngSttsCd eq 'PRO_TYPE02004_02_003'}"
+                                                    >
                                                         <p class="form-control-static">${rsumeTaskDtl[5].mngSttsCdNm}</p>
                                                         <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[5].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02006_02_')}">
-                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
                                                                             ${cdList.cdNm}
                                                                     </option>
                                                                 </c:if>
@@ -2050,9 +2035,9 @@
                         </div>
 
                         <%-- 영역 7 --%>
-                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02007">
+                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02008">
                             <div class="panel-heading" role="tab">
-                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx7" aria-constrols="accEx7">최종점검</a>
+                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx7" aria-constrols="accEx7">완료보고</a>
                             </div>
                             <div id="accEx7" class="panel-collapse collapse" role="tabpanel">
                                 <div class="panel-body">
@@ -2060,6 +2045,21 @@
                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[6].rsumeOrd}">
 
                                     <h6 class="mt0">신청자</h6>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">완료보고일</label>
+                                            <div class="col-sm-6 form-inline" >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.cmpltnBrfngDtm" value="${empty rsumeTaskDtl[6].cmpltnBrfngDtm ? today : rsumeTaskDtl[6].cmpltnBrfngDtm}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                            <em class="ion-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
                                     <fieldset>
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">신청자 상태값</label>
@@ -2083,77 +2083,17 @@
                                     <h6 class="mt0">관리자</h6>
                                     <fieldset>
                                         <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검위원</label>
-                                            <div class="col-sm-6" >
-                                                <div class="col-sm-6" style="margin-left: -15px">
-                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[6].chkCmssrSeq}" />
-                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[6].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
-                                                </div>
-                                                <div class="col-sm-1">
-                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검계획일</label>
-                                            <div class="col-sm-6 form-inline" >
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[6].chkPlanDt ? today : rsumeTaskDtl[6].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
-                                                    <span class="input-group-btn" style="z-index:0;">
-                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                            <em class="ion-calendar"></em>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">점검실시일</label>
-                                            <div class="col-sm-6 form-inline" >
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[6].chkImplmnDt ? today : rsumeTaskDtl[6].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
-                                                    <span class="input-group-btn" style="z-index:0;">
-                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
-                                                            <em class="ion-calendar"></em>
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
-                                            <label class="col-sm-2 control-label">스마트화 수준확인</label>
-                                            <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.smtfnPrsntCd" title="스마트화 현재 수준">
-                                                    <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
-                                                        <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].smtfnPrsntCd eq cdList.cd}" >selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:if>
-                                                    </c:forEach>
-                                                </select>
-                                            </div>
-                                        </div>
-                                    </fieldset>
-                                    <fieldset>
-                                        <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
                                                 <c:choose>
-                                                    <c:when test="${rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02007_02_002' or rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02007_02_003'}">
+                                                    <c:when test="${rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02008_02_004' or rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02008_02_005'}">
                                                         <p class="form-control-static">${rsumeTaskDtl[6].mngSttsCdNm}</p>
                                                         <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[6].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
-                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02008_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].mngSttsCd eq cdList.cd}" >selected</c:if> >
                                                                             ${cdList.cdNm}
                                                                     </option>
@@ -2171,6 +2111,158 @@
                                             <div class="col-sm-6 form-inline">
                                                 <p class="form-control-static" >
                                                     ${ kl:convertDate(rsumeTaskDtl[6].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-1 control-label">완료보고서<span class="star"> *</span></label>
+                                            <div class="col-sm-10 col-md-11">
+                                                <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="완료보고서">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE10">
+                                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile5">
+                                                    <input type="hidden" class="notRequired" data-hidden='fileInfo' data-fileSeq="4" data-fileType='ATTACH_FILE_TYPE10' name="rsumeTaskFile5" value="${rsumeTaskDtl[6].appctnFileInfo[0].fileSeq}">
+                                                    <div class="dz-default dz-message">
+                                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                                    </div>
+                                                </div>
+                                                <p class="text-bold mt">
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <%-- 영역 8 --%>
+                        <div class="panel panel-default" data-sttsCd="PRO_TYPE02007">
+                            <div class="panel-heading" role="tab">
+                                <a role="button" data-toggle="collapse" data-parent="#accParent" data-target="#accEx8" aria-constrols="accEx8">최종점검</a>
+                            </div>
+                            <div id="accEx8"class="panel-collapse collapse" role="tabpanel">
+                                <div class="panel-body">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeSeq" value="${rsumeTaskDtl[7].rsumeSeq}">
+                                    <input type="hidden" class="notRequired" name="rsumeTaskDtl.rsumeOrd" value="${rsumeTaskDtl[7].rsumeOrd}">
+
+                                    <h6 class="mt0">신청자</h6>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">신청자 상태값</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnSttsCd" value="${rsumeTaskDtl[7].appctnSttsCd}">
+                                                <p class="form-control-static" >${rsumeTaskDtl[7].appctnSttsCdNm}</p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">신청자 최종 수정일시</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <p class="form-control-static">
+                                                    ${ kl:convertDate(rsumeTaskDtl[7].appctnSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+
+                                    <h6 class="mt0">관리자</h6>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">점검위원</label>
+                                            <div class="col-sm-6" >
+                                                <div class="col-sm-6" style="margin-left: -15px">
+                                                    <input type="hidden" class="notRequired chkCmssrSeq" name="rsumeTaskDtl.chkCmssrSeq" value="${rsumeTaskDtl[7].chkCmssrSeq}" />
+                                                    <input type="text" class="form-control input-sm notRequired chkCmssrNm" value="${rsumeTaskDtl[7].chkCmssrNm}" title="점검위원" maxlength="50" placeholder="점검위원" disabled>
+                                                </div>
+                                                <div class="col-sm-1">
+                                                    <button type="button" class="btn btn-sm btn-info btnCmtSearch">위원검색</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">점검계획일</label>
+                                            <div class="col-sm-6 form-inline" >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkPlanDt" value="${empty rsumeTaskDtl[7].chkPlanDt ? today : rsumeTaskDtl[7].chkPlanDt}" title="점검계획일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                            <em class="ion-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">점검실시일</label>
+                                            <div class="col-sm-6 form-inline" >
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="rsumeTaskDtl.chkImplmnDt" value="${empty rsumeTaskDtl[7].chkImplmnDt ? today : rsumeTaskDtl[7].chkImplmnDt}" title="점검실시일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <span class="input-group-btn" style="z-index:0;">
+                                                        <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
+                                                            <em class="ion-calendar"></em>
+                                                        </button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">스마트화 수준확인</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.smtfnPrsntCd" title="스마트화 현재 수준">
+                                                    <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
+                                                        <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
+                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[7].smtfnPrsntCd eq cdList.cd}" >selected</c:if> >
+                                                                    ${cdList.cdNm}
+                                                            </option>
+                                                        </c:if>
+                                                    </c:forEach>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">관리자 상태값/결과</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <c:choose>
+                                                    <c:when test="${rsumeTaskDtl[7].mngSttsCd eq 'PRO_TYPE02007_02_002' or rsumeTaskDtl[7].mngSttsCd eq 'PRO_TYPE02007_02_003'}">
+                                                        <p class="form-control-static">${rsumeTaskDtl[7].mngSttsCdNm}</p>
+                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[7].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                            <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[7].mngSttsCd eq cdList.cd}" >selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                    <fieldset>
+                                        <div class="form-group text-sm">
+                                            <label class="col-sm-2 control-label">관리자 최종 수정일시</label>
+                                            <div class="col-sm-6 form-inline">
+                                                <p class="form-control-static" >
+                                                    ${ kl:convertDate(rsumeTaskDtl[7].mngSttsChngDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                                 </p>
                                             </div>
                                         </div>
