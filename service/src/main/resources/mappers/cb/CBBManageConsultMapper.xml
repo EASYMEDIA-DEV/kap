@@ -1525,12 +1525,14 @@
         2024.02.20   장두석       최초생성
     -->
     <delete id="deleteSurveyRspn" parameterType="CBBManageConsultUpdateDTO">
-        delete /* CBBManageConsultMapper.deleteSurveyRspn */
-        sv_rspn_mst , sv_sbjct_rspn_dtl , sv_mtlcc_rspn_dtl
-		from sv_rspn_mst
-		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
-		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
-		where sv_rspn_mst.srv_seq = #{srvSeq}
+        DELETE /* CBBManageConsultMapper.deleteSurveyRspn */
+        SV_RSPN_MST , SV_SBJCT_RSPN_DTL , SV_MTLCC_RSPN_DTL
+		FROM SV_RSPN_MST
+		LEFT JOIN SV_SBJCT_RSPN_DTL ON SV_RSPN_MST.SRV_RSPN_SEQ = SV_SBJCT_RSPN_DTL.SRV_RSPN_SEQ
+		LEFT JOIN SV_MTLCC_RSPN_DTL ON SV_RSPN_MST.SRV_RSPN_SEQ = SV_MTLCC_RSPN_DTL.SRV_RSPN_SEQ
+		WHERE SV_RSPN_MST.SRV_SEQ = #{srvSeq}
+        AND SV_RSPN_MST.RFNC_SEQ = #{cnstgSeq}
+        AND SV_RSPN_MST.RFNC_CD = 'CON'
     </delete>
 
     <!--
