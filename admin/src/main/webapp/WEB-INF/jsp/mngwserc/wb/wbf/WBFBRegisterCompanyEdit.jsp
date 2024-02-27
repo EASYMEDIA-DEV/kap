@@ -2221,10 +2221,10 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">스마트화 수준확인</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.smtfnPrsntCd" title="스마트화 현재 수준">
+                                                <select class="form-control input-sm notRequired" name="rsumeTaskDtl.smtfnLvlChkCd" title="스마트화 현재 수준">
                                                     <c:forEach var="cdList" items="${cdDtlList.BGN_REG_INF}" varStatus="status">
                                                         <c:if test="${fn:contains(cdList.cd, 'BGN_REG_INF020')}">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[7].smtfnPrsntCd eq cdList.cd}" >selected</c:if> >
+                                                            <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[7].smtfnLvlChkCd eq cdList.cd}" >selected</c:if> >
                                                                     ${cdList.cdNm}
                                                             </option>
                                                         </c:if>

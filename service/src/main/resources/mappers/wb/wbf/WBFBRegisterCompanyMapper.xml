@@ -853,6 +853,7 @@
             ,agrmt_dt = #{agrmtDt}
             ,agrmt_term_dt = #{agrmtTermDt}
             ,cmpltn_brfng_dtm = #{cmpltnBrfngDtm}
+            ,smtfn_lvl_chk_cd = #{smtfnLvlChkCd}
         </if>
             ,mod_id = #{modId}
             ,mod_ip = #{modIp}
