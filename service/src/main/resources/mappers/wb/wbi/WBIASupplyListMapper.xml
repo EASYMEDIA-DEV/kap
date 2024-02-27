@@ -234,6 +234,8 @@
         ,EPISD
         ,ACCS_STRT_DTM
         ,ACCS_END_DTM
+        ,BSN_STRT_DTM
+        ,BSN_END_DTM
         ,EXPS_YN
         ,REG_ID
         ,REG_IP
@@ -245,6 +247,8 @@
             ,#{bsnCd}
             ,#{year}
             ,#{episd}
+            ,#{accsStrtDtm}
+            ,#{accsEndDtm}
             ,#{accsStrtDtm}
             ,#{accsEndDtm}
             ,#{expsYn}
@@ -268,6 +272,8 @@
               ,EPISD =  #{episd}
               ,ACCS_STRT_DTM = #{accsStrtDtm}
               ,ACCS_END_DTM = #{accsEndDtm}
+              ,BSN_STRT_DTM = #{accsStrtDtm}
+              ,BSN_END_DTM = #{accsEndDtm}
               ,EXPS_YN = #{expsYn}
               ,MOD_ID = #{modId}
               ,MOD_IP = #{modIp}
