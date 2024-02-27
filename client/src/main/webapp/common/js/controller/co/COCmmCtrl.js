@@ -1149,20 +1149,14 @@ var cmmCtrl = (function(){
 				var endDtObj = jQuery(".datetimepicker_endDt");
 				var endDt	 = new Date(endDtObj.val());
 
-				// 종료 날짜가 선택된 경우에만 시작 날짜의 최대 선택 가능 날짜 설정
-				if(endDt.getTime() > 0) {
-					strtDtObj.datetimepicker("setOptions", { maxDate: endDt });
-				} else { // 종료 날짜가 선택되지 않은 경우 시작 날짜의 최대 선택 가능 날짜 제거
-					strtDtObj.datetimepicker("setOptions", { maxDate: false });
+				if((endDt.getTime() > 0) && (strtDt.getTime() / (1000 * 3600 * 24) >= endDt.getTime() / (1000 * 3600 * 24))) {
+					strtDtObj.datetimepicker("setOptions", { maxDate : endDt });
+					endDtObj.datetimepicker("setOptions", { minDate : strtDt });
+					strtDtObj.val(endDtObj.val());
+				} else {
+					strtDtObj.datetimepicker("setOptions", { maxDate : endDt });
+					endDtObj.datetimepicker("setOptions", { minDate : strtDt });
 				}
-
-				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
-				{
-					endDtObj.val($(this).val());
-				}
-
-				endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
-
 			});
 		});
 
@@ -1173,29 +1167,24 @@ var cmmCtrl = (function(){
 				format : "Y.m.d",
 				defaultDate : "",
 				defaultTime : "00:00",
+				scrollInput : false,
 				scrollMonth : false,
 				scrollTime : false,
 				todayButton: false,
 			}).on('change',function(e){
 				var strtDtObj = jQuery(".datetimepicker_strtDt");
-				var strtDt   = new Date($(this).val());
+				var strtDt   = new Date(strtDtObj.val());
 				var endDtObj = jQuery(".datetimepicker_endDt");
-				var endDt	 = new Date(endDtObj.val());
+				var endDt	 = new Date($(this).val());
 
-				// 종료 날짜가 선택된 경우에만 시작 날짜의 최대 선택 가능 날짜 설정
-				if(endDt.getTime() > 0) {
-					strtDtObj.datetimepicker("setOptions", { maxDate: endDt });
-				} else { // 종료 날짜가 선택되지 않은 경우 시작 날짜의 최대 선택 가능 날짜 제거
-					strtDtObj.datetimepicker("setOptions", { maxDate: false });
+				if((strtDt.getTime() > 0) && (strtDt.getTime() / (1000 * 3600 * 24) >= endDt.getTime() / (1000 * 3600 * 24))) {
+					strtDtObj.datetimepicker("setOptions", { maxDate : endDt });
+					endDtObj.datetimepicker("setOptions", { minDate : strtDt });
+					endDtObj.val(strtDtObj.val());
+				} else {
+					strtDtObj.datetimepicker("setOptions", { maxDate : endDt });
+					endDtObj.datetimepicker("setOptions", { minDate : strtDt });
 				}
-
-				if (strtDt.getTime() / (1000 * 3600 * 24) > endDt.getTime() / (1000 * 3600 * 24))
-				{
-					endDtObj.val($(this).val());
-				}
-
-				endDtObj.datetimepicker("setOptions", { minDate : strtDt, value : endDtObj.val() });
-
 			});
 		});
 
@@ -1206,6 +1195,11 @@ var cmmCtrl = (function(){
 
 		var endObj = jQuery(".datetimepicker_endDt");
 		endObj.datetimepicker("setOptions", { value : date_format(afterMonth)});
+
+		var strtDt   = new Date(strtObj.val());
+		var endDt	 = new Date(endObj.val());
+		strtObj.datetimepicker("setOptions", { maxDate : endDt });
+		endObj.datetimepicker("setOptions", { minDate : strtDt });
 	}
 
 	var date_format = function(trgtPerid){
