@@ -51,7 +51,7 @@
                                                 <div class="tooltip-wrap">
                                                     <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                     <div class="tooltip-box">
-                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                        <p class="txt f-caption2">${appctnList.bfreJdgmtRsltCntn}</p>
                                                         <button class="btn-close" title="툴팁 닫기" type="button"></button>
                                                     </div>
                                                 </div>
@@ -79,7 +79,7 @@
                                                 <div class="tooltip-wrap">
                                                     <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                     <div class="tooltip-box">
-                                                        <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                        <p class="txt f-caption2">${appctnList.initVstOpnnCntn}</p>
                                                         <button class="btn-close" title="툴팁 닫기" type="button"></button>
                                                     </div>
                                                 </div>
@@ -140,7 +140,7 @@
                                             <div class="tooltip-wrap">
                                                 <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                 <div class="tooltip-box">
-                                                    <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                    <p class="txt f-caption2">${appctnList.bfreJdgmtRsltCntn}</p>
                                                     <button class="btn-close" title="툴팁 닫기" type="button"></button>
                                                 </div>
                                             </div>
@@ -154,7 +154,7 @@
                                             <div class="tooltip-wrap">
                                                 <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                                 <div class="tooltip-box">
-                                                    <p class="txt f-caption2">${appctnList.rsltCntn}</p>
+                                                    <p class="txt f-caption2">${appctnList.initVstOpnnCntn}</p>
                                                     <button class="btn-close" title="툴팁 닫기" type="button"></button>
                                                 </div>
                                             </div>
@@ -215,7 +215,7 @@
                                     </div>
                                     <div class="info-list">
                                         <p class="tit f-caption2">신청사항</p>
-                                        <p class="txt f-body2" style="text-overflow: ellipsis">${not empty appctnList.appctnTypeNm ? appctnList.appctnTypeNm : ""}</p>
+                                        <p class="txt f-body2" style="text-overflow: ellipsis">${not empty appctnList.appctnTypeNm ? appctnList.appctnTypeNm : '-'}</p>
                                     </div>
                                     <div class="info-list">
                                         <p class="tit f-caption2">신청일자</p>

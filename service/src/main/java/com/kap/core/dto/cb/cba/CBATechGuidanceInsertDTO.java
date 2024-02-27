@@ -376,4 +376,10 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 상세 - 사용자 개선활동 추진계획서 파일 정렬값")
     private Integer impvmFileOrd;
 
+    @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 목록 - 사전심사결과의견")
+    private String bfreJdgmtRsltCntn;
+    @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 목록 - 초도방문결과의견")
+    private String initVstOpnnCntn;
+
+
 }
