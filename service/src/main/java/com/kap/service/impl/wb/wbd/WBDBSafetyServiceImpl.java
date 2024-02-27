@@ -1214,13 +1214,22 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             }
             if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
                 wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
+            }else{
+                wBDBSafetyPbsnDtlDTO.setSpprtPmt(wBDBSafetyPbsnDtlDTO.getSpprtPmt().replaceAll(",",""));
             }
+
             if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
                 wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
+            }else{
+                wBDBSafetyPbsnDtlDTO.setPhswPmt(wBDBSafetyPbsnDtlDTO.getPhswPmt().replaceAll(",",""));
             }
+
             if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
                 wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
+            }else{
+                wBDBSafetyPbsnDtlDTO.setTtlPmt(wBDBSafetyPbsnDtlDTO.getTtlPmt().replaceAll(",",""));
             }
+
             if(wBDBSafetyPbsnDtlDTO.getChkDt() == null || wBDBSafetyPbsnDtlDTO.getChkDt().equals("")){
                 wBDBSafetyPbsnDtlDTO.setChkDt(null);
             }

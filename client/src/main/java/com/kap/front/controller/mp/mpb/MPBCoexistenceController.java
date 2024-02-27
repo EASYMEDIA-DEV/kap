@@ -346,17 +346,23 @@ public class MPBCoexistenceController {
                     if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //보안환경구축
                         WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO = mpbBsnMstDTO.getWBCBSecurityMstInsertDTO();
-                        wBCBSecurityMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        if(mpbBsnMstDTO.getFileSeqList().size() > 0){
+                            wBCBSecurityMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        }
                         respCnt = wBCBSecurityService.carbonUserUpdate(wBCBSecurityMstInsertDTO, multiRequest, request);
                     } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //안전설비구축
                         WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO = mpbBsnMstDTO.getWBDBSafetyMstInsertDTO();
-                        wBDBSafetyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        if(mpbBsnMstDTO.getFileSeqList().size() > 0) {
+                            wBDBSafetyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        }
                         respCnt = wBDBSafetyService.carbonUserUpdate(wBDBSafetyMstInsertDTO, multiRequest, request);
                     } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
                         //탄소배출저감
                         WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO = mpbBsnMstDTO.getWBEBCarbonCompanyMstInsertDTO();
-                        wBEBCarbonCompanyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        if(mpbBsnMstDTO.getFileSeqList().size() > 0) {
+                            wBEBCarbonCompanyMstInsertDTO.setFileSeqList(mpbBsnMstDTO.getFileSeqList());
+                        }
                         respCnt = wBEBCarbonCompanyService.carbonUserUpdate(wBEBCarbonCompanyMstInsertDTO, multiRequest, request);
                     } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
                         mpbBsnMstDTO.getWBFBRegisterDTO().setFileSeqList(mpbBsnMstDTO.getFileSeqList());

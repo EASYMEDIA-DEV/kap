@@ -1213,13 +1213,22 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             }
             if(wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt().equals("")){
                 wBEBCarbonCompanyPbsnDtlDTO.setSpprtPmt(null);
+            }else{
+                wBEBCarbonCompanyPbsnDtlDTO.setSpprtPmt(wBEBCarbonCompanyPbsnDtlDTO.getSpprtPmt().replaceAll(",",""));
             }
+
             if(wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt().equals("")){
                 wBEBCarbonCompanyPbsnDtlDTO.setPhswPmt(null);
+            }else{
+                wBEBCarbonCompanyPbsnDtlDTO.setPhswPmt(wBEBCarbonCompanyPbsnDtlDTO.getPhswPmt().replaceAll(",",""));
             }
+
             if(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
                 wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
+            }else{
+                wBEBCarbonCompanyPbsnDtlDTO.setTtlPmt(wBEBCarbonCompanyPbsnDtlDTO.getTtlPmt().replaceAll(",",""));
             }
+
             if(wBEBCarbonCompanyPbsnDtlDTO.getChkDt() == null || wBEBCarbonCompanyPbsnDtlDTO.getChkDt().equals("")){
                 wBEBCarbonCompanyPbsnDtlDTO.setChkDt(null);
             }
