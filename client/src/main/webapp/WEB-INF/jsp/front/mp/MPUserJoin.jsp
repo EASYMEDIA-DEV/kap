@@ -200,7 +200,7 @@
                                         <div class="for-status-chk for-status-chk-id"><!-- 조건 충족 시 satisfy 클래스 추가 -->
                                             <div class="form-group">
                                                 <div class="form-input">
-                                                    <input type="text" placeholder="아이디 입력"  id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
+                                                    <input type="text" placeholder="영문 아이디 입력"  id="id" name="mpaUserDto.id" title="아이디" maxlength="12" oninput="this.value=this.value.replace(/[^a-zA-Z0-9]/gi,'');">
                                                 </div>
                                                 <div class="btn-wrap">
                                                     <button class="btn-solid small gray-bg" type="button" id="dupId"><span>중복확인</span></button>
