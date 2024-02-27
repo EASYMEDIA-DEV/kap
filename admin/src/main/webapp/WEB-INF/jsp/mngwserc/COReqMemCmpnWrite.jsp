@@ -96,7 +96,7 @@
         <div class="form-group text-sm">
             <label class="col-sm-1 control-label text-bold">전화번호<span class="star"> *</span></label>
             <div class="col-sm-5">
-                <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo" value="" maxlength="13" title="부품사 전화번호" placeholder=""  />
+                <input type="text" class="form-control input-sm" id="cmpnTelNo" name="cmpnTelNo" value="" maxlength="11" title="부품사 전화번호" placeholder=""  />
             </div>
             <label class="col-sm-1 control-label text-bold">사업자등록번호<span class="star"> *</span></label>
             <div class="col-sm-5 cmpnBsnmNo">
