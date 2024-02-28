@@ -12,6 +12,9 @@
               <c:when test="${ptcptList.eduStat eq '교육대기'}">
                 <c:set var="changeChk" value="changeChk"/>
               </c:when>
+              <c:otherwise>
+                <c:set var="changeChk" value=""/>
+              </c:otherwise>
 
               <%--<c:when test="${ptcptList.eduStat ne '교육대기'}">
                 <c:set var="disabledChk" value="disabled"/>
