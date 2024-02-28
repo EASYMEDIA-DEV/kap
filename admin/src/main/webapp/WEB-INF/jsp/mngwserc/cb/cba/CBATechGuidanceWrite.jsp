@@ -1567,7 +1567,7 @@
 </c:choose>
                 <div class="clearfix">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}>목록</button>
+                        <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                     </div>
                     <div class="pull-right">
                         <div class="btn btn-sm btn-success" id="submit">저장</div>
