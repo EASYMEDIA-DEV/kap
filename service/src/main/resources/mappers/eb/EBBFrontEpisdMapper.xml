@@ -1270,8 +1270,19 @@
 			<if test="strtDt != null and strtDt != ''">
 				<choose>
 					<when test="srchDate == 1">
-						AND EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND EDCTN_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+
+						AND (
+
+							CASE WHEN EDU_GUBUN = 'E'
+							THEN
+								EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+								AND EDCTN_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+							ELSE
+								PTCPT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+								AND PTCPT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+							END
+						)
+
 					</when>
 					<when test="srchDate == 2">
 						AND PTCPT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
