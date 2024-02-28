@@ -260,7 +260,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 										var rtnData = resultData.rtnData;
 										if(rtnData.regStat == "F"){
 											alert("이미 해당 회차에 신청한 회원입니다.");
-										}else if(rtnData.regStat == "S"){
+										}
+										else if(rtnData.regStat == "R") {
+											alert("선수 이수과정 미수료 회원입니다.");
+										}
+										else if(rtnData.regStat == "S"){
 											alert("저장되었습니다.");
 											history.back();
 										}
