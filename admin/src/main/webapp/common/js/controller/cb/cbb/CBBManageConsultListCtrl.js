@@ -139,10 +139,10 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        var _csrf = $("#csrfKey").val();
+                        // var _csrf = $("#csrfKey").val();
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
-                        // location.href = "./write?" + $formObj.serialize();
-                        location.href = "./write?detailsKey=" + detailsKey + "&_csrf=" + _csrf;
+                        location.href = "./write?" + $formObj.serialize();
+                        // location.href = "./write?detailsKey=" + detailsKey + "&_csrf=" + _csrf;
                     }
                 }
             },
@@ -192,7 +192,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
             }
 
-            $('#btnSearch').trigger("click");
+            // $('#btnSearch').trigger("click");
 
             // 리스트 조회
             cmmCtrl.setFormData($formObj);

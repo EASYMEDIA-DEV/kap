@@ -247,7 +247,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 }
             }
 
-            $('#btnSearch').trigger("click");
+            // $('#btnSearch').trigger("click");
 
             // 리스트 조회
             cmmCtrl.setFormData($formObj);
