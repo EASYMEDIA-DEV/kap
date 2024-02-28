@@ -1,4 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+<% pageContext.setAttribute("newLine", "\n"); %>
+
 <c:set var="rtnData" value="${rtnInfo.rtnData}" />
 <c:set var="roomDto" value="${rtnInfo.roomDto}" />
 <c:set var="isttrList" value="${rtnInfo.isttrList}" />
@@ -162,7 +164,7 @@
                                     <div class="txt-sec">
                                         <div class="ul-txt-w highlight">
                                             <div class="ul-txt-list">
-                                                <p class="ul-txt">${ rtnData.itrdcCntn }</p>
+                                                <p class="ul-txt">${ fn:replace(rtnData.itrdcCntn, newLine, '<br>') }</p>
                                             </div>
                                         </div>
                                     </div>
@@ -179,7 +181,7 @@
                                         <div class="ul-txt-w highlight">
                                             <div class="ul-txt-list">
                                                 <%--<p class="ul-txt has-dot">${ rtnData.stduyTrgtCntn }</p>--%>
-                                                <p class="ul-txt">${ rtnData.stduyTrgtCntn }</p>
+                                                <p class="ul-txt">${ fn:replace(rtnData.stduyTrgtCntn, newLine, '<br>') }</p>
                                             </div>
                                         </div>
                                     </div>
