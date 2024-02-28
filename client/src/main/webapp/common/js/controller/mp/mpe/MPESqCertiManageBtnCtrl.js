@@ -32,6 +32,8 @@ define(["ezCtrl"], function(ezCtrl) {
                             $(".paymentInfoViewPopupFrm").find(".idntfnPhotoFileSeqImage").attr("src",  $(".paymentInfoViewPopupFrm").find(".idntfnPhotoFileSeqImage").data("src"));
                         }
                         $(".paymentInfoViewPopupFrm").on("onModalOpenComplete", function(){
+                            clearInterval(_flowInterval);
+                            $(".flow-wrap").css("left", 0);
                             flowTxtImgFn();
                         })
 

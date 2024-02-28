@@ -270,7 +270,7 @@
     </c:choose>
 
 
-    <div class="layer-popup estiCertiPop paymentInfoViewPopupFrm ${unavailable} data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+    <div class="layer-popup estiCertiPop paymentInfoViewPopupFrm ${unavailable}" data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
         <form style="height:100%">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="for-center">
