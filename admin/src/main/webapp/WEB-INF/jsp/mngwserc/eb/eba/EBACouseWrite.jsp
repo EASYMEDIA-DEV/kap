@@ -165,7 +165,7 @@
                     </div>
                     <label class="col-sm-1 control-label">GPC 강사 ID</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control input-sm notRequired" id="gpcIsttrId" name="gpcIsttrId" value="${rtnDto.gpcIsttrId}" title="GPC 강사 ID" maxlength="20" placeholder="GPC 강사 ID 입력" style="max-width: 150px;"/>
+                        <input type="text" class="form-control input-sm notRequired numberChk" id="gpcIsttrId" name="gpcIsttrId" value="${rtnDto.gpcIsttrId}" title="GPC 강사 ID" maxlength="10" placeholder="GPC 강사 ID 입력" style="max-width: 150px;"/>
                     </div>
                 </div>
             </fieldset>
