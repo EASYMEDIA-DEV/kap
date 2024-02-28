@@ -35,9 +35,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
                         var openCnt = parseInt($("#infoCard").find(".open").length) // 보이는 게시물
                         if(pageCnt < page){
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).show();
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt+1,openCnt+10).addClass("open");
+                            $("#infoCard").children("a").slice(openCnt,openCnt+9).show();
+                            $("#infoCard").children("a").slice(openCnt,openCnt+9).removeClass("open");
+                            $("#infoCard").children("a").slice(openCnt,openCnt+9).addClass("open");
                             openCnt = openCnt + 9;
                             $(".cntText").text("(" + openCnt +"/"+ chilCnt + ")");
                         }else{
