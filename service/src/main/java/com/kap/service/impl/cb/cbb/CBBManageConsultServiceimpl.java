@@ -1014,7 +1014,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //번호
             cell = row.createCell(0);
-            cell.setCellValue(cBBConsultSuveyRsltListDTO.getTotalCount() - i);
+            cell.setCellValue(rowNum-1);
             cell.setCellStyle(style_body);
 
             //사업연도

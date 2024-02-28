@@ -428,7 +428,7 @@
         2023.12.04    이옥정       최초생성
     -->
     <select id="selectConsultSuveyRsltList" parameterType="CBBConsultSuveyRsltListDTO" resultType="CBBConsultSuveyRsltListDTO">
-        SELECT
+        SELECT /* CBBManageConsultMapper.selectConsultSuveyRsltList */
             BSN_YEAR                                                                           <!-- 사업연도 -->
             , COUNT(APPCTN_BSNM_NO) CMPN_CNT                                                   <!-- 대상부품사 -->
             , SUM(SRV_CMPLT_CMPN_CNT) SRV_CMPLT_CMPN_CNT                                       <!-- 설문완료 부품사 -->
@@ -486,7 +486,7 @@
         2023.12.04    이옥정       최초생성
     -->
     <select id="getConsultSuveyRsltCnt" parameterType="CBBConsultSuveyRsltListDTO" resultType="java.lang.Integer">
-        SELECT
+        SELECT /* CBBManageConsultMapper.getConsultSuveyRsltCnt */
             COUNT(*)
         FROM(
             SELECT
@@ -533,22 +533,22 @@
         2023.12.04    이옥정       최초생성
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBBConsultSuveyRsltListDTO" resultType="CBBConsultSuveyRsltListDTO">
-        SELECT
-        CP_MST.BSN_YEAR             <!-- 사업연도 -->
-        , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
-        , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
-        , CPSR.PTCPT_NAME           <!-- 참여자 -->
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
-        , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
-        , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'CNSTG_PSCND03') LVLUP_DT      <!-- 렙업일 -->
-        , IFNULL(CPSR.TTL_SCORE, 0) TTL_SCORE                       <!-- 총점(100) -->
-        , IFNULL(CPSR.GUIDE_RSLT_SCORE, 0) GUIDE_RSLT_SCORE         <!-- 지도실적(50) -->
-        , IFNULL(CPSR.CMMNCTN_SCORE, 0) CMMNCTN_SCORE               <!-- 의사소동(5) -->
-        , IFNULL(CPSR.PLNNGABLT_SCORE, 0) PLNNGABLT_SCORE           <!-- 기획력(10) -->
-        , IFNULL(CPSR.EXCTVABLT_SCORE, 0) EXCTVABLT_SCORE           <!-- 실행력(15) -->
-        , IFNULL(CPSR.MND_SCORE, 0) MND_SCORE                       <!-- 마인드(5) -->
-        , IFNULL(CPSR.EXPRTS_SCORE, 0) EXPRTS_SCORE                 <!-- 전문지식(15) -->
+        SELECT  /* CBBManageConsultMapper.selectConsultSuveyRsltDtlExcel */
+            CP_MST.BSN_YEAR             <!-- 사업연도 -->
+            , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
+            , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
+            , CPSR.PTCPT_NAME           <!-- 참여자 -->
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
+            , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
+            , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'CNSTG_PSCND03') LVLUP_DT      <!-- 렙업일 -->
+            , IFNULL(CPSR.TTL_SCORE, 0) TTL_SCORE                       <!-- 총점(100) -->
+            , IFNULL(CPSR.GUIDE_RSLT_SCORE, 0) GUIDE_RSLT_SCORE         <!-- 지도실적(50) -->
+            , IFNULL(CPSR.CMMNCTN_SCORE, 0) CMMNCTN_SCORE               <!-- 의사소동(5) -->
+            , IFNULL(CPSR.PLNNGABLT_SCORE, 0) PLNNGABLT_SCORE           <!-- 기획력(10) -->
+            , IFNULL(CPSR.EXCTVABLT_SCORE, 0) EXCTVABLT_SCORE           <!-- 실행력(15) -->
+            , IFNULL(CPSR.MND_SCORE, 0) MND_SCORE                       <!-- 마인드(5) -->
+            , IFNULL(CPSR.EXPRTS_SCORE, 0) EXPRTS_SCORE                 <!-- 전문지식(15) -->
         FROM
         CP_CNSTG_APPCTN_MST CP_MST
         JOIN CO_MEM_MST MEM_MST
@@ -567,8 +567,7 @@
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.CNSTG_PSCND_CD = 'CNSTG_PSCND03'
         ORDER BY
-        CP_MST.REGDTM DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        CP_MST.REG_DTM DESC
     </select>
 
     <!--
@@ -579,8 +578,8 @@
         2023.12.04    이옥정       최초생성
     -->
     <select id="getConsultSuveyRsltDtlCnt" parameterType="CBBConsultSuveyRsltListDTO" resultType="java.lang.Integer">
-        SELECT
-        COUNT(*)
+        SELECT /* CBBManageConsultMapper.getConsultSuveyRsltDtlCnt */
+            COUNT(*)
         FROM
         CP_CNSTG_APPCTN_MST CP_MST
         JOIN CO_MEM_MST MEM_MST
