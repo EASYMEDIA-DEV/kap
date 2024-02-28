@@ -44,20 +44,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
-            //검색버튼 클릭시
-            consentChk : {
-                event : {
-                    click : function() {
-                        var chkYn = $("input:checkbox[name='consentChk']").prop('checked');
-                        if(agreeYn == 'Y') {
-                            $("input:checkbox[name='consentChk']").prop("checked", true);
-                        } else {
-                            $("input:checkbox[name='consentChk']").prop("checked", false);
-                        }
-                        openPopup('newsletterAgreePopup', this);
-                    }
-                }
-            },
             refusalBtn : {
                 event : {
                     click : function() {
