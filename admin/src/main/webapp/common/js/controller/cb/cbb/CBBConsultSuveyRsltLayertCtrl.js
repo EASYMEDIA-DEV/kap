@@ -122,7 +122,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             frmDataObj.append($('<input/>', { type: 'hidden',  name: 'excelBsnYear', value: excelDownYearChk, class: 'notRequired' }));
 
                             //파라미터를 물고 가야함.
-                            location.href = "./srvRsltexcel-down?" + frmDataObj.serialize();
+                            location.href = "/mngwserc/cb/cbb/srvRsltExcel-down?" + frmDataObj.serialize();
 
                         } else {
                             alert(msgCtrl.getMsg("fail.reason"));

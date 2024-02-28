@@ -174,6 +174,12 @@ public interface CBATechGuidanceMapper {
     public int getConsultSuveyRsltCnt(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO);
 
     /**
+     * 만족도 종합결과 엑셀 조회
+     */
+    public List<CBAConsultSuveyRsltListDTO> selectConsultSuveyRsltDtlExcel(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO);
+
+
+    /**
      * 컨설팅 이관 목록 조회
      */
     public  List<CBATechGuidanceInsertDTO> selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;

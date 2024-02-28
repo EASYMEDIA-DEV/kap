@@ -68,6 +68,16 @@ public interface CBATechGuidanceService {
     public CBAConsultSuveyRsltListDTO selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO) throws Exception;
 
     /**
+     * 만족도 종합 결과 엑셀 리스트 조회
+     */
+    public CBAConsultSuveyRsltListDTO selectConsultSuveyRsltDtlExcel(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO) throws Exception;
+
+    /**
+     * 만족도 종합 결과 엑셀 생성
+     */
+    void srvRsltExcelDownload(CBAConsultSuveyRsltListDTO pCBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception;
+
+    /**
      * 이관 내역 조회
      */
     public CBATechGuidanceInsertDTO selectTrsfGuidanceList(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;

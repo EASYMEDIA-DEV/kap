@@ -236,7 +236,7 @@ public class CBBManageConsultController {
     /**
      * 컨설팅 사업 만족도 종합 결과 엑셀다운로드 관련
      */
-    @GetMapping(value = "/srvRsltexcel-down")
+    @GetMapping(value = "/srvRsltExcel-down")
     public void selectConsultSrvRsltExcel(CBBConsultSuveyRsltListDTO cBBConsultSuveyRsltListDTO , HttpServletResponse response) throws Exception
     {
         try

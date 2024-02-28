@@ -1259,6 +1259,51 @@
     </select>
 
     <!--
+        쿼리명 : CBATechGuidanceMapper.selectConsultSuveyRsltDtlExcel
+        설  명 : 만족도 종합결과 엑셀다운 상세 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.02.28    구은희      최초생성
+    -->
+    <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
+        SELECT
+            CP_MST.BSN_YEAR             <!-- 사업연도 -->
+            , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
+            , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
+            , CPSR.PTCPT_NAME           <!-- 참여자 -->
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
+            , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
+            , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'GUIDE_PSCND04') LVLUP_DT      <!-- 렙업일 -->
+            , IFNULL(CPSR.TTL_SCORE, 0) TTL_SCORE                       <!-- 총점(100) -->
+            , IFNULL(CPSR.GUIDE_RSLT_SCORE, 0) GUIDE_RSLT_SCORE         <!-- 지도실적(50) -->
+            , IFNULL(CPSR.CMMNCTN_SCORE, 0) CMMNCTN_SCORE               <!-- 의사소동(5) -->
+            , IFNULL(CPSR.PLNNGABLT_SCORE, 0) PLNNGABLT_SCORE           <!-- 기획력(10) -->
+            , IFNULL(CPSR.EXCTVABLT_SCORE, 0) EXCTVABLT_SCORE           <!-- 실행력(15) -->
+            , IFNULL(CPSR.MND_SCORE, 0) MND_SCORE                       <!-- 마인드(5) -->
+            , IFNULL(CPSR.EXPRTS_SCORE, 0) EXPRTS_SCORE                 <!-- 전문지식(15) -->
+        FROM
+        CP_CNSTG_APPCTN_MST CP_MST
+        JOIN CO_MEM_MST MEM_MST
+        ON MEM_MST.MEM_SEQ = CP_MST.APPCTN_MEM_SEQ
+        LEFT JOIN CP_CMPN_MST CMPN_MST
+        ON CMPN_MST.BSNM_NO = CP_MST.APPCTN_BSNM_NO
+        LEFT JOIN CP_CNSTG_RSUME_MST CPR_MST
+        ON CP_MST.CNSTG_SEQ = CPR_MST.CNSTG_SEQ
+        LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
+        ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
+        where 1=1
+        <if test="rtnBsnYear != null and rtnBsnYear != ''">
+            AND BSN_YEAR = ${rtnBsnYear}
+        </if>
+        AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
+        AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
+        AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'
+        ORDER BY
+        CP_MST.REG_DTM DESC
+    </select>
+
+    <!--
      쿼리명 : CBATechGuidanceMapper.deleteManageConsult
      설  명 : 컨설팅사업 경영컨설팅 신청마스터 테이블 삭제
       수정일     수정자       수정내용
