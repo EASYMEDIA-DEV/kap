@@ -1210,7 +1210,7 @@
                                         <label class="col-sm-1 control-label">총금액(①+②)</label>
                                         <div class="col-sm-5 form-inline">
                                             <input type="text" class="form-control comma notRequired" id="sum" value="${rtnPbsn[1].ttlPmt}" maxlength="50" disabled/>
-                                            <input type="hidden" class="notRequired" id="ttlPmt" name="pbsnDtlList[1].ttlPmt" value="${rtnPbsn[1].ttlPmt}"/>
+                                            <input type="hidden" class="notRequired" id="ttlPmt" name="pbsnDtlList[1].ttlPmt" value="${fn:replace(rtnPbsn[1].ttlPmt,",","")}"/>
                                         </div>
                                     </div>
                                 </fieldset>
