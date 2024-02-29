@@ -142,6 +142,15 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 pCBATechGuidanceInsertDTO.setMjrPrdct2(companyInfo.getList().get(i).getMjrPrdct2());
                 pCBATechGuidanceInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
                 pCBATechGuidanceInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
+
+                if(pCBATechGuidanceInsertDTO.getCtgryCd().equals("COMPANY01001")) {
+                    pCBATechGuidanceInsertDTO.setQlty5StarCd(companyInfo.getList().get(i).getQlty5StarCd());
+                    pCBATechGuidanceInsertDTO.setQlty5StarYear(companyInfo.getList().get(i).getQlty5StarYear());
+                    pCBATechGuidanceInsertDTO.setPay5StarCd(companyInfo.getList().get(i).getPay5StarCd());
+                    pCBATechGuidanceInsertDTO.setPay5StarYear(companyInfo.getList().get(i).getPay5StarYear());
+                    pCBATechGuidanceInsertDTO.setTchlg5StarCd(companyInfo.getList().get(i).getTchlg5StarCd());
+                    pCBATechGuidanceInsertDTO.setTchlg5StarYear(companyInfo.getList().get(i).getTchlg5StarYear());
+                }
             }
 
             for(int j=0; j<companyInfo.getList().size(); j++){
@@ -631,7 +640,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
     }
 
     /**
-     * 만족도 종합 결과 엑셀 다운로드
+     * 만족도 종합 결과 엑셀다운로드 상세
      */
     public CBAConsultSuveyRsltListDTO selectConsultSuveyRsltDtlExcel(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO) throws Exception{
 
