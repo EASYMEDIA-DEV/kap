@@ -1098,13 +1098,19 @@
         수정일     수정자     수정내용
        ==========  ======  ==============
        2023.11.16  김동현     최초 생성
+       2024.02.29  구은희     신청자 취소 조건 추가
    -->
     <select id="getSbrdmNoCheck" parameterType="WBFBRegisterSearchDTO">
-        SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
-        FROM cx_appctn_mst
-        WHERE episd_seq = #{episdSeq}
-        AND appctn_bsnm_no = #{bsnmNo}
-        AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+        SELECT /*WBFBRegisterCompanyMapper.getSbrdmNoCheck*/
+            COUNT(*)
+        FROM cx_appctn_mst A
+        LEFT JOIN CX_APPCTN_RSUME_DTL B
+        ON A.appctn_seq = B.appctn_seq
+        WHERE A.episd_seq = #{episdSeq}
+          AND appctn_bsnm_no = #{bsnmNo}
+          AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
+          AND appctn_stts_cd != 'PRO_TYPE02001_01_004'
+          AND mng_stts_cd != 'PRO_TYPE02001_01_004'
     </select>
 
     <!--
@@ -1113,12 +1119,18 @@
         수정일     수정자     수정내용
        ==========  ======  ==============
        2023.11.16  김동현     최초 생성
+       2024.02.29  구은희     신청자 취소 조건 추가
    -->
     <select id="getMemSeqCheck" parameterType="WBFBRegisterSearchDTO">
-        SELECT COUNT(*) /*WBFBRegisterCompanyMapper.getMemSeqCheck*/
-        FROM cx_appctn_mst
-        WHERE episd_seq = #{episdSeq}
-          AND mem_seq = #{memSeq}
+        SELECT /*WBFBRegisterCompanyMapper.getMemSeqCheck*/
+            COUNT(*)
+        FROM cx_appctn_mst A
+        LEFT JOIN CX_APPCTN_RSUME_DTL B
+        ON A.appctn_seq = B.appctn_seq
+        WHERE A.episd_seq = #{episdSeq}
+          AND A.mem_seq = #{memSeq}
+          AND appctn_stts_cd != 'PRO_TYPE02001_01_004'
+          AND mng_stts_cd != 'PRO_TYPE02001_01_004'
     </select>
 
     <!--
