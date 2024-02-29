@@ -144,6 +144,15 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 pCBBManageConsultInsertDTO.setMjrPrdct2(companyInfo.getList().get(i).getMjrPrdct2());
                 pCBBManageConsultInsertDTO.setMjrPrdct3(companyInfo.getList().get(i).getMjrPrdct3());
                 pCBBManageConsultInsertDTO.setCmpnTelNo(companyInfo.getList().get(i).getTelNo());
+
+                if(pCBBManageConsultInsertDTO.getCtgryCd().equals("COMPANY01001")) {
+                    pCBBManageConsultInsertDTO.setQlty5StarCd(companyInfo.getList().get(i).getQlty5StarCd());
+                    pCBBManageConsultInsertDTO.setQlty5StarYear(companyInfo.getList().get(i).getQlty5StarYear());
+                    pCBBManageConsultInsertDTO.setPay5StarCd(companyInfo.getList().get(i).getPay5StarCd());
+                    pCBBManageConsultInsertDTO.setPay5StarYear(companyInfo.getList().get(i).getPay5StarYear());
+                    pCBBManageConsultInsertDTO.setTchlg5StarCd(companyInfo.getList().get(i).getTchlg5StarCd());
+                    pCBBManageConsultInsertDTO.setTchlg5StarYear(companyInfo.getList().get(i).getTchlg5StarYear());
+                }
             }
 
             for(int j=0; j<companyInfo.getList().size(); j++){
@@ -1014,7 +1023,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //번호
             cell = row.createCell(0);
-            cell.setCellValue(cBBConsultSuveyRsltListDTO.getTotalCount() - i);
+            cell.setCellValue(rowNum-1);
             cell.setCellStyle(style_body);
 
             //사업연도

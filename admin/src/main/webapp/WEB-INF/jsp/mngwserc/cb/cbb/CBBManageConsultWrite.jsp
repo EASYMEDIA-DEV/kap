@@ -38,6 +38,7 @@
             <input type="hidden" class="notRequired" id="cnstgCd" name="cnstgCd" value="CONSULT_GB02" />
             <input type="hidden" class="notRequired" id="regDtm" name="regDtm" value="${ kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '-')}" />
 
+
         <div id="appctnPdfArea1" >
             <fieldset>
                 <span class="dtl-tab" style="float:right" data-html2canvas-ignore="true"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
@@ -509,13 +510,13 @@
         <div id="appctnPdfArea2">
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
-                <h6 class="mt0"><em class="ion-play mr-sm"></em>상주기술지도 신청정보</h6>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>상주경영컨설팅 신청정보</h6>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청일자<span class="star"> *</span></label>
                     <div class="input-group col-md-2" style="z-index:0;">
-                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt"  value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if>" title="신청일자" />
+                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt"  value="${not empty rtnDto ? kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="신청일자" />
                         <span class="input-group-btn" style="z-index:0;">
                             <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                 <em class="ion-calendar"></em>
@@ -1610,7 +1611,7 @@
             </c:choose>
                 <div class="clearfix">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-sm btn-default" id="btnList">목록</button>
+                        <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                     </div>
                     <div class="pull-right">
                         <div class="btn btn-sm btn-success" id="submit">저장</div>

@@ -33,7 +33,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 			//전체 갯수
-			var totCnt = $("#ptcptListContainer").find("tr").data("totalCount");
+			var totCnt = $(".ebbAtndcSrchLayer").find("#ptcptListLayerContainer").find("tr").data("totalCount");
 			//총 건수
 			ctrl.obj.find("#ptcptListLayerContainerTotCnt").text(totCnt);
 

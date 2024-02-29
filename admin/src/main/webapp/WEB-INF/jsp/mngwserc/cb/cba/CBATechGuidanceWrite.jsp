@@ -432,7 +432,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">신청일자<span class="star"> *</span></label>
                     <div class="input-group col-md-2" style="z-index:0;">
-                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt" value="<c:if test="${not empty rtnDto}">${kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}</c:if><c:if test="${empty rtnDto}">${today}</c:if>" title="신청일자" />
+                        <input type="text" class="form-control datetimepicker_strtDt"  name="appctnDt" value="${not empty rtnDto ? kl:convertDate(rtnDto.appctnDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '') : today}" title="신청일자" />
                         <span class="input-group-btn" style="z-index:0;" data-html2canvas-ignore="true">
                                 <button type="button" class="btn btn-inverse" onclick="jQuery(this).parent().prev().focus();">
                                     <em class="ion-calendar"></em>
@@ -1567,7 +1567,7 @@
 </c:choose>
                 <div class="clearfix">
                     <div class="pull-left">
-                        <button type="button" class="btn btn-sm btn-default" id="btnList">목록</button>
+                        <button type="button" class="btn btn-sm btn-default" id="btnList" data-str-pam="${strPam}">목록</button>
                     </div>
                     <div class="pull-right">
                         <div class="btn btn-sm btn-success" id="submit">저장</div>

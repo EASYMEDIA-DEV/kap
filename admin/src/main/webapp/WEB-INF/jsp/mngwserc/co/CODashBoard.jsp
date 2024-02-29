@@ -41,11 +41,11 @@
                     <div class="card-body">
                         <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <h6 class="card-title"><strong>기술지도</strong></h6>
-                        <p class="card-text"><strong>신청</strong><span style="float:right;"><strong>${rtnData.conTechApplication}</strong>건</span></p>
-                        <p class="card-text"><strong>지도중</strong><span style="float:right;"><strong>${rtnData.conTechTraining}</strong>건</span></p>
+                        <p class="card-text"><strong>신청</strong><span style="float:right;"><a href="javascript:;" data-link="/cb/cba/list?dashBoardType=A" class="moreLink"><strong>${rtnData.conTechApplication}</strong></a>건</span></p>
+                        <p class="card-text"><strong>지도중</strong><span style="float:right;"><a href="javascript:;" data-link="/cb/cba/list?dashBoardType=B" class="moreLink"><strong>${rtnData.conTechTraining}</strong></a>건</span></p>
                         <h6 class="card-title"><strong>경영컨설팅</strong></h6>
-                        <p class="card-text"><strong>신청</strong><span style="float:right;"><strong>${rtnData.conMngApplication}</strong>건</span></p>
-                        <p class="card-text"><strong>지도중</strong><span style="float:right;"><strong>${rtnData.conMngTraining}</strong>건</span></p>
+                        <p class="card-text"><strong>신청</strong><span style="float:right;"><a href="javascript:;" data-link="/cb/cbb/list?dashBoardType=A" class="moreLink"><strong>${rtnData.conMngApplication}</strong></a>건</span></p>
+                        <p class="card-text"><strong>지도중</strong><span style="float:right;"><a href="javascript:;" data-link="/cb/cbb/list?dashBoardType=B" class="moreLink"><strong>${rtnData.conMngTraining}</strong></a>건</span></p>
                     </div>
                 </div>
             </div>
@@ -84,8 +84,8 @@
                     <div class="card-body">
                         <p class="card-text"><small class="text-muted" style="float:right;">기준일 : ${sysDate}</small></p>
                         <p class="card-text">&nbsp;</p>
-                        <p class="card-text"><strong>접수대기</strong><span style="float:right;"><strong>${rtnData.inquiryApplicationWaiting}</strong>건</span></p>
-                        <p class="card-text"><strong>접수완료</strong><span style="float:right;"><strong>${rtnData.inquiryApplicationCompleted}</strong>건</span></p>
+                        <p class="card-text"><strong>접수대기</strong><span style="float:right;"><a href="javascript:;" data-link="/im/ima/list?dashBoardType=A" class="moreLink"><strong>${rtnData.inquiryApplicationWaiting}</strong></a>건</span></p>
+                        <p class="card-text"><strong>접수완료</strong><span style="float:right;"><a href="javascript:;" data-link="/im/ima/list?dashBoardType=B" class="moreLink"><strong>${rtnData.inquiryApplicationCompleted}</strong></a>건</span></p>
                     </div>
                 </div>
             </div>

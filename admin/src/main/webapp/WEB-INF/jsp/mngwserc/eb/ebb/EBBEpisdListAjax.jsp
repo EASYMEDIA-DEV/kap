@@ -40,7 +40,7 @@
         <td class="text-center">${list.edctnStatusNm}</td><!--교육상태-->
         <td class="text-center">${list.isttrName} </td><!--이름-->
         <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td> <!--소속-->
-        <td class="text-center">${list.fxnumCnt}</td><!--정원-->
+        <td class="text-center">${not empty list.fxnumCnt and list.fxnumImpsbYn eq 'Y' ? list.fxnumCnt : '제한 없음'}</td><!--정원-->
         <td class="text-center">${list.accsCnt}</td><!--신청자수-->
         <td class="text-center">${list.rcrmtMthdCdNm}</td><!--모집 방식-->
         <td class="text-center">${list.picNm}</td><!--담당자 이름-->

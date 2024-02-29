@@ -13,12 +13,15 @@
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
         <!-- 상세로 이동시 시퀀스 -->
         <input type="hidden" id="detailsKey" name="detailsKey" value="" />
-          <input type="hidden" class="notRequired" id="cnstgCd" name="cnstgCd" value="CONSULT_GB02" />
+        <input type="hidden" class="notRequired" id="cnstgCd" name="cnstgCd" value="CONSULT_GB02" />
+        <input type="hidden" id="dashBoardType" name="dashBoardType" value="${rtnData.dashBoardType}" />
+
         <!--기간 검색 시작-->
         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
           <jsp:param name="srchText" value="기간검색" />
           <jsp:param name="srchOption" value="신청일,사업연도,방문일,킥오프일,랩업일,등록일,수정일" />
           <jsp:param name="srchType" value="cnstg" />
+          <jsp:param name="dashBoardType" value="${rtnData.dashBoardType}" />
         </jsp:include>
         <fieldset>
             <div class="form-group text-sm">

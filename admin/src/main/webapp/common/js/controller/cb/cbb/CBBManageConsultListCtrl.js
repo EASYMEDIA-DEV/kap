@@ -139,10 +139,10 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         //상세보기
                         var detailsKey = $(this).data("detailsKey");
-                        var _csrf = $("#csrfKey").val();
+                        // var _csrf = $("#csrfKey").val();
                         $formObj.find("input[name=detailsKey]").val(detailsKey);
-                        // location.href = "./write?" + $formObj.serialize();
-                        location.href = "./write?detailsKey=" + detailsKey + "&_csrf=" + _csrf;
+                        location.href = "./write?" + $formObj.serialize();
+                        // location.href = "./write?detailsKey=" + detailsKey + "&_csrf=" + _csrf;
                     }
                 }
             },
@@ -178,6 +178,22 @@ define(["ezCtrl"], function(ezCtrl) {
             }
         },
         immediately : function() {
+
+            //대시보드에서 접근 시 검색 필터 설정
+            var dashType= $("#dashBoardType").val();
+
+            if(!(dashType === undefined)){
+                //접수대기
+                if(dashType == "A"){
+                    $("select[name='rsumeSttsCd'] option:eq(1)").prop("selected", true);
+                    //접수완료
+                }else if(dashType == "B"){
+                    $("select[name='rsumeSttsCd'] option:eq(9)").prop("selected", true);
+                }
+            }
+
+            // $('#btnSearch').trigger("click");
+
             // 리스트 조회
             cmmCtrl.setFormData($formObj);
 

@@ -41,6 +41,7 @@
 					WHEN ISTTR_CNT <![CDATA[>]]>  1 THEN ISTTR_CNT-1
 					END ISTTR_OUT_CNT
 				, FXNUM_CNT
+		     	, FXNUM_IMPSB_YN
 				, ACCS_CNT
 				, PIC_NM
 				, PIC_EMAIL

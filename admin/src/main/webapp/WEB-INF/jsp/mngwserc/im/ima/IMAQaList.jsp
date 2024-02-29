@@ -13,10 +13,14 @@
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
             <input type="hidden" id="rsumeCd" name="rsumeCd" value="" />
+            <input type="hidden" id="dashBoardType" name="dashBoardType" value="${rtnData.dashBoardType}" />
+
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="문의 등록일,답변 등록일" />
+                <jsp:param name="srchType" value="ima" />
+                <jsp:param name="dashBoardType" value="${rtnData.dashBoardType}" />
             </jsp:include>
             <!--기간 검색 종료-->
             <%--문의 유형 시작--%>

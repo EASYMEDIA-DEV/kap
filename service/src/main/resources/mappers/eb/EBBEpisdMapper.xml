@@ -1604,11 +1604,15 @@
 		and a.edctn_seq = #{edctnSeq}
 		and a.episd_year = #{episdYear}
 		and a.episd_ord = #{episdOrd}
+
 		and a.stts_cd != 'EDU_STTS_CD04'
 		and a.stts_cd != 'EDU_STTS_CD05'
-
+		<if test='atndcYn == "Y" '>
+		and a.stts_cd != 'EDU_STTS_CD02'
+		</if>
 
 		<if test='atndcYn == "N" '>
+
 			UNION ALL
 
 			SELECT
@@ -1758,7 +1762,9 @@
 			and a.stts_cd != 'EDU_STTS_CD04'
 			and a.stts_cd != 'EDU_STTS_CD05'
 
-
+		<if test='atndcYn == "Y" '>
+			and a.stts_cd != 'EDU_STTS_CD02'
+		</if>
 
 		<if test='atndcYn == "N" '>
 			UNION ALL

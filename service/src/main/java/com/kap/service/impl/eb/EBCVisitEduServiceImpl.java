@@ -880,7 +880,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         COMessageReceiverDTO mngReceiverDto = new COMessageReceiverDTO();
 
         COMailDTO toMngMailForm = new COMailDTO();
-        toMngMailForm.setSubject("현장방문교육이 접수 되었습니다");
+        toMngMailForm.setSubject("["+siteName+"] 현장방문교육이 접수되었습니다.");
 
         //이메일 //담당자 이상훈 : skill@kapkorea.org //개발서버 테스트 후 변경 필요
         mngReceiverDto.setEmail("eghee@easymedia.net");

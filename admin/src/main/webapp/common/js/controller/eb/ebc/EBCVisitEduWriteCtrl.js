@@ -686,7 +686,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $("#edctnStrtDt").focus();
                             return false;
                         }
-                        if(edctnStrtDt == edctnEndDt){
+                        if(edctnStrtDtm == edctnEndDtm){
                             if(edctnStrtHour > edctnEndHour){
                                 alert("교육 시작시간이 더 클 수 없습니다.");
                                 $("#edctnStrtHour").focus();
@@ -720,11 +720,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         actForm.cnfrmdTheme = cnfrmdTheme;
                         actForm.edctnSttsCd = edctnSttsCd;
                         actForm.edctnYear = edctnYear;
-
-                        if(edctnStrtDtm == "" || edctnEndDtm == "") {
-                            actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
-                            actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
-                        }
+                        actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
+                        actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
+                        actForm.edctnStrtDtm = edctnStrtDtm;//교육시작일시
+                        actForm.edctnEndDtm = edctnEndDtm;//교육종료일시
 
                         actForm.edctnPlace = edctnPlace;
                         actForm.cmptnCnt = cmptnCnt;
@@ -813,10 +812,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         if(lctrFileArray == "" || (lctrFileArray[lctrFileArray.length-1].fileOrd != temp.fileOrd)){
                                             lctrFileArray.push(temp);
                                         }
-
                                     }
                                 }
-
                             })
                         }
                         actForm.lctrFileList = lctrFileArray;

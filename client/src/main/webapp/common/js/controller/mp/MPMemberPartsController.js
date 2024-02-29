@@ -376,6 +376,7 @@ define(["ezCtrl"], function(ezCtrl) {
                             $(".old").hide();
                             $(".for-status-chk").removeClass("satisfy");
                             $(".switchingMemberPopup").css('display','none');
+                            $("#applyYn").val("");
                             $(".dimd").css('display','none');
                             $(".dimd").css('z-index','');
                             $("body").removeClass("stop-scroll");
@@ -470,7 +471,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 $(".for-status-chk").removeClass("satisfy");
                             }
 
-                        }
+                        } $("#applyYn").val("");
                     }
                 }
             },

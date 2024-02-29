@@ -332,7 +332,8 @@
             <if test="cmssrCbsnCd != null and cmssrCbsnCd != ''.toString()">
                 and ma.cmssr_cbsn_cd = #{cmssrCbsnCd}
             </if>
-            <if test="srchLayer == 'Y'.toString() "> /* 회원검색 레이어일 경우 특정 부품사의 회원들만 조회되도록 */
+            <!-- 회원검색 레이어일 경우 특정 부품사의 회원들만 조회 -->
+            <if test="srchLayer == 'Y'.toString() ">
                 <if test="workBsnmNo != null and workBsnmNo != ''.toString() ">
                     and ma.work_bsnm_no = replace(#{workBsnmNo},'-','')
                 </if>
@@ -510,7 +511,8 @@
                     else '' end as dept_cd_nm
              , mem.dept_dtl_nm
              , mem.pstn_cd
-             , (select cd_nm from co_code_mst where  cd = mem.pstn_cd ) as pstn_cd_nm
+             , case when mem.pstn_cd != '' then  (select cd_nm from co_code_mst where  cd=mem.pstn_cd )
+                    else '' end as pstn_cd_nm
              , mem.reg_dtm
              , case when cmpn_mst.ctgry_cd != '' then  (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd )
                        else '' end as ctgry_cd_nm

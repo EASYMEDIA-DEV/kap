@@ -378,7 +378,7 @@
 
                                                 <c:set var="srvListStart" value="" />
 
-                                                <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate)}">
+                                                <c:if test="${rtnData.sttsCd eq 'EDU_STTS_CD01' && rtnData.trnsfYn eq 'N' && (srvStrt.before(currentDate) || srvStrt eq currentDate)  &&   (currentDate.before(srvEnd) || srvEnd eq currentDate) }">
                                                     <c:set var="srvListStart" value="srvListStart" />
                                                 </c:if>
 

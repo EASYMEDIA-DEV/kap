@@ -31,17 +31,17 @@
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 1}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData1" id="frmData1">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
 
-                            <input type="hidden" id="mngSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
-                            <input type="hidden" id="appctnSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
+                            <input type="hidden" id="mngSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
+                            <input type="hidden" id="appctnSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
 
                             <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
                         <a class="acco-click-area" href="javascript:">
@@ -85,7 +85,7 @@
                                                 <p class="data-title f-body1"><span>종된사업장번호</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="sbrdnBsnmNo" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4">
+                                                        <input type="text" id="sbrdnBsnmNo" name="wBEBCarbonCompanyMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4">
                                                     </div>
                                                 </div>
                                                 <div class="noti-txt-w">
@@ -98,10 +98,10 @@
                                                     <p class="data-title f-body1"><span>구축사업장</span><span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input">
-                                                            <input type="text" id="zipCode" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].pbsnZipcode" placeholder="우편번호" value="${rtnPbsn[0].pbsnZipcode}" readonly="">
+                                                            <input type="text" id="zipCode" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].pbsnZipcode" placeholder="우편번호" value="${rtnPbsn[0].pbsnZipcode}" readonly="">
                                                         </div>
                                                         <div class="form-input w-longer">
-                                                            <input type="text" id="bscAddr" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].pbsnBscAddr" placeholder="주소" value="${rtnPbsn[0].pbsnBscAddr}" readonly="">
+                                                            <input type="text" id="bscAddr" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].pbsnBscAddr" placeholder="주소" value="${rtnPbsn[0].pbsnBscAddr}" readonly="">
                                                         </div>
                                                         <div class=" ">
                                                             <button class="btn-solid small gray-bg" id="searchPostCode" type="button"><span>우편번호 찾기</span></button>
@@ -109,7 +109,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <div class="form-input w-longest">
-                                                            <input type="text" id="dtlAddr" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].pbsnDtlAddr" placeholder="상세주소 입력" value="${rtnPbsn[0].pbsnDtlAddr}" maxlength="100">
+                                                            <input type="text" id="dtlAddr" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].pbsnDtlAddr" placeholder="상세주소 입력" value="${rtnPbsn[0].pbsnDtlAddr}" maxlength="100">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -140,7 +140,7 @@
                                                             <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[0].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
-                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
+                                                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                         </div>
                                                     </c:if>
                                                     <div class="file-prev-area">
@@ -164,19 +164,19 @@
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 2}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData2" id="frmData2">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
 
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
 
-                            <input type="hidden" id="mngSttsCd2" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
-                            <input type="hidden" id="appctnSttsCd2" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[1].appctnSttsCd}">
+                            <input type="hidden" id="mngSttsCd2" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
+                            <input type="hidden" id="appctnSttsCd2" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[1].appctnSttsCd}">
 
                             <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
 
@@ -218,7 +218,7 @@
                                                 <p class="data-title f-body1">지원금 ①<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="spprtPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}">
+                                                        <input type="text" id="spprtPmt" class="comma" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -226,7 +226,7 @@
                                                 <p class="data-title f-body1">자부담 ②<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="phswPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}">
+                                                        <input type="text" id="phswPmt" class="comma" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}">
                                                     </div>
                                                 </div>
                                             </div>
@@ -235,7 +235,7 @@
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
                                                         <input type="text" id="sum" class="comma" placeholder="총금액 입력" value="${rtnPbsn[1].ttlPmt}" readonly>
-                                                        <input type="hidden" class="notRequired" id="ttlPmt" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].ttlPmt" value="${rtnPbsn[1].ttlPmt}"/>
+                                                        <input type="hidden" class="notRequired" id="ttlPmt" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].ttlPmt" value="${rtnPbsn[1].ttlPmt}"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -265,7 +265,7 @@
                                                             <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
-                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
+                                                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                         </div>
                                                     </c:if>
                                                     <div class="file-prev-area">
@@ -313,19 +313,19 @@
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 4}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <form name="frmData4" id="frmData4">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
 
-                            <input type="hidden" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
 
-                            <input type="hidden" id="mngSttsCd4" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
-                            <input type="hidden" id="appctnSttsCd4" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[3].appctnSttsCd}">
+                            <input type="hidden" id="mngSttsCd4" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
+                            <input type="hidden" id="appctnSttsCd4" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[3].appctnSttsCd}">
 
                             <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
 
@@ -377,7 +377,7 @@
                                                             <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[3].fileSeq}"/>
                                                             <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
-                                                            <input type="hidden" name="wBCBSecurityMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
+                                                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                         </div>
                                                     </c:if>
                                                     <div class="file-prev-area">
@@ -482,13 +482,13 @@
                                     <div id="spprt1" class="tab-con">
                                         <form name="spprtform1" id="spprtform1">
                                         <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
-                                        <input type="hidden" class="notRequired" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[0].appctnSpprtSeq}" />
+                                        <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                                        <input type="hidden" class="notRequired" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[0].appctnSpprtSeq}" />
                                         <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
-                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[0].giveType}" />
+                                        <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[0].giveType}" />
 
-                                        <input type="hidden" id="spprtAppctnSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[0].appctnSttsCd}" />
-                                        <input type="hidden" id="spprtMngSttsCd1" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}" />
+                                        <input type="hidden" id="spprtAppctnSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[0].appctnSttsCd}" />
+                                        <input type="hidden" id="spprtMngSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}" />
                                         <input type="hidden" class="tabFlag" value="${not empty rtnSpprt[0].acntNo ? 'update' : 'insert'}"/>
 
                                         <div class="tab-con-area">
@@ -508,7 +508,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input calendar">
-                                                                                <input type="text" id="accsDt1" class="datetimepicker_input" name="wBCBSecurityMstInsertDTO.spprtList[0].accsDt" value="${kl:convertDate(rtnSpprt[0].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"  placeholder="날짜 선택">
+                                                                                <input type="text" id="accsDt1" class="datetimepicker_input" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].accsDt" value="${kl:convertDate(rtnSpprt[0].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"  placeholder="날짜 선택">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -524,7 +524,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="bankNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[0].bankNm}">
+                                                                                <input type="text" id="bankNm1" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[0].bankNm}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -540,7 +540,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="acntNo1" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[0].acntNo}">
+                                                                                <input type="text" id="acntNo1" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[0].acntNo}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -556,7 +556,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="dpsitNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[0].dpsitNm}">
+                                                                                <input type="text" id="dpsitNm1" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[0].dpsitNm}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -658,13 +658,13 @@
                                     <div id="spprt2" class="tab-con">
                                         <form name="spprtform2" id="spprtform2">
                                         <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
-                                        <input type="hidden" class="notRequired" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[1].appctnSpprtSeq}" />
+                                        <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                                        <input type="hidden" class="notRequired" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[1].appctnSpprtSeq}" />
                                         <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
-                                        <input type="hidden" name="wBCBSecurityMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[1].giveType}" />
+                                        <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].giveType" value="${rtnSpprt[1].giveType}" />
 
-                                        <input type="hidden" id="spprtAppctnSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[1].appctnSttsCd}" />
-                                        <input type="hidden" id="spprtMngSttsCd2" name="wBCBSecurityMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}" />
+                                        <input type="hidden" id="spprtAppctnSttsCd2" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].appctnSttsCd" value="${rtnSpprt[1].appctnSttsCd}" />
+                                        <input type="hidden" id="spprtMngSttsCd2" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}" />
                                         <input type="hidden" class="tabFlag" value="${not empty rtnSpprt[1].acntNo ? 'update' : 'insert'}"/>
 
                                         <div class="tab-con-area">
@@ -684,7 +684,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input calendar">
-                                                                                <input type="text" id="accsDt2" class="datetimepicker_input" name="wBCBSecurityMstInsertDTO.spprtList[0].accsDt"  value="${kl:convertDate(rtnSpprt[1].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" placeholder="날짜 선택">
+                                                                                <input type="text" id="accsDt2" class="datetimepicker_input" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].accsDt"  value="${kl:convertDate(rtnSpprt[1].accsDt, 'yyyy-MM-dd', 'yyyy-MM-dd', '')}" placeholder="날짜 선택">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -700,7 +700,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="bankNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[1].bankNm}">
+                                                                                <input type="text" id="bankNm2" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[1].bankNm}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -716,7 +716,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="acntNo2" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[1].acntNo}">
+                                                                                <input type="text" id="acntNo2" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[1].acntNo}">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -732,7 +732,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="dpsitNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[1].dpsitNm}">
+                                                                                <input type="text" id="dpsitNm2" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[1].dpsitNm}">
                                                                             </div>
                                                                         </div>
                                                                     </div>

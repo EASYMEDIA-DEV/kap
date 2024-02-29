@@ -380,6 +380,7 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String bfreJdgmtRsltCntn;
     @Schema(title = "사용자 마이페이지 - 컨설팅신청내역 목록 - 초도방문결과의견")
     private String initVstOpnnCntn;
-
+    @Schema(title = "관리자 대시보드 검색타입", example = "A/B")
+    private String dashBoardType;
 
 }

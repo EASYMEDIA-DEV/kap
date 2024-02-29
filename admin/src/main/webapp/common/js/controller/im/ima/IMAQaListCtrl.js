@@ -160,6 +160,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
+
+            //대시보드에서 접근 시 검색 필터 설정
+            var dashType= $("#dashBoardType").val();
+
+            if(!(dashType === undefined)){
+                //접수대기
+                if(dashType == "A"){
+                    $("input[data-name='rsumeCdList']").eq(0).prop("checked", true);
+                    //접수완료
+                }else if(dashType == "B"){
+                    $("input[data-name='rsumeCdList']").eq(1).prop("checked", true);
+                }
+            }
+
+            $('#btnSearch').trigger("click");
+
             //리스트 조회
             search();
         }

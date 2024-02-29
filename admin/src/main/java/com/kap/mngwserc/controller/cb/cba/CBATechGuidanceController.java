@@ -231,7 +231,7 @@ public class CBATechGuidanceController {
     }
 
     /**
-     * 컨설팅 사업 경영컨설팅 만족도 종합결과 목록 조회
+     * 컨설팅 사업 기술지도 만족도 종합결과 목록 조회
      */
     @GetMapping(value = "/selectSurveyRslt")
     public String selectConsultSuveyRsltList(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
@@ -250,7 +250,29 @@ public class CBATechGuidanceController {
     }
 
     /**
-     * 컨설팅 사업 경영컨설팅 엑셀다운로드 관련
+     * 컨설팅 사업 기술지도 만족도 종합 결과 엑셀다운로드
+     */
+    @GetMapping(value = "/srvRsltExcel-down")
+    public void selectConsultSrvRsltExcel(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO , HttpServletResponse response) throws Exception
+    {
+        try
+        {
+            cBAConsultSuveyRsltListDTO.setRtnBsnGubun("CONSULT_GB01");
+            //엑셀 생성
+            cBATechGuidanceService.srvRsltExcelDownload(cBATechGuidanceService.selectConsultSuveyRsltDtlExcel(cBAConsultSuveyRsltListDTO), response);
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    /**
+     * 컨설팅 사업 기술지도 엑셀다운로드
      */
     @GetMapping(value = "/excel-down")
     public void selectManageConsultListExcel(CBATechGuidanceInsertDTO cBATechGuidanceInsertDTO, HttpServletResponse response) throws Exception

@@ -1609,6 +1609,11 @@ function openPopup(popName, comebackEl, reloadChk) {
           }});
           $(designatedPopup).hasClass("trendPopup") && trendMobMotion();
         }, 10);
+
+        // fadein 완료 후 reloadChk 값이 Y 이면 data값 변경 후 트리커 클릭 처리
+        if(reloadChk == "Y"){
+          $(comebackEl.target).data("mapchk", "Y").trigger("click");
+        }
       }
 
       if($(designatedPopup).hasClass("full-popup")){ // full-popup 팝업만 2분할 모션

@@ -831,7 +831,7 @@
 		<if test="cmptnYn != null and cmptnYn == 'Y'.toString()">
 			, cmptn_yn = #{cmptnYn}
 		    , cmptn_dtm = now()
-			, crtfctNo = #{crtfctNo}
+			, crtfct_no = #{crtfctNo}
 		</if>
 		<if test="cmptnYn != null and cmptnYn == 'N'.toString()">
 			, cmptn_yn = #{cmptnYn}

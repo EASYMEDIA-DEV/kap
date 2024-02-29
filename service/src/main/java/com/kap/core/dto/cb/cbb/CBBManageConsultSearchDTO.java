@@ -29,6 +29,7 @@ import java.util.List;
 @EqualsAndHashCode(callSuper=false)
 @Schema(title = "경영컨설팅 신청부품사 검색")
 public class CBBManageConsultSearchDTO extends BaseDTO {
+
     @Schema(title = "컨설팅순번", example = "숫자")
     private Integer cnstgSeq;
     @Schema(title = "부품사 구분 리스트")
@@ -46,5 +47,7 @@ public class CBBManageConsultSearchDTO extends BaseDTO {
     private String rsn;
     @Schema(title = "엑셀여부")
     private String excelYn;
+    @Schema(title = "관리자 대시보드 검색타입", example = "A/B")
+    private String dashBoardType;
 
 }

@@ -686,19 +686,19 @@
 		, cmptn_dtm
 		, mem_seq
 		, case when trnsf_yn = 'N' then
-													case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
-														case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
-														case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-														when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
-														when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
-													end
-													when stts_cd = 'EDU_STTS_CD02' then '신청취소'
-													when stts_cd = 'EDU_STTS_CD04' then '신청대기'
-													when stts_cd = 'EDU_STTS_CD05' then '미선발'
-													when stts_cd = 'EDU_STTS_CD06' then '교육취소'
-													end
-													when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
-													end
+				case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+					case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+					case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+					when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+					when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+				end
+				when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+				when stts_cd = 'EDU_STTS_CD04' then '신청대기'
+				when stts_cd = 'EDU_STTS_CD05' then '미선발'
+				when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+				end
+				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+				end
 		    else '교육양도'
 		end as edu_stat
 		, case when trnsf_yn = 'N' then
@@ -1112,7 +1112,7 @@
 		A.reg_dtm DESC
 		)AA
 
-		<include refid="selectMypageEduListWhereSql" />
+		<include refid="selectMypageVisitEduListWhereSql" />
 
 		<choose>
 			<when test="srchOrder == 1">
@@ -1270,14 +1270,137 @@
 			<if test="strtDt != null and strtDt != ''">
 				<choose>
 					<when test="srchDate == 1">
-						AND EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND EDCTN_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+
+						AND (
+
+							CASE WHEN EDU_GUBUN = 'E'
+							THEN
+								EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+								AND EDCTN_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+							ELSE
+								PTCPT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+								AND PTCPT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+							END
+						)
+
 					</when>
 					<when test="srchDate == 2">
 						AND PTCPT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
 						AND PTCPT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
 					</when>
 				</choose>
+			</if>
+
+		</where>
+	</sql>
+
+
+	<!--
+		쿼리명 : selectMypageVisitEduListWhereSql
+		설  명 : 마이페이지 - 교육/세미나 신청내역 중 방문교육을 위한 where Sql
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.02.28    구은희       최초생성
+    -->
+	<sql id="selectMypageVisitEduListWhereSql">
+		<where>
+
+			AND (MEM_SEQ = #{memSeq} or bfre_mem_seq = #{memSeq})
+
+			<if test="cnnctCd != null and cnnctCd != '' ">
+				AND edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
+			</if>
+
+			<!--과정분류 검색 중분류까지 있을경우-->
+			<if test="ctgryCd != null and ctgryCd !='' ">
+				AND ctgry_cd = #{ctgryCd}
+			</if>
+
+			<!--과정분류 검색 - 대분류만 선택 했을경우-->
+			<if test="prntCd !=null and prntCd !='' and (ctgryCd == null or ctgryCd =='') ">
+				AND LEFT(ctgry_cd, 7) like concat('%', #{prntCd}, '%')
+			</if>
+
+			<!-- 학습방식 -->
+			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
+				and (
+				<foreach collection="stduyMthdCdList" item="stduyMthdCdList" index="index" open="" close="" separator=" or ">
+					stduy_mthd_cd = #{stduyMthdCdList}
+				</foreach>
+				)
+			</if>
+
+			<!-- 수료여부 -->
+			<if test="cmptnYnList != null and cmptnYnList.size() > 0">
+				and (
+				<foreach collection="cmptnYnList" item="cmptnYnList" index="index" open="" close="" separator=" or ">
+					cmptn_yn = #{cmptnYnList}
+				</foreach>
+				)
+			</if>
+
+			<!-- 접수상태 -->
+			<if test="accsStatusOrderList != null and accsStatusOrderList.size() > 0">
+				and (
+				<foreach collection="accsStatusOrderList" item="accsStatusOrderList" index="index" open="" close="" separator=" or ">
+					accs_status_order = #{accsStatusOrderList}
+				</foreach>
+				)
+			</if>
+
+			<!--교육상태-->
+			<if test="sttsCdList != null and sttsCdList.size() > 0">
+				and (
+
+				(
+				(case when trnsf_yn = 'N' then
+				case when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+				case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+				case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+				when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+				when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+				end
+				when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+				when stts_cd = 'EDU_STTS_CD04' then '신청대기'
+				when stts_cd = 'EDU_STTS_CD05' then '미선발'
+				when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+				end
+				when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+				end
+				else '교육양도'
+				end ) IN
+				<foreach collection="sttsCdList" item="sttsCdList" index="index" open="(" close=")" separator=" , ">
+					#{sttsCdList}
+				</foreach>
+				)
+
+
+				or
+				(
+				(
+				case when trnsf_yn = 'N' then
+				CASE edctn_stts_cd
+				WHEN 'EBC_VISIT_CD02001' THEN '신청'
+				WHEN 'EBC_VISIT_CD02002' THEN '협의중'
+				WHEN 'EBC_VISIT_CD02003' THEN '교육완료'
+				WHEN 'EBC_VISIT_CD02004' THEN '교육취소'
+				END
+
+				else '교육양도'
+				end
+
+				) IN
+				<foreach collection="sttsCdList" item="sttsCdList" index="index" open="(" close=")" separator=" , ">
+					#{sttsCdList}
+				</foreach>
+				)
+
+				)
+			</if>
+
+			<!-- 키워드 -->
+			<if test="q != null and q !='' ">
+				and ( (nm like concat('%', #{q}, '%')) or (place_nm like concat('%', #{q}, '%')) )
 			</if>
 
 		</where>
@@ -1804,7 +1927,7 @@
 		A.reg_dtm DESC
 		)AA
 
-		<include refid="selectMypageEduListWhereSql" />
+		<include refid="selectMypageVisitEduListWhereSql" />
 
 	</select>
 
