@@ -195,7 +195,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find(".addSubQuestion").show()
                             .end()
-                            .find('input[name=dpth]').val(dpth);
+                            .find('input[name=dpth]').val(dpth)
+                            .end()
+                            .find('.answerForm th').html('응답<span class="star"> *</span>')
 
                         if (dpth == "2"){                                    // 하위문항일때 폼 (객관식(단일선택) 으로 폼을 셋팅한다.
                             clone.find(".addSubQuestion").hide()
@@ -240,7 +242,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find('.'+surveyType+'questionTxt').attr("rowspan","3")
                             .end()
-                            .find('input[name=dpth]').val("2");
+                            .find('input[name=dpth]').val("2")
+                            .end()
+                            .find('.answerForm th').html('응답<span class="star"> *</span>')
                         filedset.find(".subNumber").attr("disabled",false);
                         $(filedset).last().after(clone);
                         questionSet(surveyType);
@@ -427,7 +431,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.delAnswer').show()
                                 .end()
-                                .find(".answerForm").show();
+                                .find(".answerForm").show()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
                         }else if($(this).val()=='QST05'){ // 5점척도
 
                             var addAnswerCnt = 4;
@@ -451,6 +457,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find('.delAnswer').hide()
                                 .end()
                                 .find(".answerForm").show()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
 
                         }else if($(this).val()=='QST06'){   //  7점척도
 
@@ -474,7 +482,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.delAnswer').hide()
                                 .end()
-                                .find(".answerForm").show();
+                                .find(".answerForm").show()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
+
                         }else if($(this).val()=='QST07'){   //  10점척도
 
                             var addAnswerCnt = 9;
@@ -496,7 +507,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.delAnswer').hide()
                                 .end()
-                                .find(".answerForm").show();
+                                .find(".answerForm").show()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
                         }else if($(this).val()=='QST02'){   // 객관식 복수
                             filedset.find('.subNumber').hide()
                                 .end()
@@ -518,7 +531,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.delAnswer').show()
                                 .end()
-                                .find(".answerForm").show();
+                                .find(".answerForm").show()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
+
                         }else if($(this).val()=='QST03' || $(this).val()=='QST04') {   // 주관식 서술 , 주관식 단답
                             filedset.find(".addSubQuestion").hide()
                                 .end()
@@ -534,7 +550,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.answerForm:not(:eq(0))').remove()
                                 .end()
-                                .find(".answerForm").hide();
+                                .find(".answerForm").hide()
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
                         }
 
                         if(dpth == "2"){
@@ -550,7 +568,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find("input[name=next_no]").val("")
                                 .end()
-                                .find(".answer").css("width","100%");
+                                .find(".answer").css("width","100%")
+                                .end()
+                                .find('.answerForm th').html('응답<span class="star"> *</span>')
+
                         }
 
 
@@ -563,10 +584,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 filedset.find("."+surveyType+"questionTxt").attr("rowspan",rowspan+1);
                                 if (i==0){
                                     clone.find('.answer').attr("disabled",false).removeClass("notRequired");
+                                    clone.find('th').html('응답(max)<span class="star"> *</span>')
                                 }
                                 $(answerFiledset).last().after(clone);
                             }
                             $(answerFiledset).find('.answer').attr("disabled",false).removeClass("notRequired");
+                            $(answerFiledset).find('th').html('응답(min)<span class="star"> *</span>')
+
                         }
                     }
                 }

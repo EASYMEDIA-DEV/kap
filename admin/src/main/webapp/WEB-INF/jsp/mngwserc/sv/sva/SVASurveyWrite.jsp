@@ -130,7 +130,24 @@
                                             <c:when test="${qstnList.svSurveyExmplDtlList.size() > 0}">
                                                 <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                     <tr class="answerForm" <c:if test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">style="display: none;" </c:if>>
-                                                    <th>응답<span class="star"> *</span></th>
+                                                        <c:choose>
+                                                            <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
+                                                                <c:choose>
+                                                                    <c:when test="${exmplStatus.first}">
+                                                                        <th>응답(min)<span class="star"> *</span></th>
+                                                                    </c:when>
+                                                                    <c:when test="${exmplStatus.last}">
+                                                                        <th>응답(max)<span class="star"> *</span></th>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <th>응답<span class="star"> *</span></th>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                <th>응답<span class="star"> *</span></th>
+                                                            </c:otherwise>
+                                                        </c:choose>
                                                     <td class="form-inline">
                                                         <c:choose>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST01'}">
