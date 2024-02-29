@@ -202,7 +202,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                         $(".loading-area").stop().fadeOut(200);
                                         return false;
                                     } else if(respData.respCnt == 300) {
-                                        alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n(종된사업장번호 중복)");
+                                        alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n (종된사업장번호 중복)");
                                         $(".loading-area").stop().fadeOut(200);
                                         return false;
                                     } else {
@@ -217,6 +217,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                         $(".loading-area").stop().fadeOut(200);
                                     }
                                 },"./getSbrdmNoCheck",wBFBRegisterSearchDTO, "text");
+                                $(".loading-area").stop().fadeOut(200);
                             } else {
                                 alert('약관에 동의해주세요.');
                             }

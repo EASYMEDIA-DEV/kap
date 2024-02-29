@@ -5,10 +5,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbd.*;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -1319,14 +1316,16 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
         int respCnt = 0;
 
-        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
+//        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
 
         WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
-        respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
+//        respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
+        respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
 
         if(respCnt > 0 ){
-            int cnt = wBDBSafetyMapper.getBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
+//            int cnt = wBDBSafetyMapper.getBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
+            int cnt = wBDBSafetyMapper.getSbrdnBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
             if(cnt > 0 ){
                 respCnt = 999;
             }
@@ -1344,7 +1343,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
         int respCnt = 0;
 
-        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
+//        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
 
         WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());

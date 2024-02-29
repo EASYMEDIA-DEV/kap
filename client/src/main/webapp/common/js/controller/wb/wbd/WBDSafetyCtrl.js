@@ -141,8 +141,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             var pass = false;
                             var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
 
+                            $(".loading-area").stop().fadeIn(200);
+
                             if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
-                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertBsnmNoCnt",
                                     type : "POST",
@@ -182,7 +183,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                                 location.href = "/my-page/coexistence/list";
                                             }
                                         }else if(data.respCnt > 0 ){
-                                            alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n (종된사업장 중복)");
+                                            alert("해당 소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.\n (종된사업장번호 중복)");
                                             $(".loading-area").stop().fadeOut(200);
                                             return;
                                         }else {
@@ -202,6 +203,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 }
                                 $(".loading-area").stop().fadeOut(200);
                             }
+                            $(".loading-area").stop().fadeOut(200);
                         } else {
                             alert('약관에 동의해주세요.')
                         }

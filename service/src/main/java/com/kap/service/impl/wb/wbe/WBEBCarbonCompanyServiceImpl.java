@@ -6,7 +6,6 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbe.*;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -1318,14 +1317,16 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         int respCnt = 0;
 
-        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+//        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
 
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
-        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+//        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
+        respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
 
         if(respCnt > 0 ){
-           int cnt = wBEBCarbonCompanyMapper.getBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
+//          int cnt = wBEBCarbonCompanyMapper.getBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
+            int cnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
            if(cnt > 0 ){
                respCnt = 999;
            }
@@ -1343,7 +1344,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         int respCnt = 0;
 
-        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+//        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
         WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
