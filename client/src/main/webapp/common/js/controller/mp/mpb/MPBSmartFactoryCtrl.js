@@ -192,22 +192,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 }
                             });
 
-                            /*
-                            var mPBBsnSearchDTO = {}
-                            mPBBsnSearchDTO.offerBsnmNo = $formObj.find('#offerBsnmNo').val();
-
-                            cmmCtrl.jsonAjax(function(respObj) {
-                                var rtnData = JSON.parse(respObj);
-                                if(rtnData.cmpnCount == 0){
-                                    offerBsnmNoCheck = false;
-                                    $formObj.find('#offerCmpnNm').val('');
-                                    alert(msgCtrl.getMsg("fail.mp.join.al_019"));
-                                } else {
-                                    offerBsnmNoCheck = true;
-                                    $formObj.find('#offerCmpnNm').val(rtnData.cmpnNm);
-                                }
-                            }, "./getBsnmNoCheck", mPBBsnSearchDTO, "text")*/
-
                         } else {
                             offerBsnmNoCheck = false;
                             $("#offerCmpnNm").val("");
