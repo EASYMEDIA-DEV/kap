@@ -300,10 +300,12 @@
             B.EMAIL,
             B.TEL_NO,
             B.DEPT_CD,
-            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = DEPT_CD) DEPT_NM,
+            CASE WHEN B.DEPT_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.DEPT_CD)
+                 ELSE '' END AS DEPT_NM,
             B.DEPT_DTL_NM,
             B.PSTN_CD,
-            (SELECT CD_NM FROM CO_CODE_MST WHERE CD = PSTN_CD) PSTN_CD_NM,
+            CASE WHEN B.PSTN_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.PSTN_CD)
+                 ELSE '' END AS PSTN_CD_NM,
             B.PSTN_NM,
             (SELECT SRV_SEQ FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = A.CNSTG_SEQ) AS SRV_SEQ,
             (SELECT SRV_STRT_DTM FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = A.CNSTG_SEQ) AS SRV_STRT_DTM,

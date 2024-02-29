@@ -560,7 +560,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             cmmCtrl.frmAjax(function(respObj) {
                                 //TODO 페이지 이동
                                 alert(msgCtrl.getMsg("success.upd2"));
-                                location.reload();
+                                location.href = "/my-page/member/intrduction/modify-page";
                             }, "/my-page/member/intrduction/update", $formObj6, "POST", "json",true);
                         }
                     }
