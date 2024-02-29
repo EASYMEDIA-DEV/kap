@@ -16,6 +16,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     var ctrl = new ezCtrl.controller(exports.controller);
 
 
+
     var search = function (page){
         //data로 치환해주어야한다.
         cmmCtrl.setFormData($formObj);
@@ -35,7 +36,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             $(".trsfField").validation({});
             //페이징 처리
             cmmCtrl.listPaging(totCnt, $formObj, "trsfListContainer", "trsfPagingContainer");
-        }, "/mngwserc/eb/ebc/trsfList", $formObj, "GET", "html");
+        }, "/mngwserc/eb/ebc/trsfList", $formObj, "POST", "html");
     }
 
     var callbackAjaxDelete = function(data){
@@ -375,6 +376,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }
         },
         immediately : function(){
+
+            console.log($formObj)
+            debugger;
+
             changeAppctnFldCd();
             search();
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);

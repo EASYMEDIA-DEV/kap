@@ -161,7 +161,7 @@ public class EBCVisitEduController {
     /**
      * 방문교육 신청 이관 이력을 조회한다.
      */
-    @GetMapping(value = "/trsfList")
+    @PostMapping(value = "/trsfList")
     public String getTrsfListPageAjax(EBCVisitEduDTO ebcVisitEduDTO, ModelMap modelMap) throws Exception
     {
         try
