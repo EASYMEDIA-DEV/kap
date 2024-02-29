@@ -390,7 +390,7 @@
                             </c:if>
                         </a>
                     </div>
-                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02004'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                    <div class="list-item <c:if test="${nowRsumeTaskCd eq 'PRO_TYPE02005'}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
                         <a class="acco-click-area" href="javascript:">
                             <div class="txt-box">
                                 <p class="tit f-head">원가계산</p>

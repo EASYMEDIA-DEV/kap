@@ -713,45 +713,6 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
                 wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(registerDTO);
             }
-
-
-            /*cOCodeDTO.setCd("PRO_TYPE02"); // 스마트 공장 코드
-             *//* 단계 코드 리스트 *//*
-            List<COCodeDTO> stateList = cOCodeService.getCdIdList(cOCodeDTO);
-            List<COCodeDTO> selStatelist = stateList.stream()
-                    .filter(ele -> ele.getDpth() == 3)
-                    .sorted(Comparator.comparing(COCodeDTO::getLftVal))
-                    .collect(Collectors.toList());
-
-            *//* 다음 진행 상태 *//*
-            String nextRsumeSttsCd = "";
-            for (int codeIdx=0; codeIdx<selStatelist.size(); codeIdx++) {
-                if (selStatelist.get(codeIdx).getCd().equals(wBFBRegisterDTO.getNowRsumeTaskCd())
-                        && codeIdx != (selStatelist.size()-1)) {
-                    nextRsumeSttsCd = selStatelist.get((codeIdx + 1)).getCd();
-                }
-            }
-
-            *//* 다음 진행 상태 값이 있을 경우 단계 생성*//*
-            if(!nextRsumeSttsCd.equals("")){
-
-                *//* 상생신청 진행상세 *//*
-                WBFBRegisterDTO registerDTO = new WBFBRegisterDTO();
-                int firstAppctnRsumeDtlIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen); *//* 진행순번 *//*
-                registerDTO.setRsumeOrd(rsumeTaskDTO.getRsumeOrd() + 1);
-                registerDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
-                registerDTO.setRsumeSttsCd(nextRsumeSttsCd);
-                registerDTO.setAppctnSttsCd(nextRsumeSttsCd + "_01_001");
-                registerDTO.setMngSttsCd(nextRsumeSttsCd + "_02_001");
-                registerDTO.setRegId(wBFBRegisterDTO.getRegId());
-                registerDTO.setRegIp(wBFBRegisterDTO.getRegIp());
-                wBFBRegisterCompanyMapper.putStepAppctnRsumeDtl(registerDTO);
-
-                *//* 상생신청 스마트 상세 *//*
-                registerDTO.setRsumeSeq(firstAppctnRsumeDtlIdgen);
-                wBFBRegisterCompanyMapper.putAppctnRsumeTaskDtl(registerDTO);
-            }*/
         }
 
         return respCnt;
