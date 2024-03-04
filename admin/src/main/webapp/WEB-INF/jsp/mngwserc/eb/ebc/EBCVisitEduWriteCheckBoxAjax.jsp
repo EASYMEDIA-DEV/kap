@@ -10,8 +10,8 @@
 </c:if>
 <div class="col-sm-11">
     <c:if test="${not empty cdDtlList}">
-        <label class="checkbox-inline c-checkbox">
-            <input type="checkbox" class="checkboxAll appctnTypeAll notRequired" name="appctnTypeAll" />
+        <label class="checkbox-inline c-checkbox" style="margin-left: 10px;">
+            <input type="checkbox" class="checkboxAll appctnTypeAll notRequired" name="appctnTypeAll"/>
             <span class="ion-checkmark-round"></span> 전체
         </label>
     </c:if>

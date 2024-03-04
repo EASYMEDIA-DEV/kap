@@ -377,9 +377,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         immediately : function(){
 
-            console.log($formObj)
-            debugger;
-
             changeAppctnFldCd();
             search();
             $formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);

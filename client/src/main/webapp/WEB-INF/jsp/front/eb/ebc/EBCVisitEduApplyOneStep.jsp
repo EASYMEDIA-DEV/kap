@@ -93,7 +93,7 @@
                                                 <th>부서</th>
                                                 <td>${not empty applicantInfo.deptCdNm ? applicantInfo.deptCdNm : "-"}
                                                     <c:choose>
-                                                        <c:when test="${not empty applicantInfo.deptCdNm}">
+                                                        <c:when test="${not empty applicantInfo.deptDtlNm}">
                                                             (${applicantInfo.deptDtlNm})
                                                         </c:when>
                                                         <c:otherwise>
