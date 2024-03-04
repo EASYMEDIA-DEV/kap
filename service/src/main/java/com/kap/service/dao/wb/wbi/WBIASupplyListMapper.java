@@ -1,6 +1,5 @@
 package com.kap.service.dao.wb.wbi;
 
-import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wba.WBAManagementOptnDTO;
@@ -74,5 +73,10 @@ public interface WBIASupplyListMapper {
      * 회차 신청여부 조회
      */
     public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
+     * 동일 부품사 회차사업 신청여부 조회
+     */
+    public int getApplyPartsCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
 }

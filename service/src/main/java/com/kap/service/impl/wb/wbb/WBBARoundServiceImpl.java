@@ -206,11 +206,17 @@ public class WBBARoundServiceImpl implements WBBARoundService {
                         rtnCode = 200;
                         RequestContextHolder.getRequestAttributes().setAttribute("contentAuth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
                     }
+
+                    //같은 회차에 동일 부품사가 신청한 내역이 있는지
+                    cnt = wBBARoundMapper.getApplyPartsCount(wBRoundMstSearchDTO);
+                    if (cnt > 0) {
+                        rtnCode = 400;
+                    }
+
                 } else {
                     //부품사가 1차 2차가 아닐떄,
                     rtnCode = 190;
                 }
-
             }
         }
 

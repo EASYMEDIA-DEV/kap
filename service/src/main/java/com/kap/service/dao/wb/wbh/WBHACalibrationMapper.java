@@ -1,9 +1,8 @@
 package com.kap.service.dao.wb.wbh;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.*;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
+import com.kap.core.dto.wb.wbb.WBBATransDTO;
+import com.kap.core.dto.wb.wbg.WBGAExamSearchDTO;
 import com.kap.core.dto.wb.wbh.*;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -280,6 +279,11 @@ public interface WBHACalibrationMapper {
      * 회차 신청여부 조회
      */
     public int getApplyCount(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
+
+    /**
+     * 동일 부품사 회차사업 신청여부 조회
+     */
+    public int getApplyPartsCount(WBHACalibrationSearchDTO wbhaCalibrationSearchDTO) throws Exception;
 
     /**
      * 컨설팅사업 신청여부 조회

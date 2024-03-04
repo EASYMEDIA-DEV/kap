@@ -1091,6 +1091,13 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                                     //컨설팅 내역없음 코드 200
                                     rtnCode = 450;
                                 }
+
+                                //같은 회차에 동일 부품사가 신청한 내역이 있는지
+                                rtnCnt = wBGAExamMapper.getApplyPartsCount(wbgaExamSearchDTO);
+                                if (rtnCnt > 0) {
+                                    rtnCode = 460;
+                                }
+
                             } else {
                                 rtnCode = 450;
                             }

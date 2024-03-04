@@ -9,7 +9,6 @@ import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBIASupplyListService;
-import com.kap.service.dao.COGCntsMapper;
 import com.kap.service.dao.wb.wbb.WBBBCompanyMapper;
 import com.kap.service.dao.wb.wbi.WBIASupplyListMapper;
 import lombok.RequiredArgsConstructor;
@@ -29,7 +28,7 @@ import java.util.List;
  * 공급망안정화기금 > 신청업체관리를 위한 ServiceImpl
  * </pre>
  *
- * @ClassName		: WBFBRegisterCompanyServiceImpl.java
+ * @ClassName		: WBIASupplyListServiceImpl.java
  * @Description		: 신청업체관리를 위한 ServiceImpl
  * @author 오병호
  * @since 2023.11.17
@@ -50,7 +49,6 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
     //Mapper
     private final WBIASupplyListMapper wBIASupplyListMapper;
-    private final COGCntsMapper cOGCntsMapper;
     private final WBBBCompanyMapper wbbbCompanyMapper;
 
     /* 회차관리 마스터 시퀀스 */
@@ -106,8 +104,6 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
     public int updateSupply(WBRoundMstDTO wBRoundMstDTO, HttpServletRequest request) throws Exception {
 
         int respCnt = 0;
-
-        String detailsKey = wBRoundMstDTO.getDetailsKey();
 
         respCnt = wBIASupplyListMapper.updateSupply(wBRoundMstDTO);
 
@@ -249,9 +245,13 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
                     rtnCode = 190;
                 }
 
+                //같은 회차에 동일 부품사가 신청한 내역이 있는지
+                int rtnCnt = wBIASupplyListMapper.getApplyPartsCount(wBRoundMstSearchDTO);
+                if (rtnCnt > 0) {
+                    rtnCode = 460;
+                 }
             }
         }
-
         return rtnCode;
     }
 }

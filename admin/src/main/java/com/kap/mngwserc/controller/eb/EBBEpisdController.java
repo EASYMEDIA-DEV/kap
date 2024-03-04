@@ -7,7 +7,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
-import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.common.utility.seed.COBrowserUtil;
 import com.kap.core.dto.COCodeDTO;
@@ -177,6 +176,7 @@ public class EBBEpisdController {
         try
         {
             eBBEpisdDTO.setExcelYn("Y");
+            eBBEpisdDTO.setEpisdYear(eBBEpisdDTO.getOrgEpisdYear());
             // 목록 조회
             EBBPtcptDTO ebbExcelListDto = eBBEpisdService.setPtcptList(eBBEpisdDTO);
 

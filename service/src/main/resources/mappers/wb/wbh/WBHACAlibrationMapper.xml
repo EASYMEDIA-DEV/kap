@@ -1411,6 +1411,27 @@
     </select>
 
     <!--
+        쿼리명 : WBHACalibrationMapper.getApplyPartsCount
+        설  명 : 동일 부품사 회차사업 참여 카운트
+        수정일     수정자     수정내용
+       ==========  ======  ==============
+       2024.02.29  구은희     최초 생성
+    -->
+    <select id="getApplyPartsCount" parameterType="wBHACalibrationSearchDTO" resultType="java.lang.Integer">
+        SELECT /* WBHACalibrationMapper.getApplyPartsCount */ COUNT(*)
+        FROM (
+                 SELECT EPISD_SEQ
+                 FROM cx_episd_mst
+                 WHERE BSN_CD = 'BSN09' AND YEAR = #{year}
+             ) cem
+                 JOIN CX_APPCTN_MST cam ON cem.EPISD_SEQ = cam.episd_seq
+                 JOIN CX_APPCTN_RSUME_DTL B ON cam.appctn_seq = B.appctn_seq AND B.rsume_ord = 1 AND APPCTN_STTS_CD != 'PRO_TYPE07001_01_004'
+        WHERE 1=1
+          AND appctn_bsnm_no = #{bsnmNo}
+          AND mem_seq != #{memSeq}
+    </select>
+
+    <!--
          쿼리명 : WBHACalibrationMapper.getApplyDtl
          설  명 : 신청자 정보조회
          수정일     수정자     수정내용

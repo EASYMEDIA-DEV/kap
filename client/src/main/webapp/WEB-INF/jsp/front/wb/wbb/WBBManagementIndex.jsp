@@ -58,7 +58,7 @@
                                             <c:choose>
                                                 <c:when test="${item.dateOrd eq 1}">
                                                     <c:set var="classTag" value="accepting"/>
-                                                    <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' href='javascript:' data-episd='${item.episdSeq}'><span>신청하기</span></a>"/>
+                                                    <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' href='javascript:' data-episd='${item.episdSeq}' data-year='${item.year}'><span>신청하기</span></a>"/>
                                                 </c:when>
                                                 <c:when test="${item.dateOrd eq 2}">
                                                     <c:set var="classTag" value="waiting"/>
@@ -234,7 +234,7 @@
                                     <div class="btn-set">
                                     </div>
                                     <div class="btn-set">
-                                        <a class="btn-solid small black-bg apply" href="javascript:"  data-episd='${rtnRoundDtl.episdSeq}'><span>신청하기</span></a>
+                                        <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnRoundDtl.episdSeq}' data-year='${rtnRoundDtl.year}'><span>신청하기</span></a>
                                     </div>
                                 </div>
 

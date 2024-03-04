@@ -116,6 +116,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 alert('사업 지원대상 기준을 확인해주세요.\n(지원대상 기준 : 전년도 매출액 ' + $('#pmt').val() +'억 미만)');
                             } else if (data.resultCode == 450) {
                                 alert('사업 지원대상 기준을 확인해주세요. (컨설팅 내역)');
+                            } else if (data.resultCode == 460) {
+                                alert('소속 부품사의 사업자등록번호로 이미 신청한 사업입니다.');
                             }
                         },"./applyChecked",null, "json", false, false, "get");
                     }
@@ -149,22 +151,22 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         if (valid) {
                             //이용약관 체크여부
+                            //이용약관 체크여부
                             if ($('#agreeChk').is(':checked')) {
-                                $(".loading-area").stop().fadeIn(200);
-
-                                cmmCtrl.fileFrm(function(data){
-                                    //콜백함수. 페이지 이동
-                                    if (data.actCnt == 999) {
-                                        if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
-                                            location.href = "/my-page/coexistence/list";
+                                if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
+                                    $(".loading-area").stop().fadeIn(200);
+                                    cmmCtrl.fileFrm(function(data){
+                                        //콜백함수. 페이지 이동
+                                        if (data.actCnt == 999) {
+                                            if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
+                                                location.href = "/my-page/coexistence/list";
+                                            }
+                                        } else {
+                                            location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                         }
-                                    } else {
-                                        if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
-                                            location.href = "./complete";
-                                        }
-                                    }
-                                    $(".loading-area").stop().fadeOut(200);
-                                }, "./insert", $formObj, "json");
+                                        $(".loading-area").stop().fadeOut(200);
+                                    }, "./insert", $formObj, "json");
+                                }
                             } else {
                                 alert('약관에 동의해주세요.');
                             }

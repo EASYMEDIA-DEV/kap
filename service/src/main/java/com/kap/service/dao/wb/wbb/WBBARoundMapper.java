@@ -80,6 +80,11 @@ public interface WBBARoundMapper {
     public int getApplyCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
 
     /**
+     * 동일 부품사 회차사업 신청여부 조회
+     */
+    public int getApplyPartsCount(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception;
+
+    /**
      * 회차 삭제
      */
     public int getAppctnCnt(WBRoundMstDTO wBRoundMstDTO) throws Exception;

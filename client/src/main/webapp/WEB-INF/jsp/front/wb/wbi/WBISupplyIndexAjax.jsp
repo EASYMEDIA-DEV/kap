@@ -3,7 +3,7 @@
     <c:choose>
         <c:when test="${item.dateOrd eq 1}">
             <c:set var="classTag" value="accepting"/>
-            <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' data-episd='${item.episdSeq}' href='javascript:'><span>신청하기</span></a>"/>
+            <c:set var="applyButton" value="<a class='btn-solid small black-bg apply' data-episd='${item.episdSeq}' data-year='${item.year}' href='javascript:'><span>신청하기</span></a>"/>
         </c:when>
         <c:when test="${item.dateOrd eq 2}">
             <c:set var="classTag" value="waiting"/>

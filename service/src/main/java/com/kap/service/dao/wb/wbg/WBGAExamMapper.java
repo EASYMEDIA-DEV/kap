@@ -2,10 +2,7 @@ package com.kap.service.dao.wb.wbg;
 
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
-import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbg.*;
-import com.kap.core.dto.wb.wbh.WBHACalibrationSearchDTO;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -276,6 +273,11 @@ public interface WBGAExamMapper {
      * 회차 신청여부 조회
      */
     public int getApplyCount(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
+
+    /**
+     * 동일 부품사 회차사업 신청여부 조회
+     */
+    public int getApplyPartsCount(WBGAExamSearchDTO wbgaExamSearchDTO) throws Exception;
 
     /**
      * 컨설팅사업 신청여부 조회
