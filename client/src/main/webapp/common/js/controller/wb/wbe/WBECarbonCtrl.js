@@ -167,6 +167,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     }
                                 });
                             }else{
+                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertSbrdnBsnmNoCnt",
                                     type : "POST",

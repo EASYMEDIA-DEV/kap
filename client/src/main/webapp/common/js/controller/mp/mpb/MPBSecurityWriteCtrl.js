@@ -72,6 +72,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // set model
     ctrl.model = {
         id : {
+            searchPostCode : {
+                event : {
+                    click : function() {
+                        cmmCtrl.searchPostCode(500,600,"zipcode","bscAddr","dtlAddr");
+                    }
+                }
+            },
             spprtPmt : {
                 event : {
                     change : function() {

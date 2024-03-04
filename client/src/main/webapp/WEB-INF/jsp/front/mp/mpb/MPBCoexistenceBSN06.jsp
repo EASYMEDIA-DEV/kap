@@ -61,7 +61,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
@@ -148,11 +147,6 @@
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
@@ -302,7 +296,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
@@ -497,11 +490,6 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
-                                                <div class="data-line">
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">완료보고서<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
@@ -614,7 +602,6 @@
                                                         <div class="p-cont-sec">
                                                             <div class="sec-tit-area">
                                                                 <p class="f-head">지급정보를 입력해주세요</p>
-                                                                <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                                             </div>
                                                             <div class="sec-con-area">
                                                                 <div class="data-enter-form">
@@ -852,7 +839,6 @@
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
                                                             <p class="f-head">지급정보를 입력해주세요</p>
-                                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                                         </div>
                                                         <div class="sec-con-area">
                                                             <div class="data-enter-form">
@@ -1087,7 +1073,6 @@
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
                                                             <p class="f-head">지급정보를 입력해주세요</p>
-                                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                                         </div>
                                                         <div class="sec-con-area">
                                                             <div class="data-enter-form">

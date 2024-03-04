@@ -27,6 +27,10 @@
                                             ${rtnData.applyList[0].appctnSttsNm}
                                     </span></p>
                                 </c:if>
+                                <c:if test="${rtnData.applyList[0].appctnSttsCd ne 'PRO_TYPE07001_01_002'}">
+                                    <c:set var="readonly1" value="readonly" />
+                                    <c:set var="disabled1" value="disabled" />
+                                </c:if>
                             </a>
                             <div class="acco-hide-area">
                                 <c:if test="${not empty rtnData.applyList[0].rtrnRsnCntn && rtnData.applyList[0].appctnSttsCd eq 'PRO_TYPE07001_01_002'}">
@@ -36,7 +40,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
@@ -50,21 +53,23 @@
                                                             <c:set var="totalTchlgCnt" value="${totalTchlgCnt+item.tchlgCnt}"/>
                                                             <div class="form-group equiment">
                                                                 <div class="form-input w-longer">
-                                                                    <input type="text" class="tchlgNm" name="exam.euipmentList[${status.index}].tchlgNm" value="${item.tchlgNm}" placeholder="장비명 입력" maxlength="50">
+                                                                    <input type="text" class="tchlgNm" name="exam.euipmentList[${status.index}].tchlgNm" value="${item.tchlgNm}" placeholder="장비명 입력" maxlength="50" ${readonly1}>
                                                                 </div>
                                                                 <div class="amount-div">
-                                                                    <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 1}">disabled</c:if> minus"><img src="/common/images/icon-add-data-minus.svg" alt=""></button><!-- 클릭 안될 때 disabled class 추가 -->
+                                                                    <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 1 or not empty disabled1}">disabled</c:if> minus" ${disabled1}><img src="/common/images/icon-add-data-minus.svg" alt=""></button><!-- 클릭 안될 때 disabled class 추가 -->
                                                                     <div class="form-input">
-                                                                        <input type="text" class="tchlgCnt numberChk" name="exam.euipmentList[${status.index}].tchlgCnt" value="${item.tchlgCnt}" title="대상장비 수량">
+                                                                        <input type="text" class="tchlgCnt numberChk" name="exam.euipmentList[${status.index}].tchlgCnt" value="${item.tchlgCnt}" title="대상장비 수량" ${readonly1}>
                                                                     </div>
-                                                                    <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 100}">disabled</c:if> plus"><img src="/common/images/icon-add-data-plus.svg" alt=""></button>
+                                                                    <button type="button" class="amount-btn <c:if test="${item.tchlgCnt == 100 or not empty disabled1}">disabled</c:if> plus" ${disabled1}><img src="/common/images/icon-add-data-plus.svg" alt=""></button>
                                                                 </div>
+                                                                <c:if test="${empty readonly1}">
                                                                 <div class="btn-wrap">
                                                                     <c:if test="${status.index ne 0}">
                                                                         <button type="button" class="btn-text-icon delete deleteBtn" href="javascript:"><span>삭제</span></button>
                                                                     </c:if>
                                                                     <button type="button" class="btn-solid small gray-bg addBtn" href="javascript:"><span>장비 추가</span></button>
                                                                 </div>
+                                                                </c:if>
                                                             </div>
                                                         </c:forEach>
                                                     </div>
@@ -111,11 +116,6 @@
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
@@ -190,8 +190,11 @@
                                         </c:when>
                                     </c:choose>
                                     <p class="box-label bigger ${classType}"><span>
-                                            ${rtnData.applyList[0].appctnSttsNm}
+                                            ${rtnData.applyList[1].appctnSttsNm}
                                     </span></p>
+                                </c:if>
+                                <c:if test="${rtnData.applyList[1].appctnSttsCd ne 'PRO_TYPE07001_03_001' && rtnData.applyList[1].appctnSttsCd ne 'PRO_TYPE07001_03_003'}">
+                                    <c:set var="readonly2" value="readonly" />
                                 </c:if>
                             </a>
                             <div class="acco-hide-area">
@@ -202,7 +205,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
@@ -210,7 +212,7 @@
                                                     <p class="data-title f-body1">투자금액<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" class="comma" name="exam.wbgaMsEuipmentDTO.nvstmPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].nvstmPmt}">
+                                                            <input type="text" class="comma" name="exam.wbgaMsEuipmentDTO.nvstmPmt" placeholder="투자금액 입력" value="${rtnData.applyList[1].msEquipmentList[0].nvstmPmt}" ${readonly2}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -258,7 +260,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
 
                                         <div class="row">
@@ -267,11 +268,6 @@
                                             </div>
                                             <div class="td">
                                                 <div class="data-line-w">
-                                                    <div class="data-line">
-                                                        <div class="noti-txt-w">
-                                                            <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                        </div>
-                                                    </div>
                                                     <div class="data-line">
                                                         <p class="data-title f-body1">영수증<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">

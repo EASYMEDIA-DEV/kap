@@ -344,7 +344,7 @@
                         <div class="btn-set">
                             <c:choose>
                                 <c:when test="${fileYn eq 'Y'}">
-                                    <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episdSeq}"><span>다음</span></a>
+                                    <a class="btn-solid small black-bg" id="nextBtn" data-episd-seq="${episdSeq}" href="javascript:"><span>다음</span></a>
                                 </c:when>
                                 <c:otherwise>
                                     <a class="btn-solid small black-bg insertSkip" href="javascript:"><span>다음</span></a>

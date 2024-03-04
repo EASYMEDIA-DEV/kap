@@ -42,11 +42,6 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
-                                                <div class="data-line">
                                                     <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <c:if test="${rtnData.appctnSttsCd eq 'PRO_TYPE06001_01_002'}">

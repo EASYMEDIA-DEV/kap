@@ -67,6 +67,9 @@
                                             ${rtnDtl[0].appctnSttsNm}
                                     </span></p>
                                 </c:if>
+                                <c:if test="${rtnDtl[0].appctnSttsCd ne 'PRO_TYPE01001_01_002'}">
+                                    <c:set var="readonly1" value="readonly" />
+                                </c:if>
                             </a>
                             <div class="acco-hide-area">
                                 <c:if test="${not empty rtnDtl[0].rtrnRsnCntn }">
@@ -76,7 +79,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
 
                                         <div class="td">
@@ -85,7 +87,7 @@
                                                     <p class="data-title f-body1"><span>종된사업장번호</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" id="sbrdnBsnmNo" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4">
+                                                            <input type="text" id="sbrdnBsnmNo" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" placeholder="종된사업장번호 입력" value="${rtnData.sbrdnBsnmNo}" maxlength="4" ${readonly1}>
                                                         </div>
                                                     </div>
                                                     <div class="noti-txt-w">
@@ -103,13 +105,15 @@
                                                             <div class="form-input w-longer">
                                                                 <input type="text" id="bscAddr" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].pbsnBscAddr" placeholder="주소" value="${rtnPbsn[0].pbsnBscAddr}" readonly="">
                                                             </div>
+                                                            <c:if test="${empty readonly1}">
                                                             <div class=" ">
                                                                 <button class="btn-solid small gray-bg" id="searchPostCode" type="button"><span>우편번호 찾기</span></button>
                                                             </div>
+                                                            </c:if>
                                                         </div>
                                                         <div class="form-group">
                                                             <div class="form-input w-longest">
-                                                                <input type="text" id="dtlAddr" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].pbsnDtlAddr" placeholder="상세주소 입력" value="${rtnPbsn[0].pbsnDtlAddr}" maxlength="100">
+                                                                <input type="text" id="dtlAddr" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].pbsnDtlAddr" placeholder="상세주소 입력" value="${rtnPbsn[0].pbsnDtlAddr}" maxlength="100" ${readonly1}>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -124,11 +128,6 @@
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
@@ -200,6 +199,9 @@
                                             ${rtnDtl[1].appctnSttsNm}
                                     </span></p>
                                 </c:if>
+                                <c:if test="${rtnDtl[1].appctnSttsCd ne 'PRO_TYPE01002_01_001' && rtnDtl[1].appctnSttsCd ne 'PRO_TYPE01002_01_003'}">
+                                    <c:set var="readonly2" value="readonly" />
+                                </c:if>
                             </a>
                             <div class="acco-hide-area">
                                 <c:if test="${not empty rtnDtl[1].rtrnRsnCntn }">
@@ -209,7 +211,6 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">신청내용</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                         </div>
 
                                         <div class="td">
@@ -218,7 +219,7 @@
                                                     <p class="data-title f-body1">지원금 ①<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" id="spprtPmt" class="comma" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}">
+                                                            <input type="text" id="spprtPmt" class="comma" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}" ${readonly2}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -226,7 +227,7 @@
                                                     <p class="data-title f-body1">자부담 ②<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" id="phswPmt" class="comma" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}">
+                                                            <input type="text" id="phswPmt" class="comma" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}" ${readonly2}>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -249,11 +250,6 @@
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
@@ -361,11 +357,6 @@
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                    </div>
-                                                </div>
                                                 <div class="data-line">
                                                     <p class="data-title f-body1">완료보고서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
@@ -495,7 +486,6 @@
                                                     <div class="p-cont-sec">
                                                         <div class="sec-tit-area">
                                                             <p class="f-head">지급정보를 입력해주세요</p>
-                                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                                         </div>
                                                         <div class="sec-con-area">
                                                             <div class="data-enter-form">
@@ -669,7 +659,6 @@
                                                 <div class="p-cont-sec">
                                                     <div class="sec-tit-area">
                                                         <p class="f-head">지급정보를 입력해주세요</p>
-                                                        <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                                                     </div>
                                                     <div class="sec-con-area">
                                                         <div class="data-enter-form">

@@ -141,9 +141,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             var pass = false;
                             var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
 
-                            $(".loading-area").stop().fadeIn(200);
 
                             if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertBsnmNoCnt",
                                     type : "POST",
@@ -168,6 +168,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     }
                                 });
                             }else{
+                                $(".loading-area").stop().fadeIn(200);
                                 jQuery.ajax({
                                     url : "./getInsertSbrdnBsnmNoCnt",
                                     type : "POST",

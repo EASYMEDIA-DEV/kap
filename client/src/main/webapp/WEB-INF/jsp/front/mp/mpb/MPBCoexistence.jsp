@@ -45,11 +45,6 @@
                                             </div>
                                             <div class="td">
                                                 <div class="data-line-w">
-                                                    <div class="data-line">
-                                                        <div class="noti-txt-w">
-                                                            <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
-                                                        </div>
-                                                    </div>
                                                     <c:choose>
                                                         <c:when test="${not empty item.applyOptnList}">
                                                             <c:forEach var="itemOptn" items="${item.applyOptnList}" varStatus="status1">
@@ -91,12 +86,12 @@
                                                                                     <p class="empty-txt">선택된 파일 없음</p>
                                                                                     <!-- 파일 첨부되면 file-list 영역 생성 -->
                                                                                 </div>
+                                                                                <div class="file-btn-area">
+                                                                                    <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
+                                                                                    <input type="hidden" name="fileSeqList" value="${itemOptn.fileSeq}"/>
+                                                                                    <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
+                                                                                </div>
                                                                             </c:if>
-                                                                            <div class="file-btn-area">
-                                                                                <input type="file" name="atchFile${status1.index}" id="searchFile${status1.index}" class="searchFile">
-                                                                                <input type="hidden" name="fileSeqList" value="${itemOptn.fileSeq}"/>
-                                                                                <label class="btn-solid gray-bg" for="searchFile${status1.index}">파일 찾기</label>
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
