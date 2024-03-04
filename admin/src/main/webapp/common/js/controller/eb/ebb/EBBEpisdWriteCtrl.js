@@ -54,6 +54,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		}
 
 		cmmCtrl.listFrmAjax(function(respObj) {
+
 			$formObj.find("table").eq(0).find(".checkboxAll").prop("checked", false);
 			//CALLBACK 처리
 			ctrl.obj.find("#ptcptListContainer").html(respObj);
@@ -164,6 +165,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//비고일경우 숫자전용 클래스 제거
 			if("ED_BDGET_CD01011".indexOf($(this).attr("name")) > -1 || "ED_BDGET_CD02011".indexOf($(this).attr("name")) > -1 ){
 				$(this).removeClass("numberChk");
+				$(this).removeClass("comma");
 			}
 
 			//인풋박스 복사
@@ -247,6 +249,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 	});
 
+	//숫자형 금액 데이터 콤마찍기
+	$(".comma").each(function(){
+			var commaVal = $(this).val().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+			$(this).val(commaVal);
+		});
+
 	}
 	//협력기관 지출내역 자동계산
 
@@ -265,12 +273,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 		var totPmt1 =0;
-		$(".calPmtForm.bdget01.numberChk").each(function(idx){
+		$(".calPmtForm.bdget01.comma").each(function(idx){
+		//$(".calPmtForm.bdget01.numberChk").each(function(idx){
 			var inputName = $(this).attr("name");
 
 			if("ED_BDGET_CD01011".indexOf(inputName) == -1 || "ED_BDGET_CD02011".indexOf(inputName) == -1 ){
 				if($(this).val() !="" && $(this).val() != undefined){
-					totPmt1 = totPmt1 + parseInt($(this).val());
+					totPmt1 = totPmt1 + parseInt($(this).val().replaceAll(",", ""));
 				}
 			}
 		});
@@ -286,12 +295,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 		var totPmt2 =0;
-		$(".calPmtForm.bdget02.numberChk").each(function(idx){
+
+		$(".calPmtForm.bdget02.comma").each(function(idx){
+		//$(".calPmtForm.bdget02.numberChk").each(function(idx){
 			var inputName = $(this).attr("name");
 
 			if("ED_BDGET_CD01011".indexOf(inputName) == -1 || "ED_BDGET_CD02011".indexOf(inputName) == -1 ){
 				if($(this).val() !="" && $(this).val() != undefined){
-					totPmt2 = totPmt2 + parseInt($(this).val());
+					totPmt2 = totPmt2 + parseInt($(this).val().replaceAll(",", ""));
 				}
 			}
 		});
@@ -2114,7 +2125,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							if("ED_BDGET_CD01011" == $(this).attr("name") || "ED_BDGET_CD02011" == $(this).attr("name")){
 								temp.etcNm = $(this).val();
 							}else{
-								temp.pmt = $(this).val();
+								temp.pmt = $(this).val().replaceAll(",", "");
 							}
 
 
@@ -2156,7 +2167,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.bdgetExpnsYn = $("input[name='bdgetExpnsYn']:checked").val();
 						actForm.expnsCprtnInsttNm = $("#expnsCprtnInsttNm").val(); //지출 협업기관명
 						actForm.expnsCprtnInsttSeq = $("#expnsCprtnInsttSeq").val(); //지출 협업기관 번호
-						actForm.expnsPmt = $("#expnsPmt").val();//지출 협업기관 금액
+						actForm.expnsPmt = $("#expnsPmt").val().replaceAll(",", "");//지출 협업기관 금액
 
 						 //오프라인평가 관련 데이터 세팅
 						//if(actForm.otsdExamPtcptYn != undefined && actForm.otsdExamPtcptYn == "Y"){
