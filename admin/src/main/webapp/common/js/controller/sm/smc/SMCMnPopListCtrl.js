@@ -120,7 +120,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                 }
                             });
                             console.log(JSON.stringify(ajaxData, null, 2));
-                            debugger;
+
                             $.ajax({
                                 type: "post",
                                 url: "./sort",
