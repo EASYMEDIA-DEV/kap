@@ -50,7 +50,7 @@
 
                                 <label class="col-sm-1 control-label">부품사코드</label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="cmpnCd" name="cmpnCd" value="${rtnInfo.cmpnCd}" title="부품사코드" maxlength="50" placeholder="부품사코드 입력" style="width: 220px;"  oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="cmpnCd" name="cmpnCd" value="${rtnInfo.cmpnCd}" title="부품사코드" maxlength="20" placeholder="부품사코드 입력" style="width: 220px;"  oninput="this.value=this.value.replace(/[ㄱ-힣]/g, '')"/>
                                 </div>
                             </div>
                         </fieldset>
