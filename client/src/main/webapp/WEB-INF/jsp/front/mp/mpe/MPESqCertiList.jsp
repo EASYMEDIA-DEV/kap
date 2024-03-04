@@ -387,8 +387,10 @@
                                                                             <dt class="f-body2">업종</dt>
                                                                             <dd class="f-body2">
                                                                                 <c:set var="cbsnCdNm" value="" />
+
                                                                                 <c:choose>
                                                                                     <c:when test="${ not empty rtnCompletePrcsList}">
+
                                                                                         <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
                                                                                             <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
                                                                                                 <c:choose>
@@ -396,15 +398,22 @@
                                                                                                         <c:set var="cbsnCdNm" value="${ list.cbsnCdNm }" />
                                                                                                     </c:when>
                                                                                                     <c:otherwise>
-                                                                                                        <c:set var="cbsnCdNm">
-                                                                                                            ${ cbsnCdNm}, ${list.cbsnCdNm}
-                                                                                                        </c:set>
+                                                                                                        <c:choose>
+                                                                                                            <c:when test="${not empty list.cbsnCdNm}">
+                                                                                                                <c:set var="cbsnCdNm">
+                                                                                                                    ${ cbsnCdNm}, ${list.cbsnCdNm}
+                                                                                                                </c:set>
+                                                                                                            </c:when>
+                                                                                                        </c:choose>
                                                                                                     </c:otherwise>
                                                                                                 </c:choose>
                                                                                             </c:if>
                                                                                         </c:forEach>
+
                                                                                     </c:when>
+
                                                                                 </c:choose>
+
                                                                                     ${ empty cbsnCdNm ? '-' :  cbsnCdNm}
                                                                             </dd>
                                                                         </dl>
