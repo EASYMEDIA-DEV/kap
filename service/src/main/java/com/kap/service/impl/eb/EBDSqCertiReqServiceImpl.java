@@ -2,10 +2,8 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.EBBEpisdSqCertDTO;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
@@ -21,13 +19,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * SQ평가원 자격증 신청관리
@@ -126,12 +121,12 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      */
     public int updateConfirmInfo(COUserCmpnDto cOUserCmpnDto, EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception{
         //회원 회사 정보 변경
-        int respCnt = cOCommService.setMemCmpnDtl(cOUserCmpnDto, request);
+        cOCommService.setMemCmpnDtl(cOUserCmpnDto, request);
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBGExamAppctnMstDTO.getFileList());
         eBGExamAppctnMstDTO.setIdntfnPhotoFileSeq( fileSeqMap.get("idntfnPhotoFileSeq") );
         eBGExamAppctnMstDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
         eBGExamAppctnMstDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
-        eBDSqCertiReqMapper.updateConfirmInfo( eBGExamAppctnMstDTO );
+        int respCnt = eBDSqCertiReqMapper.updateConfirmInfo( eBGExamAppctnMstDTO );
         return respCnt;
     }
 
