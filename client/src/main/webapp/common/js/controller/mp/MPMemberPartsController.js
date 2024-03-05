@@ -233,10 +233,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         return false;
                     }
                 }
-
-
             }
-
         }
         var list1 = [];
         list1.push("");
@@ -328,7 +325,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
             pstnCd : {
                 event : {
                     change : function() {
@@ -341,7 +337,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
             pstnCdOld : {
                 event : {
                     change : function() {
@@ -354,7 +349,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
         },
         classname : {
             // do something...
@@ -384,8 +378,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
-
             btnSave : {
                 event : {
                     click : function () {
@@ -425,8 +417,6 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             }
 
-
-
                             //부품사 변경 시
                             if($("#bsnmNosOld").val() != "" && $("#partTypeChg").val()=="chg") {
                                 if (confirm(msgCtrl.getMsg("confirm.sve"))) {
@@ -436,8 +426,9 @@ define(["ezCtrl"], function(ezCtrl) {
                                         popChk = true;
                                         alert(msgCtrl.getMsg("success.upd2"));
 
-                                        // location.reload();
+                                        location.href = "/my-page/member/intrduction/modify-page";
                                     }, "/my-page/member/intrduction/update-company", $formObj5, "POST", "json");
+
                                 } else {
                                     popChk = false;
                                 }
@@ -475,8 +466,6 @@ define(["ezCtrl"], function(ezCtrl) {
                     }
                 }
             },
-
-
             //사업자 등록 번호 인증
             btnCmpnChk : {
                 event : {
