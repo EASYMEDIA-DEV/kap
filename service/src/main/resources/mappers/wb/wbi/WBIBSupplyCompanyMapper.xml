@@ -366,7 +366,8 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                                AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -374,7 +375,8 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                                AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -382,7 +384,8 @@
                         <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
                             AND
                             (
-                                MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d') OR MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                                MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                                AND MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                             )
                         </if>
                     </when>
@@ -600,15 +603,15 @@
         INSERT /* WBIBSupplyCompanyMapper.insertChangeLog */ INTO CX_APPCTN_TRNSF_DTL
         (
             TRNSF_SEQ
-        , APPCTN_SEQ
-        , BFRE_MEM_SEQ
-        , AFTR_MEM_SEQ
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+            , APPCTN_SEQ
+            , BFRE_MEM_SEQ
+            , AFTR_MEM_SEQ
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
-            VALUE
-            (
+        VALUES
+        (
             #{trnsfSeq}
             ,#{appctnSeq}
             ,#{bfreMemSeq}
@@ -616,7 +619,7 @@
             ,#{regId}
             ,#{regIp}
             ,NOW()
-            )
+        )
     </insert>
 
     <!--
@@ -636,7 +639,7 @@
             AFTR_MEM_SEQ,
             ( SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = AFTR_MEM_SEQ ) AFTR_MEM_NM,
             ( SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = AFTR_MEM_SEQ ) AFTR_MEM_ID,
-            (SELECT NAME FROM CO_ADM_MST WHERE ID = REG_ID) REG_NAME,
+            ( SELECT NAME FROM CO_ADM_MST WHERE ID = REG_ID ) REG_NAME,
             REG_ID,
             REG_IP,
             REG_DTM
@@ -703,15 +706,15 @@
         INSERT /* WBIBSupplyCompanyMapper.insertApply */ INTO CX_APPCTN_MST
         (
             APPCTN_SEQ
-        , EPISD_SEQ
-        , MEM_SEQ
-        , APPCTN_BSNM_NO
-        ,REG_ID
-        ,REG_IP
-        ,REG_DTM
+            , EPISD_SEQ
+            , MEM_SEQ
+            , APPCTN_BSNM_NO
+            ,REG_ID
+            ,REG_IP
+            ,REG_DTM
         )
-            VALUE
-            (
+        VALUES
+        (
             #{appctnSeq}
             ,#{episdSeq}
             ,#{memSeq}
@@ -719,7 +722,7 @@
             ,#{regId}
             ,#{regIp}
             ,NOW()
-            )
+        )
     </insert>
 
     <!--
@@ -733,19 +736,19 @@
         INSERT /* WBIBSupplyCompanyMapper.insertApplyDtl */ INTO CX_APPCTN_RSUME_DTL
         (
             RSUME_SEQ
-        , RSUME_ORD
-        , APPCTN_SEQ
-        , RSUME_STTS_CD
-        , APPCTN_STTS_CD
-        , APPCTN_STTS_CHNG_DTM
-        , MNG_STTS_CD
-        , MNG_STTS_CHNG_DTM
-        , REG_ID
-        , REG_IP
-        , REG_DTM
+            , RSUME_ORD
+            , APPCTN_SEQ
+            , RSUME_STTS_CD
+            , APPCTN_STTS_CD
+            , APPCTN_STTS_CHNG_DTM
+            , MNG_STTS_CD
+            , MNG_STTS_CHNG_DTM
+            , REG_ID
+            , REG_IP
+            , REG_DTM
         )
-            VALUE
-            (
+        VALUES
+        (
             #{rsumeSeq}
             , 1
             ,#{appctnSeq}
@@ -757,7 +760,7 @@
             ,#{regId}
             ,#{regIp}
             ,NOW()
-            )
+        )
     </insert>
 
     <!--
@@ -768,15 +771,15 @@
        2023.12.01  오병호     최초 생성
    -->
     <select id="selectRecent" parameterType="wBRoundMstSearchDTO" resultType="wBIBSupplyDTO">
-            SELECT /* WBIBSupplyCompanyMapper.selectRecent*/
-                 RSUME_SEQ
-                , APPCTN_SEQ
-                , RSUME_STTS_CD
-                , REG_DTM
-            FROM CX_APPCTN_RSUME_DTL
-            WHERE RSUME_STTS_CD = 'PRO_TYPE06001'
-            ORDER BY REG_DTM DESC
-            LIMIT 1
+        SELECT /* WBIBSupplyCompanyMapper.selectRecent*/
+             RSUME_SEQ
+            , APPCTN_SEQ
+            , RSUME_STTS_CD
+            , REG_DTM
+        FROM CX_APPCTN_RSUME_DTL
+        WHERE RSUME_STTS_CD = 'PRO_TYPE06001'
+        ORDER BY REG_DTM DESC
+        LIMIT 1
     </select>
 
 
@@ -789,43 +792,43 @@
     -->
     <select id="selectPartsCompanyList" parameterType="MPEPartsCompanyDTO" resultType="MPEPartsCompanyDTO">
         SELECT /* WBIBSupplyCompanyMapper.selectPartsCompanyList */
-        BSNM_NO
-        , RPRSNT_NM
-        , CMPN_NM
-        , CMPN_CD
-        , CTGRY_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.CTGRY_CD) AS CTGRY_NM
-        , SIZE_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.SIZE_CD) AS SIZE_NM
-        , BSNM_NO
-        , BSC_ADDR
-        , DTL_ADDR
-        , SLS_PMT
-        , MPLE_CNT
-        , TEL_NO
-        , STBSM_DT
-        , ZIPCODE
-        , TEL_NO
-        , MJR_PRDCT_1
-        , MJR_PRDCT_2
-        , MJR_PRDCT_3
-        , QLTY_5_STAR_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_CD_NM
-        , QLTY_5_STAR_YEAR
-        , PAY_5_STAR_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.PAY_5_STAR_CD) AS PAY_5_STAR_CD_NM
-        , PAY_5_STAR_YEAR
-        , TCHLG_5_STAR_CD
-        , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
-        , TCHLG_5_STAR_YEAR
-        , REG_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
-        , REG_IP
-        , REG_DTM
-        , MOD_ID
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
-        , MOD_IP
-        , MOD_DTM
+            BSNM_NO
+            , RPRSNT_NM
+            , CMPN_NM
+            , CMPN_CD
+            , CTGRY_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.CTGRY_CD) AS CTGRY_NM
+            , SIZE_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.SIZE_CD) AS SIZE_NM
+            , BSNM_NO
+            , BSC_ADDR
+            , DTL_ADDR
+            , SLS_PMT
+            , MPLE_CNT
+            , TEL_NO
+            , STBSM_DT
+            , ZIPCODE
+            , TEL_NO
+            , MJR_PRDCT_1
+            , MJR_PRDCT_2
+            , MJR_PRDCT_3
+            , QLTY_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.QLTY_5_STAR_CD) AS QLTY_5_STAR_CD_NM
+            , QLTY_5_STAR_YEAR
+            , PAY_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.PAY_5_STAR_CD) AS PAY_5_STAR_CD_NM
+            , PAY_5_STAR_YEAR
+            , TCHLG_5_STAR_CD
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.TCHLG_5_STAR_CD) AS TCHLG_5_STAR_CD_NM
+            , TCHLG_5_STAR_YEAR
+            , REG_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
+            , REG_IP
+            , REG_DTM
+            , MOD_ID
+            , (SELECT NAME FROM CO_ADM_MST WHERE ID = A.MOD_ID) AS MOD_NAME
+            , MOD_IP
+            , MOD_DTM
         FROM CP_CMPN_MST A
         <include refid="selectPartsComListwhereSql" />
         ORDER BY
@@ -842,7 +845,7 @@
     -->
     <select id="selectPartsCompanyCnt" parameterType="MPEPartsCompanyDTO" resultType="java.lang.Integer">
         SELECT /* WBIBSupplyCompanyMapper.selectPartsCompanyCnt*/
-        COUNT(BSNM_NO)
+            COUNT(BSNM_NO)
         FROM
         CP_CMPN_MST A
         <include refid="selectPartsComListwhereSql" />
@@ -886,7 +889,7 @@
     <select id="getBsnmNoCnt" parameterType="wBIBSupplyMstDTO" resultType="java.lang.Integer">
         SELECT /* WBIBSupplyCompanyMapper.getBsnmNoCnt*/ COUNT(*)
         FROM CX_APPCTN_MST A
-                JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
+        JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
         WHERE EPISD_SEQ = #{episdSeq}
           AND APPCTN_BSNM_NO = #{bsnmNo}
           AND APPCTN_STTS_CD != 'PRO_TYPE06001_01_004'
@@ -903,10 +906,7 @@
         UPDATE cx_appctn_mst /*WBIBSupplyCompanyMapper.updAppctnMst*/
         SET
             adm_memo = #{admMemo}
-          ,adm_memo_mod_dtm = now()
+          , adm_memo_mod_dtm = now()
         WHERE appctn_seq = #{appctnSeq}
     </update>
 </mapper>
-
-
-
