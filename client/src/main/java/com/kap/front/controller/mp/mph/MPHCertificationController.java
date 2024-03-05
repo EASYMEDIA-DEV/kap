@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * 회원정보 수정를 위한 Controller
  * </pre>
  *
- * @ClassName		: MPAUserController.java
+ * @ClassName		: MPHCertificationController.java
  * @Description		: 회원정보 수정를 위한 Controller
  * @author 양현우
  * @since 2023.12.12
@@ -237,18 +237,6 @@ public class MPHCertificationController {
             MPEPartsCompanyDTO mpePartsCompanyDTO = mpJoinDto.getMpePartsCompanyDTO();
             mpePartsCompanyDTO.setBsnmNo(mpJoinDto.getBsnmNo());
             modelMap.addAttribute("respCnt", mpePartsCompanyService.updatePartsCompany(mpePartsCompanyDTO));
-
-            MPAUserDto mpaUserDto = new MPAUserDto();
-            COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-            mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
-
-            if (!"".equals(mpaUserDto.getDetailsKey())) {
-                MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
-                String[] split = mpaUserDtos.getEmail().split("@");
-                mpaUserDtos.setEmailName(split[0]);
-                mpaUserDtos.setEmailAddr(split[1]);
-                modelMap.addAttribute("rtnDtl", mpaUserDtos);
-            }
         }
         catch (Exception e)
         {
