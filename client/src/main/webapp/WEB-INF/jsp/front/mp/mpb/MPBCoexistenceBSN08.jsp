@@ -258,9 +258,9 @@
                                 </c:if>
                                 <div class="data-enter-form">
                                     <div class="row">
-                                        <div class="th">
+                                        <%--<div class="th">
                                             <p class="title f-head">신청내용</p>
-                                        </div>
+                                        </div>--%>
 
                                         <div class="row">
                                             <div class="th">

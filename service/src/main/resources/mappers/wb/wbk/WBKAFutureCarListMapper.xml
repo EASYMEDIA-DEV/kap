@@ -252,31 +252,19 @@
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND
-                            (
-                                ACCS_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                                OR
-                                ACCS_END_DTM BETWEEN STR_TO_DATE(#{endDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                                OR
-                                STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
-                                OR
-                                STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN ACCS_STRT_DTM AND ACCS_END_DTM
-                            )
+                        <if test="strtDt != null and strtDt != ''.toString()">
+                            AND ACCS_STRT_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        </if>
+                        <if test="endDt != null and endDt != ''.toString()">
+                            AND ACCS_END_DTM <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 2">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND
-                            (
-                                BSN_STRT_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                                OR
-                                BSN_END_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                                OR
-                                STR_TO_DATE(#{strtDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
-                                OR
-                                STR_TO_DATE(#{endDt}, '%Y-%m-%d') BETWEEN BSN_STRT_DTM AND BSN_END_DTM
-                            )
+                        <if test="strtDt != null and strtDt != ''.toString()">
+                            AND BSN_STRT_DTM  <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        </if>
+                        <if test="endDt != null and endDt != ''.toString()">
+                            AND BSN_STRT_DTM <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                 </choose>

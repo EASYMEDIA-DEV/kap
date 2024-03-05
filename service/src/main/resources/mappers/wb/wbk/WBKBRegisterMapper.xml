@@ -790,33 +790,27 @@
             <if test="carbonDate != null and carbonDate != ''.toString() ">
                 <choose>
                     <when test="carbonDate == 1">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND
-                            (
-                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                            OR
-                            B.REG_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
-                            )
+                        <if test="strtDt != null and strtDt != ''.toString()">
+                            AND REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        </if>
+                        <if test="endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 2">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND
-                            (
-                            B.REG_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                            OR
-                            B.REG_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
-                            )
+                        <if test="strtDt != null and strtDt != ''.toString()">
+                            AND REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        </if>
+                        <if test="endDt != null and endDt != ''.toString()">
+                            AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 3">
-                        <if test="strtDt != null and strtDt != ''.toString() and endDt != null and endDt != ''.toString()">
-                            AND
-                            (
-                            B.MOD_DTM BETWEEN STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND STR_TO_DATE(#{endDt}, '%Y-%m-%d')
-                            OR
-                            B.MOD_DTM >= STR_TO_DATE(#{strtDt}, '%Y-%m-%d') AND B.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE( #{endDt} , '%Y-%m-%d'), INTERVAL 1 DAY)
-                            }
+                        <if test="strtDt != null and strtDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        </if>
+                        <if test="endDt != null and endDt != ''.toString()">
+                            AND MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                 </choose>

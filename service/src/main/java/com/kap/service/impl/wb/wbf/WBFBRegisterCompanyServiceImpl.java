@@ -6,7 +6,6 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.*;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbf.WBFBRsumeTaskDtlDTO;
@@ -37,7 +36,6 @@ import java.sql.Timestamp;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -1823,7 +1821,17 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                     respCnt = 300;
                 }
             } else {
-                respCnt = 100;
+                if(!wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
+                    int overlap2 = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
+
+                    if(overlap2 > 0) {
+                        respCnt = 100;
+                    }
+
+                }
+                else {
+                    respCnt = 100;
+                }
             }
 
         } catch (Exception e) {
