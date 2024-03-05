@@ -4,10 +4,10 @@
         <c:forEach var="list" items="${fundingList.list}" varStatus="status">
             <tr>
                 <td class="text-center">${list.bsnNm}</td>
-                <td class="text-center">${list.picCmssrNm}</td>
-                <td class="text-center">${list.fndnSpprtPmt}</td>
-                <td class="text-center">${list.nvstmPmt}</td>
-                <td class="text-center">${list.realGiveDt}</td>
+                <td class="text-center">${kl:emptyHypen(list.picCmssrNm)}</td>
+                <td class="text-center">${kl:emptyHypen(list.fndnSpprtPmt)}</td>
+                <td class="text-center">${kl:emptyHypen(list.nvstmPmt)}</td>
+                <td class="text-center">${kl:emptyHypen(list.realGiveDt)}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${list.tchlgOrdMax eq 1}">

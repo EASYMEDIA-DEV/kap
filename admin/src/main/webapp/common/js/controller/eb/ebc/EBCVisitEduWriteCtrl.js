@@ -275,6 +275,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event : {
                     click : function(){
                         cmmCtrl.getLecturerLayerPop(function(data){
+                            if(data.choiceCnt  == -1){
+                                return false;
+                            }
                             if(data.choiceCnt  == 0){
                                 alert(msgCtrl.getMsg("fail.mpc.notSrchLecturer"));
                             }else if(data.choiceCnt > 6) {

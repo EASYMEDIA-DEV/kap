@@ -91,10 +91,10 @@
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
-                    <div class="col-sm-5" style="margin-left: -15px">
+                    <div class="col-sm-5">
                         <p class="form-control-static">${rtnInfo.hpNo}</p>
                     </div>
-                    <label class="col-sm-1 control-label">일반 전화번호</label>
+                    <label class="col-sm-1 control-label" style="margin-left: -14px;">일반 전화번호</label>
                     <div class="col-sm-1">
                         <input type="text" class="form-control input-sm notRequired" id="telNo" name="telNo" value="${rtnInfo.telNo}" title="전화번호" oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="11"/>
                     </div>
@@ -697,7 +697,7 @@
                                                         </td>
                                                         <td class="text-center">
                                                             <c:choose>
-                                                                <c:when test="${ not empty list.spclCntn }">
+                                                                <c:when test="${ not empty list.spclCntn}">
                                                                     ${list.spclCntn}
                                                                 </c:when>
                                                                 <c:otherwise>-</c:otherwise>

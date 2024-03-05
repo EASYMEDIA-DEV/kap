@@ -5,7 +5,7 @@
             <tr>
                 <td class="text-center">${techGuidanceList.totalCount - techGuidanceList.firstIndex - status.index}</td>
                 <td class="text-center">${list.cbsnNm}</td>
-                <td class="text-center">${list.cmssrNm}</td>
+                <td class="text-center">${kl:emptyHypen(list.cmssrNm)}</td>
                 <td class="text-center">
                     <c:choose>
                         <c:when test="${list.rsumeSttsNm eq '지도완료'}">
