@@ -47,6 +47,7 @@
 		    MENU_SEQ = #{menuSeq}
 		order by
 			REG_DTM desc
+		LIMIT #{firstIndex}, #{recordCountPerPage}
 	</select>
 
 	<!--
