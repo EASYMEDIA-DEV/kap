@@ -1,15 +1,18 @@
 package com.kap.mngwserc.controller.um;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.UMAFtpUploadDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.UMAFtpUploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -39,6 +42,10 @@ public class UMAFtpUploadController {
 
     //FTP 업로드 서비스
     private final UMAFtpUploadService uMAFtpUploadService;
+
+    //사용자 http 경로
+    @Value("${app.user-domain}")
+    private String appUserDomain;
 
     /**
      * FTP 업로드 목록 페이지
@@ -73,6 +80,8 @@ public class UMAFtpUploadController {
         {
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", uMAFtpUploadService.selectUploadFileList(uMAFtpUploadDTO));
+            modelMap.addAttribute("appUserDomain", appUserDomain);
+
         }
         catch (Exception e)
         {

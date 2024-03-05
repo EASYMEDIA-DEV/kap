@@ -97,9 +97,11 @@
              , A.CMPN_NFRML_NM
              , A.CMPN_CD
              , A.CTGRY_CD
-             , (select cd_nm from co_code_mst where cd = A.CTGRY_CD) as CTGRY_NM
+             , CASE WHEN A.CTGRY_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD)
+               ELSE '' END as CTGRY_CD_NM
              , A.SIZE_CD
-             , (select cd_nm from co_code_mst where cd = A.SIZE_CD) as SIZE_NM
+             , CASE WHEN A.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SIZE_CD)
+               ELSE '' END as SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO
              , A.ZIPCODE

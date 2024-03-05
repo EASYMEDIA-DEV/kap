@@ -318,6 +318,9 @@
                 OR (exps_strt_dtm <![CDATA[ <= ]]> SYSDATE() AND exps_end_dtm <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)
                 ))
             </if>
+            <if test="mdCd != null and mdCd != ''.toString() ">
+                AND MD_CD = #{mdCd}
+            </if>
             <if test="dStrDt != null and dStrDt != ''.toString() and dEndDt !=  null and dEndDt != ''.toString()">
                 AND EXPS_STRT_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
                 AND EXPS_END_DTM <![CDATA[ <= ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
@@ -359,9 +362,6 @@
                     TAG_CD = #{tagCdList}
                 </foreach>
                 )
-            </if>
-            <if test="mdCd != null and mdCd != ''.toString() ">
-                AND MD_CD = #{mdCd}
             </if>
             <if test="q != null and q != ''">
                 <choose>
