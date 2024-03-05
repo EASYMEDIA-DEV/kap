@@ -64,6 +64,9 @@
 				</div>
 				<!-- footer - END -->
 			</footer>
+
+
+
 			<div class="quick-menu">
 				<div class="menu-area">
 					<button class="btn-open-menu" title="퀵 메뉴 열기" type="button"></button>
@@ -99,6 +102,10 @@
 				<div class="bar"></div>
 			</div>
 			<div class="dimd"></div>
+
+			<div class="only-vertical-view"></div>
+
+
 			<div class="loading-area" style="display: none;">
 				<div class="for-center">
 					<div class="lottie-area">

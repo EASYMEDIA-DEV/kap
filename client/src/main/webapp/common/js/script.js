@@ -1609,11 +1609,6 @@ function openPopup(popName, comebackEl, reloadChk) {
           }});
           $(designatedPopup).hasClass("trendPopup") && trendMobMotion();
         }, 10);
-
-        // fadein 완료 후 reloadChk 값이 Y 이면 data값 변경 후 트리커 클릭 처리
-        if(reloadChk == "Y"){
-          $(comebackEl.target).data("mapchk", "Y").trigger("click");
-        }
       }
 
       if($(designatedPopup).hasClass("full-popup")){ // full-popup 팝업만 2분할 모션
@@ -1874,40 +1869,40 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
       if(window.matchMedia("(orientation: portrait)").matches){
         // 세로 모드 (평소 사용하는 각도)
         if(typeof focusEle != "undefined"){// 키패드 올라왔을 때
-          $("body").addClass("only-vertical-view");
+          $("body").addClass("vertical");
           $(".only-vertical-view").addClass("on");
         }else{
-          $("body").removeClass("only-vertical-view");
+          $("body").removeClass("vertical");
           $(".only-vertical-view").removeClass("on");
         }		
         
       }else if(window.matchMedia("(orientation: landscape)").matches){
         // 가로 모드 (동영상 볼때 사용하는 각도)
-        $("body").addClass("only-vertical-view");
+        $("body").addClass("vertical");
         $(".only-vertical-view").addClass("on");
       }
     }else{	// ios 
       if(agent.indexOf("version") != -1){
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
-          $("body").removeClass("only-vertical-view");
+          $("body").removeClass("vertical");
           $(".only-vertical-view").removeClass("on");
         }else if(window.matchMedia("(orientation: landscape)").matches){
           if(window.innerHeight < 512){
             // 가로 모드 (동영상 볼때 사용하는 각도)
-            $("body").addClass("only-vertical-view");
+            $("body").addClass("vertical");
             $(".only-vertical-view").addClass("on");
           }
         }
       }else{			
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
-          $("body").addClass("only-vertical-view");
+          $("body").addClass("vertical");
           $(".only-vertical-view").addClass("on");
         }else if(window.matchMedia("(orientation: landscape)").matches){
           if(window.innerHeight < 512){
             // 가로 모드 (동영상 볼때 사용하는 각도)
-            $("body").removeClass("only-vertical-view");
+            $("body").removeClass("vertical");
             $(".only-vertical-view").removeClass("on");
           }
         }

@@ -2045,6 +2045,8 @@ footer .copy-area span:last-child:after {display: none;}
 .gray-bg-sec .status-circle {position: absolute; top: 50%; transform: translateY(-50%); right: 50rem;}
 .gray-bg-sec:has(.status-circle) {position: relative; padding: 32rem 50rem;}
 .gray-bg-sec:has(.status-circle) ~ .gray-bg-sec:has(.status-circle) {margin-top: 24rem;}
+.gray-bg-sec:has( > a) {padding: 0 !important;}
+.gray-bg-sec:has( > a) > a {display: inline-block; width: 100%; padding: 32rem 50rem;}
 
 .gray-bg-sec.narrow-pad {padding: 30rem;}
 .gray-bg-sec.wide-pad {padding: 80rem;}
@@ -2147,6 +2149,7 @@ footer .copy-area span:last-child:after {display: none;}
         /* ! 느낌표 정보 글씨 */
 .exclamation-txt {padding-left: max(32rem, 28px); color: #697278; background: url("/common/images/icon-exclamation-mark.svg") no-repeat left top / max(24rem, 20px);}
 .exclamation-txt.f-sub-head {background-position: left top 1rem;}
+.exclamation-txt a {color: #697278; text-decoration: underline; text-underline-position: under;}
 .exclamation-txt + .exclamation-txt {margin-top: 4rem;}
 
         /* 숫자 */
@@ -3204,6 +3207,7 @@ footer .copy-area span:last-child:after {display: none;}
   .info-head .left .sort-select::before {top: 2rem; height: 16rem;}
   .info-head .left .sort-select .form-select.txt-select{min-height:auto;}
   .cont-sec .trainings-list-w {margin-top: 24rem;}
+  .cont-sec .info-sec + .trainings-list-w {margin-top: 16rem;}
           /* 간격 */
           /* 기본 -> pc: 64, mobile: 32 */
   .cont-sec .info-head:not(.no-bdr) + *:not(.filter-popup, .table-sec) {margin-top: 32rem;}
@@ -3582,8 +3586,8 @@ footer .copy-area span:last-child:after {display: none;}
 
 @media (orientation: landscape) and (pointer: coarse) {
   @media (max-height: 414px) and (max-width: 1023px) {
-    body.only-vertical-view {overflow: hidden; height: 100%; min-height: 100%; touch-action: none;}
-    .only-vertical-view.on {display: block;}
+    body.vertical {overflow: hidden; height: 100%; min-height: 100%; touch-action: none;}
+    /* .only-vertical-view.on {display: block;} */
   }
 }
 
@@ -3789,7 +3793,7 @@ footer .copy-area span:last-child:after {display: none;}
 
 /* --------------------------------------------- 재단정보 > 인사말 - START --------------------------------------------- */
 .greeting-wrap {display: flex; justify-content: space-between;}
-.greeting-wrap .txt-box {width: 586rem; margin-top: 322rem;}
+.greeting-wrap .txt-box {width: 586rem;}
 .greeting-wrap .img-box {width: 410rem;}
 .greeting-wrap .img-box .img {margin-bottom: 16rem; border-radius: 2px; overflow: hidden;}
 .greeting-wrap .img-box .img img {width: 100%;}
@@ -3798,7 +3802,7 @@ footer .copy-area span:last-child:after {display: none;}
 .scroll-motion.active .for-motion .greeting-wrap .txt-box {top: 0; opacity: 1;}
 @media all and (max-width: 1023px) {
   .greeting-wrap {position: relative; display: block;}
-  .greeting-wrap .txt-box {width: 100%; margin-top: 0;}
+  .greeting-wrap .txt-box {width: 100%;}
   .greeting-wrap .txt-box .tabl-layout {display: block; padding-right: 270rem;}
   .greeting-wrap .img-box {position: absolute; top: 0; right: 0; width: 250rem; height: 270rem;}
   .greeting-wrap .img-box .img {margin-bottom: 0;}
