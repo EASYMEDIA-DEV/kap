@@ -120,7 +120,7 @@
                                             <div>
                                                 <label class="col-sm-2 control-label">질문<span class="star"> *</span></label>
                                                 <div class="col-sm-10">
-                                                    <input type="text" class="form-control input-sm" name="qstnNm" value="${ qstnList.qstnNm }" maxlength="50" title="질문" placeholder="질문을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') } />
+                                                    <input type="text" class="form-control input-sm" name="qstnNm" value="${ qstnList.qstnNm }" maxlength="300" title="질문" placeholder="질문을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') } />
                                                 </div>
                                             </div>
                                         </div>
@@ -202,7 +202,7 @@
                                     <div>
                                         <label class="col-sm-2 control-label">질문<span class="star"> *</span></label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control input-sm" name="qstnNm" value="" maxlength="50" title="질문" placeholder="질문을 입력하세요." />
+                                            <input type="text" class="form-control input-sm" name="qstnNm" value="" maxlength="300" title="질문" placeholder="질문을 입력하세요." />
                                         </div>
                                     </div>
                                 </div>
