@@ -1,7 +1,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 
 <div class="container-fluid">
-	<div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebh/EBHEduApplicantListCtrl">
+	<div class="card-body" data-controller="controller/co/COFormCtrl controller/eb/ebh/EBHEduApplicantListCtrl controller/eb/eba/EBACheckBoxCtrl">
 		<h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
 		<form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
 			<!-- 현재 페이징 번호 -->
@@ -34,7 +34,7 @@
 						</label>
 						<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
 							<label class="checkbox-inline c-checkbox classType">
-								<input type="checkbox" class="checkboxSingle" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+								<input type="checkbox" class="checkboxSingle ${cdList.cd}" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
 								<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 							</label>
 						</c:forEach>

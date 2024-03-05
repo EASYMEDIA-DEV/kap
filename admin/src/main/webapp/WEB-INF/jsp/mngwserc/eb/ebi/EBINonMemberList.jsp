@@ -39,7 +39,7 @@
 
 							<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
 								<label class="checkbox-inline c-checkbox classType">
-									<input type="checkbox" class="checkboxSingle" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+									<input type="checkbox" class="checkboxSingle ${cdList.cd}" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
