@@ -1241,7 +1241,7 @@
                                     </c:if>
                                 </c:if>
                             </c:forEach>
-                            <input type="text" class="form-control input-sm calPmtForm bdget01 numberChk notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm calPmtForm bdget01 comma notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
                         </c:forEach>
                     </div>
                     <div class="bdgetTargetData" style="display:none;" data-type="bdget02">
@@ -1265,7 +1265,7 @@
                                     </c:if>
                                 </c:if>
                             </c:forEach>
-                            <input type="text" class="form-control input-sm calPmtForm bdget02 numberChk notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
+                            <input type="text" class="form-control input-sm calPmtForm bdget02 comma notRequired" name="${cdList.cd}" value="${tempPmt}" title="${cdList.cdNm}" maxlength="50" placeholder="${cdList.cdNm} 입력" />
                         </c:forEach>
                     </div>
 
@@ -1310,7 +1310,7 @@
                                             <div class="col-sm-6">
                                                 <label class="col-sm-1 control-label">지출금액</label>
                                                 <div class="col-sm-4 form-inline">
-                                                    <input type="text" class="form-control input-sm numberChk notRequired" id="expnsPmt" name="expnsPmt" value="${rtnDto.expnsPmt}" title="지출금액" maxlength="50" placeholder="지출금액" style=width:250px;"/>
+                                                    <input type="text" class="form-control input-sm notRequired comma" id="expnsPmt" name="expnsPmt" value="${rtnDto.expnsPmt}" title="지출금액" maxlength="50" placeholder="지출금액" style=width:250px;"/>
                                                 </div>
                                             </div>
                                         </div>
