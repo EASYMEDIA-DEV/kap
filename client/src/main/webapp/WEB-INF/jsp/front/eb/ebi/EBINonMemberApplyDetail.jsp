@@ -1,5 +1,11 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
+<script type="text/javascript">
+    window.history.pushState(null, '', '');
+    window.onpopstate = () => {
+        $("#frmSearch").attr("action", "./list");
+        $("#frmSearch").submit();
+    }
+</script>
 <c:set var="rtnData" value="${rtnInfo.rtnData}" />
 <c:set var="roomDto" value="${rtnInfo.roomDto}" />
 <c:set var="isttrList" value="${rtnInfo.isttrList}" />
