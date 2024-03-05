@@ -951,6 +951,7 @@
       수정일      수정자       수정내용
     ==========   ========   ==============
     2024.02.05    박준희       최초생성
+    2024.03.05    이옥정       문항 호출 조건문 추가(척도와 주관식만 호출하게끔)
 -->
 	<select id="selectApiSurveyQstnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyApiQstnDtlDTO">
 
@@ -996,7 +997,8 @@
 							 , QSTN_NM AS QSTN
 							 ,(SELECT MAX(SRV_TYPE_CD) AS SRV_TYPE_CD FROM sv_qstn_dtl WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_TYPE_CD
 						 FROM sv_qstn_dtl A , (SELECT @rownum:=0) B
-						 WHERE A.SRV_SEQ IN (
+						 WHERE SRV_TYPE_CD IN ( 'QST05','QST06','QST07','QST03' ,'QST04')
+						 AND A.SRV_SEQ IN (
 						 SELECT * FROM ( SELECT SRV_SEQ from ED_EDCTN_EPISD_MST
 						 WHERE EDCTN_SEQ = #{detailsKey}
 						 ORDER BY EPISD_YEAR ASC , EPISD_ORD ASC LIMIT 1 ) AS T
