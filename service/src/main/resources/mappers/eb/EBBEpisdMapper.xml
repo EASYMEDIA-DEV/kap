@@ -383,14 +383,14 @@
 				<choose>
 					<!--교육기간-->
 					<when test="srchDate == 1">
-						AND EDCTN_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-						AND EDCTN_END_DTM <![CDATA[ < ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+						AND EDCTN_STRT_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND EDCTN_END_DTM <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
 					</when>
 
 					<!--접수기간-->
 					<when test="srchDate == 2">
-						AND ACCS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
-						AND ACCS_END_DTM <![CDATA[ < ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+						AND ACCS_STRT_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND ACCS_END_DTM <![CDATA[ <= ]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
 					</when>
 
 					<!--등록일-->
