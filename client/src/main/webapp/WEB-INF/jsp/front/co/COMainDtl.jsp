@@ -864,15 +864,27 @@
                         <p class="sec-tit f-title3">고객지원</p>
                     </div>
                     <div class="help-btn-area">
-                        <a class="btn-list manager" href="/foundation/intro/organization/index">
+                        <a class="btn-list manager" href="/foundation/intro/organization/content">
                             <span>담당자 연락처</span>
                         </a>
                         <a class="btn-list edu-schedule" id="eduScheduleBtn" href="javascript:">
                             <span>전체교육 일정</span>
                         </a>
-                        <a class="btn-list certificate" href="javascript:">
-                            <span>증명서 발급</span>
-                        </a>
+                        <c:choose>
+                            <c:when test="${not empty loginMap.authCd}">
+                                <c:choose>
+                                    <c:when test="${loginMap.authCd eq 'CS'}">
+                                        <a class="btn-list certificate" href="javascript:" onclick="alert('위원 계정은 해당 서비스를 이용할 수 없습니다.');"><span>증명서 발급</span></a>
+                                    </c:when>
+                                    <c:when test="${loginMap.authCd ne 'CS'}">
+                                        <a class="btn-list certificate" href="/my-page/edu-apply/list?crtfctYn=Y" ><span>증명서 발급</span></a>
+                                    </c:when>
+                                </c:choose>
+                            </c:when>
+                            <c:otherwise>
+                                <a class="btn-list certificate" href="javascript:" onclick="alert('로그인후 이용해주세요');"><span>증명서 발급</span></a>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>

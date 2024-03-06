@@ -25,24 +25,24 @@
 							<div class="form-select">
 								<select title="관련사이트 이동" id="footerFamilySelect" onchange="setFooterFamilySelect()">
 									<option value="">관련사이트</option>
-									<option value="http://www.motie.go.kr">산업통상자원부</option>
-									<option value="http://www.mosf.go.kr">기획재정부</option>
-									<option value="http://www.kaica.or.kr">한국자동차산업협동조합</option>
-									<option value="http://www.kase.org">한국자동차공학회</option>
-									<option value="http://www.molit.or.kr">국토교통부</option>
-									<option value="http://www.smba.go.kr">중소기업청</option>
-									<option value="http://www.katech.re.kr">자동차부품연구원</option>
-									<option value="http://www.autopart.or.kr">부산자동차부품공업협동조합</option>
-									<option value="http://www.kama.or.kr">한국자동차공업협회</option>
-									<option value="http://www.hkasa.co.kr">현대기아협력회</option>
-									<option value="http://www.sbc.or.kr">중소기업진흥공단</option>
-									<option value="http://kari.hmc.co.kr">한국자동차산업엽구소</option>
-									<option value="http://www.hyundai-motor.co.kr">현대자동차</option>
-									<option value="http://www.kia.co.kr">기아자동차</option>
-									<option value="http://www.renaultsamsungm.com">르노삼성자동차</option>
-									<option value="http://www.mobis.co.kr">현대모비스</option>
-									<option value="http://www.gm-korea.co.kr">한국지엠</option>
-									<option value="http://www.smotor.com">쌍용자동차</option>
+									<option value="https://www.motie.go.kr">산업통상자원부</option>
+									<option value="https://www.moef.go.kr">기획재정부</option>
+									<option value="https://www.kaica.or.kr">한국자동차산업협동조합</option>
+									<option value="https://www.ksae.org">한국자동차공학회</option>
+									<option value="http://www.molit.go.kr">국토교통부</option>
+									<option value="https://www.mss.go.kr">중소벤처기업부</option>
+									<option value="https://www.katech.re.kr">한국자동차연구원</option>
+									<option value="http://www.baica.or.kr">부산자동차부품공업협동조합</option>
+									<option value="https://www.kama.or.kr">한국자동차모빌리티산업협회</option>
+									<option value="https://www.hkasa.com">현대·기아 협력회</option>
+									<option value="https://www.kosmes.or.kr">중소벤처기업진흥공단</option>
+									<option value="http://www.kmir.org">한국자동차산업시험연구소</option>
+									<option value="https://www.hyundai.com">현대자동차</option>
+									<option value="https://www.kia.com">기아</option>
+									<option value="https://www.renaultkoream.com">르노코리아자동차</option>
+									<option value="https://www.mobis.co.kr">현대모비스</option>
+									<option value="https://www.gm-korea.co.kr">한국지엠</option>
+									<option value="http://www.kg-mobility.com">KG 모빌리티</option>
 								</select>
 								<script type="text/javascript">
 									function setFooterFamilySelect(){
@@ -93,7 +93,7 @@
 						</c:choose>
 
 						<a class="quick-btn faq" href="/foundation/board/faq/list"><span class="txt">FAQ</span></a>
-						<a class="quick-btn manager" href="/foundation/intro/organization/index"><span class="txt">담당자</span></a>
+						<a class="quick-btn manager" href="/foundation/intro/organization/content"><span class="txt">담당자</span></a>
 					</div>
 				</div>
 				<a class="btn-top" href="javascript:" title="페이지 상단으로 이동"><span class="txt">TOP</span></a>
