@@ -461,7 +461,7 @@
                 </div>
             </fieldset>
 
-            <fieldset>
+            <fieldset id="thnlZone">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">썸네일 이미지</label>
                     <div class="col-sm-10 col-md-11">

@@ -31,12 +31,52 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				//CALLBACK 처리
 				ctrl.obj.find("#listContainer").html(respObj);
 				//전체 갯수
-				var totCnt = $(respObj).eq(0).data("totalCount");
+				var totCnt = $("#listContainer").find("tr:first").data("totalCount");
+
+
+				//등록된 회차 있으면 과정수정 못바꾸게함
+				var _readOnly = false;
+				if(totCnt>0){
+					console.log("못바꿈");
+					_readOnly = true;
+
+					$("#frmData").find("input, select, button, .couseSearch, textarea").prop("disabled", true);
+					$("input[name='expsYn']").prop("disabled", false);
+					$("button[type='submit']").prop("disabled", false);
+
+					$(".dz-hidden-input").prop("disabled",true);
+					$(".dropzone").removeClass("dz-clickable");
+					$(".dz-default.dz-message").hide();
+					$('.dz-remove').hide();
+
+
+
+				}else{
+					console.log("바꿈");
+					_readOnly = false;
+				}
+
+				jQuery("textarea[id$='StduyCntn']").each(function(){
+					cmmCtrl.setEditor({
+						editor : jQuery(this).attr("id"),
+						height : 400,
+						readOnly : _readOnly
+					});
+				});
+
 				//총 건수
 				ctrl.obj.find("#listContainerTotCnt").text(totCnt);
 				//페이징 처리
 				cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
 			}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");
+		}else{
+			jQuery("textarea[id$='StduyCntn']").each(function(){
+				cmmCtrl.setEditor({
+					editor : jQuery(this).attr("id"),
+					height : 400,
+					readOnly : false
+				});
+			});
 		}
 
 
@@ -334,16 +374,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 			$(".classType").trigger("change");
 
-			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
+			//var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
 			/* Editor Setting */
-			jQuery("textarea[id$='StduyCntn']").each(function(){
+			/*jQuery("textarea[id$='StduyCntn']").each(function(){
 				cmmCtrl.setEditor({
 					editor : jQuery(this).attr("id"),
 					height : 400,
 					readOnly : _readOnly
 				});
-			});
+			});*/
 
 			jQuery(".CodeMirror").find("textarea").addClass("notRequired");
 
@@ -574,6 +614,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 						if($formObj.find(".dropzone").size() > 0)
 						{
+							$("#frmData").find("input, select, button, .couseSearch, textarea").prop("disabled", false);
+							$("#frmData").find(".dz-hidden-input").prop("disabled",false);
+
 							cmmCtrl.fileFrmAjax(function(data){
 								//콜백함수. 페이지 이동
 								if(data.respCnt > 0){
@@ -584,6 +627,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						}
 						else
 						{
+
 							cmmCtrl.frmAjax(function(data){
 								if(data.respCnt > 0){
 									alert(actionMsg);

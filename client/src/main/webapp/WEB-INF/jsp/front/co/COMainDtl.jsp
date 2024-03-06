@@ -1022,6 +1022,6 @@
             </div>
         </div>
     </div>
-    <div class="only-vertical-view"></div>
+
 </div>
 <!-- content 영역 end -->

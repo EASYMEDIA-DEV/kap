@@ -1553,6 +1553,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			}
 
+			$(".dz-hidden-input").prop("disabled",true);
+			$(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
+			$(".dz-default.dz-message").hide();
+			$('.dz-remove').hide();
+
 
 			// 유효성 검사
 			$formObj.validation({
