@@ -81,12 +81,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         },
         immediately : function(){
 
-            var odtmYn =  $("input[name='odtmYn']:checked").val();
-            if (odtmYn !== 'Y') {
-                $(".datetimepicker_strtDt").val(new Date().toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-'));
-                $(".datetimepicker_endDt").val(new Date().toLocaleDateString().replace(/\./g, '').replace(/\s/g, '-'));
-            }
-
             /* File Dropzone Setting */
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
