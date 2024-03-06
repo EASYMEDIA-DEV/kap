@@ -74,6 +74,7 @@ var commonScript = (function(){
           }
           if($(".only-vertical-view").html() == '') {
             $(".only-vertical-view").empty().load("/html/vertical-view.html");
+            showBack();
           }
         }        
       }
@@ -1858,7 +1859,6 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
 	for(var txt in mobileArr){
 		if(navigator.userAgent.match(mobileArr[txt]) != null){
 			mobileNum = txt;
-			//alert(txt);
 			break;
 		}
 	}
@@ -1875,11 +1875,21 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
           $("body").removeClass("vertical");
           $(".only-vertical-view").removeClass("on");
         }		
-        
       }else if(window.matchMedia("(orientation: landscape)").matches){
-        // 가로 모드 (동영상 볼때 사용하는 각도)
-        $("body").addClass("vertical");
-        $(".only-vertical-view").addClass("on");
+        var widthChk = window.innerWidth;
+        var heightChk = window.innerHeight;
+        var aspectRatio = widthChk / heightChk
+        var landscapeAspectRatioThreshold = 1.2;
+
+        if (aspectRatio > landscapeAspectRatioThreshold) {
+          // 가로 모드
+          $("body").addClass("landscape");
+          $(".only-vertical-view").addClass("on");
+        } else {
+          // 세로 모드
+          $("body").removeClass("landscape");
+          $(".only-vertical-view").removeClass("on");
+        }
       }
     }else{	// ios 
       if(agent.indexOf("version") != -1){
@@ -1897,13 +1907,13 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
       }else{			
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
-          $("body").addClass("vertical");
-          $(".only-vertical-view").addClass("on");
+          $("body").removeClass("vertical");
+          $(".only-vertical-view").removeClass("on");
         }else if(window.matchMedia("(orientation: landscape)").matches){
           if(window.innerHeight < 512){
             // 가로 모드 (동영상 볼때 사용하는 각도)
-            $("body").removeClass("vertical");
-            $(".only-vertical-view").removeClass("on");
+            $("body").addClass("vertical");
+            $(".only-vertical-view").addClass("on");
           }
         }
       }

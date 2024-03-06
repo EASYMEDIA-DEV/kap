@@ -1526,7 +1526,7 @@ footer .copy-area span:last-child:after {display: none;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .tit {font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt {margin-top: 10rem; font-size: 13rem; line-height: 165%; letter-spacing: -0.26rem;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .img {display: none;}
-  .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap {border: 1px solid red; width: 100%;}
+  .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap {width: 100%;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap .btn-set ~ .btn-set {margin-top: 12rem;}
   .accepting-fixed-area .hide-area .con-area .info-line-list-w .list .txt .btn-wrap .btn-set a ~ a {margin-top: 4rem;}
   .accepting-fixed-area .hide-area .btn-wrap {margin-top: 60rem;}
