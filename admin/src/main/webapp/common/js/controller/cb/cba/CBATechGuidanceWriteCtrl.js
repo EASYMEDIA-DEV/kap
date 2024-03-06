@@ -119,7 +119,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("사전심사선정");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_03");
                 if (initVstRsltCd == 'BF_JDGMT_RSLT03') {
-                    $(".rsumeSttsNm").text("지원단이관");
+                    $(".rsumeSttsNm").text("경영컨설팅이관");
                     $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
                 }else if(initVstRsltCd == 'INIT_VST_RSLT01'){
                     $(".rsumeSttsNm").text("지도승인");
@@ -135,7 +135,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("사전심사탈락");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_04");
             }else if(bfJdgmtRslt == 'BF_JDGMT_RSLT03'){
-                $(".rsumeSttsNm").text("지원단이관");
+                $(".rsumeSttsNm").text("경영컨설팅이관");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }
         }
@@ -929,7 +929,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var day = ("0" + date.getDate()).slice(-2);
                         var fullDay = year + month + day;
 
-                        var fileName = "기술지도 사업현황_"+cmpnNmText+"_"+fullDay+".pdf";
+                        var fileName = "기술지도 신청서_"+cmpnNmText+"_"+fullDay+".pdf";
                         cmmCtrl.getAppctnPdfDownload(fileName);
                     }
                 }

@@ -43,7 +43,7 @@ public class MPBBusDto extends BaseDTO {
     private String cnstgCdNm;
 
 
-    @Schema(title = "진행상태", example = "지원단이관")
+    @Schema(title = "진행상태", example = "")
     private String statusNm;
 
 

@@ -1,6 +1,7 @@
 package com.kap.front.controller.cb;
 
 import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cbb.CBBManageConsultInsertDTO;
@@ -250,7 +251,7 @@ public class CBTechGuidanceController {
             smsDto.getReceiver().add(receiverDto);
             SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
             smiSmsCntnDTO.setSmsCntnCd("SMS03"); // 컨설팅 신청 완료 구분 코드
-            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
             cOMessageService.sendSms(smsDto, "");
 
         }catch(Exception e){

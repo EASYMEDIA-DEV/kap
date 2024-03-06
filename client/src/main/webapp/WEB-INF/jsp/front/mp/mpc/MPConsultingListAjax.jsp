@@ -56,7 +56,7 @@
                                                     </div>
                                                 </div>
                                             </c:if>
-                                            <c:if test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
+                                            <c:if test="${appctnList.rsumeSttsNm eq '경영컨설팅이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
                                                 <div class="status-info-w">
                                                     <p class="box-label bigger waiting">
                                                         <span>${appctnList.rsumeSttsNm}</span>
@@ -159,7 +159,7 @@
                                                 </div>
                                             </div>
                                         </c:if>
-                                        <c:if test="${appctnList.rsumeSttsNm eq '지원단이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
+                                        <c:if test="${appctnList.rsumeSttsNm eq '경영컨설팅이관' or appctnList.rsumeSttsNm eq '지도연기' or appctnList.rsumeSttsNm eq '이관'}">
                                             <div class="status-info-w">
                                                 <p class="box-label bigger waiting">
                                                     <span>${appctnList.rsumeSttsNm}</span>

@@ -36,7 +36,7 @@
                                                         <p class="box-label bigger arr"><span>${manageDto.rsumeSttsNm}</span></p>
                                                     </div>
                                                 </c:when>
-                                                <c:when test="${manageDto.rsumeSttsNm eq '지원단이관' or manageDto.rsumeSttsNm eq '지도연기' or manageDto.rsumeSttsNm eq '이관'}">
+                                                <c:when test="${manageDto.rsumeSttsNm eq '경영컨설팅이관' or manageDto.rsumeSttsNm eq '지도연기' or manageDto.rsumeSttsNm eq '이관'}">
                                                     <div class="status-info-w">
                                                         <p class="box-label bigger waiting">
                                                             <span>${manageDto.rsumeSttsNm}</span>
