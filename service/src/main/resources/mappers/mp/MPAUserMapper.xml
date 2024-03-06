@@ -7,6 +7,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    양현우       최초생성
+        2024.03.08    이옥정       수정자 데이터 조회시 동일 id 가 있어 조건문 추가 (mem_cd = #{memCd} AND)
     -->
     <select id="selectUserList" parameterType="MPAUserDto" resultType="MPAUserDto">
         SELECT MEM_SEQ /* MPAUserMapper.selectUserList */
@@ -66,7 +67,7 @@
                       , MEM.NTFY_SMS_RCV_YN
                       , MEM.NTFY_EMAIL_RCV_YN
                       , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.MOD_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.MOD_ID)
-                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.MOD_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.MOD_ID)
+                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.MOD_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE mem_cd = #{memCd} AND ID=MEM.MOD_ID)
                               ELSE NULL END AS MOD_NAME
                       , CMPN_MST.CMPN_NM
                       , CASE WHEN CMPN_MST.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.SIZE_CD )
@@ -90,7 +91,7 @@
                       , CASE WHEN MEM.CMSSR_WORK_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=MEM.CMSSR_WORK_CD )
                               ELSE '' END as CMSSR_WORK_CD_NM
                       , CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=MEM.REG_ID)
-                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=MEM.REG_ID)
+                             WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=MEM.REG_ID) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE mem_cd = #{memCd} AND ID=MEM.REG_ID)
                               ELSE NULL END AS CMT_MOD_NAME
                       , MEM.BIRTH
                       , MEM.CMSSR_MPLMN_DT
@@ -139,6 +140,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    양현우       최초생성
+        2024.03.08    이옥정       수정자 데이터 조회시 동일 id 가 있어 조건문 추가 (mem_cd = #{memCd} AND)
     -->
     <select id="selectUserCompanyInfoList" parameterType="MPAUserDto" resultType="MPAUserDto">
         SELECT mem_seq /* MPAUserMapper.selectUserCompanyInfoList */
@@ -174,7 +176,7 @@
                      , mem.ntfy_sms_rcv_yn
                      , mem.ntfy_email_rcv_yn
                      , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
-                            when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                            when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where  mem_cd = #{memCd} AND id=mem.mod_id)
                                 else null end as  mod_name
                      , cmpn_mst.cmpn_nm
                     , CASE WHEN CMPN_MST.size_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.size_cd )
@@ -217,6 +219,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    양현우       최초생성
+        2024.03.08    이옥정       수정자 데이터 조회시 동일 id 가 있어 조건문 추가 (mem_cd = #{memCd} AND)
     -->
     <select id="selectUserListCnt" parameterType="MPAUserDto" resultType="java.lang.Integer">
         select count(*) /* MPAUserMapper.selectUserListCnt */
@@ -231,7 +234,7 @@
                    , mem.work_bsnm_no
                    , mem.gndr
                    , case when (select count(*) from co_adm_mst where id=mem.mod_id) > 0 then (select name from co_adm_mst where id=mem.mod_id)
-                          when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where id=mem.mod_id)
+                          when (select count(*) from co_adm_mst where id=mem.mod_id) = 0 then (select name from co_mem_mst where  mem_cd = #{memCd} AND id=mem.mod_id)
                             else null end as  mod_name
                    , cmpn_mst.cmpn_nm
                    , CASE WHEN CMPN_MST.size_cd != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE  CD=CMPN_MST.size_cd )
@@ -254,7 +257,7 @@
                    ,  case when mem.cmssr_work_cd != ''  then  (select cd_nm from co_code_mst where  cd=mem.cmssr_work_cd )
                            else '' end as cmssr_work_cd_nm
                    , case when (select count(*) from co_adm_mst where id=mem.reg_id) > 0 then (select name from co_adm_mst where id=mem.reg_id)
-                          when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where id=mem.reg_id)
+                          when (select count(*) from co_adm_mst where id=mem.reg_id) = 0 then (select name FROM co_mem_mst where  mem_cd = #{memCd} AND id=mem.reg_id)
                            else null end as cmt_mod_name
                    , mem.birth
                    , mem.cmssr_mplmn_dt
