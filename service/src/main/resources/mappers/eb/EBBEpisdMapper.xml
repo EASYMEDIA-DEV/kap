@@ -383,26 +383,42 @@
 				<choose>
 					<!--교육기간-->
 					<when test="srchDate == 1">
-						AND EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND EDCTN_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						<if test="strtDt != null and strtDt != ''">
+							AND EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND EDCTN_END_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 
 					<!--접수기간-->
 					<when test="srchDate == 2">
-						AND ACCS_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND ACCS_STRT_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						<if test="strtDt != null and strtDt != ''">
+							AND ACCS_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND ACCS_END_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 
 					<!--등록일-->
 					<when test="srchDate == 3">
-						AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND REG_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						<if test="strtDt != null and strtDt != ''">
+							AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND REG_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 
 					<!--수정일-->
 					<when test="srchDate == 4">
-						AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND MOD_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						<if test="strtDt != null and strtDt != ''">
+							AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND MOD_DTM <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 				</choose>
 			</if>

@@ -239,10 +239,10 @@
                                                                     <div class="form-group form-calendar">
                                                                         <div class="form-input">
                                                                             <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
-                                                                                <input type="hidden" name="paramStrtDt" id="paramStrtDt" value="${eBBEpisdDTO.strtDt}">
-                                                                                <input type="hidden" name="paramEndDt" id="paramEndDt" value="${eBBEpisdDTO.endDt}">
+                                                                                <input type="hidden" name="paramStrtDt" id="paramStrtDt" placeholder="2023.01.01" value="${eBBEpisdDTO.strtDt}">
+                                                                                <input type="hidden" name="paramEndDt" id="paramEndDt" placeholder="2023.01.01" value="${eBBEpisdDTO.endDt}">
 
-                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${not empty eBBEpisdDTO.strtDt ? eBBEpisdDTO.strtDt : today}" title="시작일"/>
+                                                                            <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" placeholder="2023.01.01" value="${not empty eBBEpisdDTO.strtDt ? eBBEpisdDTO.strtDt : today}" title="시작일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>
@@ -251,7 +251,7 @@
                                                                         </div>
                                                                         <div class="form-input calendar">
                                                                             <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
-                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${not empty eBBEpisdDTO.endDt ? eBBEpisdDTO.endDt : today}" title="종료일"/>
+                                                                            <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" placeholder="2023.01.01" value="${not empty eBBEpisdDTO.endDt ? eBBEpisdDTO.endDt : today}" title="종료일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>

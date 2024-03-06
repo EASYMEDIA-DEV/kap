@@ -233,9 +233,7 @@
 			1=1
 			AND a.exps_yn = 'Y'
 
-
 			<if test="cnnctCd != null and cnnctCd != '' ">
-
 				<choose>
 					<when test="cnnctCd == 'EDCTN_REL01' ">
 						AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd IN ('EDCTN_REL01', 'EDCTN_REL03') )
@@ -243,9 +241,7 @@
 					<otherwise>
 						AND a.edctn_seq IN(SELECT cnnct_edctn_seq FROM ed_edctn_rel_dtl WHERE edctn_seq = #{edctnSeq} AND cnnct_cd = #{cnnctCd})
 					</otherwise>
-
 				</choose>
-
 			</if>
 
 			<!--과정분류 검색 중분류까지 있을경우-->
@@ -257,7 +253,6 @@
 			<if test="prntCd !=null and prntCd !='' and (ctgryCd == null or ctgryCd =='') ">
 				AND LEFT(a.ctgry_cd, 7) like concat('%', #{prntCd}, '%')
 			</if>
-
 
 			<!-- 학습방식 -->
 			<if test="stduyMthdCdList != null and stduyMthdCdList.size() > 0">
@@ -281,19 +276,25 @@
 				and ( (nm like concat('%', #{q}, '%')) or (place_nm like concat('%', #{q}, '%')) )
 			</if>
 
-
 			<!-- 기간검색 -->
 			<!--교육기간/접수기간-->
 			<if test="strtDt != null and strtDt != ''">
 				<choose>
 					<when test="srchDate == 1">
-						AND accs_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND accs_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						<if test="strtDt != null and strtDt != ''">
+							AND accs_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND accs_end_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 					<when test="srchDate == 2">
-						AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
-						AND edctn_strt_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
-
+						<if test="strtDt != null and strtDt != ''">
+							AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+						</if>
+						<if test="endDt != null and endDt != ''">
+							AND edctn_end_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+						</if>
 					</when>
 				</choose>
 			</if>
