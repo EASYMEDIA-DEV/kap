@@ -540,7 +540,7 @@ public class EBACouseController {
             smiSmsCntnDTO.setSmsCntnCd("SMS01"); //교육신청 완료 코드
             smiSmsCntnDTO.setSmsCntnSeq(3);
             smsDto.getReceiver().add(receiverDto);
-            smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
             cOMessageService.sendSms(smsDto, "");
             //SMS 발송 끝

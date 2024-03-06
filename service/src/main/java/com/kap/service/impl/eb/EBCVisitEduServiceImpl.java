@@ -922,7 +922,7 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
         smiSmsCntnDTO.setSmsCntnCd("SMS09"); //방문교육신청 완료 코드
         smsDto.getReceiver().add(userReceiverDto);
-        smsDto.setMessage(COStringUtil.getHtmlStrCnvr(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+        smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
         cOMessageService.sendSms(smsDto, "");
         //SMS 발송 끝

@@ -98,7 +98,7 @@
              , A.CMPN_CD
              , A.CTGRY_CD
              , CASE WHEN A.CTGRY_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD)
-               ELSE '' END as CTGRY_CD_NM
+               ELSE '' END as CTGRY_NM
              , A.SIZE_CD
              , CASE WHEN A.SIZE_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SIZE_CD)
                ELSE '' END as SIZE_NM
