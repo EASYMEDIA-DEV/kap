@@ -39,6 +39,7 @@
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" id="mngSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd1" name="wBCBSecurityMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
@@ -171,6 +172,7 @@
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
 
@@ -318,6 +320,7 @@
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBCBSecurityMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
 

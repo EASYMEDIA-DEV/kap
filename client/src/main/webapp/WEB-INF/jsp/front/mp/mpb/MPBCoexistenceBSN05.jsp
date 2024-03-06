@@ -39,6 +39,7 @@
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" id="mngSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd1" name="wBEBCarbonCompanyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
@@ -171,6 +172,7 @@
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
 
@@ -317,6 +319,7 @@
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
 

@@ -39,6 +39,7 @@
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" id="mngSttsCd1" name="wBDBSafetyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
                             <input type="hidden" id="appctnSttsCd1" name="wBDBSafetyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[0].appctnSttsCd}">
@@ -171,6 +172,7 @@
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].bsnPlanDt" value="${today}">
 
@@ -317,6 +319,7 @@
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
 
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
 
