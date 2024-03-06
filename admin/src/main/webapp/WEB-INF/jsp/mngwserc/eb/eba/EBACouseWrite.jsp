@@ -419,7 +419,7 @@
                                 <c:forEach var="relList" items="${relList}" varStatus="status">
                                     <c:if test="${relList.cnnctCd eq 'EDCTN_REL01'}">
                                         <div class="row" style="margin-bottom: 20px;">
-                                            -${relList.cnnctNm}
+                                            ▣ ${relList.cnnctNm}
                                             <input type="hidden" class="notRequired cloneHidden" name="edctnRel1" value="${relList.cnnctEdctnSeq}">
                                             <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
                                         </div>
@@ -435,7 +435,7 @@
                                 <c:forEach var="relList" items="${relList}" varStatus="status">
                                     <c:if test="${relList.cnnctCd eq 'EDCTN_REL02'}">
                                         <div class="row" style="margin-bottom: 20px;">
-                                            -${relList.cnnctNm}
+                                            ▣ ${relList.cnnctNm}
                                             <input type="hidden" class="notRequired cloneHidden" name="edctnRel2" value="${relList.cnnctEdctnSeq}">
                                             <button type="button" class="btn btn-sm btn-danger btnDeleteOptn" onclick='$(this).closest(".row").remove();'><em class="ion-android-remove"></em></button>
                                         </div>

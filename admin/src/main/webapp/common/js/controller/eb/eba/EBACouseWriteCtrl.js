@@ -37,12 +37,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				//등록된 회차 있으면 과정수정 못바꾸게함
 				var _readOnly = false;
 				if(totCnt>0){
-					console.log("못바꿈");
+
 					_readOnly = true;
 
 					$("#frmData").find("input, select, button, .couseSearch, textarea").prop("disabled", true);
 					$("input[name='expsYn']").prop("disabled", false);
 					$("button[type='submit']").prop("disabled", false);
+					$("#btnList").prop("disabled", false);
 
 					$(".dz-hidden-input").prop("disabled",true);
 					$(".dropzone").removeClass("dz-clickable");
@@ -52,7 +53,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 
 				}else{
-					console.log("바꿈");
+
 					_readOnly = false;
 				}
 
