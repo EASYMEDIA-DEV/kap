@@ -71,28 +71,6 @@
                                     </div>
                                     <div class="row">
                                         <div class="th">
-                                            <p class="title f-head">과제명<span class="essential-mark color-sky">*</span>
-                                            </p>
-                                        </div>
-                                        <div class="td">
-                                            <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="form-group">
-                                                        <div class="form-select">
-                                                            <select id="taskCd" name="taskCd" title="과제명">
-                                                                <option value="">선택</option>
-                                                                <c:forEach var="list" items="${rtnData.asigtList}" varStatus="status">
-                                                                    <option value="${list.bsnOptnSeq}">${list.optnNm}</option>
-                                                                </c:forEach>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="th">
                                             <p class="title f-head">사업유형<span class="essential-mark color-sky">*</span>
                                             </p>
                                         </div>
@@ -104,6 +82,28 @@
                                                             <select id="bsnTypeCd" name="bsnTypeCd" title="사업유형">
                                                                 <option value="">선택</option>
                                                                 <c:forEach var="list" items="${rtnData.bsinList}" varStatus="status">
+                                                                    <option value="${list.bsnOptnSeq}">${list.optnNm}</option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="th">
+                                            <p class="title f-head">과제명<span class="essential-mark color-sky">*</span>
+                                            </p>
+                                        </div>
+                                        <div class="td">
+                                            <div class="data-line-w">
+                                                <div class="data-line">
+                                                    <div class="form-group">
+                                                        <div class="form-select">
+                                                            <select id="taskCd" name="taskCd" title="과제명">
+                                                                <option value="">선택</option>
+                                                                <c:forEach var="list" items="${rtnData.asigtList}" varStatus="status">
                                                                     <option value="${list.bsnOptnSeq}">${list.optnNm}</option>
                                                                 </c:forEach>
                                                             </select>
