@@ -697,8 +697,8 @@
 
 
     <!--
-         쿼리명 : WBHACalibrationMapper.getTrnsfList
-         설  명 : 상생사업 이관로그 조회
+         쿼리명 : WBHACalibrationMapper.getConsultingList
+         설  명 : 상생사업 컨설팅내역 조회
          수정일     수정자     수정내용
         ==========  ======  ==============
         2023.11.24  김태훈     최초 생성
@@ -712,13 +712,16 @@
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.CTGRY_CD) AS CTGRY_NM
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CMPN_SIZE_CD) AS SIZE_NM
              ,A.APPCTN_BSNM_NO
-             ,CONCAT((SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.FIRST_RGNS_CD) , ' ' , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SCND_RGNS_CD)) AS RGNS_NAME
+             ,CONCAT(CASE WHEN A.FIRST_RGNS_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.FIRST_RGNS_CD) ELSE '' END
+                    , ' '
+                    , CASE WHEN A.SCND_RGNS_CD != '' THEN (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SCND_RGNS_CD) ELSE '' END
+                ) AS RGNS_NAME
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD) AS APPCTN_FLD_NM
              ,(SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = C.CMSSR_SEQ) AS CMSSR_NM
              ,A.REG_DTM
         FROM CP_CNSTG_APPCTN_MST A
-                 JOIN CP_CMPN_MST B ON A.APPCTN_BSNM_NO = B.BSNM_NO
-                 JOIN CP_CNSTG_RSUME_MST C ON A.CNSTG_SEQ = C.CNSTG_SEQ
+        JOIN CP_CMPN_MST B ON A.APPCTN_BSNM_NO = B.BSNM_NO
+        JOIN CP_CNSTG_RSUME_MST C ON A.CNSTG_SEQ = C.CNSTG_SEQ
         WHERE APPCTN_BSNM_NO = #{appctnBsnmNo}
         ORDER BY REG_DTM DESC
     </select>
