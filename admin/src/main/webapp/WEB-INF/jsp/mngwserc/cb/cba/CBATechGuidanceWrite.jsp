@@ -912,12 +912,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group text-sm form-inline fltyImpvmRate">
-                                    <label class="col-sm-1 control-label">공정불량개선율</label>
+                                    <label class="col-sm-1 control-label">공정불량개선</label>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmBfreRate" name="fltyImpvmBfreRate" maxlength="3" value="" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
                                     </div>
                                     <div class="col-sm-3">
-                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
+                                        <input type="number" class="form-control input-sm notRequired fltyImpvmAftrRate" name="fltyImpvmAftrRate" maxlength="3" value="" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
                                     </div>
                                     <div class="col-sm-3">
                                         <input type="number" class="form-control input-sm notRequired fltyImpvmRate" name="fltyImpvmRate" value="0" title="불량개션율" readonly="readonly" placeholder="0" style="width: 220px" />&nbsp;%
@@ -1213,12 +1213,12 @@
                                         </div>
                                     </div>
                                     <div class="form-group text-sm form-inline fltyImpvmRate">
-                                        <label class="col-sm-1 control-label">공정불량개선율</label>
+                                        <label class="col-sm-1 control-label">공정불량개선</label>
                                         <div class="col-sm-3 form-inline">
-                                            <input type="number" class="form-control input-sm fltyImpvmBfreRate" name="fltyImpvmBfreRate" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
+                                            <input type="number" class="form-control input-sm fltyImpvmBfreRate" name="fltyImpvmBfreRate" maxlength="3" value="${rsumeList.fltyImpvmBfreRate}" title="불량개션이전율" placeholder="개선 전 불량률 입력" style="width: 220px" />&nbsp;ppm
                                         </div>
                                         <div class="col-sm-3 form-inline">
-                                            <input type="number" class="form-control input-sm fltyImpvmAftrRate" name="fltyImpvmAftrRate" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
+                                            <input type="number" class="form-control input-sm fltyImpvmAftrRate" name="fltyImpvmAftrRate" maxlength="3" value="${rsumeList.fltyImpvmAftrRate}" title="불량개션이후율" placeholder="개선 후 불량률 입력" style="width: 220px" />&nbsp;ppm
                                         </div>
                                         <div class="col-sm-3 form-inline">
                                             <input type="number" class="form-control input-sm fltyImpvmRate" name="fltyImpvmRate" value="<c:if test="${not empty rsumeList.fltyImpvmRate}">${rsumeList.fltyImpvmRate}</c:if><c:if test="${empty rsumeList.fltyImpvmRate}">0</c:if>" title="불량개션율" readonly="readonly" placeholder="0" style="width: 220px" />&nbsp;%
