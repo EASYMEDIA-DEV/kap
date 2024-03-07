@@ -1779,8 +1779,15 @@ var cmmCtrl = (function(){
 		// 관리자메모 textarea 줄바꿈처리
 		var textarea = $("#admMemo");
 		var div = $('<div>').css({
+			'font-family': textarea.css('font-family'),
+			'font-size': textarea.css('font-size'),
+			'line-height': textarea.css('line-height'),
 			'white-space': 'pre-wrap', // 줄바꿈 처리를 위해 white-space 속성을 설정
 			'word-wrap': 'break-word', // 단어가 라인을 넘어갈 경우 줄바꿈 처리
+			'width': textarea.outerWidth(),
+			'height': textarea.outerHeight(),
+			'border': textarea.css('border'), // 테두리 설정 추가
+			'padding': textarea.css('padding') // 패딩 설정 추가
 		}).html(textarea.val().replace(/\n/g, "<br>")); // textarea의 텍스트를 가져와서 줄바꿈 처리한 후 div에 삽입
 
 		// div 요소를 textarea 앞에 삽입하고, textarea는 숨김 처리

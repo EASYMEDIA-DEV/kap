@@ -114,6 +114,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 location.href = "./step1";
                             } else if (data.resultCode == 400) {
                                 alert('사업 지원대상 기준을 확인해주세요.\n(지원대상 기준 : 전년도 매출액 ' + $('#pmt').val() +'억 미만)');
+                                location.href = '/my-page/member/intrduction/modify-page?applyYn=Y';
                             } else if (data.resultCode == 450) {
                                 alert('사업 지원대상 기준을 확인해주세요. (컨설팅 내역)');
                             } else if (data.resultCode == 460) {
