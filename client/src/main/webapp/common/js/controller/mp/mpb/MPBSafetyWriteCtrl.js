@@ -197,6 +197,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01004_02_001');
                         }
 
+                        //검수보고
+                        if($formObj.find("#appctnSttsCd"+id).val() == 'PRO_TYPE01006_01_001'){
+                            $formObj.find("#appctnSttsCd"+id).val('PRO_TYPE01006_01_004');
+                            $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01006_02_001');
+                        } else if($formObj.find("#appctnSttsCd"+id).val() == 'PRO_TYPE01006_01_005'){
+                            $formObj.find("#appctnSttsCd"+id).val('PRO_TYPE01006_01_006');
+                            $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01006_02_001');
+                        }
+
                         if (valid) {
                             if (confirm("저장 후 내용을 수정할 수 없습니다.\n" + "저장하시겠습니까?")) {
                                 $(".loading-area").stop().fadeIn(200);

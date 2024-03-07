@@ -416,29 +416,90 @@
                         </a>
                     </div>
 
-                    <div class="list-item"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
-                        <a class="acco-click-area" href="javascript:">
-                            <div class="txt-box">
-                                <p class="tit f-head">검수보고</p>
+                    <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 6}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
+                        <form name="frmData4" id="frmData6">
+                            <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.rsumeSeq" value="${rtnDtl[maxRsumeOrd-1].rsumeSeq}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.maxRsumeOrd" value="${rtnData.maxRsumeOrd}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.episdSeq" value="${rtnData.episdSeq}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.memSeq" value="${rtnMem.memSeq}" />
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.bsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnBsnmNo" value="${rtnCompany.bsnmNo}"/>
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}"/>
+
+                            <input type="hidden" name="wBDBSafetyMstInsertDTO.pbsnDtlList[0].cmpltnBrfngDt" value="${today}">
+
+                            <input type="hidden" id="mngSttsCd6" name="wBDBSafetyMstInsertDTO.rsumeDtlList[0].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
+                            <input type="hidden" id="appctnSttsCd6" name="wBDBSafetyMstInsertDTO.rsumeDtlList[0].appctnSttsCd" value="${rtnDtl[5].appctnSttsCd}">
+
+                            <input type="hidden" class="notRequired" name="bsnCd" value="${rtnData.bsnCd}" />
+
+                            <a class="acco-click-area" href="javascript:">
+                                <div class="txt-box">
+                                    <p class="tit f-head">검수보고</p>
+                                </div>
+                                <c:if test="${not empty rtnDtl[5].appctnSttsNm}">
+                                    <c:choose>
+                                        <c:when test="${rtnDtl[5].appctnSttsNm eq '접수전'}">
+                                            <c:set var="classType" value="waiting" />
+                                        </c:when>
+                                        <c:when test="${rtnDtl[5].appctnSttsNm eq '접수완료' || rtnDtl[5].appctnSttsNm eq '보완완료' || rtnDtl[5].appctnSttsNm eq '적합'}">
+                                            <c:set var="classType" value="accepting" />
+                                        </c:when>
+                                        <c:when test="${rtnDtl[5].appctnSttsNm eq '보완요청' || rtnDtl[5].appctnSttsNm eq '부적합'}">
+                                            <c:set var="classType" value="arr" />
+                                        </c:when>
+                                    </c:choose>
+                                    <p class="box-label bigger ${classType}"><span>
+                                            ${rtnDtl[5].appctnSttsNm}
+                                    </span></p>
+                                </c:if>
+                            </a>
+                            <div class="acco-hide-area">
+                                <c:if test="${not empty rtnDtl[5].rtrnRsnCntn }">
+                                    <p class="exclamation-txt f-body1">${rtnDtl[5].rtrnRsnCntn}</p>
+                                </c:if>
+                                <div class="data-enter-form">
+                                    <div class="row">
+                                        <div class="th">
+                                            <p class="title f-head">첨부파일</p>
+                                        </div>
+                                        <div class="td">
+                                            <div class="data-line-w">
+                                                <div class="data-line">
+                                                    <p class="data-title f-body1">점검보고서<span class="essential-mark color-sky">*</span></p>
+                                                    <div class="form-group">
+                                                        <c:if test="${rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_001' or rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_005'}">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
+                                                            <div class="file-btn-area">
+                                                                <input type="file" name="atchFile6" id="searchFile6" class="searchFile">
+                                                                <label class="btn-solid gray-bg" for="searchFile6">파일 찾기</label>
+                                                                <input type="hidden" name="fileSeqList" value="${rtnFile[5].fileSeq}"/>
+                                                                <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE09">
+                                                            </div>
+                                                        </c:if>
+                                                        <div class="file-prev-area">
+                                                            <a href="/file/download?fileSeq=${rtnFile[5].fileSeq}&fileOrd=${rtnFile[5].fileOrd}" download="" title="파일 다운로드">${rtnFile[5].fileNm}</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <c:if test="${rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_001' or rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_005'}">
+                                    <div class="btn-wrap align-right">
+                                        <a class="btn-solid small black-bg modify" href="javascript:" data-Seq="6" data-status="${rtnDtl[5].appctnSttsNm}"><span>저장</span></a>
+                                    </div>
+                                </c:if>
                             </div>
-                            <c:if test="${not empty rtnDtl[5].appctnSttsNm}">
-                                <c:choose>
-                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '대기'}">
-                                        <c:set var="classType" value="waiting" />
-                                    </c:when>
-                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '적합'}">
-                                        <c:set var="classType" value="accepting" />
-                                    </c:when>
-                                    <c:when test="${rtnDtl[5].appctnSttsNm eq '부적합'}">
-                                        <c:set var="classType" value="arr" />
-                                    </c:when>
-                                </c:choose>
-                                <p class="box-label bigger ${classType}"><span>
-                                        ${rtnDtl[5].appctnSttsNm}
-                                </span></p>
-                            </c:if>
-                        </a>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>

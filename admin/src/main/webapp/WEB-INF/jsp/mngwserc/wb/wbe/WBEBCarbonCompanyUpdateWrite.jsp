@@ -1749,7 +1749,7 @@
 
 
                                 <h6 class="mt0">관리자</h6>
-                                <fieldset>
+                                <fieldset style="display:none">
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">최종점검일</label>
                                         <div class="col-sm-5">
@@ -1773,6 +1773,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">관리자 상태값/결과</label>
                                         <div class="col-sm-10 form-inline">
+                                            <div class="col-sm-1" style="margin-left: -15px">
                                             <c:choose>
                                                 <c:when test="${rtnDtl[5].mngSttsNm eq '적합'}">
                                                     <p class="form-control-static">적합</p>
@@ -1799,6 +1800,7 @@
                                             <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn6" name="rsumeDtlList[5].rtrnRsnCntn" value="${rtnDtl[5].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
                                         </div>
                                     </div>
+                                </div>
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">

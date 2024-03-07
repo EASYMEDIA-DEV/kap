@@ -1747,30 +1747,31 @@
 
 
                                 <h6 class="mt0">관리자</h6>
-                                <fieldset>
-                                    <div class="form-group text-sm">
-                                        <label class="col-sm-1 control-label">최종점검일</label>
-                                        <div class="col-sm-5">
-                                            <div class="col-sm-3" style="margin-left: -15px">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" id="lastChkDt2" name="pbsnDtlList[5].lastChkDt"
-                                                           value="${kl:convertDate(rtnPbsn[5].lastChkDt , 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"
-                                                           title="설립일자" readonly onclick="cmmCtrl.initCalendar(this);" <c:if test="${rtnData.maxRsumeOrd ne 6}">disabled</c:if> <c:if test="${rtnDtl[5].mngSttsNm eq '미선정' || rtnDtl[5].mngSttsNm eq '선정'}">disabled</c:if>/>
-                                                    <span class="input-group-btn" style="z-index:0;">
+                                <fieldset style="display:none">
+                                <div class="form-group text-sm">
+                                    <label class="col-sm-1 control-label">최종점검일</label>
+                                    <div class="col-sm-5">
+                                        <div class="col-sm-3" style="margin-left: -15px">
+                                            <div class="input-group">
+                                                <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" id="lastChkDt2" name="pbsnDtlList[5].lastChkDt"
+                                                       value="${kl:convertDate(rtnPbsn[5].lastChkDt , 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"
+                                                       title="설립일자" readonly onclick="cmmCtrl.initCalendar(this);" <c:if test="${rtnData.maxRsumeOrd ne 6}">disabled</c:if> <c:if test="${rtnDtl[5].mngSttsNm eq '미선정' || rtnDtl[5].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                                <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
                                                         </button>
                                                     </span>
-                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </fieldset>
+                                </div>
+                            </fieldset>
 
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">관리자 상태값/결과</label>
                                         <div class="col-sm-10 form-inline">
+                                            <div class="col-sm-1" style="margin-left: -15px">
                                             <c:choose>
                                                 <c:when test="${rtnDtl[5].mngSttsNm eq '적합'}">
                                                     <p class="form-control-static">적합</p>
@@ -1792,9 +1793,10 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <input type="hidden" class="notRequired" name="rsumeDtlList[5].appctnSttsCd"value="${rtnDtl[5].appctnSttsCd}">
-                                        </div>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn6" name="rsumeDtlList[5].rtrnRsnCntn" value="${rtnDtl[5].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
+                                            </div>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn6" name="rsumeDtlList[5].rtrnRsnCntn" value="${rtnDtl[5].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>

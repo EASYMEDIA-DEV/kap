@@ -571,7 +571,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityDtlDTO.setAppctnSeq(wBCBSecurityMstInsertDTO.getAppctnSeq());
             wBCBSecurityDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
             wBCBSecurityDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
-            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01006_02_001");
+            wBCBSecurityDtlDTO.setMngSttsCd("PRO_TYPE01006_02_004");
             wBCBSecurityDtlDTO.setRegId(coaAdmDTO.getId());
             wBCBSecurityDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 

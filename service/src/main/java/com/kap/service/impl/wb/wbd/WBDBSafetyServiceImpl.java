@@ -571,7 +571,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
             wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
             wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_001");
+            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_004");
             wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
             wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 

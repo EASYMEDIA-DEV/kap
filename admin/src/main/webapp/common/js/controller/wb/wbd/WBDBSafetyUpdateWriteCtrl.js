@@ -351,6 +351,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         }else if(mngSttsCd =='PRO_TYPE01006_02_002'){
                             $(".rtrnRsnCntn").attr('disabled',false);
                             $(".rtrnRsnCntn").css("display", "block");
+                        }else if(mngSttsCd =='PRO_TYPE01006_02_005'){
+                            $(".rtrnRsnCntn").attr('disabled',false);
+                            $(".rtrnRsnCntn").css("display", "block");
                         }else{
                             $(".rtrnRsnCntn").attr('disabled',true);
                             $(".rtrnRsnCntn").css("display", "none");
@@ -506,6 +509,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             }else if(mngSttsCd6 =='PRO_TYPE01006_02_002'){
                 $(".rtrnRsnCntn").attr('disabled',false);
                 $(".rtrnRsnCntn").css("display", "block");
+            }else if(mngSttsCd6 =='PRO_TYPE01006_02_005'){
+                $(".rtrnRsnCntn").attr('disabled',false);
+                $(".rtrnRsnCntn").css("display", "block");
             }else{
                 $(".rtrnRsnCntn").attr('disabled',true);
                 $(".rtrnRsnCntn").css("display", "none");
@@ -642,6 +648,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 $(this).next().val("PRO_TYPE01006_01_002");
                             }else if($(this).val() =="PRO_TYPE01006_02_003"){
                                 $(this).next().val("PRO_TYPE01006_01_003");
+                            }else if($(this).val() =="PRO_TYPE01006_02_005"){
+                                $(this).next().val("PRO_TYPE01006_01_005");
                             }
                         });
 

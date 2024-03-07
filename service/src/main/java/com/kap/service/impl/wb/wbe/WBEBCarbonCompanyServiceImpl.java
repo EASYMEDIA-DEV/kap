@@ -572,7 +572,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanyDtlDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
             wBEBCarbonCompanyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
             wBEBCarbonCompanyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
-            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_001");
+            wBEBCarbonCompanyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_004");
             wBEBCarbonCompanyDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
