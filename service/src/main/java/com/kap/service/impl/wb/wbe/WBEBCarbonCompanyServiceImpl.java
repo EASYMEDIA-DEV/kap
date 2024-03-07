@@ -1324,6 +1324,8 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 //        respCnt = wBEBCarbonCompanyMapper.getBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
         respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
 
+        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
 //          int cnt = wBEBCarbonCompanyMapper.getBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
             int cnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
@@ -1331,8 +1333,6 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                respCnt = 999;
            }
         }
-
-        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
@@ -1349,14 +1349,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
 
+        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
             int cnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoSeqCnt(wBEBCarbonCompanyMstInsertDTO);
             if(cnt > 0 ){
                 respCnt = 999;
             }
         }
-
-        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }

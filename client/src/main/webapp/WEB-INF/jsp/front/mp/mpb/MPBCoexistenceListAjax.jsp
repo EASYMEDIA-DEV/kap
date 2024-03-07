@@ -47,7 +47,8 @@
                                     <div class="status-info-w">
                                         <p class="box-label bigger ${classType}"><span>${item.appctnSttsCdNm}</span></p>
                                     </div>
-                                    <c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">
+                                    <%--<c:if test="${item.appctnSttsCdNm eq '보완요청' || item.appctnSttsCdNm eq '부적합' || item.appctnSttsCdNm eq '미선정' || item.appctnSttsCdNm eq '탈락'}">--%>
+                                    <c:if test="${not empty item.rtrnRsnCntn and item.rtrnRsnCntn ne null}">
                                         <div class="tooltip-wrap">
                                             <button class="tooltip-btn btn-icon tooltipOn" type="button" title="툴팁 보기"></button>
                                             <div class="tooltip-box">

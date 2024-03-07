@@ -1431,6 +1431,9 @@
                                                 </c:choose>
                                                 <input type="hidden" class="notRequired" name="rsumeDtlList[2].appctnSttsCd"value="${rtnDtl[2].appctnSttsCd}">
                                             </div>
+                                            <div class="col-sm-10" >
+                                                <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn3" name="rsumeDtlList[2].rtrnRsnCntn" value="${rtnDtl[2].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1673,6 +1676,9 @@
 
                                                 <input type="hidden" class="notRequired" name="rsumeDtlList[4].appctnSttsCd"value="${rtnDtl[4].appctnSttsCd}">
                                             </div>
+                                            <div class="col-sm-10" >
+                                                <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn5" name="rsumeDtlList[4].rtrnRsnCntn" value="${rtnDtl[4].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1787,6 +1793,9 @@
                                                 </c:otherwise>
                                             </c:choose>
                                             <input type="hidden" class="notRequired" name="rsumeDtlList[5].appctnSttsCd"value="${rtnDtl[5].appctnSttsCd}">
+                                        </div>
+                                        <div class="col-sm-10" >
+                                            <input type="text" class="form-control rtrnRsnCntn notRequired" id="rtrnRsnCntn6" name="rsumeDtlList[5].rtrnRsnCntn" value="${rtnDtl[5].rtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" disabled/>
                                         </div>
                                     </div>
                                 </fieldset>

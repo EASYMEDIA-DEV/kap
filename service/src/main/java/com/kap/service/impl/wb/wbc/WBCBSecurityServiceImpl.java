@@ -1320,6 +1320,8 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 //        respCnt = wBCBSecurityMapper.getBsnmNoCnt(wBCBSecurityMstInsertDTO);
         respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
 
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
 //            int cnt = wBCBSecurityMapper.getBsnmNoSeqCnt(wBCBSecurityMstInsertDTO);
             int cnt = wBCBSecurityMapper.getSbrdnBsnmNoSeqCnt(wBCBSecurityMstInsertDTO);
@@ -1327,8 +1329,6 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
                 respCnt = 999;
             }
         }
-
-        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
@@ -1346,14 +1346,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
         respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
 
+        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
             int cnt = wBCBSecurityMapper.getSbrdnBsnmNoSeqCnt(wBCBSecurityMstInsertDTO);
             if(cnt > 0 ){
                 respCnt = 999;
             }
         }
-
-        wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
