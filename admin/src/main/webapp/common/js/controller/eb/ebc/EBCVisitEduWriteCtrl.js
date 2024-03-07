@@ -685,6 +685,11 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var edctnStrtDtm = edctnStrtDt + " " + edctnStrtHour + ":00:00";
                         var edctnEndDtm = edctnEndDt + " " + edctnEndHour + ":59:59";
 
+                        if(edctnStrtDt == null || edctnStrtHour == '' || edctnEndDt == null || edctnEndHour == '') {
+                            edctnStrtDtm = null;
+                            edctnEndDtm = null;
+                        }
+
                         //교육기간 유효성 체크
                         if(edctnStrtDtm > edctnEndDtm){
                             alert("교육 시작일이 교육 종료일보다 이전날짜로 입력 해주세요.");

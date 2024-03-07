@@ -239,7 +239,7 @@ public class WBJAcomDTO extends BaseDTO {
     private String nm;
 
     @Schema(title = "점수")
-    private Integer score;
+    private Double score;
 
     @Schema(title = "SQ 평가년도")
     private Integer year;

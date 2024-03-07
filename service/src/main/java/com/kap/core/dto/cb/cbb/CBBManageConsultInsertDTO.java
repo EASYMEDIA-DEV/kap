@@ -143,10 +143,10 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private String  cbsnSeq;
 
     @Schema(title = "SQ 점수")
-    private Integer  score;
-    private Integer  score1;
-    private Integer  score2;
-    private Integer  score3;
+    private Double score;
+    private Double score1;
+    private Double score2;
+    private Double score3;
 
     @Schema(title = "SQ 평가년도")
     private Integer year;

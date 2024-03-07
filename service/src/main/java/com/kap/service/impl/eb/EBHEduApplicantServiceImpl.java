@@ -128,7 +128,7 @@ public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
                     if(score.equals("")|| score.isEmpty()) {
                         pMPEPartsCompanyDTO.setScore(null);
                     } else {
-                        pMPEPartsCompanyDTO.setScore(Integer.valueOf(score));
+                        pMPEPartsCompanyDTO.setScore(Double.valueOf(score));
                     }
 
                     pMPEPartsCompanyDTO.setNm(nm);

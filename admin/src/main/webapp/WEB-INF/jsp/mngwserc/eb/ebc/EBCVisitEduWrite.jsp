@@ -308,72 +308,73 @@
             <fieldset class="sqInfoArea" <c:if test="${rtnInfo.ctgryCd eq null or rtnInfo.ctgryCd eq 'COMPANY01001'}">style="display:none;"</c:if>>
                 <div class="form-group text-sm form-inline">
                     <label class="col-sm-1 control-label">SQ 정보</label>
-                    <div class="col-sm-5 sqInfoList">
+                    <div class="col-sm-5" style="margin-left: -15px;">
                         <c:forEach items="${sqInfoList.list}" var="list" varStatus="status">${sqInfoList.sqInfoList}
-                            <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
-                            <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
-                            <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                            <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
-                                <option value="">선택</option>
-                                <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                    <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
-                                            ${cdList.cdNm}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                            <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="${list.crtfnCmpnNm}" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
-                            </br>
+                            <div class="col-sm-11 sqInfoList" style="padding-top: 10px;padding-bottom: 10px;">
+                                <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value="${list.cbsnSeq}"/>
+                                <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="${list.nm}" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
+                                <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="${list.score}" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                        <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
+                                                ${cdList.cdNm}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                                <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="${list.crtfnCmpnNm}" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
+                            </div>
                         </c:forEach>
                         <c:choose>
                             <c:when test="${sqInfoListCnt == 0}">
                                 <c:forEach var="i" begin="1" end="${3 - sqInfoListCnt}" varStatus="status">
-                                    <input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value=""/>
-                                    <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                                    <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
-                                        <option value="">선택</option>
-                                        <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                            <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
-                                    </br>
+                                    <div class="col-sm-11 sqInfoList" style="padding-top: 10px;padding-bottom: 10px;"><input type="hidden" class="notRequired" id="cbsnSeq${status.count}" name="sqInfoList${status.count}" value=""/>
+                                        <input type="text" class="form-control input-sm notRequired" id="nm${status.count}" name="sqInfoList${status.count}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="score${status.count}" name="sqInfoList${status.count}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <select class="form-control input-sm notRequired" id="year${status.count}" name="sqInfoList${status.count}" title="평가년도" style="width:auto;">
+                                            <option value="">선택</option>
+                                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count}" name="sqInfoList${status.count}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
+                                    </div>
                                 </c:forEach>
                             </c:when>
                             <c:when test="${sqInfoListCnt != 3 and sqInfoListCnt > 0}">
                                 <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
-                                    <input type="hidden" class="notRequired" id="cbsnSeq${status.count + 1}" name="sqInfoList${status.count + 1}" value=""/>
-                                    <input type="text" class="form-control input-sm notRequired" id="nm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                                    <select class="form-control input-sm notRequired" id="year${status.count + 1}" name="sqInfoList${status.count + 1}" title="평가년도" style="width:auto;">
-                                        <option value="">선택</option>
-                                        <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                            <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
-                                    </br>
+                                    <div class="col-sm-11 sqInfoList" style="padding-top: 10px;padding-bottom: 10px;"><input type="hidden" class="notRequired" id="cbsnSeq${status.count + 1}" name="sqInfoList${status.count + 1}" value=""/>
+                                        <input type="text" class="form-control input-sm notRequired" id="nm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="score${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <select class="form-control input-sm notRequired" id="year${status.count + 1}" name="sqInfoList${status.count + 1}" title="평가년도" style="width:auto;">
+                                            <option value="">선택</option>
+                                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${status.count + 1}" name="sqInfoList${status.count + 1}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
+                                    </div>
                                 </c:forEach>
                             </c:when>
                             <c:when test="${sqInfoListCnt == 3}">
                                 <c:forEach var="i" begin="1" end="${ 3 - sqInfoListCnt }" varStatus="status">
-                                    <input type="hidden" class="notRequired" id="cbsnSeq${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value=""/>
-                                    <input type="text" class="form-control input-sm notRequired" id="nm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
-                                    <input type="text" class="form-control input-sm notRequired" id="score${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
-                                    <select class="form-control input-sm notRequired" id="year${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" title="평가년도" style="width:auto;">
-                                        <option value="">SQ 평가년도 선택</option>
-                                        <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
-                                            <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
-                                                    ${cdList.cdNm}
-                                            </option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
-                                    </br>
+                                    <div class="col-sm-11 sqInfoList" style="padding-top: 10px;padding-bottom: 10px;"><input type="hidden" class="notRequired" id="cbsnSeq${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value=""/>
+                                        <input type="text" class="form-control input-sm notRequired" id="nm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="SQ 업종" placeholder="SQ업종" maxlength="50"/>
+                                        <input type="text" class="form-control input-sm notRequired" id="score${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="점수" placeholder="SQ점수" maxlength="50" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"/>
+                                        <select class="form-control input-sm notRequired" id="year${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" title="평가년도" style="width:auto;">
+                                            <option value="">SQ 평가년도 선택</option>
+                                            <c:forEach var="cdList" items="${cdDtlList.CO_YEAR_CD}">
+                                                <option value="${cdList.cd}" <c:if test="${list.year eq cdList.cd}">selected</c:if>>
+                                                        ${cdList.cdNm}
+                                                </option>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm notRequired" id="crtfnCmpnNm${sqInfoListCnt}" name="sqInfoList${sqInfoListCnt}" value="" title="인증주관사명" placeholder="SQ인증주관사" maxlength="50"/>
+                                    </div>
                                 </c:forEach>
                             </c:when>
                         </c:choose>

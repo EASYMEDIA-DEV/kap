@@ -248,7 +248,7 @@ public class EBCVisitEduDTO extends BaseDTO {
     private String nm;
 
     @Schema(title = "점수", example = "")
-    private Integer score;
+    private Double score;
 
     @Schema(title = "SQ 평가년도", example = "")
     private Integer year;

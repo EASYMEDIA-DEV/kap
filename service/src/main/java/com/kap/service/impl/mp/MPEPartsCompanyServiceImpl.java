@@ -168,7 +168,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
 
                 mpePartsCompanyDTO.setNm(nm);
                 mpePartsCompanyDTO.setYear(year);
-                mpePartsCompanyDTO.setScore(score);
+                mpePartsCompanyDTO.setScore((double) score);
                 mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);
                 mpePartsCompanyDTO.setCbsnSeq(mpePartsCompanySqInfoDtlIdgen.getNextIntegerId());
 
@@ -225,7 +225,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     if(score.equals("")|| score.isEmpty()) {
                         mpePartsCompanyDTO.setScore(null);
                     } else {
-                        mpePartsCompanyDTO.setScore(Integer.valueOf(score));
+                        mpePartsCompanyDTO.setScore(Double.valueOf(score));
                     }
                     mpePartsCompanyDTO.setNm(nm);
                     mpePartsCompanyDTO.setCrtfnCmpnNm(crtfnCmnNm);

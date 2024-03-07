@@ -3,7 +3,6 @@ package com.kap.core.dto.wb.wbi;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.kap.core.dto.BaseDTO;
-import com.kap.core.dto.wb.WBCompanyDetailMstDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
@@ -174,7 +173,7 @@ public class WBIBSupplyDTO extends BaseDTO {
     private String nm;
 
     @Schema(title = "점수")
-    private Integer score;
+    private Double score;
 
     @Schema(title = "SQ 평가년도")
     private Integer year;
