@@ -194,13 +194,20 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             $formObj.find("#mngSttsCd"+id).val('PRO_TYPE01004_02_001');
                         }
 
+                        console.log($formObj);
                         if (valid) {
+                            alert("여기1");
                             if (confirm("저장 후 내용을 수정할 수 없습니다.\n" + "저장하시겠습니까?")) {
+                                alert("여기2");
+                                $(".loading-area").stop().fadeIn(200);
                                 cmmCtrl.fileFrm(function (data) {
+                                    alert("여기3");
+                                    alert(data.respCnt);
                                     if (data.respCnt == 100) {
                                         alert("잘못된 접근입니다. 다시 시도바랍니다.");
                                     }
-                                   // location.href = "./list";
+                                    $(".loading-area").stop().fadeOut(200);
+                                    location.href = "./list";
                                 }, "./update", $formObj, "json");
                             }
                         }
@@ -269,11 +276,13 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         if (valid) {
                             if(confirm("저장하시겠습니까?")) {
+                                $(".loading-area").stop().fadeIn(200);
                                 cmmCtrl.fileFrm(function (data) {
                                     if (data.respCnt == 100) {
                                         alert("잘못된 접근입니다. 다시 시도바랍니다.");
                                     }
-                                    location.href = "./list";
+                                    $(".loading-area").stop().fadeOut(200);
+                                    $(".btn-role-close").click();
                                 }, "./update", $formObj, "json");
                             }
                         }

@@ -1323,6 +1323,8 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 //        respCnt = wBDBSafetyMapper.getBsnmNoCnt(wBDBSafetyMstInsertDTO);
         respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
 
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
 //            int cnt = wBDBSafetyMapper.getBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
             int cnt = wBDBSafetyMapper.getSbrdnBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
@@ -1330,8 +1332,6 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
                 respCnt = 999;
             }
         }
-
-        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }
@@ -1349,14 +1349,14 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
 
+        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+
         if(respCnt > 0 ){
             int cnt = wBDBSafetyMapper.getSbrdnBsnmNoSeqCnt(wBDBSafetyMstInsertDTO);
             if(cnt > 0 ){
                 respCnt = 999;
             }
         }
-
-        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }

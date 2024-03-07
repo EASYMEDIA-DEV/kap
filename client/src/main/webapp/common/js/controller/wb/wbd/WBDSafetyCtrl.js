@@ -203,7 +203,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 }
                                 $(".loading-area").stop().fadeOut(200);
                             }
-                            $(".loading-area").stop().fadeOut(200);
                         } else {
                             alert('약관에 동의해주세요.')
                         }
