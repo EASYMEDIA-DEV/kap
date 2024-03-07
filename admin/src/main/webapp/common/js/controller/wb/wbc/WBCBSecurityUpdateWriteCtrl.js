@@ -306,7 +306,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             $(".rtrnRsnCntn").attr('disabled',false);
                             $(".rtrnRsnCntn").css("display", "block");
                         }else if(mngSttsCd =='PRO_TYPE01001_02_004'){
-                            $(".rtrnRsnCntn").attr('disabled',true);
+                            $(".rtrnRsnCntn").attr('disabled',false);
                             $(".rtrnRsnCntn").css("display", "block");
                         }else if(mngSttsCd =='PRO_TYPE01002_02_002'){
                             $(".rtrnRsnCntn").attr('disabled',false);
@@ -448,7 +448,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 $(".rtrnRsnCntn").attr('disabled',false);
                 $(".rtrnRsnCntn").css("display", "block");
             }else if(mngSttsCd1 =='PRO_TYPE01001_02_004'){
-                $(".rtrnRsnCntn").attr('disabled',true);
+                $(".rtrnRsnCntn").attr('disabled',false);
                 $(".rtrnRsnCntn").css("display", "block");
             }else if(mngSttsCd2 =='PRO_TYPE01002_02_002'){
                 $(".rtrnRsnCntn").attr('disabled',false);

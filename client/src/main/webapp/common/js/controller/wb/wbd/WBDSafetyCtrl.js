@@ -195,13 +195,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                             if(pass){
                                 if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
+                                    $(".loading-area").stop().fadeIn(200);
+
                                     cmmCtrl.fileFrmAjax(function (data) {
                                         $(".loading-area").stop().fadeOut(200);
+
                                         //콜백함수. 페이지 이동
                                         location.replace("./complete");
                                     }, "./insert", $formObj, "json");
                                 }
-                                $(".loading-area").stop().fadeOut(200);
                             }
                         } else {
                             alert('약관에 동의해주세요.')
