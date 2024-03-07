@@ -480,14 +480,15 @@
         2024.02.05   구은희       최초생성
     -->
     <select id="selectNoticeRowNum" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
-        SELECT ROWNUM
+        SELECT /* BDANoticeMapper.selectNoticeRowNum */
+            ROWNUM
         FROM
         (
-        SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM
-        , TB1.NTFY_SEQ
-        , TB1.TITL
-        , TB1.REG_DTM
-        , TB1.MAIN_POST_YN
+            SELECT @ROWNUM:=@ROWNUM+1 AS ROWNUM
+            , TB1.NTFY_SEQ
+            , TB1.TITL
+            , TB1.REG_DTM
+            , TB1.MAIN_POST_YN
         FROM
         (
         SELECT
@@ -514,13 +515,13 @@
         , 'Y' AS MAIN_POST_YN
         FROM BD_NTFY_MST
         WHERE 1=1
-        AND NTFY_YN = 'Y'
-        AND ((EXPS_STRT_DTM <![CDATA[ <= ]]>  SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
-        AND EXPS_YN = 'Y'
-    <if test="srchVal != null and srchVal != ''">
-        AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
-        OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
-    </if>
+         AND NTFY_YN = 'Y'
+         AND ((EXPS_STRT_DTM <![CDATA[ <= ]]>  SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+         AND EXPS_YN = 'Y'
+     <if test="srchVal != null and srchVal != ''">
+         AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+         OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+     </if>
         ) AS A
 
         UNION ALL
@@ -537,29 +538,32 @@
         , MAIN_POST_YN
         FROM
         (
-        SELECT
-        NTFY_SEQ
-        , TITL
-        , READ_CNT
-        , REG_DTM
-        , NTFY_YN
-        , ODTM_YN
-        , EXPS_STRT_DTM
-        , EXPS_END_DTM
-        , 'N' AS MAIN_POST_YN
-        FROM BD_NTFY_MST
-        WHERE 1=1
-        <if test="srchVal != null and srchVal != ''">
-            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
-            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
-        </if>
+            SELECT
+            NTFY_SEQ
+            , TITL
+            , READ_CNT
+            , REG_DTM
+            , NTFY_YN
+            , ODTM_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
+            , 'N' AS MAIN_POST_YN
+            FROM BD_NTFY_MST
+            WHERE 1=1
+            <if test="srchVal != null and srchVal != ''">
+                AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+                OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+            </if>
         ) AS B
         ) AS TB1
         , (select @ROWNUM:=0) TEMP
         ORDER BY MAIN_POST_YN DESC, REG_DTM DESC
         ) TB
 
-        WHERE NTFY_SEQ = #{detailsKey} AND MAIN_POST_YN = #{mainPostYn}
+        WHERE NTFY_SEQ = #{detailsKey}
+        <if test="mainPostYn != null and mainPostYn != ''">
+            AND MAIN_POST_YN = #{mainPostYn}
+        </if>
     </select>
 
     <!--
