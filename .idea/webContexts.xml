@@ -4,11 +4,14 @@
     <option name="state">
       <map>
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/layout/header.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/layout" />
+        <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/bd/bda/BDANoticeList.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/bd/bda" />
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/eb/eba/EBACouseWrite.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/eb/eba" />
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/eb/ebb/EBBEpisdWrite.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/eb/ebb" />
         <entry key="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/wb/wbj/WBJRoundWrite.jsp" value="file://$PROJECT_DIR$/admin/src/main/webapp/WEB-INF/jsp/mngwserc/wb/wbj" />
         <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/eb/ebm/EBMEduApplyDtl.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/eb/ebm" />
         <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/mp/mpc/MPConsultingList.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/mp/mpc" />
+        <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbb/WBBManagementIndex.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbb" />
+        <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbj/WBJAutoMotiveStep1.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/front/wb/wbj" />
         <entry key="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/layout/header.jsp" value="file://$PROJECT_DIR$/client/src/main/webapp/WEB-INF/jsp/layout" />
       </map>
     </option>

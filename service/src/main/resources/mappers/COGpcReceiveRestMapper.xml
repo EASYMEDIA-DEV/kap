@@ -68,6 +68,7 @@
 				 left join ed_edctn_prcs_mst b on b.edctn_seq = a.edctn_seq
 		where a.exps_yn = 'Y'
 		  and b.gpc_yn = 'Y'
+		  and DATE_FORMAT(A.edctn_strt_dtm, '%Y-%m-%d') >= DATE_FORMAT(DATE_ADD(NOW(), INTERVAL -6 MONTH), '%Y-%m-%d')
 		  and a.edctn_seq = #{kapSeq}
 	</select>
 
