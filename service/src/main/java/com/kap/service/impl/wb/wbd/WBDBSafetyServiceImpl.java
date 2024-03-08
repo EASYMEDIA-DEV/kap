@@ -812,7 +812,9 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
             pbsnList = wBDBSafetyMapper.selectExcelPbsn(wBDBSafetySearchDTO.getList().get(i));
+
             length = pbsnList.size();
+
             maxOrd = pbsnList.get(length-1).getMaxRsumeOrd();
 
             //번호
@@ -847,7 +849,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
             //종된 사업장번호
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getSbrdnBsnmNo().substring(0,3)+"-"+list.get(i).getSbrdnBsnmNo().substring(3,5)+"-"+list.get(i).getSbrdnBsnmNo().substring(5));
+            cell.setCellValue(list.get(i).getSbrdnBsnmNo());
             cell.setCellStyle(style_body);
 
             //구분

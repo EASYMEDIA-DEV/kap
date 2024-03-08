@@ -57,7 +57,9 @@
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
         ORDER BY B.APPCTN_SEQ DESC
+        <if test='excelYn != "Y"'>
         LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--
@@ -1161,7 +1163,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
     -->
-    <select id="selectExcelPbsn" parameterType="wBDBSafetySearchDTO" resultType="WBEBCarbonCompanyPbsnDtlDTO">
+    <select id="selectExcelPbsn" parameterType="wBDBSafetySearchDTO" resultType="WBDBSafetyPbsnDtlDTO">
         SELECT /* WBDBSafetyMapper.selectCarbonCompanyPbsn */
             A.RSUME_SEQ
              ,A.RSUME_ORD

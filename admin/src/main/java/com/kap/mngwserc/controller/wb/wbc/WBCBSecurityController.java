@@ -313,6 +313,7 @@ public class WBCBSecurityController {
         try
         {
             //엑셀 생성
+            wBCBSecuritySearchDTO.setExcelYn("Y");
             wBCBSecurityService.excelDownload(wBCBSecurityService.selectCarbonCompanyList(wBCBSecuritySearchDTO), response);
         }
         catch (Exception e)
