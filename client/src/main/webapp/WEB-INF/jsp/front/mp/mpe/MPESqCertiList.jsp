@@ -258,10 +258,9 @@
 </c:if>
 <!-- SQ평가원 자격증 팝업 -->
 <c:if test="${ not empty sqCertiMst }">
-
     <c:set var="unavailable" value=""/>
     <c:choose>
-        <c:when test="${sqCertiMst.issueCd eq 'EBD_SQ_R'}">
+        <c:when test="${sqCertiMst.examCd eq 'EBD_SQ_TP_S'}">
         <%--<c:when test="${sqCertiMst.issueCd eq 'EBD_SQ_R' or sqCertiMst.useYn eq 'N' or sqCertiMst.expiration}">--%>
             <c:set var="unavailable" value="unavailable"/>
         </c:when>
