@@ -39,11 +39,17 @@
                     <label class="col-sm-1 control-label">예상 응답시간<span class="star"> *</span></label>
                     <div class="col-sm-10">
                         <select class="form-control input-sm wd-sm" name="rspnMm" id="rspnMm" title="예상 응답시간">
+                            <option value="5" <c:if test="${rtnDto.rspnMm eq '5'}">selected</c:if>>5</option>
                             <option value="10" <c:if test="${rtnDto.rspnMm eq '10'}">selected</c:if>>10</option>
+                            <option value="15" <c:if test="${rtnDto.rspnMm eq '15'}">selected</c:if>>15</option>
                             <option value="20" <c:if test="${rtnDto.rspnMm eq '20'}">selected</c:if>>20</option>
+                            <option value="25" <c:if test="${rtnDto.rspnMm eq '25'}">selected</c:if>>25</option>
                             <option value="30" <c:if test="${rtnDto.rspnMm eq '30'}">selected</c:if>>30</option>
+                            <option value="35" <c:if test="${rtnDto.rspnMm eq '35'}">selected</c:if>>35</option>
                             <option value="40" <c:if test="${rtnDto.rspnMm eq '40'}">selected</c:if>>40</option>
+                            <option value="45" <c:if test="${rtnDto.rspnMm eq '45'}">selected</c:if>>45</option>
                             <option value="50" <c:if test="${rtnDto.rspnMm eq '50'}">selected</c:if>>50</option>
+                            <option value="55" <c:if test="${rtnDto.rspnMm eq '55'}">selected</c:if>>55</option>
                             <option value="60" <c:if test="${rtnDto.rspnMm eq '60'}">selected</c:if>>60</option>
                         </select>
                         &nbsp;분&nbsp;
@@ -140,7 +146,7 @@
                                                                         <th>응답(max)<span class="star"> *</span></th>
                                                                     </c:when>
                                                                     <c:otherwise>
-                                                                        <th>응답<span class="star"> *</span></th>
+                                                                        <th>응답<span class="star                                                                                                                                                                                                                                                     "> *</span></th>
                                                                     </c:otherwise>
                                                                 </c:choose>
                                                             </c:when>
