@@ -2214,11 +2214,15 @@
 		, ctgry_cd
 		, ctgry_cd_nm /* 과정분류2 */
 		, nm /* 과정명 */
+		, stduy_mthd_cd/* 학습방식 */
+		, rcrmt_mthd_cd/* 모집방식*/
 		, stduy_mthd_cd_nm /* 학습방식 */
 		, stduy_time_cd_nm  /* 학습시간 */
 		, cbsn_cd_nm /*업종*/
 		, episd_year /*년도*/
 		, episd_ord /* 차수 */
+		, stduy_dd_cd /*학습일*/
+		, stduy_time_cd /*학습시간*/
 		, stduy_dd_cd_nm /*교육일*/
 		, edctn_strt_dtm /* 교육기간 시작일 */
 		, edctn_end_dtm /* 교육기간 종료일 */
@@ -2301,17 +2305,22 @@
 		, reg_dtm
 		, reg_ip
 		, reg_id
+		, exps_yn
 		FROM (SELECT /*EBBEpisdMapper.selectEpisdList*/
 		a.episd_seq
 		, (select cd_nm from co_code_mst WHERE cd = LEFT(b.ctgry_cd, 7)) AS prnt_cd_nm/* 과정분류1 */
 	    , b.ctgry_cd
 		, (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) AS ctgry_cd_nm /* 과정분류2 */
 		, b.nm /* 과정명 */
+	   	, b.stduy_mthd_cd/* 학습방식 */
+		, a.rcrmt_mthd_cd/* 모집방식*/
 		, (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm/* 학습방식 */
 		, (select cd_nm from co_code_mst where cd=b.stduy_time_cd) as stduy_time_cd_nm /* 학습시간 */
 		, (select cd_nm from co_code_mst where cd=a.cbsn_cd) AS cbsn_cd_nm/*업종*/
 		, a.episd_year /*년도*/
 		, a.episd_ord/*차수*/
+	   , b.stduy_dd_cd /*학습일*/
+	   , b.stduy_time_cd /*학습시간*/
 		, (select cd_nm from co_code_mst where cd=b.stduy_dd_cd) AS stduy_dd_cd_nm/*교육일*/
 		, a.edctn_strt_dtm/* 교육기간 시작일 */
 		, a.edctn_end_dtm/* 교육기간 종료일 */
@@ -2402,6 +2411,7 @@
 		, a.reg_dtm
 		, a.reg_ip
 		, a.reg_id
+		, a.exps_yn
 		FROM ed_edctn_episd_mst a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
 		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
@@ -2480,6 +2490,10 @@
 		) m ON m.episd_seq = a.episd_seq
 
 		GROUP BY a.episd_seq, a.episd_ord
+
+
+
+
 		) AA
 
 		<include refid="selectEpisdListwhereSql" />
@@ -2675,10 +2689,15 @@
 
 		) m ON m.episd_seq = a.episd_seq
 
-		GROUP BY a.EPISD_ORD
+		GROUP BY a.episd_seq, a.episd_ord
+
+
+
 		) AA
 
 		<include refid="selectEpisdListwhereSql" />
+
+		GROUP BY a.episd_ord
 
 	</select>
 

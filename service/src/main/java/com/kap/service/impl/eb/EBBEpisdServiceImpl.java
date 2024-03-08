@@ -189,7 +189,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		excelListDto.setRecordCountPerPage(page.getRecordCountPerPage());
 
 		excelListDto.setList(eBBEpisdMapper.selectEpisdExcelList(eBBEpisdDTO));
-		excelListDto.setTotalCount(eBBEpisdMapper.selectEpisdExcelListCnt(eBBEpisdDTO));
+		//excelListDto.setTotalCount(eBBEpisdMapper.selectEpisdExcelListCnt(eBBEpisdDTO));
 
 		return excelListDto;
 	}
@@ -1254,7 +1254,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			cell = row.createCell(11); cell.setCellValue(dto.getPlaceNm()); cell.setCellStyle(style_body);//교육장소
 			cell = row.createCell(12); cell.setCellValue(dto.getCprtnInsttNm()); cell.setCellStyle(style_body);//협력기관
-			cell = row.createCell(13); cell.setCellValue(dto.getFxnumCnt()); cell.setCellStyle(style_body);//정원(명)
+
+			cell = row.createCell(13); cell.setCellValue((dto.getFxnumCnt() == null) ? "-" : String.valueOf(dto.getFxnumCnt())); cell.setCellStyle(style_body);//정원(명)
 
 			//강사 반복문 시작
 			cell = row.createCell(14); cell.setCellValue(dto.getIsttrNm1()); cell.setCellStyle(style_body);//강사1
@@ -1344,6 +1345,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				}
 			}
 
+
 			//셀 너비 자동맞춤 시작
 			for(int j=0; j<=81;j++){
 				if(j == 10) continue;//병합된 셀이므로 패스
@@ -1351,13 +1353,15 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 				//교육기간 시작~종료
 				if(j == 9){
-					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1200 );
+					//sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1200 );
+					sheet.setColumnWidth(j, Math.min(255 * 50, sheet.getColumnWidth(j) + 100));
 				//교육장소, 협력기관, 예산비고, 지출비고
 				}else if(j == 11 || j == 12 || j == 69 || j == 81){
 					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2500 );
 				//그외 일반적인 셀들
 				}else{
-					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1024 );
+					//sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1024 );
+					sheet.setColumnWidth(j, Math.min(255 * 10, sheet.getColumnWidth(j) + 1024));
 				}
 			}
 
