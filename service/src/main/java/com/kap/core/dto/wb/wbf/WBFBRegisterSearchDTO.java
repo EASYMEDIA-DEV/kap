@@ -148,4 +148,7 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
 
     @Schema(title = "지급차수 List")
     private List<WBOrderMstDto> orderList;
+
+    @Schema(title = "엑셀다운여부")
+    private String excelYn;
 }

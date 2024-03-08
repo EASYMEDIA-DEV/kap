@@ -63,6 +63,7 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click: function () {
                         //사유입력 레이어팝업 활성화
+                        var frmDataObj    = $(this).closest("form");
                         $.fileDownload("./excelDown?" + frmDataObj.serialize() , {
                             prepareCallback : function(url){
                                 jQuery(".loadingbar").stop().fadeIn(200);

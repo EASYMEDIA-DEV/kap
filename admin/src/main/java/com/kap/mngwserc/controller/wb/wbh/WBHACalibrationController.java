@@ -145,6 +145,7 @@ public class WBHACalibrationController {
         try
         {
             //엑셀 생성
+            wBHACalibrationSearchDTO.setExcelYn("Y");
             wbhaCalibrationService.excelDownload(wbhaCalibrationService.selectCalibrationList(wBHACalibrationSearchDTO), response);
         }
         catch (Exception e)

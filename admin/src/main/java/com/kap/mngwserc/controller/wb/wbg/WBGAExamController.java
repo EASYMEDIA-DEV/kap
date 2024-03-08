@@ -145,6 +145,7 @@ public class WBGAExamController {
         try
         {
             //엑셀 생성
+            wBGAExamSearchDTO.setExcelYn("Y");
             wBGAExamService.excelDownload(wBGAExamService.selectCalibrationList(wBGAExamSearchDTO), response);
         }
         catch (Exception e)

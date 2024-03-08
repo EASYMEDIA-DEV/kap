@@ -346,6 +346,7 @@ public class WBIBSupplyCompanyController {
         try
         {
             //엑셀 생성
+            wBIBSupplySearchDTO.setExcelYn("Y");
             wBIBSupplyCompanyService.excelDownload(wBIBSupplyCompanyService.getSupplyCompanyList(wBIBSupplySearchDTO), response);
         }
         catch (Exception e)

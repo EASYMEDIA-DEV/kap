@@ -374,6 +374,7 @@ public class WBFBRegisterCompanyController {
         try
         {
             wBFBRegisterSearchDTO.setBsnCd("BSN06");
+            wBFBRegisterSearchDTO.setExcelYn("Y");
             //엑셀 생성
             wBFBRegisterCompanyService.excelDownload(wBFBRegisterCompanyService.getRegisterCompanyList(wBFBRegisterSearchDTO), response);
         }

@@ -50,7 +50,9 @@
         ) INFO
         <include refid="selectListwhereSql" />
         ORDER BY episd_seq DESC, appctn_seq DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test="excelYn != 'Y'.toString() ">
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

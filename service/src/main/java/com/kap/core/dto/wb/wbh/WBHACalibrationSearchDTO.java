@@ -210,4 +210,6 @@ public class WBHACalibrationSearchDTO extends BaseDTO {
     private List<WBHAValidDtlDTO> validDtlDTOList;
     @Schema(title = "파일명", example = "숫자")
     private String clbtnFileNm;
+    @Schema(title = "엑셀다운여부")
+    private String excelYn;
 }

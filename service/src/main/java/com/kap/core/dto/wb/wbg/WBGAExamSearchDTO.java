@@ -257,4 +257,6 @@ public class WBGAExamSearchDTO extends BaseDTO {
     @Schema(title = "파일명", example = "숫자")
     private String examFileNm;
 
+    @Schema(title = "엑셀다운여부")
+    private String excelYn;
 }

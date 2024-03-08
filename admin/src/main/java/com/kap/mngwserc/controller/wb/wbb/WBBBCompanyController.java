@@ -251,6 +251,7 @@ public class WBBBCompanyController {
         try
         {
             //엑셀 생성
+            wbbCompanySearchDTO.setExcelYn("Y");
             wbbbCompanyService.excelDownload(wbbbCompanyService.selectCompanyList(wbbCompanySearchDTO), response);
         }
         catch (Exception e)
