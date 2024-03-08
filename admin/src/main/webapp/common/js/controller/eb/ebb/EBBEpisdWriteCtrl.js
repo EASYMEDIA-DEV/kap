@@ -1545,6 +1545,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(this).find(".dz-default.dz-message").hide().css("cursor", "not-allowed");
 					});
 
+					$(".dz-hidden-input").prop("disabled",true);
+					$(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
+					$(".dz-default.dz-message").hide();
+					$('.dz-remove').hide();
+
 				}
 
 				//교육이 시작된 상태에서는 노출여부를 제외하고 전부 사용 불가능
@@ -1553,10 +1558,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				}
 			}
 
-			$(".dz-hidden-input").prop("disabled",true);
-			$(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
-			$(".dz-default.dz-message").hide();
-			$('.dz-remove').hide();
+
 
 
 			// 유효성 검사
