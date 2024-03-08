@@ -249,13 +249,21 @@
 		, REG_DTM
 		, REG_IP
 		, REG_ID
+		, MOD_ID
+		, CTGRY_CD
+		, STDUY_DD_CD
+		, STDUY_TIME_CD
+		, EXPS_YN
 		FROM (SELECT
 			A.EDCTN_SEQ
 			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = LEFT(A.CTGRY_CD, 7)) AS PRNT_CD_NM/* 과정분류1 */
 			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CTGRY_CD) AS CTGRY_CD_NM /* 과정분류2 */
+			, A.CTGRY_CD
 			, A.NM /* 과정명 */
 			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD=A.STDUY_TIME_CD) AS STDUY_TIME_CD_NM /* 학습시간 */
+		    , A.STDUY_TIME_CD
 			, (SELECT CD_NM FROM CO_CODE_MST WHERE CD=A.STDUY_DD_CD) AS STDUY_DD_CD_NM/*교육일*/
+		    , A.STDUY_DD_CD
 			, A.EDCTN_STRT_DTM/* 교육기간 시작일 */
 			, A.EDCTN_END_DTM/* 교육기간 종료일 */
 			, (SELECT NM FROM ED_EDCTN_PLACE_MST WHERE PLACE_SEQ = A.PLACE_SEQ) AS PLACE_NM/* 교육장소 */
@@ -323,6 +331,8 @@
 			, A.REG_DTM
 			, A.REG_IP
 			, A.REG_ID
+			, A.MOD_ID
+			, A.EXPS_YN
 			FROM NMB_EDCTN_PRCS_MST A
 			LEFT OUTER JOIN ( SELECT CD AS BD_CD, PMT, ETC_NM, EDCTN_SEQ FROM NMB_EDCTN_BDGET_EXPNS_DTL) C ON C.EDCTN_SEQ = A.EDCTN_SEQ
 			LEFT OUTER JOIN (
@@ -472,13 +482,13 @@
 					</when>
 					<when test="f == 2"><!--최초등록자-->
 						AND (
-						INSTR(#{q}, AA.REG_ID) <![CDATA[>]]> 0 OR
+						MOD_ID LIKE CONCAT('%', #{q}, '%') OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
 						)
 					</when>
 					<when test="f == 3"><!--최종수정자-->
 						AND (
-						INSTR(#{q}, AA.MOD_ID) <![CDATA[>]]> 0 OR
+						REG_ID LIKE CONCAT('%', #{q}, '%') OR
 						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = AA.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
 						)
 					</when>
