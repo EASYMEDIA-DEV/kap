@@ -1814,7 +1814,7 @@
                                 </fieldset>
                                 <fieldset>
                                     <div class="form-group text-sm">
-                                        <label class="col-sm-1 control-label">점검보고서<span class="star"> *</span></label>
+                                        <label class="col-sm-1 control-label">검수보고서<span class="star"> *</span></label>
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
