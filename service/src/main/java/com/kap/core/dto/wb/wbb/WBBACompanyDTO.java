@@ -158,4 +158,7 @@ public class WBBACompanyDTO extends BaseDTO {
 
     @Schema(title = "인증주관사명")
     private String crtfnCmpnNm;
+
+    @Schema(title = "엑셀다운여부")
+    private String excelYn;
 }

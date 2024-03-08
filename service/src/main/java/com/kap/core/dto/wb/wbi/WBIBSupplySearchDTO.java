@@ -104,4 +104,6 @@ public class WBIBSupplySearchDTO extends BaseDTO {
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
 
+    @Schema(title = "엑셀다운여부")
+    private String excelYn;
 }
