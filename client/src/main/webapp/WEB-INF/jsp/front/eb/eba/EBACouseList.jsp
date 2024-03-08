@@ -237,11 +237,9 @@
                                                                 <div class="middle-line">
                                                                     <!-- 2023-12-07 수정 -->
                                                                     <div class="form-group form-calendar">
+
                                                                         <div class="form-input">
                                                                             <%--<input type="text" name="strtDt" id="strtDt" placeholder="2023.01.01">--%>
-                                                                                <input type="hidden" name="paramStrtDt" id="paramStrtDt" placeholder="2023.01.01" value="${eBBEpisdDTO.strtDt}">
-                                                                                <input type="hidden" name="paramEndDt" id="paramEndDt" placeholder="2023.01.01" value="${eBBEpisdDTO.endDt}">
-
                                                                             <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" placeholder="2023.01.01" value="${not empty eBBEpisdDTO.strtDt ? eBBEpisdDTO.strtDt : today}" title="시작일"/>
                                                                             <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
@@ -260,6 +258,9 @@
                                                                         </div>
 
                                                                     </div>
+
+                                                                    <input type="hidden" name="paramStrtDt" id="paramStrtDt" placeholder="2023.01.01" value="${eBBEpisdDTO.strtDt}">
+                                                                    <input type="hidden" name="paramEndDt" id="paramEndDt" placeholder="2023.01.01" value="${eBBEpisdDTO.endDt}">
                                                                     <!-- // 2023-12-07 수정 -->
                                                                 </div>
                                                             </div>
