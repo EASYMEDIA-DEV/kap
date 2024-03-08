@@ -2479,8 +2479,9 @@
 
 		) m ON m.episd_seq = a.episd_seq
 
-		GROUP BY a.EPISD_ORD
+		GROUP BY a.episd_seq, a.episd_ord
 		) AA
+
 		<include refid="selectEpisdListwhereSql" />
 
 		GROUP BY episd_seq
