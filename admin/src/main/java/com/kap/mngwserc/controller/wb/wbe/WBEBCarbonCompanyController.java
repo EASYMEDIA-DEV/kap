@@ -314,6 +314,7 @@ public class WBEBCarbonCompanyController {
         try
         {
             //엑셀 생성
+            wBEBCarbonCompanySearchDTO.setExcelYn("Y");
             wBEBCarbonCompanyService.excelDownload(wBEBCarbonCompanyService.selectCarbonCompanyList(wBEBCarbonCompanySearchDTO), response);
         }
         catch (Exception e)

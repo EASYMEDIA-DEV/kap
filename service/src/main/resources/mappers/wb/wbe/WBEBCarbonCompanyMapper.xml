@@ -57,7 +57,9 @@
         ) ORD ON C.RSUME_ORD = ORD.RSUME_ORD AND C.APPCTN_SEQ = ORD.APPCTN_SEQ
         <include refid="selectCarbonListwhereSql" />
         ORDER BY B.APPCTN_SEQ DESC
-        LIMIT #{firstIndex}, #{recordCountPerPage}
+        <if test='excelYn != "Y"'>
+            LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

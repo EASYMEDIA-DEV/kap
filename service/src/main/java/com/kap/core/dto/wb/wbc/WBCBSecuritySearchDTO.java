@@ -188,6 +188,9 @@ public class WBCBSecuritySearchDTO extends BaseDTO {
     @Schema(title = "수정자 아이디", example = "")
     private String modNm;
 
+    @Schema(title = "엑셀 여부", example = "")
+    private String excelYn;
+
 
     @Schema(title = "조회 리스트")
     private List<WBCBSecuritySearchDTO> list;
