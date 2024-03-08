@@ -1807,10 +1807,10 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
 
             /* 회원 순번 기준 신청 조회 */
             int overLapMemSeq = wBFBRegisterCompanyMapper.getMemSeqCheck(wBFBRegisterSearchDTO);
+            int overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
 
+            /*현재 계정으로 신청한 이력이 없을 경우*/
             if(overLapMemSeq == 0) {
-                int overlap = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
-
                 /* 종된 사업장번호 미 입력 */
                 if(overlap > 0 && wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
                     respCnt = 200;
@@ -1820,18 +1820,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 if(overlap > 0 && !wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
                     respCnt = 300;
                 }
+            /*현재 계정으로 신청한 이력이 있을 경우*/
             } else {
-                if(!wBFBRegisterSearchDTO.getSbrdnBsnmNo().isEmpty()) {
-                    int overlap2 = wBFBRegisterCompanyMapper.getSbrdmNoCheck(wBFBRegisterSearchDTO);
-
-                    if(overlap2 > 0) {
-                        respCnt = 100;
-                    }
-
-                }
-                else {
-                    respCnt = 100;
-                }
+                respCnt = 100;
             }
 
         } catch (Exception e) {

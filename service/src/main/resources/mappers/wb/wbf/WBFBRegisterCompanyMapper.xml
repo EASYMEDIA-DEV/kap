@@ -1131,6 +1131,8 @@
         ON A.appctn_seq = B.appctn_seq
         WHERE A.episd_seq = #{episdSeq}
           AND A.mem_seq = #{memSeq}
+          AND appctn_bsnm_no = #{bsnmNo}
+          AND sbrdn_bsnm_no = #{sbrdnBsnmNo}
           AND appctn_stts_cd != 'PRO_TYPE02001_01_004'
           AND mng_stts_cd != 'PRO_TYPE02001_01_004'
     </select>
