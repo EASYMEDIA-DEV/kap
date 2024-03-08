@@ -2,6 +2,7 @@ package com.kap.service.impl.cb.cbb;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cbb.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -603,7 +604,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
                 receiverDto.setNote4("초도방문결과");
             }
 
-            smsDto.setMessage(cntn);
+            smsDto.setMessage(COStringUtil.replaceHTML(cntn));
 
             cOMessageService.sendSms(smsDto, "");
         }

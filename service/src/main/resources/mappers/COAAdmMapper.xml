@@ -127,6 +127,26 @@
 	</select>
 
 	<!--
+      쿼리명 : COAAdmMapper.selectAdmDtl
+      설  명 : 이전시스템 회우너 암호화 해주기
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.03.06   김학규       최초생성
+ -->
+	<select id="selectUserEncList" parameterType="MPAUserDto" resultType="MPAUserDto">
+		select /* COAAdmMapper.selectUserEncList */
+			mem_seq
+			, id
+			, name
+			, pwd
+		from
+			co_mem_mst a
+		where
+			/*MEM_SEQ <![CDATA[ > ]]> 10000*/
+			MEM_SEQ <![CDATA[ > ]]> 200000
+	</select>
+
+	<!--
          쿼리명 : COAAdmMapper.insertAdm
          설  명 : 관리자를 등록한다.
           수정일     수정자       수정내용

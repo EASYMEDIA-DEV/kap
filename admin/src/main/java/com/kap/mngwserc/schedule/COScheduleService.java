@@ -1,6 +1,7 @@
 package com.kap.mngwserc.schedule;
 
 import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COSmsDTO;
@@ -170,7 +171,7 @@ public class COScheduleService {
             smiSmsCntnDTO.setSmsCntnCd("SMS02"); //교육시작 3일전 코드
             smiSmsCntnDTO.setSmsCntnSeq(5);
 
-            smsDto.setMessage(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn());
+            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
             cOMessageService.sendSms(smsDto, "");
 

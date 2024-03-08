@@ -2,6 +2,7 @@ package com.kap.service.impl.cb.cba;
 
 import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
@@ -573,7 +574,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
                 //사업 진행 단계(치환문자4)
                 receiverDto.setNote4("초도방문결과");
             }
-            smsDto.setMessage(cntn);
+
+            smsDto.setMessage(COStringUtil.replaceHTML(cntn));
 
             cOMessageService.sendSms(smsDto, "");
         }
