@@ -624,6 +624,7 @@ public class EBACouseController {
             EBBEpisdDTO rtnMap = new EBBEpisdDTO();
             try
             {
+                eBBEpisdDTO.setApplyListYn("N");
                 rtnMap = eBBEpisdService.selectEpisdList(eBBEpisdDTO);
             }
             catch (Exception e)

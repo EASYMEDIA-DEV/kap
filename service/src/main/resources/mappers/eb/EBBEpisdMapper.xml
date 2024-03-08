@@ -387,7 +387,7 @@
 							AND EDCTN_STRT_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
 						</if>
 						<if test="endDt != null and endDt != ''">
-							AND EDCTN_END_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 23:59:59')
+							AND EDCTN_END_DTM <![CDATA[<=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 23:59:59')
 						</if>
 					</when>
 

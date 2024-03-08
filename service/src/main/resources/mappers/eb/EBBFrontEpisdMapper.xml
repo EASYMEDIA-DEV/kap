@@ -233,6 +233,16 @@
 			1=1
 			AND a.exps_yn = 'Y'
 
+			<if test="applyListYn == 'N'.toString()">
+
+				AND (
+					DATE_FORMAT(accs_strt_dtm, '%Y') = DATE_FORMAT(NOW(), '%Y')
+					or DATE_FORMAT(accs_end_dtm, '%Y') = DATE_FORMAT(NOW(), '%Y')
+					or DATE_FORMAT(edctn_strt_dtm, '%Y') = DATE_FORMAT(NOW(), '%Y')
+					or DATE_FORMAT(edctn_end_dtm, '%Y') = DATE_FORMAT(NOW(), '%Y')
+				)
+			</if>
+
 			<if test="cnnctCd != null and cnnctCd != '' ">
 				<choose>
 					<when test="cnnctCd == 'EDCTN_REL01' ">
