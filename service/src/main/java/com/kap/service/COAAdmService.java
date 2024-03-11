@@ -1,8 +1,6 @@
 package com.kap.service;
 
 import com.kap.core.dto.COAAdmDTO;
-import com.kap.core.dto.EmfMap;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
@@ -36,9 +34,6 @@ public interface COAAdmService {
 	 * 관리자 상세를 조회한다.
 	 */
 	public COAAdmDTO selectAdmDtl(COAAdmDTO pCOAAdmDTO) throws Exception;
-
-	//임시 회원조회
-	public List<MPAUserDto> selectUserList(MPAUserDto mPAUserDto) throws Exception;
 
 	/**
 	 * 관리자를 등록한다.
