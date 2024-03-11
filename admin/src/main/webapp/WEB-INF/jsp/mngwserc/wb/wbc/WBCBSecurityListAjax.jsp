@@ -17,6 +17,17 @@
                 <td class="text-center">${list.episd}</td>
                 <td class="text-center">${list.rsumeSttsNm}</td>
                 <td class="text-center">${list.mngSttsNm}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${list.pmndvPmtYn == 'N'}">
+                            -
+                        </c:when>
+                        <c:otherwise>
+                            ${list.pmndvSttsNm}
+                        </c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">${list.spprtSttsNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm }</a></td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center">${list.sbrdnBsnmNo}</td>
