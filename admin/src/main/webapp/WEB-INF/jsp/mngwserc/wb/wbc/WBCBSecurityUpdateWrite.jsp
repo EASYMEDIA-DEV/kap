@@ -670,12 +670,8 @@
                                         <div class="col-sm-10 form-inline">
                                             <div class="col-sm-1" style="margin-left: -15px">
                                             <c:choose>
-                                                <c:when test="${rtnSpprt[0].mngSttsNm eq '적합'}">
-                                                    <p class="form-control-static">적합</p>
-                                                    <input type="hidden" name="spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}">
-                                                </c:when>
-                                                <c:when test="${rtnSpprt[0].mngSttsNm eq '부적합'}">
-                                                    <p class="form-control-static">부적합</p>
+                                                <c:when test="${rtnSpprt[0].mngSttsNm eq '지급완료'}">
+                                                    <p class="form-control-static">지급완료</p>
                                                     <input type="hidden" name="spprtList[0].mngSttsCd" value="${rtnSpprt[0].mngSttsCd}">
                                                 </c:when>
                                                 <c:otherwise>
@@ -895,12 +891,8 @@
                                         <div class="col-sm-10 form-inline">
                                             <div class="col-sm-1" style="margin-left: -15px">
                                             <c:choose>
-                                                <c:when test="${rtnSpprt[0].mngSttsNm eq '적합'}">
-                                                    <p class="form-control-static">적합</p>
-                                                    <input type="hidden" name="spprtList[1].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}">
-                                                </c:when>
-                                                <c:when test="${rtnSpprt[0].mngSttsNm eq '부적합'}">
-                                                    <p class="form-control-static">부적합</p>
+                                                <c:when test="${rtnSpprt[1].mngSttsNm eq '지급완료'}">
+                                                    <p class="form-control-static">지급완료</p>
                                                     <input type="hidden" name="spprtList[1].mngSttsCd" value="${rtnSpprt[1].mngSttsCd}">
                                                 </c:when>
                                                 <c:otherwise>
