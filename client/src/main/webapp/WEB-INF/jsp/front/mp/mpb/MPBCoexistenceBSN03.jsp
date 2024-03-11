@@ -476,7 +476,7 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">점검보고서<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">검수보고서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <c:if test="${rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_001' or rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_005'}">
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
