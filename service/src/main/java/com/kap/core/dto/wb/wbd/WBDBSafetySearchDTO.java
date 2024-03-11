@@ -188,6 +188,13 @@ public class WBDBSafetySearchDTO extends BaseDTO {
     @Schema(title = "수정자 아이디", example = "")
     private String modNm;
 
+    @Schema(title = "선급금 지급 여부", example = "")
+    private String pmndvPmtYn;
+    @Schema(title = "선급금 지급 진행 상태", example = "")
+    private String pmndvSttsNm;
+    @Schema(title = "지원금 지급 진행 상태", example = "")
+    private String spprtSttsNm;
+
     @Schema(title = "엑셀 여부", example = "")
     private String excelYn;
 
