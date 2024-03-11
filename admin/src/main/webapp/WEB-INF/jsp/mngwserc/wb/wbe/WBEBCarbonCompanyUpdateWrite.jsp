@@ -1030,7 +1030,7 @@
             <br>
 
             <div class="container-fluid">
-                <div class="panel-group" id="accParent" role="tablist">
+                <div class="panel-group" id="accParent" role="tablist" data-mng-stts-nm="${rtnDtl[maxRsumeOrd-1].mngSttsNm}">
 
                     <!-- 신청 -->
                     <div class="panel panel-default">
@@ -1235,11 +1235,11 @@
                                                 <c:choose>
                                                     <c:when test="${rtnDtl[1].mngSttsNm eq '적합'}">
                                                         <p class="form-control-static">적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[1].mngSttsNm eq '부적합'}">
                                                         <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" title="관리자 상태값" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd"  <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if>>
@@ -1405,11 +1405,11 @@
                                                 <c:choose>
                                                     <c:when test="${rtnDtl[2].mngSttsNm eq '적합'}">
                                                         <p class="form-control-static">적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[2].mngSttsNm eq '부적합'}">
                                                         <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 3}">disabled</c:if>>
@@ -1526,11 +1526,11 @@
                                                 <c:choose>
                                                     <c:when test="${rtnDtl[3].mngSttsNm eq '적합'}">
                                                         <p class="form-control-static">적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[3].mngSttsNm eq '부적합'}">
                                                         <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 4}">disabled</c:if>>
@@ -1649,11 +1649,11 @@
                                                 <c:choose>
                                                     <c:when test="${rtnDtl[4].mngSttsNm eq '적합'}">
                                                         <p class="form-control-static">적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[4].mngSttsNm eq '부적합'}">
                                                         <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 5}">disabled</c:if>>
@@ -1769,11 +1769,11 @@
                                             <c:choose>
                                                 <c:when test="${rtnDtl[5].mngSttsNm eq '적합'}">
                                                     <p class="form-control-static">적합</p>
-                                                    <input type="hidden" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
+                                                    <input type="hidden" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
                                                 </c:when>
                                                 <c:when test="${rtnDtl[5].mngSttsNm eq '부적합'}">
                                                     <p class="form-control-static">부적합</p>
-                                                    <input type="hidden" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
+                                                    <input type="hidden" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
                                                 </c:when>
                                                 <c:otherwise>
                                                     <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 6}">disabled</c:if>>

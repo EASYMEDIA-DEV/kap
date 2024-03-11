@@ -1216,7 +1216,7 @@
                 </div>
             </div>
 
-            <div id="frmDataRsumeTask">
+            <div id="frmDataRsumeTask" data-mng-stts="${rsumeTaskDtl[rsumeLeng].mngSttsCd}">
                 <div class="container-fluid">
                     <div class="panel-group" id="accParent" role="tablist">
                         <div>
@@ -1295,7 +1295,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
-                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn1" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[0].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1505,10 +1506,10 @@
                                                         or rsumeTaskDtl[1].mngSttsCd eq 'PRO_TYPE02002_02_005'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[1].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[1].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02002_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[1].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1519,6 +1520,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn2" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[1].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1630,10 +1633,10 @@
                                                         or rsumeTaskDtl[2].mngSttsCd eq 'PRO_TYPE02003_02_003'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[2].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[2].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[2].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02003_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >
@@ -1644,6 +1647,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn3" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[2].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1782,10 +1787,10 @@
                                                         or rsumeTaskDtl[3].mngSttsCd eq 'PRO_TYPE02005_02_003'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[3].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[3].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[3].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02005_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[3].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -1796,6 +1801,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn4" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[3].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -1999,10 +2006,10 @@
                                                         or rsumeTaskDtl[5].mngSttsCd eq 'PRO_TYPE02004_02_003'}"
                                                     >
                                                         <p class="form-control-static">${rsumeTaskDtl[5].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[5].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[5].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02004_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[5].mngSttsCd eq cdList.cdNm}" >selected</c:if> >
@@ -2013,6 +2020,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn6" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[5].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2084,10 +2093,10 @@
                                                 <c:choose>
                                                     <c:when test="${rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02008_02_004' or rsumeTaskDtl[6].mngSttsCd eq 'PRO_TYPE02008_02_005'}">
                                                         <p class="form-control-static">${rsumeTaskDtl[6].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[6].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[6].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02008_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[6].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -2098,6 +2107,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn7" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[6].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2236,10 +2247,10 @@
                                                 <c:choose>
                                                     <c:when test="${rsumeTaskDtl[7].mngSttsCd eq 'PRO_TYPE02007_02_002' or rsumeTaskDtl[7].mngSttsCd eq 'PRO_TYPE02007_02_003'}">
                                                         <p class="form-control-static">${rsumeTaskDtl[7].mngSttsCdNm}</p>
-                                                        <input type="hidden" class="notRequired" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[7].mngSttsCd}">
+                                                        <input type="hidden" class="notRequired mngCd" name="rsumeTaskDtl.mngSttsCd" value="${rsumeTaskDtl[7].mngSttsCd}">
                                                     </c:when>
                                                     <c:otherwise>
-                                                        <select class="form-control input-sm notRequired mngSttsCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
+                                                        <select class="form-control input-sm notRequired mngSttsCd mngCd" name="rsumeTaskDtl.mngSttsCd" title="관리자 상태값">
                                                             <c:forEach var="cdList" items="${cdDtlList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList, 'PRO_TYPE02007_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rsumeTaskDtl[7].mngSttsCd eq cdList.cd}" >selected</c:if> >
@@ -2250,6 +2261,8 @@
                                                         </select>
                                                     </c:otherwise>
                                                 </c:choose>
+                                                &nbsp;
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn8" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[7].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>

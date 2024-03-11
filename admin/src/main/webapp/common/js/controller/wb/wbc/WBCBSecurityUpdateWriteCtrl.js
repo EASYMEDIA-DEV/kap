@@ -403,6 +403,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             trnsfSearch(1);
             pmndvPmtViewShowFn();
 
+            var accParentTemp = $("#accParent").data("mngSttsNm");
+            if(accParentTemp == "부적합" || accParentTemp == "미선정") {
+                for(var i = 1; i < 8; i++) {
+                    $("#accEx"+i).css('pointer-events', 'none');
+                }
+            }
+
             var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
             /* Editor Setting */

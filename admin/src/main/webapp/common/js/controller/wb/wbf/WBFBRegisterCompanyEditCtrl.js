@@ -288,11 +288,51 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
 
     let rtrnRsnCntnShow = function(mngSttsCd) {
         if(mngSttsCd =='PRO_TYPE02001_02_002'){
-            $(".rtrnRsnCntn").show().attr('disabled',false);
+            $(".rtrnRsnCntn1").show().attr('disabled',false);
         }else if(mngSttsCd =='PRO_TYPE02001_02_004'){
-            $(".rtrnRsnCntn").show().attr('disabled',false);
+            $(".rtrnRsnCntn1").show().attr('disabled',false);
         }else{
-            $(".rtrnRsnCntn").hide().attr('disabled',true);
+            $(".rtrnRsnCntn1").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02002_02_003'){
+            $(".rtrnRsnCntn2").show().attr('disabled',false);
+        }else if(mngSttsCd =='PRO_TYPE02002_02_004'){
+            $(".rtrnRsnCntn2").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn2").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02003_02_002'){
+            $(".rtrnRsnCntn3").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn3").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02004_02_002'){
+            $(".rtrnRsnCntn4").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn4").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02005_02_002'){
+            $(".rtrnRsnCntn5").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn5").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02007_02_002'){
+            $(".rtrnRsnCntn7").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn7").hide().attr('disabled',true);
+        }
+
+        if(mngSttsCd =='PRO_TYPE02008_02_003'){
+            $(".rtrnRsnCntn8").show().attr('disabled',false);
+        }else if(mngSttsCd =='PRO_TYPE02008_02_004'){
+            $(".rtrnRsnCntn8").show().attr('disabled',false);
+        }else{
+            $(".rtrnRsnCntn8").hide().attr('disabled',true);
         }
     }
 
@@ -570,7 +610,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             /* 직급 값에 따른 show/hide */
             fnpstnNmShow($('#pstnCd').val());
             /* 반려사유 show/hide */
-            rtrnRsnCntnShow($('.mngCd').val());
+            // rtrnRsnCntnShow($('.mngCd').val());
+            rtrnRsnCntnShow($('#frmDataRsumeTask').data("mngStts"));
+
 
             $formObj.validation({
                 after : function() {
