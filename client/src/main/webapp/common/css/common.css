@@ -2657,7 +2657,6 @@ footer .copy-area span:last-child:after {display: none;}
 .cont-sec .sec-tit-area .article-total-count{width:auto;}
 .cont-sec .sec-tit-area .gray-txt {color: #9CA1A6;}
 .cont-sec .sec-tit-area .gray-txt .key-txt {color: #06161E;}
-.cont-sec .sec-tit-area .box-label{margin-right:16rem}
 .cont-sec .sec-con-area .sub-title {font-family: "Pretendard_SemiBold", sans-serif; font-size: max(18rem, 16px); line-height: 155%; letter-spacing: -0.36rem;}
 .cont-sec .sec-con-area .inner-title {margin-bottom: 27rem;}
 .cont-sec .sec-con-area .data-enter-form {margin-top: 40rem;}
@@ -2723,7 +2722,6 @@ footer .copy-area span:last-child:after {display: none;}
   .cont-sec .sec-tit-area .f-caption1 {margin-top: 8rem;}
   .cont-sec .sec-tit-area .noti-txt {margin-top: 8rem;}
   .cont-sec .sec-tit-area:not(.non-block) .btn-wrap {margin-top: 16rem;}
-  .cont-sec .sec-tit-area .box-label{margin-right:8rem}
   .cont-sec .sec-con-area .inner-title {margin-bottom: 16rem;}
   .cont-sec .sec-con-area .inner-title .f-title2 {font-family: "Pretendard_Bold", sans-serif;}
   .cont-sec .sec-con-area .sub-title {font-size: 15rem; line-height: 170%; letter-spacing: -0.3rem;}

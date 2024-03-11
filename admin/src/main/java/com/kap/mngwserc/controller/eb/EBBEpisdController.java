@@ -176,7 +176,10 @@ public class EBBEpisdController {
         try
         {
             eBBEpisdDTO.setExcelYn("Y");
+            eBBEpisdDTO.setAtndcYn("Y");
+
             eBBEpisdDTO.setEpisdYear(eBBEpisdDTO.getOrgEpisdYear());
+            eBBEpisdDTO.setEpisdOrd(eBBEpisdDTO.getOrgEpisdOrd());
             // 목록 조회
             EBBPtcptDTO ebbExcelListDto = eBBEpisdService.setPtcptList(eBBEpisdDTO);
 

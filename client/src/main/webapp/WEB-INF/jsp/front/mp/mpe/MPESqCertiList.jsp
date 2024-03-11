@@ -259,10 +259,13 @@
 <!-- SQ평가원 자격증 팝업 -->
 <c:if test="${ not empty sqCertiMst }">
     <c:set var="unavailable" value=""/>
+    <c:set var="posChk" value=""/>
+
     <c:choose>
         <c:when test="${sqCertiMst.examCd eq 'EBD_SQ_TP_S'}">
         <%--<c:when test="${sqCertiMst.issueCd eq 'EBD_SQ_R' or sqCertiMst.useYn eq 'N' or sqCertiMst.expiration}">--%>
             <c:set var="unavailable" value="unavailable"/>
+            <c:set var="posChk" value="pos-chk"/>
         </c:when>
         <c:otherwise>
             <c:set var="unavailable" value=""/>
@@ -270,7 +273,7 @@
     </c:choose>
 
 
-    <div class="layer-popup estiCertiPop paymentInfoViewPopupFrm ${unavailable}" data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
+    <div class="layer-popup estiCertiPop paymentInfoViewPopupFrm ${unavailable} ${posChk}" data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
         <form style="height:100%">
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <div class="for-center">
@@ -280,7 +283,7 @@
                             <div class="flow-wrap">
                                 <div class="flow-list"><p class="img">
                                     <c:choose>
-                                        <c:when test="${not empty unavailable}">
+                                        <c:when test="${not empty posChk}">
                                             <img src="/common/images/img-logo-certificate-prevention-of-theft-unavailable.svg" alt="">
                                         </c:when>
                                         <c:otherwise>

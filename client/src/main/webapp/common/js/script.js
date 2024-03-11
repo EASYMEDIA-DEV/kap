@@ -1853,7 +1853,7 @@ function printFn(){
 // 세로 최적화 안내
 function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올라왔는지 아닌지 체크 후  only-vertical-view 노출,미노출 체크 
 	var agent = navigator.userAgent.toLowerCase();
-
+		
 	var mobileArr = new Array("iPhone", "iPod", "Android");
 	var mobileNum;
 	for(var txt in mobileArr){
@@ -1865,10 +1865,8 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
 
   if(agent.indexOf('nexus 5 build/mra58n') > -1 || agent.indexOf('Windows') > -1){
   }else{
-    if(mobileNum > 1){ // ios 외 다른 기종
-
-      if(window.matchMedia("(orientation: portrait)").matches || window.innerWidth <= window.innerHeight){
-
+    if(mobileNum > 1){ // ios 외 다른 기종 				
+      if (window.matchMedia('(orientation: portrait)').matches || window.innerWidth <= window.innerHeight) {
         // 세로 모드 (평소 사용하는 각도)
         if(typeof focusEle != "undefined"){// 키패드 올라왔을 때
           $("body").addClass("vertical");
@@ -1878,7 +1876,6 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
           $(".only-vertical-view").removeClass("on");
         }		
       }else if(window.matchMedia("(orientation: landscape)").matches || window.innerWidth > window.innerHeight){
-
         var widthChk = window.innerWidth;
         var heightChk = window.innerHeight;
         var aspectRatio = widthChk / heightChk
@@ -1894,8 +1891,7 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
           $(".only-vertical-view").removeClass("on");
         }
       }
-    }else{	// ios
-
+    }else{	// ios 
       if(agent.indexOf("version") != -1){
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
@@ -1926,14 +1922,11 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
 }
 
 $(window).on("orientationchange", function(event){
-
-  $(window).on('resize', function() {
+  $(window).on("resize", function() {
     var focusEle = document.activeElement.name;
     $("input:focus, textarea:focus").blur();
     setTimeout(function(){
       showBack(focusEle);
     },280)
   });
-
-
 });
