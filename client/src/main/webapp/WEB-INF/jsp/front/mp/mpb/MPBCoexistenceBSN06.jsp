@@ -10,7 +10,10 @@
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
             <div class="btn-wrap">
-                <c:if test="${spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' or spprtDtl[1].appctnSttsCd eq 'PRO_TYPE03002_01_003' or spprtDtl[2].appctnSttsCd eq 'PRO_TYPE03003_01_003'}">
+                <c:if test="${
+                    (spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' and registerDtl.pmndvPmtYn eq 'Y') or
+                    spprtDtl[1].appctnSttsCd eq 'PRO_TYPE03002_01_003' or
+                    spprtDtl[2].appctnSttsCd eq 'PRO_TYPE03003_01_003'}">
                     <p class="box-label bigger arr"><span>보완요청</span></p>
                 </c:if>
                 <a class="btn-text-icon black-arrow btnSpprtPop" href="javascript:void(0);" title="팝업 열기"><span>지급정보관리</span></a>
