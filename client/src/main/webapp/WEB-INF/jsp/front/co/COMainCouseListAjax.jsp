@@ -18,7 +18,24 @@
                                 <c:set var="accsStatusOrderClass" value="end"/>
                             </c:otherwise>
                         </c:choose>
-                        <a class="swiper-slide marquee_item1 ${accsStatusOrderClass}" href="/education/apply/detail?detailsKey=${list.edctnSeq}">
+
+                        <c:set var="dtlClass" value=""/>
+                        <c:choose>
+                            <c:when test="${ list.nonMemberCd eq 'N' }">
+                                <c:set var="dtlClass" value="nonMemberDtl"/>
+                            </c:when>
+                            <c:otherwise>
+                                <c:if test="${list.accsStatusOrder eq 3}">
+                                    <c:set var="dtlClass" value="episdDtl"/>
+                                </c:if>
+                                <c:if test="${list.accsStatusOrder ne 3}">
+                                    <c:set var="dtlClass" value="episdDtl"/>
+                                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+
+
+                        <a class="swiper-slide marquee_item1 ${dtlClass} ${accsStatusOrderClass}" href="javascript:" data-edctnSeq="${list.edctnSeq}">
                             <!--
                               접수중: accepting
                               접수대기: waiting
@@ -31,11 +48,12 @@
                             </div>
                             <div class="txt-area">
                                 <!--비회원 구분자를 사용하여 영역 표시-->
-                                <c:if test="${1 ne 1}">
+                                <c:if test="${list.nonMemberCd eq 'N'}">
                                     <div class="top-label-area">
                                         <p class="box-label bigger available"><span>비회원 신청 가능</span></p>
                                     </div>
                                 </c:if>
+
                                 <div class="sort-label-area">
                                     <p class="label"><span>${list.prntCdNm}</span></p>
                                     <p class="label"><span>${list.ctgryCdNm}</span></p>
