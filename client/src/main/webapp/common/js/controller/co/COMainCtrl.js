@@ -100,8 +100,17 @@ define(["ezCtrl"], function(ezCtrl) {
 			episdDtl : {
 				event : {
 					click : function(e){
-						var edctnseq = $(e.target).closest("div").data("edctnseq");
-						location.href="/education/apply/detail?detailsKey="+edctnseq;
+						var edctnseq = $(this).data("edctnseq");
+
+						location.href="/education/apply/detail?detailsKey=" + edctnseq;
+					}
+				}
+			},
+			nonMemberDtl : {
+				event : {
+					click : function(e){
+						var edctnseq = $(this).data("edctnseq");
+						location.href="/education/apply/non-member/detail?detailsKey="+edctnseq;
 					}
 				}
 			},

@@ -150,6 +150,7 @@ public class COMainController
             stduyList.add("STDUY_MTHD01");
             stduyList.add("STDUY_MTHD03");
             eBBEpisdDTO.setMainYn("Y");
+            eBBEpisdDTO.setApplyListYn("Y");
             eBBEpisdDTO.setStduyMthdCdList(stduyList);
             modelMap.addAttribute("rtnData", eBBEpisdService.selectEpisdList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
