@@ -14,6 +14,14 @@
                 <td class="text-center">${list.episd}</td>
                 <td class="text-center">${list.rsumeSttsCdNm}</td>
                 <td class="text-center">${list.mngSttsCdNm}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${pmndvPmtYn eq 'Y'}">${list.spprtDtl[0].mngSttsCdNm}</c:when>
+                        <c:otherwise>-</c:otherwise>
+                    </c:choose>
+                </td>
+                <td class="text-center">${list.spprtDtl[1].mngSttsCdNm}</td>
+                <td class="text-center">${list.spprtDtl[2].mngSttsCdNm}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}">${list.cmpnNm}</a></td>
                 <td class="text-center">${kl:bsnmNoConvert(list.bsnmNo)}</td>
                 <td class="text-center">
@@ -21,7 +29,6 @@
                         <c:when test="${not empty list.sbrdnBsnmNo}">${list.sbrdnBsnmNo}</c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
-
                 </td>
                 <td class="text-center">${list.ctgryCdNm}</td>
                 <td class="text-center">${list.sizeCdNm}</td>

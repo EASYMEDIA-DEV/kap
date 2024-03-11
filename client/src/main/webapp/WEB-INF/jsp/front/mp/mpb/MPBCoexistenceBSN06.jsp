@@ -1,18 +1,21 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBSmartFactoryCtrl ">
+    <c:set var="registerDtl" value="${rtnData.registerDtl}"/>
+    <c:set var="spprtDtl" value="${rtnRegisterData.spprtDtl}"/>
+    <c:set var="rsumeTaskDtl" value="${rtnRegisterData.rsumeTaskDtl}"/>
+    <c:set var="rsumeLeng" value="${fn:length(rtnRegisterData.rsumeTaskDtl)-1}"/>
+    <c:set var="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}"/>
+
     <div class="for-motion">
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
             <div class="btn-wrap">
+                <c:if test="${spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' or spprtDtl[1].appctnSttsCd eq 'PRO_TYPE03002_01_003' or spprtDtl[2].appctnSttsCd eq 'PRO_TYPE03003_01_003'}">
+                    <p class="box-label bigger arr"><span>보완요청</span></p>
+                </c:if>
                 <a class="btn-text-icon black-arrow btnSpprtPop" href="javascript:void(0);" title="팝업 열기"><span>지급정보관리</span></a>
             </div>
         </div>
-        <c:set var="registerDtl" value="${rtnData.registerDtl}"/>
-        <c:set var="spprtDtl" value="${rtnRegisterData.spprtDtl}"/>
-        <c:set var="rsumeTaskDtl" value="${rtnRegisterData.rsumeTaskDtl}"/>
-
-        <c:set var="rsumeLeng" value="${fn:length(rtnRegisterData.rsumeTaskDtl)-1}"/>
-        <c:set var="nowRsumeTaskCd" value="${rsumeTaskDtl[rsumeLeng].rsumeSttsCd}"/>
 
         <div class="sec-con-area" id="contArea">
             <div class="article-sec">
@@ -37,16 +40,16 @@
                                         <c:set var="classType" value="end" />
                                     </c:when>
                                 </c:choose>
-                                <p class="box-label bigger ${classType}"><span>
-                                        ${rsumeTaskDtl[0].appctnSttsCdNm}
-                                </span></p>
+                                <p class="box-label bigger ${classType}">
+                                    <span>${rsumeTaskDtl[0].appctnSttsCdNm}</span>
+                                </p>
                             </c:if>
                         </a>
                         <div class="acco-hide-area">
                             <form name="frmData" enctype="multipart/form-data">
                                 <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
-                                <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
+                                <input type="hidden" class="notRequired" id="appctnSeq" name="wBFBRegisterDTO.appctnSeq" value="${rtnDto.appctnSeq}" />
+                                <input type="hidden" class="notRequired" id="appctnBsnmNo" name="wBFBRegisterDTO.appctnBsnmNo" value="${registerDtl.appctnBsnmNo}" />
                                 <input type="hidden" class="notRequired" name="wBFBRegisterDTO.appctnSttsCd" value="${rsumeTaskDtl[0].appctnSttsCd}" />
                                 <input type="hidden" class="notRequired mngSttsCd" name="wBFBRegisterDTO.mngSttsCd" value="${rsumeTaskDtl[0].mngSttsCd}" />
                                 <input type="hidden" class="notRequired rsumeSttsCd" name="wBFBRegisterDTO.rsumeTaskDtl.rsumeSttsCd" value="${rsumeTaskDtl[0].rsumeSttsCd}" />
@@ -69,7 +72,7 @@
                                                     <p class="data-title f-body1"><span>종된사업장번호</span></p>
                                                     <div class="form-group">
                                                         <div class="form-input w-longer">
-                                                            <input type="text" name="wBFBRegisterDTO.sbrdnBsnmNo" placeholder="종된사업장번호" value="${registerDtl.sbrdnBsnmNo}">
+                                                            <input type="text" id="sbrdnBsnmNo" name="wBFBRegisterDTO.sbrdnBsnmNo" placeholder="종된사업장번호" value="${registerDtl.sbrdnBsnmNo}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -569,14 +572,14 @@
                                     <div class="swiper-wrapper">
                                         <c:if test="${registerDtl.pmndvPmtYn eq 'Y'}">
                                             <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[0].giveType}" data-stts-cd="${spprtDtl[0].mngSttsCd}" href="javascript:">
-                                                <p class="txt"><span class="menu-name">선급금</span></p>
+                                                <p class="txt"><span class="menu-name <c:if test="${spprtDtl[0].appctnSttsCd eq 'PRO_TYPE03001_01_003'}">privacy</c:if>">선급금</span></p>
                                             </a>
                                         </c:if>
                                         <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[1].giveType}" data-stts-cd="${spprtDtl[1].mngSttsCd}" href="javascript:">
-                                            <p class="txt"><span class="menu-name">지원금</span></p>
+                                            <p class="txt"><span class="menu-name <c:if test="${spprtDtl[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'}">privacy</c:if>">지원금</span></p>
                                         </a>
                                         <a class="swiper-slide txt-tab-btn btnSpprtTab" data-give-type="${spprtDtl[2].giveType}" data-stts-cd="${spprtDtl[2].mngSttsCd}" href="javascript:">
-                                            <p class="txt"><span class="menu-name">기술임치</span></p>
+                                            <p class="txt"><span class="menu-name <c:if test="${spprtDtl[2].appctnSttsCd eq 'PRO_TYPE03003_01_003'}">privacy</c:if>">기술임치</span></p>
                                         </a>
                                     </div>
                                 </div>

@@ -124,6 +124,9 @@
                         <th class="text-center">회차</th>
                         <th class="text-center">진행상태</th>
                         <th class="text-center">관리자</br>상태값</th>
+                        <th class="text-center">선급금</br>지급</th>
+                        <th class="text-center">지원금</br>지급</th>
+                        <th class="text-center">기술임치</th>
                         <th class="text-center">부품사명</th>
                         <th class="text-center">사업자등록번호</th>
                         <th class="text-center">종된사업장번호</th>

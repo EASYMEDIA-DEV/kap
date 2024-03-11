@@ -150,7 +150,13 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         wBFBRegisterSearchDTO.setFirstIndex(page.getFirstRecordIndex());
         wBFBRegisterSearchDTO.setRecordCountPerPage(page.getRecordCountPerPage());
 
-        wBFBRegisterSearchDTO.setList(wBFBRegisterCompanyMapper.getRegisterCompanyList(wBFBRegisterSearchDTO));
+        /* 선급금 관련 정보 - 지원금액상세 Table 조회 */
+        List<WBFBRegisterSearchDTO> searchDTO = wBFBRegisterCompanyMapper.getRegisterCompanyList(wBFBRegisterSearchDTO);
+        for(WBFBRegisterSearchDTO dto : searchDTO) {
+            dto.setSpprtDtl(wBFBRegisterCompanyMapper.getSpprtDtlList(dto));
+        }
+
+        wBFBRegisterSearchDTO.setList(searchDTO);
         wBFBRegisterSearchDTO.setTotalCount(wBFBRegisterCompanyMapper.getRegisterCompanyCount(wBFBRegisterSearchDTO));
 
         return wBFBRegisterSearchDTO;

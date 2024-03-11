@@ -22,6 +22,12 @@
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
             <div class="btn-wrap">
+                <c:if test="${
+                    rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' or
+                    rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'
+                }">
+                    <p class="box-label bigger arr"><span>보완요청</span></p>
+                </c:if>
                 <a class="btn-text-icon black-arrow" id="popOpen" href="javascript:" title="팝업 열기"><span>지급정보관리</span></a>
             </div>
         </div>
@@ -518,11 +524,11 @@
                                 <div class="swiper-wrapper">
                                     <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">
                                         <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">active</c:if>" href="javascript:">
-                                            <p class="txt"><span class="menu-name">선급금</span></p>
+                                            <p class="txt"><span class="menu-name <c:if test="${rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_003'}">privacy</c:if>">선급금</span></p>
                                         </a>
                                     </c:if>
                                     <a class="swiper-slide txt-tab-btn <c:if test="${rtnData.pmndvPmtYn eq 'N'}">active</c:if>" href="javascript:">
-                                        <p class="txt"><span class="menu-name">지원금</span></p>
+                                        <p class="txt"><span class="menu-name <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'}">privacy</c:if>">지원금</span></p>
                                     </a>
                                 </div>
                             </div>
