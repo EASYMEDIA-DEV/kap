@@ -16,7 +16,7 @@
                 <td class="text-center">${list.mngSttsCdNm}</td>
                 <td class="text-center">
                     <c:choose>
-                        <c:when test="${pmndvPmtYn eq 'Y'}">${list.spprtDtl[0].mngSttsCdNm}</c:when>
+                        <c:when test="${list.pmndvPmtYn eq 'Y'}">${list.spprtDtl[0].mngSttsCdNm}</c:when>
                         <c:otherwise>-</c:otherwise>
                     </c:choose>
                 </td>

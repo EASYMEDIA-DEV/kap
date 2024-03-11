@@ -113,6 +113,8 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     private String offerBsnmNo;
     @Schema(title = "완료보고일", example = "")
     private String cmpltnBrfngDtm;
+    @Schema(title = "선급금액여부", example = "")
+    private String pmndvPmtYn;
 
     private Integer cmpnCount;
 

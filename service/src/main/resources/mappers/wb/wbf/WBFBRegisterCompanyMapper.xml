@@ -28,7 +28,7 @@
             (
                 SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
                     YEAR(A.year) as year, A.episd as episd,
-                    B.appctn_seq, B.episd_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm,
+                    B.appctn_seq, B.episd_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.pmndv_pmt_yn,
                     C.*,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
