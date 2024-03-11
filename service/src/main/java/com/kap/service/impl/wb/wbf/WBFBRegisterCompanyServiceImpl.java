@@ -1745,13 +1745,25 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 }
 
                 switch (spprtDtl.getAppctnSttsCd()) {
+                    case "PRO_TYPE03001_01_001":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03003_01_002");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03001_02_002");
+                        break;
                     case "PRO_TYPE03001_01_003":
                         spprtDtl.setAppctnSttsCd("PRO_TYPE03001_01_004");
                         spprtDtl.setMngSttsCd("PRO_TYPE03001_02_002");
                         break;
+                    case "PRO_TYPE03002_01_001":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03002_01_002");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03002_02_002");
+                        break;
                     case "PRO_TYPE03002_01_003":
                         spprtDtl.setAppctnSttsCd("PRO_TYPE03002_01_004");
                         spprtDtl.setMngSttsCd("PRO_TYPE03002_02_002");
+                        break;
+                    case "PRO_TYPE03003_01_001":
+                        spprtDtl.setAppctnSttsCd("PRO_TYPE03003_01_002");
+                        spprtDtl.setMngSttsCd("PRO_TYPE03003_02_002");
                         break;
                     case "PRO_TYPE03003_01_003":
                         spprtDtl.setAppctnSttsCd("PRO_TYPE03003_01_004");
