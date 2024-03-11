@@ -528,11 +528,11 @@
                     <div class="col-sm-11">
                         <label class="radio-inline c-radio">
                             <input type="radio" class="pmndvPmtYn" name="pmndvPmtYn" value="Y" <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">checked</c:if> title="노출여부"/>
-                            <span class="ion-record"></span> 노출
+                            <span class="ion-record"></span> 해당
                         </label>
                         <label class="radio-inline c-radio">
                             <input type="radio" class="pmndvPmtYn" name="pmndvPmtYn" value="N" <c:if test="${rtnData.pmndvPmtYn eq 'N'}">checked</c:if> title="노출여부"/>
-                            <span class="ion-record"></span> 미노출
+                            <span class="ion-record"></span> 미해당
                         </label>
                     </div>
                 </div>

@@ -115,6 +115,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
     }
 
+    let pmndvPmtViewShowFn = () => {
+        let checkedVal = $formObj.find('input[name=pmndvPmtYn]:checked').val();
+        let pmndvPmtViwe = $('#aaa1');
+
+        if(checkedVal === 'Y') {
+            pmndvPmtViwe.css('display', 'block');
+        } else {
+            pmndvPmtViwe.css('display', 'none');
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -309,13 +320,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             pmndvPmtYn : {
                 event : {
                     change : function() {
-                        if($(this).val() == 'Y'){
-                            $("#ab1").css('height' , '100%');
-                            $("#ab1").addClass('in');
-                        }else{
-                            $("#ab1").css('height' , '0px');
-                            $("#ab1").removeClass('in');
-                        }
+                        pmndvPmtViewShowFn();
                     }
                 }
             },
@@ -431,6 +436,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         immediately : function() {
 
             trnsfSearch(1);
+            pmndvPmtViewShowFn();
 
             var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;
 
