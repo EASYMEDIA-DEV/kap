@@ -228,7 +228,7 @@
                                                 <p class="data-title f-body1">지원금 ①<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="spprtPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}" ${readonly2}>
+                                                        <input type="text" id="spprtPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].spprtPmt" placeholder="지원금 입력" value="${rtnPbsn[1].spprtPmt}" ${readonly2} maxlength="50">
                                                     </div>
                                                 </div>
                                             </div>
@@ -236,7 +236,7 @@
                                                 <p class="data-title f-body1">자부담 ②<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <div class="form-input w-longer">
-                                                        <input type="text" id="phswPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}" ${readonly2}>
+                                                        <input type="text" id="phswPmt" class="comma" name="wBCBSecurityMstInsertDTO.pbsnDtlList[0].phswPmt" placeholder="자부담 입력" value="${rtnPbsn[1].phswPmt}" ${readonly2} maxlength="50">
                                                     </div>
                                                 </div>
                                             </div>
@@ -590,7 +590,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="bankNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[0].bankNm}">
+                                                                                <input type="text" id="bankNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[0].bankNm}" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -606,7 +606,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="acntNo1" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[0].acntNo}">
+                                                                                <input type="text" id="acntNo1" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[0].acntNo}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -622,7 +622,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="dpsitNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[0].dpsitNm}">
+                                                                                <input type="text" id="dpsitNm1" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[0].dpsitNm}" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -764,7 +764,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="bankNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[1].bankNm}">
+                                                                                <input type="text" id="bankNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].bankNm" placeholder="은행 입력" value="${rtnSpprt[1].bankNm}" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -780,7 +780,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="acntNo2" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[1].acntNo}">
+                                                                                <input type="text" id="acntNo2" name="wBCBSecurityMstInsertDTO.spprtList[0].acntNo" placeholder="계좌번호 입력" value="${rtnSpprt[1].acntNo}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -796,7 +796,7 @@
                                                                     <div class="data-line">
                                                                         <div class="form-group">
                                                                             <div class="form-input">
-                                                                                <input type="text" id="dpsitNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[1].dpsitNm}">
+                                                                                <input type="text" id="dpsitNm2" name="wBCBSecurityMstInsertDTO.spprtList[0].dpsitNm" placeholder="예금주 입력" value="${rtnSpprt[1].dpsitNm}" maxlength="50">
                                                                             </div>
                                                                         </div>
                                                                     </div>
