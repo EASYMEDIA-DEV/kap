@@ -383,6 +383,7 @@
                     </c:forEach>
                 </div>
             </fieldset>
+            </div>
             <c:choose>
                 <c:when test="${not empty rtnDto}">
                     <fieldset class="ptcptField">

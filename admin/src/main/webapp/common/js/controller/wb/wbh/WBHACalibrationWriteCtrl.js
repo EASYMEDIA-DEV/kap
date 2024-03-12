@@ -158,6 +158,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./consultinglist.ajax", $formObj, "POST", "html");
     }
 
+    let fnpstnNmShow = function(pstnCd) {
+        if(pstnCd == 'MEM_CD01007'){
+            $("#pstnNm").css("display", "block");
+        }else{
+            $("#pstnNm").val("");
+            $("#pstnNm").css("display", "none");
+        }
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -287,13 +296,19 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
                         }
 
+                        var url = window.location.href;
+                        var urlArray = url.split("/");
+                        var wbUrl1 = urlArray[4];
+                        var wbUrl2 = urlArray[5];
+
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
                                 fnpstnNmShow($('#pstnCd').val());
-                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                            }, "/mngwserc/" + wbUrl1 + "/" + wbUrl2 + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }

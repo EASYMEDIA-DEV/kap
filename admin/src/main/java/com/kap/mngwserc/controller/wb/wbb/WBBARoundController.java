@@ -1,12 +1,13 @@
 package com.kap.mngwserc.controller.wb.wbb;
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBBARoundService;
+import com.kap.service.WBPartCompanyService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -47,6 +48,7 @@ public class WBBARoundController {
      **/
     public final COCodeService cOCodeService;
     public final WBBARoundService wBBARoundService;
+    private final WBPartCompanyService wBPartCompanyService;
 
     /**
      * 공통 회차 목록으로 이동한다.
@@ -236,5 +238,49 @@ public class WBBARoundController {
             throw new Exception(e.getMessage());
         }
         return "jsonView";
+    }
+
+    /**
+     * 부품사회원 / 담당위원 Detail Ajax
+     */
+    @PostMapping(value = "/selModalDetail")
+    public String selectPartUserDetailAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
+        try
+        {
+            modelMap.addAttribute("rtnData", wBPartCompanyService.selPartUserDetail(wBPartCompanyDTO));
+            wBPartCompanyDTO.setWorkBsnmNo(((WBPartCompanyDTO)modelMap.getAttribute("rtnData")).getWorkBsnmNo());
+            modelMap.addAttribute("rtnDataCompDetail", wBPartCompanyService.selectPartUserCompDetailAjax(wBPartCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 부품사회원 / 담당위원 Detail Ajax
+     */
+    @RequestMapping(value = "/partUserChk")
+    @ResponseBody
+    public WBPartCompanyDTO selectPartUserChkAjax(@Valid @RequestBody WBPartCompanyDTO wBPartCompanyDTO, ModelMap modelMap ) throws Exception {
+        WBPartCompanyDTO partCompanyDTO = new WBPartCompanyDTO();
+        try
+        {
+            partCompanyDTO.setRespCnt(wBPartCompanyService.selectPartUserChkAjax(wBPartCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return partCompanyDTO;
     }
 }

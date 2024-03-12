@@ -273,7 +273,7 @@
                                                             <c:forEach var="item" items="${rtnData.dtlList}" varStatus="status">
                                                                 <c:choose>
                                                                     <c:when test="${empty item.nm and empty item.score and empty item.year and empty item.crtfnCmpnNm}">
-                                                                        -
+
                                                                     </c:when>
                                                                     <c:otherwise>
                                                                         <c:if test="${empty item.nm}">

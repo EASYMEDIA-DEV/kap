@@ -355,7 +355,7 @@
                     A.TITL LIKE CONCAT('%', #{q}, '%') OR
                     MEM.NAME LIKE CONCAT('%', #{q}, '%') OR
                     MEM.EMAIL LIKE CONCAT('%', #{q}, '%') OR
-                    MEM.HP_NO LIKE CONCAT('%', #{q}, '%') OR
+                    MEM.HP_NO LIKE CONCAT('%', #{q}, '%')
                     )
                 </otherwise>
             </choose>

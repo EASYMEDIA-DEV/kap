@@ -291,11 +291,11 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
 
     // 사업진행 상세
     @Schema(title = "불량개선이전율")
-    private double fltyImpvmBfreRate;
+    private Double fltyImpvmBfreRate;
     @Schema(title = "불량개선이후률")
-    private double fltyImpvmAftrRate;
+    private Double fltyImpvmAftrRate;
     @Schema(title = "불량개선율")
-    private double fltyImpvmRate;
+    private Double fltyImpvmRate;
 
     // 만족도 설문
     @Schema(title = "설문순번")

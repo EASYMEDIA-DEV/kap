@@ -173,12 +173,18 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 event: {
                     click: function () {
                         $("#srchDivide").val("Y");
+
+                        var url = window.location.href;
+                        var urlArray = url.split("/");
+                        var wbUrl1 = urlArray[urlArray.length - 3];
+                        var wbUrl2 = urlArray[urlArray.length - 2];
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
-                                $formObj.find('#memSeq').val(data.memSeq);
-                                cmmCtrl.frmAjax(function(respObj) {
-                                    /* return data input */
-                                    setInputValue(respObj);
-                                }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                            $formObj.find('#memSeq').val(data.memSeq);
+                            cmmCtrl.frmAjax(function(respObj) {
+                                /* return data input */
+                                setInputValue(respObj);
+                            }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }

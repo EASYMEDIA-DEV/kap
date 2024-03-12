@@ -113,12 +113,25 @@ define(["ezCtrl"], function(ezCtrl) {
                             var resCnt = 0;
                             console.log(resCnt);
 
+                            var url = window.location.href;
+                            var urlArray = url.split("/");
+                            var wbUrl1 = urlArray[4];
+                            var wbUrl2 = urlArray[5];
+                            var bsnCd = urlArray[6];
+
+                            var ajaxUrl = "/mngwserc/" + wbUrl1 + "/" + wbUrl2 + "/partUserChk";
+
+                            // 사업생성관리로 생성된 사업에 대해서만 url 변경
+                            if(wbUrl1 == "wbb") {
+                                ajaxUrl = "/mngwserc/" + wbUrl1 + "/" + wbUrl2 + "/" + bsnCd + "/partUserChk";
+                            }
+
                             if($("#srchAppctnSeq").val() != ''){
                                 wBPartCompanyDTO.appctnSeq = $("#srchAppctnSeq").val();
                                 cmmCtrl.jsonAjax(function(respObj){
                                     let response = JSON.parse(respObj);
                                     resCnt = response.respCnt;
-                                }, "/mngwserc/wb/partUserChk", wBPartCompanyDTO, "text");
+                                }, ajaxUrl, wBPartCompanyDTO, "text");
                             }
 
                             console.log(resCnt);

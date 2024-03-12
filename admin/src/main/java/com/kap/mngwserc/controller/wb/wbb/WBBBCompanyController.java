@@ -1,15 +1,15 @@
 package com.kap.mngwserc.controller.wb.wbb;
 
+import com.kap.core.dto.wb.WBPartCompanyDTO;
 import com.kap.core.dto.wb.wba.WBAManageSearchDTO;
 import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanyDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBATransDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBAManagementService;
 import com.kap.service.WBBBCompanyService;
+import com.kap.service.WBPartCompanyService;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -54,6 +54,7 @@ public class WBBBCompanyController {
     public final COCodeService cOCodeService;
     public final WBBBCompanyService wbbbCompanyService;
     public final WBAManagementService wbaManagementService;
+    private final WBPartCompanyService wBPartCompanyService;
 
     /**
      * 공통 부품사관리 목록으로 이동한다.
@@ -306,5 +307,49 @@ public class WBBBCompanyController {
             throw new Exception(e.getMessage());
         }
         return wBBACompanySearchDTO;
+    }
+
+    /**
+     * 부품사회원 / 담당위원 Detail Ajax
+     */
+    @PostMapping(value = "/selModalDetail")
+    public String selectPartUserDetailAjax(WBPartCompanyDTO wBPartCompanyDTO , ModelMap modelMap ) throws Exception {
+        try
+        {
+            modelMap.addAttribute("rtnData", wBPartCompanyService.selPartUserDetail(wBPartCompanyDTO));
+            wBPartCompanyDTO.setWorkBsnmNo(((WBPartCompanyDTO)modelMap.getAttribute("rtnData")).getWorkBsnmNo());
+            modelMap.addAttribute("rtnDataCompDetail", wBPartCompanyService.selectPartUserCompDetailAjax(wBPartCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
+    /**
+     * 부품사회원 / 담당위원 Detail Ajax
+     */
+    @RequestMapping(value = "/partUserChk")
+    @ResponseBody
+    public WBPartCompanyDTO selectPartUserChkAjax(@Valid @RequestBody WBPartCompanyDTO wBPartCompanyDTO, ModelMap modelMap ) throws Exception {
+        WBPartCompanyDTO partCompanyDTO = new WBPartCompanyDTO();
+        try
+        {
+            partCompanyDTO.setRespCnt(wBPartCompanyService.selectPartUserChkAjax(wBPartCompanyDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return partCompanyDTO;
     }
 }

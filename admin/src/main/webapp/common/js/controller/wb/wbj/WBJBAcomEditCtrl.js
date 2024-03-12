@@ -327,13 +327,20 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         let appctnSeqVal = $formObj.find('input[type=hidden][name=appctnSeq]').val() ;
                         $(".mpbMemberPartsSocietySrchLayer #srchAppctnSeq").val(appctnSeqVal);
 
+                        var url = window.location.href;
+                        var pattern = /\/wb\/(\w+)/;
+                        var match = url.match(pattern);
+                        if (match) {
+                            var wbSubUrl = match[1];
+                        }
+
                         cmmCtrl.getPartsCompanyMemberLayerPop(function (data) {
                             $formObj.find('#memSeq').val(data.memSeq);
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
                                 fnpstnNmShow($('#pstnCd').val());
-                            }, "/mngwserc/wb/selModalDetail", $formObj, "post", "json");
+                            }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }
