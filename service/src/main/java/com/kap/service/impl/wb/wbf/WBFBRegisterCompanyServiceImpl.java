@@ -1716,29 +1716,29 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                         if(spprtDtl.getGiveType().equals("PRO_TYPE03001")) {
                             /* 선급금 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
-                            } else if (i == 1) {
                                 spprtDtl.setAcntFileSeq(fileSeq); /*계좌이체약정서*/
-                            } else if (i == 2) {
+                            } else if (i == 1) {
                                 spprtDtl.setBnkbkFileSeq(fileSeq); /*통장사본*/
+                            } else if (i == 2) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             }
                         } else if(spprtDtl.getGiveType().equals("PRO_TYPE03002")) {
                             /* 지원금 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
-                            } else if (i == 1) {
                                 spprtDtl.setAcntFileSeq(fileSeq); /*계좌이체약정서*/
-                            } else if (i == 2) {
+                            } else if (i == 1) {
                                 spprtDtl.setBnkbkFileSeq(fileSeq); /*통장사본*/
+                            } else if (i == 2) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             }
                         } else if(spprtDtl.getGiveType().equals("PRO_TYPE03003")) {
                             /* 기울임치 */
                             if(i == 0) {
-                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
-                            } else if (i == 1) {
                                 spprtDtl.setTchlgLseFileSeq(fileSeq); /*기술임치증*/
-                            } else if (i == 2) {
+                            } else if (i == 1) {
                                 spprtDtl.setLsePayFileSeq(fileSeq); /*임치료납입영수증*/
+                            } else if (i == 2) {
+                                spprtDtl.setSpprtAppctnFileSeq(fileSeq); /*지원금신청서*/
                             }
                         }
                     }

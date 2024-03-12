@@ -1137,7 +1137,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile12" class="searchFile" name="atchFile2">
-                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].tchlgLseFileSeq}">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[2].tchlgLseFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile12">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">
@@ -1162,7 +1162,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile13" class="searchFile" name="atchFile3">
-                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].lsePayFileSeq}">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[2].lsePayFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile13">파일 찾기</label>
                                                                                     </div>
                                                                                     <!-- 2023-12-20 추가 -->
@@ -1190,7 +1190,7 @@
                                                                                     </div>
                                                                                     <div class="file-btn-area">
                                                                                         <input type="file" id="searchFile11" class="searchFile" name="atchFile1">
-                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[1].spprtAppctnFileSeq}">
+                                                                                        <input type="hidden" name="fileSeqList" value="${spprtDtl[2].spprtAppctnFileSeq}">
                                                                                         <label class="btn-solid gray-bg" for="searchFile11">파일 찾기</label>
                                                                                     </div>
                                                                                     <div class="file-prev-area">

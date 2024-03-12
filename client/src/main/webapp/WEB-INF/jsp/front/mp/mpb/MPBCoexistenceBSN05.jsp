@@ -539,7 +539,7 @@
                                 <div class="tab-con-box">
                                     <!-- 선급금 탭 -->
                                     <c:if test="${rtnData.pmndvPmtYn eq 'Y'}">
-                                    <div id="spprt1" class="tab-con">
+                                    <div id="spprt1" class="tab-con" <c:if test="${rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_005'}">style="pointer-events: none;"</c:if>>
                                         <form name="spprtform1" id="spprtform1">
                                         <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
@@ -714,7 +714,7 @@
                                     <c:set var="flag" value="${not empty rtnSpprt[1].accsDt ? 'update' : 'insert'}"/>
 
                                     <!-- 지원금 탭 -->
-                                    <div id="spprt2" class="tab-con">
+                                    <div id="spprt2" class="tab-con" <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_005'}">style="pointer-events: none;"</c:if>>
                                         <form name="spprtform2" id="spprtform2">
                                         <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />

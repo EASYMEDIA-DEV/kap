@@ -64,11 +64,11 @@
                             <div class="col-sm-9 pr0">
                                 <input type="text" class="form-control input-sm" data-name="q" value="${rtnData.q}" maxlength="30" />
                             </div>
+                            <div class="pull-left ml-sm">
+                                <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
+                                <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="pull-left ml-sm">
-                        <button type="button" class="btn btn-inverse btn-sm" id="btnSearch">검색</button>
-                        <button type="button" class="btn btn-default btn-sm" id="btnRefresh">초기화</button>
                     </div>
                 </div>
             </fieldset>
