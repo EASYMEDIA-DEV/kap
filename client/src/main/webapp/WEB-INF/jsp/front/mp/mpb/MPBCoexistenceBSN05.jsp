@@ -647,7 +647,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].spprtAppctnFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[0].spprtAppctnFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[0].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[0].spprtAppctnFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].spprtAppctnFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -671,7 +671,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].agrmtFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="agrmtFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[0].agrmtFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[0].agrmtFileSeq}&fileOrd=${rtnSpprt[0].agrmtFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].agrmtFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -695,7 +695,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[0].grnteInsrncFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="grnteInsrncFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[0].grnteInsrncFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[0].grnteInsrncFileSeq}&fileOrd=${rtnSpprt[0].grnteInsrncFileOrd}" download="" title="파일 다운로드">${rtnSpprt[0].grnteInsrncFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -822,7 +822,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].spprtAppctnFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="spprtAppctnFileSeq1">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[1].spprtAppctnFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].spprtAppctnFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -846,7 +846,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].blingFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="blingFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[1].blingFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[1].blingFileSeq}&fileOrd=${rtnSpprt[1].blingFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].blingFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -870,7 +870,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].slsFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="slsFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[1].slsFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[1].slsFileSeq}&fileOrd=${rtnSpprt[1].slsFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].slsFileNm}</a>
                                                                             </div>
                                                                         </div>
@@ -894,7 +894,7 @@
                                                                                 <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].insptChkFileSeq}">
                                                                                 <label class="btn-solid gray-bg" for="insptChkFileSeq">파일 찾기</label>
                                                                             </div>
-                                                                            <div class="file-prev-area">
+                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[1].insptChkFileSeq}">style="pointer-events: auto;"</c:if>>
                                                                                 <a href="/file/download?fileSeq=${rtnSpprt[1].insptChkFileSeq}&fileOrd=${rtnSpprt[1].insptChkFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].insptChkFileNm}</a>
                                                                             </div>
                                                                         </div>
