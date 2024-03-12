@@ -1802,7 +1802,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 &nbsp;
-                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn4" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[3].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn5" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[3].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2021,7 +2021,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 &nbsp;
-                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn6" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[5].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn4" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[5].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2108,7 +2108,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 &nbsp;
-                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn7" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[6].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn8" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[6].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
@@ -2262,7 +2262,7 @@
                                                     </c:otherwise>
                                                 </c:choose>
                                                 &nbsp;
-                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn8" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[7].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
+                                                <input type="text" class="form-control input-sm notRequired rtrnRsnCntn7" name="rsumeTaskDtl.rtrnRsnCntn" value="${rsumeTaskDtl[7].rtrnRsnCntn}" title="반려사유내용" maxlength="50" placeholder="반려사유내용">
                                             </div>
                                         </div>
                                     </fieldset>
