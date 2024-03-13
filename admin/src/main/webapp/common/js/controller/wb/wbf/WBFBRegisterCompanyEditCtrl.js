@@ -637,8 +637,13 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
 
                     let nowRsumeTaskCd = $sendFormData.find('input[type=hidden][name=nowRsumeTaskCd]').val();
+                    let mngCd = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".mngCd").val();  //현재 태스크 관리자 상태값
                     let dropzoneTask = $dataRsumeTask.find(`[data-sttsCd=${nowRsumeTaskCd}]`).find(".dropzone");
-                    if(dropzoneTask.length > 0) {
+                    //완료보고 태스크의 관리자 상태가 접수 전이면 첨부파일 유효성 검사 패스
+                    if(nowRsumeTaskCd == "PRO_TYPE02008" && mngCd == "PRO_TYPE02008_02_001") {
+
+                    }
+                    else if(dropzoneTask.length > 0) {
                         dropzoneTask.each(function(idx, el) {
                             if($(el).find('.dz-preview').length < 1) {
                                 alert(msgCtrl.getMsg("fail.notFileRequired"));
