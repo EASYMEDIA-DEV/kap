@@ -488,6 +488,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
                 spprDTO.setGiveDt(null);
             }
+            if(spprDTO.getAccsDt() == null || spprDTO.getAccsDt().isEmpty()) {
+                spprDTO.setAccsDt(null);
+            }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
             spprDTO.setModIp(wBFBRegisterDTO.getModIp());
@@ -509,6 +512,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
                 spprDTO.setGiveDt(null);
             }
+            if(spprDTO.getAccsDt() == null || spprDTO.getAccsDt().isEmpty()) {
+                spprDTO.setAccsDt(null);
+            }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
             spprDTO.setModIp(wBFBRegisterDTO.getModIp());
@@ -529,6 +535,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         if(spprDTO.getAppctnSpprtSeq() != null) {
             if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
                 spprDTO.setGiveDt(null);
+            }
+            if(spprDTO.getAccsDt() == null || spprDTO.getAccsDt().isEmpty()) {
+                spprDTO.setAccsDt(null);
             }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
