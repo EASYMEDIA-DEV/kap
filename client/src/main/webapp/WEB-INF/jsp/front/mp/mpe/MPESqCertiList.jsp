@@ -264,14 +264,28 @@
     <c:choose>
         <c:when test="${sqCertiMst.examCd eq 'EBD_SQ_TP_S'}">
         <%--<c:when test="${sqCertiMst.issueCd eq 'EBD_SQ_R' or sqCertiMst.useYn eq 'N' or sqCertiMst.expiration}">--%>
-            <c:set var="unavailable" value="unavailable"/>
             <c:set var="posChk" value="pos-chk"/>
+        </c:when>
+        <c:otherwise>
+
+            <c:set var="posChk" value=""/>
+        </c:otherwise>
+    </c:choose>
+
+    <c:choose>
+        <c:when test="${ sqCertiMst.useYn eq 'N' }">
+            <c:set var="unavailable" value="unavailable"/>
+        </c:when>
+        <c:when test="${ sqCertiMst.issueCd eq 'EBD_SQ_R' }">
+            <c:set var="unavailable" value="unavailable"/>
+        </c:when>
+        <c:when test="${ sqCertiMst.expiration }">
+            <c:set var="unavailable" value="unavailable"/>
         </c:when>
         <c:otherwise>
             <c:set var="unavailable" value=""/>
         </c:otherwise>
     </c:choose>
-
 
     <div class="layer-popup estiCertiPop paymentInfoViewPopupFrm ${unavailable} ${posChk}" data-controller="controller/mp/mpe/MPESqCertiAppliyCtrl"><!-- 팝업 디자인 확인을 위해 first-show 클래스 추가한 상태 -->
         <form style="height:100%">
