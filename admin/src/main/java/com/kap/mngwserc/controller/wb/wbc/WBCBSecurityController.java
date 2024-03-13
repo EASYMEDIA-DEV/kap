@@ -1,12 +1,9 @@
 package com.kap.mngwserc.controller.wb.wbc;
 
 
-
-import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBCBSecurityService;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +58,7 @@ public class WBCBSecurityController {
         cdDtlList.add("PRO_TYPE");
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+        modelMap.addAttribute("proTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
 
         cdDtlList.add("ROUND_CD");
         modelMap.addAttribute("classCityTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));

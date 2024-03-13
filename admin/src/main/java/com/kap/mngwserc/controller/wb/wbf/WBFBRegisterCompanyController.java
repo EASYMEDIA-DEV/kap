@@ -63,6 +63,7 @@ public class WBFBRegisterCompanyController {
             // 코드 set
             cdDtlList.add("PRO_TYPE"); // 신청 진행상태
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+            modelMap.addAttribute("proDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
             modelMap.addAttribute("optYearList", wBFBRegisterCompanyService.getOptYearList(wBFBRegisterSearchDTO));
             modelMap.addAttribute("rtnData", wBFBRegisterSearchDTO);
         }

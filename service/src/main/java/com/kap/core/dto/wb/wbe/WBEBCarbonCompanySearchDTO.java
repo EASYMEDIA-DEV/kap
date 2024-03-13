@@ -182,6 +182,11 @@ public class WBEBCarbonCompanySearchDTO extends BaseDTO {
     @Schema(title = "노출여부 리스트")
     private List expsYnList;
 
+    @Schema(title = "선급금 지급 진행 상태 검색 필터 리스트", example = "")
+    private List<String> pmndvSttsList;
+    @Schema(title = "지원금 지급 진행 상태 검색 필터 리스트", example = "")
+    private List<String> spprtSttsList;
+
 
     @Schema(title = "등록자 아이디", example = "")
     private String regNm;

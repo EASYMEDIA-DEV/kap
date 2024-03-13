@@ -1201,6 +1201,32 @@
                 </foreach>
                 )
             </if>
+
+            <if test="pmndvSttsList != null and pmndvSttsList.size() > 0">
+                AND PMNDV_PMT_YN = 'Y'
+                AND (SELECT MNG_STTS_CD FROM CX_APPCTN_SPPRT_DTL WHERE GIVE_TYPE = 'PRO_TYPE03001' AND APPCTN_SEQ = INFO.APPCTN_SEQ) IN (
+                <foreach collection="pmndvSttsList" item="pmndvSttsList" index="index" separator=" , ">
+                    #{pmndvSttsList}
+                </foreach>
+                )
+            </if>
+
+            <if test="spprtSttsList != null and spprtSttsList.size() > 0">
+                AND (SELECT MNG_STTS_CD FROM CX_APPCTN_SPPRT_DTL WHERE GIVE_TYPE = 'PRO_TYPE03002' AND APPCTN_SEQ = INFO.APPCTN_SEQ) IN (
+                <foreach collection="spprtSttsList" item="spprtSttsList" index="index" separator=" , ">
+                    #{spprtSttsList}
+                </foreach>
+                )
+            </if>
+
+            <if test="techSttsList != null and techSttsList.size() > 0">
+                AND (SELECT MNG_STTS_CD FROM CX_APPCTN_SPPRT_DTL WHERE GIVE_TYPE = 'PRO_TYPE03003' AND APPCTN_SEQ = INFO.APPCTN_SEQ) IN (
+                <foreach collection="techSttsList" item="techSttsList" index="index" separator=" , ">
+                    #{techSttsList}
+                </foreach>
+                )
+            </if>
+
             <if test="year != null and year != ''.toString()">
                 AND INFO.year = #{year}
             </if>

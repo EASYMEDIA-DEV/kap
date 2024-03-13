@@ -125,6 +125,13 @@ public class WBFBRegisterSearchDTO extends BaseDTO {
     @Schema(title = "구분 코드 리스트")
     private List ctgryCdList;
 
+    @Schema(title = "선급금 지급 진행 상태 검색 필터 리스트", example = "")
+    private List<String> pmndvSttsList;
+    @Schema(title = "지원금 지급 진행 상태 검색 필터 리스트", example = "")
+    private List<String> spprtSttsList;
+    @Schema(title = "기술임치 진행 상태 검색 필터 리스트", example = "")
+    private List<String> techSttsList;
+
     @Schema(title = "검색 리스트", example = "")
     List<WBFBRegisterSearchDTO> list;
 

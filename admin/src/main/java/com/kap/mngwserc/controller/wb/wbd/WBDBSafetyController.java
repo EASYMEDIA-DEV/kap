@@ -1,12 +1,9 @@
 package com.kap.mngwserc.controller.wb.wbd;
 
 
-
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyTrnsfDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.service.COCodeService;
 import com.kap.service.WBDBSafetyService;
 import lombok.RequiredArgsConstructor;
@@ -61,6 +58,7 @@ public class WBDBSafetyController {
         cdDtlList.add("PRO_TYPE");
 
         modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "3"));
+        modelMap.addAttribute("proTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "5"));
 
         cdDtlList.add("ROUND_CD");
         modelMap.addAttribute("classCityTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));

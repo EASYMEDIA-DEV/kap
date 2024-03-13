@@ -165,6 +165,24 @@
                 </foreach>
                 )
             </if>
+
+            <if test="pmndvSttsList != null and pmndvSttsList.size() > 0">
+                AND PMNDV_PMT_YN = 'Y'
+                AND (SELECT MNG_STTS_CD FROM CX_APPCTN_SPPRT_DTL WHERE GIVE_TYPE = 'PRO_TYPE03001' AND APPCTN_SEQ = B.APPCTN_SEQ) IN (
+                <foreach collection="pmndvSttsList" item="pmndvSttsList" index="index" separator=" , ">
+                     #{pmndvSttsList}
+                </foreach>
+                )
+            </if>
+
+            <if test="spprtSttsList != null and spprtSttsList.size() > 0">
+                AND (SELECT MNG_STTS_CD FROM CX_APPCTN_SPPRT_DTL WHERE GIVE_TYPE = 'PRO_TYPE03002' AND APPCTN_SEQ = B.APPCTN_SEQ) IN (
+                <foreach collection="spprtSttsList" item="spprtSttsList" index="index" separator=" , ">
+                    #{spprtSttsList}
+                </foreach>
+                )
+            </if>
+
             <if test="q != null and q != ''.toString() ">
                 AND (
                 EXISTS (SELECT ID FROM CO_MEM_MST WHERE MEM_SEQ = B.MEM_SEQ AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%') OR HP_NO LIKE CONCAT('%', #{q}, '%') ))

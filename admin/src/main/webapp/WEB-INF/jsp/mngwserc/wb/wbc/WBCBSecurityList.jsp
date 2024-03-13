@@ -56,6 +56,46 @@
                     </div>
                 </div>
             </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">선급금지급</label>
+                    <div class="col-sm-11">
+                        <label class="checkbox-inline c-checkbox classType">
+                            <input type="checkbox" class="checkboxAll" />
+                            <span class="ion-checkmark-round"></span> 전체
+                        </label>
+
+                        <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                            <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE03001_02')}">
+                                <label class="checkbox-inline c-checkbox classType">
+                                    <input type="checkbox" class="checkboxSingle" data-name="pmndvSttsList" name="cd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.pmndvSttsList, cdList.cd)}">checked</c:if>/>
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">지원금지급</label>
+                    <div class="col-sm-11">
+                        <label class="checkbox-inline c-checkbox classType">
+                            <input type="checkbox" class="checkboxAll" />
+                            <span class="ion-checkmark-round"></span> 전체
+                        </label>
+
+                        <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                            <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE03002_02')}">
+                                <label class="checkbox-inline c-checkbox classType">
+                                    <input type="checkbox" class="checkboxSingle" data-name="spprtSttsList" name="cd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.spprtSttsList, cdList.cd)}">checked</c:if>/>
+                                    <span class="ion-checkmark-round"></span> ${cdList.cdNm}
+                                </label>
+                            </c:if>
+                        </c:forEach>
+                    </div>
+                </div>
+            </fieldset>
             <fieldset class="last-child">
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">검색키워드</label>
