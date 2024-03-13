@@ -228,6 +228,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                         if($("#spprt1").css("display") == 'block'){
                             $formObj = $('#spprtform1');
+                            var tabFlag = $formObj.find(".tabFlag").val();
 
                             if($formObj.find("#accsDt1").val() == "") {
                                 alert("접수일을 입력해주세요");
@@ -249,24 +250,28 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 $formObj.find("#dpsitNm1").focus();
                                 return;
                             }
-                            if($formObj.find("#spprtAppctnFileSeq").val() == "") {
-                                alert("지원금신청서를 등록해주세요");
-                                $formObj.find("#spprtAppctnFileSeq").focus();
-                                return;
-                            }
-                            if($formObj.find("#agrmtFileSeq").val() == "") {
-                                alert("협약서를 등록해주세요");
-                                $formObj.find("#agrmtFileSeq").focus();
-                                return;
-                            }
-                            if($formObj.find("#grnteInsrncFileSeq").val() == "") {
-                                alert("보증보험증을 등록해주세요");
-                                $formObj.find("#grnteInsrncFileSeq").focus();
-                                return;
+
+                            if (tabFlag == "insert") {
+                                if ($formObj.find("#spprtAppctnFileSeq").val() == "") {
+                                    alert("지원금신청서를 등록해주세요");
+                                    $formObj.find("#spprtAppctnFileSeq").focus();
+                                    return;
+                                }
+                                if ($formObj.find("#agrmtFileSeq").val() == "") {
+                                    alert("협약서를 등록해주세요");
+                                    $formObj.find("#agrmtFileSeq").focus();
+                                    return;
+                                }
+                                if ($formObj.find("#grnteInsrncFileSeq").val() == "") {
+                                    alert("보증보험증을 등록해주세요");
+                                    $formObj.find("#grnteInsrncFileSeq").focus();
+                                    return;
+                                }
                             }
 
                         }else if($("#spprt2").css("display") == 'block'){
                             $formObj = $('#spprtform2');
+                            var tabFlag = $formObj.find(".tabFlag").val();
 
                             if($formObj.find("#accsDt2").val() == "") {
                                 alert("접수일을 입력해주세요");
@@ -288,25 +293,28 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 $formObj.find("#dpsitNm2").focus();
                                 return;
                             }
-                            if($formObj.find("#spprtAppctnFileSeq1").val() == "") {
-                                alert("지원금신청서를 등록해주세요");
-                                $formObj.find("#spprtAppctnFileSeq1").focus();
-                                return;
-                            }
-                            if($formObj.find("#blingFileSeq").val() == "") {
-                                alert("거래명세서를 등록해주세요");
-                                $formObj.find("#blingFileSeq").focus();
-                                return;
-                            }
-                            if($formObj.find("#slsFileSeq").val() == "") {
-                                alert("매출전표를 등록해주세요");
-                                $formObj.find("#slsFileSeq").focus();
-                                return;
-                            }
-                            if($formObj.find("#insptChkFileSeq").val() == "") {
-                                alert("검수확인서를 등록해주세요");
-                                $formObj.find("#insptChkFileSeq").focus();
-                                return;
+
+                            if (tabFlag == "insert") {
+                                if ($formObj.find("#spprtAppctnFileSeq1").val() == "") {
+                                    alert("지원금신청서를 등록해주세요");
+                                    $formObj.find("#spprtAppctnFileSeq1").focus();
+                                    return;
+                                }
+                                if ($formObj.find("#blingFileSeq").val() == "") {
+                                    alert("거래명세서를 등록해주세요");
+                                    $formObj.find("#blingFileSeq").focus();
+                                    return;
+                                }
+                                if ($formObj.find("#slsFileSeq").val() == "") {
+                                    alert("매출전표를 등록해주세요");
+                                    $formObj.find("#slsFileSeq").focus();
+                                    return;
+                                }
+                                if ($formObj.find("#insptChkFileSeq").val() == "") {
+                                    alert("검수확인서를 등록해주세요");
+                                    $formObj.find("#insptChkFileSeq").focus();
+                                    return;
+                                }
                             }
 
                         }
