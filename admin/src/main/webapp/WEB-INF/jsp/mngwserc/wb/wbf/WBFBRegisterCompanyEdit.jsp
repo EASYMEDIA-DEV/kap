@@ -672,7 +672,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[0].giveDt" value="${empty spprtDtl[0].giveDt ? today : spprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[0].giveDt" value="${spprtDtl[0].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -899,7 +899,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[1].giveDt" value="${empty spprtDtl[1].giveDt ? today : spprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[1].giveDt" value="${spprtDtl[1].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>
@@ -1076,7 +1076,7 @@
                                             <label class="col-sm-2 control-label">지급일</label>
                                             <div class="col-sm-6 form-inline" >
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[2].giveDt" value="${empty spprtDtl[2].giveDt ? today : spprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
+                                                    <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="spprtDtlList[2].giveDt" value="${spprtDtl[2].giveDt}" title="지급일" readonly="" onclick="cmmCtrl.initCalendar(this);">
                                                     <span class="input-group-btn" style="z-index:0;">
                                                     <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                         <em class="ion-calendar"></em>

@@ -470,9 +470,14 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             wBEBCarbonCompanySpprtDTO.setModId(coaAdmDTO.getId());
             wBEBCarbonCompanySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBEBCarbonCompanySpprtDTO.getGiveDt() != "" ){
-                wBEBCarbonCompanyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
+            if(wBEBCarbonCompanySpprtDTO.getGiveDt() == null || wBEBCarbonCompanySpprtDTO.getGiveDt().isEmpty()) {
+                wBEBCarbonCompanySpprtDTO.setGiveDt(null);
             }
+            if(wBEBCarbonCompanySpprtDTO.getAccsDt() == null || wBEBCarbonCompanySpprtDTO.getAccsDt().isEmpty()) {
+                wBEBCarbonCompanySpprtDTO.setAccsDt(null);
+            }
+
+            wBEBCarbonCompanyMapper.updateAppctnSpprt(wBEBCarbonCompanySpprtDTO);
         }
 
 

@@ -485,6 +485,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /* 선급금 지급 */
         if(wBFBRegisterDTO.getPmndvPmtYn().equals("Y")) {
             spprDTO = wBFBRegisterDTO.getSpprtDtlList().get(0);
+            if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
+                spprDTO.setGiveDt(null);
+            }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
             spprDTO.setModIp(wBFBRegisterDTO.getModIp());
@@ -503,6 +506,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /* 지원금지급 */
         spprDTO = wBFBRegisterDTO.getSpprtDtlList().get(1);
         if(spprDTO.getAppctnSpprtSeq() != null){
+            if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
+                spprDTO.setGiveDt(null);
+            }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
             spprDTO.setModIp(wBFBRegisterDTO.getModIp());
@@ -521,6 +527,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         /* 기술임치 */
         spprDTO = wBFBRegisterDTO.getSpprtDtlList().get(2);
         if(spprDTO.getAppctnSpprtSeq() != null) {
+            if(spprDTO.getGiveDt() == null || spprDTO.getGiveDt().isEmpty()) {
+                spprDTO.setGiveDt(null);
+            }
             spprDTO.setAppctnSeq(wBFBRegisterDTO.getAppctnSeq());
             spprDTO.setModId(wBFBRegisterDTO.getModId());
             spprDTO.setModIp(wBFBRegisterDTO.getModIp());

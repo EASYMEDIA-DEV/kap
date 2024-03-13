@@ -469,9 +469,14 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetySpprtDTO.setModId(coaAdmDTO.getId());
             wBDBSafetySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBDBSafetySpprtDTO.getGiveDt() != "" ){
-                wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
+            if(wBDBSafetySpprtDTO.getGiveDt() == null || wBDBSafetySpprtDTO.getGiveDt().isEmpty()) {
+                wBDBSafetySpprtDTO.setGiveDt(null);
             }
+            if(wBDBSafetySpprtDTO.getAccsDt() == null || wBDBSafetySpprtDTO.getAccsDt().isEmpty()) {
+                wBDBSafetySpprtDTO.setAccsDt(null);
+            }
+
+            wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
         }
 
 

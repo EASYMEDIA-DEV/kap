@@ -469,9 +469,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecuritySpprtDTO.setModId(coaAdmDTO.getId());
             wBCBSecuritySpprtDTO.setModIp(coaAdmDTO.getLoginIp());
 
-            if(wBCBSecuritySpprtDTO.getGiveDt() != "" ){
-                wBCBSecurityMapper.updateAppctnSpprt(wBCBSecuritySpprtDTO);
+            if(wBCBSecuritySpprtDTO.getGiveDt() == null || wBCBSecuritySpprtDTO.getGiveDt().isEmpty()) {
+                wBCBSecuritySpprtDTO.setGiveDt(null);
             }
+            if(wBCBSecuritySpprtDTO.getAccsDt() == null || wBCBSecuritySpprtDTO.getAccsDt().isEmpty()) {
+                wBCBSecuritySpprtDTO.setAccsDt(null);
+            }
+
+            wBCBSecurityMapper.updateAppctnSpprt(wBCBSecuritySpprtDTO);
         }
 
 
