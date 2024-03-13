@@ -23,7 +23,7 @@
             <p class="f-title3">사업진행상황</p>
             <div class="btn-wrap">
                 <c:if test="${
-                    (rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' and rtnData.pmndvPmtYn eq 'Y') or
+                    rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' or
                     rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'
                 }">
                     <p class="box-label bigger arr"><span>보완요청</span></p>
