@@ -380,10 +380,9 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
                         if(confirm("위 정보로 사업을 신청하시겠습니까?")){
                             $(".loading-area").stop().fadeIn(200);
                             cmmCtrl.fileFrm(function(data){
-                                var cnstgSeq = data.actCnt;
                                 $(".loading-area").stop().fadeOut(200);
                                 //콜백함수. 페이지 이동
-                                location.replace("./complete?cnstgSeq="+cnstgSeq);
+                                location.replace("./complete");
                             }, "./insert", $formObj, "json");
                         }
                     }

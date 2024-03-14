@@ -1228,5 +1228,15 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         return cBATechGuidanceMapper.checkSurveyCnt(pCBATechGuidanceUpdateDTO);
     }
 
+    /**
+     * 등록된 설문 개수 조회
+     */
+    public int selectApplyCnmstgSeq(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception
+    {
+        return cBATechGuidanceMapper.selectApplyCnmstgSeq(pCBATechGuidanceInsertDTO);
+    }
+
+
+
 }
 

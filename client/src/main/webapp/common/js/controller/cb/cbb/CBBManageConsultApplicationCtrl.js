@@ -46,7 +46,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }else if(ctgryCd == "COMPANY01001"){
 
                 $(".fiveStar").show();
-                
+
                 // 품질 5스타
                 if(coInfo.list[0].qlty5StarCdNm){
                     $("#qlty5Star").text(coInfo.list[0].qlty5StarCdNm+" / "+coInfo.list[0].qlty5StarYear);
@@ -60,7 +60,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 }else{
                     $("#pay5Star").text("-");
                 }
-                
+
                 //기술 5스타
                 if(coInfo.list[0].tchlg5StarCdNm){
                     $("#techlg5Star").text(coInfo.list[0].tchlg5StarCdNm+" / "+coInfo.list[0].tchlg5StarYear);
@@ -207,7 +207,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             }
                         }
 
-
                         var cmssrInfo = {}
                         cmssrInfo.picName = picName;
                         cmssrInfo.cmssrHpNo = cmssrHpNo;
@@ -216,12 +215,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         cmssrInfo.picDeptNm = picDeptNm;
                         cmssrInfo.picPstnNm = picPstnNm;
                         cmssrInfo.ctgryCd = ctgryCd;
-                        cmmCtrl.jsonAjax(function (data) {
-                            var cmssr = JSON.parse(data);
-                            if(cmssr){
-                                location.href= "./consInfoApply?bsnmNo="+$("#bsnmNo").val()+"&cnstgSeq="+cmssr;
-                            }
-                        }, './cmssrInfo', cmssrInfo, "text");
+
+                        $("#consultFrm").attr("action","./consInfoApply");
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'bsnmNo', value:$("#bsnmNo").val() }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'picName', value:cmssrInfo.picName }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'cmssrHpNo', value:cmssrInfo.cmssrHpNo }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'picEmail', value:cmssrInfo.picEmail }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'cmssrCmpnTelNo', value:cmssrInfo.cmssrCmpnTelNo }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'picDeptNm', value:cmssrInfo.picDeptNm }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'picPstnNm', value:cmssrInfo.picPstnNm }));
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'ctgryCd', value:cmssrInfo.ctgryCd }));
+                        $("#consultFrm").submit();
+
                     }
                 }
             },

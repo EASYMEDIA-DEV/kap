@@ -11,8 +11,8 @@
 </script>
 <c:set var="csList" value="${rtnDto.list}"/>
 <%
-  String bsnmNo = request.getParameter("bsnmNo");
-  String cnstgSeq = request.getParameter("cnstgSeq");
+    String bsnmNo = request.getParameter("bsnmNo");
+    String cnstgSeq = request.getParameter("cnstgSeq");
 %>
 <input type="hidden" class="bsnmNo" value="<%=bsnmNo%>">
 <input type="hidden" class="cnstgSeq" value="<%=cnstgSeq%>">
@@ -57,16 +57,25 @@
         </div>
     </div>
 
-        <div class="divide-con-area">
-            <!--LNB 시작-->
-            <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
-            <!--LNB 종료-->
+    <div class="divide-con-area">
+        <!--LNB 시작-->
+        <jsp:include page="/WEB-INF/jsp/layout/lnb.jsp" />
+        <!--LNB 종료-->
 
-            <form id="frmData" name="frmData" method="post" enctype="multipart/form-data">
-                <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                <input type="hidden" class="bsnmNo" name="bsnmNo" value="<%=bsnmNo%>">
-                <input type="hidden" class="appctnDt" name="appctnDt" value="${date}">
-                <input type="hidden" class="cnstgSeq" name="cnstgSeq" value="<%=cnstgSeq%>">
+        <form id="frmData" name="frmData" method="post" enctype="multipart/form-data">
+            <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            <input type="hidden" class="bsnmNo" name="bsnmNo" value="<%=bsnmNo%>">
+            <input type="hidden" class="appctnDt" name="appctnDt" value="${date}">
+            <%--<input type="hidden" class="cnstgSeq" name="cnstgSeq" value="<%=cnstgSeq%>">--%>
+
+            <input type="hidden" class="picName" name="picName" value="${cBBManageConsultInsertDTO.picName}">
+            <input type="hidden" class="cmssrHpNo" name="cmssrHpNo" value="${cBBManageConsultInsertDTO.cmssrHpNo}">
+            <input type="hidden" class="picEmail" name="picEmail" value="${cBBManageConsultInsertDTO.picEmail}">
+            <input type="hidden" class="cmssrCmpnTelNo" name="cmssrCmpnTelNo" value="${cBBManageConsultInsertDTO.cmssrCmpnTelNo}">
+            <input type="hidden" class="picDeptNm" name="picDeptNm" value="${cBBManageConsultInsertDTO.picDeptNm}">
+            <input type="hidden" class="picPstnNm" name="picPstnNm" value="${cBBManageConsultInsertDTO.picPstnNm}">
+            <input type="hidden" class="ctgryCd" name="ctgryCd" value="${cBBManageConsultInsertDTO.ctgryCd}">
+
             <div class="right-con-area">
                 <div class="cont-sec-w">
                     <div class="cont-sec scroll-motion">
@@ -535,8 +544,8 @@
                     </div>
                 </div>
             </div>
-        </div>
     </div>
-    </div>
+</div>
+</div>
 </div>
 <!-- content 영역 end -->

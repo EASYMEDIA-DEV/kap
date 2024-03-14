@@ -121,4 +121,10 @@ public interface CBATechGuidanceService {
      * 설문 개수 조회
      */
     public int checkSurveyCnt(CBATechGuidanceUpdateDTO pCBATechGuidanceUpdateDTO) throws Exception;
+
+    /**
+     * 신청완료 페이지에 필요한 컨설팅 순번 조회
+     */
+    public int selectApplyCnmstgSeq(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO) throws Exception;
+
 }

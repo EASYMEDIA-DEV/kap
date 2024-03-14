@@ -17,26 +17,7 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald) {
         classname : {
         },
         immediately : function() {
-            var info = {};
-            info.cnstgSeq = $(".cnstgSeq").val();
-            cmmCtrl.jsonAjax(function (data) {
-                console.log(data)
-                var completeInfo = JSON.parse(data);
-                var regDtm = completeInfo.regDtm;
-                var name = completeInfo.name;
-                var cmpnNm = completeInfo.cmpnNm;
-                var appctnFldNm = completeInfo.appctnFldNm;
-                var appctnMemSeq = completeInfo.appctnMemSeq;
-                var etcNm = completeInfo.etcNm;
-                var cbsnCd = completeInfo.cbsnCd
 
-                var replacedRegDtm = regDtm.replace(/-/g, '.');
-                $(".regDtm").text(replacedRegDtm.slice(0,16));
-                $(".name").text(name);
-                $(".cmpnNm").text(cmpnNm);
-                $(".appctnFldNm").text(appctnFldNm);
-
-            }, './completeInfo', info, "text");
         }
     };
 

@@ -65,6 +65,11 @@
                     </div>--%>
                 </div>
             </div>
+
+            <form id="consultFrm" name="consultFrm" method="post" enctype="multipart/form-data">
+                <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
+            </form>
+
             <div class="cont-sec-w">
                 <div class="cont-sec no-border scroll-motion">
                     <div class="for-motion">

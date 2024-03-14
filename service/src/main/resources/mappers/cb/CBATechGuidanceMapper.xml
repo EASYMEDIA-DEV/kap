@@ -1306,6 +1306,22 @@
     </select>
 
     <!--
+        쿼리명 : CBATechGuidanceMapper.selectApplyCnmstgSeq
+        설  명 : 신청 순번 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.03.14    구은희       최초 생성
+    -->
+    <select id="selectApplyCnmstgSeq" parameterType="CBAConsultSuveyRsltListDTO" resultType="java.lang.Integer">
+        SELECT /* CBATechGuidanceMapper.selectApplyCnmstgSeq */
+            cnstg_seq
+        FROM CP_CNSTG_APPCTN_MST
+        WHERE appctn_mem_seq = #{memSeq}
+        ORDER BY reg_dtm desc
+        LIMIT 1
+    </select>
+
+    <!--
      쿼리명 : CBATechGuidanceMapper.deleteManageConsult
      설  명 : 컨설팅사업 경영컨설팅 신청마스터 테이블 삭제
       수정일     수정자       수정내용
@@ -1750,6 +1766,7 @@
     -->
     <select id="selectCompleteInfo" parameterType="CBATechGuidanceInsertDTO" resultType="CBATechGuidanceInsertDTO">
         SELECT /*CBATechGuidanceMapper.selectCompleteInfo*/
+            CNSTG_SEQ,
             REG_DTM,
             (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = A.APPCTN_MEM_SEQ) NAME,
             (SELECT CMPN_NM FROM CP_CMPN_MST WHERE BSNM_NO = A.APPCTN_BSNM_NO) CMPN_NM,

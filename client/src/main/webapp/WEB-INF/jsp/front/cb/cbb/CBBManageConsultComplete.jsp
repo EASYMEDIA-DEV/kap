@@ -9,12 +9,7 @@
         }
     }
 </script>
-<c:set var="csList" value="${rtnDto.list}"/>
-<%
-    String cnstgSeq = request.getParameter("cnstgSeq");
-%>
 <div class="cont-wrap" data-controller="controller/cb/cbb/CBBManageConsultCompleteCtrl">
-<input type="hidden" class="cnstgSeq" value="<%=cnstgSeq%>">
     <!--
       신청 페이지: apply-page 클래스 추가
       그 외 페이지: basic-page 클래스 추가
@@ -68,14 +63,14 @@
                                 <div class="def-list-w">
                                     <div class="def-list">
                                         <p class="tit f-head">신청일시</p>
-                                        <p class="txt f-sub-head regDtm"></p>
+                                        <p class="txt f-sub-head">${kl:convertDate(rtnData.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd HH:mm', '-')}</p>
                                     </div>
                                     <div class="def-list">
                                         <p class="tit f-head">신청정보</p>
                                         <p class="txt f-sub-head">
-                                            <span class="txt-item name"></span>
-                                            <span class="txt-item cmpnNm"></span>
-                                            <span class="txt-item appctnFldNm"></span>
+                                            <span class="txt-item">${rtnData.name}</span>
+                                            <span class="txt-item">${rtnData.cmpnNm}</span>
+                                            <span class="txt-item">${rtnData.appctnFldNm}</span>
                                         </p>
                                     </div>
                                 </div>
@@ -98,7 +93,7 @@
             <div class="page-bot-btn-sec scroll-motion">
                 <div class="btn-wrap align-center for-motion">
                     <div class="btn-set">
-                        <a class="btn-solid small black-bg" href="/my-page/consulting/list"><span>신청내역 보기</span></a>
+                        <a class="btn-solid small black-bg" href="/my-page/consulting/detail?detailsKey=${rtnData.cnstgSeq}"><span>신청내역 보기</span></a>
                     </div>
                 </div>
             </div>

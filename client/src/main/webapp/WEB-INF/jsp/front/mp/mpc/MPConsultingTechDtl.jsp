@@ -571,7 +571,7 @@
                                                     <c:choose>
                                                         <c:when test="${not empty rtnData.appctnTypeList}">
                                                             <c:forEach var="appctnTypeList" items="${rtnData.appctnTypeList}" varStatus="status">
-                                                                ${appctnTypeList.appctnTypeNm}/
+                                                                ${appctnTypeList.appctnTypeNm}
                                                             </c:forEach>
                                                         </c:when>
                                                         <c:otherwise>

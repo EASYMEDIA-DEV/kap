@@ -108,7 +108,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             consInfoApply : {
                 event : {
                     click : function(){
-                        location.href= "./consInfoApply?bsnmNo="+$("#bsnmNo").val()+"&sizeCd="+$("#sizeCd").val();
+                        $("#consultFrm").attr("action","./consInfoApply");
+                        $("#consultFrm").append($('<input/>', {type: 'hidden', name: 'bsnmNo', value:$("#bsnmNo").val() }));
+                        $("#consultFrm").submit();
                     }
                 }
             },
