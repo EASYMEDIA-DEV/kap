@@ -192,7 +192,7 @@ public class CBTechGuidanceController {
 
     @PostMapping("/insert")
     public String insertConsultInfoApplicationPage(CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO, CBBManageConsultInsertDTO pCBBManageConsultInsertDTO, CBBManageConsultUpdateDTO cBBManageConsultUpdateDTO,  MultipartHttpServletRequest multiRequest, ModelMap modelMap, @PathVariable("type") String type) throws Exception {
-        /*try {*/
+        try {
 
         COUserDetailsDTO cOLoginUserDTO = (COUserDetailsDTO) RequestContextHolder.getRequestAttributes().getAttribute("loginMap", RequestAttributes.SCOPE_SESSION);
         //이메일 발송
@@ -273,12 +273,12 @@ public class CBTechGuidanceController {
         cOMessageService.sendSms(smsDto, "");
 
 
-        /*}catch(Exception e){
+        }catch(Exception e){
             if (log.isErrorEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
         return "jsonView";
     }
     @PostMapping("/consInfoApply")
