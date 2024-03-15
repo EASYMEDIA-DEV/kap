@@ -208,15 +208,12 @@ define(["ezCtrl", "ezVald", "ezFile"], function(ezCtrl, ezVald, ezFile) {
             applyBtn : {
                 event : {
                     click : function () {
-                        var url = "./index";
                         if($("#memCd").val() == "CP") {
                             location.href = "./step1";
                         } else if($("#memCd").val() == "CS") {
                             alert("위원회원은 해당 서비스를 이용할 수 없습니다.");
-                            location.href = url;
                         } else if($("#memCd").val() != "" && $("#memCd").val() != "CP") {
                             alert("방문교육 신청은 부품사 회원만 신청 가능합니다.");
-                            location.href = url;
                         } else if($("#memCd").val() == "") {
                             if (confirm("로그인 후 이용 가능한 서비스입니다.\n로그인하시겠습니까?")) {
                                 location.href = "/login?rtnUrl=%2Feducation%2Fvisit%2Fstep1";

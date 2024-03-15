@@ -1249,7 +1249,6 @@
 			 , pstn_nm
 		FROM co_mem_mst A
 		where 1=1
-		 and mem_cd = 'CP'
 		 and mem_seq = #{memSeq}
 	</select>
 

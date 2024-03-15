@@ -121,8 +121,16 @@ public class EBCVisitEduController {
                 }
                 modelMap.addAttribute("applicantInfo", applicantDto);
                 modelMap.addAttribute("sqInfoList", mpePartsCompanyService.selectPartsComSQInfo(mpePartsCompanyDTO));
-            } else {
-                vwUrl = "redirect:../index";
+            } else if(applicantDto.getMemCd().equals("CO")){
+
+                modelMap.addAttribute("msg", "방문교육 신청은 부품사 회원만 신청 가능합니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+
+            } else if(applicantDto.getMemCd().equals("CS")){
+                modelMap.addAttribute("msg", "위원 계정은 해당 서비스를 이용할 수 없습니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
             }
         }
         catch (Exception e)
@@ -176,7 +184,7 @@ public class EBCVisitEduController {
                 }
                 modelMap.addAttribute("rtnInfo", ebcVisitEduDTO);
             } else {
-                vwUrl = "redirect:../index";
+                vwUrl = "redirect:./index";
             }
         }
         catch (Exception e)
@@ -240,13 +248,13 @@ public class EBCVisitEduController {
                 String applyCompleteYn = (String) session.getAttribute("applyCompleteYn");
 
                 if(applyCompleteYn == null || !applyCompleteYn.equals("Y")) {
-                    vwUrl = "redirect:../index";
+                    vwUrl = "redirect:./index";
                 } else {
                     ebcVisitEduDTO.setMemSeq(COUserDetailsHelperService.getAuthenticatedUser().getSeq());
                     modelMap.addAttribute("rtnData", ebcVisitEduService.selectVisitEduApplyInfo(ebcVisitEduDTO));
                 }
             } else {
-                vwUrl = "redirect:../index";
+                vwUrl = "redirect:./index";
             }
 
             // 방문신청여부 세션값 삭제
