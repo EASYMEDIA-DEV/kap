@@ -596,7 +596,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">년도</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm notRequired" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="50" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="edctnYear" name="edctnYear" value="${rtnInfo.edctnYear}" title="교육년도" maxlength="4" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
@@ -732,7 +732,7 @@
                             <div class="row">
                                 <label class="col-sm-1 control-label">참석률(%)</label>
                                 <div class="col-sm-10 form-inline">
-                                    <input type="text" class="form-control input-sm notRequired" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? formatPtcptRate : ''}" title="참석률(%)" maxlength="50" style="width: 220px;"/>
+                                    <input type="text" class="form-control input-sm notRequired" id="ptcptRate" name="ptcptRate" value="${not empty rtnInfo.ptcptRate ? formatPtcptRate : ''}" title="참석률(%)" maxlength="3" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');" style="width: 220px;"/>
                                 </div>
                             </div>
                         </fieldset>
