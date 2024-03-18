@@ -157,7 +157,9 @@
                                                             <div class="info-list-w ">
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">강사</p>
-                                                                    <p class="txt f-body2">${rtnData.isttrGroupName}</p>
+
+                                                                    <c:set var="isttrName" value="${not empty rtnData.isttrGroupName ? rtnData.rtnData : rtnData.isttrName}"/>
+                                                                    <p class="txt f-body2">${isttrName}</p>
                                                                 </div>
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">정원</p>
