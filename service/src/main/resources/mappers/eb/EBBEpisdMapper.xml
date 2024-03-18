@@ -70,6 +70,7 @@
 					END isttr_out_cnt
 				, fxnum_cnt
 				, fxnum_impsb_yn
+		     	, edctn_stts_cd
 				, accs_cnt
 				, rcrmt_mthd_cd
 				, rcrmt_mthd_cd_nm
