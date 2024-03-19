@@ -188,6 +188,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }else{
             $("#pstnNm").val("");
             $("#pstnNm").css("display", "none");
+            $("#pstnNm").addClass("notRequired");
         }
     }
 
@@ -196,7 +197,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             $("#newPstnNm").css("display", "block");
         }else{
             $("#newPstnNm").val("");
-            $("#newPstnNm").css("display", "none");
+            $("#newPstnNm").css("display" , "none");
+            $("#newPstnNm").addClass("notRequired");
         }
     }
 
@@ -427,7 +429,19 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             }else{
                 $("#pstnNm").val("");
                 $("#pstnNm").css("display", "none");
+                $("#pstnNm").addClass("notRequired");
             }
+
+            var newPstnCd = $("#newPstnNm").val();
+
+            if(newPstnCd =='MEM_CD01007'){
+                $("#newPstnNm").css("display", "block");
+            }else{
+                $("#newPstnNm").val("");
+                $("#newPstnNm").css("display" , "none");
+                $("#newPstnNm").addClass("notRequired");
+            }
+
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
                 cmmCtrl.setDropzone(trgtObj, {

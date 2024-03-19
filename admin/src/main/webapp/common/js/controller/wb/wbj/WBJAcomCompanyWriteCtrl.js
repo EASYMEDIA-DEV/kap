@@ -116,6 +116,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }else{
             $("#pstnNm").val("");
             $("#pstnNm").css("display", "none");
+            $("#pstnNm").addClass("notRequired");
         }
     }
 
@@ -125,6 +126,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }else{
             $("#newPstnNm").val("");
             $("#newPstnNm").css("display", "none");
+            $("#newPstnNm").addClass("notRequired");
         }
     }
 

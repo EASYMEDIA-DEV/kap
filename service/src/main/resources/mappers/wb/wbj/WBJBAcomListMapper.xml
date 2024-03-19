@@ -199,11 +199,14 @@
             mjr_prdct_2 = #{mjrPrdct2},
             mjr_prdct_3 = #{mjrPrdct3},
             qlty_5_star_cd = #{qlty5StarCd},
-            qlty_5_star_year = #{qlty5StarYear},
+            <if test="qlty5StarYear != null and qlty5StarYear != ''.toString() ">qlty_5_star_year = #{qlty5StarYear},</if>
+            <if test="qlty5StarYear == null or qlty5StarYear == ''.toString() ">qlty_5_star_year = NULL,</if>
             pay_5_star_cd = #{pay5StarCd},
-            pay_5_star_year = #{pay5StarYear},
+            <if test="pay5StarYear != null and pay5StarYear != ''.toString() ">pay_5_star_year = #{pay5StarYear},</if>
+            <if test="pay5StarYear == null or pay5StarYear == ''.toString() ">pay_5_star_year = NULL,</if>
             tchlg_5_star_cd = #{tchlg5StarCd},
-            tchlg_5_star_year = #{tchlg5StarYear},
+            <if test="tchlg5StarYear != null and tchlg5StarYear != ''.toString() ">tchlg_5_star_year = #{tchlg5StarYear},</if>
+            <if test="tchlg5StarYear == null or tchlg5StarYear == ''.toString() ">tchlg_5_star_year = NULL,</if>
             mod_id = #{modId},
             mod_ip = #{modIp},
             mod_dtm = now()
