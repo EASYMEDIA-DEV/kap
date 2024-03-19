@@ -411,6 +411,7 @@
             </div>
 
             <div id="appctnPdfArea2">
+            <c:if test="${not empty rtnInfo.appctnSeq}">
             <h6 class="mt0"><em class="ion-play mr-sm"></em>담당위원 정보</h6>
 
                 <fieldset>
@@ -448,6 +449,7 @@
                         </div>
                     </div>
                 </fieldset>
+            </c:if>
 
                 <fieldset>
                     <div class="form-group text-sm">
