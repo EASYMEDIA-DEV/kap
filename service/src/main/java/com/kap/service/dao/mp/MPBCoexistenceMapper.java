@@ -64,4 +64,9 @@ public interface MPBCoexistenceMapper {
      *  마이페이지 상생 사업 사용자 취소
      */
     public int updateUserCancel(MPBBsnSearchDTO mpbBnsSearchDTO);
+
+    /**
+     *  상생 사업 상세조회
+     */
+    public MPBBsnSearchDTO getBusinessInfo(MPBBsnSearchDTO mpbBnsSearchDTO);
 }

@@ -149,116 +149,124 @@ public class MPBCoexistenceController {
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
-            MPAUserDto mpaUserDto = new MPAUserDto();
-            mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
+            MPBBsnSearchDTO searchDTO = mpbCoexistenceService.getBusinessInfo(mpbBsnSearchDTO);
 
-            if (!"".equals(mpaUserDto.getDetailsKey())) {
-                MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
-                modelMap.addAttribute("coUser", mpaUserDtos);
-            }
+            if (searchDTO.getMemSeq().equals(cOUserDetailsDTO.getSeq())) {
+                MPAUserDto mpaUserDto = new MPAUserDto();
+                mpaUserDto.setDetailsKey(String.valueOf(cOUserDetailsDTO.getSeq()));
 
-            mpbBsnSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-            mpbBsnSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
-
-            RequestContextHolder.getRequestAttributes().setAttribute("appctnSeq", mpbBsnSearchDTO.getAppctnSeq(), RequestAttributes.SCOPE_SESSION);
-
-            //공통사업 + 각사업에 대한 페이지 서비스 분기
-            //공통사업 여부
-            String businessYn = mpbCoexistenceService.getBusinessYn(mpbBsnSearchDTO);
-
-            // 공통코드 배열 셋팅
-            ArrayList<String> cdDtlList = new ArrayList<String>();
-            cdDtlList.add("MEM_CD"); // 신청 진행상태
-
-            if("Y".equals(businessYn)) {
-                /*TO-DO 공통사업 진행*/
-                WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
-                wbbaCompanySearchDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
-                wbbaCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-
-                WBBAApplyMstDTO wbbApplyMstDTO = new WBBAApplyMstDTO();
-                wbbApplyMstDTO = wbbbCompanyService.selectCompanyDtl(wbbaCompanySearchDTO);
-                modelMap.addAttribute("rtnInfo", wbbApplyMstDTO);
-            } else {
-                if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
-                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
-                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
-                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
-                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
-                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
-                } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //스마트공장
-                    /* 스마트 상태 코드 값 */
-                    cdDtlList.add("BGN_REG_INF");
-                    /* 진행 단계 별 신청 정보*/
-                    WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
-                    wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
-                    wBFBRegisterSearchDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
-                    modelMap.addAttribute("rtnDto", mpbBsnSearchDTO);
-                    modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
-                    modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
-                    
-                } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //시험계측장비
-                    WBGAExamSearchDTO wbgaExamSearchDTO = new WBGAExamSearchDTO();
-                    wbgaExamSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyDtl(wbgaExamSearchDTO));
-                } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //검교정
-                    WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
-                    wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyDtl(wbhaCalibrationSearchDTO));
-                } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //공급망
-                    WBIBSupplySearchDTO wBIBSupplySearchDTO = new WBIBSupplySearchDTO();
-                    wBIBSupplySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
-                } else if ("BSN10".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //자동차부품
-                    WBJAcomSearchDTO wBJAcomSearchDTO = new WBJAcomSearchDTO();
-                    wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-
-                    modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
-                    modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
-                } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
-                    wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
-                } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
-                    wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
-                } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //보안환경구축
-                    WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
-                    wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
-                } else if ("BSN11".equals(mpbBsnSearchDTO.getBsnCd())) {
-                    //미래차공모전
-                    WBKBRegisterSearchDTO wBKBRegisterSearchDTO = new WBKBRegisterSearchDTO();
-                    wBKBRegisterSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
-                    modelMap.addAttribute("rtnData", wBKBRegisterService.selectFutureCarConRegDtl(wBKBRegisterSearchDTO));
+                if (!"".equals(mpaUserDto.getDetailsKey())) {
+                    MPAUserDto mpaUserDtos = mpaUserService.selectUserDtlTab(mpaUserDto);
+                    modelMap.addAttribute("coUser", mpaUserDtos);
                 }
-            }
 
-            modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-            modelMap.addAttribute("businessYn", businessYn);
-            modelMap.addAttribute("rtnBsnData", mpbCoexistenceService.getBsnDetail(mpbBsnSearchDTO));
-            //modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
-            modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-            if( !"BSN11".equals(mpbBsnSearchDTO.getBsnCd())){
-                modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
+                mpbBsnSearchDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+                mpbBsnSearchDTO.setBsnmNo(cOUserDetailsDTO.getBsnmNo());
+
+                RequestContextHolder.getRequestAttributes().setAttribute("appctnSeq", mpbBsnSearchDTO.getAppctnSeq(), RequestAttributes.SCOPE_SESSION);
+
+                //공통사업 + 각사업에 대한 페이지 서비스 분기
+                //공통사업 여부
+                String businessYn = mpbCoexistenceService.getBusinessYn(mpbBsnSearchDTO);
+
+                // 공통코드 배열 셋팅
+                ArrayList<String> cdDtlList = new ArrayList<String>();
+                cdDtlList.add("MEM_CD"); // 신청 진행상태
+
+                if("Y".equals(businessYn)) {
+                    /*TO-DO 공통사업 진행*/
+                    WBBACompanySearchDTO wbbaCompanySearchDTO = new WBBACompanySearchDTO();
+                    wbbaCompanySearchDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
+                    wbbaCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+
+                    WBBAApplyMstDTO wbbApplyMstDTO = new WBBAApplyMstDTO();
+                    wbbApplyMstDTO = wbbbCompanyService.selectCompanyDtl(wbbaCompanySearchDTO);
+                    modelMap.addAttribute("rtnInfo", wbbApplyMstDTO);
+                } else {
+                    if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                        wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
+                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                        wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
+                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+                        wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
+                    } else if ("BSN06".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //스마트공장
+                        /* 스마트 상태 코드 값 */
+                        cdDtlList.add("BGN_REG_INF");
+                        /* 진행 단계 별 신청 정보*/
+                        WBFBRegisterSearchDTO wBFBRegisterSearchDTO = new WBFBRegisterSearchDTO();
+                        wBFBRegisterSearchDTO.setAppctnSeq(mpbBsnSearchDTO.getAppctnSeq());
+                        wBFBRegisterSearchDTO.setBsnCd(mpbBsnSearchDTO.getBsnCd());
+                        modelMap.addAttribute("rtnDto", mpbBsnSearchDTO);
+                        modelMap.addAttribute("rtnData", wBFBRegisterCompanyService.getEditInfo(wBFBRegisterSearchDTO));
+                        modelMap.addAttribute("rtnRegisterData", wBFBRegisterCompanyService.getRegisterDtl(wBFBRegisterSearchDTO));
+
+                    } else if ("BSN07".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //시험계측장비
+                        WBGAExamSearchDTO wbgaExamSearchDTO = new WBGAExamSearchDTO();
+                        wbgaExamSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wbgaExamService.selectCompanyDtl(wbgaExamSearchDTO));
+                    } else if ("BSN08".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //검교정
+                        WBHACalibrationSearchDTO wbhaCalibrationSearchDTO = new WBHACalibrationSearchDTO();
+                        wbhaCalibrationSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wbhaCalibrationService.selectCompanyDtl(wbhaCalibrationSearchDTO));
+                    } else if ("BSN09".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //공급망
+                        WBIBSupplySearchDTO wBIBSupplySearchDTO = new WBIBSupplySearchDTO();
+                        wBIBSupplySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectSupplyDtl(wBIBSupplySearchDTO));
+                    } else if ("BSN10".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //자동차부품
+                        WBJAcomSearchDTO wBJAcomSearchDTO = new WBJAcomSearchDTO();
+                        wBJAcomSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+
+                        modelMap.addAttribute("rtnData", wBJBAcomListService.selectAcomDtl(wBJAcomSearchDTO));
+                        modelMap.addAttribute("rtnAppctnRsume", wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO));
+                    } else if ("BSN03".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+                        wBCBSecuritySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBCBSecurityService.selectCarbonCompanyDtl(wBCBSecuritySearchDTO));
+                    } else if ("BSN04".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+                        wBDBSafetySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBDBSafetyService.selectCarbonCompanyDtl(wBDBSafetySearchDTO));
+                    } else if ("BSN05".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //보안환경구축
+                        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+                        wBEBCarbonCompanySearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBEBCarbonCompanyService.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO));
+                    } else if ("BSN11".equals(mpbBsnSearchDTO.getBsnCd())) {
+                        //미래차공모전
+                        WBKBRegisterSearchDTO wBKBRegisterSearchDTO = new WBKBRegisterSearchDTO();
+                        wBKBRegisterSearchDTO.setDetailsKey(String.valueOf(mpbBsnSearchDTO.getAppctnSeq()));
+                        modelMap.addAttribute("rtnData", wBKBRegisterService.selectFutureCarConRegDtl(wBKBRegisterSearchDTO));
+                    }
+                }
+
+                modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
+                modelMap.addAttribute("businessYn", businessYn);
+                modelMap.addAttribute("rtnBsnData", mpbCoexistenceService.getBsnDetail(mpbBsnSearchDTO));
+                //modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
+                modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
+                if( !"BSN11".equals(mpbBsnSearchDTO.getBsnCd())){
+                    modelMap.addAttribute("rtnCompany", mpbCoexistenceService.selectCompanyUserDtl(mpbBsnSearchDTO));
+                }
+            } else {
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
             }
 
         } catch (Exception e) {

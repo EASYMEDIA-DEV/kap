@@ -286,6 +286,22 @@
     </update>
 
     <!--
+         쿼리명 : MPBCoexistenceMapper.getBusinessInfo
+         설  명 : 상생 사업 상세조회
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.24  김태훈     최초 생성
+    -->
+    <select id="getBusinessInfo" parameterType="mpbBsnSearchDTO" resultType="mpbBsnSearchDTO">
+        SELECT /* MPBCoexistenceMapper.selectSqList */
+            APPCTN_SEQ,
+            EPISD_SEQ,
+            MEM_SEQ
+        FROM CX_APPCTN_MST
+        WHERE APPCTN_SEQ = #{appctnSeq}
+    </select>
+
+    <!--
 		쿼리명 : selectCompanyListwhereSql
 		설  명 : 게시판 관리 where Sql
 	      수정일      수정자       수정내용

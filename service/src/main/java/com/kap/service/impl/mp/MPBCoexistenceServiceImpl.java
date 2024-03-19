@@ -163,4 +163,12 @@ public class MPBCoexistenceServiceImpl implements MPBCoexistenceService {
         respCnt = mpbCoexistenceMapper.updateUserCancel(mpbBnsSearchDTO);
         return respCnt;
     }
+
+    /**
+     *   상생 사업 상세조회
+     */
+    public MPBBsnSearchDTO getBusinessInfo(MPBBsnSearchDTO mpbBnsSearchDTO) throws Exception
+    {
+        return mpbCoexistenceMapper.getBusinessInfo(mpbBnsSearchDTO);
+    }
 }

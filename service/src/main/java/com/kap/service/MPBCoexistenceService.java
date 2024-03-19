@@ -53,4 +53,9 @@ public interface MPBCoexistenceService {
      *   마이페이지 상생 사업 사용자 신청취소
      */
     public int updateUserCancel(MPBBsnSearchDTO mpbBnsSearchDTO, String businessYn) throws Exception;
+
+    /**
+     *   상생 사업 상세조회
+     */
+    public MPBBsnSearchDTO getBusinessInfo(MPBBsnSearchDTO mpbBnsSearchDTO) throws Exception;
 }
