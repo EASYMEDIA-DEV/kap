@@ -206,10 +206,16 @@ public class EBMMypageController
 
         EBBEpisdDTO rtnDto = (EBBEpisdDTO)rtnMap.get("rtnData");
 
-
         //사용자 출석정보 호출
-
         if(rtnDto != null){
+
+
+            if(!COUserDetailsHelperService.getAuthenticatedUser().getSeq().equals(rtnDto.getMemSeq())){
+                modelMap.addAttribute("msg", "잘못된 접근입니다.");
+                modelMap.addAttribute("url", "/");
+                vwUrl = "front/COBlank.error";
+            }
+
 
             EBBPtcptDTO eBBPtcptDTO = new EBBPtcptDTO();
 
@@ -295,7 +301,7 @@ public class EBMMypageController
             vwUrl = "front/COBlank.error";
         }
 
-        return "front/eb/ebm/EBMEduApplyDtl.front";
+        return vwUrl;
     }
 
     /**
