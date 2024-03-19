@@ -145,7 +145,7 @@ public class MPBCoexistenceController {
     public String getCoexistenceView(MPBBsnSearchDTO mpbBsnSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
 
         String vwUrl = "front/mp/mpb/MPBCoexistenceView.front";
-        try {
+        /*try {*/
             COUserDetailsDTO cOUserDetailsDTO = null;
             cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 
@@ -269,12 +269,12 @@ public class MPBCoexistenceController {
                 vwUrl = "front/COBlank.error";
             }
 
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }
+        }*/
 
         return vwUrl;
     }
