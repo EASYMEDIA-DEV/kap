@@ -25,37 +25,6 @@
                 <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${registerDtl.bsnmNo}" />
                 <input type="hidden" class="notRequired" name="appctnSeq" value="${rtnBasicData.appctnSeq}" />
 
-                <h6 class="mt0"><em class="ion-play mr-sm"></em>회차 정보</h6>
-                <fieldset>
-                    <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">연도<span class="star"> *</span></label>
-                        <div class="col-sm-5" style="margin-left: -15px">
-                            <div class="col-sm-6" style="margin-left: -15px">
-                                <select class="form-control input-sm" id="optYear" name="year" title="연도">
-                                    <option value="">연도 전체</option>
-                                    <c:forEach var="optYear" items="${optYearList}" varStatus="status">
-                                        <option value="${optYear}" <c:if test="${registerDtl.year eq optYear}">selected</c:if> >
-                                                ${optYear}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                        </div>
-
-                        <label class="col-sm-1 control-label">회차<span class="star"> *</span></label>
-                        <div class="col-sm-2">
-                            <select class="form-control input-sm" id="optEpisd" name="episd" title="회차">
-                                <option value="">회차 전체</option>
-                                <c:forEach var="optEpisd" items="${rtnBasicData.episdList}" varStatus="status" >
-                                    <option value="${optEpisd}" <c:if test="${registerDtl.episd eq optEpisd}">selected</c:if> >
-                                            ${optEpisd}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
-                </fieldset>
-
                 <div id="appctnPdfArea1">
                     <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
 
