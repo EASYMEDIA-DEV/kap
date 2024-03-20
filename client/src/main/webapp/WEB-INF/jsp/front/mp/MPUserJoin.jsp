@@ -51,7 +51,7 @@
 <%!
     // 함수 정의
     public String nullChk(String str) {
-        if(str == null || str.equals("null")) {
+        if(str == null || str.equals("null") || str.equals("NaN")) {
             return "";
         }
         return str;
