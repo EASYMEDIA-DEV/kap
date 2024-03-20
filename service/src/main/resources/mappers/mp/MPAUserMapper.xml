@@ -396,10 +396,7 @@
                         ma.cmpn_nm like concat('%', #{q}, '%')
                         or
                         ma.work_bsnm_no like concat('%', replace(#{q},'-',''), '%')
-                        or
-                        ma.cmt_mod_name like concat('%', #{q}, '%')
-                        or
-                        ma.cmssr_cbsn_cd_nm like concat('%' , #{q}, '%')
+
                         )
                     </otherwise>
                 </choose>
