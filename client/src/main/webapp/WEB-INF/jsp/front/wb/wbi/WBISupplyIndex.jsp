@@ -174,16 +174,14 @@
                                                 <div class="txt">
                                                     <div class="btn-wrap">
                                                         <div class="btn-set">
-                                                            <c:choose>
-                                                                <c:when test="${empty rtnRoundDtl.optnList}">
+                                                            <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                                                                <c:if test="${empty item.fileSeq}">
                                                                     -
-                                                                </c:when>
-                                                                <c:otherwise>
-                                                                    <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                                                        <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download><span>${item.fileNm}</span></a>
-                                                                    </c:forEach>
-                                                                </c:otherwise>
-                                                            </c:choose>
+                                                                </c:if>
+                                                                <c:if test="${not empty item.fileSeq}">
+                                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download><span>${item.fileNm}</span></a>
+                                                                </c:if>
+                                                            </c:forEach>
                                                         </div>
                                                     </div>
                                                 </div>

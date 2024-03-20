@@ -174,14 +174,31 @@
                                                     <div class="txt">
                                                         <!-- 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
                                                         <div class="btn-wrap">
+                                                            <c:choose>
+                                                                <c:when test="${empty rtnRoundForm.smrtFctryAppctnFileSeq or empty rtnRoundForm.smrtFctryScrtyFileSeq}" >
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div class="btn-set">
+                                                                        <a class="btn-text-icon download-bg downloadAll" href="javascript:" title="파일 다운로드" download=""><span>첨부파일 전체 다운로드</span></a>
+                                                                    </div>
+                                                                </c:otherwise>
+                                                            </c:choose>
                                                             <div class="btn-set">
-                                                                <a class="btn-text-icon download-bg downloadAll" href="javascript:" title="파일 다운로드" download=""><span>첨부파일 전체 다운로드</span></a>
-                                                            </div>
-                                                            <div class="btn-set">
-                                                                <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryAppctnFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.appctnFileNm}</span></a>
-                                                                <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.scrtyFileNm}</span></a>
-                                                                <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryAppctnFileSeq}">
-                                                                <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryScrtyFileSeq}">
+                                                                <c:choose>
+                                                                    <c:when test="${empty rtnRoundForm.smrtFctryAppctnFileSeq and empty rtnRoundForm.smrtFctryAppctnFileSeq}" >
+                                                                        -
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <c:if test="${not empty rtnRoundForm.smrtFctryAppctnFileSeq}" >
+                                                                            <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.scrtyFileNm}</span></a>
+                                                                            <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryScrtyFileSeq}">
+                                                                        </c:if>
+                                                                        <c:if test="${not empty rtnRoundForm.smrtFctryAppctnFileSeq}" >
+                                                                            <a class="btn-text-icon download btnDownload" data-file-seq="${rtnRoundForm.smrtFctryScrtyFileSeq}" href="javascript:void(0);" download="" title="양식 다운로드"><span>${rtnRoundForm.scrtyFileNm}</span></a>
+                                                                            <input type="hidden" class="optnFile" value="${rtnRoundForm.smrtFctryScrtyFileSeq}">
+                                                                        </c:if>
+                                                                    </c:otherwise>
+                                                                </c:choose>
                                                             </div>
                                                         </div>
                                                         <!-- // 2024-02-13 첨부파일전체다운로드 추가로 인한 마크업 변경 -->
