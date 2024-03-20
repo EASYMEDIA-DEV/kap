@@ -19,7 +19,7 @@
         ,F.CMPN_NM
         ,F.BSNM_NO
         ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM
-        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = NULLIF(F.SIZE_CD,'')) AS SIZE_NM
         ,D.NAME
         ,D.ID
         ,D.HP_NO
@@ -78,7 +78,7 @@
         ,F.CMPN_NM
         ,F.BSNM_NO
         ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM
-        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = NULLIF(F.SIZE_CD,'')) AS SIZE_NM
         ,D.NAME
         ,D.ID
         ,D.HP_NO
@@ -646,7 +646,7 @@
              , A.CTGRY_CD
              , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
              , A.SIZE_CD
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(SIZE_CD,'')) AS SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE
@@ -713,7 +713,7 @@
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.RSUME_STTS_CD) AS RSUME_STTS_NM
              ,B.CMPN_NM
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = B.CTGRY_CD) AS CTGRY_NM
-             ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.CMPN_SIZE_CD) AS SIZE_NM
+             ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = NULLIF(A.CMPN_SIZE_CD,'')) AS SIZE_NM
              ,A.APPCTN_BSNM_NO
              ,CONCAT((SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.FIRST_RGNS_CD) , ' ' , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.SCND_RGNS_CD)) AS RGNS_NAME
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = A.APPCTN_FLD_CD) AS APPCTN_FLD_NM

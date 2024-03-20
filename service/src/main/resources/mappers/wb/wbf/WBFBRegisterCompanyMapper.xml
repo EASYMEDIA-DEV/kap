@@ -31,7 +31,7 @@
                     B.appctn_seq, B.episd_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.pmndv_pmt_yn,
                     C.*,
                     (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
-                    (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm,
                     (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) as rsume_ord
                 FROM
                 (
@@ -85,7 +85,7 @@
             ,B.mem_seq, B.id, B.name, B.email, B.dept_cd, B.dept_dtl_nm, B.pstn_cd, B.pstn_nm, B.hp_no, B.tel_no, B.work_bsnm_no
             ,C.bsnm_no,C.cmpn_nm, C.rprsnt_nm, C.ctgry_cd, C.size_cd, C.bsnm_no, C.stbsm_dt, C.zipcode, C.bsc_addr, C.dtl_addr, C.sls_pmt, C.qlty_5_star_cd, C.pay_5_star_cd, C.tchlg_5_star_cd,C.mple_cnt,C.mjr_prdct_1,C.mjr_prdct_2,C.mjr_prdct_3
             ,(SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) ctgry_cd_nm /* 구분 */
-            ,(SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) size_cd_nm /* 규모 */
+            ,(SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) size_cd_nm /* 규모 */
             ,C.tel_no as comp_tel /* 회사 전화번호 */
             ,YEAR(C.qlty_5_star_year) as qlty_5_star_year
             ,YEAR(C.pay_5_star_year) as pay_5_star_year
@@ -129,7 +129,7 @@
              , A.CTGRY_CD
              , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_CD_NM
              , A.SIZE_CD
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_CD_NM
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(SIZE_CD,'')) AS SIZE_CD_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE

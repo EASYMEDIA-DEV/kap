@@ -27,7 +27,7 @@
                                       (SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME,
                                       C.*,
                                       (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
-                                      (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
+                                      (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.size_cd,'')) as size_cd_nm,
                                       (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
                                   FROM
                                       (
@@ -71,7 +71,7 @@
                                 B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.mod_dtm,
                                 C.*,
                                 (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
-                                (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm,
+                                (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.size_cd,'')) as size_cd_nm,
                                 (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd
                                 FROM
                                 (
@@ -187,7 +187,7 @@
              , A.CTGRY_CD
              , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
              , A.SIZE_CD
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(SIZE_CD,'')) AS SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE

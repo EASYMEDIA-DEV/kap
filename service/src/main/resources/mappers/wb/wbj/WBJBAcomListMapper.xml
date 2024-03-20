@@ -19,7 +19,7 @@
         , F.mod_dtm
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
         , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
@@ -90,7 +90,7 @@
         , F.mod_dtm
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
         , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.size_cd) as size_cd_nm
+        , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm

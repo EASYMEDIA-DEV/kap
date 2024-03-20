@@ -24,7 +24,7 @@
         ,B.SBRDN_BSNM_NO
         ,F.RPRSNT_NM
         ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.CTGRY_CD ) AS CTGRY_NM
-        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = F.SIZE_CD) AS SIZE_NM
+        ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = NULLIF(F.SIZE_CD,'')) AS SIZE_NM
         ,D.NAME
         ,D.ID
         ,D.HP_NO
@@ -1315,7 +1315,7 @@
              , A.CTGRY_CD
              , (SELECT cd_nm FROM co_code_mst WHERE cd = CTGRY_CD) AS CTGRY_NM
              , A.SIZE_CD
-             , (SELECT cd_nm FROM co_code_mst WHERE cd = SIZE_CD) AS SIZE_NM
+             , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(A.SIZE_CD,'')) AS SIZE_NM
              , A.STBSM_DT
              , A.TEL_NO AS COMP_TEL
              , A.ZIPCODE
