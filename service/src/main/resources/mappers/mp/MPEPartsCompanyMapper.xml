@@ -682,8 +682,8 @@
                  , CP_MST.APPCTN_MEM_SEQ
                  , CMPN_MST.SLS_PMT
                  , CMPN_MST.MPLE_CNT
-                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
-                 , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
+                 , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CASE WHEN CD = '' THEN NULL ELSE CD END FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_NM
+                 , (SELECT CD FROM CO_CODE_MST WHERE CD = (SELECT CASE WHEN CD = '' THEN NULL ELSE CD END FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CBSN_CD
                  , CP_MST.FIRST_RGNS_CD
                  , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.FIRST_RGNS_CD AND CD_ID = 'ADDR_CD') FIRST_RGNS_NM
                  , CP_MST.SCND_RGNS_CD
@@ -705,7 +705,7 @@
                  , CPR_MST.init_vst_file_seq
                  , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
                  , CP_MST.itrdc_file_seq
-                 , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
+                 , (SELECT MIN(FILE_ORD) FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
                  , CP_MST.APPCTN_DT
                  , CPR_MST.FLTY_IMPVM_RATE
                  , CPR_MST.GUIDE_PSCND_DT
@@ -797,7 +797,7 @@
            , CPR_MST.init_vst_file_seq
            , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CPR_MST.init_vst_file_seq AND USE_YN = 'Y') init_vst_file_ORD
            , CP_MST.itrdc_file_seq
-           , (SELECT FILE_ORD FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
+           , (SELECT MIN(FILE_ORD) FROM CO_FILE_DTL WHERE FILE_SEQ = CP_MST.itrdc_file_seq AND USE_YN = 'Y') itrdc_file_ORD
            , CP_MST.APPCTN_DT
            , (CASE WHEN CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS03'
                     AND (SELECT IFNULL(vst_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE() then 'MNGCNSLT_STATUS06'
