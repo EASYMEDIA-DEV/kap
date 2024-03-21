@@ -201,7 +201,8 @@
 				, (SELECT web_path FROM co_file_dtl WHERE file_seq = 1 order by file_ord desc limit 1) AS web_path
 				, b.exps_yn
 			from ed_edctn_episd_mst b
-			where  exps_yn = 'Y'
+			where  b.exps_yn = 'Y'
+			and edctn_stts_cd = 'EDCTN_STTS_CD01'
 
 			) bb, (SELECT @rownum:=0) TMP
 
