@@ -12,6 +12,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 	// form Object
 	var $formObj = jQuery("#frmData");
+	var editorInitCount = 0;
 
 	// 과정에 소속된 차수 조회
 	var search = function (page){
@@ -44,6 +45,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					$("input[name='expsYn']").prop("disabled", false);
 					$("button[type='submit']").prop("disabled", false);
 					$("#btnList").prop("disabled", false);
+					$("#csrfKey").prop("disabled", false);
+					$("#edctnSeq").prop("disabled", false);
+					$("#pageRowSize").prop("disabled", false);
+					$("#listRowSize").prop("disabled", false);
+					$("#pageIndex").prop("disabled", false);
+					$("#couseEpisdYn").prop("disabled", false);
 
 					$(".dz-hidden-input").prop("disabled",true);
 					$(".dropzone").removeClass("dz-clickable");
@@ -53,20 +60,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 
 				}else{
-
 					_readOnly = false;
 				}
 
-				jQuery("textarea[id$='StduyCntn']").each(function(){
-					cmmCtrl.setEditor({
-						editor : jQuery(this).attr("id"),
-						height : 400,
-						readOnly : _readOnly
+				//상세 페이지에 처음 입장 시에만 에디터 셋팅 (안그럼 맨 밑 회차정보 목록 페이징 이동 시 셋팅 중복 에러 뜸)
+				if(editorInitCount < 1) {
+					jQuery("textarea[id$='StduyCntn']").each(function(){
+						cmmCtrl.setEditor({
+							editor : jQuery(this).attr("id"),
+							height : 400,
+							readOnly : _readOnly
+						});
 					});
-				});
+				}
+				editorInitCount++;
+
 
 				//총 건수
-				ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+				// ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+
 				//페이징 처리
 				cmmCtrl.listPaging(totCnt, $formObj, "listContainer", "pagingContainer");
 			}, "/mngwserc/eb/ebb/select", $formObj, "POST", "html");

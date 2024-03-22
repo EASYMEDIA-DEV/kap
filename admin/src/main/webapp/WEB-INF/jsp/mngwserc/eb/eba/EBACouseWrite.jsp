@@ -13,6 +13,11 @@
             <input type="hidden" class="notRequired" id="copyYn" name="copyYn" value="${rtnDto.copyYn}" />
             <input type="hidden" class="notRequired" id="couseEpisdYn" name="couseEpisdYn" value="Y" />
 
+            <!-- 페이징 버튼 사이즈 -->
+            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+            <!-- 현재 페이징 번호 -->
+            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex}" />
 
             <!-- 첨부파일 순번 -->
             <input type="hidden" class="notRequired" id="thnlFileSeq" name="thnlFileSeq" value="${rtnDto.thnlFileSeq}" />
