@@ -1,5 +1,6 @@
 package com.kap.service.impl.sm;
 
+import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.service.COFileService;
 import com.kap.service.SMJFormService;
@@ -55,22 +56,122 @@ public class SMJFormServiceImpl implements SMJFormService {
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(smjFormDTO.getFileList());
 
         if(smjFormDTO.getTypeCd().equals("BUSINESS01")) {
-            smjFormDTO.setTchgdFileSeq(fileSeqMap.get("tchgdFileSeq"));
-            smjFormDTO.setMngmntFileSeq(fileSeqMap.get("mngmntFileSeq"));
+            for(COFileDTO fileDTO : smjFormDTO.getFileList()) {
+                // dropzone에서 업로드한 파일 삭제 시 null 처리
+                if(fileDTO.getFieldNm().equals("tchgdFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setTchgdFileSeq(null);
+                    } else {
+                        smjFormDTO.setTchgdFileSeq(fileSeqMap.get("tchgdFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("mngmntFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setMngmntFileSeq(null);
+                    } else {
+                        smjFormDTO.setMngmntFileSeq(fileSeqMap.get("mngmntFileSeq"));
+                    }
+                }
+            }
 
         } else if(smjFormDTO.getTypeCd().equals("BUSINESS02")) {
-            smjFormDTO.setScrtyEnvrnmtFileSeq(fileSeqMap.get("scrtyEnvrnmtFileSeq"));
-            smjFormDTO.setSftyFcltyFileSeq(fileSeqMap.get("sftyFcltyFileSeq"));
-            smjFormDTO.setCrbnEmsnsFileSeq(fileSeqMap.get("crbnEmsnsFileSeq"));
-            smjFormDTO.setSmrtFctryAppctnFileSeq(fileSeqMap.get("smrtFctryAppctnFileSeq"));
-            smjFormDTO.setSmrtFctryScrtyFileSeq(fileSeqMap.get("smrtFctryScrtyFileSeq"));
-            smjFormDTO.setExamMsremntFileSeq(fileSeqMap.get("examMsremntFileSeq"));
-            smjFormDTO.setClbtnFileSeq(fileSeqMap.get("clbtnFileSeq"));
-            smjFormDTO.setSplychnStblztnFileSeq(fileSeqMap.get("splychnStblztnFileSeq"));
-            smjFormDTO.setCarPartAppctnFileSeq(fileSeqMap.get("carPartAppctnFileSeq"));
-            smjFormDTO.setFtreCarAppctnFileSeq(fileSeqMap.get("ftreCarAppctnFileSeq"));
+
+            for(COFileDTO fileDTO : smjFormDTO.getFileList()) {
+                // dropzone에서 업로드한 파일 삭제 시 null 처리
+                if(fileDTO.getFieldNm().equals("scrtyEnvrnmtFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setScrtyEnvrnmtFileSeq(null);
+                    } else {
+                        smjFormDTO.setScrtyEnvrnmtFileSeq(fileSeqMap.get("scrtyEnvrnmtFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("sftyFcltyFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setSftyFcltyFileSeq(null);
+                    } else {
+                        smjFormDTO.setSftyFcltyFileSeq(fileSeqMap.get("sftyFcltyFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("crbnEmsnsFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setCrbnEmsnsFileSeq(null);
+                    } else {
+                        smjFormDTO.setCrbnEmsnsFileSeq(fileSeqMap.get("crbnEmsnsFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("smrtFctryAppctnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setSmrtFctryAppctnFileSeq(null);
+                    } else {
+                        smjFormDTO.setSmrtFctryAppctnFileSeq(fileSeqMap.get("smrtFctryAppctnFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("smrtFctryScrtyFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setSmrtFctryScrtyFileSeq(null);
+                    } else {
+                        smjFormDTO.setSmrtFctryScrtyFileSeq(fileSeqMap.get("smrtFctryScrtyFileSeq"));
+                    }
+                }
+
+
+                if(fileDTO.getFieldNm().equals("examMsremntFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setExamMsremntFileSeq(null);
+                    } else {
+                        smjFormDTO.setExamMsremntFileSeq(fileSeqMap.get("examMsremntFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("clbtnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setClbtnFileSeq(null);
+                    } else {
+                        smjFormDTO.setClbtnFileSeq(fileSeqMap.get("clbtnFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("splychnStblztnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setSplychnStblztnFileSeq(null);
+                    } else {
+                        smjFormDTO.setSplychnStblztnFileSeq(fileSeqMap.get("splychnStblztnFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("carPartAppctnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setCarPartAppctnFileSeq(null);
+                    } else {
+                        smjFormDTO.setCarPartAppctnFileSeq(fileSeqMap.get("carPartAppctnFileSeq"));
+                    }
+                }
+
+                if(fileDTO.getFieldNm().equals("ftreCarAppctnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setFtreCarAppctnFileSeq(null);
+                    } else {
+                        smjFormDTO.setFtreCarAppctnFileSeq(fileSeqMap.get("ftreCarAppctnFileSeq"));
+                    }
+                }
+            }
+
         } else if(smjFormDTO.getTypeCd().equals("BUSINESS03")) {
-            smjFormDTO.setTtlEdctnFileSeq(fileSeqMap.get("ttlEdctnFileSeq"));
+            for(COFileDTO fileDTO : smjFormDTO.getFileList()) {
+                // dropzone에서 업로드한 파일 삭제 시 null 처리
+                if(fileDTO.getFieldNm().equals("ttlEdctnFileSeq")) {
+                    if (fileDTO.getStatus().equals("delfile")) {
+                        smjFormDTO.setTtlEdctnFileSeq(null);
+                    } else {
+                        smjFormDTO.setTtlEdctnFileSeq(fileSeqMap.get("ttlEdctnFileSeq"));
+                    }
+                }
+            }
         }
         return smjFormMapper.updateFormDtl(smjFormDTO);
     }
