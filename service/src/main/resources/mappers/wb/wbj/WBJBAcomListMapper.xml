@@ -24,7 +24,7 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
-        , (SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ) AS CMPN_SEQ_NM
+        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), DEPT_NM) AS CMPN_SEQ_NM
         , F.CMPN_SEQ AS BSNM_NO
         , F.NAME
         , F.HP_NO
@@ -95,7 +95,7 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
-        , (SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ) AS CMPN_SEQ_NM
+        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), DEPT_NM) AS CMPN_SEQ_NM
         , C.BSNM_NO
         , F.NAME
         , F.HP_NO
