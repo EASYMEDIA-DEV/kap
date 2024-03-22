@@ -23,8 +23,8 @@
         FROM
             SM_FILE_PUBC_MST A
         WHERE 1=1
-            ORDER BY
-             REG_DTM DESC
+        ORDER BY REG_DTM DESC
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--

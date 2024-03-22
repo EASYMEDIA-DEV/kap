@@ -294,7 +294,9 @@
     <sql id="selectUserListWhereSql">
         <where>
             and ma.mem_cd = #{memCd}
-            and ma.wthdrw_yn = #{wthdrwYn}
+            <if test="wthdrwYn != null and wthdrwYn != ''.toString() ">
+                and ma.wthdrw_yn = #{wthdrwYn}
+            </if>
             <if test="date == 1">
                 <if test="strtDt != null and strtDt != ''.toString() ">
                     and ma.reg_dtm <![CDATA[>=]]> str_to_date(#{strtDt}, '%Y-%m-%d')
