@@ -158,7 +158,7 @@
                                                                 <div class="info-list">
                                                                     <p class="tit f-caption2">강사</p>
 
-                                                                    <c:set var="isttrName" value="${not empty rtnData.isttrGroupName ? rtnData.rtnData : rtnData.isttrName}"/>
+                                                                    <c:set var="isttrName" value="${not empty rtnData.isttrGroupName ? rtnData.isttrGroupName : rtnData.isttrName}"/>
                                                                     <p class="txt f-body2">${isttrName}</p>
                                                                 </div>
                                                                 <div class="info-list">
@@ -398,24 +398,27 @@
 
                         <%
 
+                            if(eBBEpisdDTO.getSrvSeq() !=null){
+                                String srvStrtString = eBBEpisdDTO.getSrvStrtDtm();//"2024-01-15 16:25:00";
+                                String srvEndString = eBBEpisdDTO.getSrvEndDtm();//"2024-01-15 16:25:00";
 
-                            String srvStrtString = eBBEpisdDTO.getSrvStrtDtm();//"2024-01-15 16:25:00";
-                            String srvEndString = eBBEpisdDTO.getSrvEndDtm();//"2024-01-15 16:25:00";
+                                Date convertedDate1 = sdf.parse(srvStrtString);
+                                Date convertedDate2 = sdf.parse(srvEndString);
 
-                            Date convertedDate1 = sdf.parse(srvStrtString);
-                            Date convertedDate2 = sdf.parse(srvEndString);
+                                // Calendar 객체를 사용하여 30분 전의 날짜 및 시간 계산
 
-                            // Calendar 객체를 사용하여 30분 전의 날짜 및 시간 계산
+                                cal.setTime(convertedDate1);
+                                Date srvStrt = cal.getTime();
+                                cal.setTime(convertedDate2);
+                                Date srvEnd = cal.getTime();
 
-                            cal.setTime(convertedDate1);
-                            Date srvStrt = cal.getTime();
-                            cal.setTime(convertedDate2);
-                            Date srvEnd = cal.getTime();
+                                // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
+                                pageContext.setAttribute("currentDate", parsedDate);//현재 시간
+                                pageContext.setAttribute("srvStrt", srvStrt);//설문 시작시간
+                                pageContext.setAttribute("srvEnd", srvEnd);//설문 시작시간
+                            }
 
-                            // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
-                            pageContext.setAttribute("currentDate", parsedDate);//현재 시간
-                            pageContext.setAttribute("srvStrt", srvStrt);//설문 시작시간
-                            pageContext.setAttribute("srvEnd", srvEnd);//설문 시작시간
+
                         %>
 
                         <c:choose>
