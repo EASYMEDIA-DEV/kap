@@ -21,7 +21,7 @@
 
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/wb/wbe/WBEBCarbonCompanyUpdateWriteCtrl">
-        <h6 class="mt0"><em class="ion-play mr-sm"></em>신청부품사 상세/수정</h6>
+        <h5 class="mt0"><b>신청부품사 상세/수정</b></h5>
         <form class="form-horizontal" id="frmData" name="frmData" method="post" >
 
             <!-- 현재 페이징 번호 -->
@@ -82,7 +82,7 @@
                 <fieldset>
                     <div class="form-group text-sm">
                         <div class="col-sm-5" style="margin-left: -15px">
-                            <h6 class="mt0">신청자 정보</h6>
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 정보</h6>
                         </div>
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-5">
@@ -170,7 +170,7 @@
                 <fieldset>
                     <div class="form-group text-sm">
                         <div class="col-sm-5" style="margin-left: -15px">
-                            <h6 class="mt0">부품사 정보</h6>
+                            <h6 class="mt0"><em class="ion-play mr-sm"></em>부품사 정보</h6>
                         </div>
                         <label class="col-sm-2 control-label"></label>
                         <div class="col-sm-5">
@@ -425,7 +425,7 @@
                 </div>
             </fieldset>
             </div>
-            <h6 class="mt0">신청자 변경 이력</h6>
+            <h6 class="mt0"><em class="ion-play mr-sm"></em>신청자 변경 이력</h6>
 
             <fieldset>
                 <div class="col-sm-12 p0 mt">
@@ -449,7 +449,7 @@
 
             <div id="appctnPdfArea2">
 
-            <h6 class="mt0">담당위원 정보</h6>
+            <h6 class="mt0"><em class="ion-play mr-sm"></em>담당위원 정보</h6>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -489,7 +489,7 @@
 
 
 
-            <h6 class="mt0">사업신청 정보</h6>
+            <h6 class="mt0"><em class="ion-play mr-sm"></em>사업신청 정보</h6>
 
             <fieldset>
                 <div class="form-group text-sm">
@@ -519,7 +519,7 @@
                 </div>
             </fieldset>
 
-            <h6 class="mt0">지급관리</h6>
+            <h6 class="mt0"><em class="ion-play mr-sm"></em>지급관리</h6>
 
 
             <fieldset>
@@ -997,36 +997,36 @@
                                     </div>
                                     <input type="hidden" class="notRequired" id="insptChkFileSeq" name="insptChkFileSeq" value="${rtnSpprt[1].insptChkFileSeq}" />
                                 </fieldset>
-                                <fieldset>
-                                    <div class="form-group text-sm">
-                                        <label class="col-sm-1 control-label">관리자메모</label>
-                                        <div class="col-sm-5">
-                                            <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" value="${rtnData.admMemo}" title="관리자메모"  placeholder="관리자 메모를 입력해주세요." maxlength="500">${rtnData.admMemo}</textarea>
-                                            <div class="pull-right">
-                                                <div class="pull-right">
-                                                    <p class="form-control-static">${ kl:convertDate(rtnData.admMemoModDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
-                                                </div>
-                                                <div>
-                                                    <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </fieldset>
 
                             </div>
                         </div>
                     </div>
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">관리자메모</label>
+                            <div class="col-sm-11">
+                                <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" value="${rtnData.admMemo}" title="관리자메모"  placeholder="관리자 메모를 입력해주세요." maxlength="2000" rows="10">${rtnData.admMemo}</textarea>
+                                <div class="pull-right">
+                                    <div class="pull-right">
+                                        <p class="form-control-static">${ kl:convertDate(rtnData.admMemoModDtm , 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-sm btn-default" id="btnUpdAdmMemo">관리자메모 업데이트</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <div class="pull-right">
+                        <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
+                    </div>
                 </div>
-            </div>
-            <div class="pull-right">
-                <button type="button" class="btn btn-sm btn-default" id="appctnPdfDownload">신청정보 다운로드</button>
             </div>
         </div>
 
-            <h6 class="mt0">사업진행 상세</h6>
+            <h6 class="mt0"><em class="ion-play mr-sm"></em>사업진행 상세</h6>
             <hr>
-            <h6 class="mt0"><em class="ion-play mr-sm"></em>전체 진행상태 : ${rtnDtl[maxRsumeOrd-1].rsumeSttsNm } (${rtnDtl[maxRsumeOrd-1].mngSttsNm }) </h6>
+            <h5 class="mt0"><em class="ion-play mr-sm"></em>전체 진행상태 : ${rtnDtl[maxRsumeOrd-1].rsumeSttsNm } (${rtnDtl[maxRsumeOrd-1].mngSttsNm }) </h5>
             <br>
 
             <div class="container-fluid">
