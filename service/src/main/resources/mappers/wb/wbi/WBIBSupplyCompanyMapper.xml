@@ -42,9 +42,9 @@
                         ) C /* 회원-회사 JOIN 테이블 */
                         ON C.mem_seq = B.mem_seq
                     ) D
+                    <include refid="selectListWhereSql" />
+                    ORDER BY year DESC, episd DESC, reg_dtm desc
                 ) F
-        <include refid="selectListWhereSql" />
-        ORDER BY year DESC, episd DESC, reg_dtm desc
         <if test="excelYn != 'Y'.toString() ">
             LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>
