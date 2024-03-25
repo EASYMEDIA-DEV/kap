@@ -44,7 +44,7 @@
                                 ) TMP
                 ) COMPANY_INFO
         <include refid="selectCompanyListwhereSql" />
-        ORDER BY year DESC, episd DESC
+        ORDER BY APPCTN_SEQ DESC
         <if test="excelYn != 'Y'.toString() ">
             LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>
