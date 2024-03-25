@@ -2413,7 +2413,12 @@
 		, a.reg_ip
 		, a.reg_id
 		, a.exps_yn
-		FROM ed_edctn_episd_mst a
+		FROM (
+			SELECT * FROM ed_edctn_episd_mst AA WHERE 1=1
+			AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+			AND edctn_end_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+			ORDER BY EPISD_SEQ DESC,EPISD_YEAR DESC, EPISD_ORD DESC
+		) a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
 		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
 
@@ -2613,7 +2618,12 @@
 		, a.reg_dtm
 		, a.reg_ip
 		, a.reg_id
-		FROM ed_edctn_episd_mst a
+		FROM (
+			SELECT * FROM ed_edctn_episd_mst AA WHERE 1=1
+			AND edctn_strt_dtm <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d 00:00:00')
+			AND edctn_end_dtm <![CDATA[<=]]> DATE_FORMAT(#{endDt}, '%Y-%m-%d 23:59:59')
+			ORDER BY EPISD_SEQ DESC,EPISD_YEAR DESC, EPISD_ORD DESC
+		) a
 		LEFT JOIN ed_edctn_prcs_mst b ON b.edctn_seq = a.edctn_seq
 		LEFT OUTER JOIN ( SELECT CD AS bd_cd, PMT, ETC_NM, EDCTN_SEQ, EPISD_ORD, EPISD_YEAR FROM ed_edctn_bdget_expns_dtl) C ON c.EDCTN_SEQ = a.EDCTN_SEQ AND c.EPISD_ORD = a.EPISD_ORD AND c.EPISD_YEAR = a.EPISD_YEAR
 

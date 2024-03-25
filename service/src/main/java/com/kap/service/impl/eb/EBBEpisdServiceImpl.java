@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -987,9 +988,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public void excelDownload1(EBBEpisdExcelDTO eBBEpisdExcelDTO, HttpServletResponse response) throws Exception{
 
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFCellStyle style_header = workbook.createCellStyle();
-		XSSFCellStyle style_body = workbook.createCellStyle();
+		SXSSFWorkbook workbook = new SXSSFWorkbook();
+		CellStyle style_header = workbook.createCellStyle();
+		CellStyle style_body = workbook.createCellStyle();
 		Sheet sheet = workbook.createSheet();
 
 		Row row = null;
@@ -1349,7 +1350,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			//셀 너비 자동맞춤 시작
 			for(int j=0; j<=81;j++){
 				if(j == 10) continue;//병합된 셀이므로 패스
-				sheet.autoSizeColumn(j);
+				//sheet.autoSizeColumn(j);
+				sheet.setColumnWidth(j, Math.min(255 * 50, sheet.getColumnWidth(j) + 500));
 
 				//교육기간 시작~종료
 				if(j == 9){
@@ -1357,7 +1359,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 					sheet.setColumnWidth(j, Math.min(255 * 50, sheet.getColumnWidth(j) + 100));
 				//교육장소, 협력기관, 예산비고, 지출비고
 				}else if(j == 11 || j == 12 || j == 69 || j == 81){
-					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2500 );
+					sheet.setColumnWidth(j, Math.min(255 * 50, sheet.getColumnWidth(j) + 2500));
+					//sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2500 );
 				//그외 일반적인 셀들
 				}else{
 					//sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+1024 );
