@@ -129,7 +129,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
-            //리스트 조회
+            // 리스트 조회
+            cmmCtrl.setFormData($formObj);
             search();
         }
     };

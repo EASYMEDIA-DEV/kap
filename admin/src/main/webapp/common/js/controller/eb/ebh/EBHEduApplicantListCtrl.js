@@ -290,7 +290,7 @@ define(["ezCtrl"], function(ezCtrl) {
         },
         immediately : function() {
             //리스트 조회
-            // cmmCtrl.setFormData($formObj);
+            cmmCtrl.setFormData($formObj);
             search();
 
             var searchInput = $("#btnSearch").closest('fieldset').find('input:text');
