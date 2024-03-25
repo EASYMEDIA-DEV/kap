@@ -12,9 +12,11 @@
                     </div>
                     <div class="con-area">
                         <div class="scroll-area">
-                            <div class="p-cont-sec" style="height: 500px;">
-                                <div class="sec-con-area" id="eduRoom" style="height: 500px;">
+                            <div class="p-cont-sec">
+                                <div class="sec-con-area">
+                                    <div class="map-area" id="eduRoom">
 
+                                    </div>
                                 </div>
                             </div>
                             <div class="p-cont-sec">
