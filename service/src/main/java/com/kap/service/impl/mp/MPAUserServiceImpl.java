@@ -1041,7 +1041,13 @@ public class MPAUserServiceImpl implements MPAUserService {
 
             //사업자등록번호
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getWorkBsnmNo() == null ? "-" : list.get(i).getWorkBsnmNo().substring(0,3)+"-"+list.get(i).getWorkBsnmNo().substring(3,5)+"-"+list.get(i).getWorkBsnmNo().substring(5));
+
+
+            String workBsnmNo= (list.get(i).getWorkBsnmNo() != null) ? list.get(i).getWorkBsnmNo()  : "-";
+
+            workBsnmNo= (workBsnmNo.length() == 10) ? list.get(i).getWorkBsnmNo().substring(0,3)+"-"+list.get(i).getWorkBsnmNo().substring(3,5)+"-"+list.get(i).getWorkBsnmNo().substring(5) :workBsnmNo;
+
+            cell.setCellValue(workBsnmNo);
             cell.setCellStyle(style_body);
 
             //구분
