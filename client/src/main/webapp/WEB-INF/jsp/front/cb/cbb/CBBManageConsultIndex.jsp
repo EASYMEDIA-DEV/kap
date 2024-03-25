@@ -35,8 +35,8 @@
                                     </div>
                                     <div class="txt-area">
                                         <p class="txt f-head">
-                                            상주경영컨설팅 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다.
-                                            <br/>이후 담당자가 연락하여, 초도 방문 후 상주경영컨설팅 부품사를 선정하게 됩니다.
+                                            경영컨설팅 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다.
+                                            <br/>이후 담당자가 연락하여, 초도 방문 후 경영컨설팅 부품사를 선정하게 됩니다.
                                         </p>
                                     </div>
                                     <div class="btn-wrap">
@@ -54,7 +54,7 @@
 
                                 <div class="divide-flex-box download">
                                     <div class="left">
-                                        <p class="f-body2">상주경영컨설팅 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
+                                        <p class="f-body2">경영컨설팅 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
                                         <p class="f-caption2">* 개선활동 추진계획서는 다운로드 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
                                     </div>
                                     <div class="right has-button">
@@ -95,7 +95,7 @@
                 <div class="cont-sec scroll-motion">
                     <div class="for-motion">
                         <div class="sec-tit-area">
-                            <p class="f-title3"><span class="menu-name">경영컨설팅 자문위원 소개</span> &#40;<span class="item-count">${rtnDto.totalCount}</span>명&#41;</p>
+                            <p class="f-title3"><span class="menu-name">경영컨설팅 경영전문위원 소개</span> &#40;<span class="item-count">${rtnDto.totalCount}</span>명&#41;</p>
                         </div>
                         <div class="sec-con-area popUp">
                             <div class="list-sec">
@@ -134,14 +134,14 @@
             <div class="accepting-fixed-area">
                 <div class="for-position">
                     <button class="open-click-area" type="button">
-                        <p class="tit"><c:out value="${sysYear}" /> 상주경영컨설팅 <span class="status">접수중</span></p>
+                        <p class="tit"><c:out value="${sysYear}" /> 경영컨설팅 <span class="status">접수중</span></p>
                         <div class="btn-text-icon plus"><span>더보기</span></div>
                     </button>
 
                     <div class="hide-area">
                         <div class="inner-con">
                             <div class="tit-area">
-                                <p class="f-title1"><c:out value="${sysYear}" /> 상주경영컨설팅 접수중 (상시접수중)</p>
+                                <p class="f-title1"><c:out value="${sysYear}" /> 경영컨설팅 접수중 (상시접수중)</p>
                             </div>
                             <!-- 2024-01-24 첨부파일 영역 추가 -->
                             <div class="con-area">

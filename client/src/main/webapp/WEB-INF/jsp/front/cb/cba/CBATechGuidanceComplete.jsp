@@ -60,7 +60,7 @@
                     <div class="for-motion">
                         <div class="status-con-box gray-bg completed">
                             <div class="cont-for-padding">
-                                <p class="f-title1"><span class="color-sky">상주기술지도</span><br> 신청이 완료되었습니다.</p>
+                                <p class="f-title1"><span class="color-sky">기술지도</span><br> 신청이 완료되었습니다.</p>
                                 <div class="def-list-w">
                                     <div class="def-list">
                                         <p class="tit f-head">신청일시</p>

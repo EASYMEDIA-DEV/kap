@@ -252,7 +252,7 @@
                                         </dl>
                                         <dl class="info">
                                             <dt class="f-body1">담당업무</dt>
-                                            <dd class="f-body2">상주기술지도, 상생형 스마트공장 담당</dd>
+                                            <dd class="f-body2">기술지도, 상생형 스마트공장 담당</dd>
                                         </dl>
                                     </div>
                                 </div>

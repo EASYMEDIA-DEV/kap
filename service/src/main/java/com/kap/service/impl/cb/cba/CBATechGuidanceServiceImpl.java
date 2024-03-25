@@ -538,8 +538,8 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             //이름
             receiverDto.setName(tempDto.getName());
             //사업명(치환문자1)
-            //receiverDto.setNote1("2024 상주기술지도");
-            receiverDto.setNote1(tempDto.getBsnYear() + " 상주" +tempDto.getCnstgNm());
+            //receiverDto.setNote1("2024 기술지도");
+            receiverDto.setNote1(tempDto.getBsnYear() + " " +tempDto.getCnstgNm());
             //부품사명(치환문자3)
             receiverDto.setNote3(tempDto.getCmpnNm());
             //신청일

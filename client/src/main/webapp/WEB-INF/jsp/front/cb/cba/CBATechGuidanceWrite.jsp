@@ -71,7 +71,7 @@
                     <div class="cont-sec scroll-motion">
                         <div class="for-motion">
                             <div class="sec-tit-area">
-                                <p class="f-title3">상주기술지도 신청정보를 입력해주세요.</p>
+                                <p class="f-title3">기술지도 신청정보를 입력해주세요.</p>
                                 <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
                             </div>
                             <div class="sec-con-area">
@@ -353,7 +353,7 @@
                                             <div class="data-line-w">
                                                 <div class="data-line">
                                                     <div class="noti-txt-w">
-                                                        <p class="f-body2">상주기술지도 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
+                                                        <p class="f-body2">기술지도 신청 시 회사소개서(자율 양식)와 개선활동 추진계획서가 필수로 첨부되어야 합니다.</p>
                                                         <P class="bullet-noti-txt f-caption2">* 개선활동 추진계획서는 아래 [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</P>
                                                         <P class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</P>
                                                     </div>

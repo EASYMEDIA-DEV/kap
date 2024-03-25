@@ -565,9 +565,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             receiverDto.setName(tempDto.getName());
             //사업명(치환문자1)
 
-
-
-            receiverDto.setNote1(tempDto.getBsnYear() + " 상주" +tempDto.getCnstgNm());
+            receiverDto.setNote1(tempDto.getBsnYear() + " " +tempDto.getCnstgNm());
             //부품사명(치환문자3)
             receiverDto.setNote3(tempDto.getCmpnNm());
             //신청일

@@ -1685,9 +1685,7 @@
 
             <!-- 키워드 -->
             <if test="q != null and q !='' ">
-                AND CONCAT(BSN_YEAR, CNSTG_NM) LIKE REPLACE(    concat('%', #{q}, '%')           , '상주', '')
-
-
+                AND CONCAT(BSN_YEAR, CNSTG_NM) LIKE REPLACE(concat('%', #{q}, '%'), '상주', '')
             </if>
 
             <!--<if test="dateType != null and dateType != ''.toString() ">

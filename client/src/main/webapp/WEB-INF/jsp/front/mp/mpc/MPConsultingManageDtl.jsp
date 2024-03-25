@@ -20,7 +20,7 @@
                                 <div class="gray-bg-sec">
                                     <div class="flex">
                                         <input type="hidden" name="bsnYear" class="bsnYear" value="${rtnData.bsnYear}">
-                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>상주${rtnData.cnstgNm}</p>
+                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>${rtnData.cnstgNm}</p>
                                         <div class="group">
                                             <c:choose>
                                                 <c:when test="${manageDto.rsumeSttsCd eq 'MNGTECH_STATUS10' || manageDto.rsumeSttsCd eq 'MNGTECH_STATUS11' || manageDto.rsumeSttsCd eq 'MNGTECH_STATUS12'}">

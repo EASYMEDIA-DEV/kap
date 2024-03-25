@@ -113,7 +113,7 @@
 
             <div class="evaluation-category">
                 <div class="left">
-                    <p class="subject-tit f-title3">2023 상주기술지도</p>
+                    <p class="subject-tit f-title3">2023 기술지도</p>
                     <div class="sort-label-area">
                         <p class="label"><span>기술지도</span></p>
                     </div>

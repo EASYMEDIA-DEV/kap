@@ -30,7 +30,7 @@
                                 <div class="gray-bg-sec">
                                     <div class="flex">
                                         <input type="hidden" name="bsnYear" class="bsnYear" value="${rtnData.bsnYear}">
-                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>상주${rtnData.cnstgNm}</p>
+                                        <p class="f-title1">${rtnData.bsnYear} <br class="only-mobile"/>${rtnData.cnstgNm}</p>
                                         <div class="group">
                                             <c:if test="${rtnData.cnstgCd eq 'CONSULT_GB01'}">
                                                 <c:choose>

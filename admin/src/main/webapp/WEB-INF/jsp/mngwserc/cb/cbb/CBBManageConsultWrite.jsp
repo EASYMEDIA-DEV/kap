@@ -510,7 +510,7 @@
         <div id="appctnPdfArea2">
             <fieldset>
                 <span class="dtl-tab" style="float:right"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
-                <h6 class="mt0"><em class="ion-play mr-sm"></em>상주경영컨설팅 신청정보</h6>
+                <h6 class="mt0"><em class="ion-play mr-sm"></em>경영컨설팅 신청정보</h6>
             </fieldset>
             <fieldset>
                 <div class="form-group text-sm">

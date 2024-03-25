@@ -215,7 +215,7 @@ public class CBTechGuidanceController {
             //이름
             receiverDto.setName(cOLoginUserDTO.getName());
             //사업명(치환문자1)
-            receiverDto.setNote1("2024 상주기술지도");
+            receiverDto.setNote1("2024 기술지도");
             //신청분야(치환문자2)
             String cbsnCdNm = "";
             if(pCBATechGuidanceInsertDTO.getCbsnCd().contains("METAL")){
@@ -248,7 +248,7 @@ public class CBTechGuidanceController {
             //이름
             receiverDto.setName(cOLoginUserDTO.getName());
             //사업명(치환문자1)
-            receiverDto.setNote1("2024 상주경영컨설팅");
+            receiverDto.setNote1("2024 경영컨설팅");
             //신청분야(치환문자2)
             receiverDto.setNote2(pCBBManageConsultInsertDTO.getAppctnFldNm());
             //부품사명(치환문자3)

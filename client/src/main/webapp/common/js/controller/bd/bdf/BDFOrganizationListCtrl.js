@@ -232,7 +232,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 if(rtnData) {
                                     var cmssrType = "";
                                     if(rtnData.cmssrCbsnCd.charAt(10) == 3) {
-                                        cmssrType = "자문위원";
+                                        cmssrType = "경영전문위원";
                                     }
                                     else {
                                         cmssrType = "전문위원";

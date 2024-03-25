@@ -38,7 +38,7 @@
                                             <p class="txt"><span class="menu-name">전문위원</span></p>
                                         </a>
                                         <a class="swiper-slide txt-tab-btn btnFilter" href="javascript:" data-cmssr-cbsn-cd="MEM_CD03003">
-                                            <p class="txt"><span class="menu-name">자문위원</span></p>
+                                            <p class="txt"><span class="menu-name">경영전문위원</span></p>
                                         </a>
                                     </div>
                                 </div>
@@ -137,7 +137,7 @@
                                         </div>
                                     </div>
                                     <div class="section-tit-area">
-                                        <p class="tit f-title2"><span class="menu-name">자문위원</span> &#40;<span class="item-count" id="advCnt">${ rtnAdvData.totalCount }</span>명&#41;</p>
+                                        <p class="tit f-title2"><span class="menu-name">경영전문위원</span> &#40;<span class="item-count" id="advCnt">${ rtnAdvData.totalCount }</span>명&#41;</p>
                                     </div>
                                     <div class="tab-con-area">
                                         <div class="article-list-w txt-card-list" id="advList"><!--  txt-card-list: 텍스트 카드일 경우 + bg가 있을 경우 -->
@@ -157,7 +157,7 @@
                                                         <div class="txt-box">
                                                             <div class="names">
                                                                 <p class="name f-title3">${ list.name }</p>
-                                                                <%--<p class="position f-sub-head">자문위원</p>--%>
+                                                                <%--<p class="position f-sub-head">경영전문위원</p>--%>
                                                             </div>
                                                             <div class="labels">
                                                                 <p class="box-label"><span>${ list.cmssrCbsnCdNm }</span></p>

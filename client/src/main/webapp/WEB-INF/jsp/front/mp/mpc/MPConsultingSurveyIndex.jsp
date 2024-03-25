@@ -14,7 +14,7 @@
 
             <div class="inner-con-box evaluation"><!-- evaluation: 평가하기 대기 페이지 -->
                 <div class="cont-for-padding">
-                    <p class="f-title1">${rtnData.bsnYear} 상주${rtnData.cnstgNm} </p>
+                    <p class="f-title1">${rtnData.bsnYear} ${rtnData.cnstgNm} </p>
                     <div class="sort-label-area">
                         <p class="label"><span>${rtnData.cnstgNm}</span></p>
                     </div>
