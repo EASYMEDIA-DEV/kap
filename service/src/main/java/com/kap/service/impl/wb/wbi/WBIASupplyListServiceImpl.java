@@ -183,8 +183,6 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
         wBRoundMstSearchDTO = wBIASupplyListMapper.getRoundDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstSearchDTO.setStageOrd(1);
-
         if (wBRoundMstSearchDTO != null) {
             //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
             wBRoundMstSearchDTO.setOptnList(wBIASupplyListMapper.selectOPtnList(wBRoundMstSearchDTO));
