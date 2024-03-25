@@ -882,8 +882,8 @@ public class EBCVisitEduServiceImpl implements EBCVisitEduService {
         COMailDTO toMngMailForm = new COMailDTO();
         toMngMailForm.setSubject("["+siteName+"] 현장방문교육이 접수되었습니다.");
 
-        //이메일 //담당자 이상훈 : skill@kapkorea.org //개발서버 테스트 후 변경 필요
-        mngReceiverDto.setEmail("eghee@easymedia.net");
+        //이메일 //담당자: 이상훈(skill@kapkorea.org)
+        mngReceiverDto.setEmail("skill@kapkorea.org");
         // 신청자명
         mngReceiverDto.setName(applicantDto.getName());
         //치환문자1 부품사명

@@ -564,6 +564,9 @@
         <if test="mainPostYn != null and mainPostYn != ''">
             AND MAIN_POST_YN = #{mainPostYn}
         </if>
+        <if test="mainPostYn == null">
+            LIMIT 1;
+        </if>
     </select>
 
     <!--
