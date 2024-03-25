@@ -1169,26 +1169,26 @@
                 <choose>
                     <when test="srchDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND INFO.reg_dtm <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(INFO.reg_dtm) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                            AND DATE(INFO.REG_DTM) <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                     <when test="srchDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND INFO.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(INFO.REG_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND INFO.REG_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                            AND DATE(INFO.REG_DTM) <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                     <when test="srchDate == 3">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND INFO.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(INFO.MOD_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND INFO.MOD_DTM <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
+                            AND DATE(INFO.MOD_DTM) <![CDATA[ < ]]> DATE_ADD(str_to_date(#{endDt}, '%Y-%m-%d'), interval 1 day)
                         </if>
                     </when>
                 </choose>

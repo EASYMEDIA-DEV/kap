@@ -366,26 +366,26 @@
                 <choose>
                     <when test="carbonDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND REG_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND REG_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 3">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND MOD_DTM <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(MOD_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND MOD_DTM <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(MOD_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                 </choose>
