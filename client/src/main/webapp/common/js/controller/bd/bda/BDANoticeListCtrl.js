@@ -37,10 +37,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var openCnt = $("#infoCard").find(".open").length // 보이는 게시물
 
                         if(pageCnt < page){
-                            $("#infoCard").children("a").slice(openCnt+mainPostCnt,openCnt+mainPostCnt+10).show();
-                            $("#infoCard").children("a").slice(openCnt+mainPostCnt,openCnt+mainPostCnt+10).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt+mainPostCnt,openCnt+mainPostCnt+10).addClass("open");
-                            openCnt = openCnt + 10;
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).show();
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).removeClass("open");
+                            $("#infoCard").children("a").slice(openCnt,openCnt+10).addClass("open");
+                            openCnt = openCnt - mainPostCnt + 10;
+
                             $(".cntText").text("(" + openCnt +"/"+ chilCnt + ")");
                         }else{
                             $("#infoCard").find(".close").show();
@@ -66,10 +67,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         immediately : function() {
 
             if(chilCnt > 10){
-                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).hide();
-                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).removeClass("open");
-                $("#infoCard").children("a").slice(10+mainPostCnt,chilCnt+mainPostCnt).addClass("close");
-                var openCnt = $("#infoCard").find(".open").length; // 보이는 게시물
+                $("#infoCard").children("a").slice(10,chilCnt+mainPostCnt).hide();
+                $("#infoCard").children("a").slice(10,chilCnt+mainPostCnt).removeClass("open");
+                $("#infoCard").children("a").slice(10,chilCnt+mainPostCnt).addClass("close");
+                var openCnt = $("#infoCard").find("a.normalPost.open").length; // 보이는 게시물
                 $(".cntText").text("(" + openCnt + "/" + chilCnt + ")");
             }else{
                 $(".moreBtn").hide();

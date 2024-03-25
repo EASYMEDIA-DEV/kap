@@ -47,7 +47,7 @@
                                                                     <img src="${ list.webPath }" alt="${ list.fileDsc }">
                                                                 </c:when>
                                                                 <c:otherwise>
-                                                                    <img src="" alt="">
+
                                                                 </c:otherwise>
                                                             </c:choose>
                                                         </div>

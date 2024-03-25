@@ -23,7 +23,7 @@
                                     <c:when test="${not empty fileList.list}">
                                         <div class="attatched-file-area">
                                             <c:forEach var="fileList" items="${fileList.list}">
-                                                <a class="btn-text-icon download-bg download" href="/file/download?fileSeq=${fileList.fileSeq}&fileOrd=${fileList.fileOrd}" title="파일 다운로드" download><span>${fileList.fileName}</span></a>
+                                                <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${fileList.fileSeq}&fileOrd=${fileList.fileOrd}" title="파일 다운로드" download><span>${fileList.fileName}</span></a>
                                             </c:forEach>
                                         </div>
                                     </c:when>
