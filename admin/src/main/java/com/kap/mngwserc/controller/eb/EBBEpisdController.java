@@ -458,9 +458,12 @@ public class EBBEpisdController {
                 eBBEpisdDTO.setEpisdYear(eBBEpisdDTO.getOrgEpisdYear());
             }
 
-            if(!eBBEpisdDTO.getEpisdOrd().equals(eBBEpisdDTO.getOrgEpisdOrd())){
-                eBBEpisdDTO.setEpisdOrd(eBBEpisdDTO.getOrgEpisdOrd());
+            if(eBBEpisdDTO.getEpisdOrd() != null && eBBEpisdDTO.getOrgEpisdOrd() != null) {
+                if (!eBBEpisdDTO.getEpisdOrd().equals(eBBEpisdDTO.getOrgEpisdOrd())) {
+                    eBBEpisdDTO.setEpisdOrd(eBBEpisdDTO.getOrgEpisdOrd());
+                }
             }
+
             modelMap.addAttribute("rtnData", eBBEpisdService.setPtcptList(eBBEpisdDTO));
             modelMap.addAttribute("eBBEpisdDTO", eBBEpisdDTO);
         }

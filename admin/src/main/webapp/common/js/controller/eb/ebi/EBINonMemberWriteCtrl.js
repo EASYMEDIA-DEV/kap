@@ -1209,11 +1209,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(".eduIsttrSearch").focus();
 						return false
 					}
-
-					if($("#fxnumCnt").val() == ""){
-						alert("정원수를 입력해주세요");
-						$("#fxnumCnt").focus();
-						return false;
+					if(!$("#fxnumImpsbYn").prop('checked')) {
+						if($("#fxnumCnt").val() == ""){
+							alert("정원수를 입력해주세요");
+							$("#fxnumCnt").focus();
+							return false;
+						}
 					}
 
 					if($("#picNm").val() == ""){
@@ -1591,10 +1592,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						actForm.isttrSeqList = isttrSeqList; //강사
 
-						if($("#fxnumCnt").val() == ""){
-							alert("정원수를 입력해주세요");
-							$("#fxnumCnt").focus();
-							return false;
+						if(!$("#fxnumImpsbYn").prop('checked')) {
+							if ($("#fxnumCnt").val() == "") {
+								alert("정원수를 입력해주세요");
+								$("#fxnumCnt").focus();
+								return false;
+							}
 						}
 
 						if($("#picNm").val() == ""){

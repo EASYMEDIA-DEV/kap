@@ -227,8 +227,8 @@
                         <input type="hidden" class="optnFile" value="${item.fileSeq}">
                     </c:forEach>
                 </c:if>
-            </div>
-    </c:if>
+            </c:if>
+        </div>
     </div>
 </div>
 <!-- content 영역 end -->

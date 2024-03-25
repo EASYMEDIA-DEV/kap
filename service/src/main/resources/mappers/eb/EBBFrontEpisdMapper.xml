@@ -100,6 +100,9 @@
 											FROM ed_edctn_episd_mst b
 											WHERE b.exps_yn = 'Y'
 											AND edctn_stts_cd = 'EDCTN_STTS_CD01'
+											<if test="applyListYn == 'N'.toString()">
+												AND b.episd_year = DATE_FORMAT(NOW(), '%Y')
+											</if>
 									) bb, (SELECT @rownum:=0) TMP
 						ORDER BY accs_status_order asc, accs_strt_dtm ASC) bbb
 						GROUP BY edctn_seq
@@ -203,7 +206,9 @@
 			from ed_edctn_episd_mst b
 			where  b.exps_yn = 'Y'
 			and edctn_stts_cd = 'EDCTN_STTS_CD01'
-
+			<if test="applyListYn == 'N'.toString()">
+				AND b.episd_year = DATE_FORMAT(NOW(), '%Y')
+			</if>
 			) bb, (SELECT @rownum:=0) TMP
 
 

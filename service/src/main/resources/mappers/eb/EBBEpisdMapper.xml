@@ -836,7 +836,7 @@
 				   , a.srv_end_dtm
 		           , (select titl from sv_mst where srv_seq = a.srv_seq) as srv_nm
 				   , (select COUNT(mem_seq) from sv_rspn_mst WHERE srv_seq = a.srv_seq and rfnc_seq = a.episd_seq) AS srv_mem_cnt /*설문 참여자수*/
-				   , (SELECT COUNT(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord) AS edctn_mem_cnt
+				   , (SELECT COUNT(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS edctn_mem_cnt
 				   , a.exam_seq
 		           , a.exam_strt_dtm
 		           , a.exam_end_dtm

@@ -162,32 +162,32 @@
 			<if test="strtDt != null and strtDt != ''.toString() ">
 				<choose>
 					<when test="srchDate == 1">
-						AND C.EDCTN_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND DATE(C.EDCTN_STRT_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 					<when test="srchDate == 2">
-						AND C.ACCS_STRT_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND DATE(C.ACCS_STRT_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 					<when test="srchDate == 3">
-						AND A.REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND DATE(A.REG_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 					<when test="srchDate == 4">
-						AND A.MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+						AND DATE(A.MOD_DTM) <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
 					</when>
 				</choose>
 			</if>
 			<if test="endDt != null and endDt != ''.toString() ">
 				<choose>
 					<when test="srchDate == 1">
-						AND C.EDCTN_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND DATE(C.EDCTN_END_DTM) <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 					<when test="srchDate == 2">
-						AND C.ACCS_END_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND DATE(C.ACCS_END_DTM) <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 					<when test="srchDate == 3">
-						AND A.REG_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND DATE(A.REG_DTM) <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 					<when test="srchDate == 4">
-						AND A.MOD_DTM <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
+						AND DATE(A.MOD_DTM) <![CDATA[ < ]]> DATE_ADD(STR_TO_DATE(#{endDt}, '%Y-%m-%d'), interval 1 day)
 					</when>
 				</choose>
 			</if>
