@@ -3,7 +3,6 @@ package com.kap.front.controller.wb.wbi;
 import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbi.WBIBSupplySearchDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
@@ -57,8 +56,7 @@ public class WBISupplyController {
     public final WBIBSupplyCompanyService wBIBSupplyCompanyService;
     public final COGCntsService pCOGCntsService;
     public final COCodeService cOCodeService;
-    /* 양식 파일 */
-    public final SMJFormService smjFormService;
+
 
     /**
      * 메인
@@ -77,10 +75,6 @@ public class WBISupplyController {
             modelMap.addAttribute("rtnData", wBIASupplyListService.selectSupplyList(wBRoundMstSearchDTO));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBIASupplyListService.getRoundDtl(wBRoundMstSearchDTO));
-
-            SMJFormDTO smjFormDTO = new SMJFormDTO();
-            smjFormDTO.setTypeCd("BUSINESS02");
-            modelMap.addAttribute("rtnRoundForm", smjFormService.selectFormDtl(smjFormDTO));
 
             RequestContextHolder.getRequestAttributes().removeAttribute("contentAuth", RequestAttributes.SCOPE_SESSION);
         } catch (Exception e) {
@@ -179,9 +173,6 @@ public class WBISupplyController {
             } else {
                 wBRoundMstSearchDTO.setStageOrd(1);
                 modelMap.addAttribute("rtnRoundDtl", wBIASupplyListService.getRoundDtl(wBRoundMstSearchDTO));
-                SMJFormDTO smjFormDTO = new SMJFormDTO();
-                smjFormDTO.setTypeCd("BUSINESS02");
-                modelMap.addAttribute("rtnRoundForm", smjFormService.selectFormDtl(smjFormDTO));
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
