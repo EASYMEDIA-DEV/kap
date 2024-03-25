@@ -41,7 +41,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 					_readOnly = true;
 
-					$("#frmData").find("input, select, button, .couseSearch, textarea").prop("disabled", true);
+					/*$("#frmData").find("input, select, button, .couseSearch, textarea").prop("disabled", true);
 					$("input[name='expsYn']").prop("disabled", false);
 					$("button[type='submit']").prop("disabled", false);
 					$("#btnList").prop("disabled", false);
@@ -55,7 +55,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 					$(".dz-hidden-input").prop("disabled",true);
 					$(".dropzone").removeClass("dz-clickable");
 					$(".dz-default.dz-message").hide();
-					$('.dz-remove').hide();
+					$('.dz-remove').hide();*/
 
 
 

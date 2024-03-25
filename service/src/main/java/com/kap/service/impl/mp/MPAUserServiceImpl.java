@@ -20,6 +20,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.text.StringEscapeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
@@ -872,9 +873,14 @@ public class MPAUserServiceImpl implements MPAUserService {
      * @throws Exception
      */
     private void excelCp(MPAUserDto mpaUserDto, HttpServletResponse response) throws Exception {
-        XSSFWorkbook workbook = new XSSFWorkbook();
-        XSSFCellStyle style_header = workbook.createCellStyle();
-        XSSFCellStyle style_body = workbook.createCellStyle();
+
+
+        SXSSFWorkbook workbook = new SXSSFWorkbook(mpaUserDto.getList().size());
+
+
+        //XSSFWorkbook workbook = new XSSFWorkbook();
+        CellStyle style_header = workbook.createCellStyle();
+        CellStyle style_body = workbook.createCellStyle();
         Sheet sheet = workbook.createSheet();
 
         Row row = null;
@@ -979,7 +985,7 @@ public class MPAUserServiceImpl implements MPAUserService {
         cell.setCellValue("가입일");
         cell.setCellStyle(style_header);
 
-
+        System.out.println("@@여기까진 금방함");
         row = sheet.createRow(rowNum++);
         for (int i = 0; i <= 18; i++) {
             cell = row.createCell(i);
@@ -998,6 +1004,9 @@ public class MPAUserServiceImpl implements MPAUserService {
         // Body
         List<MPAUserDto> list = mpaUserDto.getList();
 
+
+
+        System.out.println("@@ 얼마나걸리나 " + list.size());
         for (int i=0; i<list.size(); i++) {
             row = sheet.createRow(rowNum++);
 
@@ -1128,18 +1137,57 @@ public class MPAUserServiceImpl implements MPAUserService {
             cell.setCellStyle(style_body);
 
 
+
         }
+        /*0 번호
+        1 아이디
+        2 이름
+        3 성별
+        4 생년월일
+        5 부품사명
+        6 사업자등록번호
+        7 구분
+        8 규모
+        9 휴대폰번호
+        10 일반전화번호
+        11 부서
+        12 직급
+        13 이메일
+        14 주소
+        15 우편번호
+        18 가입일*/
 
         // 열 너비 설정
-        for(int i =0; i < 19; i++){
-            sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 2000));
+        for(int j =0; j < 19; j++){
+
+            if(j == 16 || j == 17){
+                continue;//마게팅 활용 동의 E-MAIL SMS
+            }else if(j == 14 || j == 18){
+                sheet.setColumnWidth(j, 3000);
+            }else if(j >=9 && j <= 12){
+                sheet.setColumnWidth(j, Math.min(255 * 10, sheet.getColumnWidth(j) + 2500));
+            }else if(j == 1 || j == 4 || j == 6 ){
+                sheet.setColumnWidth(j, Math.min(255 * 10, sheet.getColumnWidth(j) + 2000));
+            }else{
+
+                sheet.setColumnWidth(j, Math.min(255 * 10, sheet.getColumnWidth(j) + 1500));
+
+
+
+
+            }
+            //sheet.autoSizeColumn(j);
+            //sheet.setColumnWidth(j, (sheet.getColumnWidth(i)  + 2000));
+
         }
+
+
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
 
         //컨텐츠 타입 및 파일명 지정
         response.setContentType("ms-vnd/excel");
+        response.setHeader("Set-Cookie", "fileDownload=true; path=/");
         response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("KAP_부품사회원_", "UTF-8") + timeStamp +".xlsx");
 
         // Excel File Output

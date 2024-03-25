@@ -241,15 +241,15 @@ public class MPBMemberPartsSocietyController {
     }
 
     @GetMapping(value = "/excel-down")
-    public void selectUserListExcel(MPAUserDto mpaUserDto ,
-                                    HttpServletResponse response) throws Exception
+    public void selectUserListExcel(MPAUserDto mpaUserDto ,HttpServletResponse response) throws Exception
     {
         try
         {
             mpaUserDto.setMemCd("CP");
             mpaUserDto.setExcelYn("Y");
             //엑셀 생성
-            mpaUserService.excelDownload(mpaUserService.selectUserList(mpaUserDto), response);
+            MPAUserDto excelUserDto = mpaUserService.selectUserList(mpaUserDto);
+            mpaUserService.excelDownload(excelUserDto, response);
         }
         catch (Exception e)
         {
