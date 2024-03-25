@@ -469,7 +469,7 @@ public class EBINonMemberDTO extends BaseDTO {
     private String pmtB11 = "-";
 
     @Schema(title = "비고", example = "문자")
-
+    @Builder.Default
     private String enDetil = "-";
 
 
