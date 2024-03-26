@@ -149,6 +149,7 @@ define(["ezCtrl"], function(ezCtrl) {
 
 							// actionForm.edctnSeq = 0;
 							actionForm.edctnSeqList = seqList;
+
 							if(confirm("선택한 과정을 삭제하시겠습니까?")) {
 								cmmCtrl.jsonAjax(function(data){
 									if(data !=""){

@@ -946,6 +946,7 @@
 		<foreach collection="edctnSeqList" item="edctnSeqList" index="index" separator=", " open="(" close=")">
 			#{edctnSeqList}
 		</foreach>
+		/*AND STTS_CD = 'EDU_STTS_CD01'*/
 	</select>
 
 	<!--
