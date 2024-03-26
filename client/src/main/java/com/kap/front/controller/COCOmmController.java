@@ -285,7 +285,16 @@ public class COCOmmController {
         @PostMapping("/nice/my-idnttvrfct")
         @ResponseBody
         public COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
-            return cOCommService.idnttvrfct(request , cocNiceReqEncDto,url+"/nice/my-idnttvrfct-confirm");
+            StringBuffer nowUrl = request.getRequestURL();
+            String currentUrl = nowUrl.toString();
+            System.out.println("============================================================");
+            System.out.println(currentUrl);
+            if(!currentUrl.contains("www.") && currentUrl.contains("kapkorea.org")) {
+                return cOCommService.idnttvrfct(request , cocNiceReqEncDto,currentUrl+"/nice/my-idnttvrfct-confirm");
+            }
+            else {
+                return cOCommService.idnttvrfct(request, cocNiceReqEncDto, url + "/nice/my-idnttvrfct-confirm");
+            }
         }
 
 
