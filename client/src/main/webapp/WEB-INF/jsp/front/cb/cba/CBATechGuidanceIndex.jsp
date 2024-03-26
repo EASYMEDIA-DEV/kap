@@ -18,8 +18,8 @@
         </div>
         <div class="img-area">
             <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
+                <img class="only-pc" src="/common/images/img-sub-top-visual-technical-guide.jpg" alt="">
+                <img class="only-mobile" src="/common/images/img-sub-top-visual-technical-guide-mobile.jpg" alt="">
             </div>
         </div>
     </div>

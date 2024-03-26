@@ -29,14 +29,6 @@
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
             </div>
-            <c:if test="${ device eq 'PC' }">
-            <div class="img-area">
-                <div class="img">
-                    <img class="only-pc" src="/common/images/img-sub-top-visual-notice.jpg" alt="">
-                    <img class="only-mobile" src="/common/images/img-sub-top-visual-notice-mobile.jpg" alt="">
-                </div>
-            </div>
-            </c:if>
         </div>
 
         <div class="divide-con-area">
