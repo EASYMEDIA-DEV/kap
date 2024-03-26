@@ -936,62 +936,66 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(1);
-        cell.setCellValue("사업연도");
+        cell.setCellValue("기술지도순번");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(2);
-        cell.setCellValue("부품사명");
+        cell.setCellValue("사업연도");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
-        cell.setCellValue("담당위원");
+        cell.setCellValue("부품사명");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
-        cell.setCellValue("참여자");
+        cell.setCellValue("담당위원");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(5);
-        cell.setCellValue("신청업종/분야");
+        cell.setCellValue("참여자");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("지도구분");
+        cell.setCellValue("신청업종/분야");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
-        cell.setCellValue("상태");
+        cell.setCellValue("지도구분");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(8);
-        cell.setCellValue("렙업일");
+        cell.setCellValue("상태");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(9);
-        cell.setCellValue("총점(100)");
+        cell.setCellValue("렙업일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(10);
-        cell.setCellValue("지도실적(50)");
+        cell.setCellValue("총점(100)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(11);
-        cell.setCellValue("의사소동(5)");
+        cell.setCellValue("지도실적(50)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(12);
-        cell.setCellValue("기획력(10)");
+        cell.setCellValue("의사소동(5)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
-        cell.setCellValue("실행력(15)");
+        cell.setCellValue("기획력(10)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(14);
-        cell.setCellValue("마인드(5)");
+        cell.setCellValue("실행력(15)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(15);
+        cell.setCellValue("마인드(5)");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(16);
         cell.setCellValue("전문지식(15)");
         cell.setCellStyle(style_header);
 
@@ -1006,78 +1010,83 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cell.setCellValue(rowNum-1);
             cell.setCellStyle(style_body);
 
-            //사업연도
+            //기술지도순번
             cell = row.createCell(1);
+            cell.setCellValue(list.get(i).getCnstgSeq());
+            cell.setCellStyle(style_body);
+
+            //사업연도
+            cell = row.createCell(2);
             cell.setCellValue(list.get(i).getBsnYear());
             cell.setCellStyle(style_body);
 
             //부품사명
-            cell = row.createCell(2);
+            cell = row.createCell(3);
             cell.setCellValue(list.get(i).getCmpnNm());
             cell.setCellStyle(style_body);
 
             //담당위원
-            cell = row.createCell(3);
+            cell = row.createCell(4);
             cell.setCellValue(list.get(i).getCmssrNm() == null ? "-" : list.get(i).getCmssrNm());
             cell.setCellStyle(style_body);
 
             //참여자
-            cell = row.createCell(4);
+            cell = row.createCell(5);
             cell.setCellValue(list.get(i).getPtcptName() == null ? "-" : list.get(i).getPtcptName());
             cell.setCellStyle(style_body);
 
             //신청업종/분야
-            cell = row.createCell(5);
+            cell = row.createCell(6);
             cell.setCellValue(list.get(i).getAppctnFldNm());
             cell.setCellStyle(style_body);
 
             //지도구분
-            cell = row.createCell(6);
+            cell = row.createCell(7);
             cell.setCellValue(list.get(i).getGuideTypeNm());
             cell.setCellStyle(style_body);
 
             //상태
-            cell = row.createCell(7);
+            cell = row.createCell(8);
             cell.setCellValue(list.get(i).getSrvStts());
             cell.setCellStyle(style_body);
 
             //렙업일
-            cell = row.createCell(8);
+            cell = row.createCell(9);
             cell.setCellValue(list.get(i).getLvlupDt() == null ? "-" : list.get(i).getLvlupDt());
             cell.setCellStyle(style_body);
 
             //총점(100)
-            cell = row.createCell(9);
+            cell = row.createCell(10);
             cell.setCellValue(list.get(i).getTtlScore());
             cell.setCellStyle(style_body);
 
             //지도실적(50)
-            cell = row.createCell(10);
+            cell = row.createCell(11);
             cell.setCellValue(list.get(i).getGuideRsltScore());
             cell.setCellStyle(style_body);
 
             //의사소통(5)
-            cell = row.createCell(11);
+            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getCmmnctnScore());
             cell.setCellStyle(style_body);
 
             //기획력(10)
-            cell = row.createCell(12);
+            cell = row.createCell(13);
             cell.setCellValue(list.get(i).getPlnngabltScore());
             cell.setCellStyle(style_body);
 
             //실행력(15)
-            cell = row.createCell(13);
+            cell = row.createCell(14);
             cell.setCellValue(list.get(i).getExctvabltScore());
             cell.setCellStyle(style_body);
 
             //마인드(5)
-            cell = row.createCell(14);
+            cell = row.createCell(15);
             cell.setCellValue(list.get(i).getMndScore());
             cell.setCellStyle(style_body);
 
             //전문지식(15)
-            cell = row.createCell(15);
+            cell = row.createCell(16);
             cell.setCellValue(list.get(i).getExprtsScore());
             cell.setCellStyle(style_body);
 

@@ -1245,6 +1245,7 @@
         <if test="rtnBsnGubun != null and rtnBsnGubun != ''">
             AND CP_MST.CNSTG_CD = #{rtnBsnGubun}
         </if>
+        AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'
@@ -1269,7 +1270,8 @@
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
         SELECT
-            CP_MST.BSN_YEAR             <!-- 사업연도 -->
+            CP_MST.CNSTG_SEQ            <!-- 컨설팅 순번 -->
+            , CP_MST.BSN_YEAR             <!-- 사업연도 -->
             , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
             , CPSR.PTCPT_NAME           <!-- 참여자 -->
@@ -1298,6 +1300,7 @@
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
             AND BSN_YEAR = ${rtnBsnYear}
         </if>
+        AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'

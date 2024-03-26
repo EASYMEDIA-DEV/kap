@@ -29,6 +29,8 @@ import java.util.List;
 @EqualsAndHashCode(callSuper = false)
 @Schema(title = "만족도 종합 결과 리스트")
 public class CBBConsultSuveyRsltListDTO extends BaseDTO {
+    @Schema(title = "컨설팅순번")
+    private Integer cnstgSeq;
     @Schema(title = "사업연도")
     private Integer bsnYear;
     @Schema(title = "대상부품사 개수")
