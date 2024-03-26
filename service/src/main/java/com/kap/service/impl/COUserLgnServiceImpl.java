@@ -3,15 +3,15 @@ package com.kap.service.impl;
 import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COStringUtil;
-import com.kap.common.utility.COWebUtil;
 import com.kap.common.utility.seed.COSeedCipherUtil;
-import com.kap.core.dto.*;
+import com.kap.core.dto.COIdFindDto;
+import com.kap.core.dto.COLoginDTO;
+import com.kap.core.dto.COSystemLogDTO;
+import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.service.COLgnService;
 import com.kap.service.COSystemLogService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.COUserLgnService;
-import com.kap.service.dao.COLgnMapper;
 import com.kap.service.dao.COUserLgnMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,10 +24,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.servlet.http.HttpServletRequest;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * <pre>
@@ -105,11 +102,11 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 					}
 				}
 				//TODO 24-01-22 이 부분은 반영시 삭제 해야 함
-				LocalDate currentDate = LocalDate.now();
+				/*LocalDate currentDate = LocalDate.now();
 				LocalDate targetDate = LocalDate.parse("2024-03-25");
 				if(currentDate.isBefore(targetDate)) {
 					dateResult = 0;
-				}
+				}*/
 				//로그인 5회 체크
 				if (rtnCOUserDto.getLgnFailCnt() < 5)
 				{
