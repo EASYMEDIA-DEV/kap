@@ -287,8 +287,7 @@ public class COCOmmController {
         public COCNiceServiceDto idnttvrfct(HttpServletRequest request , COCNiceReqEncDto cocNiceReqEncDto) throws Exception {
             StringBuffer nowUrl = request.getRequestURL();
             String currentUrl = nowUrl.toString();
-            System.out.println("============================================================");
-            System.out.println(currentUrl);
+            currentUrl = currentUrl.replace(request.getRequestURI(), "");
             if(!currentUrl.contains("www.") && currentUrl.contains("kapkorea.org")) {
                 return cOCommService.idnttvrfct(request , cocNiceReqEncDto,currentUrl+"/nice/my-idnttvrfct-confirm");
             }
