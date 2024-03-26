@@ -127,7 +127,7 @@ api:
     key: A5Z0A4B9B5T4
     secret: bc125IJyf96M1LTCsEq6a8PntjFn8Dpc
   kap:
-    end-point: http://web.kapkorea.org
+    end-point: http://www.kapkorea.org
     key: N5Z0A4B9A5T4
     secret: hV127IJyf96M1LTAsEq6a8PntjFK9DpC
 
@@ -138,12 +138,12 @@ nice :
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
   return-url-adm : http://mng.kapkorea.org
-  return-url-user : http://web.kapkorea.org
+  return-url-user : http://www.kapkorea.org
 
 #강제 로그인 여부
 app:
   #사용자 도메인
-  user-domain: http://web.kapkorea.org/
+  user-domain: http://www.kapkorea.org/
   #관리자 도메인
   admin-domain: http://mng.kapkorea.org/
 
