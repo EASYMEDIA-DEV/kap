@@ -859,6 +859,31 @@
                         </fieldset>
                     </c:if>
 
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <label class="col-sm-1 control-label">GPC 전송여부<span class="star"> *</span></label>
+                            <div class="col-sm-11">
+                                <div class="row">
+
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="episdGpcYn" value="Y" title="gpc여부" <c:if test="${rtnDto.episdGpcYn eq 'Y'}">checked</c:if> />
+                                        <span class="ion-record"></span> 전송
+                                    </label>
+                                    <label class="radio-inline c-radio">
+                                        <input type="radio" name="episdGpcYn" value="N" title="gpc여부" <c:if test="${rtnDto.episdGpcYn eq 'N'}">checked</c:if> />
+                                        <span class="ion-record"></span> 미전송
+                                    </label>
+                                </div>
+                                <div class="row">
+                                    <p class="text-bold mt">
+                                        ※ GPC 인터페이스 전송 대상 차수는 '전송'으로 체크해 주시기 바랍니다.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
 
 
 

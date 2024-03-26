@@ -1972,9 +1972,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
 						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
 
-
-
-
 						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
 
 						actForm.examSeq = $("#examSeq").val();//시험순번
@@ -1982,6 +1979,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 						actForm.edctnCmpltnYn = $("input[name='edctnCmpltnYn']:checked").val();//교육완료여부
+						actForm.episdGpcYn = $("input[name='episdGpcYn']:checked").val();//차수 GPC 여부
 
 
 						//교육 안내문 세팅

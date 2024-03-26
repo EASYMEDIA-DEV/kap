@@ -427,6 +427,10 @@ public class EBBEpisdDTO extends BaseDTO {
     @Schema(title = "교육내용 메일발송용", example = "텍스트")
     private String informCntn;
 
+    @Schema(title = "교육차수 GPC 여부", example = "Y/N")
+    @Builder.Default
+    private String episdGpcYn = "N";
+
 
 
 

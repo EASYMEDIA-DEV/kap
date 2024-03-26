@@ -750,6 +750,7 @@
 		     , expns_pmt
 			 , exps_yn
 			 , edctn_cmpltn_yn
+		     , episd_gpc_yn
 			<if test=' mypageYn == "Y".toString() '>
 				, stts_cd
 				, gpc_id
@@ -857,6 +858,7 @@
 		           , a.expns_pmt
 				   , a.exps_yn
 				   , a.edctn_cmpltn_yn
+		           , a.episd_gpc_yn
 					<if test=' mypageYn == "Y".toString() '>
 		           		, ptcpt_seq
 						, stts_cd
@@ -1042,6 +1044,7 @@
 			, mod_id
 			, mod_ip
 			, mod_dtm
+			, episd_gpc_yn
 			) VALUES(
 				#{edctnSeq}
 				, #{episdYear}
@@ -1081,6 +1084,7 @@
 				, #{modId}
 				, #{modIp}
 				, now()
+				, #{episdGpcYn}
 			)
 	</insert>
 
@@ -1337,6 +1341,7 @@
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}
 			, mod_dtm = now()
+		  	, episd_gpc_yn = #{episdGpcYn}
 		where 1=1
 			and edctn_seq = #{edctnSeq}
 			and episd_year = #{orgEpisdYear}
