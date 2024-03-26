@@ -932,6 +932,23 @@
 	</delete>
 
 	<!--
+          쿼리명 : EBINonMemberMapper.selectNonMemberDeletePrevChk
+          설  명 : 비회원 교육 과정 - 삭제 전 참여자 체크, 참여자 상태와 무관하게 있는지만 체크
+           수정일     수정자       수정내용
+         ==========   ======    ==============
+         2023.12.15   장두석       최초생성
+         -->
+	<select id="selectNonMemberDeletePrevChk" parameterType="EBINonMemberDTO" resultType="java.lang.Integer">
+		SELECT /*EBINonMemberMapper.selectNonMemberDeletePrevChk*/
+		SUM((SELECT COUNT(PTCPT_SEQ) from NMB_EDCTN_PTCPT_MST WHERE EDCTN_SEQ = a.EDCTN_SEQ)) as PTCPT_CNT
+		from NMB_EDCTN_PRCS_MST a
+		where EDCTN_SEQ IN
+		<foreach collection="edctnSeqList" item="edctnSeqList" index="index" separator=", " open="(" close=")">
+			#{edctnSeqList}
+		</foreach>
+	</select>
+
+	<!--
          쿼리명 : EBINonMemberMapper.deleteNonMember
          설  명 : 비회원 교육 과정 삭제
           수정일     수정자       수정내용
@@ -940,11 +957,11 @@
     -->
 	<delete id="deleteNonMember" parameterType="EBINonMemberDTO">
 		DELETE FROM /* EBINonMemberMapper.deleteNonMember */
-		   ED_EDCTN_PRCS_MST
+			NMB_EDCTN_PRCS_MST
 		WHERE 1=1
 			AND EDCTN_SEQ IN
-		<foreach collection="delValueList" item="delValueList" index="index" separator=", " open="(" close=")">
-			#{delValueList}
+		<foreach collection="edctnSeqList" item="edctnSeqList" index="index" separator=", " open="(" close=")">
+			#{edctnSeqList}
 		</foreach>
 	</delete>
 

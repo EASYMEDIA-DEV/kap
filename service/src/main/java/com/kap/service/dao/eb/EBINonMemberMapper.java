@@ -86,7 +86,7 @@ public interface EBINonMemberMapper {
 	/**
 	 * 비회원 교육 과정 삭제
 	 */
-	public int deleteNonMemberDtl(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
+	public int deleteNonMember(EBINonMemberDTO pEBINonMemberDTO) throws Exception;
 
 	/**
 	 * 비회원 교육 과정 대상 삭제

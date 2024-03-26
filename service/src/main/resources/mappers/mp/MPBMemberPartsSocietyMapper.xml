@@ -149,15 +149,13 @@
                          , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_cp_nm
                          , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd  ) as size_cd_nm
                          , cmm.work_bsnm_no
-                      FROM ed_edctn_episd_mst a
-                       LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-                       inner join ep_edctn_ptcpt_mst ptcpt_mst
-                        on ptcpt_mst.edctn_seq = b.edctn_seq
-                       inner join co_mem_mst cmm
-                        on cmm.mem_seq = ptcpt_mst.mem_seq
-                       inner join cp_cmpn_mst cmpn_mst
-                        on cmm.work_bsnm_no  = cmpn_mst.bsnm_no
-                          where ptcpt_mst.mem_seq=#{detailsKey} ) AA
+                        FROM ep_edctn_ptcpt_mst ptcpt_mst
+                             INNER JOIN ed_edctn_episd_mst a ON a.edctn_seq = ptcpt_mst.edctn_seq AND a.episd_seq = ptcpt_mst.episd_seq
+                             INNER JOIN ed_edctn_prcs_mst b ON ptcpt_mst.edctn_seq = b.edctn_seq
+                             inner join co_mem_mst cmm on cmm.mem_seq = ptcpt_mst.mem_seq
+                             inner join cp_cmpn_mst cmpn_mst on ptcpt_mst.ptcpt_bsnm_no  = cmpn_mst.bsnm_no
+                          where ptcpt_mst.mem_seq=#{detailsKey}
+                        GROUP BY ptcpt_mst.mem_seq ) AA
                 order by reg_dtm desc ) as cc
                  group by parnt_seq
                         , prnt_cd_nm
@@ -340,15 +338,13 @@
                                 , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_cp_nm
                                 , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd  ) as size_cd_nm
                                 , cmm.work_bsnm_no
-                       FROM ed_edctn_episd_mst a
-                        LEFT JOIN ed_edctn_prcs_mst b ON a.edctn_seq = b.edctn_seq
-                        inner join ep_edctn_ptcpt_mst ptcpt_mst
-                          on ptcpt_mst.edctn_seq = b.edctn_seq
-                        inner join co_mem_mst cmm
-                          on cmm.mem_seq = ptcpt_mst.mem_seq
-                        inner join cp_cmpn_mst cmpn_mst
-                          on cmm.work_bsnm_no  = cmpn_mst.bsnm_no
-                      where ptcpt_mst.mem_seq=#{detailsKey} ) AA
+                           FROM ep_edctn_ptcpt_mst ptcpt_mst
+                                    INNER JOIN ed_edctn_episd_mst a ON a.edctn_seq = ptcpt_mst.edctn_seq AND a.episd_seq = ptcpt_mst.episd_seq
+                                    INNER JOIN ed_edctn_prcs_mst b ON ptcpt_mst.edctn_seq = b.edctn_seq
+                                    inner join co_mem_mst cmm on cmm.mem_seq = ptcpt_mst.mem_seq
+                                    inner join cp_cmpn_mst cmpn_mst on ptcpt_mst.ptcpt_bsnm_no  = cmpn_mst.bsnm_no
+                      where ptcpt_mst.mem_seq=#{detailsKey}
+                       GROUP BY ptcpt_mst.mem_seq ) AA
                         order by reg_dtm desc ) as cc
                         group by parnt_seq
                                , prnt_cd_nm

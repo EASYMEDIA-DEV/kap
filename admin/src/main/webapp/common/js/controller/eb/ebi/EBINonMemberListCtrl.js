@@ -33,50 +33,6 @@ define(["ezCtrl"], function(ezCtrl) {
 		return true;
 	};
 
-	//var 선택삭제
-	var delCallback = function(obj){
-
-		var frmDataObj    = $(obj).closest("form");
-		var delActCnt = frmDataObj.find("input:checkbox[name='delValueList']:checked").length;
-		var delType = frmDataObj.data("delType");
-		if (delActCnt > 0)
-		{
-			// 계정은 최고 관리자 및 본인 계정은 삭제 불가
-			if(confirm(msgCtrl.getMsg("confirm.del")))
-			{
-				//삭제 전송
-				cmmCtrl.frmAjax(function(respObj){
-					if(respObj != undefined && respObj.respCnt > 0){
-						var msg = msgCtrl.getMsg("success.del.target.none");
-						if(typeof delType!= "undefined" && typeof msgCtrl.getMsg("success.del.target." + delType) != "undefined"){
-							msg = msgCtrl.getMsg("success.del.target." + delType);
-						}
-						alert(msg);
-						$formObj.find("#btnSearch").click();
-					}
-					else{
-						alert(msgCtrl.getMsg("fail.act"));
-					}
-				}, "./delete", frmDataObj, "POST", "json");
-			}
-
-		}
-		else
-		{
-			if(typeof delType!= "undefined")
-			{
-				alert(msgCtrl.getMsg("fail.del.target." + frmDataObj.data("delType")));
-			}
-			else
-			{
-				alert(msgCtrl.getMsg("fail.target"));
-			}
-
-			return;
-		}
-
-	}
-
 
 	// 목록 조회
 	var search = function (page){
@@ -100,21 +56,6 @@ define(["ezCtrl"], function(ezCtrl) {
 		}, "/mngwserc/eb/ebi/select", $formObj, "POST", "html");
 
 	}
-
-
-	var callbackAjaxCdList  = function (cdList){
-
-		// console.log(cdList);
-
-		var detailList = cdList.detailList;
-
-		ctrl.obj.find("#cdListContainer").html(cdList);
-
-		$(".detailCdList").html(tempHtml);
-
-
-	}
-
 
 	// set model
 	ctrl.model = {
@@ -208,19 +149,20 @@ define(["ezCtrl"], function(ezCtrl) {
 
 							// actionForm.edctnSeq = 0;
 							actionForm.edctnSeqList = seqList;
+							if(confirm("선택한 과정을 삭제하시겠습니까?")) {
+								cmmCtrl.jsonAjax(function(data){
+									if(data !=""){
+										var rtn = JSON.parse(data);
 
-							cmmCtrl.jsonAjax(function(data){
-								if(data !=""){
-									var rtn = JSON.parse(data);
-
-									if(rtn.rsn == "F"){
-										alert("교육 신청자가 존재합니다.");
-									}else{
-										alert("삭제되었습니다.");
-										location.reload;
+										if(rtn.rsn == "F"){
+											alert("선택한 과정 중 교육 신청자가 있는 과정이 존재합니다.");
+										}else{
+											alert("삭제되었습니다.");
+											location.reload();
+										}
 									}
-								}
-							}, "./nonMemberDeleteChk", actionForm, "text");
+								}, "./nonMemberDeleteChk", actionForm, "text");
+							}
 						}
 					}
 				}

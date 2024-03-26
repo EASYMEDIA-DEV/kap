@@ -356,7 +356,7 @@ public class EBINonMemberServiceImpl implements EBINonMemberService {
 		if(ptcptCnt>0){
 			resultDto.setRsn("F");
 		}else{
-			eBINonMemberMapper.deleteNonMemberDtl(pEBINonMemberDTO);
+			eBINonMemberMapper.deleteNonMember(pEBINonMemberDTO);
 			resultDto.setRsn("S");
 		}
 		
