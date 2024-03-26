@@ -251,7 +251,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 								//KAP-> GPC 대참 로직 성공시 KAP 대참로직 진행
-								if(rtnData.actCnt == 1){
+								if(rtnData.result == "S"){
 
 									cmmCtrl.jsonAjax(function(data){
 
