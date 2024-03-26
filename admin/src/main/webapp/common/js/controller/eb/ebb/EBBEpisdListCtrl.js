@@ -154,9 +154,36 @@ define(["ezCtrl"], function(ezCtrl) {
 			btnExcel : {
 				event : {
 					click : function() {
-						//사유입력 레이어팝업 활성화
-						$excelObj.find("#rsn").val('');
-						$excelObj.modal("show");
+
+						//1년 이하로 입력했는지 체크
+						var strtDt = $("#strtDt").val();
+						var endDt = $("#endDt").val();
+
+						if(strtDt !="" && endDt != ""){
+
+							const startDate = new Date(strtDt);
+							const endDate = new Date(endDt);
+
+							// 두 날짜의 차이를 계산하여 밀리초로 변환
+							const diffMilliseconds = Math.abs(endDate - startDate);
+
+							// 1년을 밀리초로 변환
+							const oneYearInMilliseconds = 1000 * 60 * 60 * 24 * 365;
+
+							// 두 날짜의 차이가 1년 이상인지 확인
+							if(diffMilliseconds > oneYearInMilliseconds){
+								alert("검색범위는 1년까지만 가능합니다.");
+								return false;
+							}
+
+							//사유입력 레이어팝업 활성화
+							$excelObj.find("#rsn").val('');
+							$excelObj.modal("show");
+
+						}else{
+							alert("날짜를 입력해주세요");
+						}
+
 					}
 				}
 			},
