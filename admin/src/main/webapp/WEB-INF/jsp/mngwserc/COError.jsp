@@ -15,6 +15,8 @@
 	<meta property="og:title" content="NOTICE | KAP" id="og-title-value"/>
 	<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
 	<meta property="og:image" content="img URL" id="og-image-value"/>
+	<%@ page import="java.net.InetAddress" %>
+	<meta name="SM" content="${InetAddress.getLocalHost().getHostAddress()}" />
 	<link rel="stylesheet" href="/common/css/error_style.css" />
 </head>
 <body>

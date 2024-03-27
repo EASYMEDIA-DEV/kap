@@ -7,12 +7,15 @@
 		<spring:eval var="httpUserDomain" expression="@environment.getProperty('app.user-domain')" />
 		<spring:eval var="siteProfile" expression="@environment.getProperty('spring.config.activate.on-profile')" />
 		<c:set var="now" value="<%=new java.util.Date()%>" />
+		<c:set var="serverName" value="<%=request.getServerName()%>" />
 		<c:set var="curtDt"><fmt:formatDate value="${now}" pattern="yyyy-MM-dd" /></c:set>
 		<c:set var="sysDate"><fmt:formatDate value="${now}" pattern="yyyyMMddHHmmss" /></c:set>
-    	<meta charset="utf-8" />
+		<meta charset="utf-8" />
     	<meta http-equiv="x-ua-compatible" content="IE=edge" >
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     	<meta name="X-CSRF-TOKEN" content="${_csrf.token}" />
+		<%@ page import="java.net.InetAddress" %>
+    	<meta name="SM" content="${InetAddress.getLocalHost().getHostAddress()}" />
     	<title>${siteName}</title>
     	<link rel="shortcut icon" href="/common/images/favicon.ico" />
     	<link rel="stylesheet" href="/bootstrap/vendor/animate.css/animate.css" />
