@@ -315,20 +315,20 @@
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">
-                    AND REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    AND DATE(REG_DTM) <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
                 <when test="srchDate == 2">
-                    AND MOD_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    AND DATE(MOD_DTM) <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
             </choose>
         </if>
         <if test="endDt != null and endDt != ''">
             <choose>
                 <when test="srchDate == 1">
-                    AND REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND DATE(REG_DTM) <![CDATA[<=]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
                 <when test="srchDate == 2">
-                    AND MOD_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND DATE(MOD_DTM) <![CDATA[<=]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
             </choose>
         </if>

@@ -306,20 +306,20 @@
         <if test="strtDt != null and strtDt != ''">
             <choose>
                 <when test="srchDate == 1">
-                    AND A.REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    AND DATE(A.REG_DTM) <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
                 <when test="srchDate == 2">
-                    AND (SELECT RPLY.REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
+                    AND (SELECT DATE(RPLY.REG_DTM) FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) <![CDATA[>=]]> DATE_FORMAT(#{strtDt}, '%Y-%m-%d')
                 </when>
             </choose>
         </if>
         <if test="endDt != null and endDt != ''">
             <choose>
                 <when test="srchDate == 1">
-                    AND A.REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND DATE(A.REG_DTM) <![CDATA[<=]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
                 <when test="srchDate == 2">
-                    AND (SELECT RPLY.REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) REG_DTM <![CDATA[<]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND (SELECT DATE(RPLY.REG_DTM) FROM BD_QA_RPLY_DTL RPLY WHERE A.QA_SEQ = RPLY.QA_SEQ) <![CDATA[<=]]>  DATE_ADD(DATE_FORMAT(#{endDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
                 </when>
             </choose>
         </if>
