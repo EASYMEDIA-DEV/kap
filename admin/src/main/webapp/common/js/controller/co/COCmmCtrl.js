@@ -1937,6 +1937,8 @@ var cmmCtrl = (function(){
 			event.stopPropagation();
 			return false;
 		});
+		//신청정보변경 이력 영역 숨기기
+		$(".ptcptField").hide();
 
 		// 로딩바 노출
 		jQuery(".loadingbar").stop().fadeIn(200);
@@ -1985,6 +1987,8 @@ var cmmCtrl = (function(){
 
 			// });
 		});
+		//신청정보변경 이력 영역 보이기
+		$(".ptcptField").show();
 	}
 
 	var fn_email_validation_chk = function (email) {
