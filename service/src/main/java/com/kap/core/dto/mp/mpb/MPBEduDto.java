@@ -115,6 +115,9 @@ public class MPBEduDto extends BaseDTO {
     @Schema(title = "수료자동여부", example = "Y/N")
     private String cmptnAutoYn;
 
+    @Schema(title = "수료여부", example = "Y/N")
+    private String cmptnYn;
+
 
 
     @Schema(title = "교육상태 명", example = "교육대기/교육중/마감")
