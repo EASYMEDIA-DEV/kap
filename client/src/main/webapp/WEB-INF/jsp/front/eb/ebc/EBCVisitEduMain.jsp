@@ -8,9 +8,15 @@
               신청 페이지: apply-page 클래스 추가
               그 외 페이지: basic-page 클래스 추가
             -->
-            <div class="sub-top-vis-area">
+            <div class="sub-top-vis-area basic-page">
                 <div class="page-tit-area">
                     <p class="page-tit f-xlarge-title"><span class="for-move">방문교육</span></p>
+                </div>
+                <div class="img-area">
+                    <div class="img">
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-educational-visiting.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-educational-visiting-mobile.jpg" alt="">
+                    </div>
                 </div>
             </div>
 

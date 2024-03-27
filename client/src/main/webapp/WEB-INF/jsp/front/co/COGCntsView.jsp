@@ -20,7 +20,7 @@
                     <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
                 </div>
 
-<%--                <jsp:include page="/WEB-INF/jsp/front/co/COGCntsInclude.jsp" />--%>
+                <jsp:include page="/WEB-INF/jsp/front/co/COGCntsInclude.jsp" />
 
             </div>
         </c:otherwise>

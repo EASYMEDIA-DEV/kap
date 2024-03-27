@@ -15,9 +15,15 @@
         <input type="hidden" id="recordCountPerPage" name="recordCountPerPage" value="${ rtnData.recordCountPerPage }" />
         <input type="hidden" id="ordFlag" name="ordFlag" value="1" />
     </form>
-    <div class="sub-top-vis-area">
+    <div class="sub-top-vis-area basic-page">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
+        </div>
+        <div class="img-area">
+            <div class="img">
+                <img class="only-pc" src="/common/images/img-sub-top-visual-san-funds-supplychain.jpg" alt="">
+                <img class="only-mobile" src="/common/images/img-sub-top-visual-san-funds-supplychain-mobile.jpg" alt="">
+            </div>
         </div>
     </div>
 
