@@ -4,9 +4,15 @@
         <!-- 상세로 이동시 시퀀스 -->
         <input type="hidden" id="detailsKey" name="detailsKey" value="" />
         <div class="cont-wrap">
-            <div class="sub-top-vis-area">
+            <div class="sub-top-vis-area basic-page">
                 <div class="page-tit-area">
                     <p class="page-tit f-xlarge-title"><span class="for-move">재단소식</span></p>
+                </div>
+                <div class="img-area">
+                    <div class="img">
+                        <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-news.jpg" alt="">
+                        <img class="only-mobile" src="/common/images/img-sub-top-visual-foundation-news-mobile.jpg" alt="">
+                    </div>
                 </div>
             </div>
             <div class="divide-con-area">

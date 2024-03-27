@@ -4,9 +4,15 @@
         <input type="hidden" class="notRequired" id="dsclsrSeq" name="dsclsrSeq" value="" />
     </form>
     <div class="cont-wrap">
-        <div class="sub-top-vis-area">
+        <div class="sub-top-vis-area basic-page">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">경영공시</span></p>
+            </div>
+            <div class="img-area">
+                <div class="img">
+                    <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-disclosure.jpg" alt="">
+                    <img class="only-mobile" src="/common/images/img-sub-top-visual-foundation-disclosure-mobile.jpg" alt="">
+                </div>
             </div>
         </div>
 
