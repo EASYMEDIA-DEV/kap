@@ -15,15 +15,9 @@
         <input type="hidden" id="recordCountPerPage" name="recordCountPerPage" value="${ rtnData.recordCountPerPage }" />
         <input type="hidden" id="ordFlag" name="ordFlag" value="1" />
     </form>
-    <div class="sub-top-vis-area basic-page">
+    <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">미래차공모전</span></p>
-        </div>
-        <div class="img-area">
-            <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-san-reward-futurecar.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-san-reward-futurecar-mobile.jpg" alt="">
-            </div>
         </div>
     </div>
 

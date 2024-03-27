@@ -12,15 +12,9 @@
     <c:set var="now" value="<%=new java.util.Date()%>" />
     <c:set var="sysYear"><fmt:formatDate value="${now}" pattern="yyyy" /></c:set>
     <input type="hidden" id="pmt" value="${rtnRoundDtl.stndSlsPmt}" />
-    <div class="sub-top-vis-area basic-page">
+    <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">검교정</span></p>
-        </div>
-        <div class="img-area">
-            <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-san-funds-calibration.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-san-funds-calibration-mobile.jpg" alt="">
-            </div>
         </div>
     </div>
 

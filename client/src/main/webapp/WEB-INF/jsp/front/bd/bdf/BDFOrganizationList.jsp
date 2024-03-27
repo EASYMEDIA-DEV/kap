@@ -2,15 +2,9 @@
 
 <div class="cont-wrap" data-controller="controller/bd/bdf/BDFOrganizationListCtrl">
 
-    <div class="sub-top-vis-area basic-page">
+    <div class="sub-top-vis-area">
         <div class="page-tit-area">
             <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
-        </div>
-        <div class="img-area">
-            <div class="img">
-                <img class="only-pc" src="/common/images/img-sub-top-visual-foundation-organization.jpg" alt="">
-                <img class="only-mobile" src="/common/images/img-sub-top-visual-foundation-organization-mobile.jpg" alt="">
-            </div>
         </div>
     </div>
 

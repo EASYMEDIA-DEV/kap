@@ -12,15 +12,9 @@
       컨실팅 사업: consult-biz
       상생 사업: coexisting-biz
     -->
-        <div class="sub-top-vis-area basic-page">
+        <div class="sub-top-vis-area">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
-            </div>
-            <div class="img-area">
-                <div class="img">
-                    <img class="only-pc" src="/common/images/img-sub-top-visual-consulting-guide.jpg" alt="">
-                    <img class="only-mobile" src="/common/images/img-sub-top-visual-consulting-guide-mobile.jpg" alt="">
-                </div>
             </div>
         </div>
         <div class="divide-con-area">
