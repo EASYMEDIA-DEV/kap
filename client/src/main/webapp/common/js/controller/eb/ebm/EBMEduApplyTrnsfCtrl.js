@@ -174,7 +174,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							}
 
 							//입력된 GPC 아이디의 성별과 현재 로그인된 계정의 성별이 다른 경우 노출
-							if(passFlag && gndr != gndrCd){
+							if(passFlag && (gndr != gndrCd)){
 								//alert("GPC 계정의 성별과 KAP 성별이 일치하지 않습니다.");
 								openPopup('genderMatchPopup', e);
 								passFlag = false;
@@ -220,6 +220,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						if(gpcYn == "Y" && gpcPass == "N"){
 							alert("GPC 아이디를 인증해주세요.");
+							return false;
+						}
+
+						if($("#gndr").val() != $("#loginGndr").val()) {
+							alert("양도 받을 사람과 양도 해주는 사람의 성별이 같아야 합니다.");
 							return false;
 						}
 

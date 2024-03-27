@@ -37,7 +37,9 @@
         <input type="hidden" id="memSeq" name="memSeq" value="${loginMap.seq}" />
         <input type="hidden" id="memId" name="memId" value="${applicantInfo.id}" /><!--로그인 한 사람의 id -->
         <c:set var="gndr" value="${applicantInfo.gndr eq 1 ? 'M' : 'F'}" />
-        <input type="hidden" id="gndr" name="gndr" value="${gndr}" /><!--로그인 한 사람의 성별 -->
+
+        <input type="hidden" id="loginGndr" name="loginGndr" value="${gndr}" /><!--양도해주는사람의 성별-->
+        <input type="hidden" id="gndr" name="gndr" value="" /><!--양도받을 사람의 성별-->
         <input type="hidden" id="bsnmNo" name="bsnmNo" value="${loginMap.bsnmNo}" />
 
         <!--현재 lctrSeq를 기반으로 이전 이후것을 가져온다 -->

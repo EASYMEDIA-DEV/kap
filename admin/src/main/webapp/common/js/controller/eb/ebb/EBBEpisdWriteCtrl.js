@@ -1525,12 +1525,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$("#fxnumCnt").prop("disabled", true);//정원수
 					$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스
-					$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식
+					//$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식 2024-03-27 잠깐 열음
 					$("input[name='cmptnAutoYn']").prop("disabled", true);//수료 자동화 여부
 
-					$("#picNm").prop("disabled", true);//문의 담당자명
-					$("#picEmail").prop("disabled", true);//문의 담당자 이메일
-					$("#picTelNo").prop("disabled", true);//문의 담당자 전화번호
+					//$("#picNm").prop("disabled", true);//문의 담당자명 2024-03-27 잠깐 열음
+					//$("#picEmail").prop("disabled", true);//문의 담당자 이메일 2024-03-27 잠깐 열음
+					//$("#picTelNo").prop("disabled", true);//문의 담당자 전화번호 2024-03-27 잠깐 열음
 
 					$("button.cprtnInsttSearch").prop("disabled", true);//협력기관 검색버튼
 					$("button.eduRoomSearch").prop("disabled", true);//교육장소 검색버튼
