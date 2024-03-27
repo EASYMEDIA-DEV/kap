@@ -248,142 +248,142 @@
                 </fieldset>
 
                 <fieldset class="fiveStar" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01002' || empty rtnDto}">style="display: none"</c:if>> <%--구분이 1차일 때--%>
-                <fieldset>
-                    <div class="form-group text-sm form-inline">
-                        <label class="col-sm-1 control-label">품질5스타</label>
-                        <div class="col-sm-5">
-                            <select class="form-control input-sm notRequired" name="qlty5StarCd" id="qlty5StarCd">
-                                <option value="">선택</option>
-                                <c:forEach var="qltyList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(qltyList.cd, 'COMPANY03') && qltyList.cd ne 'COMPANY03'}">
-                                        <option value="${qltyList.cd}" <c:if test="${rtnDto.qlty5StarCd eq qltyList.cd}">selected</c:if>>${qltyList.cdNm}</option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                            <select class="form-control input-sm notRequired" name="qlty5StarYear" id="qlty5StarYear">
-                                <option value="">선택</option>
-                                <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                    <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                        <option value="${yearList.cd}" <c:if test="${rtnDto.qlty5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                            년
+                    <fieldset>
+                        <div class="form-group text-sm form-inline">
+                            <label class="col-sm-1 control-label">품질5스타</label>
+                            <div class="col-sm-5">
+                                <select class="form-control input-sm notRequired" name="qlty5StarCd" id="qlty5StarCd">
+                                    <option value="">선택</option>
+                                    <c:forEach var="qltyList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                        <c:if test="${fn:contains(qltyList.cd, 'COMPANY03') && qltyList.cd ne 'COMPANY03'}">
+                                            <option value="${qltyList.cd}" <c:if test="${rtnDto.qlty5StarCd eq qltyList.cd}">selected</c:if>>${qltyList.cdNm}</option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <select class="form-control input-sm notRequired" name="qlty5StarYear" id="qlty5StarYear">
+                                    <option value="">선택</option>
+                                    <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                        <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                            <option value="${yearList.cd}" <c:if test="${rtnDto.qlty5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                년
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
 
-                <fieldset>
+                    <fieldset>
+                        <div class="form-group text-sm form-inline">
+                            <label class="col-sm-1 control-label">납입5스타</label>
+                            <div class="col-sm-5">
+                                <select class="form-control input-sm notRequired" name="pay5StarCd" id="pay5StarCd">
+                                    <option value="">선택</option>
+                                    <c:forEach var="payList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                        <c:if test="${fn:contains(payList.cd, 'COMPANY03') && payList.cd ne 'COMPANY03'}">
+                                            <option value="${payList.cd}" <c:if test="${rtnDto.pay5StarCd eq payList.cd}">selected</c:if>>${payList.cdNm} </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <select class="form-control input-sm notRequired" name="pay5StarYear" id="pay5StarYear">
+                                    <option value="">선택</option>
+                                    <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                        <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                            <option value="${yearList.cd}" <c:if test="${rtnDto.pay5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                년
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group text-sm form-inline">
+                            <label class="col-sm-1 control-label">기술5스타</label>
+                            <div class="col-sm-5">
+                                <select class="form-control input-sm notRequired" name="tchlg5StarCd" id="tchlg5StarCd">
+                                    <option value="">선택</option>
+                                    <c:forEach var="tchList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
+                                        <c:if test="${fn:contains(tchList.cd, 'COMPANY03') && tchList.cd ne 'COMPANY03'}">
+                                            <option value="${tchList.cd}"<c:if test="${rtnDto.tchlg5StarCd eq tchList.cd}">selected</c:if>>${tchList.cdNm} </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                <select class="form-control input-sm notRequired" name="tchlg5StarYear" id="tchlg5StarYear">
+                                    <option value="">선택</option>
+                                    <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                        <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                            <option value="${yearList.cd}" <c:if test="${rtnDto.tchlg5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
+                                        </c:if>
+                                    </c:forEach>
+                                </select>
+                                년
+                            </div>
+                        </div>
+                    </fieldset>
+                </fieldset>
+                <fieldset class="sqInfo" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01001' || empty rtnDto}">style="display: none"</c:if>><%--구분이 2차일 때--%>
                     <div class="form-group text-sm form-inline">
-                        <label class="col-sm-1 control-label">납입5스타</label>
-                        <div class="col-sm-5">
-                            <select class="form-control input-sm notRequired" name="pay5StarCd" id="pay5StarCd">
-                                <option value="">선택</option>
-                                <c:forEach var="payList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(payList.cd, 'COMPANY03') && payList.cd ne 'COMPANY03'}">
-                                        <option value="${payList.cd}" <c:if test="${rtnDto.pay5StarCd eq payList.cd}">selected</c:if>>${payList.cdNm} </option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                            <select class="form-control input-sm notRequired" name="pay5StarYear" id="pay5StarYear">
+                        <label class="col-sm-1 control-label">SQ정보</label>
+                        <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
+                            <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq1" id="cbsnSeq" value="${sqInfoList[4]}"/>
+                            <input type="text" class="form-control input-sm notRequired"  name="nm1" id="nm" value="${sqInfoList[0]}" placeholder="SQ업종" maxlength="50"/>
+                            <input type="number" class="form-control input-sm notRequired"  name="score1" id="score" value="${sqInfoList[1]}" placeholder="SQ점수" maxlength="50"/>
+                            <select class="form-control input-sm notRequired" name="year1" id="yearSelect">
                                 <option value="">선택</option>
                                 <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
                                     <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                        <option value="${yearList.cd}" <c:if test="${rtnDto.pay5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
+                                        <option value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
+                                        </label>
                                     </c:if>
                                 </c:forEach>
                             </select>
-                            년
+                            <input type="text" class="form-control input-sm notRequired" name="crtfnCmpnNm1" id="crtfnCmpnNm" value="${sqInfoList[3]}" maxlength="50" placeholder="SQ인증주관사"/>
                         </div>
-                    </div>
-                </fieldset>
-                <fieldset>
-                    <div class="form-group text-sm form-inline">
-                        <label class="col-sm-1 control-label">기술5스타</label>
-                        <div class="col-sm-5">
-                            <select class="form-control input-sm notRequired" name="tchlg5StarCd" id="tchlg5StarCd">
-                                <option value="">선택</option>
-                                <c:forEach var="tchList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
-                                    <c:if test="${fn:contains(tchList.cd, 'COMPANY03') && tchList.cd ne 'COMPANY03'}">
-                                        <option value="${tchList.cd}"<c:if test="${rtnDto.tchlg5StarCd eq tchList.cd}">selected</c:if>>${tchList.cdNm} </option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                            <select class="form-control input-sm notRequired" name="tchlg5StarYear" id="tchlg5StarYear">
-                                <option value="">선택</option>
-                                <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                    <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                        <option value="${yearList.cd}" <c:if test="${rtnDto.tchlg5StarYear eq yearList.cd}">selected</c:if>>${yearList.cd} </option>
-                                    </c:if>
-                                </c:forEach>
-                            </select>
-                            년
-                        </div>
-                    </div>
-                </fieldset>
-            </fieldset>
-            <fieldset class="sqInfo" <c:if test="${rtnDto.ctgryCd eq 'COMPANY01001' || empty rtnDto}">style="display: none"</c:if>><%--구분이 2차일 때--%>
-                <div class="form-group text-sm form-inline">
-                    <label class="col-sm-1 control-label">SQ정보</label>
-                    <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
-                        <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq1" id="cbsnSeq" value="${sqInfoList[4]}"/>
-                        <input type="text" class="form-control input-sm notRequired"  name="nm1" id="nm" value="${sqInfoList[0]}" placeholder="SQ업종" maxlength="50"/>
-                        <input type="number" class="form-control input-sm notRequired"  name="score1" id="score" value="${sqInfoList[1]}" placeholder="SQ점수" maxlength="50"/>
-                        <select class="form-control input-sm notRequired" name="year1" id="yearSelect">
-                            <option value="">선택</option>
-                            <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                    <option value="${yearList.cd}"<c:if test="${sqInfoList[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
-                                    </label>
-                                </c:if>
-                            </c:forEach>
-                        </select>
-                        <input type="text" class="form-control input-sm notRequired" name="crtfnCmpnNm1" id="crtfnCmpnNm" value="${sqInfoList[3]}" maxlength="50" placeholder="SQ인증주관사"/>
-                    </div>
 
-                    <c:forEach var="i" begin="2" end="3">
-                        <c:choose>
-                            <c:when test="${i eq 2}">
-                                <label class="col-sm-1 control-label"></label>
-                                <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
-                                    <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq${i}" id="cbsnSeq${i}" value="${sqInfoList1[4]}"/>
-                                    <input type="text" class="form-control input-sm notRequired"  name="nm${i}" id="nm${i}" value="${sqInfoList1[0]}" placeholder="SQ업종" maxlength="50"/>
-                                    <input type="number" class="form-control input-sm notRequired"  name="score${i}" id="score${i}" value="${sqInfoList1[1]}" placeholder="SQ점수" maxlength="50"/>
-                                    <select class="form-control input-sm notRequired" name="year${i}" id="yearSelect${i}">
-                                        <option value="">선택</option>
-                                        <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                            <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                                <option value="${yearList.cd}" <c:if test="${sqInfoList1[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
-                                                </label>
-                                            </c:if>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="text" class="form-control input-sm notRequired"  name="crtfnCmpnNm${i}" id="crtfnCmpnNm${i}" value="${sqInfoList1[3]}" maxlength="50" placeholder="SQ인증주관사"/>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <label class="col-sm-1 control-label"></label>
-                                <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
-                                    <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq${i}" id="cbsnSeq${i}" value="${sqInfoList2[4]}"/>
-                                    <input type="text" class="form-control input-sm notRequired"  name="nm${i}" id="nm${i}" value="${sqInfoList2[0]}" placeholder="SQ업종" maxlength="50"/>
-                                    <input type="number" class="form-control input-sm notRequired"  name="score${i}" id="score${i}" value="${sqInfoList2[1]}" placeholder="SQ점수" maxlength="50"/>
-                                    <select class="form-control input-sm notRequired" name="year${i}" id="yearSelect${i}">
-                                        <option value="">선택</option>
-                                        <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
-                                            <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
-                                                <option value="${yearList.cd}" <c:if test="${sqInfoList2[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
-                                                </label>
-                                            </c:if>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="text" class="form-control input-sm notRequired"  name="crtfnCmpnNm${i}" id="crtfnCmpnNm${i}" value="${sqInfoList2[3]}" maxlength="50" placeholder="SQ인증주관사"/>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                    </c:forEach>
-                </div>
-            </fieldset>
-            </div>
+                        <c:forEach var="i" begin="2" end="3">
+                            <c:choose>
+                                <c:when test="${i eq 2}">
+                                    <label class="col-sm-1 control-label"></label>
+                                    <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
+                                        <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq${i}" id="cbsnSeq${i}" value="${sqInfoList1[4]}"/>
+                                        <input type="text" class="form-control input-sm notRequired"  name="nm${i}" id="nm${i}" value="${sqInfoList1[0]}" placeholder="SQ업종" maxlength="50"/>
+                                        <input type="number" class="form-control input-sm notRequired"  name="score${i}" id="score${i}" value="${sqInfoList1[1]}" placeholder="SQ점수" maxlength="50"/>
+                                        <select class="form-control input-sm notRequired" name="year${i}" id="yearSelect${i}">
+                                            <option value="">선택</option>
+                                            <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                                <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                                    <option value="${yearList.cd}" <c:if test="${sqInfoList1[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
+                                                    </label>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm notRequired"  name="crtfnCmpnNm${i}" id="crtfnCmpnNm${i}" value="${sqInfoList1[3]}" maxlength="50" placeholder="SQ인증주관사"/>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <label class="col-sm-1 control-label"></label>
+                                    <div class="col-sm-11" style="padding-top: 10px;padding-bottom: 10px;">
+                                        <input type="hidden" class="form-control input-sm notRequired"  name="cbsnSeq${i}" id="cbsnSeq${i}" value="${sqInfoList2[4]}"/>
+                                        <input type="text" class="form-control input-sm notRequired"  name="nm${i}" id="nm${i}" value="${sqInfoList2[0]}" placeholder="SQ업종" maxlength="50"/>
+                                        <input type="number" class="form-control input-sm notRequired"  name="score${i}" id="score${i}" value="${sqInfoList2[1]}" placeholder="SQ점수" maxlength="50"/>
+                                        <select class="form-control input-sm notRequired" name="year${i}" id="yearSelect${i}">
+                                            <option value="">선택</option>
+                                            <c:forEach var="yearList" items="${cdDtlList.CO_YEAR_CD}" varStatus="status">
+                                                <c:if test="${yearList.cd ne 'CO_YEAR_CD'}">
+                                                    <option value="${yearList.cd}" <c:if test="${sqInfoList2[2] eq yearList.cd}">selected</c:if>>${yearList.cdNm}</option>
+                                                    </label>
+                                                </c:if>
+                                            </c:forEach>
+                                        </select>
+                                        <input type="text" class="form-control input-sm notRequired"  name="crtfnCmpnNm${i}" id="crtfnCmpnNm${i}" value="${sqInfoList2[3]}" maxlength="50" placeholder="SQ인증주관사"/>
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </c:forEach>
+                    </div>
+                </fieldset>
+<%--            </div>--%>
             <c:choose>
                 <c:when test="${not empty rtnDto}">
                     <fieldset class="ptcptField">
@@ -424,7 +424,7 @@
                     </fieldset>
                 </c:when>
             </c:choose>
-        <div id="appctnPdfArea2">
+<%--        <div id="appctnPdfArea2">--%>
             <fieldset>
                 <span class="dtl-tab" style="float:right" data-html2canvas-ignore="true"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
                 <h6 class="mt0"><em class="ion-play mr-sm"></em>기술지도 신청정보</h6>

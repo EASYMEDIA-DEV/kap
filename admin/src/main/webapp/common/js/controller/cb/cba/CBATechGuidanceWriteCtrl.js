@@ -930,7 +930,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         var fullDay = year + month + day;
 
                         var fileName = "기술지도 신청서_"+cmpnNmText+"_"+fullDay+".pdf";
-                        cmmCtrl.getAppctnPdfDownload(fileName);
+                        cmmCtrl.getCnstgPdfDownload(fileName);
                     }
                 }
             },

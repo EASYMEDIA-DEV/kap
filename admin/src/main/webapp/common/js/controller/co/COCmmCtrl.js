@@ -1906,6 +1906,87 @@ var cmmCtrl = (function(){
 		});
 	}
 
+	//2024-03-27 통테 159번 컨설팅 사업 전용 신청자 정보 pdf 다운로드 (한 페이지에 나오도록 수정)
+	var fn_cnstg_pdf_download = function(fileName){
+
+		// pdf 변환 관련 상단 padding 값 추가
+		$("#appctnPdfArea1").css("padding-top" ,"10px");
+		// $("#appctnPdfArea2").css("padding-top" ,"20px");
+
+		// 관리자메모 textarea 줄바꿈처리
+		var textarea = $("#admMemo");
+		var div = $('<div>').css({
+			'font-family': textarea.css('font-family'),
+			'font-size': textarea.css('font-size'),
+			'line-height': textarea.css('line-height'),
+			'white-space': 'pre-wrap', // 줄바꿈 처리를 위해 white-space 속성을 설정
+			'word-wrap': 'break-word', // 단어가 라인을 넘어갈 경우 줄바꿈 처리
+			'width': textarea.outerWidth(),
+			'height': textarea.outerHeight(),
+			'border': textarea.css('border'), // 테두리 설정 추가
+			'padding': textarea.css('padding') // 패딩 설정 추가
+		}).html(textarea.val().replace(/\n/g, "<br>")); // textarea의 텍스트를 가져와서 줄바꿈 처리한 후 div에 삽입
+
+		// div 요소를 textarea 앞에 삽입하고, textarea는 숨김 처리
+		textarea.before(div).hide();
+
+		// 신청자 정보 pdf 다운로드시 스크롤방지 코드 삽입(스크롤시 영역 틀어짐)
+		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
+		$("#element").on('scroll touchmove mousewheel', function(event) {
+			event.preventDefault();
+			event.stopPropagation();
+			return false;
+		});
+
+		// 로딩바 노출
+		jQuery(".loadingbar").stop().fadeIn(200);
+
+		var doc = new jsPDF("p", "mm", "a4", true);
+		var imgData = "";
+		var imgWidth = 180;
+		var imgHeight = "";
+		html2canvas($("#appctnPdfArea1")[0], {
+		}).then(function(canvas){
+			//console.log(canvas);
+			imgData = canvas.toDataURL('image/jpeg', 1.0);
+			imgHeight = canvas.height * imgWidth / canvas.width;
+
+			// 이미지를 페이지의 중앙에 위치시키기 위한 좌표 계산
+			var xPos = (doc.internal.pageSize.getWidth() - imgWidth) / 2; // 페이지의 가로 중앙
+
+			doc.addImage(imgData, 'jpeg', xPos, 5, imgWidth, imgHeight);
+
+			// html2canvas($('#appctnPdfArea2')[0], {
+			// }).then(function(canvas){
+			// 	imgData = canvas.toDataURL('image/jpeg', 1.0);
+			// 	imgHeight = canvas.height * 200 / canvas.width;
+
+			// doc.addPage();
+			// doc.addImage(imgData, 'jpeg', 5, 5, 200, imgHeight);
+
+			// 파일 저장
+			doc.save(fileName);
+
+			//화면 확인 용(이미지로 표현)
+			//document.write('<img src="' + imgData + '" />');
+
+			// pdf 변환 관련 추가한 상단 padding 값 제거
+			$("#appctnPdfArea1").css("padding-top" ,"0");
+			// $("#appctnPdfArea2").css("padding-top" ,"0");
+
+			// pdf 변환 후 관리자메모 textarea 다시 원래대로 복원
+			div.replaceWith(textarea.show());
+			//로딩바 숨기기
+			jQuery(".loadingbar").stop().fadeOut(200);
+
+			// 신청자 정보 pdf 다운로드 후 스크롤 노출 처리
+			$('html, body').css({'overflow': '', 'height': ''});
+			$("#element").off('scroll touchmove mousewheel');
+
+			// });
+		});
+	}
+
 	var fn_email_validation_chk = function (email) {
 		let splitEmail = email.toString().split("@");
 		var atRegex = /[^@]+@[^@]+/; //@ 체크
@@ -1983,6 +2064,8 @@ var cmmCtrl = (function(){
 		getConsultSuveyRsltPop : fn_consult_suvey_rslt_layer_pop,
 		// pdf 다운로드 관련
 		getAppctnPdfDownload : fn_appctn_pdf_download ,
+		// 컨설팅 사업 pdf 다운로드
+		getCnstgPdfDownload : fn_cnstg_pdf_download,
 
 		// 이메일_체크
 		getEmailChk : fn_email_validation_chk
