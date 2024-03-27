@@ -99,7 +99,7 @@
                             <div class="group">
                                 <p class="index-num f-title3">${list.episdOrd}회차 ${accsStatusOrder}</p>
                                 <div class="status-info-w">
-                                    <c:if test="${not empty episdDto.cbsnCdNm}">
+                                    <c:if test="${not empty list.cbsnCdNm}">
                                         <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>
                                     </c:if>
 
