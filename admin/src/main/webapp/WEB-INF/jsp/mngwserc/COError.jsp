@@ -16,7 +16,15 @@
 	<meta property="og:description" content="KAP 홈페이지에 방문하신 것을 환영합니다." id="og-description-value"/>
 	<meta property="og:image" content="img URL" id="og-image-value"/>
 	<%@ page import="java.net.InetAddress" %>
-	<meta name="SM" content="${InetAddress.getLocalHost().getHostAddress()}" />
+	<c:set var="nowsm">${InetAddress.getLocalHost().getHostAddress()}</c:set>
+	<c:choose>
+		<c:when test="${nowsm eq '10.10.2.20'}">
+			<meta name="SM" content="1" />
+		</c:when>
+		<c:otherwise>
+			<meta name="SM" content="2" />
+		</c:otherwise>
+	</c:choose>
 	<link rel="stylesheet" href="/common/css/error_style.css" />
 </head>
 <body>
