@@ -60,6 +60,7 @@
 		<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 		<!--메시지 공통-->
 		<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js?${sysDate}"></script>
+		<spring:eval var="sessionTime" expression="@environment.getProperty('server.servlet.session.timeout')" />
 		<%--메뉴 분류--%>
 		<script type="text/javascript">
 			//<![CDATA[
@@ -113,6 +114,28 @@
 					}
 				}
 			}
+
+			var sessionCount = null;
+			var initSssionSeconds = ${sessionTime};
+			var sessionSeconds = ${sessionTime};
+			$(document).ready(function(){
+				sessionCount = setInterval(function(){
+					sessionSeconds = sessionSeconds - 1;
+					if(sessionSeconds < 0){
+						return;
+					}
+					if (sessionSeconds < 61) {
+						$("#sessionLastTime").text('00:' + addZero(sessionSeconds));
+					}
+					// sec
+					var mins = Math.floor((sessionSeconds)/60)
+					var secs = sessionSeconds - mins*60
+					$("#sessionLastTime").text(addZero(mins) + ':' + addZero(secs));
+					function addZero(num) {
+						return ((num < 10) ? '0' : '') + num
+					}
+				}, 1000);
+			})
 
 			//]]>
 		</script>
@@ -216,6 +239,10 @@
 					</c:forEach>
 
 	         	 	<ul class="pull-right">
+						<li class="mr">
+							<fmt:parseNumber var="sessionMm">${(sessionTime / 60)}</fmt:parseNumber>
+							<h6 id="sessionLastTime">${sessionMm}:00</h6>
+						</li>
 			            <li class="dropdown">
 			            	<a href="javascript:" class="dropdown-toggle ripple" data-toggle="dropdown" aria-expanded="false">
             					<em class="ion-person"></em>

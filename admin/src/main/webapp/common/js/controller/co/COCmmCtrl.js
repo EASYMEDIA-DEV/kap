@@ -53,6 +53,16 @@ var cmmCtrl = (function(){
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function(){
+				try
+				{
+					if(sessionSeconds){
+						sessionSeconds = initSssionSeconds;
+					}
+				}
+				catch (e)
+				{
+
+				}
 				if (loading) {
 					jQuery(".loadingbar").stop().fadeOut(200);
 				}
@@ -112,6 +122,16 @@ var cmmCtrl = (function(){
 					fn_ajax_error(data, status, xhr);
 				},
 				complete : function(){
+					try
+					{
+						if(sessionSeconds){
+							sessionSeconds = initSssionSeconds;
+						}
+					}
+					catch (e)
+					{
+
+					}
 					if (loading) {
 						jQuery(".loadingbar").stop().fadeOut(200);
 					}
@@ -213,6 +233,16 @@ var cmmCtrl = (function(){
 					fn_ajax_error(data, status, xhr);
 				},
 				complete : function(){
+					try
+					{
+						if(sessionSeconds){
+							sessionSeconds = initSssionSeconds;
+						}
+					}
+					catch (e)
+					{
+
+					}
 					if (loading) {
 						jQuery(".loadingbar").stop().fadeOut(200);
 					}
@@ -264,6 +294,16 @@ var cmmCtrl = (function(){
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function() {
+				try
+				{
+					if(sessionSeconds){
+						sessionSeconds = initSssionSeconds;
+					}
+				}
+				catch (e)
+				{
+
+				}
 				if (loading) {
 					jQuery(".loadingbar").stop().fadeOut(200);
 				}
@@ -313,6 +353,16 @@ var cmmCtrl = (function(){
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function() {
+				try
+				{
+					if(sessionSeconds){
+						sessionSeconds = initSssionSeconds;
+					}
+				}
+				catch (e)
+				{
+
+				}
 				if (loading) {
 					jQuery(".loadingbar").stop().fadeOut(200);
 				}
@@ -924,6 +974,16 @@ var cmmCtrl = (function(){
 				fn_ajax_error(data, status, xhr);
 			},
 			complete : function() {
+				try
+				{
+					if(sessionSeconds){
+						sessionSeconds = initSssionSeconds;
+					}
+				}
+				catch (e)
+				{
+
+				}
 				$(".loadingbar").stop().fadeOut(200);
 			}
 		});

@@ -17,7 +17,7 @@ server:
     max-swallow-size: 104886080
   servlet:
     session:
-      timeout: 120m
+      timeout: 3600
       cookie:
         name: KAP_LOCAL_ADMIN_JSESSIONID
 ---
@@ -25,8 +25,19 @@ spring.config.activate.on-profile: stg
 domain:
   host: devapi.therailntel.com
   port: 20141
-
+server:
+  servlet:
+    session:
+      timeout: 3600
+      cookie:
+        name: ADMIN
 ---
 spring.config.activate.on-profile: prod
 domain:
   host: api.therailntel.com
+server:
+  servlet:
+    session:
+      timeout: 3600
+      cookie:
+        name: ADMIN
