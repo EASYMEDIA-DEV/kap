@@ -15,7 +15,15 @@
     	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
     	<meta name="X-CSRF-TOKEN" content="${_csrf.token}" />
 		<%@ page import="java.net.InetAddress" %>
-    	<meta name="SM" content="${InetAddress.getLocalHost().getHostAddress()}" />
+		<c:set var="nowsm">${InetAddress.getLocalHost().getHostAddress()}</c:set>
+		<c:choose>
+			<c:when test="${nowsm eq '10.10.2.20'}">
+				<meta name="SM" content="1" />
+			</c:when>
+			<c:otherwise>
+				<meta name="SM" content="2" />
+			</c:otherwise>
+		</c:choose>
     	<title>${siteName}</title>
     	<link rel="shortcut icon" href="/common/images/favicon.ico" />
     	<link rel="stylesheet" href="/bootstrap/vendor/animate.css/animate.css" />
