@@ -8,6 +8,15 @@
           <label class="checkbox-inline c-checkbox">
 
             <c:choose>
+              <c:when test="${ptcptList.eduStat eq '교육양도'}">
+                <c:set var="trnsfYn" value="Y"/>
+              </c:when>
+              <c:otherwise>
+                <c:set var="trnsfYn" value="N"/>
+              </c:otherwise>
+            </c:choose>
+
+            <c:choose>
 
               <c:when test="${ptcptList.eduStat eq '교육대기'}">
                 <c:set var="changeChk" value="changeChk"/>
@@ -23,7 +32,7 @@
                 <c:set var="disabledChk" value=""/>
               </c:otherwise>--%>
             </c:choose>
-            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired ${changeChk}" data-ptcpt_seq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" />
+            <input type="checkbox" value="${ptcptList.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired ${changeChk}" data-ptcpt_seq="${ptcptList.ptcptSeq}" data-memSeq="${ptcptList.memSeq}" data-trnsf-yn="${trnsfYn}"/>
             <span class="ion-checkmark-round"></span>
           </label>
         </td>

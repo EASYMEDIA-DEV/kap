@@ -2184,35 +2184,40 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						if(ptcptCnt>0){
 							$("#ptcptListContainer").find("tr").each(function(){
 
-								var ptcptForm = {};
-								var examScore = $(this).find("input[name='examScore']").val();
-								var ptcptSeq = $(this).find("input[name=delValueList]").val();
-								var memSeq = $(this).find("input[name=delValueList]").data("memseq");
-								var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
-								var orgCmptnYn = $(this).find("td").find("#orgCmptnYn").val();//$(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
+								//교육양도한 참여자는 제외한다.
+								var trnsfYn = $(this).find("input[name=delValueList]").data("trnsfYn");
 
-								var oflnExamDtm = $(this).find("td").find("#oflnExamDtm").val();
+								if(trnsfYn == "N"){
 
-								var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
-								if(orgCmptnYn != cmptnYn) cmptnChangeYn = "Y";
+									var ptcptForm = {};
+									var examScore = $(this).find("input[name='examScore']").val();
+									var ptcptSeq = $(this).find("input[name=delValueList]").val();
+									var memSeq = $(this).find("input[name=delValueList]").data("memseq");
+									var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
+									var orgCmptnYn = $(this).find("td").find("#orgCmptnYn").val();//$(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
 
-								ptcptForm.edctnSeq = actForm.edctnSeq;//과정번호
-								ptcptForm.episdYear = actForm.episdYear;//회차년도
-								ptcptForm.episdOrd = actForm.episdOrd;//회차번호
-								ptcptForm.ptcptSeq = ptcptSeq;//참여자 번호
-								ptcptForm.memSeq = memSeq;//회원 번호
+									var oflnExamDtm = $(this).find("td").find("#oflnExamDtm").val();
 
-								ptcptForm.examScore = examScore;//평가점수
-								ptcptForm.oflnExamDtm = oflnExamDtm;//오프라인점수 날짜
+									var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
+									if(orgCmptnYn != cmptnYn) cmptnChangeYn = "Y";
 
-								ptcptForm.orgCmptnYn = orgCmptnYn//수료여부 원래값
-								ptcptForm.cmptnYn = cmptnYn//수료여부
-								ptcptForm.otsdExamPtcptYn = actForm.otsdExamPtcptYn;//오프라인 여부
-								ptcptForm.cmptnChangeYn = cmptnChangeYn;
+									ptcptForm.edctnSeq = actForm.edctnSeq;//과정번호
+									ptcptForm.episdYear = actForm.episdYear;//회차년도
+									ptcptForm.episdOrd = actForm.episdOrd;//회차번호
+									ptcptForm.ptcptSeq = ptcptSeq;//참여자 번호
+									ptcptForm.memSeq = memSeq;//회원 번호
 
+									ptcptForm.examScore = examScore;//평가점수
+									ptcptForm.oflnExamDtm = oflnExamDtm;//오프라인점수 날짜
 
+									ptcptForm.orgCmptnYn = orgCmptnYn//수료여부 원래값
+									ptcptForm.cmptnYn = cmptnYn//수료여부
+									ptcptForm.otsdExamPtcptYn = actForm.otsdExamPtcptYn;//오프라인 여부
+									ptcptForm.cmptnChangeYn = cmptnChangeYn;
 
-								ptcptList.push(ptcptForm);
+									ptcptList.push(ptcptForm);
+
+								}
 
 							});
 						}
