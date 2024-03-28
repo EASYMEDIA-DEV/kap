@@ -523,7 +523,7 @@
                     </c:choose>
                 </div>
             </div>
-            <c:if test="${ not empty rtnDto && copyYn eq 'N' }">
+            <c:if test="${ not empty rtnDto and rtnDto.copyYn eq 'N' }">
                 <h6 class="mt"><em class="ion-play mr-sm"></em>등록/수정이력</h6>
                 <div class="table-responsive ">
                     <table class="table text-sm">
@@ -560,7 +560,7 @@
             </c:if>
 
             <!--VUE 영역 시작 -->
-            <c:if test="${ not empty rtnDto && copyYn eq 'N' }">
+            <c:if test="${ not empty rtnDto && rtnDto.copyYn eq 'N' }">
                 <h6 class="mt"><em class="ion-play mr-sm"></em>회차정보</h6>
                 <div class="table-responsive col-sm-12 p0 m0" id="vueList" <c:if test="${empty rtnDto}">style="display:none;"</c:if>  >
                     <table class="table table-hover table-striped" >

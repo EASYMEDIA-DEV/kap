@@ -176,7 +176,6 @@ public class EBBEpisdController {
         try
         {
             eBBEpisdDTO.setExcelYn("Y");
-            eBBEpisdDTO.setAtndcYn("Y");
 
             eBBEpisdDTO.setEpisdYear(eBBEpisdDTO.getOrgEpisdYear());
             eBBEpisdDTO.setEpisdOrd(eBBEpisdDTO.getOrgEpisdOrd());
@@ -206,6 +205,8 @@ public class EBBEpisdController {
         try
         {
             eBBEpisdDTO.setExcelYn("Y");
+            eBBEpisdDTO.setAtndcYn("Y");
+
             // 목록 조회
             //목록 상단 th에 뿌려줄 날짜 리스트를 구한다.
             EBBPtcptDTO eBBPtcptDTO = eBBEpisdService.setAtndcList(eBBEpisdDTO);

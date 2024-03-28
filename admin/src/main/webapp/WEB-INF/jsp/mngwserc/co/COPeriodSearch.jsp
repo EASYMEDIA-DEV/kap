@@ -68,9 +68,9 @@
 			<div class="form-group mr-sm">
 
 				<div class="input-group">
-					<%--교육 및 컨설팅은 날짜 기본값이 30일전 그 외에는 1년전 처리 관련--%>
+					<%--컨설팅은 날짜 기본값이 30일전 그 외에는 1년전 처리 관련--%>
 					<c:choose>
-						<c:when test="${param.srchType eq 'cnstg' or param.srchType eq 'edctn' or param.srchType eq 'episd'}">
+						<c:when test="${param.srchType eq 'cnstg'}">
 							<c:choose>
 								<c:when test="${not empty param.dashBoardType}">
 									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
@@ -79,12 +79,12 @@
 									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 								</c:otherwise>
 							</c:choose>
-
 						</c:when>
 						<c:when test="${param.srchType eq 'defaultBoard' or param.srchType eq 'onlineManual'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
-						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
+						<%-- 2024-03-28 교육사업은 기존 30일 전에서 180일 전으로 변경 --%>
+						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'edctn' or param.srchType eq 'episd'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${param.srchType eq 'ima'}">
@@ -108,7 +108,7 @@
 					</span>
 					<span class="input-group-addon bg-white b0">~</span>
 					<c:choose>
-						<c:when test="${param.srchType eq 'episd' or param.srchType eq 'cnstg' or param.srchType eq 'ima'}">
+						<c:when test="${param.srchType eq 'cnstg' or param.srchType eq 'ima'}">
 
 							<c:choose>
 								<c:when test="${not empty param.dashBoardType}">
@@ -124,7 +124,8 @@
 						<c:when test="${param.srchType eq 'defaultBoard' or param.srchType eq 'onlineManual'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
-						<c:when test="${fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a'}">
+						<%-- 2024-03-28 교육차수는 기존 30일 후에서 180일 후로 변경 --%>
+						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'episd'}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : kl:convertDate(kl:addDay(today, '+180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>
