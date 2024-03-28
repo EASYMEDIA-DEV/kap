@@ -313,6 +313,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
+		dto.setFirstIndex( page.getFirstRecordIndex() );
+		dto.setRecordCountPerPage( page.getRecordCountPerPage() );
 
 		return dto;
 	}
