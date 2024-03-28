@@ -71,8 +71,8 @@
                                                 <th>일반 전화번호</th>
                                                 <td>
                                                     <c:choose>
-                                                        <c:when test="${not empty rtnUser.memTelNo}">
-                                                            ${rtnUser.memTelNo}
+                                                        <c:when test="${not empty rtnUser.telNo}">
+                                                            ${rtnUser.telNo}
                                                         </c:when>
                                                         <c:otherwise>-</c:otherwise>
                                                     </c:choose>
