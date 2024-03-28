@@ -101,7 +101,7 @@
                                         </tr>
                                         <tr>
                                             <th>일반 전화번호</th>
-                                            <td class="appTelNo">${empty loginMap.memTelNo ? '-': loginMap.memTelNo }</td>
+                                            <td class="appTelNo">${empty loginMap.telNo ? '-': loginMap.telNo}</td>
                                         </tr>
                                         <tr>
                                             <th>부서</th>
