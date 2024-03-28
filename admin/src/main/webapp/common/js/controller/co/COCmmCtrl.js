@@ -1945,7 +1945,7 @@ var cmmCtrl = (function(){
 
 		var doc = new jsPDF("p", "mm", "a4", true);
 		var imgData = "";
-		var imgWidth = 180;
+		var imgWidth = 200;
 		var imgHeight = "";
 		html2canvas($("#appctnPdfArea1")[0], {
 		}).then(function(canvas){
