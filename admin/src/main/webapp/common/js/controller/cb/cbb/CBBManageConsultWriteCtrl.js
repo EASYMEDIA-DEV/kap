@@ -761,7 +761,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                                 var rtnData = JSON.parse(respObj);
                                 if (rtnData.respCnt > 0) {
                                     alert(msgCtrl.getMsg("success.upd"));
-                                    location.replace("./list");
+                                    // location.replace("./list");
                                 }
                             }, "/mngwserc/cb/cba/updAdmMemo", cBATechGuidanceInsertDTO, "text")
                         }
