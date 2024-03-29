@@ -1008,8 +1008,8 @@ public class WBGAExamServiceImpl implements WBGAExamService {
         smjFormDTO.setTypeCd("BUSINESS02");
         smjFormDTO = smjFormMapper.selectFormDtl(smjFormDTO);
 
-        wbgaExamSearchDTO.setFileSeq(smjFormDTO.getClbtnFileSeq());
-        wbgaExamSearchDTO.setFileOrd(smjFormDTO.getClbtnFileOrd());
+        wbgaExamSearchDTO.setFileSeq(smjFormDTO.getExamMsremntFileSeq());
+        wbgaExamSearchDTO.setFileOrd(smjFormDTO.getExamMsremntFileOrd());
         wbgaExamSearchDTO.setExamFileNm(smjFormDTO.getExamFileNm());
 
         //신청가능 매출액가져오기
