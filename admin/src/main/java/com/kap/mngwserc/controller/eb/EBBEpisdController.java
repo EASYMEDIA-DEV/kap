@@ -678,6 +678,7 @@ public class EBBEpisdController {
     {
         //제목만 필요해서 강제 변경
         eBBEpisdDTO.setSiteGubun("front");
+        eBBEpisdDTO.setExpsYn("N"); // 미노출인 경우에도 QR 이미지 다운로드될 수 있도록 수정
         HashMap rtnMap = eBBEpisdService.selectEpisdDtl(eBBEpisdDTO);
         String episdNm = ((EBBEpisdDTO)rtnMap.get("rtnData")).getNm();
         String savePath = imgUploadFilePath + "upload/temp/qr";

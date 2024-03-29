@@ -4,7 +4,16 @@
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${rtnData.totalCount - rtnData.firstIndex - status.index}</td>
-                <td class="text-center">${list.edctnSttsName}</td>
+                <td class="text-center">
+                    <c:choose>
+                        <c:when test="${list.edctnSttsName eq 'ASIS_CH001'}" >
+                            미완료(주제불일치)
+                        </c:when>
+                        <c:otherwise>
+                            ${list.edctnSttsName}
+                        </c:otherwise>
+                    </c:choose>
+                </td>
                 <td class="text-center">
                     <a href="javascript:" class="listView" data-details-key="${list.vstSeq}" data-mem-seq="${list.memSeq}" data-vst-rslt-seq="${list.vstRsltSeq}" data-appctn-bsnm-no="${list.appctnBsnmNo}">
                             ${list.cmpnNm}

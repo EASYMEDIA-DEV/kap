@@ -905,9 +905,16 @@
 			and episd_year = #{episdYear}
 		    and episd_ord = #{episdOrd}
 
-		<if test="siteGubun == 'front'.toString() ">
-		  and exps_yn = 'Y'
-		</if>
+			<if test="siteGubun == 'front'.toString() ">
+				<choose>
+					<when test="expsYn != 'N'.toString()">
+						and exps_yn = 'Y'
+					</when>
+					<otherwise>
+
+					</otherwise>
+				</choose>
+			</if>
 
 			<if test='mypageYn == "Y".toString() '>
 				AND (MEM_SEQ = #{memSeq} OR bfre_mem_seq = #{memSeq})
