@@ -131,7 +131,7 @@
                                                     <c:forEach var="exmplList" items="${qstnList.exExamExmplDtlList}" varStatus="exmplStatus">
                                                         <div class="col-sm-12 exmplOptnContainerList pl0 pr0 mb-sm">
                                                             <div class="col-sm-9 ">
-                                                                <input type="text" class="form-control input-sm" value="${ exmplList.exmplNm }" name="exmplNm" maxlength="50" title="응답내용" placeholder="응답내용을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }/>
+                                                                <input type="text" class="form-control input-sm" value="${ exmplList.exmplNm }" name="exmplNm" maxlength="150" title="응답내용" placeholder="응답내용을 입력하세요." ${ kl:decode(rtnDto.posbChg, false, 'disabled', '') }/>
                                                             </div>
                                                             <div class="col-sm-1">
                                                                 <c:choose>
@@ -211,7 +211,7 @@
                                     <div class="col-sm-10 exmplOptnContainer pl0 pr0">
                                         <div class="col-sm-12 exmplOptnContainerList pl0 pr0 mb-sm">
                                             <div class="col-sm-9 ">
-                                                <input type="text" class="form-control input-sm" value="" name="exmplNm" maxlength="50" title="응답내용" placeholder="응답내용을 입력하세요." />
+                                                <input type="text" class="form-control input-sm" value="" name="exmplNm" maxlength="150" title="응답내용" placeholder="응답내용을 입력하세요." />
                                             </div>
                                             <div class="col-sm-1">
                                                 <label class="checkbox c-checkbox checkbox-inline pl0" style="display:none;">
