@@ -1719,44 +1719,57 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						return false;
 					}
 
-					//만족도조사
-					if($("#srvSeq").val() == "") {
-						alert("만족도조사를 선택해주세요");
-						$(".eduSrvSearch").focus();
-						return false;
-					}
-
-					if($("#srvStrtDtm").val() == "") {
-						alert("만족도조사 시작일시를 입력해주세요");
-						$("#srvStrtDtm").focus();
-						return false;
-					}
 
 
-					if($("#srvEndDtm").val() == "") {
-						alert("만족도조사 종료일시를 입력해주세요");
-						$("#srvEndDtm").focus();
-						return false;
+
+					var updateEdDt = $("#edctnStrtDt").val();
+
+					var eduDate = new Date(updateEdDt);//교육 시작일
+					var date2 = new Date("2024-04-01");//현재날짜
+					//교육시작일이 2024-03-29 이전인 차수들은 설문,평가 유효성체크 제외
+
+					if(eduDate >= date2){
+						//만족도조사
+						if($("#srvSeq").val() == "") {
+							alert("만족도조사를 선택해주세요");
+							$(".eduSrvSearch").focus();
+							return false;
+						}
+
+						if($("#srvStrtDtm").val() == "") {
+							alert("만족도조사 시작일시를 입력해주세요");
+							$("#srvStrtDtm").focus();
+							return false;
+						}
+
+
+						if($("#srvEndDtm").val() == "") {
+							alert("만족도조사 종료일시를 입력해주세요");
+							$("#srvEndDtm").focus();
+							return false;
+						}
+
+						//평가
+						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+							alert("평가를 선택해주세요");
+							$(".eduExamSearch").focus();
+							return false;
+						}
+
+						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+							alert("평가 시작일시를 선택해주세요");
+							$("#examStrtDtm").focus();
+							return false;
+						}
+
+						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+							alert("평가 종료일시를 선택해주세요");
+							$("#examEndDtm").focus();
+							return false;
+						}
 					}
 
-					//평가
-					if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-						alert("평가를 선택해주세요");
-						$(".eduExamSearch").focus();
-						return false;
-					}
 
-					if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-						alert("평가 시작일시를 선택해주세요");
-						$("#examStrtDtm").focus();
-						return false;
-					}
-
-					if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-						alert("평가 종료일시를 선택해주세요");
-						$("#examEndDtm").focus();
-						return false;
-					}
 
 
 
@@ -1909,42 +1922,62 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#srvSeq").val() == "") {
-							alert("만족도조사를 선택해주세요");
-							$(".eduSrvSearch").focus();
-							return false;
+
+						var updateEdDt = $("#edctnStrtDt").val();
+
+						var eduDate = new Date(updateEdDt);//교육 시작일
+						var date2 = new Date("2024-04-01");//기준 날짜
+
+						//교육시작일이 2024-03-29 이전인 차수들은 설문,평가 유효성체크 제외
+						if(eduDate >= date2){
+							if($("#srvSeq").val() == "") {
+								alert("만족도조사를 선택해주세요");
+								$(".eduSrvSearch").focus();
+								return false;
+							}
+
+							if($("#srvStrtDtm").val() == "") {
+								alert("만족도조사 시작일시를 입력해주세요");
+								$("#srvStrtDtm").focus();
+								return false;
+							}
+
+							if($("#srvEndDtm").val() == "") {
+								alert("만족도조사 종료일시를 입력해주세요");
+								$("#srvEndDtm").focus();
+								return false;
+							}
+
+							if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+								alert("평가를 선택해주세요");
+								$(".eduExamSearch").focus();
+								return false;
+							}
+
+							if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+								alert("평가 시작일시를 선택해주세요");
+								$("#examStrtDtm").focus();
+								return false;
+							}
+
+							if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
+								alert("평가 종료일시를 선택해주세요");
+								$("#examEndDtm").focus();
+								return false;
+							}
+
+							actForm.srvSeq = $("#srvSeq").val();//설문순번
+							actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
+							actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
+
+							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
+							actForm.examSeq = $("#examSeq").val();//시험순번
+							actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						}
 
-						if($("#srvStrtDtm").val() == "") {
-							alert("만족도조사 시작일시를 입력해주세요");
-							$("#srvStrtDtm").focus();
-							return false;
-						}
 
-
-						if($("#srvEndDtm").val() == "") {
-							alert("만족도조사 종료일시를 입력해주세요");
-							$("#srvEndDtm").focus();
-							return false;
-						}
-
-						if($("#examSeq").attr("disabled") === undefined && $("#examSeq").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-							alert("평가를 선택해주세요");
-							$(".eduExamSearch").focus();
-							return false;
-						}
-
-						if($("#examStrtDtm").is(":visible") && $("#examStrtDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-							alert("평가 시작일시를 선택해주세요");
-							$("#examStrtDtm").focus();
-							return false;
-						}
-
-						if($("#examEndDtm").is(":visible") && $("#examEndDtm").val() == "" && $("input[name='otsdExamPtcptYn']:checked").val() === undefined && $("#jdgmtYn").val() != "N"){
-							alert("평가 종료일시를 선택해주세요");
-							$("#examEndDtm").focus();
-							return false;
-						}
 
 
 
@@ -1965,17 +1998,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						actForm.cprtnInsttSeq = $("#cprtnInsttSeq").val();//협력기관
 
 
-						actForm.srvSeq = $("#srvSeq").val();//설문순번
-						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
-						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
 
-						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
 
 						actForm.edctnNtctnFileSeq = $("#edctnNtctnFileSeq").val();
 
-						actForm.examSeq = $("#examSeq").val();//시험순번
-						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
+
 						actForm.cmptnAutoYn = $("input[name='cmptnAutoYn']:checked").val();//수료자동여부
 						actForm.expsYn = $("input[name='expsYn']:checked").val();//노출여부
 						actForm.edctnCmpltnYn = $("input[name='edctnCmpltnYn']:checked").val();//교육완료여부
