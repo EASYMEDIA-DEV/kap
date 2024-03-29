@@ -332,10 +332,10 @@ body.stop-scroll {overflow: hidden; height: 100%; min-height: 100%; touch-action
   #header .util-area .icon-btn > span {display: none;}
 }
 
-
 /* 유틸 메뉴 - 팝업 */
 #header .pop-wrap {position: relative;}
 #header .pop-wrap .pop-box {display: none; position: absolute; left: 50%; top: calc(100% + 11rem); z-index: 40; transform: translateX(-50%); padding: 32rem; border: 1px solid #B2B8BD; background-color: #fff;}
+#header .pop-wrap .pop-box .pop-tit {display: flex; align-items: center; justify-content: space-between;}
 #header .pop-wrap .pop-box::after {content: ""; position: absolute; left: 50%; top: -10rem; transform: translateX(-50%); width: 18rem; height: 10rem; background: url("/common/images/icon-round-triangle.svg") no-repeat center center / 100%;}
 #header .pop-wrap .pop-box::before {content: ""; position: absolute; left: 50%; bottom: calc(100% + 1px); transform: translateX(-50%); width: 30rem; height: 10rem;}
 #header .pop-wrap .noti-btn ~ .pop-box {width: 404rem; padding-bottom: 16rem;}
@@ -446,7 +446,7 @@ body.stop-scroll {overflow: hidden; height: 100%; min-height: 100%; touch-action
 
   #header.menu-open .all-menu .notice-wrap {transition: opacity .6s ease; transition-delay: 1.2s; opacity: 1;}
   #header .all-menu .notice-wrap {position: absolute; display: block; bottom: 32rem; left: 0; right: 0; width: 100%; padding: 0 20rem; opacity: 0;}
-  #header .all-menu .notice-wrap .notice-rolling {position: relative; width: 100%; height: 32rem; padding-left: 50rem;}
+  #header .all-menu .notice-wrap .notice-rolling {position: relative; width: 100%; height: 32rem;/*  padding-left: 50rem; */}
   #header .all-menu .notice-wrap .notice-rolling::after {content: ""; position: absolute; left: 0; top: 50%; bottom: 0; transform: translateY(-50%); width: 32rem; height: 32rem; background: url("/common/images/icon-noti-on.svg") no-repeat top center / 100% auto;}
   #header .all-menu .notice-wrap .notice-rolling ul {position: relative; width: 100%; height: 100%; overflow: hidden;}
   #header .all-menu .notice-wrap .notice-rolling ul li {position: absolute; top: 0; left: 0; width: 100%; height: 100%;}
@@ -1921,7 +1921,7 @@ footer .copy-area span:last-child:after {display: none;}
 .estiCertiPop .seal-div .f-head .txt{position: relative; z-index:1;}
 .estiCertiPop .seal-div .f-head .img{position:absolute; right:-54rem; top:50%; transform:translateY(-50%); width:70rem; height:68rem;}
 .estiCertiPop .seal-div .f-head .img img{width:100%;}
-.estiCertiPop.pos-chk .flow-wrap {background:rgba(8,196,247,0.16)}
+.estiCertiPop.unavailable .flow-wrap {background:rgba(8,196,247,0.16)}
 .estiCertiPop.unavailable .tit-area{position:relative;}
 .estiCertiPop.unavailable .tit-area:after{display:block; content:""; position:absolute; top:0; left:0; width:100%; height:100%; background:rgba(255,255,255,0.8)}
 .estiCertiPop .no-data-area{position:absolute; top:0; left:0; width:100%; height:100%; background: rgba(255,255,255,0.8); z-index: 2;}

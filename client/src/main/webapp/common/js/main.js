@@ -245,26 +245,10 @@ var mainScript = (function(){
         lastTarget = $(this).parents(".hover-accordion");
       });
 
-      /*$(".hover-accordion").on("mouseleave", function(){
-        if($(this).parents(".coexisting-swiper-w").size() > 0){
-          $(this).find(".acco-list:first-child").addClass("active");
-        }
-      });
-
-      document.addEventListener("mousemove",(e) => {        
-        if($(e.target).parents(".coexisting-swiper-w").size() > 0){
-          if($(e.target).hasClass("acco-list") || $(e.target).hasClass("swiper-slide")){
-            $(lastTarget).find(".acco-list:first-child").addClass("active").siblings().removeClass("active");
-          }
-        }
-      })*/
-
-
       // 페이지 첫 진입 시 스크롤 내려가 있으면 quick 디자인 흰색으로
       if($(window).scrollTop() > 100){
         $(".quick-menu").addClass("scroll-down");
       }
-
 
       // 사업 영역 tab 클릭
       $(".biz-tab-area .txt-tab-swiper .txt-tab-btn").on("click", function(){
@@ -272,7 +256,6 @@ var mainScript = (function(){
         $(".biz-tab-con-area section").hide().eq($(this).index()).show();
       });
 
-      
       // 뉴스레터 수신 동의 관련
     },
     scrollFn: function(){
@@ -298,8 +281,6 @@ var mainScript = (function(){
     },
     swiperFn: function(){
       // [공통 - 교육/세미나] swiper
-      //mainTrainingInitFn();
-
       if($(location).attr('host').indexOf("html") > -1 || $(location).attr('host').indexOf("eznet1") > -1){ //  퍼블 worklist에서만 동작하게 예외처리
         trainingPCFn();
       }
@@ -952,10 +933,6 @@ function trainingPCFn() {
   
   document.querySelector(".btn_next2").addEventListener("click", () => loop2.next({duration: 0.4, ease: "power1.inOut"}));
   document.querySelector(".btn_prev2").addEventListener("click", () => loop2.previous({duration: 0.4, ease: "power1.inOut"}));
-
-
-  //loop.restart();
-  //loop2.restart();
 }
 
 
@@ -980,10 +957,6 @@ function mainTrainingInitFn() {
               observer: true,
               observeParents: true,
               loop: true,
-              /*pagination: {
-                el: ".training-swiper-area.training-swiper-area" + index + " .swiper-pagination",
-                type: "progressbar",
-              },*/
               slidesPerView: 'auto',
               navigation: {
                 nextEl: ".training-swiper-area.training-swiper-area" + index + " .swiper-button-next",
@@ -997,8 +970,6 @@ function mainTrainingInitFn() {
   }else if(window.innerWidth > 1023) { // pc
     if($("#wrap").hasClass("main")){
       $(".training-swiper-area").removeClass("is-mobile");
-      //$(".training-swiper-area .swiper-slide").css("transform", "translate(0, 0)");
-
       $(".training-swiper-area .training-swiper").each(function(index, item){
         if(mainTrainingSwiper[index] != undefined){
           mainTrainingSwiper[index].destroy();

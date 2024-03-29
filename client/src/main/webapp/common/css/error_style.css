@@ -7,6 +7,7 @@
 .only-pc {display: block !important;}
 .only-tabl {display: block;}
 .only-mobile {display: none;}
+
 @media all and (max-width: 1023px) {
   .inner {width: calc(100% - 40px);}
   .only-pc {display: none !important;}
@@ -14,7 +15,6 @@
   .only-tabl + .only-mobile {display: none;}
   .only-mobile {display: block;}
 }
-
 @media all and (max-width: 599px) {
   .only-tabl {display: none;}
   .only-tabl + .only-mobile {display: block;}
@@ -45,7 +45,7 @@
   .etc-wrap.err {background-image: url("/common/images/visual-error-page-mobile.jpg"); background-position: center center;}
   .etc-wrap.site {background-image: url("/common/images/visual-siteinspection-page-mobile.jpg"); background-position: center top;}
   .etc-wrap.infoup {background-image: url("/common/images//visual-login-page-infoupdate-mobile.jpg"); background-position: center bottom;}
-  .etc-wrap .etc-inner {/*top: 252px*/ left: unset; width: 100%; padding: 0 20px 100px;}
+  .etc-wrap .etc-inner {left: unset; width: 100%; padding: 0 20px 100px;}
   .etc-wrap .tit {margin-bottom: 32px;}
   .etc-wrap .info {margin-bottom: 12px;}
   .etc-wrap dl {display: block; margin-top: 48px;}

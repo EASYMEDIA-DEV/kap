@@ -67,8 +67,6 @@ var commonScript = (function(){
                 commonScript.headerFooterFn();
                 commonScript.formFn();
                 commonScript.commonMotion();
-                //commonScript.resizeFn();
-                //commonScript.scrollFn();
               });
             });
           }
@@ -292,7 +290,6 @@ var commonScript = (function(){
               trigger: item,
               start: () => `top ${$("#header").height() + 24}`,
               end: 'bottom top',
-              // markers: true,
               onEnter: () => {
                 yearValue = $(item).data("year");
                 if(yearValue && isHistoryScroll) {
@@ -364,7 +361,6 @@ var commonScript = (function(){
           setTimeout(() => {
             isHistoryScroll = true;
           }, 1000)
-          // clearTimeout(historyScroll);
         });
       }
 
@@ -384,12 +380,6 @@ var commonScript = (function(){
           $(".anchor-btn-w .anchor-btn").removeClass("active").eq($(this).index()).addClass("active");
         });
       });
-
-      // [교육사업] 전체일정팝업 뜰 때
-      // $(".quick-menu .edu-schedule").off().on("click", function(){
-      //   $(".allTrainingSchedulePopup").addClass("open");
-      //   schedulePopupFn();
-      // })
     },
     formFn: function(){
       // 툴팁
@@ -972,7 +962,6 @@ var commonScript = (function(){
             gsap.to($(".lnb-area"), {
               scrollTrigger: {
                 trigger: $(".divide-con-area"),
-                // start: "top 70%",
                 start: () => "top 85%",
                 endTrigger: $(".divide-con-area .right-con-area"),
                 end: () => "bottom-=100rem " + _lnbHeight,
@@ -981,7 +970,6 @@ var commonScript = (function(){
                 },
                 invalidateOnRefresh: true,
                 scrub: true,
-                // markers:true,
               },
             });
           },
@@ -1002,7 +990,6 @@ var commonScript = (function(){
                 pinSpacing: false,
                 invalidateOnRefresh: true,
                 scrub: true,
-                // markers:true,
               },
             });
           },
@@ -1117,7 +1104,6 @@ var commonScript = (function(){
             start: ()=> "top " + $(".sub-top-vis-area.basic-page").offset().top,
             end:"bottom top",
             toggleClass: {targets: $(".sub-top-vis-area.basic-page"), className: "scroll-down"},
-            //markers:true,
           },
         });
         
@@ -1134,7 +1120,6 @@ var commonScript = (function(){
                 gsap.to((".sub-top-vis-area.apply-page .img-area .graphic-item-w .item:nth-child(1)"), 0.5, {yPercent: 10 * self.progress});
                 gsap.to((".sub-top-vis-area.apply-page .img-area .graphic-item-w .item:nth-child(2)"), 0.5, {yPercent: 10 * self.progress});
               },
-              //markers:true,
             },
           });
         }
@@ -1151,7 +1136,6 @@ var commonScript = (function(){
                 end:"top top",
                 pin: true,
                 pinSpacing: false,
-                //markers:true,
               },
             });
   
@@ -1160,10 +1144,8 @@ var commonScript = (function(){
                 trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
                 start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
-                //end:"top-=50% top",
                 end:"top top",
                 scrub: 1,
-                //markers:true,
               },
             });
   
@@ -1182,7 +1164,6 @@ var commonScript = (function(){
                 end:"top-=100rem top",
                 pin: true,
                 pinSpacing: false,
-                //markers:true,
               },
             });
   
@@ -1191,10 +1172,8 @@ var commonScript = (function(){
                 trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
                 start: () => "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
                 endTrigger: ".sub-top-vis-area.basic-page .img-area",
-                //end:"top-=50% top",
                 end:"top top",
                 scrub: 1,
-                //markers:true,
               },
             });
   
@@ -1356,7 +1335,6 @@ var commonScript = (function(){
 })();
 
 $(window).on("load", function(){
-  //commonScript.deviceChk();
   commonScript.headerFooterFn();
   commonScript.init();
   commonScript.pageInitFn();
@@ -1370,7 +1348,6 @@ $(window).on("load", function(){
   commonScript.popupFn();
 });
 $(document).on("ready", function(){
-  // commonScript.headerFooterFn();
 });
 
 function scrollMotionTrigger(){
@@ -1392,7 +1369,6 @@ function scrollMotionTrigger(){
           end:"bottom top",
           toggleClass: {targets: $(".scroll-motion:visible").eq(q), className: "active"},
           once: true,
-          // markers: true,
         },
       });
     });
@@ -1528,7 +1504,6 @@ function trendMobMotion() {
             start: "top 70%",
             end:"bottom top",
             scroller: ".trendPopup .con-area",
-            // markers: true,
             onEnter: () => {
               if(!$(this).hasClass("mv")) {
                 $(this).addClass("mv");
@@ -1647,7 +1622,6 @@ function swiperInitFn(){
           nextEl: ".box-list-swiper .swiper-button-next",
           prevEl: ".box-list-swiper .swiper-button-prev",
         },
-        //spaceBetween: 40,
       });
     }
   }else if(window.innerWidth <= 1023 && boxListSwiper != undefined) {
@@ -1659,7 +1633,6 @@ function swiperInitFn(){
 var subTrainingSwiper = [];
 function trainingSwperInitFn(){
   // [공통 - 교육/세미나] swiper
-  // if (window.innerWidth > 1023) {
     if(!$("#wrap").hasClass("main")){
       if($(".training-swiper-area").size() > 0){
         $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
@@ -1683,18 +1656,6 @@ function trainingSwperInitFn(){
         });
       }
     }
-  // }
-  // else if(window.innerWidth <= 1023) {
-  //   if(!$("#wrap").hasClass("main")){
-  //     $(".training-swiper-area.swiper-role .training-swiper").each(function(index, item){
-  //       if(subTrainingSwiper[index] != undefined){
-  //         console.log(subTrainingSwiper[index]);
-  //         subTrainingSwiper[index].destroy();
-  //         subTrainingSwiper[index] = undefined;
-  //       }
-  //     });
-  //   }
-  // }
 }
 
 // 전체 교육 일정 팝업 내 스와이퍼 함수 재호출
@@ -1802,7 +1763,6 @@ function anchorVisibleFn() {
 
 // 프린트 관련 함수
 function printFn(){
-  // method 1 (새 윈도우 창 열어서 프린트 후 닫기)
   var popUrl = "FO-PC-MYP-02-013.html";
   var popOption = "top=10, left=10, width=1080, height=1528, scrollbars=no, status=no, menubar=no, toolbars=no, resizable=no";
   var myWindow = window.open(popUrl, popOption);
@@ -1814,37 +1774,6 @@ function printFn(){
   }
 
   myWindow.print();
-
-
-
-
-
-
-
-
-  // method 2 (기존 바닥페이지에서 내용 교체로 구현)
-  /*var initBody = document.body.innerHTML; //body영역 저장
-
-  const newDiv = document.createElement('div');
-  document.body.appendChild(newDiv);
-  $("body > div:last-child").attr('id', 'for-print-area');
-  $("#for-print-area").load("/html/mypage/FO-PC-MYP-02-013.html", function(){
-    window.print();
-    $("#for-print-area").css("border","5px solid yellow");
-  });
-
-
-  window.onbeforeprint = function () { //프린터 출력 전 이벤트
-    document.body.innerHTML = document.getElementById('for-print-area').innerHTML;
-  }
-  
-  
-	window.onafterprint = function () { //프린터 출력 후 이벤트
-    document.body.innerHTML = initBody;
-    ScrollTrigger.refresh();
-	}
-
-  return false;*/	
 }
 
 

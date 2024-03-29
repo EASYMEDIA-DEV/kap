@@ -166,7 +166,12 @@
 			<div class="pop-wrap">
 				<button class="noti-btn icon-btn headerNtfyButton" type="button" title="공지"><span>공지</span></button>
 				<div class="pop-box">
-					<p class="f-head"><a href="/foundation/board/notice/list">공지</a></p>
+					<div class="pop-tit">
+						<p class="f-head">공지</p>
+						<div class="btn-wrap">
+							<a class="btn-text-icon black-arrow" href="/foundation/board/notice/list" title="링크 이동"><span>전체 보기</span></a>
+						</div>
+					</div>
 					<div class="list headerNtfyButtonContainer">
 						<c:set var="curDate"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 						<c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">

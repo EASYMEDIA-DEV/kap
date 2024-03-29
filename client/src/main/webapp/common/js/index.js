@@ -113,25 +113,19 @@ $(document).on('ready', function () {
     $('.table').toggleClass('-filter-dmo').removeClass('-filter-wa');
   });
 
-  //var first = $('.-wa').length;
-  //var second = $('.-dmo').length;
   var Before = $('i[progress="작업전"]').length;
   var Ing = $('i[progress="작업중"]').length;
   var Confirm = $('i[progress="검수요청"]').length;
-  // var Complete = $('i[progress="작업완료"]').length;
   var FinalComplete = $('i[progress="완료"]').length;
   var All = Before + Ing + Confirm + FinalComplete;
   var Progress = FinalComplete / All * 100;
   var Floor = Math.floor(Progress);
 
 
-  //console.log(first, second);
-
   $('.total_all').text(All);
   $('.total_before').text(Before);
   $('.total_ing').text(Ing);
   $('.total_confirm').text(Confirm);
-  // $('.total_ok').text(Complete);
   $('.total_done').text(FinalComplete);
   $('.total_progress').text(Floor + '%');
 
@@ -144,7 +138,6 @@ $(document).on('ready', function () {
     var Before = Table.find('i[progress="작업전"]').length;
     var Ing = Table.find('i[progress="작업중"]').length;
     var Confirm = Table.find('i[progress="검수요청"]').length;
-    // var Complete = Table.find('i[progress="1차완료(고객사 확인필요)"]').length;
     var FinalComplete = Table.find('i[progress="완료"]').length;
     var All = Before + Ing + Confirm + FinalComplete;
     var Progress = FinalComplete / All * 100;
@@ -154,7 +147,6 @@ $(document).on('ready', function () {
     TotalBox.find('.total_before').text(Before);
     TotalBox.find('.total_ing').text(Ing);
     TotalBox.find('.total_confirm').text(Confirm);
-    // TotalBox.find('.total_ok').text(Complete);
     TotalBox.find('.total_done').text(FinalComplete);
     TotalBox.find('.total_progress').text(Floor + '%');
   });
