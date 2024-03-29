@@ -11,10 +11,11 @@
     <select id="selectManageConsultList" parameterType="CBBManageConsultSearchDTO" resultType="CBBManageConsultListDTO">
         SELECT /* CBBManageConsultMapper.selectManageConsultList */
             CNSTG_SEQ					/* 컨설팅순번 */
+            , APPCTN_MEM_SEQ            /* 신청자 멤버 시퀀스 */
             , CNSTG_CD                  /* 컨설팅코드 */
             , BSN_YEAR					/* 사엽연도 */
             , RSUME_STTS_CD			    /* 진행상태코드 */
-            , RSUME_STTS_NM			/* 진행상태코드명 */
+            , RSUME_STTS_NM			    /* 진행상태코드명 */
             , CMPN_NM					/* 부품사명 */
             , CTGRY_CD					/* 부품사구분코드 */
             , CTGRY_NM					/* 부품사구분코드명 */
@@ -59,6 +60,7 @@
         FROM(
             SELECT
                 CP_MST.CNSTG_SEQ
+                , CP_MST.APPCTN_MEM_SEQ
                 , CP_MST.CNSTG_CD
                 , CP_MST.BSN_YEAR
                 , CMPN_MST.CMPN_NM
@@ -165,6 +167,7 @@
         FROM(
             SELECT /* CBBManageConsultMapper.selectManageConsultList */
                 CNSTG_SEQ					/* 컨설팅순번 */
+                , APPCTN_MEM_SEQ            /* 신청자 멤버 시퀀스 */
                 , CNSTG_CD                  /* 컨설팅코드 */
                 , BSN_YEAR					/* 사엽연도 */
                 , RSUME_STTS_CD			    /* 진행상태코드 */
@@ -213,6 +216,7 @@
             FROM(
                     SELECT
                         CP_MST.CNSTG_SEQ
+                        , CP_MST.APPCTN_MEM_SEQ
                         , CP_MST.CNSTG_CD
                         , CP_MST.BSN_YEAR
                         , CMPN_MST.CMPN_NM
@@ -387,32 +391,33 @@
                     <when test="f == 8 ">
                         <!-- 최초등록자 -->
                         AND (
-                            INSTR(MST.REG_ID, #{q}) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT ADM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
+                            MST.REG_ID LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT 'x' FROM CO_MEM_MST WHERE MEM_SEQ = APPCTN_MEM_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
                         )
                     </when>
                     <when test="f == 9 ">
                         <!-- 최종등록자 -->
                         AND (
-                            INSTR(MST.MOD_ID, #{q}) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
+                            MST.MOD_ID LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
                         )
                     </when>
                     <otherwise>
                         AND (
-                            EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND CMPN_NM LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND BSNM_NO LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND SLS_PMT LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT BSNM_NO FROM CP_CMPN_MST WHERE BSNM_NO = MST.APPCTN_BSNM_NO AND MPLE_CNT LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ and ( FIRST_RGNS_NM LIKE CONCAT('%', #{q}, '%') OR SCND_RGNS_NM LIKE CONCAT('%', #{q}, '%')))
-                            OR EXISTS(SELECT CNSTG_SEQ FROM CP_CNSTG_APPCTN_MST WHERE CNSTG_SEQ = MST.CNSTG_SEQ AND CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE MEM_SEQ = MST.CMSSR_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
-                            OR INSTR(MST.REG_ID, #{q}) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT ADM_SEQ FROM CO_ADM_MST WHERE ID = MST.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
-                            OR EXISTS(SELECT MEM_SEQ FROM CO_MEM_MST WHERE ID = MST.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
-                            OR INSTR(MST.MOD_ID, #{q}) <![CDATA[>]]> 0
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
+                            CMPN_NM LIKE CONCAT('%', #{q}, '%')
+                            OR APPCTN_BSNM_NO LIKE CONCAT('%', #{q}, '%')
+                            OR SLS_PMT LIKE CONCAT('%', #{q}, '%')
+                            OR MPLE_CNT LIKE CONCAT('%', #{q}, '%')
+                            OR FIRST_RGNS_NM LIKE CONCAT('%', #{q}, '%')
+                            OR SCND_RGNS_NM LIKE CONCAT('%', #{q}, '%')
+                            OR CRTFN_CMPN_NM LIKE CONCAT('%', #{q}, '%')
+                            OR CMSSR_NM LIKE CONCAT('%', #{q}, '%')
+                            OR REG_ID LIKE CONCAT('%', #{q}, '%')
+                            OR (SELECT NAME FROM CO_ADM_MST WHERE ID = MST.REG_ID) LIKE CONCAT('%', #{q}, '%')
+                            OR (SELECT NAME FROM CO_MEM_MST WHERE MEM_SEQ = APPCTN_MEM_SEQ) LIKE CONCAT('%', #{q}, '%')
+                            OR MOD_ID LIKE CONCAT('%', #{q}, '%')
+                            OR (SELECT NAME FROM CO_ADM_MST WHERE ID = MST.MOD_ID) LIKE CONCAT('%', #{q}, '%')
                         )
                     </otherwise>
                 </choose>
