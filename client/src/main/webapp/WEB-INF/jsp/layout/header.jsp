@@ -9,6 +9,16 @@
 	<c:if test="${ not empty pageMenuDto }">
 		<c:set var="pageTitle" value="${pageMenuDto.menuNm} | ${siteName}"/>
 	</c:if>
+	<%@ page import="java.net.InetAddress" %>
+	<c:set var="nowsm">${InetAddress.getLocalHost().getHostAddress()}</c:set>
+	<c:choose>
+		<c:when test="${nowsm eq '10.10.2.20'}">
+			<meta name="SM" content="1" />
+		</c:when>
+		<c:otherwise>
+			<meta name="SM" content="2" />
+		</c:otherwise>
+	</c:choose>
 	<title>${ pageTitle }</title>
 	<link rel="shortcut icon" href="/common/images/favicon.ico" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
@@ -154,9 +164,9 @@
 
 		<div class="util-area">
 			<div class="pop-wrap">
-				<button class="noti-btn icon-btn headerNtfyButton" type="button" title="팝업"><span>공지</span></button>
+				<button class="noti-btn icon-btn headerNtfyButton" type="button" title="공지"><span>공지</span></button>
 				<div class="pop-box">
-					<p class="f-head">공지</p>
+					<p class="f-head"><a href="/foundation/board/notice/list">공지</a></p>
 					<div class="list headerNtfyButtonContainer">
 						<c:set var="curDate"><fmt:formatDate value="${now}" pattern="yyyyMMdd" /></c:set>
 						<c:forEach var="ntfyList" items="${headerNtfyList}" varStatus="status">
@@ -186,10 +196,10 @@
 			<div class="pop-wrap">
 				<c:choose>
 					<c:when test="${ not empty loginMap}">
-						<button class="log-btn icon-btn" type="button" title="팝업"><span>마이페이지</span></button>
+						<button class="log-btn icon-btn" type="button" title="마이페이지"><span>마이페이지</span></button>
 					</c:when>
 					<c:otherwise>
-						<button class="log-btn icon-btn" type="button" title="팝업"><span>로그인</span></button>
+						<button class="log-btn icon-btn" type="button" title="로그인"><span>로그인</span></button>
 					</c:otherwise>
 				</c:choose>
 
