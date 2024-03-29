@@ -17,7 +17,7 @@ server:
     max-swallow-size: 104886080
   servlet:
     session:
-      timeout: 3600
+      timeout: 7200
       cookie:
         name: KAP_LOCAL_ADMIN_JSESSIONID
 ---
@@ -28,7 +28,7 @@ domain:
 server:
   servlet:
     session:
-      timeout: 3600
+      timeout: 7200
       cookie:
         name: ADMIN
 ---
@@ -38,6 +38,6 @@ domain:
 server:
   servlet:
     session:
-      timeout: 3600
+      timeout: 7200
       cookie:
         name: ADMIN

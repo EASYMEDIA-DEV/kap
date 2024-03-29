@@ -335,6 +335,18 @@ define(["ezCtrl"], function(ezCtrl) {
 			//리스트 조회
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
+			//폼 데이터 처리후 2뎁스가 활성화 되어있다면 오픈해준다.
+			$(".detailCdList").find("input:checkbox").each(function(){
+				//2뎁스 체크박스 값이 있다면 뭉치 활성화 해줌
+				if($(this).is(":checked")){
+					$(this).closest(".cdListContainer").css("display", "");
+				}else{
+					//2뎁스 체크박스 값 없으면 비활성화 처리함, 근데 같은 영역안에 체크된거 있으면 예외 처리해줌
+					if($(".cdListContainer").eq(0).find("input:checkbox:checked").length == 0){
+						$(this).prop("disabled", true);
+					}
+				}
+			});
 			search();
 
 			var searchInput = $("#btnSearch").closest('fieldset').find('input:text');

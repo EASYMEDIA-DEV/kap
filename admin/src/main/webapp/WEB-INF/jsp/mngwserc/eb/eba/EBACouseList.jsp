@@ -60,7 +60,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList1}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}"disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}"<%--disabled="true"--%> data-cdnm="${cdList.cdNm}"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
@@ -73,7 +73,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList2}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" <%--disabled="true"--%> data-cdnm="${cdList.cdNm}"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
@@ -86,7 +86,7 @@
 								</div>
 								<c:forEach  var="cdList" items="${cdList3}" varStatus="status">
 									<label class="checkbox-inline c-checkbox">
-										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" disabled="true"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" <%--disabled="true"--%> data-cdnm="${cdList.cdNm}"/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:forEach>
