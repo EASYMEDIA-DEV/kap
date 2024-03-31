@@ -37,7 +37,7 @@
                                         <p class="txt f-head">기술지도 신청은 온라인으로만 접수받으며, 절차에 따라 항목을 입력하시면 신청이 완료됩니다. <br>이후 담당자가 연락하여, 초도 방문 후 기술지도 부품사를 선정하게 됩니다.</p>
                                     </div>
                                     <div class="btn-wrap">
-                                        <%--<a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>"
+                                        <a class="btn-solid small white-bg <c:if test="${empty loginMap}">techApplication</c:if>"
                                             <c:choose>
                                                 <c:when test="${not empty loginMap}">
                                                     href="./application"
@@ -45,8 +45,8 @@
                                                 <c:otherwise>
                                                     href="javascript:"
                                                 </c:otherwise>
-                                            </c:choose>><span>신청하기</span></a>--%>
-                                            <a class="btn-solid small white-bg" href="javascript:" onclick="alert('사업 신청 기간이 아닙니다.');"><span>신청하기</span></a>
+                                            </c:choose>><span>신청하기</span>
+                                        </a>
                                     </div>
                                 </div>
 
@@ -126,7 +126,7 @@
 
 
             <!-- 접수중 하단 플로팅 영역 -->
-            <%--<div class="accepting-fixed-area">
+            <div class="accepting-fixed-area">
                 <div class="for-position">
                     <button class="open-click-area" type="button">
                         <p class="tit"><c:out value="${sysYear}" /> 기술지도 <span class="status">접수중</span></p>
@@ -159,7 +159,7 @@
 
                             <div class="btn-wrap">
                                 <div class="btn-set">
-                                   &lt;%&ndash; <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>&ndash;%&gt;
+                                   <%-- <a class="btn-solid small gray-bg has-icon download" href="/file/download?fileSeq=${fileData.tchgdFileSeq}&fileOrd=${fileData.tchgdFileOrd}" title="개선활동 추진계획서 다운로드"><span>개선활동 추진계획서 다운로드</span></a>--%>
                                 </div>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg <c:if test="${empty loginMap}">techApplication</c:if>"
@@ -178,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-            </div>--%>
+            </div>
         </div>
     </div>
 <!-- content 영역 end -->
