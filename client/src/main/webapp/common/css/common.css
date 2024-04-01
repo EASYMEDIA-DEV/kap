@@ -514,6 +514,7 @@ footer .copy-area {display: -webkit-box; display: -ms-flexbox; display: flex; ma
 footer .copy-area span {position: relative;}
 footer .copy-area span ~ span {margin-right: 10rem; padding-right: 10rem;}
 footer .copy-area span ~ span::after {content: ""; position: absolute; right: 0; top: 50%; transform: translateY(-50%); display: inline-block; width: 1px; height: 16rem; background-color: #DFE1E4;}
+footer .copy-area span:first-child {margin-right: 10rem;} /* 2024-04-01 추가 */
 footer .copy-area span:last-child {margin-right: 0; padding-right: 0;}
 footer .copy-area span:last-child:after {display: none;}
 
@@ -531,6 +532,7 @@ footer .copy-area span:last-child:after {display: none;}
   footer .links-box a.way {order: 4;}
   footer .links-box a ~ a {margin-left: 0;}
   footer .copy-area {flex-wrap: wrap; margin-top: 18rem;}
+  footer .copy-area span:first-child {width: 100%; margin-right: 8rem;} /* 2024-04-01 추가 */
   footer .copy-area span ~ span {margin-right: 8rem; padding-right: 8rem;}
   footer .copy-area span ~ span::after {transform: translateY(-51%); height: 12rem;}
 }
@@ -660,7 +662,7 @@ footer .copy-area span:last-child:after {display: none;}
 .btn-solid.large {min-height: 68rem; padding: 16rem 40rem;}
 .btn-solid.small span {font-size: max(16rem, 14px); line-height: 160%;}
 .btn-solid.large span {font-size: max(24rem, 18px); line-height: 150%;}
-.btn-solid.white-bg {background-color: #fff;}
+.btn-solid.white-bg {background-color: #ffffff;}
 .btn-solid.white-bg span {color: #06161E;}
 .btn-solid.black-bg {background-color: #09202C;}
 .btn-solid.black-bg span {color: #fff;}

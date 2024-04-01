@@ -16,7 +16,6 @@
 					</div>
 					<div class="copy-area f-caption2">
 						<span>(04365)서울시 용산구 원효로 74&nbsp;</span>
-						<span>TEL : 02-3271-2965</span>
 						<span>FAX : 02-3271-2969</span>
 						<span>Copyright 2002 KAP All rights reserved.</span>
 					</div>
