@@ -713,7 +713,7 @@
                                                                                 <div class="data-line">
                                                                                     <div class="form-group">
                                                                                         <div class="form-input">
-                                                                                            <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" value="${spprtDtl[0].acntNo}" placeholder="계좌번호 입력">
+                                                                                            <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" value="${spprtDtl[0].acntNo}" placeholder="계좌번호 입력" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                                                         </div>
                                                                                     </div>
                                                                                 </div>
@@ -949,7 +949,7 @@
                                                                             <div class="data-line">
                                                                                 <div class="form-group">
                                                                                     <div class="form-input">
-                                                                                        <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" placeholder="계좌번호 입력" value="${spprtDtl[1].acntNo}">
+                                                                                        <input type="text" class="numberChk acntNo" name="wBFBRegisterDTO.spprtDtlList[0].acntNo" placeholder="계좌번호 입력" value="${spprtDtl[1].acntNo}" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
