@@ -325,7 +325,7 @@
                 AND ( (
 
                     EXPS_STRT_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{dStrDt}, '%Y-%m-%d')
-                    AND EXPS_END_DTM <![CDATA[ <= ]]> DATE_ADD(STR_TO_DATE(#{dEndDt}, '%Y-%m-%d'), INTERVAL 1 DAY)
+                    AND EXPS_END_DTM <![CDATA[ <= ]]> STR_TO_DATE(#{dEndDt}, '%Y-%m-%d')
 
                 ) OR ODTM_YN = 'Y' )
             </if>

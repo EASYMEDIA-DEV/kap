@@ -1026,25 +1026,25 @@
             <if test="strtDt != null and strtDt != ''.toString() ">
                 <choose>
                     <when test="srchDate == 1">
-                        AND APPCTN_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND APPCTN_DT <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 2">
                         AND BSN_YEAR <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y')
                     </when>
                     <when test="srchDate == 3">
-                        AND VST_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND VST_DT <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 4">
-                        AND CNSTG_KICKF_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND CNSTG_KICKF_DT <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 5">
-                        AND GUIDE_PSCND_DT <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND GUIDE_PSCND_DT <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 6">
-                        AND REG_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND REG_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                     <when test="srchDate == 7">
-                        AND MOD_DTM <![CDATA[ > ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                        AND MOD_DTM <![CDATA[ >= ]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                     </when>
                 </choose>
             </if>
