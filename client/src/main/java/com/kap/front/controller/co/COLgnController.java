@@ -4,7 +4,9 @@ import com.kap.common.utility.COStringUtil;
 import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.*;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
-import com.kap.service.*;
+import com.kap.service.COMessageService;
+import com.kap.service.COUserDetailsHelperService;
+import com.kap.service.COUserLgnService;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,7 +19,6 @@ import org.springframework.web.context.request.RequestContextHolder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.List;
 
 /**
  * <pre>
@@ -121,7 +122,21 @@ public class COLgnController {
 	@RequestMapping("/pwd-find-setting")
 	public String getPwdFindSetting(COIdFindDto coIdFindDto , ModelMap modelMap) throws Exception
 	{
+		/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 s */
+		String updCi = "";
+
+		if(coIdFindDto.getCi() == null || !coIdFindDto.getCi().equals("")) {
+			updCi = coIdFindDto.getCi();
+			coIdFindDto.setCi("");
+		}
+
 		MPAUserDto idFind = cOUserLgnService.getIdFind(coIdFindDto);
+
+		if(idFind.getMemSeq() != null) {
+			idFind.setCi(updCi);
+			cOUserLgnService.setCiUpd(idFind);
+		}
+		/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 e */
 
 		modelMap.addAttribute("rtnData",idFind);
 
@@ -205,7 +220,6 @@ public class COLgnController {
 		modelMap.addAttribute("data", cOUserLgnService.getIdFind(coIdFindDto));
 		return "jsonView";
 	}
-
 
     /**
 	 * 로그아웃을 처리한다.

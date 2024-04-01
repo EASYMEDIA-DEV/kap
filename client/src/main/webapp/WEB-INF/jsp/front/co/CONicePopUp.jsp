@@ -19,11 +19,26 @@
 		<input type="hidden" id="param4" name="param4"  value="${rtnData.receivedatass.paramsFour}"/>
 		<input type="hidden" id="param5" name="param5"  value="${rtnData.receivedatass.paramsFive}"/>
 	</form>
+
+	<script type="text/javascript" src="/common/js/jquery-1.12.4.min.js"></script> <%-- 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 --%>
+
 	<script type="text/javascript">
 			if('${rtnData.resultcode}' == "0000") {
 				if(document.getElementById("param1").value == "ciChk") {
 					if(document.getElementById("param2").value != document.getElementById("ci").value) {
-						alert("본인인증에 실패하였습니다.");
+						/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 s */
+						if(decodeURI(document.getElementById("param3").value) == document.getElementById("name").value &&
+								document.getElementById("param4").value == document.getElementById("mobileno").value
+						) {
+							alert("본인인증에 성공하였습니다.");
+							window.opener.name = "nicePop";
+							document.form.target = "nicePop";
+							document.form.action = "${rtnData.receivedatass.redirectUrl}";
+							document.form.submit();
+						} else {
+							alert("홈페이지에서 비밀번호 찾기 시 입력한 이름, 휴대폰번호와 동일한 정보로 본인인증 해주셔야 인증이 가능합니다.");
+						}
+						/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 e */
 					} else {
 
 						alert("본인인증에 성공하였습니다.");

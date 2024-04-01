@@ -448,7 +448,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								alert(msgCtrl.getMsg("fail.co.login.notIdExist"));
 								return ;
 							} else {
-								cmmCtrl.niceCertification('/pwd-find-setting&ciChk&' + data.data.ci +"&"+data.data.id );
+								/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 s */
+								// cmmCtrl.niceCertification('/pwd-find-setting&ciChk&' + data.data.ci +"&"+data.data.id );
+								cmmCtrl.niceCertification('/pwd-find-setting&ciChk&' + data.data.ci +"&"+encodeURI(data.data.name) +"&"+data.data.hpNo.replaceAll("-",'') +"&"+data.data.id );
+								/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 e */
 							}
 
 						}, "/pwd-find", $formObj6, "POST", "json");

@@ -163,6 +163,7 @@
     ==========   ======    ==============
     2023.12.06   양현우       최초생성
     2024.01.04   양현우       위원 사용자 빼고 조회
+    2024.04.01	 장두석		 휴대폰 번호 조회 추가
 -->
 	<select id="getIdFind" parameterType="COIdFindDto" resultType="MPAUserDto">
 		select /* COUserLgnMapper.idFind */
@@ -170,6 +171,7 @@
 		  , a.id
 		  , a.email
 		  , a.name
+		  , a.hp_no
 		  , b.ci
 		from
 			co_mem_mst a
