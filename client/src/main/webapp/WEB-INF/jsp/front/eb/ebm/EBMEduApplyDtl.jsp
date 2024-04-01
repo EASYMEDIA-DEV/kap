@@ -226,11 +226,10 @@
                                         <div class="btn-wrap align-right">
                                             <div class="btn-set">
 
-
                                                 <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.cmptnYn eq 'Y'}">
                                                     <button class="btn-solid small gray-bg icon btn-print cmptnPop" type="button" <%--onclick="printFn()"--%>><span>수료증 출력</span></button>
                                                 </c:if>
-
+                                                <c:set var="accsStatDt" value="${ empty rtnData.accsStrtDtm ? '-' : kl:convertDate(rtnData.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
                                                <c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
                                                 <%--<c:set var="accsEndDt" value="2024.01.21"/>--%>
                                                 <c:set var="edctnStatDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
@@ -317,7 +316,7 @@
                                                     cal.setTime(convertedDate);
                                                     cal.add(Calendar.DATE, -1);
 
-                                                    // 30분 전의 날짜와 시간을 가져오기
+                                                    //30분 전의 날짜와 시간을 가져오기
                                                     Date eduStrtDtm = cal.getTime();
 
                                                     // JSP 페이지의 속성으로 30분 전의 날짜와 현재 날짜를 전달
@@ -360,6 +359,9 @@
 
                                                 <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate" />
 
+                                                <c:set var="accsStatDt" value="${ empty accsStatDt ? '-' : kl:convertDate(accsStatDt, 'yyyy.MM.dd', 'yyyy-MM-dd', '-') }"/>
+                                                <c:set var="accsEndDt" value="${ empty accsEndDt ? '-' : kl:convertDate(accsEndDt, 'yyyy.MM.dd', 'yyyy-MM-dd', '-') }"/>
+
                                                 <c:set var="examStatDt" value="${ empty rtnData.examStrtDtm ? '-' : kl:convertDate(rtnData.examStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                 <c:set var="examEndDt" value="${ empty rtnData.examEndDtm ? '-' : kl:convertDate(rtnData.examEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
                                                 <!-- 0: 평가하기 비활성화, 1:평가하기 활성화-->
@@ -385,9 +387,15 @@
                                                 </c:if>
 
                                                 <c:choose>
-                                                    <c:when test="${rtnData.trnsfYn eq 'N' && (currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm)  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
+
+                                                    <%--<c:when test="${rtnData.trnsfYn eq 'N' && (currentDate.before(edctnStrtDtm) || currentDate eq edctnStrtDtm)  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
+                                                        <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
+                                                    </c:when>--%>
+
+                                                    <c:when test="${rtnData.trnsfYn eq 'N' && (((accsStatDt lt nowDate) || (accsStatDt eq nowDate)) && (nowDate eq accsEndDt || nowDate lt accsEndDt))  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
                                                         <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
                                                     </c:when>
+
                                                 </c:choose>
                                             </div>
                                         </div>
