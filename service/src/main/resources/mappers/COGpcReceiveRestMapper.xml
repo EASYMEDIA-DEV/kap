@@ -26,6 +26,7 @@
 			, pc_stduy_cntn as edu_dtl
 			, itrdc_cntn as edu_cntn
 			, date_format(now(), '%Y-%m-%d') as kap_send_dd
+			, CONCAT('https://www.kapkorea.org/education/apply/detail?detailsKey=', edctn_seq) AS kap_url
 		from ed_edctn_prcs_mst a
 		WHERE exps_yn = 'Y'
 		  AND gpc_yn = 'Y'
