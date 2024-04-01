@@ -607,7 +607,7 @@
                                                 <spring:eval var="fileExtns"
                                                              expression="@environment.getProperty('app.file.fileExtns')"/>
                                                 <spring:eval var="atchUploadMaxSize"
-                                                             expression="@environment.getProperty('app.file.max-size')"/>
+                                                             expression="104857600"/>
                                                 <div class="dropzone attachFile notRequired"
                                                      data-file-field-nm="fileSeq" data-file-extn="${fileExtns}"
                                                      data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1"
@@ -618,7 +618,7 @@
                                                 </div>
                                                 <p class="text-bold mt">
                                                     ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber
-                                                        value="${atchUploadMaxSize / 1024 / 1024 / 8}"
+                                                        value="${atchUploadMaxSize / 1024 / 1024}"
                                                         maxFractionDigits="1"/>MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>

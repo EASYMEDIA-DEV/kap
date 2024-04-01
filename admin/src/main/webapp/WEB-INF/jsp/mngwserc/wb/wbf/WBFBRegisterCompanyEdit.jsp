@@ -705,7 +705,7 @@
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
                                                     <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile2" value="${spprtDtl[0].acntFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -713,7 +713,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -723,7 +723,7 @@
                                             <label class="col-sm-1 control-label">통장사본<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
                                                     <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile3" value="${spprtDtl[0].bnkbkFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -731,7 +731,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -741,7 +741,7 @@
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
                                                     <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile1" value="${spprtDtl[0].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -749,7 +749,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -932,7 +932,7 @@
                                             <label class="col-sm-1 control-label">계좌이체약정서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="계좌이체약정서">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile5" value="${spprtDtl[1].acntFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -940,7 +940,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -950,7 +950,7 @@
                                             <label class="col-sm-1 control-label">통장사본<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile6" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="통장사본">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile6" value="${spprtDtl[1].bnkbkFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -958,7 +958,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -968,7 +968,7 @@
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
                                                     <input type="hidden" class="notRequired fileInfo" data-hidden='fileInfo' name="spprtAppctnFile4" value="${spprtDtl[1].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -976,7 +976,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1110,7 +1110,7 @@
                                             <label class="col-sm-1 control-label">기술임치증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile8" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="기술임치증">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile8" value="${spprtDtl[2].tchlgLseFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -1118,7 +1118,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1128,7 +1128,7 @@
                                             <label class="col-sm-1 control-label">임치료 납입 영수증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile9" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="임치료 납입 영수증">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile9" value="${spprtDtl[2].lsePayFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -1136,7 +1136,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1146,7 +1146,7 @@
                                             <label class="col-sm-1 control-label">지원금신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="spprtAppctnFile7" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="지원금신청서">
                                                     <input type="hidden" class="notRequired" data-hidden='fileInfo' name="spprtAppctnFile7" value="${spprtDtl[2].spprtAppctnFileSeq}">
                                                     <div class="dz-default dz-message">
@@ -1154,7 +1154,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1285,7 +1285,7 @@
                                             <label class="col-sm-1 control-label">신청서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile1" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="신청서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE01">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile1">
@@ -1295,7 +1295,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1305,7 +1305,7 @@
                                             <label class="col-sm-1 control-label">보안서약서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="보안서약서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].type" value="ATTACH_FILE_TYPE02">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[1].seqNm" value="rsumeTaskFile2">
@@ -1315,7 +1315,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1325,7 +1325,7 @@
                                             <label class="col-sm-1 control-label">중소기업확인서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="중소기업확인서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].type" value="ATTACH_FILE_TYPE03">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[2].seqNm" value="rsumeTaskFile3">
@@ -1335,7 +1335,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -1345,7 +1345,7 @@
                                             <label class="col-sm-1 control-label">사업자등록증<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업자등록증">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].type" value="ATTACH_FILE_TYPE04">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[3].seqNm" value="rsumeTaskFile4">
@@ -1355,7 +1355,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
@@ -2097,7 +2097,7 @@
                                             <label class="col-sm-1 control-label">완료보고서<span class="star"> *</span></label>
                                             <div class="col-sm-10 col-md-11">
                                                 <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
-                                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                                <spring:eval var="atchUploadMaxSize" expression="104857600" />
                                                 <div class="dropzone attachFile notRequired" data-file-field-nm="rsumeTaskFile5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="완료보고서">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].type" value="ATTACH_FILE_TYPE10">
                                                     <input type="hidden" class="notRequired" name="rsumeTaskDtl.appctnFileInfo[0].seqNm" value="rsumeTaskFile5">
@@ -2107,7 +2107,7 @@
                                                     </div>
                                                 </div>
                                                 <p class="text-bold mt">
-                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024 / 8}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                    ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
                                                 </p>
                                             </div>
                                         </div>
