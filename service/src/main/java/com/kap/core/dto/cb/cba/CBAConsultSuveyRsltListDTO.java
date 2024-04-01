@@ -60,6 +60,8 @@ public class CBAConsultSuveyRsltListDTO extends BaseDTO {
     private String ptcptPstn;
     @Schema(title = "참여자 연락처")
     private String ptcptTelno;
+    @Schema(title = "신청업종 코드명")
+    private String cbsnNm;
     @Schema(title = "신청분야 코드")
     private String appctnFldCd;
     @Schema(title = "신청분야 코드명")

@@ -1061,7 +1061,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
 
             //지도구분
             cell = row.createCell(7);
-            cell.setCellValue(list.get(i).getGuideTypeNm());
+            cell.setCellValue(list.get(i).getGuideTypeNm() == null ? "-" : list.get(i).getGuideTypeNm());
             cell.setCellStyle(style_body);
 
             //상태

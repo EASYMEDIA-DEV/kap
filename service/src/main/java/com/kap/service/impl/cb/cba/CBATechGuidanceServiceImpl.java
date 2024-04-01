@@ -1037,7 +1037,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
             //신청업종/분야
             cell = row.createCell(6);
-            cell.setCellValue(list.get(i).getAppctnFldNm());
+            cell.setCellValue(list.get(i).getCbsnNm());
             cell.setCellStyle(style_body);
 
             //지도구분

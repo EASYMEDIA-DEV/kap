@@ -1273,13 +1273,13 @@
         2024.02.28    구은희      최초생성
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
-        SELECT
+        SELECT /* CBATechGuidanceMapper.selectConsultSuveyRsltDtlExcel */
             CP_MST.CNSTG_SEQ            <!-- 컨설팅 순번 -->
             , CP_MST.BSN_YEAR             <!-- 사업연도 -->
             , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
             , CPSR.PTCPT_NAME           <!-- 참여자 -->
-            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CP_MST.APPCTN_FLD_CD AND CD_ID = 'MNGCNSLT_APP_AREA') APPCTN_FLD_NM     <!-- 신청업종/분야 -->
+            , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = (SELECT CD FROM CP_CNSTG_CBSN_DTL WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ) AND cd !='' ) CBSN_NM <!-- 신청업종/분야 -->
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD = CPR_MST.GUIDE_TYPE_CD AND CD_ID = 'GUIDE_TYPE_CD') GUIDE_TYPE_NM        <!-- 지도구분 -->
             , CASE IFNULL(CPSR.TTL_SCORE, 0) WHEN 0 THEN '미참여' ELSE '참여' END AS SRV_STTS                                     <!-- 설문참여상태 -->
             , (SELECT CNSTG_KICKF_DT FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ AND CNSTG_PSCND_CD = 'GUIDE_PSCND04') LVLUP_DT      <!-- 렙업일 -->
