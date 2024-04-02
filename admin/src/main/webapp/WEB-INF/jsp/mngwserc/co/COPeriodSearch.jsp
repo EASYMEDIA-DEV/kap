@@ -84,7 +84,10 @@
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<%-- 2024-03-28 교육사업은 기존 30일 전에서 180일 전으로 변경 --%>
-						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'edctn' or param.srchType eq 'episd'}">
+						<c:when test="${param.srchType eq 'episd'}">
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : '2024-01-01'}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:when>
+						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'edctn'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${param.srchType eq 'ima'}">
@@ -125,7 +128,10 @@
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<%-- 2024-03-28 교육차수는 기존 30일 후에서 180일 후로 변경 --%>
-						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'episd'}">
+						<c:when test="${param.srchType eq 'episd'}">
+							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : '2024-12-31'}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+						</c:when>
+						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a')}">
 							<input type="text" class="form-control input-sm datetimepicker_endDt" style="width:100px" id="${endId}" data-name="${endId}" value="${not empty endDtVal ? endDtVal : kl:convertDate(kl:addDay(today, '+180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="종료일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:otherwise>
