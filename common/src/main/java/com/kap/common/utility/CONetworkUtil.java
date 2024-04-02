@@ -67,6 +67,13 @@ public class CONetworkUtil {
 		{
 			throw new RuntimeException(ex);
 		}
+
+		/* 2024-04-02 로그인 ip 여러 개 들어올 시 예외처리 s */
+		if(loginIp.indexOf(",")>-1){
+			loginIp = loginIp.split(",")[0];
+		}
+		/* 2024-04-02 로그인 ip 여러 개 들어올 시 예외처리 e */
+
 		return loginIp;
 	}
 }

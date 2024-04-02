@@ -223,11 +223,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
+						/* 2024-04-02 성별 유효성 제거 s */
 						/*if($("#gndr").val() != $("#loginGndr").val()) {
 							alert("양도 받을 사람과 양도 해주는 사람의 성별이 같아야 합니다.");
 							return false;
 						}*/
-
+						/* 2024-04-02 성별 유효성 제거 e */
 
 						var seqObj = {};
 
