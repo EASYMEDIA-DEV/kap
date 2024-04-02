@@ -223,10 +223,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 
-						if($("#gndr").val() != $("#loginGndr").val()) {
+						/*if($("#gndr").val() != $("#loginGndr").val()) {
 							alert("양도 받을 사람과 양도 해주는 사람의 성별이 같아야 합니다.");
 							return false;
-						}
+						}*/
 
 
 						var seqObj = {};
