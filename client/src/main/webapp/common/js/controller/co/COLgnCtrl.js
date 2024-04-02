@@ -445,7 +445,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					func : function (){
 						cmmCtrl.frmAjax(function(data){
 							if(data.data == null) {
-								alert(msgCtrl.getMsg("fail.co.login.notIdExist"));
+								// alert(msgCtrl.getMsg("fail.co.login.notIdExist"));
+								alert("존재하지 않는 계정입니다.\n" +
+									"확인을 위해 아이디, 이름, 휴대폰번호를 적어서\n" +
+									"hagas@kapkorea.org 로 전송 바랍니다.");
 								return ;
 							} else {
 								/* 2024-04-01 정보 업데이트 불가능한 회원 비밀빈호 찾기 회피기동 s */
