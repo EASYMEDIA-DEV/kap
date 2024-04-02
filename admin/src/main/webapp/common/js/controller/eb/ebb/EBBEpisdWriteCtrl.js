@@ -1349,7 +1349,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						alert("교육시작일이 접수종료일과 같거나 빠를수 없습니다.");
 						$("#accsEndDt").val(null);
-						$("#edctnStrtDt").val(null);
+						//$("#edctnStrtDt").val(null);
 						return false;
 					}
 				}
@@ -1513,18 +1513,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$("#cbsnCd").prop("disabled", true);//업종
 
-					$("#accsStrtDt").prop("disabled", true);//접수 시작일
-					$("#accsStrtHour").prop("disabled", true);//접수 시작시간
-					$("#accsEndDt").prop("disabled", true);//접수 종료일
-					$("#accsEndHour").prop("disabled", true);//접수 종료시간
+					//$("#accsStrtDt").prop("disabled", true);//접수 시작일 2024-04-02 고객사 요청으로 잠깐 주석처리
+					//$("#accsStrtHour").prop("disabled", true);//접수 시작시간 2024-04-02 고객사 요청으로 잠깐 주석처리
+					//$("#accsEndDt").prop("disabled", true);//접수 종료일 2024-04-02 고객사 요청으로 잠깐 주석처리
+					//$("#accsEndHour").prop("disabled", true);//접수 종료시간 2024-04-02 고객사 요청으로 잠깐 주석처리
 
 					$("#edctnStrtDt").prop("disabled", true);//교육 시작일
 					$("#edctnStrtHour").prop("disabled", true);//교육 시작시간
 					$("#edctnEndDt").prop("disabled", true);//교육 종료일
 					$("#edctnEndHour").prop("disabled", true);//교육 종료시간
 
-					$("#fxnumCnt").prop("disabled", true);//정원수
-					$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스
+					//$("#fxnumCnt").prop("disabled", true);//정원수 2024-04-02 고객사 요청으로 잠깐 주석처리
+					//$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스 2024-04-02 고객사 요청으로 잠깐 주석처리
 					//$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식 2024-03-27 잠깐 열음
 					$("input[name='cmptnAutoYn']").prop("disabled", true);//수료 자동화 여부
 
@@ -1532,7 +1532,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					//$("#picEmail").prop("disabled", true);//문의 담당자 이메일 2024-03-27 잠깐 열음
 					//$("#picTelNo").prop("disabled", true);//문의 담당자 전화번호 2024-03-27 잠깐 열음
 
-					$("button.cprtnInsttSearch").prop("disabled", true);//협력기관 검색버튼
+					//$("button.cprtnInsttSearch").prop("disabled", true);//협력기관 검색버튼 2024-04-02 고객사 요청으로 잠깐 주석처리
 					$("button.eduRoomSearch").prop("disabled", true);//교육장소 검색버튼
 
 					//온라인강의 수정 불가처리
