@@ -325,18 +325,19 @@
 
 								<th class="text-center" rowspan="2">년도</th>
 								<th class="text-center" rowspan="2">회차</th>
-								<th class="text-center" rowspan="2">접수기간</th>
-								<th class="text-center" rowspan="2">접수상태</th>
-								<th class="text-center" rowspan="2">교육기간</th>
-								<th class="text-center" rowspan="2">실적마감여부</th>
-								<th class="text-center" rowspan="2">교육상태</th>
-								<th class="text-center" colspan="2">강사</th>
-
+								<th class="text-center" rowspan="2">업종</th>
 								<th class="text-center" rowspan="2">정원</th>
 								<th class="text-center" rowspan="2">신청자</th>
 								<th class="text-center" rowspan="2">모집 방식</th>
-								<th class="text-center" colspan="3">문의담당자</th>
 								<th class="text-center" rowspan="2">교육장소</th>
+
+								<th class="text-center" rowspan="2">접수기간</th>
+								<th class="text-center" rowspan="2">접수상태</th>
+								<th class="text-center" rowspan="2">교육기간</th>
+								<th class="text-center" rowspan="2">교육상태</th>
+								<th class="text-center" rowspan="2">실적마감여부</th>
+								<th class="text-center" colspan="2">강사</th>
+								<th class="text-center" colspan="3">문의담당자</th>
 
 
 								<th class="text-center" rowspan="2">최초 등록자</th>

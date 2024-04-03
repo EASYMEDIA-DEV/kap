@@ -33,20 +33,21 @@
             </c:otherwise>
           </c:choose>
         </td><!--회차-->
-        <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
-        <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
-        <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--교육기간-->
-        <td class="text-center">${list.bdgetExpnsNm}</td><!--실적마감여부-->
-        <td class="text-center">${list.edctnStatusNm}</td><!--교육상태-->
-        <td class="text-center">${list.isttrName} </td><!--이름-->
-        <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td> <!--소속-->
+        <td class="text-center">${list.cbsnCdNm}</td><!--업종-->
         <td class="text-center">${not empty list.fxnumCnt and list.fxnumImpsbYn eq 'Y' ? list.fxnumCnt : '제한 없음'}</td><!--정원-->
         <td class="text-center">${list.accsCnt}</td><!--신청자수-->
         <td class="text-center">${list.rcrmtMthdCdNm}</td><!--모집 방식-->
+        <td class="text-center">${list.placeNm}</td><!--교육장소-->
+        <td class="text-center">${kl:convertDate(list.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--접수기간-->
+        <td class="text-center">${list.accsStatusNm}</td><!--접수상태-->
+        <td class="text-center">${kl:convertDate(list.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')} ~ ${kl:convertDate(list.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td><!--교육기간-->
+        <td class="text-center">${list.edctnStatusNm}</td><!--교육상태-->
+        <td class="text-center">${list.bdgetExpnsNm}</td><!--실적마감여부-->
+        <td class="text-center">${list.isttrName} </td><!--이름-->
+        <td class="text-center">${list.ffltnNm} <c:if test="${list.isttrOutCnt ne ''}">외 ${list.isttrOutCnt}명 </c:if></td> <!--소속-->
         <td class="text-center">${list.picNm}</td><!--담당자 이름-->
         <td class="text-center">${list.picEmail}</td><!--담당자 이메일-->
         <td class="text-center">${list.picTelNo}</td><!--담당자 전화번호-->
-        <td class="text-center">${list.placeNm}</td><!--교육장소-->
         <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
         <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->
         <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->

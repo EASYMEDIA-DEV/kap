@@ -2221,7 +2221,7 @@
         2023.12.18   김학규       최초생성
     -->
 	<select id="selectEpisdExcelList" parameterType="EBBEpisdDTO" resultType="EBBEpisdExcelDTO">
-		SELECT
+		SELECT /* EBBEpisdMapper.selectEpisdExelList */
 		episd_seq
 		, prnt_cd_nm /* 과정분류1 */
 		, ctgry_cd
