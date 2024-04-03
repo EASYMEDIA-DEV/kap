@@ -129,7 +129,7 @@
                                         </tr>
                                         <tr>
                                             <th>질문<span class="star"> *</span></th>
-                                            <td ><input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if>" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="50" title="질문" placeholder="질문을 입력해주세요." /></td>
+                                            <td ><input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if>" name="qstn_nm" value="${qstnList.qstnNm}" maxlength="150" title="질문" placeholder="질문을 입력해주세요." /></td> <%-- 2024-04-03 글자 수 제한 수정 --%>
                                             <td></td>
                                         </tr>
                                         <c:choose>
@@ -236,7 +236,7 @@
                                         </tr>
                                         <tr>
                                             <th>질문<span class="star"> *</span></th>
-                                            <td ><input type="text" class="form-control input-sm" name="qstn_nm" value="" maxlength="50" title="질문" placeholder="질문을 입력해주세요." /></td>
+                                            <td ><input type="text" class="form-control input-sm" name="qstn_nm" value="" maxlength="150" title="질문" placeholder="질문을 입력해주세요." /></td> <%-- 2024-04-03 글자 수 제한 수정 --%>
                                             <td></td>
                                         </tr>
                                         <tr class="answerForm">
