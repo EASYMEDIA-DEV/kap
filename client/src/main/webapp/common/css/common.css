@@ -662,7 +662,7 @@ footer .copy-area span:last-child:after {display: none;}
 .btn-solid.large {min-height: 68rem; padding: 16rem 40rem;}
 .btn-solid.small span {font-size: max(16rem, 14px); line-height: 160%;}
 .btn-solid.large span {font-size: max(24rem, 18px); line-height: 150%;}
-.btn-solid.white-bg {background-color: #ffffff;}
+.btn-solid.white-bg {background-color: #fff;}
 .btn-solid.white-bg span {color: #06161E;}
 .btn-solid.black-bg {background-color: #09202C;}
 .btn-solid.black-bg span {color: #fff;}
@@ -3975,7 +3975,7 @@ footer .copy-area span:last-child:after {display: none;}
 .print-popup .print-date {margin-top: 22rem; font-family: "Pretendard_Medium", sans-serif; color: #06161E; font-size: max(24rem, 18px); line-height: 150%; letter-spacing: -0.48rem; text-align: center;}
 .print-popup .print-signature-area {position: relative; display: inline-flex; justify-content: center; margin-top: 100rem;}
 .print-popup .print-signature-area .txt {position: relative; font-family: "Pretendard_ExtraBold", sans-serif; color: #06161E; font-size: 36rem; line-height: 150%; letter-spacing: 0.72rem; text-align: center; z-index: 2;}
-.print-popup .print-signature-area img {position: absolute; right: -90rem; top: -32rem; width: 120rem; height: 116rem;}
+.print-popup .print-signature-area img {position: absolute; right: -115rem; top: -45rem; width: 145rem; height: 142rem;} /* 2024-04-03 수정 */ 
 @media print {
   html {font-size: .089vw;}  
   .print-popup {width: 100% !important; height: 100% !important; padding: 76rem 50rem;}
