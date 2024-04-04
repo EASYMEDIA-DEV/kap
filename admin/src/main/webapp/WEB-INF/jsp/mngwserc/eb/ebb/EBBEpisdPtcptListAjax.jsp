@@ -3,7 +3,7 @@
 <c:choose>
   <c:when test="${ not empty rtnData.ptcptList}">
     <c:forEach var="ptcptList" items="${rtnData.ptcptList}" varStatus="status">
-      <tr  data-total-count="${rtnData.totalCount}">
+      <tr  data-total-count="${rtnData.totalCount}" data-typea-count="${rtnData.typeACount}" data-typeb-count="${rtnData.typeBCount}" data-typec-count="${rtnData.typeCCount}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
 
@@ -46,7 +46,7 @@
         <td class="text-center">${ptcptList.pstnCdNm}</td><!-- 직급 -->
         <td class="text-center">${ptcptList.hpNo}</td><!-- 휴대폰번호 -->
         <td class="text-center" data-email="${ptcptList.email}">${ptcptList.email}</td><!-- 이메일 -->
-        <td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!-- 가입일 -->
+        <%--<td class="text-center">${ empty ptcptList.regDtm ? '-' : kl:convertDate(ptcptList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td>--%><!-- 가입일 -->
         <td class="text-center">
             ${ empty ptcptList.eduDtm ? '-' : kl:convertDate(ptcptList.eduDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
         </td><!-- 교육신청일 -->
