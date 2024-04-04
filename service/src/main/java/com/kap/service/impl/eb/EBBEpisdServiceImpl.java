@@ -162,7 +162,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
 
-		int recordCountPerPage = (eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize() >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : eBBEpisdDTO.getPageIndex() * eBBEpisdDTO.getPageRowSize();
+
+		int recordCountPerPage = 0;
+		if(eBBEpisdDTO.getPageIndex() == 1){
+			recordCountPerPage = 2;
+		}else{
+
+			int getPageIndex = (eBBEpisdDTO.getPageIndex() == 1) ? eBBEpisdDTO.getPageIndex() : eBBEpisdDTO.getPageIndex()-1;
+			recordCountPerPage = ((getPageIndex * eBBEpisdDTO.getPageRowSize())+2  >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : (getPageIndex * eBBEpisdDTO.getPageRowSize())+2;
+		}
+
+		//첫페이지 일경우에만 recordCountPerPage가 2 그외에는 2에서 +10씩 증가
 
 		eBBEpisdDTO.setFirstIndex(0);
 		eBBEpisdDTO.setRecordCountPerPage(recordCountPerPage);
@@ -1457,13 +1467,13 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		cell = row.createCell(7); cell.setCellValue("직급"); cell.setCellStyle(style_header);
 		cell = row.createCell(8); cell.setCellValue("휴대폰번호"); cell.setCellStyle(style_header);
 		cell = row.createCell(9); cell.setCellValue("이메일"); cell.setCellStyle(style_header);
-		cell = row.createCell(10); cell.setCellValue("가입일"); cell.setCellStyle(style_header);
-		cell = row.createCell(11); cell.setCellValue("교육신청일"); cell.setCellStyle(style_header);
-		cell = row.createCell(12); cell.setCellValue("교육상태"); cell.setCellStyle(style_header);
-		cell = row.createCell(13); cell.setCellValue("출석"); cell.setCellStyle(style_header);
-		cell = row.createCell(14); cell.setCellValue("수강"); cell.setCellStyle(style_header);
-		cell = row.createCell(15); cell.setCellValue("평가"); cell.setCellStyle(style_header);
-		cell = row.createCell(16); cell.setCellValue("수료"); cell.setCellStyle(style_header);
+		/*cell = row.createCell(10); cell.setCellValue("가입일"); cell.setCellStyle(style_header);*/
+		cell = row.createCell(10); cell.setCellValue("교육신청일"); cell.setCellStyle(style_header);
+		cell = row.createCell(11); cell.setCellValue("교육상태"); cell.setCellStyle(style_header);
+		cell = row.createCell(12); cell.setCellValue("출석"); cell.setCellStyle(style_header);
+		cell = row.createCell(13); cell.setCellValue("수강"); cell.setCellStyle(style_header);
+		cell = row.createCell(14); cell.setCellValue("평가"); cell.setCellStyle(style_header);
+		cell = row.createCell(15); cell.setCellValue("수료"); cell.setCellStyle(style_header);
 
 
 		// Body
@@ -1489,23 +1499,23 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			cell = row.createCell(9); cell.setCellValue(dto.getEmail()); cell.setCellStyle(style_body);//이메일
 
-			String regDtm = (dto.getRegDtm() == null || dto.getRegDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getRegDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
-			cell = row.createCell(10); cell.setCellValue(regDtm); cell.setCellStyle(style_body);//가입일
+			//String regDtm = (dto.getRegDtm() == null || dto.getRegDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getRegDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
+			//cell = row.createCell(10); cell.setCellValue(regDtm); cell.setCellStyle(style_body);//가입일
 
 
 			String eduDtm = (dto.getEduDtm() == null || dto.getEduDtm().equals("")) ? "-" : COStringUtil.convertDate(dto.getEduDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy-MM-dd HH:mm", "-");
-			cell = row.createCell(11); cell.setCellValue(eduDtm); cell.setCellStyle(style_body);//교육신청일
-			cell = row.createCell(12); cell.setCellValue(dto.getEduStat()); cell.setCellStyle(style_body);//교육상태
-			cell = row.createCell(13); cell.setCellValue(dto.getEduAtndc()+"%"); cell.setCellStyle(style_body);//출석
-			cell = row.createCell(14); cell.setCellValue(""); cell.setCellStyle(style_body);//수강
+			cell = row.createCell(10); cell.setCellValue(eduDtm); cell.setCellStyle(style_body);//교육신청일
+			cell = row.createCell(11); cell.setCellValue(dto.getEduStat()); cell.setCellStyle(style_body);//교육상태
+			cell = row.createCell(12); cell.setCellValue(dto.getEduAtndc()+"%"); cell.setCellStyle(style_body);//출석
+			cell = row.createCell(13); cell.setCellValue(""); cell.setCellStyle(style_body);//수강
 			String examScore = (dto.getExamScore() == null || dto.getExamScore().equals("")) ? "0" : String.valueOf(dto.getExamScore());
-			cell = row.createCell(15); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
+			cell = row.createCell(14); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
 
 			String cmptnYn = (dto.getCmptnYn().equals("Y")) ?"수료" : "미수료";
-			cell = row.createCell(16); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
+			cell = row.createCell(15); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
 
 			//셀 너비 자동맞춤 시작
-			for(int j=0; j<=16;j++){
+			for(int j=0; j<=15;j++){
 				sheet.autoSizeColumn(j);
 				if(j == 3){
 					sheet.setColumnWidth(j, (sheet.getColumnWidth(j))+2024 );

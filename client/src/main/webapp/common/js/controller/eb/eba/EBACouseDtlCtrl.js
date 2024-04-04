@@ -49,11 +49,26 @@ define(["ezCtrl"], function(ezCtrl) {
 
 				var rtnPage = 0;
 
-				if((tempPage * 10)>totCnt){
-					rtnPage = totCnt
+				if(tempPage == 1){
+
+					if((tempPage * 2)>totCnt){
+						rtnPage = totCnt
+					}else{
+						rtnPage = (tempPage * 2);
+					}
+
 				}else{
-					rtnPage = (tempPage * 10);
+
+					tempPage = tempPage-1;
+
+					if( ((tempPage * 10) + 2) >totCnt){
+						rtnPage = totCnt
+					}else{
+						rtnPage = ((tempPage * 10) + 2);
+					}
 				}
+
+
 
 				if(rtnPage == totCnt){
 					$(".btn-wrap.add-load.align-center").hide();
