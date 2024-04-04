@@ -887,7 +887,7 @@
 					episd_seq
 					, mem_seq
 					, ptcpt_seq
-					, ifnull((SELECT bfre_mem_seq  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ),0) AS bfre_mem_seq
+					, ifnull((SELECT max(bfre_mem_seq)  FROM ep_edctn_trnsf_dtl WHERE PTCPT_SEQ= tbl.PTCPT_SEQ ORDER BY TRNSF_SEQ DESC ),0) AS bfre_mem_seq
 					, gpc_id
 					, stts_cd
 					, cmptn_yn
