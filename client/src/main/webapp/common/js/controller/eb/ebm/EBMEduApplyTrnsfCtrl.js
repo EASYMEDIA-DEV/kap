@@ -254,6 +254,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								actForm.bfreMemSeq =  $("#memSeq").val(); //변경전 회원 번호
 								actForm.aftrMemSeq =  $("input[name='memListeRadioSet']:checked").val();//변경후 회원번호
 								actForm.ptcptSeq = $("#ptcptSeq").val();
+								actForm.gpcId = aftGpcId;
 
 
 								//KAP-> GPC 대참 로직 성공시 KAP 대참로직 진행

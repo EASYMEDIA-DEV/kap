@@ -1695,6 +1695,197 @@
 	</select>
 
 	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptListTypeBCnt
+      설  명 : 교육차수관리 - 참여자 목록 카운트 (신청 취소만)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdPtcptListTypeACnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /* EBBEpisdMapper.selectEpisdPtcptListTypeACnt */
+			count(*)
+		FROM (
+				 SELECT
+					 a.ptcpt_seq
+					  , a.mem_seq
+					  , b.id
+					  , b.name
+					  , (select cmpn_nm from cp_cmpn_mst where bsnm_no = a.ptcpt_bsnm_no) as cmpn_nm
+					  , (select cd_nm from co_code_mst where cd = c.ctgry_cd) as ctgry_nm
+					  , a.ptcpt_bsnm_no /*사업자등록번호*/
+					  , b.hp_no
+					  , b.email
+					  , b.dept_cd
+					  , case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
+					  , b.dept_dtl_nm
+					  , b.pstn_cd
+					  , case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
+					  , b.pstn_nm
+					  , a.stts_cd
+					  , case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
+					  , a.reg_dtm as edu_dtm
+					  , b.reg_dtm
+					  , a.cmptn_yn
+					  , a.exam_score
+					  , e.exam_ptcpt_seq
+					  , otsd_exam_ptcpt_yn
+					  , case when d.edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+								 case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+										  case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
+											   when d.edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   d.edctn_end_dtm  then '교육중'
+											   when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
+											  end
+									  when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
+									  when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
+									 end
+
+							 when d.edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+					 end edu_stat
+
+					  , ifnull(ROUND(((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq AND atndc_dtm IS NOT NULL) / (select COUNT(edctn_dt) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq))*100), '0') as  edu_atndc/*출석률*/
+					  , (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND A.EPISD_ORD) AS PTCPT_INFO
+					  , (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND EPISD_ORD = A.EPISD_ORD) AS LCRT_INFO
+					  , (SELECT stduy_mthd_cd FROM ed_edctn_prcs_mst WHERE EDCTN_SEQ = A.EDCTN_SEQ) AS stduy_mthd_cd
+				 from ep_edctn_ptcpt_mst a
+						  left join(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
+						  left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+						  left join(SELECT edctn_seq, episd_year, episd_ord, edctn_strt_dtm, edctn_end_dtm, otsd_exam_ptcpt_yn, edctn_stts_cd FROM ed_edctn_episd_mst) d ON d.edctn_seq = a.edctn_seq AND d.episd_year = a.episd_year AND d.episd_ord = a.episd_ord
+						  left join(select ptcpt_seq, exam_ptcpt_seq from ep_edctn_exam_ptcpt_mst) e on e.ptcpt_seq = a.ptcpt_seq
+				 where 1=1
+				   and a.edctn_seq = #{edctnSeq}
+				   and a.episd_year = #{episdYear}
+				   and a.episd_ord = #{episdOrd}
+
+				   and a.stts_cd = 'EDU_STTS_CD01'
+
+			 ) AA
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptListTypeBCnt
+      설  명 : 교육차수관리 - 참여자 목록 카운트 (신청 취소만)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdPtcptListTypeBCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /* EBBEpisdMapper.selectEpisdPtcptListTypeBCnt */
+			count(*)
+		FROM (
+		SELECT
+		a.ptcpt_seq
+		, a.mem_seq
+		, b.id
+		, b.name
+		, (select cmpn_nm from cp_cmpn_mst where bsnm_no = a.ptcpt_bsnm_no) as cmpn_nm
+		, (select cd_nm from co_code_mst where cd = c.ctgry_cd) as ctgry_nm
+		, a.ptcpt_bsnm_no /*사업자등록번호*/
+		, b.hp_no
+		, b.email
+		, b.dept_cd
+		, case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
+		, b.dept_dtl_nm
+		, b.pstn_cd
+		, case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
+		, b.pstn_nm
+		, a.stts_cd
+		, case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
+		, a.reg_dtm as edu_dtm
+		, b.reg_dtm
+		, a.cmptn_yn
+		, a.exam_score
+		, e.exam_ptcpt_seq
+		, otsd_exam_ptcpt_yn
+		, case when d.edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+		case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+		case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
+		when d.edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   d.edctn_end_dtm  then '교육중'
+		when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
+		end
+		when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
+		when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
+		end
+
+		when d.edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+		end edu_stat
+
+		, ifnull(ROUND(((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq AND atndc_dtm IS NOT NULL) / (select COUNT(edctn_dt) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq))*100), '0') as  edu_atndc/*출석률*/
+		, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND A.EPISD_ORD) AS PTCPT_INFO
+		, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND EPISD_ORD = A.EPISD_ORD) AS LCRT_INFO
+		, (SELECT stduy_mthd_cd FROM ed_edctn_prcs_mst WHERE EDCTN_SEQ = A.EDCTN_SEQ) AS stduy_mthd_cd
+		from ep_edctn_ptcpt_mst a
+		left join(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
+		left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+		left join(SELECT edctn_seq, episd_year, episd_ord, edctn_strt_dtm, edctn_end_dtm, otsd_exam_ptcpt_yn, edctn_stts_cd FROM ed_edctn_episd_mst) d ON d.edctn_seq = a.edctn_seq AND d.episd_year = a.episd_year AND d.episd_ord = a.episd_ord
+		left join(select ptcpt_seq, exam_ptcpt_seq from ep_edctn_exam_ptcpt_mst) e on e.ptcpt_seq = a.ptcpt_seq
+		where 1=1
+		and a.edctn_seq = #{edctnSeq}
+		and a.episd_year = #{episdYear}
+		and a.episd_ord = #{episdOrd}
+
+		and a.stts_cd = 'EDU_STTS_CD02'
+
+		) AA
+	</select>
+
+	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptListTypeCCnt
+      설  명 : 교육차수관리 - 참여자 목록 카운트 (교육 양도만)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectEpisdPtcptListTypeCCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /* EBBEpisdMapper.selectEpisdPtcptListTypeCCnt */
+			count(*)
+		FROM (
+				 SELECT
+					 a.ptcpt_seq
+					  , c.mem_seq
+					  , c.id
+					  , c.name
+					  , (select cmpn_nm from cp_cmpn_mst where bsnm_no = b.ptcpt_bsnm_no) as cmpn_nm
+					  , (select cd_nm from co_code_mst where cd = d.ctgry_cd) as ctgry_nm
+					  , b.ptcpt_bsnm_no /*사업자등록번호*/
+					  , c.hp_no
+					  , c.email
+					  , c.dept_cd
+					  , (select cd_nm from co_code_mst where  cd = c.dept_cd ) as dept_cd_nm
+					  , c.dept_dtl_nm
+					  , c.pstn_cd
+					  , (select cd_nm from co_code_mst where  cd = c.pstn_cd ) as pstn_cd_nm
+					  , c.pstn_nm
+					  , "" as stts_cd
+					  , "" as stts_cd_nm
+					  , c.reg_dtm as edu_dtm
+					  , c.reg_dtm
+					  , "N" as cmptn_yn
+					  , 0 as exam_score
+					  , f.exam_ptcpt_seq
+					  , otsd_exam_ptcpt_yn
+					  , '교육양도' as edu_stat
+					  , 0 as  edu_atndc/*출석률*/
+					  , 0 AS PTCPT_INFO
+					  , 0 AS LCRT_INFO
+					  , (SELECT stduy_mthd_cd FROM ed_edctn_prcs_mst WHERE EDCTN_SEQ = B.EDCTN_SEQ) AS stduy_mthd_cd
+				 from ep_edctn_trnsf_dtl a
+						  LEFT JOIN (
+					 SELECT ptcpt_seq, edctn_seq, episd_year, episd_ord, ptcpt_bsnm_no, reg_dtm from ep_edctn_ptcpt_mst
+				 )b ON b.ptcpt_seq = a.ptcpt_seq
+
+						  LEFT JOIN(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') c on c.mem_seq = a.bfre_mem_seq
+						  LEFT JOIN(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) d on d.bsnm_no = b.ptcpt_bsnm_no
+						  LEFT JOIN(SELECT edctn_seq, episd_year, episd_ord, edctn_strt_dtm, edctn_end_dtm, otsd_exam_ptcpt_yn, edctn_stts_cd FROM ed_edctn_episd_mst) e ON e.edctn_seq = b.edctn_seq AND e.episd_year = b.episd_year AND e.episd_ord = b.episd_ord
+						  LEFT JOIN(select ptcpt_seq, exam_ptcpt_seq from ep_edctn_exam_ptcpt_mst) f on f.ptcpt_seq = a.ptcpt_seq
+				 WHERE 1=1
+				   AND B.edctn_seq = #{edctnSeq}
+				   AND B.episd_year = #{episdYear}
+				   AND B.episd_ord = #{episdOrd}
+
+			 ) AA
+	</select>
+
+	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdPtcptList
       설  명 : 교육차수관리 - 참여자 목록
        수정일     수정자       수정내용
@@ -2888,6 +3079,7 @@
 	<update  id="updatePtcptInfo" parameterType="EBBPtcptDTO">
 		UPDATE ep_edctn_ptcpt_mst /* EBBEpisdMapper.updatePtcptInfo */
 		SET mem_seq = #{aftrMemSeq}
+		  , gpc_id = #{gpcId}
 		  , mod_id = #{modId}
 		  , mod_ip = #{modIp}
 		  , mod_dtm = NOW()
