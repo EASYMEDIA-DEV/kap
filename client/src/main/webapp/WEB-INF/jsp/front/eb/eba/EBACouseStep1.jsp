@@ -35,11 +35,13 @@
         <input type="hidden" id="authCd" name="authCd" value="${loginMap.authCd}" />
 
         <input type="hidden" id="gpcYn" name="gpcYn" value="${episdDto.gpcYn}" />
+        <input type="hidden" id="episdGpcYn" name="episdGpcYn" value="${episdDto.episdGpcYn}" />
 
         <c:set var="gpcYn" value="${episdDto.gpcYn}"/>
+        <c:set var="episdGpcYn" value="${episdDto.episdGpcYn}"/>
         <c:set var="gpcPass" value="Y"/>
         <c:choose>
-            <c:when test="${gpcYn eq 'Y'}">
+            <c:when test="${gpcYn eq 'Y' && episdGpcYn eq 'Y'}">
                 <c:set var="gpcPass" value="N"/>
             </c:when>
             <c:otherwise>
@@ -527,7 +529,7 @@
                             </div>
                         </div>
 
-                        <c:if test="${gpcYn eq 'Y'}">
+                        <c:if test="${gpcYn eq 'Y' && episdGpcYn eq 'Y'}">
 
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">

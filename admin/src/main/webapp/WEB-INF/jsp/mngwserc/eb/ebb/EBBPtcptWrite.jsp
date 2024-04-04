@@ -16,10 +16,13 @@
             <input type="hidden" class="notRequired" id="rcrmtMthdCd" name="rcrmtMthdCd" value="${rtnDto.rcrmtMthdCd}" />
             <input type="hidden" class="form-control input-sm notRequired" id="ptcptBsnmNo" name="ptcptBsnmNo" value="" title="참여사업자번호"/>
             <input type="hidden" id="gpcYn" name="gpcYn" value="${rtnDto.gpcYn}" />
+            <input type="hidden" id="episdGpcYn" name="episdGpcYn" value="${rtnDto.episdGpcYn}" />
+
             <c:set var="gpcYn" value="${rtnDto.gpcYn}"/>
+            <c:set var="episdGpcYn" value="${rtnDto.episdGpcYn}"/>
             <c:set var="gpcPass" value="Y"/>
             <c:choose>
-                <c:when test="${gpcYn eq 'Y'}">
+                <c:when test="${gpcYn eq 'Y' && episdGpcYn eq 'Y'}">
                     <c:set var="gpcPass" value="N"/>
                 </c:when>
                 <c:otherwise>
@@ -222,7 +225,7 @@
             </fieldset>
 
             <!-- GPC 아이디 -->
-            <c:if test="${gpcYn eq 'Y'}">
+            <c:if test="${gpcYn eq 'Y' && episdGpcYn eq 'Y'}">
                 <fieldset>
                     <div class="form-group text-sm">
                         <div class="col-sm-12">
