@@ -2277,7 +2277,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						if(resultFlag){
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
-								location.href = "./list";
+								if(actionUrl.indexOf("update") > -1) {
+									location.reload();
+								}
+								else {
+									location.href = "./list";
+								}
 							}, actionUrl, actForm, "text");
 						}
 
