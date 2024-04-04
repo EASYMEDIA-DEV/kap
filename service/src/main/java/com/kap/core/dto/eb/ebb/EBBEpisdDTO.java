@@ -519,6 +519,9 @@ public class EBBEpisdDTO extends BaseDTO {
 
     private List<EBBBdgetDTO> bdgetList;//예산지출내역 목록
 
+    private int typeBCount = 0;//신청 취소 카운트
+    private int typeCCount = 0;//교육양도 카운트
+
     @Schema(title = "엑셀다운로드 여부", example = "Y")
     private String excelYn;
 

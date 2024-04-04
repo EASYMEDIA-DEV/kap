@@ -311,8 +311,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		ptcptList = eBBEpisdMapper.selectEpisdPtcptList(ebbDto);
 		int ptcptCnt = eBBEpisdMapper.selectEpisdPtcptListCnt(ebbDto);
 
+		int ptcptTypeACnt = eBBEpisdMapper.selectEpisdPtcptListTypeACnt(ebbDto);
+		int ptcptTypeBCnt = eBBEpisdMapper.selectEpisdPtcptListTypeBCnt(ebbDto);
+		int ptcptTypeCCnt = eBBEpisdMapper.selectEpisdPtcptListTypeCCnt(ebbDto);
+
 		dto.setPtcptList(ptcptList);
 		dto.setTotalCount(ptcptCnt);
+		dto.setTypeACount(ptcptTypeACnt);
+		dto.setTypeBCount(ptcptTypeBCnt);
+		dto.setTypeCCount(ptcptTypeCCnt);
+
 		dto.setFirstIndex( page.getFirstRecordIndex() );
 		dto.setRecordCountPerPage( page.getRecordCountPerPage() );
 

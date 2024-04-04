@@ -155,6 +155,21 @@ public interface EBBEpisdMapper {
 	public int selectEpisdPtcptListCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 교육 참여자 목록 카운트(신청만)
+	 */
+	public int selectEpisdPtcptListTypeACnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육 참여자 목록 카운트(신청 취소만)
+	 */
+	public int selectEpisdPtcptListTypeBCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 교육 참여자 목록 카운트(교육 양도만)
+	 */
+	public int selectEpisdPtcptListTypeCCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 - 교육 참여자 목록
 	 */
 	public List<EBBPtcptDTO> selectEpisdPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;

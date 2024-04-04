@@ -62,15 +62,34 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			//전체 갯수
 			var totCnt = $("#ptcptListContainer").find("tr:first").data("totalCount");
+
+			//신청 갯수
+			var typeACnt = $("#ptcptListContainer").find("tr:first").data("typeaCount");
+
+			//신청 취소 갯수
+			var typeBCnt = $("#ptcptListContainer").find("tr:first").data("typebCount");
+
+			//교육 양도 갯수
+			var typeCCnt = $("#ptcptListContainer").find("tr:first").data("typecCount");
+
+
 			//총 건수
 			ctrl.obj.find("#ptcptListContainerTotCnt").text(totCnt);
+
+			//신청 건수
+			ctrl.obj.find("#ptcptListContainerTypeACnt").text(typeACnt);
+
+			//신청 취소 건수
+			ctrl.obj.find("#ptcptListContainerTypeBCnt").text(typeBCnt);
+
+			//교육 양도 건수
+			ctrl.obj.find("#ptcptListContainerTypeCCnt").text(typeCCnt);
 
 			$(".ptcptField").validation({});
 
 			$(".ptcptField").find(".btnMemAtndc").on("click", function(){
 				memAtndcLayer(this);
 			});
-			console.log(totCnt);
 
 			//페이징 처리
 			cmmCtrl.listPaging(totCnt, $formObj, "ptcptListContainer", "ptcptPagingContainer");
@@ -1545,10 +1564,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(this).find(".dz-default.dz-message").hide().css("cursor", "not-allowed");
 					});
 
-					$(".dz-hidden-input").prop("disabled",true);
-					$(".dropzone").removeClass("dz-clickable").css("cursor", "not-allowed");
-					$(".dz-default.dz-message").hide();
-					$('.dz-remove').hide();
+					$(".dz-hidden-input:gt(0)").prop("disabled",true);
+					$(".dropzone:gt(0)").removeClass("dz-clickable").css("cursor", "not-allowed");
+					$(".dz-default.dz-message:gt(0)").hide();
+					$('.dz-remove:gt(0)').hide();
 
 				}
 

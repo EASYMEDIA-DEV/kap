@@ -191,8 +191,9 @@ public class EBBPtcptDTO extends BaseDTO {
     private String relCmptnYn;
 
 
-
-
+    private int typeACount = 0;//신청 카운트
+    private int typeBCount = 0;//신청 취소 카운트
+    private int typeCCount = 0;//교육양도 카운트
 
     private List<EBBPtcptDTO> list;
 
