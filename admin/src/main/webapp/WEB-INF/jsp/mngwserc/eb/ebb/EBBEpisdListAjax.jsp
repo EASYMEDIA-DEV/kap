@@ -33,7 +33,7 @@
             </c:otherwise>
           </c:choose>
         </td><!--회차-->
-        <td class="text-center">${list.cbsnCdNm}</td><!--업종-->
+        <td class="text-center">${not empty list.cbsnCdNm ? list.cbsnCdNm : '-'}</td><!--업종-->
         <td class="text-center">${not empty list.fxnumCnt and list.fxnumImpsbYn eq 'Y' ? list.fxnumCnt : '제한 없음'}</td><!--정원-->
         <td class="text-center">${list.accsCnt}</td><!--신청자수-->
         <td class="text-center">${list.rcrmtMthdCdNm}</td><!--모집 방식-->
