@@ -2659,8 +2659,8 @@
 							LEFT JOIN ed_edctn_isttr_rel b2 ON b2.edctn_seq = aaa.edctn_seq AND b2.episd_year = aaa.episd_year AND b2.episd_ord = aaa.episd_ord
 						) AS isttr_tb
 					GROUP BY isttr_tb.episd_seq) g ON g.edctn_seq = a.edctn_seq AND g.episd_year = a.episd_year AND g.episd_ord = a.episd_ord
-		LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
-		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq
+		/*LEFT JOIN (SELECT ptcpt_seq, ptcpt_bsnm_no, edctn_seq, episd_year, episd_ord, stts_cd from ep_edctn_ptcpt_mst WHERE stts_cd = 'EDU_STTS_CD01' GROUP BY ptcpt_seq) h ON h.edctn_seq = a.edctn_seq AND h.episd_year = a.episd_year AND h.episd_ord = a.episd_ord
+		LEFT JOIN (SELECT ptcpt_seq AS at_ptcpt_seq, edctn_dt, atndc_dtm FROM ep_edctn_atndc_dtl) i ON i.at_ptcpt_seq = h.ptcpt_seq*/
 		LEFT JOIN(
 			SELECT
 				ctgry_cd
