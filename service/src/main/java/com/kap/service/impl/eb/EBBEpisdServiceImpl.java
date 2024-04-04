@@ -162,12 +162,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setTotalCount(eBBEpisdMapper.selectEpisdListCnt(eBBEpisdDTO));
 
-
 		int recordCountPerPage = 0;
 		if(eBBEpisdDTO.getPageIndex() == 1){
 			recordCountPerPage = 2;
 		}else{
-
 			int getPageIndex = (eBBEpisdDTO.getPageIndex() == 1) ? eBBEpisdDTO.getPageIndex() : eBBEpisdDTO.getPageIndex()-1;
 			recordCountPerPage = ((getPageIndex * eBBEpisdDTO.getPageRowSize())+2  >= eBBEpisdDTO.getTotalCount()) ? eBBEpisdDTO.getTotalCount() : (getPageIndex * eBBEpisdDTO.getPageRowSize())+2;
 		}
