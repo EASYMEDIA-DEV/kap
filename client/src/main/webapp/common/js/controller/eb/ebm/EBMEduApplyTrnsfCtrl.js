@@ -266,7 +266,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 										if(trnsfData.regStat == "S"){
 											alert("교육이 양도되었습니다.");
-											location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd+"&ptcptSeq="+actForm.ptcptSeq;
+											//location.href="/my-page/edu-apply/detail?detailsKey="+actForm.edctnSeq+"&episdYear="+actForm.episdYear+"&episdOrd="+actForm.episdOrd+"&ptcptSeq="+actForm.ptcptSeq;
+											location.href="/my-page/edu-apply/list";
 
 										}else if(trnsfData.regStat == "F"){
 											alert("이미 교육에 신청한 회원입니다.");
