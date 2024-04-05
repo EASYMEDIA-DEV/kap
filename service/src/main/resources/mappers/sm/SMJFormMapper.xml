@@ -19,15 +19,15 @@
              , SFTY_FCLTY_FILE_SEQ
              , CRBN_EMSNS_FILE_SEQ
              , SMRT_FCTRY_APPCTN_FILE_SEQ
-             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = SMRT_FCTRY_APPCTN_FILE_SEQ) APPCTN_FILE_NM
+             , (SELECT ORGN_FILE_NM FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = SMRT_FCTRY_APPCTN_FILE_SEQ) APPCTN_FILE_NM
              , SMRT_FCTRY_SCRTY_FILE_SEQ
-             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = SMRT_FCTRY_SCRTY_FILE_SEQ) SCRTY_FILE_NM
+             , (SELECT ORGN_FILE_NM FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = SMRT_FCTRY_SCRTY_FILE_SEQ) SCRTY_FILE_NM
              , EXAM_MSREMNT_FILE_SEQ
              , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.EXAM_MSREMNT_FILE_SEQ) AS EXAM_MSREMNT_FILE_ORD
-             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = EXAM_MSREMNT_FILE_SEQ) EXAM_FILE_NM
+             , (SELECT ORGN_FILE_NM FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = EXAM_MSREMNT_FILE_SEQ) EXAM_FILE_NM
              , CLBTN_FILE_SEQ
              , (SELECT MAX(FILE_ORD) FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.CLBTN_FILE_SEQ) AS CLBTN_FILE_ORD
-             , (SELECT CONCAT(file_dsc,'.',file_extn) FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = CLBTN_FILE_SEQ) CLBTN_FILE_NM
+             , (SELECT ORGN_FILE_NM FROM co_file_dtl WHERE USE_YN = 'Y' AND file_seq = CLBTN_FILE_SEQ) CLBTN_FILE_NM
              , SPLYCHN_STBLZTN_FILE_SEQ
              , CAR_PART_APPCTN_FILE_SEQ
              , FTRE_CAR_APPCTN_FILE_SEQ
