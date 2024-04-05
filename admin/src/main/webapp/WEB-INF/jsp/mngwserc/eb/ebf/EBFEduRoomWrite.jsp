@@ -49,7 +49,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">대표번호<span class="star"> *</span></label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control input-sm" id="rprsntTelNo" name="rprsntTelNo" value="${rtnDto.rprsntTelNo}" title="대표번호" maxlength="11" placeholder="대표번호 입력" oninput="this.value=this.value.replace(/[^0-9-]/g, '')" />
+                        <input type="text" class="form-control input-sm" id="rprsntTelNo" name="rprsntTelNo" value="${rtnDto.rprsntTelNo}" title="대표번호" maxlength="13" placeholder="대표번호 입력" />
                     </div>
                 </div>
             </fieldset>
