@@ -22,6 +22,16 @@
         , SIZE_NM					/* 부품사큐모코드명 */
         , APPCTN_BSNM_NO			/* 신청당시 사업자번호 */
         , APPCTN_MEM_SEQ            /* 신청자 멤버 시퀀스 */
+    <if test="excelYn == 'Y'.toString() ">
+        , (SELECT RPRSNT_NM FROM CP_CMPN_MST WHERE BSNM_NO = APPCTN_BSNM_NO) AS RPRSNT_NM /* 신청당시 부품사 대표자명 */
+        , ID
+        , EMAIL
+        , DEPT_NM
+        , DEPT_DTL_NM
+        , PSTN_NM
+        , HP_NO
+        , TEL_NO
+    </if>
         , SLS_PMT					/* 매출액(억원) */
         , MPLE_CNT					/* 부품사 직원수 */
         , CBSN_NM                   /* 신청 업종 */
@@ -112,6 +122,17 @@
         , CP_MST.MOD_ID
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
         , CP_MST.MOD_DTM
+    <if test="excelYn == 'Y'.toString() ">
+        , MEM_MST.ID
+        , MEM_MST.EMAIL
+        , CASE WHEN MEM_MST.DEPT_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE CD = MEM_MST.DEPT_CD)
+            ELSE '' END AS DEPT_NM
+        , MEM_MST.DEPT_DTL_NM
+        , CASE WHEN MEM_MST.PSTN_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE CD = MEM_MST.PSTN_CD)
+            ELSE '' END AS PSTN_NM
+        , MEM_MST.HP_NO
+        , MEM_MST.TEL_NO
+    </if>
         FROM
         CP_CNSTG_APPCTN_MST CP_MST
         JOIN CO_MEM_MST MEM_MST

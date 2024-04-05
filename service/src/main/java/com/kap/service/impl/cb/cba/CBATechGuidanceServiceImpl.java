@@ -708,60 +708,89 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(5);
-        cell.setCellValue("구분");
+        cell.setCellValue("대표자명");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(6);
-        cell.setCellValue("규모");
+        cell.setCellValue("구분");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(7);
-        cell.setCellValue("매출액(억원)");
+        cell.setCellValue("규모");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(8);
-        cell.setCellValue("직원수");
+        cell.setCellValue("매출액(억원)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(9);
-        cell.setCellValue("신청업종");
+        cell.setCellValue("직원수");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(10);
-        cell.setCellValue("신청 소재지");
+        cell.setCellValue("신청업종");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(11);
-        cell.setCellValue("SQ 인증 주관사");
+        cell.setCellValue("신청 소재지");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(12);
-        cell.setCellValue("방문일");
+        cell.setCellValue("SQ 인증 주관사");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
-        cell.setCellValue("담당위원");
+        cell.setCellValue("방문일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(14);
-        cell.setCellValue("방문횟수");
+        cell.setCellValue("담당위원");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(15);
-        cell.setCellValue("지도착수일");
+        cell.setCellValue("방문횟수");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(16);
-        cell.setCellValue("킥오프일");
+        cell.setCellValue("지도착수일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(17);
-        cell.setCellValue("렙업일");
+        cell.setCellValue("킥오프일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(18);
+        cell.setCellValue("렙업일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(19);
         cell.setCellValue("신청일");
         cell.setCellStyle(style_header);
+
+        cell = row.createCell(20);
+        cell.setCellValue("신청자 ID");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(21);
+        cell.setCellValue("신청자 이메일");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(22);
+        cell.setCellValue("신청자 부서");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(23);
+        cell.setCellValue("신청자 직급");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(24);
+        cell.setCellValue("신청자 휴대폰번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(25);
+        cell.setCellValue("신청자 일반 전화번호");
+        cell.setCellStyle(style_header);
+
 
         // Body
         List<CBATechGuidanceInsertDTO> excelList = pCBATechGuidanceInsertDTO.getList();
@@ -793,75 +822,125 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cell.setCellValue(excelList.get(i).getAppctnBsnmNo());
             cell.setCellStyle(style_body);
 
-            //구분
+            //대표자명
             cell = row.createCell(5);
+            cell.setCellValue(excelList.get(i).getRprsntNm());
+            cell.setCellStyle(style_body);
+
+            //구분
+            cell = row.createCell(6);
             cell.setCellValue(excelList.get(i).getCtgryNm());
             cell.setCellStyle(style_body);
 
             //규모
-            cell = row.createCell(6);
+            cell = row.createCell(7);
             cell.setCellValue(excelList.get(i).getSizeNm());
             cell.setCellStyle(style_body);
 
             //매출액(억원)
-            cell = row.createCell(7);
+            cell = row.createCell(8);
             cell.setCellValue(excelList.get(i).getSlsPmt() == null ? 0 : excelList.get(i).getSlsPmt());
             cell.setCellStyle(style_body);
 
             //직원수
-            cell = row.createCell(8);
+            cell = row.createCell(9);
             cell.setCellValue(excelList.get(i).getMpleCnt() == null ? 0 : excelList.get(i).getMpleCnt());
             cell.setCellStyle(style_body);
 
             //신청업종
-            cell = row.createCell(9);
+            cell = row.createCell(10);
             cell.setCellValue(excelList.get(i).getCbsnNm());
             cell.setCellStyle(style_body);
 
             //신청소재지
-            cell = row.createCell(10);
+            cell = row.createCell(11);
             cell.setCellValue(excelList.get(i).getFirstRgnsNm() +" "+ excelList.get(i).getScndRgnsNm());
             cell.setCellStyle(style_body);
 
             //SQ 인증 주관사
-            cell = row.createCell(11);
+            cell = row.createCell(12);
             cell.setCellValue(excelList.get(i).getCrtfnCmpnNm());
             cell.setCellStyle(style_body);
 
             //방문일
-            cell = row.createCell(12);
+            cell = row.createCell(13);
             cell.setCellValue(excelList.get(i).getVstDt() == null ? "-" : excelList.get(i).getVstDt());
             cell.setCellStyle(style_body);
 
             //담당위원
-            cell = row.createCell(13);
+            cell = row.createCell(14);
             cell.setCellValue(excelList.get(i).getCmssrNm() == null ? "-" : excelList.get(i).getCmssrNm());
             cell.setCellStyle(style_body);
 
             //방문횟수
-            cell = row.createCell(14);
+            cell = row.createCell(15);
             cell.setCellValue(excelList.get(i).getVstCnt() == null ? "-" : excelList.get(i).getVstCnt());
             cell.setCellStyle(style_body);
 
             //지도착수일
-            cell = row.createCell(15);
+            cell = row.createCell(16);
             cell.setCellValue(excelList.get(i).getGuideBgnDt() == null ? "-" : excelList.get(i).getGuideBgnDt());
             cell.setCellStyle(style_body);
 
             //킥오프일
-            cell = row.createCell(16);
+            cell = row.createCell(17);
             cell.setCellValue(excelList.get(i).getGuideKickfDt() == null ? "-" : excelList.get(i).getGuideKickfDt());
             cell.setCellStyle(style_body);
 
             //렙업일
-            cell = row.createCell(17);
+            cell = row.createCell(18);
             cell.setCellValue(excelList.get(i).getGuidePscndDt() == null ? "-" : excelList.get(i).getGuidePscndDt());
             cell.setCellStyle(style_body);
 
             //신청일
-            cell = row.createCell(18);
+            cell = row.createCell(19);
             cell.setCellValue(excelList.get(i).getAppctnDt());
             cell.setCellStyle(style_body);
+
+            //신청자ID
+            cell = row.createCell(20);
+            cell.setCellValue(excelList.get(i).getId());
+            cell.setCellStyle(style_body);
+
+            //신청자 이메일
+            cell = row.createCell(21);
+            cell.setCellValue(excelList.get(i).getEmail());
+            cell.setCellStyle(style_body);
+
+            //신청자 부서
+            cell = row.createCell(22);
+            cell.setCellValue(excelList.get(i).getDeptNm() + ' ' + excelList.get(i).getDeptDtlNm());
+            cell.setCellStyle(style_body);
+
+            //신청자 직급
+            cell = row.createCell(23);
+            cell.setCellValue(excelList.get(i).getPstnNm());
+            cell.setCellStyle(style_body);
+
+            //신청자 휴대폰번호
+            cell = row.createCell(24);
+            cell.setCellValue(excelList.get(i).getHpNo());
+            cell.setCellStyle(style_body);
+
+            //신청자 일반 전화번호
+            cell = row.createCell(25);
+            cell.setCellValue(excelList.get(i).getTelNo());
+            cell.setCellStyle(style_body);
+
+
+            sheet.setColumnWidth(0, 2000); sheet.setColumnWidth(1, 2400);
+            sheet.setColumnWidth(2, 2400); sheet.setColumnWidth(3, 5000);
+            sheet.setColumnWidth(4, 3400); sheet.setColumnWidth(5, 2800);
+            sheet.setColumnWidth(6, 2000); sheet.setColumnWidth(7, 2400);
+            sheet.setColumnWidth(8, 3000); sheet.setColumnWidth(9, 2000);
+            sheet.setColumnWidth(10, 2800); sheet.setColumnWidth(11, 4500);
+            sheet.setColumnWidth(12, 4500); sheet.setColumnWidth(13, 3000);
+            sheet.setColumnWidth(14, 2800); sheet.setColumnWidth(15, 2000);
+            sheet.setColumnWidth(16, 3000); sheet.setColumnWidth(17, 3000);
+            sheet.setColumnWidth(18, 3000); sheet.setColumnWidth(19, 3000);
+            sheet.setColumnWidth(20, 3000); sheet.setColumnWidth(21, 4500);
+            sheet.setColumnWidth(22, 5000); sheet.setColumnWidth(23, 3000);
+            sheet.setColumnWidth(24, 4000); sheet.setColumnWidth(25, 4000);
         }
 
         // 열 너비 설정

@@ -866,6 +866,18 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             cell = row.createCell(19);
             cell.setCellValue(list.get(i).getAppctnDt());
             cell.setCellStyle(style_body);
+
+            sheet.setColumnWidth(0, 2000); sheet.setColumnWidth(1, 2400);
+            sheet.setColumnWidth(2, 2400); sheet.setColumnWidth(3, 5000);
+            sheet.setColumnWidth(4, 3400); sheet.setColumnWidth(5, 2800);
+            sheet.setColumnWidth(6, 2000); sheet.setColumnWidth(7, 2400);
+            sheet.setColumnWidth(8, 3000); sheet.setColumnWidth(9, 2000);
+            sheet.setColumnWidth(10, 2800); sheet.setColumnWidth(11, 4500);
+            sheet.setColumnWidth(12, 4500); sheet.setColumnWidth(13, 3000);
+            sheet.setColumnWidth(14, 2800); sheet.setColumnWidth(15, 2000);
+            sheet.setColumnWidth(16, 3000); sheet.setColumnWidth(17, 3000);
+            sheet.setColumnWidth(18, 3000); sheet.setColumnWidth(19, 3000);
+
         }
 
         // 열 너비 설정
