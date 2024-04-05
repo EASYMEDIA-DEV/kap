@@ -84,4 +84,12 @@ public interface COLgnMapper {
 	 * CMS Root 메뉴 정보를 가져온다.
 	 */
 	public COMenuDTO getCmsRootInf(COAAdmDTO cOAAdmDTO) throws Exception;
+	/**
+	 * CMS 메뉴 리스트 조회
+	 */
+	public List<COMenuDTO> getCmsList(COUserDetailsDTO pCOUserDetailsDTO) throws Exception; /* 2024-04-05 일반관리자 CMS메뉴 안 나오는 문제 해결 */
+	/**
+	 * CMS 메뉴 시퀀스 조회
+	 */
+	public String getCmsSeq(COAAdmDTO pCOAAdmDTO) throws Exception; /* 2024-04-05 일반관리자 CMS메뉴 안 나오는 문제 해결 */
 }

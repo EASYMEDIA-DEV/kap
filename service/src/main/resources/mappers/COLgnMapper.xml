@@ -428,4 +428,39 @@
 		  AND RHT_VAL <![CDATA[<]]> (SELECT RHT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
 	</select>
 
+	<!--
+         쿼리명 : COLgnMapper.getCmsList
+         설  명 : CMS 메뉴 리스트 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.04.05   장두석       최초생성
+    -->
+	<select id="getCmsList" parameterType="COUserDetailsDTO" resultType="COMenuDTO">
+		SELECT /* COLgnMapper.getCmsList */
+			MENU_SEQ
+		FROM
+			CO_MENU_MST
+		WHERE 1=1
+		  AND USE_YN = 'Y'
+		  AND LFT_VAL <![CDATA[>]]> (SELECT LFT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
+		  AND RHT_VAL <![CDATA[<]]> (SELECT RHT_VAL FROM CO_MENU_MST WHERE MENU_SEQ = #{driveMenuSeq})
+	</select>
+
+	<!--
+         쿼리명 : COLgnMapper.getCmsSeq
+         설  명 : CMS 메뉴 시퀀스 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.04.05   장두석       최초생성
+    -->
+	<select id="getCmsSeq" parameterType="COAAdmDTO" resultType="java.lang.String">
+		SELECT /* COLgnMapper.getCmsSeq */
+			MENU_SEQ
+		FROM
+			CO_MENU_MST
+		WHERE 1=1
+		  AND MENU_TYPE = 'menu'
+		  AND USE_YN = 'Y'
+	</select>
+
 </mapper>

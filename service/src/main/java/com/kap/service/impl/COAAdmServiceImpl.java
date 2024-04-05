@@ -26,6 +26,7 @@ import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -249,6 +250,23 @@ public class COAAdmServiceImpl implements COAAdmService {
 			//변경 권한 여부 체크
 			if (menuSeqs != null)
 			{
+				/* 2024-04-05 일반관리자 CMS메뉴 안 나오는 문제 해결 s */
+				String cmsMenuSeq = coLgnMapper.getCmsSeq(pCOAAdmDTO);
+				for(String temp : menuSeqs) {
+					System.out.println(temp);
+					if(cmsMenuSeq.equals(temp)) {
+						COUserDetailsDTO tempDTO = new COUserDetailsDTO();
+						tempDTO.setDriveMenuSeq(Integer.parseInt(cmsMenuSeq));
+						List<COMenuDTO> cmsMenuList = coLgnMapper.getCmsList(tempDTO);
+						List<String> tempList = new ArrayList<>(Arrays.asList(menuSeqs));
+						for(COMenuDTO menu : cmsMenuList) {
+							tempList.add(menu.getMenuSeq().toString());
+						}
+						menuSeqs = tempList.toArray(new String[0]);
+					}
+				}
+				/* 2024-04-05 일반관리자 CMS메뉴 안 나오는 문제 해결 e */
+
 				COMenuDTO cOMenuDTO = new COMenuDTO();
 
 				cOMenuDTO.setAdmSeq( pCOAAdmDTO.getAdmSeq() );
