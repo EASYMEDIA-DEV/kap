@@ -151,12 +151,12 @@
                         <th class="text-center">방문일</th>
                         <th class="text-center">담당위원</th>
                         <th class="text-center">방문횟수</th>
+                        <th class="text-center">신청일</th>
                         <th class="text-center">킥오프일</th>
                         <th class="text-center" style="display: none">지도착수일</th>
                         <th class="text-center">킥오프자료</th>
                         <th class="text-center">랩업일</th>
                         <th class="text-center">랩업자료</th>
-                        <th class="text-center">신청일</th>
                         <th class="text-center">최초 등록자</th>
                         <th class="text-center">최초 등록일시</th>
                         <th class="text-center">최종 수정자</th>
