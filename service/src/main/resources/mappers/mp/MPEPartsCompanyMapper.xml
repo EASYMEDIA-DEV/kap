@@ -10,7 +10,7 @@
     -->
     <select id="selectPartsCompanyList" parameterType="MPEPartsCompanyDTO">
         SELECT /* MPEPartsCompanyMapper.selectPartsCompanyList */
-            BSNM_NO
+            A.BSNM_NO
             , RPRSNT_NM
             , CMPN_NM
             , CMPN_CD
@@ -18,7 +18,6 @@
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.CTGRY_CD) AS CTGRY_NM
             , SIZE_CD
             , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'COMPANY_TYPE' AND CD = A.SIZE_CD) AS SIZE_NM
-            , BSNM_NO
             , BSC_ADDR
             , DTL_ADDR
             , SLS_PMT
@@ -58,7 +57,19 @@
         <if test="dEndDt != null and dEndDt != ''.toString() ">
             , #{dEndDt} AS 'dEndDt'
         </if>
+        <if test="excelYn == 'Y'.toString() ">
+            , sq_info
+        </if>
         FROM CP_CMPN_MST A
+        <if test="excelYn == 'Y'.toString() ">
+            LEFT JOIN (
+            SELECT
+                GROUP_CONCAT(nm,'/',score,'/',YEAR,'년','/',crtfn_cmpn_nm SEPARATOR '\n') AS sq_info
+                , BSNM_NO AS temp_bsnm_no
+            from cp_cmpn_cbsn_dtl
+            GROUP BY BSNM_NO
+            ) B ON A.BSNM_NO = B.temp_bsnm_no
+        </if>
         <include refid="selectPartsComListwhereSql" />
         ORDER BY
             REG_DTM DESC

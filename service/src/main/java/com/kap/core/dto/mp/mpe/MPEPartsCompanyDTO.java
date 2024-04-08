@@ -136,6 +136,10 @@ public class MPEPartsCompanyDTO extends BaseDTO {
     @Schema(title = "인증주관사명", example = "")
     private String crtfnCmpnNm;
 
+
+    @Schema(title = "SQ 정보", example = "")
+    private String sqInfo;
+
     @Schema(title = "SQ 리스트", example = "")
     private List<String> sqInfoList;
 

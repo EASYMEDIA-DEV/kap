@@ -575,7 +575,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
             }
             cell.setCellStyle(style_body);
 
-            mpePartsCompanyDTO.setBsnmNo(list.get(i).getBsnmNo());
+            /*mpePartsCompanyDTO.setBsnmNo(list.get(i).getBsnmNo());
             MPEPartsCompanyDTO sqDto = selectPartsComSQInfo(mpePartsCompanyDTO);
             List<MPEPartsCompanyDTO> sqList = sqDto.getList();
 
@@ -588,9 +588,9 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
             String year = "";
             String score = "";
             String crtfnCmpnNm = "";
-            String sqInfo = "";
+            String sqInfo = "";*/
 
-            for (MPEPartsCompanyDTO dto : sqList) {
+            /*for (MPEPartsCompanyDTO dto : sqList) {
                 if (dto == null) {
                     break;
                 } else {
@@ -616,7 +616,7 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                     index++;
                 }
 
-            }
+            }*/
 
             //SQ 정보
             Cell sqCell = row.createCell(17);
@@ -625,7 +625,8 @@ public class MPEPartsCompanyServiceImpl implements MPEPartsCompanyService {
                 sqCell.setCellValue("-");
             } else if (list.get(i).getCtgryCd().equals("COMPANY01002")) {
 
-                RichTextString newSqInfoText = createHelper.createRichTextString(sqInfo1 + sqInfo2 + sqInfo3);
+                //RichTextString newSqInfoText = createHelper.createRichTextString(sqInfo1 + sqInfo2 + sqInfo3);
+                RichTextString newSqInfoText = createHelper.createRichTextString(list.get(i).getSqInfo());
                 sqCell.setCellValue(newSqInfoText);
                 style_body_sqInfo.setAlignment(HorizontalAlignment.LEFT);
                 style_body_sqInfo.setWrapText(true);
