@@ -768,26 +768,30 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(20);
-        cell.setCellValue("신청자 ID");
+        cell.setCellValue("신청자명");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(21);
-        cell.setCellValue("신청자 이메일");
+        cell.setCellValue("신청자 ID");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(22);
-        cell.setCellValue("신청자 부서");
+        cell.setCellValue("신청자 이메일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(23);
-        cell.setCellValue("신청자 직급");
+        cell.setCellValue("신청자 부서");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(24);
-        cell.setCellValue("신청자 휴대폰번호");
+        cell.setCellValue("신청자 직급");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(25);
+        cell.setCellValue("신청자 휴대폰번호");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(26);
         cell.setCellValue("신청자 일반 전화번호");
         cell.setCellStyle(style_header);
 
@@ -897,33 +901,38 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cell.setCellValue(excelList.get(i).getAppctnDt());
             cell.setCellStyle(style_body);
 
-            //신청자ID
+            //신청자명
             cell = row.createCell(20);
+            cell.setCellValue(excelList.get(i).getName());
+            cell.setCellStyle(style_body);
+
+            //신청자ID
+            cell = row.createCell(21);
             cell.setCellValue(excelList.get(i).getId());
             cell.setCellStyle(style_body);
 
             //신청자 이메일
-            cell = row.createCell(21);
+            cell = row.createCell(22);
             cell.setCellValue(excelList.get(i).getEmail());
             cell.setCellStyle(style_body);
 
             //신청자 부서
-            cell = row.createCell(22);
+            cell = row.createCell(23);
             cell.setCellValue(excelList.get(i).getDeptNm() + ' ' + excelList.get(i).getDeptDtlNm());
             cell.setCellStyle(style_body);
 
             //신청자 직급
-            cell = row.createCell(23);
+            cell = row.createCell(24);
             cell.setCellValue(excelList.get(i).getPstnNm());
             cell.setCellStyle(style_body);
 
             //신청자 휴대폰번호
-            cell = row.createCell(24);
+            cell = row.createCell(25);
             cell.setCellValue(excelList.get(i).getHpNo());
             cell.setCellStyle(style_body);
 
             //신청자 일반 전화번호
-            cell = row.createCell(25);
+            cell = row.createCell(26);
             cell.setCellValue(excelList.get(i).getTelNo());
             cell.setCellStyle(style_body);
 
@@ -938,9 +947,10 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             sheet.setColumnWidth(14, 2800); sheet.setColumnWidth(15, 2000);
             sheet.setColumnWidth(16, 3000); sheet.setColumnWidth(17, 3000);
             sheet.setColumnWidth(18, 3000); sheet.setColumnWidth(19, 3000);
-            sheet.setColumnWidth(20, 3000); sheet.setColumnWidth(21, 4500);
-            sheet.setColumnWidth(22, 5000); sheet.setColumnWidth(23, 3000);
-            sheet.setColumnWidth(24, 4000); sheet.setColumnWidth(25, 4000);
+            sheet.setColumnWidth(20, 3000); sheet.setColumnWidth(21, 3000);
+            sheet.setColumnWidth(22, 5000); sheet.setColumnWidth(23, 5000);
+            sheet.setColumnWidth(24, 3000); sheet.setColumnWidth(25, 4600);
+            sheet.setColumnWidth(26, 4600);
         }
 
         // 열 너비 설정

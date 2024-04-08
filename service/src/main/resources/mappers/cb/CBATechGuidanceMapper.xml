@@ -25,6 +25,7 @@
     <if test="excelYn == 'Y'.toString() ">
         , (SELECT RPRSNT_NM FROM CP_CMPN_MST WHERE BSNM_NO = APPCTN_BSNM_NO) AS RPRSNT_NM /* 신청당시 부품사 대표자명 */
         , ID
+        , NAME
         , EMAIL
         , DEPT_NM
         , DEPT_DTL_NM
@@ -123,6 +124,7 @@
         , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.MOD_ID) MOD_NAME
         , CP_MST.MOD_DTM
     <if test="excelYn == 'Y'.toString() ">
+        , MEM_MST.NAME
         , MEM_MST.ID
         , MEM_MST.EMAIL
         , CASE WHEN MEM_MST.DEPT_CD != '' THEN  (SELECT CD_NM FROM CO_CODE_MST WHERE CD = MEM_MST.DEPT_CD)
