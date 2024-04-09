@@ -365,13 +365,21 @@ public class COStringUtil {
      */
     public static String bsnmNoConvert(String str1)
     {
+
+
         if(StringUtils.isEmpty(str1)) {
             return "-";
         }
+
+        if(str1.length()<10){
+            return  str1;
+        }
+
         String prefix = str1.substring(0,3);
         String middlePart = str1.substring(3,5);
         String suffix = str1.substring(5);
         return prefix + "-" + middlePart + "-" + suffix;
+
     }
 
     /**
