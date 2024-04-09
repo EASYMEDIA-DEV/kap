@@ -5,12 +5,21 @@
 <%@ page import="java.text.SimpleDateFormat" %>
 <script>
     window.onpageshow = function(event) {
-        if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+        var reloadYn = sessionStorage.getItem("reloadYn");//저장후 리로드 여부를 체크하여 리로드시 탭 변경 해줌
+        if(!(reloadYn === undefined) && reloadYn == "Y"){
+
+            var activeIndex = (sessionStorage.getItem("activeIndex")!="" && !(sessionStorage.getItem("activeIndex") === undefined) )  ? sessionStorage.getItem("activeIndex") : 0;
+
+            $(".tabClick:eq("+activeIndex+")").find("a").trigger("click");
+            sessionStorage.removeItem("reloadYn");//새로고침할때마다  하면안되니까 세션 삭제해줌
+            sessionStorage.removeItem("activeIndex");
+        }
+        /*if ( event.persisted || (window.performance && window.performance.navigation.type == 2)) {
             // Back Forward Cache로 브라우저가 로딩될 경우 혹은 브라우저 뒤로가기 했을 경우
             // 이벤트 추가하는 곳
             $(".tabClick:eq(1)").find("a").trigger("click");
 
-        }
+        }*/
     }
 </script>
 <c:set var="rtnDto" value="${ not empty rtnInfo ? rtnInfo : rtnData}" />

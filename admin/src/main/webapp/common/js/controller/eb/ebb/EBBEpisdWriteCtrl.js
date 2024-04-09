@@ -2278,6 +2278,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							cmmCtrl.jsonAjax(function(data){
 								alert("저장되었습니다.");
 								if(actionUrl.indexOf("update") > -1) {
+									sessionStorage.setItem("reloadYn", "Y"); //저장후 탭 유지를 위해 여부 값 넣어줌
+									var activeIndex = $(".tabClick.active").index();//탭값 넣어줌
+									sessionStorage.setItem("activeIndex", activeIndex);//탭값 넣어줌
 									location.reload();
 								}
 								else {
