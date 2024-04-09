@@ -1,5 +1,4 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
-
 <div id="wrap" class="mypage" data-controller="controller/eb/ebm/EBMEduApplyTrnsfCtrl">
     <form class="form-horizontal" name="frmSearch" method="post" action="" data-del-type="none">
         <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
@@ -14,6 +13,18 @@
         <input type="hidden" id="episdYear" name="episdYear" value="${ rtnData.episdYear }" />
         <input type="hidden" id="episdSeq" name="episdSeq" value="${ rtnData.episdSeq }" />
         <input type="hidden" id="ptcptSeq" name="ptcptSeq" value="${ rtnData.ptcptSeq }" />
+
+        <c:set var="accsEndDt" value="${ empty rtnData.accsEndDtm ? '-' : kl:convertDate(rtnData.accsEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
+        <c:set var="legacyYn" value="N" />
+        <c:choose>
+            <c:when test="${accsEndDt lt '2024.03.25'}">
+                <c:set var="legacyYn" value="Y" />
+            </c:when>
+            <c:otherwise>
+                <c:set var="legacyYn" value="N" />
+            </c:otherwise>
+        </c:choose>
+
 
         <input type="hidden" id="bfrGpcId" name="bfrGpcId" value="${ rtnData.gpcId }" />
 
@@ -174,7 +185,7 @@
                     </div>
                     <div class="page-bot-btn-sec scroll-motion">
                         <div class="btn-wrap align-right for-motion">
-                            <a class="btn-solid small black-bg setTrnsf" href="javascript:"><span>교육 양도하기</span></a>
+                            <a class="btn-solid small black-bg setTrnsf" href="javascript:" data-legacy-yn="${legacyYn}"><span>교육 양도하기</span></a>
                         </div>
                     </div>
                 </div>

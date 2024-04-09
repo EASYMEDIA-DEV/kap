@@ -199,6 +199,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			setTrnsf : {
 				event: {
 					click: function (e) {
+
+						var legacyYn = $(this).data("legacyYn");
+
+						if(legacyYn == "Y"){
+							alert("2024년 3월 25일 이전 신청자는 관리자에 문의 해주세요");
+							return false;
+						}
+
 						//교육양도 시작
 
 
