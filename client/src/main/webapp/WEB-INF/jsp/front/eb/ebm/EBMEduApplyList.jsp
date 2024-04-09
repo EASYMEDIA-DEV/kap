@@ -9,6 +9,21 @@
         <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
+        <c:choose>
+            <c:when test="${rtnData.crtfctYn eq 'Y'}">
+                <input type="hidden" id="todaySetYn" name="todaySetYn" value="N" />
+            </c:when>
+            <c:otherwise>
+                <input type="hidden" id="todaySetYn" name="todaySetYn" value="Y" />
+            </c:otherwise>
+
+
+        </c:choose>
+
+
+
+
+
         <!-- content 영역 start -->
         <div class="cont-wrap">
 
@@ -97,15 +112,12 @@
                                                                                 <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd" name="stduyMthdCd">
                                                                                 <label for="stduyMthdCd">전체</label>
                                                                             </div>
-
                                                                             <c:forEach var="cdList" items="${classTypeList.STDUY_MTHD}" varStatus="status">
                                                                                 <div class="form-checkbox">
                                                                                     <input type="checkbox" data-name="stduyMthdCdList" id="stduyMthdCd${status.index}" name="stduyMthdCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.stduyMthdCd, cdList.cd)}">checked</c:if>>
                                                                                     <label for="stduyMthdCd${status.index}">${cdList.cdNm}</label>
                                                                                 </div>
                                                                             </c:forEach>
-
-
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -225,8 +237,7 @@
                                                                         <div class="middle-line">
                                                                             <div class="form-group form-calendar">
                                                                                 <div class="form-input">
-
-                                                                                    <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="${today}" title="시작일"/>
+                                                                                    <input type="text" class="datetimepicker_strtDt" style="width:100px" id="strtDt" data-name="strtDt" value="" title="시작일"/>
                                                                                     <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>
@@ -235,7 +246,7 @@
                                                                                 </div>
                                                                                 <div class="form-input calendar">
                                                                                     <%--<input type="text" name="endDt" id="endDt" placeholder="2023.01.01">--%>
-                                                                                    <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="${today}" title="종료일"/>
+                                                                                    <input type="text" class="datetimepicker_endDt" style="width:100px" id="endDt" data-name="endDt" value="" title="종료일"/>
                                                                                     <span class="input-group-btn" style="z-index:0;">
                                                                                 <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                                                     <em class="ion-calendar"></em>

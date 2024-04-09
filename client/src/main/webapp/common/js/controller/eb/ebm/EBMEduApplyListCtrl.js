@@ -278,7 +278,10 @@ define(["ezCtrl"], function(ezCtrl) {
 		},
 		immediately : function() {
 			//리스트 조회
-			cmmCtrl.setCalendarInit(6,-6);
+			if($("#todaySetYn").val() == "Y"){
+				cmmCtrl.setCalendarInit(6,-6);
+			}
+
 
 			//폼 데이터 처리
 			cmmCtrl.setFormData($formObj);
