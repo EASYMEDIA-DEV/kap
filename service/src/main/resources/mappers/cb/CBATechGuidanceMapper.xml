@@ -1143,21 +1143,21 @@
                     </when>
                     <when test="f == 7 ">
                         <!-- 담당위원 -->
-                        AND CMSSR_NM AND NAME LIKE CONCAT('%', #{q}, '%')
+                        AND CMSSR_NM LIKE CONCAT('%', #{q}, '%')
                     </when>
                     <when test="f == 8 ">
                         <!-- 최초등록자 -->
                         AND (
-                            MST.REG_ID LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT 'x' FROM CO_MEM_MST WHERE MEM_SEQ = APPCTN_MEM_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
+                            REG_ID LIKE CONCAT('%', #{q}, '%')
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST A WHERE A.ID = MST.REG_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                            OR EXISTS(SELECT 'x' FROM CO_MEM_MST A WHERE A.MEM_SEQ = MST.APPCTN_MEM_SEQ AND NAME LIKE CONCAT('%', #{q}, '%'))
                         )
                     </when>
                     <when test="f == 9 ">
                         <!-- 최종수정자 -->
                         AND (
-                            MST.MOD_ID LIKE CONCAT('%', #{q}, '%'))
-                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = MST.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
+                            MST.MOD_ID LIKE CONCAT('%', #{q}, '%')
+                            OR EXISTS(SELECT 'x' FROM CO_ADM_MST A WHERE A.ID = MST.MOD_ID AND NAME LIKE CONCAT('%', #{q}, '%'))
                         )
                     </when>
                     <otherwise>
