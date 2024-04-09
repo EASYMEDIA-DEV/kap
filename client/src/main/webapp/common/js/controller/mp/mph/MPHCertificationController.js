@@ -286,7 +286,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnParts : {
                 event : {
                     click : function() {
-                        if($("#bsnmNosOld").val()!= "") {
+                        if($("#bsnmNosOld").val()!= "" && $("#bsnmNosOld").val()!= "0") {
                             if($("#applyYn").val() == "" && $("#applyYn").val() != "Y") {
                                 $(".loading-area").stop().fadeIn(200);
                             }
