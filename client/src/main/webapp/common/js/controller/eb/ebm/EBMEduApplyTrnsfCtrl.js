@@ -200,13 +200,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				event: {
 					click: function (e) {
 
-						var legacyYn = $(this).data("legacyYn");
-
-						if(legacyYn == "Y"){
-							alert("2024년 3월 25일 이전 신청자는 관리자에 문의 해주세요");
-							return false;
-						}
-
 						//교육양도 시작
 
 
@@ -292,7 +285,16 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 									}else{
 
-										alert("KAP -> GPC 통신 실패함");
+										var legacyYn = $(this).data("legacyYn");
+
+										if(legacyYn == "Y"){
+											alert("2024년 3월 25일 이전 신청자는 관리자에 문의 해주세요");
+											return false;
+										}else{
+											alert("KAP -> GPC 통신 실패함");
+										}
+
+
 									}
 
 

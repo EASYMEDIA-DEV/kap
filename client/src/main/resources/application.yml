@@ -143,9 +143,9 @@ nice :
 #강제 로그인 여부
 app:
   #사용자 도메인
-  user-domain: https://www.kapkorea.org/
+  user-domain: https://www.kapkorea.org
   #관리자 도메인
-  admin-domain: http://mng.kapkorea.org/
+  admin-domain: http://mng.kapkorea.org
 
   file:
     #파일 업로드 물리 경로
