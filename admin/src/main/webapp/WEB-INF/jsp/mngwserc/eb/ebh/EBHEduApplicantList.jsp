@@ -34,7 +34,7 @@
 						</label>
 						<c:forEach var="cdList" items="${classTypeList.CLASS_TYPE}" varStatus="status">
 							<label class="checkbox-inline c-checkbox classType">
-								<input type="checkbox" class="checkboxSingle ${cdList.cd}" data-name="prntCdList" name="prntCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+								<input type="checkbox" class="checkboxSingle ${cdList.cd}" data-name="prntCdList" value="${cdList.cd}" data-cdnm="${cdList.cdNm}" <c:if test="${fn:contains(rtnData.prntCdList, cdList.cd)}">checked</c:if>/>
 								<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 							</label>
 						</c:forEach>
@@ -53,7 +53,7 @@
 									<br />
 								</c:if>
 								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}"data-cdnm="${cdList.cdNm}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}"data-cdnm="${cdList.cdNm}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
@@ -68,7 +68,7 @@
 									<br />
 								</c:if>
 								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
@@ -83,7 +83,7 @@
 									<br />
 								</c:if>
 								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" data-cdnm="${cdList.cdNm}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
@@ -161,7 +161,7 @@
 									<br />
 								</c:if>
 								<label class="checkbox-inline c-checkbox">
-									<input type="checkbox" class="checkboxSingle" name="partsCtgryCd" data-name="partsCtgryCdList" value="${cdList.cd}" />
+									<input type="checkbox" class="checkboxSingle" name="partsCtgryCd" data-name="partsCtgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.partsCtgryCd, cdList.cd)}">checked</c:if>/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:if>
@@ -206,7 +206,7 @@
 								</c:otherwise>
 							</c:choose>
 							<label class="checkbox-inline c-checkbox">
-								<input type="checkbox" class="checkboxSingle" name="choiceCtgryCd" data-name="choiceCtgryCdList" value="${cdList.cd}" />
+								<input type="checkbox" class="checkboxSingle" name="choiceCtgryCd" data-name="choiceCtgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.choiceCtgryCdList, cdList.cd)}">checked</c:if>/>
 								<span class="ion-checkmark-round"></span> ${cdName}
 							</label>
 						</c:forEach>

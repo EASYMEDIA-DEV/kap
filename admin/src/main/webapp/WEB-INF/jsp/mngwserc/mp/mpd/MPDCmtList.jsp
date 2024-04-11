@@ -41,7 +41,7 @@
                             <c:if test="${fn:contains(cdList, 'MEM_CD030')}">
                                 <c:if test="${fn:contains(cdList.dpth, '3')}">
                                     <label class="checkbox-inline c-checkbox">
-                                        <input type="checkbox" class="checkboxSingle" data-name="cmssrTypeList" value="${cdList.cd}" />
+                                        <input type="checkbox" class="checkboxSingle" data-name="cmssrTypeList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.cmssrTypeList, cdList.cd)}">checked</c:if>/>
                                         <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                     </label>
                                 </c:if>
@@ -62,7 +62,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.MEM_CD}" varStatus="status">
                             <c:if test="${fn:contains(cdList, 'MEM_CD040')}">
                                     <label class="checkbox-inline c-checkbox">
-                                        <input type="checkbox" class="checkboxSingle" data-name="cmssrWorkList" value="${cdList.cd}" />
+                                        <input type="checkbox" class="checkboxSingle" data-name="cmssrWorkList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.cmssrWorkList, cdList.cd)}">checked</c:if>/>
                                         <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                     </label>
                             </c:if>

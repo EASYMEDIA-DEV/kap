@@ -2,6 +2,7 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:set var="date" value="<%=new java.util.Date( )%>" />
 <c:set var="today"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd" /></c:set>
+<c:set var="todayYear"><fmt:formatDate value="${date}" pattern="yyyy-01-01" /></c:set>
 <c:set var="startId" value="strtDt" />
 <c:set var="endId" value="endDt" />
 
@@ -76,7 +77,7 @@
 									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 								</c:when>
 								<c:otherwise>
-									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-30'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+									<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : todayYear}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 								</c:otherwise>
 							</c:choose>
 						</c:when>
@@ -85,7 +86,7 @@
 						</c:when>
 						<%-- 2024-03-28 교육사업은 기존 30일 전에서 180일 전으로 변경 --%>
 						<c:when test="${param.srchType eq 'episd'}">
-							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : '2024-01-01'}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
+							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : todayYear}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>
 						</c:when>
 						<c:when test="${(fn:substring(param.srchType,0,2) eq 'wb' and fn:substring(param.srchType,3,4) eq 'a') or param.srchType eq 'edctn'}">
 							<input type="text" class="form-control input-sm datetimepicker_strtDt" style="width:100px" id="${startId}" data-name="${startId}" value="${not empty strtDtVal ? strtDtVal : kl:convertDate(kl:addDay(today, '-180'), 'yyyyMMdd', 'yyyy-MM-dd', '')}" title="시작일" readonly onclick="cmmCtrl.initCalendar(this);"/>

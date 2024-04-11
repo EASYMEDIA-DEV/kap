@@ -29,7 +29,7 @@
 
                         <c:forEach var="cdList" items="${classTypeList.STATE_TYPE}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="carbonCdList" name="cd" value="${cdList.cd}"/>
+                                <input type="checkbox" class="checkboxSingle" data-name="carbonCdList" name="cd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.carbonCdList, cdList.cd)}">checked</c:if>/>
                                 <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                             </label>
 

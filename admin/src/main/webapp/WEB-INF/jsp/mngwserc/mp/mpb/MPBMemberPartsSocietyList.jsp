@@ -37,27 +37,27 @@
                             <c:if test= "${cdList.cd eq 'COMPANY01001'}">
 
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
                             <c:if test= "${cdList.cd eq 'COMPANY01002'}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
                             <c:if test= "${cdList.cd eq 'COMPANY01003'}">
 
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
                             <c:if test= "${cdList.cd eq 'COMPANY01004'}">
 
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>

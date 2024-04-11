@@ -196,7 +196,7 @@ define(["ezCtrl"], function(ezCtrl) {
 					click : function() {
 						//파라미터를 물고 가야함. 목록 버튼 클릭시 검색 조건 물고 넘겨야함.
 						$formObj.find("input[name=_csrf]").remove();
-						location.href = "./write";
+						location.href = "./write?" + $formObj.serialize();
 					}
 				}
 			},

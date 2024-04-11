@@ -5,10 +5,10 @@
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 검색</h6>
         <form class="form-horizontal" id="frmSearch" name="frmSearch" method="post" action="" data-del-type="account">
             <!-- 현재 페이징 번호 -->
-            <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+            <input type="hidden" id="pageIndex" data-name="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
             <!-- 페이징 버튼 사이즈 -->
-            <input type="hidden" id="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
-            <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+            <input type="hidden" id="pageRowSize" data-name="pageRowSize" name="pageRowSize" value="${ rtnData.pageRowSize }" />
+            <input type="hidden" id="listRowSize" data-name="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
             <!-- CSRF KEY -->
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
@@ -38,7 +38,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                             <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="ctgryCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
@@ -57,7 +57,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
                             <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD01') and fn:length(cdList.cd) eq 17}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="appctnFldList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="appctnFldList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.appctnFldList, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
@@ -76,7 +76,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.EBC_VISIT_CD}" varStatus="status">
                             <c:if test="${fn:contains(cdList, 'EBC_VISIT_CD02') and cdList.cd ne 'EBC_VISIT_CD02'}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="edctnSttsCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="edctnSttsCdList" name="edctnSttsCd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.edctnSttsCd, cdList.cd)}">checked</c:if>/>
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>

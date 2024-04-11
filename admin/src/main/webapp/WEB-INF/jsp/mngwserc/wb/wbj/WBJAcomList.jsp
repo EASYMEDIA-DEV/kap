@@ -47,7 +47,7 @@
 							<c:forEach var="cdList" items="${typeList.COMPANY_TYPE}" varStatus="status">
 								<c:if test="${cdList.cd eq 'COMPANY01001' or cdList.cd eq 'COMPANY01002'}">
 									<label class="checkbox-inline c-checkbox classType">
-										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="cd" value="${cdList.cd}"/>
+										<input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" name="cd" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if>/>
 										<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 									</label>
 								</c:if>

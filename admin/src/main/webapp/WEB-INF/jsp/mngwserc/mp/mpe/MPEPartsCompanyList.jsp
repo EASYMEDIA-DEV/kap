@@ -34,7 +34,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                             <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY01')}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="ctgryCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ctgryCdList, cdList.cd)}">checked</c:if> />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>
@@ -53,7 +53,7 @@
                         <c:forEach var="cdList" items="${cdDtlList.COMPANY_TYPE}" varStatus="status">
                             <c:if test="${fn:length(cdList.cd) eq 12 and fn:contains(cdList, 'COMPANY02')}">
                                 <label class="checkbox-inline c-checkbox">
-                                    <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="${cdList.cd}" />
+                                    <input type="checkbox" class="checkboxSingle" data-name="sizeCdList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.sizeCdList, cdList.cd)}">checked</c:if> />
                                     <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                                 </label>
                             </c:if>

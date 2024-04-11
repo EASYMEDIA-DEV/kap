@@ -1,7 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
-
 <div class="container-fluid">
     <div class="card-body" data-controller="controller/mp/mpa/MPAUserWriteCtrl">
         <h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle} 상세/수정</h6>
@@ -160,4 +159,52 @@
     </div>
 </div>
 
+<script type="text/javascript">
+    $(document).ready(function() {
+        var modiYn = "N";
+
+        $(document).on('input', 'select, input:text, textarea', function() {
+            if (modiYn === "N" && $(this).val()) {
+                modiYn = "Y";
+            }
+        });
+
+        $(document).on('change', 'input:checkbox', function() {
+            if (modiYn === "N" && $(this).is(":checked")) {
+                modiYn = "Y";
+            }
+        });
+
+        // 수정 페이지의 경우 modiYn을 "Y"로 설정
+        if ($("#detailsKey").val() && $("#detailsKey").val() !== undefined) {
+            modiYn = "Y";
+        }
+
+        history.pushState(null, null, '');
+        window.addEventListener('popstate', browserPopstateHandler);
+
+        function browserPopstateHandler(event) {
+
+            if (modiYn === "Y") {
+                var confirmed = confirm(msgCtrl.getMsg("confirm.list"));
+
+                // browserPopstateHandler가 재발생할 수 있도록 브라우저 상태 다시 설정하기
+                history.pushState(null, null, window.location.pathname + window.location.search);
+
+                if (confirmed) {
+                    var strPam = $("#btnList").data("strPam");
+                    location.href = "./list?" + strPam;
+                }
+            } else {
+                var strPam = $("#btnList").data("strPam");
+                location.href = "./list?" + strPam;
+            }
+        }
+
+        // 페이지 이동 시 이벤트 핸들러 등록 해제
+        $(window).on('beforeunload', function() {
+        });
+    });
+
+</script>
 
