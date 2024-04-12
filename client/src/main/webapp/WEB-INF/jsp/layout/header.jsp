@@ -66,6 +66,15 @@
 	<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=f90d438f5adb45f1893d7ca237eaac27&libraries=services,clusterer,drawing"></script>
 	<script type="text/javascript" src="/common/js/kakaomap.js"></script>
 
+	<!-- Google tag (gtag.js) -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=G-SR6HF7QRWP"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'G-SR6HF7QRWP');
+	</script>
+
 	<!--함수 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
 	<!--메시지 공통-->
