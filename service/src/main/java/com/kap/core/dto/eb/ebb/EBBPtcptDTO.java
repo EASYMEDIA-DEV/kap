@@ -190,9 +190,13 @@ public class EBBPtcptDTO extends BaseDTO {
     @Schema(title = "신청과목의 신청자의 연계과정 수료여부", example = "Y/N")
     private String relCmptnYn;
 
-
+    @Builder.Default
     private int typeACount = 0;//신청 카운트
+
+    @Builder.Default
     private int typeBCount = 0;//신청 취소 카운트
+
+    @Builder.Default
     private int typeCCount = 0;//교육양도 카운트
 
     private List<EBBPtcptDTO> list;
