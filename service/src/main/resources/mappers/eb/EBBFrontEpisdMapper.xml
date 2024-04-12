@@ -104,7 +104,7 @@
 												AND b.episd_year = DATE_FORMAT(NOW(), '%Y')
 											</if>
 									) bb, (SELECT @rownum:=0) TMP
-						ORDER BY accs_status_order asc, case when accs_status_order = 3 then accs_strt_dtm end DESC, accs_strt_dtm ASC) bbb
+						ORDER BY accs_status_order asc, case when accs_status_order = 3 then accs_strt_dtm end DESC, accs_strt_dtm ASC, accs_end_dtm ASC) bbb
 						GROUP BY edctn_seq
 		) bb ON a.edctn_seq = bb.edctn_seq
 

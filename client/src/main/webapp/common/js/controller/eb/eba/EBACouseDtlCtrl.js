@@ -41,7 +41,7 @@ define(["ezCtrl"], function(ezCtrl) {
 			var totCnt = $("#totalCount").val();
 			//총 건수
 
-			if(totCnt <= 10 ){
+			if(totCnt <= 2 ){
 				$(".btn-wrap.add-load.align-center").hide();
 			}else{
 
