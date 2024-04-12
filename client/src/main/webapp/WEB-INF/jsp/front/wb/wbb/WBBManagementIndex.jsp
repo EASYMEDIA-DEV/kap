@@ -217,7 +217,7 @@
                                                                 <div class="btn-wrap">
                                                                     <div class="btn-set">
                                                                         <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                                                            <a class="btn-text-icon download" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" id="down${status.index}" download><span>신청서 다운로드</span></a>
+                                                                            <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=0" id="down${status.index}" download><span>신청서 다운로드</span></a>
                                                                         </c:forEach>
                                                                     </div>
                                                                 </div>
