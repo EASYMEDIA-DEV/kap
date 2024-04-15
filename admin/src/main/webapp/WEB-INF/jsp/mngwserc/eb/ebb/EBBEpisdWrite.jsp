@@ -301,12 +301,19 @@
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm classType" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간" style="margin-left:5px;">
-                                            <option value="">선택</option>
-                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
-                                            </c:forEach>
-                                        </select>
+                                        <div>
+                                            <select class="form-control input-sm wd-sm classType form-inline" name="edctnStrtHour" id="edctnStrtHour" title="교육 시작시간" style="margin-left:5px;">
+                                                <option value="">선택</option>
+                                                <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                    <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                                </c:forEach>
+                                            </select>
+                                            <select class="form-control input-sm wd-sm classType form-inline" name="edctnStrtMin" id="edctnStrtMin" title="교육 시작분" style="margin-left:5px;">
+                                                <option value="">선택</option>
+                                                <option value="00" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'mm', '') eq '00'}">selected</c:if> >00분</option>
+                                                <option value="30" <c:if test="${kl:convertDate(rtnDto.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'mm', '') eq '30'}">selected</c:if> >30분</option>
+                                            </select>
+                                        </div>
                                         <span class="input-group-addon bg-white b0">~</span>
                                         <input type="text" class="form-control input-sm datetimepicker_endDt" name="edctnEndDt" id="edctnEndDt" value="${ kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '') }" title="교육 종료일시" readonly="readonly"/>
                                         <span class="input-group-btn" style="z-index:0;">
@@ -314,12 +321,19 @@
                                                 <em class="ion-calendar"></em>
                                             </button>
                                         </span>
-                                        <select class="form-control input-sm wd-sm classType" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간" style="margin-left:5px;">
-                                            <option value="">선택</option>
-                                            <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
-                                                <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
-                                            </c:forEach>
-                                        </select>
+                                        <div>
+                                            <select class="form-control input-sm wd-sm classType" name="edctnEndHour" id="edctnEndHour" title="교육 종료시간" style="margin-left:5px;">
+                                                <option value="">선택</option>
+                                                <c:forEach var="cdList" items="${episdCdList.SYSTEM_HOUR}" varStatus="status">
+                                                    <option value="${cdList.cd}" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'HH', '') eq cdList.cd}">selected</c:if> >${cdList.cdNm}시</option>
+                                                </c:forEach>
+                                            </select>
+                                            <select class="form-control input-sm wd-sm classType" name="edctnEndMin" id="edctnEndMin" title="교육 종료분" style="margin-left:5px;">
+                                                <option value="">선택</option>
+                                                <option value="00" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'mm', '') eq '00'}">selected</c:if> >00분</option>
+                                                <option value="30" <c:if test="${kl:convertDate(rtnDto.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'mm', '') eq '30'}">selected</c:if> >30분</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

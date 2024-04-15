@@ -155,17 +155,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						var edctnStrtDt = $("#edctnStrtDt").val();
 						var edctnStrtHour = $("#edctnStrtHour").val();
+						var edctnStrtMin = $("#edctnStrtMin").val();
 
 						var edctnEndDt = $("#edctnEndDt").val();
 						var edctnEndHour = $("#edctnEndHour").val();
+						var edctnEndMin = $("#edctnEndMin").val();
 
 						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
 						//var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
 						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
 
-						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
+						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":"+edctnStrtMin+":00";
 						//var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
-						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":00:00";
+						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":"+edctnEndMin+":00";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 

@@ -1539,8 +1539,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					$("#edctnStrtDt").prop("disabled", true);//교육 시작일
 					$("#edctnStrtHour").prop("disabled", true);//교육 시작시간
+					$("#edctnStrtMin").prop("disabled", true);//교육 시작분
 					$("#edctnEndDt").prop("disabled", true);//교육 종료일
 					$("#edctnEndHour").prop("disabled", true);//교육 종료시간
+					$("#edctnEndMin").prop("disabled", true);//교육 종료분
 
 					//$("#fxnumCnt").prop("disabled", true);//정원수 2024-04-02 고객사 요청으로 잠깐 주석처리
 					//$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스 2024-04-02 고객사 요청으로 잠깐 주석처리
@@ -1610,12 +1612,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 					var edctnStrtDt = $("#edctnStrtDt");
 					var edctnStrtHour = $("#edctnStrtHour");
+					var edctnStrtMin = $("#edctnStrtMin");
 
 					var edctnEndDt = $("#edctnEndDt");
 					var edctnEndHour = $("#edctnEndHour");
+					var edctnEndMin = $("#edctnEndMin");
 
-					var attrArray = [accsStrtDt, accsStrtHour, accsEndDt, accsEndHour, edctnStrtDt, edctnStrtHour, edctnEndDt, edctnEndHour];
-					var attrArrayText = ["접수시작일시", "접수시작시간시" ,"접수종료일" ,"접수종료시간" ,"교육시작일시" ,"교육시작시간" ,"교육종료일시" ,"교육종료시간"];
+					var attrArray = [accsStrtDt, accsStrtHour, accsEndDt, accsEndHour, edctnStrtDt, edctnStrtHour, edctnStrtMin, edctnEndDt, edctnEndHour, edctnEndMin];
+					var attrArrayText = ["접수시작일시", "접수시작시간시" ,"접수종료일" ,"접수종료시간" ,"교육시작일시" ,"교육시작시간","교육시작분" ,"교육종료일시" ,"교육종료시간" ,"교육종료분"];
 
 					var forStatus = true;
 					for(var i=0; i<attrArray.length;i++){
@@ -1855,17 +1859,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 						var edctnStrtDt = $("#edctnStrtDt").val();
 						var edctnStrtHour = $("#edctnStrtHour").val();
+						var edctnStrtMin = $("#edctnStrtMin").val();
 
 						var edctnEndDt = $("#edctnEndDt").val();
 						var edctnEndHour = $("#edctnEndHour").val();
+						var edctnEndMin = $("#edctnEndMin").val();
 
 						var accsStrtDtm = accsStrtDt+" "+accsStrtHour+":00:00";
 						//var accsEndDtm = accsEndDt+" "+accsEndHour+":59:59";
 						var accsEndDtm = accsEndDt+" "+accsEndHour+":00:00";
 
-						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":00:00";
+						var edctnStrtDtm = edctnStrtDt+" "+edctnStrtHour+":"+edctnStrtMin+":00";
 						//var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":59:59";
-						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":00:00";
+						var edctnEndDtm = edctnEndDt+" "+edctnEndHour+":"+edctnEndMin+":00";
 
 						actForm.edctnSeq = $("#edctnSeq").val();//교육순번
 
