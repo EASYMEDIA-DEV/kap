@@ -157,8 +157,7 @@
                              INNER JOIN ed_edctn_prcs_mst b ON ptcpt_mst.edctn_seq = b.edctn_seq
                              inner join co_mem_mst cmm on cmm.mem_seq = ptcpt_mst.mem_seq
                              inner join cp_cmpn_mst cmpn_mst on ptcpt_mst.ptcpt_bsnm_no  = cmpn_mst.bsnm_no
-                          where ptcpt_mst.mem_seq=#{detailsKey}
-                        GROUP BY ptcpt_mst.mem_seq ) AA
+                          where ptcpt_mst.mem_seq=#{detailsKey}) AA
                 order by reg_dtm desc ) as cc
                  group by parnt_seq
                         , prnt_cd_nm
