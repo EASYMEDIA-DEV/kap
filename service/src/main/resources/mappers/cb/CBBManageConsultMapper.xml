@@ -46,6 +46,10 @@
             , LVLUP_DT					/* 렙업일자 */
             , LVLUP_FILE_SEQ			/* 렙업파일순번 */
             , LVLUP_FILE_ORD			/* 렙업파일ORD */
+        <if test="excelYn == 'Y'.toString() ">
+            , RPRSNT_NM                 /* 대표자명 */
+            , RQST_CNTN                 /* 컨설팅요청 세부내용 */
+        </if>
             , APPCTN_DT					/* 신청일 */
             , REG_ID					/* 등록자ID */
             , REG_NAME					/* 등록자이름 */
@@ -104,6 +108,10 @@
                     WHEN (CP_MST.RSUME_STTS_CD = 'MNGCNSLT_STATUS07')
                     AND ((SELECT IFNULL(cnstg_kickf_dt, CURDATE() + INTERVAL 1 DAY) FROM cp_cnstg_rsume_mst WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ ) <![CDATA[ <= ]]> CURDATE()) then 'MNGCNSLT_STATUS09'
                     ELSE CP_MST.RSUME_STTS_CD END) AND CD_ID = 'MNGCNSLT_STATUS') RSUME_STTS_NM
+            <if test="excelYn == 'Y'.toString() ">
+                , CMPN_MST.RPRSNT_NM
+                , CP_MST.RQST_CNTN
+            </if>
                 , CP_MST.REG_ID
                 , (SELECT NAME FROM CO_MEM_MST WHERE ID = CP_MST.REG_ID) REG_NAME
                 , (SELECT NAME FROM CO_ADM_MST WHERE ID = CP_MST.REG_ID) REG_ADM_NAME
@@ -126,7 +134,9 @@
         <include refid="selectManageConsultListWhereSql" />
         ORDER BY
             REG_DTM DESC
+        <if test="excelYn != 'Y'.toString() ">
         LIMIT #{firstIndex}, #{recordCountPerPage}
+        </if>
     </select>
 
     <!--

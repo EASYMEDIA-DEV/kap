@@ -39,6 +39,8 @@ public class CBBManageConsultListDTO extends BaseDTO {
     private String rsumeSttsNm;
     @Schema(title = "부품사명")
     private String cmpnNm;
+    @Schema(title = "대표자명")
+    private String rprsntNm;
     @Schema(title = "부품사구분코드")
     private String ctgryCd;
     @Schema(title = "부품사구분코드명")
@@ -99,6 +101,8 @@ public class CBBManageConsultListDTO extends BaseDTO {
     private String appctnDt;
     @Schema(title = "렙업일")
     private String lvlupDt;
+    @Schema(title = "컨설팅요청 세부내용")
+    private String rqstCntn;
 
     @Schema(title = "주생산품1")
     private String mjrPrdct1;
