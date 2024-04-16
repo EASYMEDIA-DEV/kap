@@ -177,14 +177,31 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                     use : true,
                     func : function (){
                         var actionUrl = "./update";
+                        var paramObj = {}
+                        paramObj.episdSeq = $("#episdSeq").val();
 
-                        cmmCtrl.frmAjax(function(data){
-                            if(data.respCnt > 0){
-                                alert(msgCtrl.getMsg("success.sve"));
-                                location.replace("./list");
+                        //정원수 체크
+                        cmmCtrl.jsonAjax(function(data){
+                            if(data != ""){
+                                var rtn = JSON.parse(data);
+
+                                //정원여유
+                                if(rtn.fxnumStta == "S"){
+                                    cmmCtrl.frmAjax(function(data){
+                                        if(data.respCnt > 0){
+                                            alert(msgCtrl.getMsg("success.sve"));
+                                            location.replace("./list");
+                                        }
+                                        actionUrl = "./list";
+                                    }, actionUrl, $formObj, "post", "json")
+                                }
+                                //정원초과
+                                else{
+                                    alert("정원이 초과되었습니다.");
+                                    return false;
+                                }
                             }
-                            actionUrl = "./list";
-                        }, actionUrl, $formObj, "post", "json")
+                        }, "./fxnumChk", paramObj, "text");
                     }
                 }
             });

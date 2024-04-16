@@ -7,7 +7,7 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt-seq="${list.ptcptSeq}" data-stts-cd="${ list.sttsCd }"/><%--체크박스--%>
+                        <input type="checkbox" value="${list.ptcptSeq}" name="delValueList" class="checkboxSingle notRequired" data-ptcpt-seq="${list.ptcptSeq}" data-stts-cd="${ list.sttsCd }" data-episd-seq="${list.episdSeq}" data-edctn-seq="${list.edctnSeq}" data-episd-ord="${list.episdOrd}" data-episd-year="${list.episdYear}"/><%--체크박스--%>
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>

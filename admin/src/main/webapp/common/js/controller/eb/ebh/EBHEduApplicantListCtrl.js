@@ -221,7 +221,7 @@ define(["ezCtrl"], function(ezCtrl) {
                         if(isChecked(alrMsg)) {
                             // 체크된 체크박스의 data-stts-cd 값들을 배열로 추출
                             var checkedValues = $("input:checkbox[name='delValueList']:checked").map(function() {
-                                return $(this).data('stts-cd');
+                                return $(this).data('sttsCd');
                             }).get();
 
                             // 가져온 배열의 값들 중 '02'라는 단어가 포함된 단어가 있는지 확인 (신청취소 데이터)
@@ -246,42 +246,130 @@ define(["ezCtrl"], function(ezCtrl) {
                                 return false;
                             }
 
+                            //과정 시퀀스 리스트
+                            var eduDiffList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data("edctnSeq");
+                            }).get();
+                            //선택한 신청자들이 모두 같은 과정인지
+                            var eduIsSame = eduDiffList.every(function(value, index, array) {
+                                return value === array[0]; // 첫 번째 요소와 모든 요소를 비교하여 같은지 확인
+                            });
+                            //연도 리스트
+                            var yearDiffList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data("episdYear");
+                            }).get();
+                            //선택한 신청자들이 모두 같은 연도인지
+                            var yearIsSame = yearDiffList.every(function(value, index, array) {
+                                return value === array[0]; // 첫 번째 요소와 모든 요소를 비교하여 같은지 확인
+                            });
+                            //회차 리스트
+                            var ordDiffList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                return $(this).data("episdOrd");
+                            }).get();
+                            //선택한 신청자들이 모두 같은 회차인지
+                            var ordIsSame = ordDiffList.every(function(value, index, array) {
+                                return value === array[0]; // 첫 번째 요소와 모든 요소를 비교하여 같은지 확인
+                            });
+
+                            //같은 과정의 회차인지 확인
+                            if (!eduIsSame || !yearIsSame || !ordIsSame) {
+                                alert("같은 과정의 같은 회차인 신청자만 선택해주세요.");
+                                return false;
+                            }
+
                             // 선발/미선발 메시지 분류
                             var conMsg = sttsVal == "Y" ? "선택한 회원을 선발하시겠습니까?" : "선택한 회원을 미선발하시겠습니까?";
 
-                            if(confirm(conMsg)) {
-                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
-                                    return $(this).val();
+                            if(sttsVal == "Y"){
+                                var paramObj = {}
+                                var fxnumCheckList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                    return $(this).data("episdSeq");
                                 }).get();
+                                paramObj.fxnumCheckList = fxnumCheckList;
 
-                                jQuery.ajax({
-                                    type : "post",
-                                    url : "./stts-update",
-                                    data :
-                                        {
-                                            "delValueList" : delValueList
-                                            , "stts" : sttsVal
-                                            , "_csrf": $("#csrfKey").val()
-                                        },
-                                    dataType : "json",
-                                    success : function(r)
-                                    {
-                                        console.log(r);
-                                        if (r.respCnt > 0)
-                                        {
-                                            alert("처리되었습니다.");
-                                            location.reload();
+                                //정원수 체크
+                                cmmCtrl.jsonAjax(function(data){
+                                    if(data != ""){
+                                        var rtn = JSON.parse(data);
+
+                                        //정원여유
+                                        if(rtn.fxnumStta == "S"){
+                                            if(confirm(conMsg)) {
+                                                var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                                    return $(this).val();
+                                                }).get();
+
+                                                jQuery.ajax({
+                                                    type : "post",
+                                                    url : "./stts-update",
+                                                    data :
+                                                        {
+                                                            "delValueList" : delValueList
+                                                            , "stts" : sttsVal
+                                                            , "_csrf": $("#csrfKey").val()
+                                                        },
+                                                    dataType : "json",
+                                                    success : function(r)
+                                                    {
+                                                        if (r.respCnt > 0)
+                                                        {
+                                                            alert("처리되었습니다.");
+                                                            location.reload();
+                                                        }
+                                                        else
+                                                        {
+                                                            alert("잘못된 접근입니다.");
+                                                        }
+                                                    },
+                                                    error : function(xhr, ajaxSettings, thrownError)
+                                                    {
+                                                        alert("잠시후 다시 시도 바랍니다.");
+                                                    }
+                                                });
+                                            }
                                         }
-                                        else
-                                        {
-                                            alert("잘못된 접근입니다.");
+                                        //정원초과
+                                        else{
+                                            alert("정원이 초과되었습니다.");
+                                            return false;
                                         }
-                                    },
-                                    error : function(xhr, ajaxSettings, thrownError)
-                                    {
-                                        alert("잠시후 다시 시도 바랍니다.");
                                     }
-                                });
+                                }, "./fxnumChk", paramObj, "text");
+                            }
+                            else {
+                                if(confirm(conMsg)) {
+                                    var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                        return $(this).val();
+                                    }).get();
+
+                                    jQuery.ajax({
+                                        type : "post",
+                                        url : "./stts-update",
+                                        data :
+                                            {
+                                                "delValueList" : delValueList
+                                                , "stts" : sttsVal
+                                                , "_csrf": $("#csrfKey").val()
+                                            },
+                                        dataType : "json",
+                                        success : function(r)
+                                        {
+                                            if (r.respCnt > 0)
+                                            {
+                                                alert("처리되었습니다.");
+                                                location.reload();
+                                            }
+                                            else
+                                            {
+                                                alert("잘못된 접근입니다.");
+                                            }
+                                        },
+                                        error : function(xhr, ajaxSettings, thrownError)
+                                        {
+                                            alert("잠시후 다시 시도 바랍니다.");
+                                        }
+                                    });
+                                }
                             }
                         }
                     }

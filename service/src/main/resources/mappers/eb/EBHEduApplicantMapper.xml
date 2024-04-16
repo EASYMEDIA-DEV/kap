@@ -19,6 +19,8 @@
 			, TBL.STD_NAME
 			, TBL.EPISD_YEAR
 			, TBL.EPISD_ORD
+		    , TBL.FXNUM_CNT
+		    , TBL.CNT
 			, TBL.CMPN_NM
 			, TBL.PTCPT_BSNM_NO
 			, TBL.BSC_ADDR
@@ -64,6 +66,8 @@
 					, B.NM AS STD_NAME
 					, A.EPISD_YEAR
 					, A.EPISD_ORD
+		            , C.FXNUM_CNT
+		            , (SELECT COUNT(*) FROM EP_EDCTN_PTCPT_MST WHERE EPISD_SEQ = A.EPISD_SEQ AND STTS_CD = 'EDU_STTS_CD01' ) AS CNT
 					, D.CMPN_NM
 					, A.PTCPT_BSNM_NO
 					, D.BSC_ADDR
@@ -126,6 +130,8 @@
 					, B.NM AS STD_NAME
 					, A.EPISD_YEAR
 					, A.EPISD_ORD
+					, C.FXNUM_CNT
+					, (SELECT COUNT(*) FROM EP_EDCTN_PTCPT_MST WHERE EPISD_SEQ = A.EPISD_SEQ AND STTS_CD = 'EDU_STTS_CD01' ) AS CNT
 					, D.CMPN_NM
 					, A.PTCPT_BSNM_NO
 					, D.BSC_ADDR
@@ -521,6 +527,39 @@
 		WHERE
 		    PTCPT_SEQ = ${detailsKey}
 	</update>
+
+	<!--
+      쿼리명 : EBHEduApplicantMapper.selectFxnumChk
+      설  명 : 교육차수관리 - 참여자 정원체크
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2023.11.28   김학규       최초생성
+ 	-->
+	<select id="selectFxnumChk" parameterType="EBHEduApplicantMstDTO" resultType="EBHEduApplicantMstDTO">
+		select /* EBHEduApplicantMapper.selectFxnumChk */
+			aa.edctn_seq
+			 , aa.episd_year
+			 , aa.episd_ord
+			 , aa.fxnum_cnt
+			 , cnt
+			 , case when aa.fxnum_impsb_yn = 'N' then 'S'
+					when aa.fxnum_impsb_yn = 'Y' then
+						case when aa.cnt <![CDATA[<]]> aa.fxnum_cnt then 'S'
+							 else 'F'
+						end
+			end fxnum_stta
+		FROM (SELECT
+				  edctn_seq
+				   , episd_year
+				   , episd_ord
+				   , fxnum_impsb_yn
+				   , fxnum_cnt
+				   , (SELECT COUNT(*) FROM ep_edctn_ptcpt_mst WHERE episd_seq = a.episd_seq AND stts_cd = 'EDU_STTS_CD01' ) AS cnt
+			  from ed_edctn_episd_mst a
+			  WHERE 1=1
+				and episd_seq = #{episdSeq}
+			 ) aa
+	</select>
 
 </mapper>
 

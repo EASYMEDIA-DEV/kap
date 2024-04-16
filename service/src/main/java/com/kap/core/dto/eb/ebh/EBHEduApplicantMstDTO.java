@@ -249,6 +249,18 @@ public class EBHEduApplicantMstDTO extends BaseDTO {
     @Hidden
     private String stts;
 
+    @Schema(title = "정원 초과 여부 상태값")
+    @Hidden
+    private String fxnumStta;
+
+    @Schema(title = "현재 신청자 수")
+    @Hidden
+    private String cnt;
+
+    @Schema(title = "정원 체크 리스트")
+    @Hidden
+    private List<String> fxnumCheckList;
+
     @Schema(title = "조회 목록", description = "목록 페이지 리스트")
     @Hidden
     private List<EBHEduApplicantMstDTO> list;

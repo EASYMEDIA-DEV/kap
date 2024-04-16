@@ -35,4 +35,9 @@ public interface EBHEduApplicantService {
      * 선발 상태 수정
      */
     public int updateStts(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
+
+    /**
+     * 신청자 정원 체크
+     */
+    public EBHEduApplicantMstDTO selectFxnumChk(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
 }

@@ -193,4 +193,39 @@ public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
         }
     }
 
+    /**
+     * 신청자 정원 체크
+     */
+    @Transactional
+    public EBHEduApplicantMstDTO selectFxnumChk(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception
+    {
+        EBHEduApplicantMstDTO tempDto = new EBHEduApplicantMstDTO();
+        EBHEduApplicantMstDTO rtnDto = new EBHEduApplicantMstDTO();
+        rtnDto.setFxnumStta("S");
+        List<String> checkList = new ArrayList<>();
+        if(pEBHEduApplicantMstDTO.getFxnumCheckList() != null) {
+            checkList = pEBHEduApplicantMstDTO.getFxnumCheckList();
+        }
+        int cnt = -1;
+        int fxCnt = -1;
+
+        if(!checkList.isEmpty()) {
+            for (String key : checkList) {
+                pEBHEduApplicantMstDTO.setEpisdSeq(Integer.parseInt(key));
+                tempDto = pEBHEduApplicantMapper.selectFxnumChk(pEBHEduApplicantMstDTO);
+                cnt = Integer.parseInt(tempDto.getCnt());
+                fxCnt = Integer.parseInt(tempDto.getFxnumCnt());
+                if ((fxCnt - cnt) <= 0 || (fxCnt - cnt) < checkList.size()) {
+                    rtnDto.setFxnumStta("F");
+                    break;
+                }
+            }
+        }
+        else {
+            rtnDto = pEBHEduApplicantMapper.selectFxnumChk(pEBHEduApplicantMstDTO);
+        }
+
+        return rtnDto;
+    }
+
 }

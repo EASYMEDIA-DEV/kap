@@ -72,4 +72,9 @@ public interface EBHEduApplicantMapper {
      */
     public int updateApplicant(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO);
 
+    /**
+     * 신청자 정원 체크
+     */
+    public EBHEduApplicantMstDTO selectFxnumChk(EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception;
+
 }

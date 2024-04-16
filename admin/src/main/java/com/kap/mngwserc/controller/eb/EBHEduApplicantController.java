@@ -13,10 +13,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -198,6 +195,29 @@ public class EBHEduApplicantController {
             }
 
             return pEBHEduApplicantMstDTO;
+        }
+
+        @Operation(summary = "신청자 정원 체크", tags = "신청자 정원 체크", description = "")
+        @PostMapping(value="/fxnumChk")
+        public EBHEduApplicantMstDTO selectFxnumChk(@RequestBody EBHEduApplicantMstDTO pEBHEduApplicantMstDTO) throws Exception
+        {
+
+            EBHEduApplicantMstDTO tempDto = new EBHEduApplicantMstDTO();
+
+            try {
+                tempDto = eBHEduApplicantService.selectFxnumChk(pEBHEduApplicantMstDTO);
+
+            }
+            catch (Exception e)
+            {
+                if (log.isDebugEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return tempDto;
         }
 
     }
