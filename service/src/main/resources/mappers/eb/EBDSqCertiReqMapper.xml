@@ -29,11 +29,9 @@
 		, sq_mst.reg_dtm
 		, sq_mst.mod_dtm
 	    , sq_mst.mod_id
-		, (select name from (
-		    select id, name from co_adm_mst
-			union all
-			select id, name from co_mem_mst
-		) tmp where tmp.id = sq_mst.mod_id limit 1) mod_name
+		, CASE WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=sq_mst.mod_id) > 0 THEN (SELECT NAME FROM CO_ADM_MST WHERE ID=sq_mst.mod_id)
+		WHEN (SELECT COUNT(*) FROM CO_ADM_MST WHERE ID=sq_mst.mod_id) = 0 THEN (SELECT NAME FROM CO_MEM_MST WHERE ID=sq_mst.mod_id)
+		ELSE NULL END AS MOD_NAME
 		, sq_mst.use_yn
 		, sq_mst.exam_cd
 		, (select cd_nm from co_code_mst where cd = sq_mst.exam_cd and cd_id = 'EBD_SQ_TP') exam_cd_nm
@@ -238,6 +236,7 @@
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    김학규       최초생성
+        2024.03.29	  이옥정		  자격증 상태가 발급대기이거나 반려시에도 상세 페이지 확인을 위해 조건문 제거 처리 (and appctn_mst.issue_cd = 'EBD_SQ_I')
     -->
 	<select id="selectExamAppctnMst" parameterType="EBDSqCertiSearchDTO" resultType="EBGExamAppctnMstDTO">
 		select /*EBDSqCertiReqMapper.selectExamAppctnMst*/
@@ -269,7 +268,7 @@
 		WHERE
 		<choose>
 			<when test="siteGubun == 'admin'">
-				appctn_mst.exam_appctn_seq = #{detailsKey} and appctn_mst.issue_cd = 'EBD_SQ_I'
+				appctn_mst.exam_appctn_seq = #{detailsKey} <!-- and appctn_mst.issue_cd = 'EBD_SQ_I' -->
 			</when>
 			<otherwise>
 				appctn_mst.mem_seq = #{memSeq}

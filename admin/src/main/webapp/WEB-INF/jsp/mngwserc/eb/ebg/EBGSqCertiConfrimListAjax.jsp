@@ -7,11 +7,19 @@
             <tr data-total-count="${rtnData.totalCount}">
                 <td class="text-center">${ rtnData.totalCount - rtnData.firstIndex - status.index }</td>
                 <td class="text-center" >
-                    <c:set var="validEndDt" value="${ kl:convertDate(list.validEndDt, 'yyyy-MM-dd', 'yyyyMMdd', '') }" />
+                    <%-- 2024-03-29 자격증 상태 발급대기 나 반려시 상태값 노출을 위한 조건문 변경 --%>
                     <c:choose>
-                        <c:when test="${list.useYn eq 'N'}">중지</c:when>
-                        <c:when test="${validEndDt < sysDate }">만료</c:when>
-                        <c:otherwise>정상</c:otherwise>
+                        <c:when test="${list.issueNm eq '발급'}">
+                            <c:set var="validEndDt" value="${ kl:convertDate(list.validEndDt, 'yyyy-MM-dd', 'yyyyMMdd', '') }" />
+                            <c:choose>
+                                <c:when test="${list.useYn eq 'N'}">중지</c:when>
+                                <c:when test="${validEndDt < sysDate }">만료</c:when>
+                                <c:otherwise>정상</c:otherwise>
+                            </c:choose>
+                        </c:when>
+                        <c:otherwise>
+                            ${list.issueNm}
+                        </c:otherwise>
                     </c:choose>
                 </td>
                 <td class="text-center" >${ list.examCdNm }</td>

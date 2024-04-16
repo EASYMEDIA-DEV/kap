@@ -196,153 +196,161 @@
                     </table>
                 </div>
             </fieldset>
-            <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>SQ평가원 자격증 정보</h7>
-            <hr />
-            <fieldset class="">
-                <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold">SQ평가원 구분</label>
-                    <div class="col-sm-2">
-                        <select class="form-control input-sm" name="examCd">
-                            <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
-                                <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
-                                        ${cdList.cdNm}
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="">
-                <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold ">자격증번호</label>
-                    <div class="col-sm-5">
-                        ${ rtnDto.jdgmtNo }
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="">
-                <div class="form-group text-sm">
-                    <label class="col-sm-2 control-label">자격증사진</label>
-                    <div class="col-sm-10">
-                        <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
-                        <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
-                        <input type="hidden" class="notRequired" id="idntfnPhotoFileSeq" name="idntfnPhotoFileSeq" value="${rtnDto.idntfnPhotoFileSeq}" />
-                        <div class="dropzone attachFile" data-file-field-nm="idntfnPhotoFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="자격증사진">
-                            <div class="dz-default dz-message">
-                                <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+            <%-- 2024-03-29 SQ 평가원 발급코드가 발급일경우에는 SQ 평가원 자격증 정보 노출 처리 --%>
+            <c:choose>
+                <c:when test="${rtnDto.issueCd eq 'EBD_SQ_I'}">
+                    <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>SQ평가원 자격증 정보</h7>
+                    <hr />
+                    <fieldset class="">
+                        <div class="form-group text-sm ">
+                            <label class="col-sm-2 control-label text-bold">SQ평가원 구분</label>
+                            <div class="col-sm-2">
+                                <select class="form-control input-sm" name="examCd">
+                                    <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
+                                        <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
+                                                ${cdList.cdNm}
+                                        </option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
-                        <p class="text-bold mt">
-                            ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
-                        </p>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="">
-                <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold ">부품사명<span class="star"> *</span></label>
-                    <div class="col-sm-5">
-                        <div class="input-group">
-                            <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnDto.bsnmNo}" />
-                            <input type="text" class="form-control input-sm notRequired" id="bsnmNoNm" value="${ rtnDto.cmpnNm }" title="부품사명" readonly/>
-                            <span class="input-group-btn">
-                                <button type="button" class="btn btn-inverse btn-sm bsnmNoBtn">
-                                    부품사 검색
-                                </button>
-                            </span>
+                    </fieldset>
+                    <fieldset class="">
+                        <div class="form-group text-sm ">
+                            <label class="col-sm-2 control-label text-bold ">자격증번호</label>
+                            <div class="col-sm-5">
+                                ${ rtnDto.jdgmtNo }
+                            </div>
                         </div>
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="">
-                <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold ">업종</label>
-                    <div class="col-sm-10">
-                        <c:set var="cbsnCdNm" value="" />
-                        <c:choose>
-                            <c:when test="${ not empty rtnCompletePrcsList}">
-                                <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
-                                    <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                    </fieldset>
+                    <fieldset class="">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-2 control-label">자격증사진</label>
+                            <div class="col-sm-10">
+                                <spring:eval var="imageExtns" expression="@environment.getProperty('app.file.imageExtns')" />
+                                <spring:eval var="atchUploadMaxSize" expression="@environment.getProperty('app.file.max-size')" />
+                                <input type="hidden" class="notRequired" id="idntfnPhotoFileSeq" name="idntfnPhotoFileSeq" value="${rtnDto.idntfnPhotoFileSeq}" />
+                                <div class="dropzone attachFile" data-file-field-nm="idntfnPhotoFileSeq" data-file-extn="${imageExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="자격증사진">
+                                    <div class="dz-default dz-message">
+                                        <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
+                                    </div>
+                                </div>
+                                <p class="text-bold mt">
+                                    ※ OOO X OOO / 파일 확장자(${imageExtns}) / 최대 용량(<fmt:formatNumber value="${5242880 / 1024 / 1024}" maxFractionDigits="1" />MB) / 최대 개수 (1개)
+                                </p>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="">
+                        <div class="form-group text-sm ">
+                            <label class="col-sm-2 control-label text-bold ">부품사명<span class="star"> *</span></label>
+                            <div class="col-sm-5">
+                                <div class="input-group">
+                                    <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${rtnDto.bsnmNo}" />
+                                    <input type="text" class="form-control input-sm notRequired" id="bsnmNoNm" value="${ rtnDto.cmpnNm }" title="부품사명" readonly/>
+                                    <span class="input-group-btn">
+                                        <button type="button" class="btn btn-inverse btn-sm bsnmNoBtn">
+                                            부품사 검색
+                                        </button>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="">
+                        <div class="form-group text-sm ">
+                            <label class="col-sm-2 control-label text-bold ">업종</label>
+                            <div class="col-sm-10">
+                                <c:set var="cbsnCdNm" value="" />
+                                <c:choose>
+                                    <c:when test="${ not empty rtnCompletePrcsList}">
+                                        <c:forEach var="list" items="${rtnCompletePrcsList.educationList}" varStatus="status">
+                                            <c:if test="${ list.lcnsCnnctCd ne 'LCNS_CNNCT02'}" >
+                                                <c:choose>
+                                                    <c:when test="${ empty cbsnCdNm }">
+                                                        <c:set var="cbsnCdNm" value="${ list.cbsnCdNm }" />
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <c:set var="cbsnCdNm">
+                                                            ${ cbsnCdNm}, ${list.cbsnCdNm}
+                                                        </c:set>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:when>
+                                </c:choose>
+                                ${ cbsnCdNm }
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div class="form-group text-sm ">
+                            <label class="col-sm-2 control-label text-bold ">자격증 최초 취득일</label>
+                            <div class="col-sm-4">
+                                ${ kl:convertDate(rtnDto.acqsnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }
+                            </div>
+                            <label class="col-sm-2 control-label text-bold ">자격증 유효기간</label>
+                            <div class="col-sm-4">
+                                ${ kl:convertDate(rtnDto.validStrtDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnDto.validEndDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="">
+                        <div class="form-group text-sm">
+                            <label class="col-sm-2 control-label">사용 여부</label>
+                            <div class="col-sm-10">
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="useYn" value="Y" title="사용 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
+                                    <span class="ion-record"></span> 사용
+                                </label>
+                                <label class="radio-inline c-radio">
+                                    <input type="radio" name="useYn" value="N" title="사용 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
+                                    <span class="ion-record"></span> 미사용
+                                </label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <h7 class="text-bold mt"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
+                    <fieldset class="last-child mt">
+                        <div class="table-responsive ">
+                            <table class="table text-sm">
+                                <tbody>
+                                <tr>
+                                    <th>최종 수정자</th>
+                                    <td>
                                         <c:choose>
-                                            <c:when test="${ empty cbsnCdNm }">
-                                                <c:set var="cbsnCdNm" value="${ list.cbsnCdNm }" />
+                                            <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                                ${ rtnDto.modName }(${ rtnDto.modId })
                                             </c:when>
-                                            <c:otherwise>
-                                                <c:set var="cbsnCdNm">
-                                                    ${ cbsnCdNm}, ${list.cbsnCdNm}
-                                                </c:set>
-                                            </c:otherwise>
+                                            <c:otherwise>-</c:otherwise>
                                         </c:choose>
-                                    </c:if>
-                                </c:forEach>
-                            </c:when>
-                        </c:choose>
-                        ${ cbsnCdNm }
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset>
-                <div class="form-group text-sm ">
-                    <label class="col-sm-2 control-label text-bold ">자격증 최초 취득일</label>
-                    <div class="col-sm-4">
-                        ${ kl:convertDate(rtnDto.acqsnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }
-                    </div>
-                    <label class="col-sm-2 control-label text-bold ">자격증 유효기간</label>
-                    <div class="col-sm-4">
-                        ${ kl:convertDate(rtnDto.validStrtDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnDto.validEndDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }
-                    </div>
-                </div>
-            </fieldset>
-            <fieldset class="">
-                <div class="form-group text-sm">
-                    <label class="col-sm-2 control-label">사용 여부</label>
-                    <div class="col-sm-10">
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="Y" title="사용 여부" <c:if test="${rtnDto.useYn eq 'Y' or rtnDto.useYn eq null}">checked</c:if>/>
-                            <span class="ion-record"></span> 사용
-                        </label>
-                        <label class="radio-inline c-radio">
-                            <input type="radio" name="useYn" value="N" title="사용 여부" <c:if test="${rtnDto.useYn eq 'N'}">checked</c:if>/>
-                            <span class="ion-record"></span> 미사용
-                        </label>
-                    </div>
-                </div>
-            </fieldset>
-            <h7 class="text-bold mt"><em class="ion-android-arrow-dropright mr-sm "></em>수정이력</h7>
-            <fieldset class="last-child mt">
-                <div class="table-responsive ">
-                    <table class="table text-sm">
-                        <tbody>
-                        <tr>
-                            <th>최종 수정자</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
-                                        ${ rtnDto.modName }(${ rtnDto.modId })
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
-                            <th>최종 수정일</th>
-                            <td>
-                                <c:choose>
-                                    <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
-                                        ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
-                                    </c:when>
-                                    <c:otherwise>-</c:otherwise>
-                                </c:choose>
-                            </td>
-                        </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </fieldset>
-            <hr />
+                                    </td>
+                                    <th>최종 수정일</th>
+                                    <td>
+                                        <c:choose>
+                                            <c:when test="${ rtnDto.regDtm ne rtnDto.modDtm }">
+                                                ${ kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                            </c:when>
+                                            <c:otherwise>-</c:otherwise>
+                                        </c:choose>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                    <hr />
+                </c:when>
+            </c:choose>
+
             <div class="clearfix">
                 <div class="pull-left">
                     <button type="button" class="btn btn-sm btn-default listBtn" data-str-pam="${strPam}">목록</button>
                 </div>
                 <div class="pull-right">
+                <%-- 2024-03-29 SQ 평가원 발급코드가 발급일경우에는 수정버튼 노출 처리 --%>
+                <c:if test="${rtnDto.issueCd eq 'EBD_SQ_I'}">
                     <c:choose>
                         <c:when test="${ not empty rtnDto.examAppctnSeq}">
                             <button type="submit" class="btn btn-sm btn-success">수정</button>
@@ -351,6 +359,7 @@
                             <button type="submit" class="btn btn-sm btn-success">등록</button>
                         </c:otherwise>
                     </c:choose>
+                </c:if>
                 </div>
             </div>
         </form>
