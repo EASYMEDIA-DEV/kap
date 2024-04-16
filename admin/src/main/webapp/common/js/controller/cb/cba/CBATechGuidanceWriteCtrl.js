@@ -87,12 +87,37 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
         var gbDt = new Date(guideBgnDt);
         var kickDt = new Date(guideKickfDt);
         var bfGbDt = (gbDt-today)/(24*60*60*1000);
+        var guideType = $("#guideTypeCd option:selected").val();
 
         // 킥오프일이 없거나, 킥오프일 전까지
         if(bfGbDt <= 0){
             if(!guideKickfDt || today - kickDt < 0 ){
                 $(".rsumeSttsNm").text("지도착수");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
+
+                if(!guideKickfDt) {
+                    // 지도구분이 단기인 경우(킥오프일 없음)
+                    if(guideType == 'GUIDE_TYPE_CD01' && guidePscndCd != "GUIDE_PSCND04") {
+                        $(".rsumeSttsNm").text("지도중");
+                        $(".rsumeSttsCd").val("MNGTECH_STATUS_09");
+                        if(guidePscndCd == 'GUIDE_PSCND01'){
+                            $(".rsumeSttsNm").text("지도연기");
+                            $(".rsumeSttsCd").val("MNGTECH_STATUS_10");
+                        }else if(guidePscndCd == 'GUIDE_PSCND02'){
+                            $(".rsumeSttsNm").text("재단취소");
+                            $(".rsumeSttsCd").val("MNGTECH_STATUS_11");
+                        }else if(guidePscndCd == 'GUIDE_PSCND03'){
+                            $(".rsumeSttsNm").text("부품사취소");
+                            $(".rsumeSttsCd").val("MNGTECH_STATUS_12");
+                        }
+                    } else if(guideType == 'GUIDE_TYPE_CD01' && guidePscndCd == 'GUIDE_PSCND04'){
+                            $(".rsumeSttsNm").text("지도 완료");
+                            $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
+                    } else {
+                        $(".rsumeSttsNm").text("지도착수");
+                        $(".rsumeSttsCd").val("MNGTECH_STATUS_08");
+                    }
+                }
                 // 킥오프일 이후면서 지도 완료가 아닐 때
             }else if(today-kickDt >=0 && guidePscndCd != "GUIDE_PSCND04"){
                 $(".rsumeSttsNm").text("지도중");
@@ -138,6 +163,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("경영컨설팅이관");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }
+        }else if(guideType == 'GUIDE_TYPE_CD01'){
+            $(".rsumeSttsNm").text("지도 완료");
+            $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
         }
     }
 
@@ -426,6 +454,13 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 }
             },
             guideKickfDt : {
+                event : {
+                    change : function(){
+                        changeStts();
+                    }
+                }
+            },
+            guideTypeCd : {
                 event : {
                     change : function(){
                         changeStts();
