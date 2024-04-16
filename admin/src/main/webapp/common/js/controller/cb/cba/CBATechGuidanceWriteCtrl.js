@@ -163,9 +163,6 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                 $(".rsumeSttsNm").text("경영컨설팅이관");
                 $(".rsumeSttsCd").val("MNGTECH_STATUS_05");
             }
-        }else if(guideType == 'GUIDE_TYPE_CD01'){
-            $(".rsumeSttsNm").text("지도 완료");
-            $(".rsumeSttsCd").val("MNGTECH_STATUS_13");
         }
     }
 
