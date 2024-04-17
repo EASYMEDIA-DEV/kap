@@ -200,7 +200,7 @@
                         , ctgry_cd_cp_nm
                         , size_cd_nm
                         , work_bsnm_no
-                    order by reg_dtm desc
+                    order by reg_day desc
                     limit #{firstIndex}, #{recordCountPerPage}
     </select>
 
