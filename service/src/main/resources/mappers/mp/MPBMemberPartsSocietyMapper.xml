@@ -200,7 +200,8 @@
                         , ctgry_cd_cp_nm
                         , size_cd_nm
                         , work_bsnm_no
-                     limit #{firstIndex}, #{recordCountPerPage}
+                    order by reg_dtm desc
+                    limit #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
