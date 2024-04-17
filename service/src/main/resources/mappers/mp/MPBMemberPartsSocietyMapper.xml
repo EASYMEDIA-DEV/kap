@@ -117,7 +117,16 @@
                          , ptcpt_mst.reg_dtm as reg_day
                          , ptcpt_mst.cmptn_dtm
                           , ptcpt_mst.cmptn_yn
-                         , (select cd_nm from co_code_mst WHERE cd = ptcpt_mst.stts_cd) as stts_cd_nm
+                         /*, (select cd_nm from co_code_mst WHERE cd = ptcpt_mst.stts_cd) as stts_cd_nm*/
+                         , CASE ptcpt_mst.STTS_CD
+                               WHEN 'EDU_STTS_CD01' THEN '선발'
+                               WHEN 'EDU_STTS_CD02' THEN '신청취소'
+                               WHEN 'EDU_STTS_CD03' THEN '신청양도'
+                               WHEN 'EDU_STTS_CD04' THEN '선발대기'
+                               WHEN 'EDU_STTS_CD05' THEN '미선발'
+                               WHEN 'EDU_STTS_CD06' THEN '교육취소'
+                               ELSE '알 수 없음'
+                         END AS stts_cd_nm
                          , b.stduy_mthd_cd
                          , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
                          , b.stduy_dd_cd
