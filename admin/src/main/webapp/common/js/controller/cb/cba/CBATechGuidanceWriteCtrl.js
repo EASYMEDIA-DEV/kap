@@ -919,7 +919,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
             tabClick : {
                 event : {
                     click : function (e){
-                        if(e.target.getAttribute('href') == "#techGuidance") {
+                        if(e.target.getAttribute('href') == "#episdList") {
                             $("#episdList").addClass("in active");
                             $("#svResult").removeClass("in active");
                         } else {

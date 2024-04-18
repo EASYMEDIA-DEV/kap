@@ -740,7 +740,7 @@
         </div>
             <div style="float:right"><button type="button" class="btn btn-sm btn-default appctnPdfDownload" data-html2canvas-ignore="true">신청정보다운</button></div>
             <ul class="nav nav-tabs" id="myTabs">
-                <li class="active tabClick"><a data-toggle="tab" href="#techGuidance">사업진행 상세</a></li>
+                <li class="active tabClick"><a data-toggle="tab" href="#episdList">사업진행 상세</a></li>
                 <li class="tabClick srvResult"><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
             </ul>
             <div class="tab-content">

@@ -25,7 +25,7 @@
           컨실팅 사업: consult-biz
           상생 사업: coexisting-biz
         -->
-        <div class="sub-top-vis-area <c:if test="${ device eq 'PC' }">basic-page</c:if>">
+        <div class="sub-top-vis-area">
             <div class="page-tit-area">
                 <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
             </div>

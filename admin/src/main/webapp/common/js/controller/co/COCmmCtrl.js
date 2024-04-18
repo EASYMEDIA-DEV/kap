@@ -1931,7 +1931,7 @@ var cmmCtrl = (function(){
 		textarea.before(div).hide();
 
 		// 신청자 정보 pdf 다운로드시 스크롤방지 코드 삽입(스크롤시 영역 틀어짐)
-		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
+		$('html, body').css({'overflow': 'hidden', 'height': 'auto'});
 		$("#element").on('scroll touchmove mousewheel', function(event) {
 			event.preventDefault();
 			event.stopPropagation();
@@ -1985,6 +1985,7 @@ var cmmCtrl = (function(){
 			$('html, body').css({'overflow': '', 'height': ''});
 			$("#element").off('scroll touchmove mousewheel');
 
+			$(document).find("form").find("#btnUpdAdmMemo").focus();
 			// });
 		});
 		//신청정보변경 이력 영역 보이기
