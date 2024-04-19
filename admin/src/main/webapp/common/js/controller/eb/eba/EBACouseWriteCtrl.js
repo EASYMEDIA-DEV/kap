@@ -380,6 +380,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			//cmmCtrl.setFormData($formObj);
 			search();
 
+			$("#lcnsCnnctCd, #ctgryCd").change(function(){
+
+				var ctgryCd= $("#ctgryCd option:selected").val();//과정분류
+				var lcnsCnnctCd= $("#lcnsCnnctCd option:selected").val();//자격증 연계
+
+				if(ctgryCd != "CLASS01002"){//과정분류가 SQ인증이 아님
+
+					if(lcnsCnnctCd == "LCNS_CNNCT02" || lcnsCnnctCd =="LCNS_CNNCT03"){//근데 값이 신청이나 갱신임
+						alert("SQ 인증 과정만 선택이 가능 합니다.");
+						$("#lcnsCnnctCd option:eq(0)").prop("selected", true);
+						return false;
+					}
+				}
+			});
+
 			$("#gpcYn").trigger("change");
 			$("#gpcParntCtgry").trigger("change");//GPC 카테고리 이벤트 실행
 
