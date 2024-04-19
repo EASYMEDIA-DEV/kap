@@ -12,7 +12,7 @@
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examAppctnSeq}" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
             <input type="hidden" class="notRequired" id="examAppctnSeq" name="examAppctnSeq" value="${rtnDto.examAppctnSeq}" />
-
+            <input type="hidden" class="notRequired" id="issueCd" name="issueCd" value="${rtnDto.issueCd}" />
 
             <!--회원, 회사 수정 시작(회원순번 넘김)-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/COReqMemCmpnWrite.jsp">
@@ -100,6 +100,7 @@
                                 <th class="text-center">회차</th>
                                 <th class="text-center">업종</th>
                                 <th class="text-center">교육일자</th>
+                                <th class="text-center">수료일자</th>
                                 <th class="text-center">취득일자</th>
                             </tr>
                         </thead>
@@ -115,7 +116,11 @@
                                 <td class="text-center" >${ kl:nvl(rtnDataSqReqData.cbsnCdNm, '-')}</td>
                                 <td class="text-center" >
                                     ${ kl:convertDate(rtnDataSqReqData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } ~ ${ kl:convertDate(rtnDataSqReqData.edctnEndDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
+                                </td><!--교육일자-->
+                                <td class="text-center" >
+                                    ${ kl:convertDate(rtnDataSqReqData.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                 </td>
+                                <!--수료일자-->
                                 <td class="text-center" >
                                     <c:choose>
                                         <c:when test="${ empty rtnDataSqReqData.acqsnDtm }">
@@ -197,6 +202,7 @@
                 </div>
             </fieldset>
             <%-- 2024-03-29 SQ 평가원 발급코드가 발급일경우에는 SQ 평가원 자격증 정보 노출 처리 --%>
+
             <c:choose>
                 <c:when test="${rtnDto.issueCd eq 'EBD_SQ_I'}">
                     <h7 class="text-bold"><em class="ion-android-arrow-dropright mr-sm "></em>SQ평가원 자격증 정보</h7>
@@ -292,7 +298,22 @@
                             </div>
                             <label class="col-sm-2 control-label text-bold ">자격증 유효기간</label>
                             <div class="col-sm-4">
-                                ${ kl:convertDate(rtnDto.validStrtDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnDto.validEndDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }
+                                <div class="input-group form-date-group mr-sm">
+                                    <input type="text" class="form-control input-sm datetimepicker_endDt" name="validStrtDt" id="validStrtDt" value="${rtnDto.validStrtDt}" title="자격증 유효 시작일" readonly="readonly"/>
+                                    <span class="input-group-btn" style="z-index:0;">
+                                        <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                            <em class="ion-calendar"></em>
+                                        </button>
+                                    </span>
+                                    <span class="input-group-addon bg-white b0">~</span>
+                                    <input type="text" class="form-control input-sm datetimepicker_endDt" name="validEndDt" id="validEndDt" value="${rtnDto.validEndDt}" title="자격증 유효 종료일" readonly="readonly"/>
+                                    <span class="input-group-btn" style="z-index:0;">
+                                        <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
+                                            <em class="ion-calendar"></em>
+                                        </button>
+                                    </span>
+                                </div>
+                                <%--${ kl:convertDate(rtnDto.validStrtDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') } ~ ${ kl:convertDate(rtnDto.validEndDt, 'yyyy-MM-dd', 'yyyy.MM.dd', '') }--%>
                             </div>
                         </div>
                     </fieldset>

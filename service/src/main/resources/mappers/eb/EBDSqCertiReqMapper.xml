@@ -172,7 +172,7 @@
         2023.11.09    김학규       최초생성
     -->
 	<select id="selectView" parameterType="EBDSqCertiSearchDTO" resultType="EBDEdctnEdisdDTO">
-		SELECT
+		SELECT /* EBDSqCertiReqMapper.selectView */
 			  edctn_prcs_mst.nm
 			, appctn_mst.exam_appctn_seq
 			, edctn_prcs_mst.stduy_mthd_cd
@@ -322,10 +322,12 @@
 		  , rtrn_rsn = #{rtrnRsn}
 		  </if>
 		  <if test="issueCd eq 'EBD_SQ_I'">
-		  , acqsn_dtm = now()
-		  , rfrsh_dtm = now()
-		  , valid_strt_dt = now()
-		  , valid_end_dt =  date_add(now(), INTERVAL 3 YEAR)
+		  /*, acqsn_dtm = now()*/
+		  /*, rfrsh_dtm = now()*/
+		  , acqsn_dtm = #{cmptnDtm}
+		  , rfrsh_dtm = #{cmptnDtm}
+		  , valid_strt_dt = #{cmptnDtm}
+		  , valid_end_dt =  date_add(#{cmptnDtm}, INTERVAL 3 YEAR)
 		  , jdgmt_no = #{jdgmtNo}
 		  </if>
 		  , mod_id = #{modId}
@@ -347,6 +349,8 @@
 		  exam_cd = #{examCd}
 		, idntfn_photo_file_seq = #{idntfnPhotoFileSeq}
 		, bsnm_no = #{bsnmNo}
+		, valid_strt_dt = #{validStrtDt}
+		, valid_end_dt = #{validEndDt}
 		, use_yn = #{useYn}
 		, mod_id = #{modId}
 		, mod_ip = #{modIp}

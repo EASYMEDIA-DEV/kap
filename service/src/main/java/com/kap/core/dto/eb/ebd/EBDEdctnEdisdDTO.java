@@ -69,6 +69,10 @@ public class EBDEdctnEdisdDTO {
     private String edctnStrtDtm;
     @Schema(title = "교육 종료 일시")
     private String edctnEndDtm;
+
+    @Schema(title = "수료 일시")
+    private String cmptnDtm;
+
     @Schema(title = "강사 명")
     private String isttrNm;
     @Schema(title = "정원")

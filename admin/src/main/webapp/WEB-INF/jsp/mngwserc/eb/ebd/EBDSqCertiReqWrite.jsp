@@ -10,6 +10,7 @@
             <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <input type="hidden" class="notRequired" id="detailsKey" name="detailsKey" value="${rtnDto.examAppctnSeq}" />
             <input type="hidden" class="notRequired" id="gubun" name="gubun" value="${gubun}" />
+            <input type="hidden" class="notRequired" id="cmptnDtm" name="cmptnDtm" value="${ kl:convertDate(rtnDto.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }" />
             <h7 class="text-bold mt0"><em class="ion-android-arrow-dropright mr-sm text-bold"></em>과정정보</h7>
             <hr >
             <fieldset>

@@ -52,9 +52,31 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 before: function(){
                     ctrl.obj.find("input[name=rtrnRsn]").removeClass("notRequired");
                     ctrl.obj.find("input[name=rtrnRsn]").addClass("notRequired");
-                    if(ctrl.obj.find("select[name=issueCd]").val() =="EBD_SQ_C"){
+                    if($("#issueCd").val() =="EBD_SQ_C"){
                         ctrl.obj.find("input[name=rtrnRsn]").removeClass("notRequired");
                     }
+
+                    //상태가 발급일때만 자격증 유효기간 변경 유효성 체크 진행
+                    if($("#issueCd").val() =="EBD_SQ_I"){
+                        var validStrtDt = $("#validStrtDt").val();
+                        var validEndDt = $("#validEndDt").val();
+
+                        if(validStrtDt == ""){
+                            alert("자격증 유효기간 시작일을 입력해주세요");
+                            return false;
+                        }
+                        if(validEndDt == ""){
+                            alert("자격증 유효기간 종료일을 입력해주세요");
+                            return false;
+                        }
+
+                        if(validEndDt == validStrtDt || validStrtDt > validEndDt){
+                            alert("유효기간 종료일이 시작일과 같거나 더 빠를수 없습니다.");
+                            return false;
+                        }
+
+                    }
+
                 },
                 after : function() {
                     var isValid = true
