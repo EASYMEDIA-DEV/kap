@@ -24,11 +24,10 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
-        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), DEPT_NM) AS CMPN_SEQ_NM
-        , F.CMPN_SEQ AS BSNM_NO
+        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), F.CMPN_NM) AS CMPN_SEQ_NM
+        , COALESCE(F.CMPN_SEQ, B.appctn_bsnm_no) AS BSNM_NO
         , F.NAME
         , F.HP_NO
-        , B.appctn_bsnm_no as bsnm_no
         , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
         FROM
         (
@@ -54,7 +53,7 @@
         ON B.APPCTN_SEQ = E.APPCTN_SEQ
         INNER JOIN
         (
-        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
+        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, CMPN_NM, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
         FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
         )F
         ON E.RSUME_SEQ = F.RSUME_SEQ
@@ -95,7 +94,7 @@
         , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
         , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
-        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), DEPT_NM) AS CMPN_SEQ_NM
+        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), F.CMPN_NM) AS CMPN_SEQ_NM
         , C.BSNM_NO
         , F.NAME
         , F.HP_NO
@@ -127,7 +126,7 @@
         ON B.APPCTN_SEQ = E.APPCTN_SEQ
         INNER JOIN
         (
-        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
+        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, CMPN_NM, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
         FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
         )F
         ON E.RSUME_SEQ = F.RSUME_SEQ
