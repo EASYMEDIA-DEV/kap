@@ -940,7 +940,7 @@
 		from sv_mst A
 		where srv_seq IN (
 			SELECT * FROM ( SELECT SRV_SEQ from ED_EDCTN_EPISD_MST
-			WHERE EDCTN_SEQ = #{detailsKey}
+			WHERE EDCTN_SEQ = #{detailsKey} AND SRV_SEQ IS NOT NULL
 			ORDER BY EPISD_YEAR ASC , EPISD_ORD ASC LIMIT 1 ) AS T
 			)
 	</select>
