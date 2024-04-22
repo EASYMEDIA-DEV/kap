@@ -4,13 +4,17 @@ import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COSystemLogDTO;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.eb.eba.EBACouseDTO;
 import com.kap.core.dto.eb.ebb.*;
+import com.kap.core.dto.eb.ebd.EBDSqCertiSearchDTO;
 import com.kap.core.dto.eb.ebf.EBFEduRoomDetailDTO;
+import com.kap.core.dto.eb.ebg.EBGExamAppctnMstDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.service.*;
 import com.kap.service.dao.COFileMapper;
 import com.kap.service.dao.eb.EBBEpisdMapper;
 import com.kap.service.dao.eb.EBBFrontEpisdMapper;
+import com.kap.service.dao.eb.EBDSqCertiReqMapper;
 import com.kap.service.dao.mp.MPAUserMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -67,14 +71,20 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	private final MPAUserMapper mpaUserMapper;
 
 
+	private final EBACouseService eBACouseService;
+
 	//교육장 서비스
 	private final EBFEduRoomService eBFEduRoomService;
 	private final EBEExamService eBEExamService;
 
+	private final EBDSqCertiReqMapper eBDSqCertiReqMapper;
+
+
+
 
 
 	//sq평가원 자격증
-	//public final EBDSqCertiReqService eBDSqCertiReqService;
+	public final EBDSqCertiReqService eBDSqCertiReqService;
 
 
 	//파일 서비스
@@ -577,6 +587,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 					cmptnNo.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
 					eBBEpisdMapper.updatePtcptCmptnInfo(cmptnNo);// -> ptcptSeq
+
+					//수료한 과정이 갱신과정인지 체크한다
+					if("LCNS_CNNCT03".equals(cmptnNo.getLcnsCnnctCd())){
+						System.out.println("@@@ SQ 갱신");
+						updateCertiValid(eBBEpisdDTO.getEdctnSeq(), eBBPtcptDTO);
+					}
 				}
 			}
 
@@ -1944,6 +1960,33 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	 */
 	public EBBPtcptDTO selectQrPtcptDtl(EBBEpisdDTO eBBEpisdDTO) throws Exception {
 		return eBBFrontEpisdMapper.selectQrPtcptDtl(eBBEpisdDTO);
+	}
+
+	/**
+	 * SQ 평가원 자격증 갱신 - 관리자용
+	 * 교육 과정 마스터
+	 */
+	public int updateCertiValid(int edctnSeq, EBBPtcptDTO eBBPtcptDTO) throws Exception{
+		int respCnt = 0;
+		EBDSqCertiSearchDTO eBDSqCertiSearchDTO = new EBDSqCertiSearchDTO();
+		eBDSqCertiSearchDTO.setMemSeq(eBBPtcptDTO.getMemSeq());
+		eBDSqCertiSearchDTO.setSiteGubun("front");
+		EBGExamAppctnMstDTO eBGExamAppctnMstDTO = eBDSqCertiReqMapper.selectExamAppctnMst(eBDSqCertiSearchDTO);
+		if(eBGExamAppctnMstDTO != null) {
+			EBACouseDTO eBACouseDTO = new EBACouseDTO();
+			eBACouseDTO.setDetailsKey(String.valueOf(edctnSeq));
+			HashMap<String, Object> rtnMap = eBACouseService.selectCouseDtl(eBACouseDTO);
+			EBACouseDTO ebaDto = (EBACouseDTO) rtnMap.get("rtnData");
+			if (ebaDto == null) {
+				throw new Exception("NO DATA");
+			}
+			log.error("ebaDto : {}", ebaDto);
+			if ("LCNS_CNNCT03".equals(ebaDto.getLcnsCnnctCd())) {
+				//자격증 갱신
+				eBDSqCertiReqMapper.updateCertiRenewal(eBGExamAppctnMstDTO);
+			}
+		}
+		return respCnt;
 	}
 
 

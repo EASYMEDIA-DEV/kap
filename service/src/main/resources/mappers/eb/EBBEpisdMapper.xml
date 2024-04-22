@@ -3276,16 +3276,19 @@
 	<select id="selectCmptnNo" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT
 			GROUP_CONCAT('KAP-', AA.CTGRY_CD,'-',AA.EDCTN_SEQ,'-', AA.EPISD_YEAR, AA.cmptn_no) AS crtfct_no
+		 	, LCNS_CNNCT_CD
 		FROM (SELECT
 				  C.CTGRY_CD
 				   , C.EDCTN_SEQ
 				   , MAX(A.EPISD_YEAR) AS EPISD_YEAR
 				   , (SELECT LPAD(COUNT(*)+1, '5' , '0') AS cmptn_no FROM ep_edctn_ptcpt_mst WHERE 1=1/*CMPTN_YN = 'Y'*/
 																									  AND (CRTFCT_NO  != '' AND CRTFCT_NO != '-' AND CRTFCT_NO  IS NOT NULL)
+
 			  AND EDCTN_SEQ = #{edctnSeq} AND EPISD_YEAR = #{episdYear}) AS cmptn_no
+				   , C.LCNS_CNNCT_CD
 			  FROM ed_edctn_episd_mst A
 					   LEFT JOIN(
-				  SELECT EDCTN_SEQ, CTGRY_CD FROM ed_edctn_prcs_mst
+				  SELECT EDCTN_SEQ, CTGRY_CD, LCNS_CNNCT_CD FROM ed_edctn_prcs_mst
 			  ) C ON C.EDCTN_SEQ = A.EDCTN_SEQ
 
 			  WHERE 1=1

@@ -61,8 +61,6 @@ public class EBACouseServiceImpl implements EBACouseService {
 
 	public final COCodeService cOCodeService;
 
-	public final EBBEpisdService eBBEpisdService;
-
 	//파일 업로드 위치
 	@Value("${app.file.upload-path}")
 	private String fileUploadPath;
