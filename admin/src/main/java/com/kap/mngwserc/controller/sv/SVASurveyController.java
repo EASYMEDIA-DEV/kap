@@ -115,7 +115,8 @@ public class SVASurveyController<sVASurveyMstDTO> {
             modelMap.addAttribute("cdTwoDtlList", sVASurveyService.getSurveyTypeList());
 
             modelMap.addAttribute("rtnSrchData", sVASurveyDTO);
-            if(detailsKey != null){
+            System.out.println("@@ detailsKey = " + detailsKey);
+            if(detailsKey != null && detailsKey !=""){
                 modelMap.addAttribute("rtnData", sVASurveyService.selectSurveyDtl( sVASurveyDTO ));
             }
 

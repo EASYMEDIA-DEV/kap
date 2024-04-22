@@ -159,7 +159,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             modelMap.addAttribute("rtnEpisdSurveyData", wLSurveyService.selectEpisdSurveyList(wBLEpisdMstDTO));
 
 
-            if(detailsKey != null){
+            if(detailsKey != null && detailsKey != ""){
 
                 WBLSurveyMstInsertDTO WBLSurveyMstInsertDTO = wLSurveyService.selectSurveyDtl(wBLSurveyMstSearchDTO);
                 modelMap.addAttribute("rtnData", WBLSurveyMstInsertDTO);
