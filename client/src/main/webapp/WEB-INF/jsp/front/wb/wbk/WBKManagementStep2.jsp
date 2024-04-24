@@ -142,7 +142,7 @@
                       <div class="data-line">
                         <div class="form-group">
                           <div class="form-input">
-                            <input type="text" id="RdGrd" name="rdGrd" placeholder="학년 입력">
+                            <input type="text" class="numberChk" id="RdGrd" name="rdGrd" placeholder="학년 입력(숫자만 기입)">
                           </div>
                           <div class="form-select">
                             <select name="rdGrdCd" title="졸업여부 선택">
@@ -203,7 +203,7 @@
                       <div class="data-line">
                         <div class="form-group">
                           <div class="form-textarea">
-                            <textarea name="dtlCntn" class="ckeditorRequired" id="" cols="" rows="" placeholder="공모 주제 세부내용 입력"></textarea>
+                            <textarea name="dtlCntn" class="ckeditorRequired" id="dtlCntn" cols="" rows="" placeholder="공모 주제 세부내용 입력"></textarea>
                             <div class="check-byte">
                               <p class="txt"><span class="current-byte">0</span>자</p>
                               <p class="txt"><span class="max-byte">500</span>자</p>
@@ -286,9 +286,10 @@
                                   <div class="form-select">
                                     <select class="partDomainChk" title="메일 선택">
                                       <option value="default" selected>직접입력</option>
-                                      <option value="">easymedia.net</option>
-                                      <option value="">option2</option>
-                                      <option value="">option3</option>
+                                      <option value="naver.com">naver.com</option>
+                                      <option value="gmail.com">gmail.com</option>
+                                      <option value="nate.com">nate.com</option>
+                                      <option value="daum.net">daum.net</option>
                                     </select>
                                   </div>
                                 </div>
@@ -321,7 +322,7 @@
                               <div class="data-line">
                                 <div class="form-group">
                                   <div class="form-input">
-                                    <input type="text" class="grd" name="partList[0].grd" placeholder="학년 입력">
+                                    <input type="text" class="grd numberChk" name="partList[0].grd" placeholder="학년 입력(숫자만 기입)">
                                   </div>
                                   <div class="form-select">
                                     <select class="grdCd" name="partList[0].grdCd" title="졸업여부 선택">
@@ -386,7 +387,7 @@
                             <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                           </div>
                           <div class="btn-wrap btn-down-wrap">
-                            <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnData.fileSeq}&fileOrd=1" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                            <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnData.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                           </div>
                         </div>
                       </div>

@@ -64,6 +64,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         } else {
                             $('.partNoti').html('');
                             $('.addPart').last().append(partHtml);
+                            $(".grd").validation({});
                             // 추가시 마다 배열형식에 이름으로 인풋 name값들 셋팅
                             $('.Participant').last().find(".name").attr("name","partList["+ partLength +"].name");
                             $('.Participant').last().find(".hpNo").attr("name","partList["+ partLength +"].hpNo");

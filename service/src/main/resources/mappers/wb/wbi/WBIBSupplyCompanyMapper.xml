@@ -869,8 +869,8 @@
                     </when>
                     <otherwise>
                         AND (
-                        INSTR(#{q}, CMPN_NM) <![CDATA[>]]> 0 OR
-                        INSTR(#{q}, BSNM_NO) <![CDATA[>]]> 0 OR
+                        INSTR(CMPN_NM, #{q}) <![CDATA[>]]> 0 OR
+                        INSTR(BSNM_NO, #{q}) <![CDATA[>]]> 0
                         )
                     </otherwise>
                 </choose>

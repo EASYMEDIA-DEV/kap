@@ -20,7 +20,7 @@
                                         </select>
                                     </div>
                                     <div class="form-input srch-input w-longer">
-                                        <input type="text" name="q" placeholder="검색어를 입력해 주세요.">
+                                        <input type="text" id="q" name="q" placeholder="검색어를 입력해 주세요.">
                                         <div class="input-btn-wrap">
                                             <button class="delete-btn" title="지우기" type="button"></button>
                                             <span class="srch-btn" id="btnSearch" title="검색"></span>

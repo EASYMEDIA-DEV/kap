@@ -129,6 +129,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             addCount = addCount;
                             //전체 갯수
                             var totalCnt = $(respObj).eq(0).data("totalCount");
+                            totalCnt = (totalCnt === undefined)? 0 : totalCnt;
+
                             if (addCount >= totalCnt) {
                                 $('.add-load').hide();
                             } else {

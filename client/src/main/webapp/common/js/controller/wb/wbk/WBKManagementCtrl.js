@@ -11,6 +11,13 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
     var $formObj = $('#frmData');
     var fileInput = "";
 
+    //자리수 콤마 사용을 위한 설정
+    var naviLang= navigator.language;
+
+    var option = {
+        maximumFractionDigits: 4
+    };
+
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
     {
@@ -97,6 +104,40 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
     // set model
     ctrl.model = {
         id : {
+            dtlCntn : {
+                event : {
+                    input : function(event){
+
+                        event.preventDefault();
+                        var surveyCon = $(this);
+
+                        let content = surveyCon.val();
+
+                        var currentByte = surveyCon.closest("div").find(".current-byte");
+                        var contextLeng = content.length;
+                        contextLeng = contextLeng.toLocaleString(naviLang, option);
+
+
+                        // 글자수 세기
+                        if (content.length == 0 || content == '') {
+                            currentByte.text(0);
+                        } else {
+                            currentByte.text(contextLeng);
+                        }
+                        surveyCon.closest("div").find(".current-byte").val(content.length);
+
+                        // 글자수 제한
+                        if (content.length > 500) {
+                            // 200자 부터는 타이핑 되지 않도록
+                            $(this).val($(this).val().substring(0, 500));
+                            // 200자 넘으면 알림창 뜨도록
+                            alert('글자수는 500자까지 입력 가능합니다.');
+                            return false;
+                        };
+
+                    }
+                }
+            },
             emailDomain : {
                 event : {
                     change : function () {

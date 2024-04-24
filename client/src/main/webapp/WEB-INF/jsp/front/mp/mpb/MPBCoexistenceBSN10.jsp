@@ -243,25 +243,34 @@
                                     </div>
                                     <p class="box-label bigger">
                                         <span>
-                                            <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
-                                                <c:choose>
-                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_001'}">
-                                                        결과대기
-                                                    </c:when>
-                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_002'}">
-                                                        사용자취소
-                                                    </c:when>
-                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_003'}">
-                                                        탈락
-                                                    </c:when>
-                                                    <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_004'}">
-                                                        수상
-                                                    </c:when>
-                                                    <c:otherwise>
-                                                        결과대기
-                                                    </c:otherwise>
-                                                </c:choose>
-                                            </c:forEach>
+                                            <c:choose>
+                                                <c:when test="${not empty rtnAppctnRsume.applyList}">
+                                                    <c:forEach var="item" items="${rtnAppctnRsume.applyList}" varStatus="status">
+                                                        <c:choose>
+                                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_001'}">
+                                                                결과대기
+                                                            </c:when>
+                                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_002'}">
+                                                                사용자취소
+                                                            </c:when>
+                                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_003'}">
+                                                                탈락
+                                                            </c:when>
+                                                            <c:when test="${item.appctnSttsCd eq 'PRO_TYPE05002_01_004'}">
+                                                                수상
+                                                            </c:when>
+                                                            <c:otherwise>
+                                                                결과대기
+                                                            </c:otherwise>
+                                                        </c:choose>
+                                                    </c:forEach>
+                                                </c:when>
+                                                <c:otherwise>
+                                                    결과대기
+                                                </c:otherwise>
+
+                                            </c:choose>
+
                                         </span>
                                     </p>
                                 </a>
