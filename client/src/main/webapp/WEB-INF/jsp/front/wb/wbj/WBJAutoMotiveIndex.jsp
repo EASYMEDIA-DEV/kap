@@ -53,13 +53,13 @@
                                         <p class="f-body2">자동차부품산업대상 신청 시 부문별 신청서가 필수로 첨부되어야합니다.</p>
                                         <p class="f-caption2">* [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
                                     </div>
-                                    <div class="right has-button">
-                                        <div class="btn-wrap">
-                                        <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                            <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
-                                        </c:forEach>
+                                    <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                                        <div class="right has-button">
+                                            <div class="btn-wrap">
+                                                <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </div>
                             </div>
                         </div>
@@ -129,11 +129,11 @@
                             </div>
 
                             <div class="btn-wrap">
-                                <div class="btn-set">
-                                    <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                                        <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
-                                    </c:forEach>
-                                </div>
+                                <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                                    <div class="btn-set">
+                                        <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                    </div>
+                                </c:if>
                                 <div class="btn-set">
                                     <a class="btn-solid small black-bg apply" href="javascript:" data-episd='${rtnData.episdSeq}'><span>신청하기</span></a>
                                 </div>
@@ -143,10 +143,8 @@
                     </div>
                 </div>
             </div>
-            <c:if test="${not empty rtnRoundDtl.optnList}">
-                <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
-                    <input type="hidden" class="optnFile" value="${item.fileSeq}">
-                </c:forEach>
+            <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                    <input type="hidden" class="optnFile" value="${rtnRoundDtl.fileSeq}">
             </c:if>
         </c:if>
     </div>

@@ -3,11 +3,13 @@ package com.kap.service.impl.wb.wbj;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.service.WBJARoundListService;
 import com.kap.service.dao.COGCntsMapper;
+import com.kap.service.dao.sm.SMJFormMapper;
 import com.kap.service.dao.wb.wbj.WBJARoundListMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +17,6 @@ import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.List;
 
 @Slf4j
@@ -27,6 +28,7 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
     //Mapper
     private final WBJARoundListMapper wBJARoundListMapper;
     private final COGCntsMapper cOGCntsMapper;
+    private final SMJFormMapper sMJFormMapper;
 
     /* 회차관리 마스터 시퀀스 */
     private final EgovIdGnrService cxEpisdSeqIdgen;
@@ -193,7 +195,17 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
     public WBRoundMstSearchDTO getRoundDtl(WBRoundMstSearchDTO wBRoundMstSearchDTO) throws Exception {
 
         //공통사업의 경우 신청단계의 옵션정보를 가져온다. 그외 사업의 경우 양식관리 파일정보를 가져와야함.
-        wBRoundMstSearchDTO.setOptnList(wBJARoundListMapper.selectOPtnList(wBRoundMstSearchDTO));
+//        wBRoundMstSearchDTO.setOptnList(wBJARoundListMapper.selectOPtnList(wBRoundMstSearchDTO));
+
+        // 양식
+        if (wBRoundMstSearchDTO != null) {
+            //wBRoundMstSearchDTO.setStageOrd(1);
+            SMJFormDTO smjFormDTO = new SMJFormDTO();
+            smjFormDTO.setTypeCd("BUSINESS02");
+            //그외 사업의 경우 양식관리 파일정보를 가져와야함.
+            SMJFormDTO optionList = sMJFormMapper.selectFormDtl(smjFormDTO);
+            wBRoundMstSearchDTO.setFileSeq(optionList.getCarPartAppctnFileSeq());
+        }
 
         return wBRoundMstSearchDTO;
     }

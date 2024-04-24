@@ -37,7 +37,73 @@
             ${rtnCms.cnts}
             <%-- 상생사업 CMS 영역 End--%>
 
+                                    <div class="box-btn-area">
+                                        <div class="bg-area">
+                                            <div class="img" style="background-image: url('/common/images/img-apply-btn-bg.jpg');"></div>
+                                        </div>
+                                        <div class="txt-area">
+                                            <p class="txt f-head">미래차공모전 신청은 온라인으로 접수 받으며, 신청절차에 따라서 해당 항목을 입력하시고 부문별 신청서를 첨부해주시면 됩니다.<br/>신청 후 1차 논문 심사, 2차 PT심사를 거쳐 시상자를 선정하게됩니다.</p>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <a class="btn-solid small white-bg apply" href="javascript:" data-episd='${rtnData.episdSeq}'><span>신청하기</span></a>
+                                        </div>
+                                    </div>
 
+                                    <div class="divide-flex-box download">
+                                        <div class="left">
+                                            <p class="f-body2">미래차공모전 신청 시 관련 제출 서류가 필수로 첨부되어야합니다.</p>
+                                            <p class="f-caption2">* [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
+                                        </div>
+                                        <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                                            <div class="right has-button">
+                                                <div class="btn-wrap">
+                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                                </div>
+                                            </div>
+                                        </c:if>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont-sec scroll-motion">
+                        <div class="for-motion">
+                            <div class="sec-tit-area">
+                                <p class="f-title3">미래차공모전 Q&A 이용안내</p>
+                            </div>
+                            <div class="sec-con-area">
+                                <div class="graphic-sec">
+                                    <div class="box-btn-area">
+                                        <div class="bg-area">
+                                            <div class="img" style="background-image: url('/common/images/img-inquiry-btn-bg.jpg');"></div>
+                                        </div>
+                                        <div class="txt-area">
+                                            <p class="txt f-head">미래차공모전 관련 궁금한 점을 상시 질문할 수 있도록 Q&A게시판을 운영하고 있습니다.<br/>게시판에 질문을 남겨주시면 관리자에게 전달되며 답변을 얻을 수 있습니다.</p>
+                                        </div>
+                                        <div class="btn-wrap">
+                                            <a class="btn-solid small white-bg" href="/foundation/cs/qa/index?inqFir=INQ07&inqSec=미래차공모전"><span>신청 문의하기</span></a>
+                                        </div>
+                                    </div>
+                                    <p class="noti-txt f-caption2">* 다만 문의 사항이 많아 답변이 다소 늦어질 수 있으니 양해 바랍니다.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cont-sec scroll-motion">
+                        <div class="for-motion">
+                            <div class="sec-tit-area">
+                                <p class="f-title3">추가공지사항</p>
+                            </div>
+                            <div class="sec-con-area">
+                                <div class="txt-sec">
+                                    <div class="paragraph">
+                                        <p class="f-sub-head">${rtnData.addNtfyCntn}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
             <c:if test="${not empty rtnRoundDtl}">
                 <!-- 미래차 공모전 사업 접수 하단 플로팅 영역 -->
@@ -71,7 +137,7 @@
                                 <div class="btn-wrap">
                                     <c:if test="${not empty rtnRoundDtl.fileSeq}">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=1" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                                         </div>
                                     </c:if>
                                     <div class="btn-set">
