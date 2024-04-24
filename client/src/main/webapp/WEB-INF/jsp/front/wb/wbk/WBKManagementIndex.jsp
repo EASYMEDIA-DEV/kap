@@ -54,10 +54,10 @@
                                             <p class="f-body2">미래차공모전 신청 시 관련 제출 서류가 필수로 첨부되어야합니다.</p>
                                             <p class="f-caption2">* [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
                                         </div>
-                                        <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                                        <c:if test="${not empty formFileSeq}">
                                             <div class="right has-button">
                                                 <div class="btn-wrap">
-                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${formFileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                                                 </div>
                                             </div>
                                         </c:if>
@@ -135,9 +135,9 @@
                                 </div>
 
                                 <div class="btn-wrap">
-                                    <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                                    <c:if test="${not empty formFileSeq}">
                                         <div class="btn-set">
-                                            <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                                            <a class="btn-solid small gray-bg has-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${formFileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
                                         </div>
                                     </c:if>
                                     <div class="btn-set">
@@ -152,8 +152,8 @@
 
             </c:if>
 
-                <c:if test="${not empty rtnRoundDtl.fileSeq}">
-                    <input type="hidden" class="optnFile" value="${item.fileSeq}">
+                <c:if test="${not empty formFileSeq}">
+                    <input type="hidden" class="optnFile" value="${formFileSeq}">
                 </c:if>
             </div>
         </div>

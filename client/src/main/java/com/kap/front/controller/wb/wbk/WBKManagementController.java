@@ -4,12 +4,12 @@ import com.kap.core.dto.COCodeDTO;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbb.WBBAApplyMstDTO;
 import com.kap.core.dto.wb.wbb.WBBACompanySearchDTO;
 import com.kap.core.dto.wb.wbk.WBKBRegisterDTO;
 import com.kap.service.*;
-import com.kap.service.dao.COGCntsMapper;
+import com.kap.service.dao.sm.SMJFormMapper;
 import com.kap.service.mp.mpa.MPAUserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,6 +58,8 @@ public class WBKManagementController {
 
     public final WBBARoundService wbbaRoundService;
 
+    private final SMJFormMapper sMJFormMapper;
+
     /**
      * 메인
      */
@@ -72,6 +74,11 @@ public class WBKManagementController {
             modelMap.addAttribute("rtnCms", pCOGCntsService.getCmsDtl(pCOGCntsDTO, "726", "N"));
             //사업접수 하단플로팅 영역용
             modelMap.addAttribute("rtnRoundDtl", wBKAFutureCarContestListService.getRoundDtl(wBRoundMstSearchDTO));
+            //신청서 양식
+            SMJFormDTO smjFormDTO = new SMJFormDTO();
+            smjFormDTO.setTypeCd("BUSINESS02");
+            SMJFormDTO formFile = sMJFormMapper.selectFormDtl(smjFormDTO);
+            modelMap.addAttribute("formFileSeq", formFile.getFtreCarAppctnFileSeq());
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
