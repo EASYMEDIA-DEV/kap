@@ -224,7 +224,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var expsYn = ctrl.obj.find(":radio[name=expsYn]:checked").val();
                         var befeExpsYn = ctrl.obj.find("#befeExpsYn").val();
 
-                        cmmCtrl.frmAjax(function(respObj){
+                        /*cmmCtrl.frmAjax(function(respObj){
                             if(respObj != undefined && respObj.respCnt > 0){
                                 if (expsYn == befeExpsYn) {
                                     alert("신청정보가 존재하여 수정할 수 없습니다.");
@@ -241,7 +241,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         location.href = "./list";
                                     }, actionUrl, wbRoundMstDTO, "text")
                                 }
-                            }else{
+                            }else{*/
                                 var wbRoundMstDTO = {};
                                 wbRoundMstDTO.detailsKey = ctrl.obj.find("#detailsKey").val();
                                 wbRoundMstDTO.bsnCd = ctrl.obj.find("#bsnCd").val();
@@ -272,8 +272,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                     alert(actionMsg);
                                     location.href = "./list";
                                 }, actionUrl, wbRoundMstDTO, "text")
-                            }
-                        }, "./getAppctnCnt", $formObj, "POST", "json");
+                            /*}
+                        }, "./getAppctnCnt", $formObj, "POST", "json");*/
                     }
                 },
                 msg : {
