@@ -1,7 +1,6 @@
 package com.kap.service.impl.wb.wbc;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
@@ -147,8 +146,10 @@ public class WBCASecurityListServiceImpl implements WBCASecurityListService {
 
         WBRoundMstDTO wBRoundMstDTO = wBCASecurityListMapper.selectCarbonDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstDTO.setDetailsKey(detailsKey);
-        wBRoundMstDTO.setGiveList(wBCASecurityListMapper.selectGiveList(wBRoundMstDTO));
+        if(wBRoundMstDTO != null) {
+            wBRoundMstDTO.setDetailsKey(detailsKey);
+            wBRoundMstDTO.setGiveList(wBCASecurityListMapper.selectGiveList(wBRoundMstDTO));
+        }
 
         return wBRoundMstDTO;
     }

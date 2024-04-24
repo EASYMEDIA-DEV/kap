@@ -149,9 +149,12 @@ public class WBKBFutureCarContestListRegServiceImpl implements WBKBFutureCarCont
 
         WBFutureCarContestMstDTO wBFutureCarContestMstDTO = wBKAFutureCarContestListMapper.selectFutureCarContestDtl(wBFutureCarContestSearchDTO);
 
-        wBFutureCarContestMstDTO.setDetailsKey(detailsKey);
-        wBFutureCarContestMstDTO.setPrizeList(wBKAFutureCarContestListMapper.selectPrizeList(wBFutureCarContestMstDTO));
-        wBFutureCarContestMstDTO.setPlaceList(wBKAFutureCarContestListMapper.selectPlaceList(wBFutureCarContestMstDTO));
+        if(wBFutureCarContestMstDTO != null) {
+            wBFutureCarContestMstDTO.setDetailsKey(detailsKey);
+            wBFutureCarContestMstDTO.setPrizeList(wBKAFutureCarContestListMapper.selectPrizeList(wBFutureCarContestMstDTO));
+            wBFutureCarContestMstDTO.setPlaceList(wBKAFutureCarContestListMapper.selectPlaceList(wBFutureCarContestMstDTO));
+        }
+
         return wBFutureCarContestMstDTO;
     }
 

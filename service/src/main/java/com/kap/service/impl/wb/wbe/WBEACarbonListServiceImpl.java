@@ -6,8 +6,6 @@ import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbd.WBDBCompanyDTO;
-import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCompanyDTO;
 import com.kap.service.COUserDetailsHelperService;
@@ -149,8 +147,10 @@ public class WBEACarbonListServiceImpl implements WBEACarbonListService {
 
         WBRoundMstDTO wBRoundMstDTO = wBEACarbonListMapper.selectCarbonDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstDTO.setDetailsKey(detailsKey);
-        wBRoundMstDTO.setGiveList(wBEACarbonListMapper.selectGiveList(wBRoundMstDTO));
+        if(wBRoundMstDTO != null) {
+            wBRoundMstDTO.setDetailsKey(detailsKey);
+            wBRoundMstDTO.setGiveList(wBEACarbonListMapper.selectGiveList(wBRoundMstDTO));
+        }
 
         return wBRoundMstDTO;
     }

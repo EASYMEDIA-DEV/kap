@@ -41,10 +41,10 @@
                             <input type="checkbox" class="checkboxAll" />
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
-                        <c:forEach var="cdDtlList" items="${cdDtlList.WBK_PTN}" varStatus="status">
+                        <c:forEach var="cdList" items="${cdDtlList.WBK_PTN}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="ptcptTypeList" name="cd" value="${cdDtlList.cd}" <c:if test="${fn:contains(rtnData.carbonCdList, cdList.cd)}">checked</c:if>/>
-                                <span class="ion-checkmark-round"></span> ${cdDtlList.cdNm}
+                                <input type="checkbox" class="checkboxSingle" data-name="ptcptTypeList" name="ptcptTypeList" value="${cdList.cd}" <c:if test="${fn:contains(rtnData.ptcptTypeList, cdList.cd)}">checked</c:if>/>
+                                <span class="ion-checkmark-round"></span> ${cdList.cdNm}
                             </label>
                         </c:forEach>
                     </div>
@@ -60,7 +60,7 @@
                         </label>
                         <c:forEach var="wbkbRegCtg" items="${wbkbRegCtg}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="themeCdList" name="cd" value="${wbkbRegCtg.cd}" <c:if test="${fn:contains(rtnData.themeCdList, cdList.cd)}">checked</c:if>/>
+                                <input type="checkbox" class="checkboxSingle" data-name="themeCdList" name="themeCdList" value="${wbkbRegCtg.cd}" <c:if test="${fn:contains(rtnData.themeCdList, wbkbRegCtg.cd)}">checked</c:if>/>
                                 <span class="ion-checkmark-round"></span> ${wbkbRegCtg.cdNm}
                             </label>
                         </c:forEach>
@@ -77,7 +77,7 @@
                         </label>
                         <c:forEach var="cdDtlList" items="${cdDtlList.WBK_AWD}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="wdcrmCdList" name="cd" value="${cdDtlList.cd}" <c:if test="${fn:contains(rtnData.wdcrmCdList, cdList.cd)}">checked</c:if>/>
+                                <input type="checkbox" class="checkboxSingle" data-name="wdcrmCdList" name="wdcrmCdList" value="${cdDtlList.cd}" <c:if test="${fn:contains(rtnData.wdcrmCdList, cdDtlList.cd)}">checked</c:if>/>
                                 <span class="ion-checkmark-round"></span> ${cdDtlList.cdNm}
                             </label>
                         </c:forEach>
@@ -94,7 +94,7 @@
                         </label>
                         <c:forEach var="wbkbRegFrt" items="${wbkbRegFrt}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="fResultCdList" name="cd" value="${wbkbRegFrt.cd}" <c:if test="${fn:contains(rtnData.fResultCdList, cdList.cd)}">checked</c:if>/>
+                                <input type="checkbox" class="checkboxSingle" data-name="fresultCdList" name="fresultCdList" value="${wbkbRegFrt.cd}" <c:if test="${fn:contains(rtnData.fresultCdList, wbkbRegFrt.cd)}">checked</c:if>/>
                                 <span class="ion-checkmark-round"></span> ${wbkbRegFrt.cdNm}
                             </label>
                         </c:forEach>
@@ -111,7 +111,7 @@
                         </label>
                         <c:forEach var="wbkbRegLrt" items="${wbkbRegLrt}" varStatus="status">
                             <label class="checkbox-inline c-checkbox classType">
-                                <input type="checkbox" class="checkboxSingle" data-name="lResultCdList" name="cd" value="${wbkbRegLrt.cd}" <c:if test="${fn:contains(rtnData.lResultCdList, cdList.cd)}">checked</c:if>/>
+                                <input type="checkbox" class="checkboxSingle" data-name="lresultCdList" name="lresultCdList" value="${wbkbRegLrt.cd}" <c:if test="${fn:contains(rtnData.lresultCdList, wbkbRegLrt.cd)}">checked</c:if>/>
                                 <span class="ion-checkmark-round"></span> ${wbkbRegLrt.cdNm}
                             </label>
                         </c:forEach>

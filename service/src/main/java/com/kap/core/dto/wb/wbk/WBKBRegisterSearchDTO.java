@@ -95,7 +95,7 @@ public class WBKBRegisterSearchDTO extends BaseDTO {
     private String carbonDate;
 
     @Schema(title = "구분 코드 리스트")
-    private List ctgryCdList;
+    private List<String> ctgryCdList;
 
 
     /* 추가 내용 */
@@ -109,22 +109,22 @@ public class WBKBRegisterSearchDTO extends BaseDTO {
     private String ptcptTypeNm;
 
     @Schema(title = "참여 코드 리스트")
-    private List ptcptTypeList;
+    private List<String> ptcptTypeList;
 
     @Schema(title = "주제 코드 리스트")
-    private List themeCdList;
+    private List<String> themeCdList;
 
     @Schema(title = "시상 코드 리스트")
-    private List wdcrmCdList;
+    private List<String> wdcrmCdList;
 
     @Schema(title = "서류결과 코드 리스트")
-    private List docResultCdList;
+    private List<String> docResultCdList;
 
     @Schema(title = "1차결과 코드 리스트")
-    private List fResultCdList;
+    private List<String> fresultCdList;
 
     @Schema(title = "최종결과 코드 리스트")
-    private List lResultCdList;
+    private List<String> lresultCdList;
 
 
     @Schema(title = "시상부문 명")

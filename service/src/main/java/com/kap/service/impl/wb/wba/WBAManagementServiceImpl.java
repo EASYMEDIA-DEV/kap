@@ -109,18 +109,24 @@ public class WBAManagementServiceImpl implements WBAManagementService {
         WBAManageInsertDTO wBAManageInsertDTO = wbaManagementMapper.selectManagementMst(wbaManageSearchDTO);
         List<WBAManagementDtlDTO> wbaStepDtlList = wbaManagementMapper.selectStepDtlList(wbaManageSearchDTO);
 
-        for (WBAManagementDtlDTO wbaManagementDtlDTO : wbaStepDtlList) {
-            wbaManagementDtlDTO.setManagementOptnList(new ArrayList<WBAManagementOptnDTO>());
+        if(wbaStepDtlList != null && !wbaStepDtlList.isEmpty()) {
+            for (WBAManagementDtlDTO wbaManagementDtlDTO : wbaStepDtlList) {
+                wbaManagementDtlDTO.setManagementOptnList(new ArrayList<WBAManagementOptnDTO>());
 
-            List<WBAManagementOptnDTO> wbaOptnDtlList = wbaManagementMapper.selectOptnDtlList(wbaManagementDtlDTO);
+                List<WBAManagementOptnDTO> wbaOptnDtlList = wbaManagementMapper.selectOptnDtlList(wbaManagementDtlDTO);
 
-            for(WBAManagementOptnDTO wbaManagementOptnDTO : wbaOptnDtlList) {
-                if (wbaManagementDtlDTO.getStageSeq().equals(wbaManagementOptnDTO.getStageSeq())) {
-                    wbaManagementDtlDTO.getManagementOptnList().add(wbaManagementOptnDTO);
+                if(wbaOptnDtlList != null && !wbaOptnDtlList.isEmpty()) {
+                    for (WBAManagementOptnDTO wbaManagementOptnDTO : wbaOptnDtlList) {
+                        if(wbaManagementDtlDTO.getStageSeq() != null && wbaManagementOptnDTO.getStageSeq() != null) {
+                            if (wbaManagementDtlDTO.getStageSeq().equals(wbaManagementOptnDTO.getStageSeq())) {
+                                wbaManagementDtlDTO.getManagementOptnList().add(wbaManagementOptnDTO);
+                            }
+                        }
+                    }
                 }
             }
+            wBAManageInsertDTO.setManagementDtlList(wbaStepDtlList);
         }
-        wBAManageInsertDTO.setManagementDtlList(wbaStepDtlList);
 
         return wBAManageInsertDTO;
     }

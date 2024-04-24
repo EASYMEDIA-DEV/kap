@@ -147,9 +147,11 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
 
         WBRoundMstDTO wBRoundMstDTO = wBJARoundListMapper.selectRoundDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstDTO.setDetailsKey(detailsKey);
-        wBRoundMstDTO.setPrizeList(wBJARoundListMapper.selectPrizeList(wBRoundMstDTO));
-        wBRoundMstDTO.setRoomList(wBJARoundListMapper.selectRoomList(wBRoundMstDTO));
+        if(wBRoundMstDTO != null) {
+            wBRoundMstDTO.setDetailsKey(detailsKey);
+            wBRoundMstDTO.setPrizeList(wBJARoundListMapper.selectPrizeList(wBRoundMstDTO));
+            wBRoundMstDTO.setRoomList(wBJARoundListMapper.selectRoomList(wBRoundMstDTO));
+        }
 
         return wBRoundMstDTO;
     }

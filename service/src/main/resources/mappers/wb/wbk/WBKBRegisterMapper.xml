@@ -791,26 +791,26 @@
                 <choose>
                     <when test="carbonDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(B.REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(B.REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(B.REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(B.REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 3">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND DATE(MOD_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(B.MOD_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND DATE(MOD_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(B.MOD_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                 </choose>
@@ -843,21 +843,21 @@
                 </foreach>
                 )
             </if>
-            <if test="fResultCdList != null and fResultCdList.size() > 0">
+            <if test="fresultCdList != null and fresultCdList.size() > 0">
                 AND (
-                <foreach collection="fResultCdList" item="fResultCdList" index="index" open="" close="" separator=" or ">
-                    C.appctn_stts_cd = #{fResultCdList}
+                <foreach collection="fresultCdList" item="fresultCdList" index="index" open="" close="" separator=" or ">
+                    C.appctn_stts_cd = #{fresultCdList}
                     AND C.RSUME_ORD = 2
-                    <if test="fResultCdList == 'WBKB_REG_FRT002' ">
+                    <if test="fresultCdList == 'WBKB_REG_FRT002' ">
                         OR C.RSUME_ORD = 3
                     </if>
                 </foreach>
                 )
             </if>
-            <if test="lResultCdList != null and lResultCdList.size() > 0">
+            <if test="lresultCdList != null and lresultCdList.size() > 0">
                 AND (
-                <foreach collection="lResultCdList" item="lResultCdList" index="index" open="" close="" separator=" or ">
-                    C.mng_stts_cd = #{lResultCdList}
+                <foreach collection="lresultCdList" item="lresultCdList" index="index" open="" close="" separator=" or ">
+                    C.mng_stts_cd = #{lresultCdList}
                     AND C.RSUME_ORD = 3
                 </foreach>
                 )

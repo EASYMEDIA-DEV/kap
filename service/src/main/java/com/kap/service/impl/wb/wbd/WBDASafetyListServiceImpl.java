@@ -144,8 +144,10 @@ public class WBDASafetyListServiceImpl implements WBDASafetyListService {
 
         WBRoundMstDTO wBRoundMstDTO = wBDASafetyListMapper.selectCarbonDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstDTO.setDetailsKey(detailsKey);
-        wBRoundMstDTO.setGiveList(wBDASafetyListMapper.selectGiveList(wBRoundMstDTO));
+        if(wBRoundMstDTO != null) {
+            wBRoundMstDTO.setDetailsKey(detailsKey);
+            wBRoundMstDTO.setGiveList(wBDASafetyListMapper.selectGiveList(wBRoundMstDTO));
+        }
 
         return wBRoundMstDTO;
     }

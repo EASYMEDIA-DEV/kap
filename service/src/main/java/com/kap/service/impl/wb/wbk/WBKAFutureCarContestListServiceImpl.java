@@ -3,11 +3,9 @@ package com.kap.service.impl.wb.wbk;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
-import com.kap.core.dto.wb.WBOrderMstDto;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestMstDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestSearchDTO;
-import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbk.WBPrizeMstDTO;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.WBKAFutureCarContestListService;
@@ -157,9 +155,12 @@ public class WBKAFutureCarContestListServiceImpl implements WBKAFutureCarContest
 
         WBFutureCarContestMstDTO wBFutureCarContestMstDTO = wBKAFutureCarContestListMapper.selectFutureCarContestDtl(wBFutureCarContestSearchDTO);
 
-        wBFutureCarContestMstDTO.setDetailsKey(detailsKey);
-        wBFutureCarContestMstDTO.setPrizeList(wBKAFutureCarContestListMapper.selectPrizeList(wBFutureCarContestMstDTO));
-        wBFutureCarContestMstDTO.setPlaceList(wBKAFutureCarContestListMapper.selectPlaceList(wBFutureCarContestMstDTO));
+        if(wBFutureCarContestMstDTO != null) {
+            wBFutureCarContestMstDTO.setDetailsKey(detailsKey);
+            wBFutureCarContestMstDTO.setPrizeList(wBKAFutureCarContestListMapper.selectPrizeList(wBFutureCarContestMstDTO));
+            wBFutureCarContestMstDTO.setPlaceList(wBKAFutureCarContestListMapper.selectPlaceList(wBFutureCarContestMstDTO));
+        }
+
         return wBFutureCarContestMstDTO;
     }
 

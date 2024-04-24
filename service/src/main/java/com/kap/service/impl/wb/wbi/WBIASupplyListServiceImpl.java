@@ -135,7 +135,9 @@ public class WBIASupplyListServiceImpl implements WBIASupplyListService {
 
         WBRoundMstDTO wBRoundMstDTO = wBIASupplyListMapper.selectSupplyDtl(wBRoundMstSearchDTO);
 
-        wBRoundMstDTO.setDetailsKey(detailsKey);
+        if(wBRoundMstDTO != null) {
+            wBRoundMstDTO.setDetailsKey(detailsKey);
+        }
 
         return wBRoundMstDTO;
     }
