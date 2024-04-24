@@ -408,10 +408,18 @@
                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
                           </div>
                           <div class="btn-wrap btn-down-wrap">
-                            <c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
+                            <%--<c:forEach var="item" items="${rtnRoundDtl.optnList}" varStatus="status">
                               <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.fileSeq}&fileOrd=${item.optnOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
-                            </c:forEach>
+                            </c:forEach>--%>
                           </div>
+                          <c:if test="${not empty rtnRoundDtl.fileSeq}">
+                            <div class="right has-button">
+                              <div class="btn-wrap">
+                                <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${rtnRoundDtl.fileSeq}&fileOrd=0" download="" title="양식 다운로드"><span>양식 다운로드</span></a>
+                              </div>
+                            </div>
+                          </c:if>
+
                         </div>
                       </div>
                     </div>
