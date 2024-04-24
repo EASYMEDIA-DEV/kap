@@ -43,156 +43,185 @@
                         <!-- 탭 컨텐츠 -->
                         <div class="tab-con-box">
                             <div class="tab-con">
-                                <c:forEach var="uniqueYear" items="${rtnData.list}" varStatus="yearStatus">
-                                    <c:if test="${yearStatus.first or uniqueYear.year ne rtnData.list[yearStatus.index - 1].year}">
-                                        <div class="cont-sec">
-                                            <div class="sec-tit-area">
-                                                <p class="f-title3">${uniqueYear.year}</p>
-                                            </div>
-                                            <div class="sec-con-area">
-                                                <div class="table-sec">
-                                                    <div class="table-box need-scroll">
-                                                        <table class="basic-table">
-                                                            <caption>신청자 기본 정보</caption>
-                                                            <colgroup>
-                                                                <col style="width: 193rem;">
-                                                                <col style="width: 180rem;">
-                                                                <col style="width: 180rem;">
-                                                                <col style="width: 180rem;">
-                                                                <col style="width: 180rem;">
-                                                                <col style="width: 180rem;">
-                                                            </colgroup>
-                                                            <thead>
-                                                            <tr>
-                                                                <th>훈격</th>
-                                                                <th>포상부문</th>
-                                                                <th>이름</th>
-                                                                <th>소속</th>
-                                                                <th>직급</th>
-                                                                <th>근속년수</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                                <c:forEach var="item" items="${rtnData.list}" varStatus="itemStatus">
-                                                                    <c:if test="${uniqueYear.year eq item.year}">
-                                                                        <tr>
-                                                                            <td class="t-align-center">${item.mrtsCd}</td>
-                                                                            <td class="t-align-center">${item.prizeCd}</td>
-                                                                            <td class="t-align-center">${item.name}</td>
-                                                                            <td class="t-align-center">${item.cmpnSeq}</td>
-                                                                            <td class="t-align-center">${item.pstnNm}</td>
-                                                                            <td class="t-align-center">${item.yrssvYearCnt}</td>
-                                                                        </tr>
-                                                                    </c:if>
-                                                                </c:forEach>
-                                                            </tbody>
-                                                        </table>
+
+                                <c:choose>
+                                    <c:when test="${not empty rtnData.list}">
+                                        <c:forEach var="uniqueYear" items="${rtnData.list}" varStatus="yearStatus">
+                                            <c:if test="${yearStatus.first or uniqueYear.year ne rtnData.list[yearStatus.index - 1].year}">
+                                                <div class="cont-sec">
+                                                    <div class="sec-tit-area">
+                                                        <p class="f-title3">${uniqueYear.year}</p>
+                                                    </div>
+                                                    <div class="sec-con-area">
+                                                        <div class="table-sec">
+                                                            <div class="table-box need-scroll">
+                                                                <table class="basic-table">
+                                                                    <caption>신청자 기본 정보</caption>
+                                                                    <colgroup>
+                                                                        <col style="width: 193rem;">
+                                                                        <col style="width: 180rem;">
+                                                                        <col style="width: 180rem;">
+                                                                        <col style="width: 180rem;">
+                                                                        <col style="width: 180rem;">
+                                                                        <col style="width: 180rem;">
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>훈격</th>
+                                                                        <th>포상부문</th>
+                                                                        <th>이름</th>
+                                                                        <th>소속</th>
+                                                                        <th>직급</th>
+                                                                        <th>근속년수</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <c:forEach var="item" items="${rtnData.list}" varStatus="itemStatus">
+                                                                        <c:if test="${uniqueYear.year eq item.year}">
+                                                                            <tr>
+                                                                                <td class="t-align-center">${item.mrtsCd}</td>
+                                                                                <td class="t-align-center">${item.prizeCd}</td>
+                                                                                <td class="t-align-center">${item.name}</td>
+                                                                                <td class="t-align-center">${item.cmpnSeq}</td>
+                                                                                <td class="t-align-center">${item.pstnNm}</td>
+                                                                                <td class="t-align-center">${item.yrssvYearCnt}</td>
+                                                                            </tr>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                            <div class="no-data-area">
+                                                <div class="txt-box">
+                                                    <p class="txt f-body1">등록된 데이터가 없습니다.</p>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </c:if>
-                                </c:forEach>
+                                    </c:otherwise>
+
+                                </c:choose>
+
+
                             </div>
 
                             <div class="tab-con">
-                                <c:forEach var="FcYear" items="${FCWinData}" varStatus="outerStatus">
-                                    <c:if test="${outerStatus.first or FcYear.year ne FCWinData[outerStatus.index - 1].year}">
-                                        <div class="cont-sec">
-                                            <div class="sec-tit-area">
-                                                <p class="f-title3 ">${FcYear.year}</p>
-                                            </div>
-                                            <div class="sec-con-area">
-                                                <div class="table-sec">
-                                                    <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
-                                                        <table class="basic-table">
-                                                            <caption>신청자 기본 정보</caption>
-                                                            <colgroup>
-                                                                <col style="width: 140rem;">
-                                                                <col style="width: 120rem;">
-                                                                <col style="width: 140rem;">
-                                                                <col style="width: 188rem;">
-                                                                <col style="width: 140rem;">
-                                                                <col style="width: 365rem;">
-                                                            </colgroup>
-                                                            <thead>
-                                                            <tr>
-                                                                <th>시상부문</th>
-                                                                <th>참여구분</th>
-                                                                <th>이름</th>
-                                                                <th>학교</th>
-                                                                <th>주제</th>
-                                                                <th>세부 내용</th>
-                                                            </tr>
-                                                            </thead>
-                                                            <tbody>
-                                                            <c:forEach var="item" items="${FCWinData}" varStatus="index" >
-                                                                <c:if test="${FcYear.year eq item.year}">
-                                                                    <c:set var="partName" value='${fn:split(item.partName, ",")}'/>
-                                                                    <c:set var="partSchlNm" value='${fn:split(item.partSchlNm, ",")}'/>
-                                                                    <c:choose>
-                                                                        <c:when test="${item.ptcptType eq '팀'}">
-                                                                            <tr>
-                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.wdcrmCd}</td>
-                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.ptcptType}</td>
-                                                                                <td class="t-align-center">${item.rdName}</td>
-                                                                                <c:choose>
-                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
-                                                                                        <td rowspan="3" class="t-align-center">${item.rdSchlNm}</td>
-                                                                                    </c:when>
-                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] || item.rdSchlNm eq partSchlNm[1]}">
-                                                                                        <td rowspan="2" class="t-align-center">${item.rdSchlNm}</td>
-                                                                                    </c:when>
-                                                                                    <c:otherwise>
-                                                                                        <td rowspan="1" class="t-align-center">${item.rdSchlNm}</td>
-                                                                                    </c:otherwise>
-                                                                                </c:choose>
-                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.themeCd}</td>
-                                                                                <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.dtlCntn}</td>
-                                                                            </tr>
-                                                                            <c:forEach items="${partName}" varStatus="partStatus">
-                                                                                <c:choose>
-                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
-                                                                                        <tr>
-                                                                                            <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
-                                                                                        </tr>
-                                                                                    </c:when>
-                                                                                    <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm ne partSchlNm[1]}">
-                                                                                        <tr>
-                                                                                            <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
-                                                                                            <c:if test="${ partStatus.index ne 0 }">
-                                                                                                <td class="t-align-center bdr partSchlNm" >${partSchlNm[1]}</td>
-                                                                                            </c:if>
-                                                                                        </tr>
-                                                                                    </c:when>
-                                                                                    <c:otherwise>
-                                                                                        <tr>
-                                                                                            <td class="t-align-center" >${partName[partStatus.index]}</td>
-                                                                                            <td class="t-align-center bdr partSchlNm" >${partSchlNm[partStatus.index]}</td>
-                                                                                        </tr>
-                                                                                    </c:otherwise>
-                                                                                </c:choose>
-                                                                            </c:forEach>
-                                                                        </c:when>
-                                                                        <c:otherwise>
-                                                                            <td class="t-align-center">${item.wdcrmCd}</td>
-                                                                            <td class="t-align-center">${item.ptcptType}</td>
-                                                                            <td class="t-align-center">${item.rdName}</td>
-                                                                            <td class="t-align-center">${item.rdSchlNm}</td>
-                                                                            <td class="t-align-center">${item.themeCd}</td>
-                                                                            <td class="t-align-center">${item.dtlCntn}</td>
-                                                                        </c:otherwise>
-                                                                    </c:choose>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            </tbody>
-                                                        </table>
+
+                                <c:choose>
+                                    <c:when test="${not empty FCWinData}">
+                                        <c:forEach var="FcYear" items="${FCWinData}" varStatus="outerStatus">
+                                            <c:if test="${outerStatus.first or FcYear.year ne FCWinData[outerStatus.index - 1].year}">
+                                                <div class="cont-sec">
+                                                    <div class="sec-tit-area">
+                                                        <p class="f-title3 ">${FcYear.year}</p>
+                                                    </div>
+                                                    <div class="sec-con-area">
+                                                        <div class="table-sec">
+                                                            <div class="table-box need-scroll"><!-- mobile에서 table 가로스크롤 필요할 경우 need-scroll 클래스 추가 -->
+                                                                <table class="basic-table">
+                                                                    <caption>신청자 기본 정보</caption>
+                                                                    <colgroup>
+                                                                        <col style="width: 140rem;">
+                                                                        <col style="width: 120rem;">
+                                                                        <col style="width: 140rem;">
+                                                                        <col style="width: 188rem;">
+                                                                        <col style="width: 140rem;">
+                                                                        <col style="width: 365rem;">
+                                                                    </colgroup>
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th>시상부문</th>
+                                                                        <th>참여구분</th>
+                                                                        <th>이름</th>
+                                                                        <th>학교</th>
+                                                                        <th>주제</th>
+                                                                        <th>세부 내용</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <c:forEach var="item" items="${FCWinData}" varStatus="index" >
+                                                                        <c:if test="${FcYear.year eq item.year}">
+                                                                            <c:set var="partName" value='${fn:split(item.partName, ",")}'/>
+                                                                            <c:set var="partSchlNm" value='${fn:split(item.partSchlNm, ",")}'/>
+                                                                            <c:choose>
+                                                                                <c:when test="${item.ptcptType eq '팀'}">
+                                                                                    <tr>
+                                                                                        <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.wdcrmCd}</td>
+                                                                                        <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.ptcptType}</td>
+                                                                                        <td class="t-align-center">${item.rdName}</td>
+                                                                                        <c:choose>
+                                                                                            <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
+                                                                                                <td rowspan="3" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                            </c:when>
+                                                                                            <c:when test="${item.rdSchlNm eq partSchlNm[0] || item.rdSchlNm eq partSchlNm[1]}">
+                                                                                                <td rowspan="2" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                            </c:when>
+                                                                                            <c:otherwise>
+                                                                                                <td rowspan="1" class="t-align-center">${item.rdSchlNm}</td>
+                                                                                            </c:otherwise>
+                                                                                        </c:choose>
+                                                                                        <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.themeCd}</td>
+                                                                                        <td rowspan="${fn:length(partName)+1}" class="t-align-center">${item.dtlCntn}</td>
+                                                                                    </tr>
+                                                                                    <c:forEach items="${partName}" varStatus="partStatus">
+                                                                                        <c:choose>
+                                                                                            <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm eq partSchlNm[1]}">
+                                                                                                <tr>
+                                                                                                    <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
+                                                                                                </tr>
+                                                                                            </c:when>
+                                                                                            <c:when test="${item.rdSchlNm eq partSchlNm[0] && item.rdSchlNm ne partSchlNm[1]}">
+                                                                                                <tr>
+                                                                                                    <td class="t-align-center bdr" >${partName[partStatus.index]}</td>
+                                                                                                    <c:if test="${ partStatus.index ne 0 }">
+                                                                                                        <td class="t-align-center bdr partSchlNm" >${partSchlNm[1]}</td>
+                                                                                                    </c:if>
+                                                                                                </tr>
+                                                                                            </c:when>
+                                                                                            <c:otherwise>
+                                                                                                <tr>
+                                                                                                    <td class="t-align-center" >${partName[partStatus.index]}</td>
+                                                                                                    <td class="t-align-center bdr partSchlNm" >${partSchlNm[partStatus.index]}</td>
+                                                                                                </tr>
+                                                                                            </c:otherwise>
+                                                                                        </c:choose>
+                                                                                    </c:forEach>
+                                                                                </c:when>
+                                                                                <c:otherwise>
+                                                                                    <td class="t-align-center">${item.wdcrmCd}</td>
+                                                                                    <td class="t-align-center">${item.ptcptType}</td>
+                                                                                    <td class="t-align-center">${item.rdName}</td>
+                                                                                    <td class="t-align-center">${item.rdSchlNm}</td>
+                                                                                    <td class="t-align-center">${item.themeCd}</td>
+                                                                                    <td class="t-align-center">${item.dtlCntn}</td>
+                                                                                </c:otherwise>
+                                                                            </c:choose>
+                                                                        </c:if>
+                                                                    </c:forEach>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
+                                            </c:if>
+                                        </c:forEach>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="no-data-area">
+                                            <div class="txt-box">
+                                                <p class="txt f-body1">등록된 데이터가 없습니다.</p>
                                             </div>
                                         </div>
-                                    </c:if>
-                                </c:forEach>
+                                    </c:otherwise>
+
+                                </c:choose>
+
                             </div>
                         </div>
                     </div>
