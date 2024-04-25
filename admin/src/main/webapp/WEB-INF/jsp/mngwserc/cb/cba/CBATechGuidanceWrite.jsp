@@ -93,7 +93,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4 pstnCdInput" <c:if test="${rtnDto.pstnCd ne 'MEM_CD01007'}">style="display: none; margin-left: -15px;"</c:if>>
-                                <input type="text" class="form-control input-sm notRequired pstnNm" class="pstnNm" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
+                                <input type="text" class="form-control input-sm notRequired pstnNm" name="pstnNm" value="${rtnDto.pstnNm}" title="직급 기타명" placeholder="기타 직급 입력"/>
                             </div>
                         </div>
                     </div>

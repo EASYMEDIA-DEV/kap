@@ -324,6 +324,7 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
             mPAUserDto.setDeptCd(pCBBManageConsultInsertDTO.getDeptCd());
             mPAUserDto.setDeptDtlNm(pCBBManageConsultInsertDTO.getDeptDtlNm());
             mPAUserDto.setPstnCd(pCBBManageConsultInsertDTO.getPstnCd());
+            mPAUserDto.setPstnNm(pCBBManageConsultInsertDTO.getPstnNm());
             mPAUserDto.setTelNo(pCBBManageConsultInsertDTO.getTelNo());
             mPAUserDto.setHpNo(pCBBManageConsultInsertDTO.getHpNo());
             mPAUserDto.setChngFndn("N");

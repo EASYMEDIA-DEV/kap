@@ -302,6 +302,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             mPAUserDto.setDeptCd(pCBATechGuidanceInsertDTO.getDeptCd());
             mPAUserDto.setDeptDtlNm(pCBATechGuidanceInsertDTO.getDeptDtlNm());
             mPAUserDto.setPstnCd(pCBATechGuidanceInsertDTO.getPstnCd());
+            mPAUserDto.setPstnNm(pCBATechGuidanceInsertDTO.getPstnNm());
             mPAUserDto.setTelNo(pCBATechGuidanceInsertDTO.getTelNo());
             mPAUserDto.setHpNo(pCBATechGuidanceInsertDTO.getHpNo());
             mPAUserDto.setChngFndn("N");
