@@ -93,4 +93,7 @@ public class WBRoundMstSearchDTO extends BaseDTO {
 
     @Schema(title = "사업자등록번호", example = "")
     private String bsnmNo;
+
+    @Schema(title = "추가 공지사항", example = "")
+    private String addNtfyCntn;
 }

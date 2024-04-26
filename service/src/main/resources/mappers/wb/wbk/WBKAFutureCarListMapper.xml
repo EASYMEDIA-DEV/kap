@@ -190,6 +190,7 @@
                      WHEN NOW() <![CDATA[ >= ]]> ACCS_STRT_DTM AND NOW() <![CDATA[ < ]]> ACCS_END_DTM THEN 1
                      ELSE 3
                      END AS DATE_ORD
+                        , ADD_NTFY_CNTN
                  FROM CX_EPISD_MST A
                  WHERE BSN_CD = 'BSN11' AND EXPS_YN = 'Y'
              ) A

@@ -97,7 +97,7 @@
                             <div class="sec-con-area">
                                 <div class="txt-sec">
                                     <div class="paragraph">
-                                        <p class="f-sub-head">${rtnData.addNtfyCntn}</p>
+                                        <p class="f-sub-head">${rtnRoundDtl.addNtfyCntn}</p>
                                     </div>
                                 </div>
                             </div>

@@ -2,6 +2,7 @@ package com.kap.service.impl.wb.wbk;
 
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.sm.smj.SMJFormDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestMstDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestSearchDTO;
@@ -178,6 +179,15 @@ public class WBKAFutureCarContestListServiceImpl implements WBKAFutureCarContest
 
         // 최신 회차
         wBRoundMstSearchDTO = wBKAFutureCarContestListMapper.getRoundDtl(wBRoundMstSearchDTO);
+
+        if (wBRoundMstSearchDTO != null) {
+            //wBRoundMstSearchDTO.setStageOrd(1);
+            SMJFormDTO smjFormDTO = new SMJFormDTO();
+            smjFormDTO.setTypeCd("BUSINESS02");
+            //그외 사업의 경우 양식관리 파일정보를 가져와야함.
+            SMJFormDTO optionList = sMJFormMapper.selectFormDtl(smjFormDTO);
+            wBRoundMstSearchDTO.setFileSeq(optionList.getCarPartAppctnFileSeq());
+        }
 
         return wBRoundMstSearchDTO;
     }
