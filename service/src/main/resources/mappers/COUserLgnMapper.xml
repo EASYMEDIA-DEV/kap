@@ -49,6 +49,7 @@
 			 , a.id
 			 , a.name
 			 , a.email
+			 , a.gndr as gender
 			 , a.hp_no
 			 , a.chng_xtnsn_cnt
 			 , a.pstn_cd

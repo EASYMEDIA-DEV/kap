@@ -217,7 +217,7 @@
         SELECT /* WBBARoundMapper.getApplyCount */ COUNT(*)
         FROM CX_APPCTN_MST A
         JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
-        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD != 'PRO_TYPE04_2_5'
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD NOT IN ('PRO_TYPE04_2_5', 'WBKB_REG_FRT004', 'WBKB_REG_LRT004')
     </select>
 
     <!--

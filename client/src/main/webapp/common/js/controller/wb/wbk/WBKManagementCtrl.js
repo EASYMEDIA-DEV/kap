@@ -181,6 +181,37 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
             }
         },
         classname : {
+            phoneCheck : {
+                event : {
+                    input : function (event) {
+                        let phoneNumber = event.target.value.replace(/[^0-9]/g, ''); // 숫자 이외의 문자 제거
+                        const phoneLen = phoneNumber.length;
+
+                        if (phoneNumber.startsWith('02')) {
+                            if (phoneLen >= 3 && phoneLen <= 6) {
+                                phoneNumber = phoneNumber.replace(/(\d{2})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 6) {
+                                if (phoneLen == 9) {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{2})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        } else {
+                            if (phoneLen > 3 && phoneLen <= 7) {
+                                phoneNumber = phoneNumber.replace(/(\d{3})(\d+)/, '$1-$2');
+                            } else if (phoneLen > 7) {
+                                if (phoneLen == 10) {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3})(\d+)/, '$1-$2-$3');
+                                } else {
+                                    phoneNumber = phoneNumber.replace(/(\d{3})(\d{3,4})(\d+)/, '$1-$2-$3');
+                                }
+                            }
+                        }
+                        event.target.value = phoneNumber;
+                    }
+                }
+            },
             fileDown : {
                 event : {
                     click : function(e) {
@@ -384,7 +415,11 @@ define(["ezCtrl", "ezVald", "ezFile" ], function(ezCtrl, ezVald ) {
                                         if (confirm("이미 신청한 사업입니다.\n신청한 이력은 마이페이지에서 확인 할 수 있습니다.\n마이페이지로 이동하시겠습니까?")) {
                                             location.href = "/my-page/main";
                                         }
-                                    } else {
+                                    }
+                                    else if(data.actCnt == 0) {
+                                        alert("신청에 실패했습니다.");
+                                    }
+                                    else {
                                         if (confirm("위 정보로 사업을 신청하시겠습니까?")) {
                                             location.href = "./complete?episdSeq=" + $('input[name=episdSeq]').val();
                                         }

@@ -83,7 +83,7 @@
                                             </tr>
                                             <tr>
                                                 <th>성별</th>
-                                                <td>${rtnUser.gender}</td>
+                                                <td>${kl:decode(rtnUser.gender, 1, '남', '여')}</td>
                                             </tr>
                                             <tr>
                                                 <th>생년월일</th>

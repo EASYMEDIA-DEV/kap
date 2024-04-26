@@ -982,6 +982,8 @@
             (select name from co_mem_mst where mem_seq = #{memSeq} ) NAME
         FROM CX_APPCTN_MST A
         WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq}
+        ORDER BY REG_DTM DESC
+        LIMIT 1
     </select>
 
 

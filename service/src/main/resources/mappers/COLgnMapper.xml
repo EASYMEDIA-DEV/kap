@@ -25,6 +25,7 @@
 		    , lgn_crtfn_yn
 			, use_yn
 			, reg_dtm
+			, gndr as gender
 		from
 			co_adm_mst a
 		where
@@ -53,6 +54,7 @@
 			, hp_no
 			, allw_ip
 			, last_lgn_dtm
+			, gndr as gender
 		from
 			co_adm_mst a
 		where 1=1
