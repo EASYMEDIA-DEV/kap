@@ -25,7 +25,6 @@
 		    , lgn_crtfn_yn
 			, use_yn
 			, reg_dtm
-			, gndr as gender
 		from
 			co_adm_mst a
 		where
