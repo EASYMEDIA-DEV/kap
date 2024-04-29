@@ -145,7 +145,7 @@ public class WBBARoundController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wBBARoundService.updateRound(wBRoundMstDTO, request);
+            wBRoundMstDTO.setRespCnt(wBBARoundService.updateRound(wBRoundMstDTO, request));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

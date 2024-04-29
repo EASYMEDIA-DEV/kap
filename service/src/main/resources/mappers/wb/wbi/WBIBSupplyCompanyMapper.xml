@@ -11,40 +11,40 @@
     -->
     <select id="getRegisterCompanyList" parameterType="wBIBSupplySearchDTO" resultType="wBIBSupplySearchDTO">
         SELECT /*WBIBSupplyCompanyMapper.getRegisterCompanyList*/ *
-            FROM ( SELECT
-                D.* ,
-                ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) rsume_stts_cd,
-                ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) mng_stts_cd,
-                ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) appctn_stts_chng_dtm,
-                ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) mng_stts_chng_dtm
-                FROM (
-                        SELECT
-                        YEAR(A.year) as year, A.episd,
-                        B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
-                        (SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
-                        (SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME,
-                        C.*,
-                        (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
-                        (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm,
-                        (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd,
-                        B.appctn_bsnm_no as bsnm_no,
-                        (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
-                    FROM
-                        (
-                            SELECT * FROM cx_episd_mst
-                            WHERE bsn_cd = 'BSN09'
-                        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
-                        INNER JOIN
-                        (
-                            SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.ctgry_cd, b.size_cd, b.rprsnt_nm
-                            ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
-                            FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
-                        ) C /* 회원-회사 JOIN 테이블 */
-                        ON C.mem_seq = B.mem_seq
-                    ) D
-                    <include refid="selectListWhereSql" />
-                    ORDER BY year DESC, episd DESC, reg_dtm desc
-                ) F
+        FROM ( SELECT
+            D.* ,
+            ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) rsume_stts_cd,
+            ( SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = mng_stts_cd) as mng_stts_cd_nm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) mng_stts_cd,
+            ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) appctn_stts_chng_dtm,
+            ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = D.appctn_seq AND card.rsume_ord = D.rsumeOrd) mng_stts_chng_dtm
+            FROM (
+                    SELECT
+                    YEAR(A.year) as year, A.episd,
+                    B.appctn_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.mod_id, B.mod_dtm,
+                    (SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NAME,
+                    (SELECT NAME FROM CO_ADM_MST WHERE ID = B.MOD_ID) AS MOD_NAME,
+                    C.*,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
+                    (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm,
+                    (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) rsumeOrd,
+                    B.appctn_bsnm_no as bsnm_no,
+                    (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
+                FROM
+                    (
+                        SELECT * FROM cx_episd_mst
+                        WHERE bsn_cd = 'BSN09'
+                    ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+                    INNER JOIN
+                    (
+                        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.ctgry_cd, b.size_cd, b.rprsnt_nm
+                        ,b.stbsm_dt, b.zipcode, b.bsc_addr, b.dtl_addr, b.sls_pmt, DATE_FORMAT(b.sls_year,'%Y') AS sls_year, b.mple_cnt, b.mjr_prdct_1, b.mjr_prdct_2, b.mjr_prdct_3
+                        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+                    ) C /* 회원-회사 JOIN 테이블 */
+                    ON C.mem_seq = B.mem_seq
+                ) D
+                <include refid="selectListWhereSql" />
+            ) F
+        ORDER BY year DESC, episd DESC, reg_dtm desc
         <if test="excelYn != 'Y'.toString() ">
             LIMIT #{firstIndex}, #{recordCountPerPage}
         </if>

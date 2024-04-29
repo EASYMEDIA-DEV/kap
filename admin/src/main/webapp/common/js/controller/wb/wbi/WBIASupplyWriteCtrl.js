@@ -103,18 +103,24 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 if(episdCnt >= 1 && bfreYear != wbRoundMstDTO.year){
                                     alert("이미 등록된 회차입니다.");
                                 }else{
-                                    cmmCtrl.frmAjax(function(respObj) {
+                                    /*cmmCtrl.frmAjax(function(respObj) {
                                         if(respObj.optEpisdCnt == '0' ||
                                             (wbRoundMstDTO.expsYn != bfreExpsYn && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm && bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
-                                                && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd) ){
+                                                && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd) ){*/
                                             cmmCtrl.jsonAjax(function(data){
-                                                alert(actionMsg);
-                                                location.href = "./list";
+                                                var info = JSON.parse(data);
+                                                if(info.respCnt > 0) {
+                                                    alert(actionMsg);
+                                                    location.href = "./list";
+                                                }
+                                                else {
+                                                    alert("회차 정보 수정에 실패했습니다.");
+                                                }
                                             }, actionUrl, wbRoundMstDTO, "text")
-                                        }else{
+                                        /*}else{
                                             alert("신청정보가 존재하여 수정할 수 없습니다.");
                                         }
-                                    }, "/mngwserc/wb/wbia/getRsumeCnt", $formObj, "post", "json")
+                                    }, "/mngwserc/wb/wbia/getRsumeCnt", $formObj, "post", "json")*/
                                 }
                             }else{
                                 if(episdCnt >= 1){

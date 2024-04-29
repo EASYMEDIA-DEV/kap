@@ -163,7 +163,7 @@ public class WBJRoundController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wBJARoundListService.updateRound(wBRoundMstDTO, request);
+            wBRoundMstDTO.setRespCnt(wBJARoundListService.updateRound(wBRoundMstDTO, request));
         }
         catch (Exception e)
         {

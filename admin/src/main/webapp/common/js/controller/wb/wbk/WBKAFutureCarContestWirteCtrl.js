@@ -238,14 +238,20 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 if(episdCnt >= 1 && yearChk != $("#year").val() ){
                                     alert("이미 등록된 회차입니다.");
                                 }else {
-                                    if( hasRegCli > 0 && expsYn == expsYnChk){
+                                    /*if( hasRegCli > 0 && expsYn == expsYnChk){
                                         alert("신청정보가 존재하여 수정할 수 없습니다.");
-                                    } else {
+                                    } else {*/
                                         cmmCtrl.jsonAjax(function (data) {
-                                            alert(actionMsg);
-                                            location.href = "./list";
+                                            var info = JSON.parse(data);
+                                            if(info.respCnt > 0) {
+                                                alert(actionMsg);
+                                                location.href = "./list";
+                                            }
+                                            else {
+                                                alert("회차 정보 수정에 실패했습니다.");
+                                            }
                                         }, actionUrl, WBFutureCarContestMstDTO, "text");
-                                    }
+                                    /*}*/
                                 }
                             }else{ // 등록 시
                                 if(episdCnt >= 1){

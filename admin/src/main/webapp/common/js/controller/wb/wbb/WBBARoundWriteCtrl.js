@@ -106,18 +106,25 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         var bfreEpisd = $("#bfreEpisd").val();
 
                         if(actionUrl.indexOf('update') != -1 ){
-                            cmmCtrl.frmAjax(function(respObj) {
-                                if(respObj.respCnt == 0 ||
+                            /*cmmCtrl.frmAjax(function(respObj) {*/
+                                /*if(respObj.respCnt == 0 ||
                                     (wbRoundMstDTO.expsYn != bfreExpsYn && bfreAccsStrtDtm == wbRoundMstDTO.accsStrtDtm && bfreAccsEndDtm == wbRoundMstDTO.accsEndDtm
-                                        && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd && bfreBnsStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBnsEndDtm == wbRoundMstDTO.bsnEndDtm) ){
+                                        && bfreYear == wbRoundMstDTO.year && bfreEpisd == wbRoundMstDTO.episd && bfreBnsStrtDtm == wbRoundMstDTO.bsnStrtDtm && bfreBnsEndDtm == wbRoundMstDTO.bsnEndDtm) ){*/
                                     cmmCtrl.jsonAjax(function(data){
-                                        alert(actionMsg);
-                                        location.href = "./list";
+                                        var info = JSON.parse(data);
+                                        if(info.respCnt > 0) {
+                                            alert(actionMsg);
+                                            location.href = "./list";
+                                        }
+                                        else {
+                                            alert("회차 정보 수정에 실패했습니다.");
+                                        }
                                     }, actionUrl, wbRoundMstDTO, "text")
-                                }else{
-                                    alert("신청정보가 존재하여 수정할 수 없습니다.");
+                                /*}else{
+                                    /!*alert("신청정보가 존재하여 수정할 수 없습니다.");*!/
+                                    alert("회차 정보 수정에 실패했습니다.");
                                 }
-                            }, "./getAppctnCnt", $formObj, "POST", "json");
+                            }, "./getAppctnCnt", $formObj, "POST", "json");*/
                         }else{
                             cmmCtrl.jsonAjax(function(data){
                                 alert(actionMsg);

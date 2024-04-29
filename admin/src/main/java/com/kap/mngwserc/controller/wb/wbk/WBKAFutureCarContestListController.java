@@ -1,9 +1,7 @@
 package com.kap.mngwserc.controller.wb.wbk;
 
 
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COUserDetailsDTO;
-import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbf.WBFBRegisterSearchDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestMstDTO;
 import com.kap.core.dto.wb.wbk.WBFutureCarContestSearchDTO;
@@ -203,7 +201,7 @@ public class WBKAFutureCarContestListController {
             wBFutureCarContestMstDTO.setModId(cOUserDetailsDTO.getId());
             wBFutureCarContestMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wbkaFutureCarContestListService.updateFutureCarContest(wBFutureCarContestMstDTO, request);
+            wBFutureCarContestMstDTO.setRespCnt(wbkaFutureCarContestListService.updateFutureCarContest(wBFutureCarContestMstDTO, request));
         }
         catch (Exception e)
         {

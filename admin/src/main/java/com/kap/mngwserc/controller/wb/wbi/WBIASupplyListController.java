@@ -161,7 +161,7 @@ public class WBIASupplyListController {
             wBRoundMstDTO.setModId(cOUserDetailsDTO.getId());
             wBRoundMstDTO.setModIp(cOUserDetailsDTO.getLoginIp());
 
-            wBIASupplyListService.updateSupply(wBRoundMstDTO, request);
+            wBRoundMstDTO.setRespCnt(wBIASupplyListService.updateSupply(wBRoundMstDTO, request));
         }
         catch (Exception e)
         {

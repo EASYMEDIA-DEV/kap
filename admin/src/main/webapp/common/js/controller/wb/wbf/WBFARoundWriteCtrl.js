@@ -398,14 +398,14 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }, "./getRoundChk", $formObj, "POST", "json");
                         } else if(actionUrl == "./update") {
                             console.log($formObj.serializeArray());
-                            cmmCtrl.frmAjax(function(respObj) {
+                            /*cmmCtrl.frmAjax(function(respObj) {
                                 let nowEpsYn = $formObj.find('input[name=expsYn]:checked').val();
 
                                 if (respObj.respCnt > 0 && (bfreExpsYn == nowEpsYn)) {
                                     alert("신청정보가 존재하여 수정할 수 없습니다.");
                                     return false;
                                 } else if (respObj.respCnt > 0 && (bfreExpsYn != nowEpsYn)) {
-                                    /*노출 여부 수정*/
+                                    /!*노출 여부 수정*!/
                                     cmmCtrl.jsonAjax(function(respObj){
                                         let response = JSON.parse(respObj);
                                         if(response.respCnt > 0){
@@ -415,7 +415,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                             alert(msgCtrl.getMsg("fail.act"));
                                         }
                                     }, './updateExpsYn', wbRoundMstDTO, "text");
-                                }else {
+                                }else {*/
                                     /*전체 수정*/
                                     cmmCtrl.jsonAjax(function(respObj){
                                         let response = JSON.parse(respObj);
@@ -426,8 +426,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                             alert(msgCtrl.getMsg("fail.act"));
                                         }
                                     }, actionUrl, wbRoundMstDTO, "text");
-                                }
-                            }, "./getRegisterChk", $formObj, "POST", "json");
+                                /*}
+                            }, "./getRegisterChk", $formObj, "POST", "json");*/
                         }
                     }
                 },
