@@ -94,7 +94,7 @@ public class EBEExamController {
             cdDtlList.add("CLASS_TYPE");
 
             modelMap.addAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
-            if(detailsKey != null){
+            if(detailsKey != null && !detailsKey.isEmpty()){
                 //상세조회
                 modelMap.addAttribute("rtnData", eBEExamService.selectExamDtl( eXGExamMstSearchDTO ));
             }

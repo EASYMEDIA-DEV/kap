@@ -210,18 +210,24 @@ public class EBEExamServiceImpl implements EBEExamService {
         EXGExamMstInsertDTO eXGExamMstInsertDTO = eBEExamMapper.selectExamDtl(eXGExamMstSearchDTO);
         List<EXGExamQstnDtlDTO> examQstnDtlList = eBEExamMapper.getExamQstnDtlList(eXGExamMstSearchDTO);
         List<EXGExamExmplDtlDTO> examExmplDtlList = eBEExamMapper.getExamExmplDtlList(eXGExamMstSearchDTO);
-        for(EXGExamQstnDtlDTO eXGExamQstnDtlDTO : examQstnDtlList){
-            eXGExamQstnDtlDTO.setExExamExmplDtlList( new ArrayList<EXGExamExmplDtlDTO>());
-            for(EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList){
-                if(eXGExamQstnDtlDTO.getQstnSeq().equals( eXGExamExmplDtlDTO.getQstnSeq() )){
-                    eXGExamQstnDtlDTO.getExExamExmplDtlList().add(eXGExamExmplDtlDTO);
+        if(!examQstnDtlList.isEmpty()) {
+            for (EXGExamQstnDtlDTO eXGExamQstnDtlDTO : examQstnDtlList) {
+                eXGExamQstnDtlDTO.setExExamExmplDtlList(new ArrayList<EXGExamExmplDtlDTO>());
+                if(!examExmplDtlList.isEmpty()) {
+                    for (EXGExamExmplDtlDTO eXGExamExmplDtlDTO : examExmplDtlList) {
+                        if (eXGExamQstnDtlDTO.getQstnSeq().equals(eXGExamExmplDtlDTO.getQstnSeq())) {
+                            eXGExamQstnDtlDTO.getExExamExmplDtlList().add(eXGExamExmplDtlDTO);
+                        }
+                    }
                 }
             }
         }
-        eXGExamMstInsertDTO.setExExamQstnDtlList( examQstnDtlList );
-        //교육 시험 매핑 여부
-        int edctnEpisdCnt = eBEExamMapper.getExamEdctnEpisdCnt( eXGExamMstSearchDTO );
-        eXGExamMstInsertDTO.setPosbChg( edctnEpisdCnt > 0 ? false : true );
+        if(eXGExamMstInsertDTO.getExamSeq() != null && eXGExamMstInsertDTO.getExamSeq() > -1) {
+            eXGExamMstInsertDTO.setExExamQstnDtlList(examQstnDtlList);
+            //교육 시험 매핑 여부
+            int edctnEpisdCnt = eBEExamMapper.getExamEdctnEpisdCnt(eXGExamMstSearchDTO);
+            eXGExamMstInsertDTO.setPosbChg(edctnEpisdCnt > 0 ? false : true);
+        }
         return eXGExamMstInsertDTO;
     }
 
