@@ -560,8 +560,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		eBBEpisdMapper.insertBdgetList(eBBEpisdDTO);
 
 		List<EBBPtcptDTO> ptcptList = eBBEpisdDTO.getPtcptList();
-		System.out.println("@@@ ptcptList= " + ptcptList);
-		System.out.println("@@@ ptcptList.size()= " + ptcptList.size());
+
 		if(ptcptList !=null && ptcptList.size()>0){
 			for(EBBPtcptDTO eBBPtcptDTO : ptcptList){
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
@@ -579,7 +578,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 					setCmptnChk(otsdPtcptDto);
 				}
-				System.out.println("@@ eBBPtcptDTO = " + eBBPtcptDTO);
+
 
 				//이전 데이터 불러와서 변경이 N -> Y이면 실행시킴 아니면 일반 업데이트
 				if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("Y")){
@@ -593,6 +592,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 						System.out.println("@@@ SQ 갱신");
 						updateCertiValid(eBBEpisdDTO.getEdctnSeq(), eBBPtcptDTO);
 					}
+				}else if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("U")){
+					eBBEpisdMapper.updatePtcptCmptnFlag(eBBPtcptDTO);// -> ptcptSeq
 				}
 			}
 

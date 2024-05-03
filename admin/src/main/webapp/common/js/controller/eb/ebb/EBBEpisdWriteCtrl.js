@@ -2251,7 +2251,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									var oflnExamDtm = $(this).find("td").find("#oflnExamDtm").val();
 
 									var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
-									if(orgCmptnYn != cmptnYn) cmptnChangeYn = "Y";
+									if(orgCmptnYn != cmptnYn && cmptnYn == "Y") {cmptnChangeYn = "Y";}
+									else if(orgCmptnYn != cmptnYn && cmptnYn == "U"){cmptnChangeYn = "U";}
 
 									ptcptForm.edctnSeq = actForm.edctnSeq;//과정번호
 									ptcptForm.episdYear = actForm.episdYear;//회차년도

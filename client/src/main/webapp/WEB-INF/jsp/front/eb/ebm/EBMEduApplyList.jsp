@@ -143,6 +143,11 @@
                                                                                 <input type="checkbox" data-name="cmptnYnList" id="cmptnYn2" name="cmptnYn2" value="N">
                                                                                 <label for="cmptnYn2">미수료</label>
                                                                             </div>
+
+                                                                            <div class="form-checkbox">
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn3" name="cmptnYn3" value="U">
+                                                                                <label for="cmptnYn3">불참</label>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>

@@ -136,6 +136,9 @@
                                                             <c:when test="${list.cmptnYn eq 'Y'}">
                                                                 수료
                                                             </c:when>
+                                                            <c:when test="${list.cmptnYn eq 'U'}">
+                                                                불참
+                                                            </c:when>
                                                             <c:otherwise>
                                                                 미수료
                                                             </c:otherwise>
