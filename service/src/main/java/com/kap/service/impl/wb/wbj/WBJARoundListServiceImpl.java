@@ -1,6 +1,7 @@
 package com.kap.service.impl.wb.wbj;
 
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COWebUtil;
 import com.kap.core.dto.ex.exg.EXGExamExmplDtlDTO;
 import com.kap.core.dto.ex.exg.EXGExamQstnDtlDTO;
 import com.kap.core.dto.sm.smj.SMJFormDTO;
@@ -69,6 +70,9 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
         int firstEpisdSeqIdgen = cxEpisdSeqIdgen.getNextIntegerId();
         wBRoundMstDTO.setEpisdSeq(firstEpisdSeqIdgen);
 
+        String cnts = wBRoundMstDTO.getAddNtfyCntn();
+        wBRoundMstDTO.setAddNtfyCntn(COWebUtil.clearXSSMinimum(cnts));
+
         respCnt = wBJARoundListMapper.insertRound(wBRoundMstDTO);
 
         for(int i = 0; i < wBRoundMstDTO.getPrizeList().size(); i++){
@@ -112,6 +116,9 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
                 wBJARoundListMapper.updatePrizeList(wBOrderMstDto);
             }
         }
+
+        String cnts = wBRoundMstDTO.getAddNtfyCntn();
+        wBRoundMstDTO.setAddNtfyCntn(COWebUtil.clearXSSMinimum(cnts));
 
         respCnt = wBJARoundListMapper.updateRound(wBRoundMstDTO);
 
