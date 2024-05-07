@@ -1696,7 +1696,11 @@
     <sql id="selectMemSeqAppctnWhereSql">
         <where>
 
-            TMP.APPCTN_MEM_SEQ = #{memSeq} OR TMP.bfre_mem_seq = #{memSeq}
+            ((CASE
+            WHEN TMP.AFTR_MEM_SEQ IS NULL OR TMP.AFTR_MEM_SEQ = '' THEN TMP.APPCTN_MEM_SEQ = #{memSeq}
+            ELSE TMP.AFTR_MEM_SEQ = #{memSeq} END)
+            OR TMP.bfre_mem_seq = #{memSeq})
+
 
             <if test="statusChk != null and statusChk != ''.toString() ">
                 AND TMP.CNSTG_CD IN
