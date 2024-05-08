@@ -618,6 +618,25 @@
 		WHERE exam_appctn_seq = #{examAppctnSeq}
 	</update>
 
+
+	<!--
+		쿼리명 : EBDSqCertiReqMapper.getCbsnList
+		설  명 : 자격증 신청자의 "업종별 기술 이해" 과정 수료 업종 리스트
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.05.08    장두석       최초생성
+    -->
+	<select id="getCbsnList" parameterType="EBDSqCertiSearchDTO" resultType="java.lang.String">
+		SELECT
+			GROUP_CONCAT((SELECT (SELECT cd_nm FROM co_code_mst WHERE cd = cbsn_cd) FROM ed_edctn_episd_mst WHERE episd_seq = A.episd_seq) SEPARATOR ', ') AS cbsn_nm
+		FROM
+			ep_edctn_ptcpt_mst A
+		WHERE
+			mem_seq = #{memSeq}
+		  AND cmptn_yn = 'Y'
+		  AND edctn_seq IN (SELECT edctn_seq FROM ed_edctn_prcs_mst WHERE nm LIKE '%업종별%기술%이해%')
+	</select>
+
 </mapper>
 
 
