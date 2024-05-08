@@ -65,7 +65,7 @@
                                     <p class="tit f-head">현황</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
-                                            <c:when test="${not empty rtnData.rsumeList[0].cnstgPscndCdNm}">
+                                            <c:when test="${not empty rtnData.rsumeList[0].cnstgPscndCdNm && rtnData.rsumeList[0].cnstgPscndDt}">
                                                 ${rtnData.rsumeList[0].cnstgPscndCdNm} ${rtnData.rsumeList[0].cnstgPscndDt}
                                             </c:when>
                                             <c:otherwise>
@@ -119,7 +119,7 @@
                                     <p class="tit f-head">현황</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
-                                            <c:when test="${not empty rtnData.rsumeList[0]}">
+                                            <c:when test="${not empty rtnData.rsumeList[0].guidePscndDt && not empty rtnData.rsumeList[0].guidePscndCdNm}">
                                                 ${rtnData.rsumeList[0].guidePscndCdNm} ${rtnData.rsumeList[0].guidePscndDt}
                                             </c:when>
                                             <c:otherwise>
