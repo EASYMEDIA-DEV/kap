@@ -2,6 +2,9 @@ package com.kap.service.impl.eb;
 
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
+import com.kap.common.utility.COStringUtil;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COUserCmpnDto;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.eb.eba.EBACouseDTO;
@@ -21,6 +24,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 
@@ -42,6 +47,7 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
     private final EBDSqCertiReqMapper eBDSqCertiReqMapper;
     /** 공통 서비스 **/
     private final COCommService cOCommService;
+    private final COMessageService cOMessageService;
     /* 파일 서비스 */
     private final COFileService cOFileService;
     private final COFileUtil cOFileUtil;
@@ -204,6 +210,7 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
      */
     public int insert(EBGExamAppctnMstDTO eBGExamAppctnMstDTO, HttpServletRequest request) throws Exception{
         int respCnt = 0;
+
         COUserDetailsDTO coUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
         eBGExamAppctnMstDTO.setExamAppctnSeq(sqCertiApplyIdgen.getNextIntegerId());
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(eBGExamAppctnMstDTO.getFileList());
@@ -223,8 +230,37 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
         eBDSqCertiSearchDTO.setLcnsCnnctCd("LCNS_CNNCT02");
         eBDSqCertiSearchDTO.setMemSeq(coUserDetailsDTO.getSeq());
         List<EBBEpisdSqCertDTO> list = eBDSqCertiReqMapper.getEducationCompleteLcnsCnnct(eBDSqCertiSearchDTO);
+
         eBGExamAppctnMstDTO.setPtcptSeq( list.get(0).getPtcptSeq() );
         eBDSqCertiReqMapper.insertPtcptMst(eBGExamAppctnMstDTO);
+
+        if(respCnt > 0) {
+            /* 관리자에게 자격증 신청 메일 발송 시작 */
+            String cbsnNmList = eBDSqCertiReqMapper.getCbsnList(eBDSqCertiSearchDTO); //"업종별 기술 이해" 과정 수료 업종 리스트 조회
+
+            //자격증 신청 일시 시작
+            LocalDateTime now = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy.MM.dd HH:mm");
+            String formattedDateTime = now.format(formatter);
+
+            //메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("[KAP] SQ평가원 자격증 발급 신청 접수 안내");
+
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            receiverDto.setEmail("jkh8258@easymedia.net"); //수신자 이메일
+            receiverDto.setName("주경희"); //수신자
+            receiverDto.setNote1(coUserDetailsDTO.getName() + " / " + coUserDetailsDTO.getId()); //신청자명 / 아이디
+            receiverDto.setNote2(coUserDetailsDTO.getCmpnNm()); //신청자 부품사명
+            receiverDto.setNote3(cbsnNmList); //신청자의 "업종별 기술 이해" 과정 수료 업종 리스트
+            receiverDto.setNote4(COStringUtil.convertDate(list.get(0).getCmptnDtm(), "yyyy-MM-dd HH:mm:ss", "yyyy.MM.dd HH:mm", "")); //"SQ 평가원 양성" 교육 수료일시
+            receiverDto.setNote5(formattedDateTime); //신청일시 (현재시각)
+            cOMailDTO.getReceiver().add(receiverDto);
+
+            cOMessageService.sendMail(cOMailDTO, "EBDSqCertiApply.html");
+            /* 관리자에게 자격증 신청 메일 발송 끝 */
+        }
+
         return respCnt;
     }
 

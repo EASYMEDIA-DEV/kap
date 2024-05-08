@@ -1,6 +1,5 @@
 package com.kap.service.dao.eb;
 
-import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.eb.ebb.EBBEpisdSqCertDTO;
 import com.kap.core.dto.eb.ebd.EBDEdctnEdisdDTO;
 import com.kap.core.dto.eb.ebd.EBDPrePrcsDTO;
@@ -117,4 +116,9 @@ public interface EBDSqCertiReqMapper {
      * 자격증 만료 갱신
      */
     public int updateCertiRenewal(EBGExamAppctnMstDTO eBGExamAppctnMstDTO);
+
+    /**
+     * 자격증 신청자의 "업종별 기술 이해" 과정 수료 업종 리스트
+     */
+    public String getCbsnList(EBDSqCertiSearchDTO eEBDSqCertiSearchDTO);
 }
