@@ -57,6 +57,12 @@ public interface EBDSqCertiReqMapper {
     public int updateIssue(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
 
     /**
+     * 발급상태의 SQ평가원 구분, 자격증 번호 변경
+     */
+    public int updateSqExamCdJdgmtNo(EBDEdctnEdisdDTO eBDEdctnEdisdDTO);
+
+
+    /**
      * 자격증 상세
      */
     public EBGExamAppctnMstDTO selectExamAppctnMst(EBDSqCertiSearchDTO eBDEdctnEdisdDTO);

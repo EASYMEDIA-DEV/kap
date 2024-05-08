@@ -337,6 +337,27 @@
 	</update>
 
 	<!--
+         쿼리명 : EBDSqCertiReqMapper.updateSqExamCdJdgmtNo
+         설  명 : 발급상태의 SQ평가원 구분, 자격증 번호 변경
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.05.03    김학규       최초생성
+    -->
+	<update id="updateSqExamCdJdgmtNo" parameterType="EBDEdctnEdisdDTO">
+		update /* EBDSqCertiReqMapper.updateSqExamCdJdgmtNo */ sq_exam_appctn_mst
+		set
+		exam_cd = #{examCd}
+		, jdgmt_no = #{jdgmtNo}
+		, mod_id = #{modId}
+		, mod_ip = #{modIp}
+		, mod_dtm = now()
+		WHERE exam_appctn_seq = #{detailsKey}
+	</update>
+
+
+
+
+	<!--
          쿼리명 : EBDSqCertiReqMapper.updateConfirmInfo
          설  명 : 자격증 정보 수정
           수정일     수정자       수정내용

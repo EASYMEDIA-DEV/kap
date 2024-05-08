@@ -108,10 +108,26 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
         int respCnt = cOCommService.setMemCmpnDtl(cOUserCmpnDto, request);
         //평가 신청 정보 변경
         if(!"EBD_SQ_R".equals( eBDEdctnEdisdDTO.getIssueCd() )){
-            //발급 대기일경우만 수정
-            eBDEdctnEdisdDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
-            eBDEdctnEdisdDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
-            eBDSqCertiReqMapper.updateIssue( eBDEdctnEdisdDTO );
+
+            if(!"".equals(eBDEdctnEdisdDTO.getOrgIssueCd()) && "EBD_SQ_I".equals(eBDEdctnEdisdDTO.getOrgIssueCd())){
+
+                //발급인데 수정이 일어났을경우 SQ평가원 구분, 자격증 번호를 업데이트 한다
+                if(!eBDEdctnEdisdDTO.getOrgExamCd().equals(eBDEdctnEdisdDTO.getExamCd()) || !eBDEdctnEdisdDTO.getOrgJdgmtNo().equals(eBDEdctnEdisdDTO.getJdgmtNo())){
+                    //SQ평가원 구분값과 자격증 번호의 변경이 있을때만 업데이트
+                    eBDEdctnEdisdDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+                    eBDEdctnEdisdDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
+                    eBDSqCertiReqMapper.updateSqExamCdJdgmtNo( eBDEdctnEdisdDTO );
+                }
+
+            }else{
+                //발급 대기일경우만 수정
+                eBDEdctnEdisdDTO.setModId(COUserDetailsHelperService.getAuthenticatedUser().getId());
+                eBDEdctnEdisdDTO.setModIp(CONetworkUtil.getMyIPaddress(request));
+                eBDSqCertiReqMapper.updateIssue( eBDEdctnEdisdDTO );
+            }
+
+
+
         }
         return respCnt;
     }

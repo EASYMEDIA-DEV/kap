@@ -210,7 +210,8 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">SQ평가원 구분<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" name="examCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'disabled', '') }>
+                        <input type="hidden" name="orgExamCd" id="orgExamCd" value="${rtnDto.examCd}"/>
+                        <select class="form-control input-sm" name="examCd" <%--${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'disabled', '') }--%>>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ_TP}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.examCd, cdList.cd, 'selected', '') }>
                                         ${cdList.cdNm}
@@ -224,6 +225,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold ">발급상태<span class="star"> *</span></label>
                     <div class="col-sm-2">
+                        <input type="hidden" name="orgIssueCd" id="orgIssueCd" value="${rtnDto.issueCd}"/>
                         <select class="form-control input-sm issueCd" name="issueCd" ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'disabled', '') }>
                             <c:forEach var="cdList" items="${cdDtlList.EBD_SQ}" varStatus="status">
                                 <option value="${cdList.cd}" ${ kl:decode(rtnDto.issueCd, cdList.cd, 'selected', '') }>
@@ -247,7 +249,8 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">자격증 번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  ${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'readonly', '') } />
+                        <input type="hidden" name="orgJdgmtNo" id="orgJdgmtNo" value="${rtnDto.jdgmtNo}"/>
+                        <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  <%--${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'readonly', '') }--%> />
                     </div>
                 </div>
             </fieldset>

@@ -95,8 +95,19 @@ public class EBDEdctnEdisdDTO {
     private String gpcId;
     @Schema(title = "SQ 평가원 구분 코드")
     private String examCd;
+
+
+
+    @Schema(title = "원본 SQ 평가원 구분 코드(발급상태에서 수정시에만 사용)")
+    private String orgExamCd;
+
+    @Schema(title = "원본 발급상태 코드(발급상태에서 수정시에만 사용)")
+    private String orgIssueCd;
+
     @Schema(title = "발급상태 코드")
     private String issueCd;
+
+
     @Schema(title = "반려 사유")
     private String rtrnRsn;
     @Schema(title = "신청자ID")
@@ -121,4 +132,7 @@ public class EBDEdctnEdisdDTO {
     private String acqsnDtm;
     @Schema(title = "자격증 번호")
     private String jdgmtNo;
+
+    @Schema(title = "원본 자격증 번호(발급상태에서 수정시에만 사용)")
+    private String orgJdgmtNo;
 }
