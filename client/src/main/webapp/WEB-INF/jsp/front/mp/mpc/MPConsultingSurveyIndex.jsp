@@ -23,7 +23,7 @@
                         <div class="def-list">
                             <p class="tit f-head">신청업종/분야</p>
                             <p class="txt f-sub-head">
-                                <c:if test="${fn:contains(rtnData.cbsnCd, 'NON')}">비금속분야- ${rtnData.cbsnNm}</p></c:if>
+                            <c:if test="${fn:contains(rtnData.cbsnCd, 'NON')}">비금속분야- ${rtnData.cbsnNm}</p></c:if>
                             <c:if test="${fn:contains(rtnData.cbsnCd, 'METAL')}">금속분야- ${rtnData.cbsnNm}</p></c:if>
                             <c:if test="${fn:contains(rtnData.cbsnCd, 'INDUS')}">기타</p></c:if>
 
@@ -32,10 +32,107 @@
                             <p class="tit f-head">위원</p>
                             <p class="txt f-sub-head">${survInfo.cmssrNm}</p>
                         </div>
-                        <div class="def-list">
-                            <p class="tit f-head">지도기간</p>
-                            <p class="txt f-sub-head">2023-01-01 ~ 2023-01-01</p>
-                        </div>
+                        <c:choose>
+                            <c:when test="${rtnData.cnstgCd eq 'CONSULT_GB02'}">
+                                <!--경영컨설팅-->
+                                <div class="def-list">
+                                    <p class="tit f-head">방문일</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].vstDt}">
+                                                ${rtnData.rsumeList[0].vstDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="def-list">
+                                    <p class="tit f-head">킥오프일</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].guideKickfDt}">
+                                                ${rtnData.rsumeList[0].guideKickfDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="def-list">
+                                    <p class="tit f-head">현황</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].cnstgPscndCdNm}">
+                                                ${rtnData.rsumeList[0].cnstgPscndCdNm} ${rtnData.rsumeList[0].cnstgPscndDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <!--기술지도-->
+                                <div class="def-list">
+                                    <p class="tit f-head">초도방문일</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].vstDt}">
+                                                ${rtnData.rsumeList[0].vstDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="def-list">
+                                    <p class="tit f-head">지도착수일</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].guideBgnDt}">
+                                                ${rtnData.rsumeList[0].guideBgnDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="def-list">
+                                    <p class="tit f-head">킥오프일</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0].guideKickfDt}">
+                                                ${rtnData.rsumeList[0].guideKickfDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+                                <div class="def-list">
+                                    <p class="tit f-head">현황</p>
+                                    <p class="txt f-sub-head">
+                                        <c:choose>
+                                            <c:when test="${not empty rtnData.rsumeList[0]}">
+                                                ${rtnData.rsumeList[0].guidePscndCdNm} ${rtnData.rsumeList[0].guidePscndDt}
+                                            </c:when>
+                                            <c:otherwise>
+                                                -
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </p>
+                                </div>
+
+                            </c:otherwise>
+
+                        </c:choose>
+
                         <div class="def-list">
                             <p class="tit f-head">총 문항수</p>
                             <p class="txt f-sub-head">${survInfo.qstnCnt}</p>

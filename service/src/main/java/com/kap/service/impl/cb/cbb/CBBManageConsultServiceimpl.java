@@ -215,7 +215,6 @@ public class CBBManageConsultServiceimpl implements CBBManageConsultService {
         }
         pCBBManageConsultInsertDTO.setRsumeList(cBBManageConsultMapper.selectTechGuidanceRsume(pCBBManageConsultInsertDTO));
 
-
         return pCBBManageConsultInsertDTO;
     }
 

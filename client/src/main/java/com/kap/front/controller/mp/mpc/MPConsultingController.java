@@ -266,6 +266,7 @@ public class MPConsultingController {
 
                     if (sVASurveyMstInsertDTO != null){
                         modelMap.addAttribute("rtnData", rtnData);
+                        modelMap.addAttribute("rtnInfo", cBATechGuidanceService.selectTechGuidanceDtl(cBATechGuidanceInsertDTO));
                         modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
                     }else{
                         modelMap.addAttribute("msg", "잘못된 접근입니다.");

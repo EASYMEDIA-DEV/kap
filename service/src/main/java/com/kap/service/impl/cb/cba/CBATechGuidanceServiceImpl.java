@@ -207,7 +207,6 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
 
         }
         pCBATechGuidanceInsertDTO.setRsumeList(cBATechGuidanceMapper.selectTechGuidanceRsume(pCBATechGuidanceInsertDTO));
-
         return pCBATechGuidanceInsertDTO;
     }
 

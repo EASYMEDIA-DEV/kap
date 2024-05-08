@@ -120,9 +120,12 @@
                 </div>
                 <div class="right">
                     <div class="status-info-w">
-                        <p class="box-label bigger"><span>2023-01-01 ~ 2023-01-01</span></p>
-                        <p class="box-label bigger"><span>금속분야- 도금</span></p>
-                        <p class="box-label bigger"><span>홍길동</span></p>
+                        <p class="box-label bigger">
+                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'NON')}"> <span>비금속분야- ${rtnInfo.cbsnNm} </span></c:if>
+                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'METAL')}"> <span>금속분야- ${rtnInfo.cbsnNm}</span></c:if>
+                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'INDUS')}"> <span>기타</span></c:if>
+                        </p>
+                        <p class="box-label bigger"><span>${rtnData.cmssrNm}</span></p>
                         <p class="box-label bigger teal"><span>${rtnData.qstnCnt}문항</span></p>
                     </div>
                 </div>

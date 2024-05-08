@@ -61,6 +61,8 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     private String guideTypeCd;
     @Schema(title = "지도현황")
     private String guidePscndCd;
+    @Schema(title = "지도현황명")
+    private String guidePscndCdNm;
     @Schema(title = "지도현황일자")
     private String guidePscndDt;
     @Schema(title = "지도착수일")
@@ -86,6 +88,13 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     private Integer lvlupFileSeq;
     @Schema(title = "기타사업자료")
     private Integer etcFileSeq;
+
+    @Schema(title = "컨설팅현황")
+    private String cnstgPscndCd;
+    @Schema(title = "컨설팅현황명")
+    private String cnstgPscndCdNm;
+    @Schema(title = "컨설팅현황일자")
+    private String cnstgPscndDt;
 
     // 만족도 설문
     @Schema(title = "설문순번")
