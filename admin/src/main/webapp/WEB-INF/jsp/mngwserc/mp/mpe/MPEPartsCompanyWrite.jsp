@@ -38,7 +38,7 @@
                             <div class="form-group text-sm">
                                 <label class="col-sm-1 control-label">부품사명<span class="star text-danger"> *</span></label>
                                 <div class="col-sm-5">
-                                    <input type="text" class="form-control input-sm notRequired" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" readonly title="부품사명" maxlength="50" style="width: 200px;"/>
+                                    <input type="text" class="form-control input-sm" id="cmpnNm" name="cmpnNm" value="${rtnInfo.cmpnNm}" title="부품사명" maxlength="50" style="width: 200px;"/>
                                 </div>
                             </div>
                         </fieldset>
