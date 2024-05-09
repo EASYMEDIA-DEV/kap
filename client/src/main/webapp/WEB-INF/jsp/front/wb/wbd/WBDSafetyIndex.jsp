@@ -175,7 +175,7 @@
                                                         <div class="btn-wrap">
                                                             <div class="btn-set">
                                                                 <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
-                                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.scrtyEnvrnmtFileSeq}&fileOrd=${item.fileOrd}" download><span>${item.fileNm}</span></a>
+                                                                    <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.sftyFcltyFileSeq}&fileOrd=${item.fileOrd}" download><span>${item.fileNm}</span></a>
                                                                 </c:forEach>
                                                             </div>
                                                         </div>
