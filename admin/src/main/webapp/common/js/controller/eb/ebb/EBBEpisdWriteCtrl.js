@@ -2001,17 +2001,17 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("#examEndDtm").focus();
 								return false;
 							}
-
-							actForm.srvSeq = $("#srvSeq").val();//설문순번
-							actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
-							actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
-
-							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
-
-							actForm.examSeq = $("#examSeq").val();//시험순번
-							actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						}
+
+						actForm.srvSeq = $("#srvSeq").val();//설문순번
+						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
+						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
+
+						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
+						actForm.examSeq = $("#examSeq").val();//시험순번
+						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						/* 2024.05.09 차수 수정 시엔 유효성 체크 제외 e */
 
 
