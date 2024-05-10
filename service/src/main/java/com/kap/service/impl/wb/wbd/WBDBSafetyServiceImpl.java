@@ -839,7 +839,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
             //사업구분
             cell = row.createCell(3);
-            cell.setCellValue("탄소배출저감");
+            cell.setCellValue("안전설비구축");
             cell.setCellStyle(style_body);
 
             //부품사명
