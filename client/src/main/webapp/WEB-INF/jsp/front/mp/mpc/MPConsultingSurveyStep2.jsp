@@ -121,9 +121,16 @@
                 <div class="right">
                     <div class="status-info-w">
                         <p class="box-label bigger">
-                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'NON')}"> <span>비금속분야- ${rtnInfo.cbsnNm} </span></c:if>
-                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'METAL')}"> <span>금속분야- ${rtnInfo.cbsnNm}</span></c:if>
-                            <c:if test="${fn:contains(rtnInfo.cbsnCd, 'INDUS')}"> <span>기타</span></c:if>
+                            <c:choose>
+                                <c:when test="${rtnInfo.cnstgCd eq 'CONSULT_GB02'}">
+                                    ${rtnInfo.appctnFldNm}
+                                </c:when>
+                                <c:otherwise>
+                                    <c:if test="${fn:contains(rtnInfo.cbsnCd, 'NON')}">비금속분야- ${rtnInfo.cbsnNm}</c:if>
+                                    <c:if test="${fn:contains(rtnInfo.cbsnCd, 'METAL')}">금속분야- ${rtnInfo.cbsnNm}</c:if>
+                                    <c:if test="${fn:contains(rtnInfo.cbsnCd, 'INDUS')}">기타</c:if>
+                                </c:otherwise>
+                            </c:choose>
                         </p>
                         <p class="box-label bigger"><span>${rtnData.cmssrNm}</span></p>
                         <p class="box-label bigger teal"><span>${rtnData.qstnCnt}문항</span></p>
