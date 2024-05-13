@@ -15,7 +15,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">제목<span class="star"> *</span></label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="50" placeholder="제목을 입력하세요." />
+                        <input type="text" class="form-control input-sm" id="titl" name="titl" value="${rtnDto.titl}" title="제목" maxlength="100" placeholder="제목을 입력하세요." />
                     </div>
                     <div class="col-sm-2">
                         <label class="checkbox-inline c-checkbox">
