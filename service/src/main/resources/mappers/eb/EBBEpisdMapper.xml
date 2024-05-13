@@ -1334,10 +1334,18 @@
 			, place_seq = #{placeSeq}
 			, srv_seq = #{srvSeq}
 			, exam_seq = #{examSeq}
-			, srv_strt_dtm = #{srvStrtDtm}
-			, srv_end_dtm = #{srvEndDtm}
-			, exam_strt_dtm = if(#{examStrtDtm}='', null , #{examStrtDtm})
-			, exam_end_dtm = if(#{examEndDtm}='', null , #{examEndDtm})
+			, srv_strt_dtm = CASE WHEN #{srvStrtDtm} = '' THEN NULL
+								  ELSE #{srvStrtDtm}
+							  END
+			, srv_end_dtm = CASE WHEN #{srvEndDtm} = '' THEN NULL
+								 ELSE #{srvEndDtm}
+								END
+			, exam_strt_dtm = CASE WHEN #{examStrtDtm} = '' THEN NULL
+									ELSE #{examStrtDtm}
+								END
+			, exam_end_dtm = CASE WHEN #{examEndDtm} = '' THEN NULL
+								  ELSE #{examEndDtm}
+								END
 			, cmptn_auto_yn = #{cmptnAutoYn}
 			, otsd_exam_ptcpt_yn = #{otsdExamPtcptYn}
 			, bdget_expns_yn = #{bdgetExpnsYn}

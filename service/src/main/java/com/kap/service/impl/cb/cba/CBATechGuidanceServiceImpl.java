@@ -194,6 +194,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             pCBATechGuidanceInsertDTO.setDpndCmpnList(dpndnInfoList);
 
             List<CBATechGuidanceInsertDTO> appctnTypeInfo = cBATechGuidanceMapper.selectCnstgAppctnType(cnstgSeq);
+
             List appctnTypeList = new ArrayList();
             for(int i=0; i<appctnTypeInfo.size(); i++){
                 CBATechGuidanceInsertDTO appctnDto = new CBATechGuidanceInsertDTO();

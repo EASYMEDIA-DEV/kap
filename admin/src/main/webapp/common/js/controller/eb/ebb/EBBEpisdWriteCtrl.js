@@ -1674,36 +1674,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						return false
 					}
 
-					//문읨담당자
-					if($("#picNm").val() == ""){
-						alert("담당자명을 입력해주세요.");
-						$("#picNm").focus();
-						return false
-					}
-					//담당자이메일
-					if($("#picEmail").val() == ""){
-						alert("담당자이메일을 입력해주세요.");
-						$("#picEmail").focus();
-						return false
-					}
-
-					var email = $("#picEmail").val();
-					var temp2 = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net|kr|co\.kr|org)$/;
-					var emailTest2 = temp2.test(email);
-
-					if(!emailTest2){
-						alert("이메일 양식에 맞게 입력 해주세요");
-						$("#picEmail").focus();
-						return false;
-					}
-
-
-					if($("#picTelNo").val() == ""){
-						alert("담당자전화번호를 입력해주세요.");
-						$("#picTelNo").focus();
-						return false
-					}
-
 
 					//교육장소
 					var stduyMthdCd = $("#stduyMthdCd").val();
@@ -1745,13 +1715,48 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 
-					var updateEdDt = $("#edctnStrtDt").val();
+					/* 2024.05.09 문의 담당자 유효성을 여기로 옮기고 차수 수정 시엔 유효성 체크 제외 s */
+					// var updateEdDt = $("#edctnStrtDt").val();
 
-					var eduDate = new Date(updateEdDt);//교육 시작일
-					var date2 = new Date("2024-04-01");//현재날짜
+					// var eduDate = new Date(updateEdDt);//교육 시작일
+					// var date2 = new Date("2024-04-01");//현재날짜
+
 					//교육시작일이 2024-03-29 이전인 차수들은 설문,평가 유효성체크 제외
+					// if(eduDate >= date2){
 
-					if(eduDate >= date2){
+					//차수 수정 시 문의담당자, 설문, 평가 유효성 체크 제외
+					var actionType = $("#myTabs").data("actionType");
+					if(actionType != "update") {
+						//문읨담당자
+						if($("#picNm").val() == ""){
+							alert("담당자명을 입력해주세요.");
+							$("#picNm").focus();
+							return false
+						}
+						//담당자 이메일
+						if($("#picEmail").val() == ""){
+							alert("담당자이메일을 입력해주세요.");
+							$("#picEmail").focus();
+							return false
+						}
+
+						var email = $("#picEmail").val();
+						var temp2 = /[_a-zA-Z0-9-\.\_]+@[\.a-zA-Z0-9-]+\.(com|net|kr|co\.kr|org)$/;
+						var emailTest2 = temp2.test(email);
+
+						if(!emailTest2){
+							alert("이메일 양식에 맞게 입력 해주세요");
+							$("#picEmail").focus();
+							return false;
+						}
+
+						//담당자 전화번호
+						if($("#picTelNo").val() == ""){
+							alert("담당자전화번호를 입력해주세요.");
+							$("#picTelNo").focus();
+							return false
+						}
+
 						//만족도조사
 						if($("#srvSeq").val() == "") {
 							alert("만족도조사를 선택해주세요");
@@ -1791,6 +1796,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							return false;
 						}
 					}
+					/* 2024.05.09 문의 담당자 유효성을 여기로 옮기고 차수 수정 시엔 유효성 체크 제외 e */
 
 
 
@@ -1948,13 +1954,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						}
 
 
-						var updateEdDt = $("#edctnStrtDt").val();
+						/* 2024.05.09 차수 수정 시엔 유효성 체크 제외 s */
+						// var updateEdDt = $("#edctnStrtDt").val();
 
-						var eduDate = new Date(updateEdDt);//교육 시작일
-						var date2 = new Date("2024-04-01");//기준 날짜
+						// var eduDate = new Date(updateEdDt);//교육 시작일
+						// var date2 = new Date("2024-04-01");//현재날짜
 
 						//교육시작일이 2024-03-29 이전인 차수들은 설문,평가 유효성체크 제외
-						if(eduDate >= date2){
+						// if(eduDate >= date2){
+
+						//차수 수정 시 문의담당자, 설문, 평가 유효성 체크 제외
+						var actionType = $("#myTabs").data("actionType");
+						if(actionType != "update") {
 							if($("#srvSeq").val() == "") {
 								alert("만족도조사를 선택해주세요");
 								$(".eduSrvSearch").focus();
@@ -1990,17 +2001,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("#examEndDtm").focus();
 								return false;
 							}
-
-							actForm.srvSeq = $("#srvSeq").val();//설문순번
-							actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
-							actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
-
-							actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
-							actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
-
-							actForm.examSeq = $("#examSeq").val();//시험순번
-							actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
 						}
+
+						actForm.srvSeq = $("#srvSeq").val();//설문순번
+						actForm.srvStrtDtm = $("#srvStrtDtm").val();//설문시작일
+						actForm.srvEndDtm = $("#srvEndDtm").val();//설문종료일
+
+						actForm.examStrtDtm = $("#examStrtDtm").val();//시험시작일
+						actForm.examEndDtm = $("#examEndDtm").val();//시험종료일
+
+						actForm.examSeq = $("#examSeq").val();//시험순번
+						actForm.otsdExamPtcptYn = $("input[name='otsdExamPtcptYn']:checked").val();//오프라인평가여부
+						/* 2024.05.09 차수 수정 시엔 유효성 체크 제외 e */
 
 
 

@@ -23,10 +23,16 @@
                         <div class="def-list">
                             <p class="tit f-head">신청업종/분야</p>
                             <p class="txt f-sub-head">
-                            <c:if test="${fn:contains(rtnData.cbsnCd, 'NON')}">비금속분야- ${rtnData.cbsnNm}</p></c:if>
-                            <c:if test="${fn:contains(rtnData.cbsnCd, 'METAL')}">금속분야- ${rtnData.cbsnNm}</p></c:if>
-                            <c:if test="${fn:contains(rtnData.cbsnCd, 'INDUS')}">기타</p></c:if>
-
+                                <c:choose>
+                                    <c:when test="${rtnData.cnstgCd eq 'CONSULT_GB02'}">
+                                        ${rtnData.appctnFldNm}
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:if test="${fn:contains(rtnData.cbsnCd, 'NON')}">비금속분야- ${rtnData.cbsnNm}</p></c:if>
+                                        <c:if test="${fn:contains(rtnData.cbsnCd, 'METAL')}">금속분야- ${rtnData.cbsnNm}</p></c:if>
+                                        <c:if test="${fn:contains(rtnData.cbsnCd, 'INDUS')}">기타</p></c:if>
+                                    </c:otherwise>
+                                </c:choose>
                         </div>
                         <div class="def-list">
                             <p class="tit f-head">위원</p>

@@ -167,7 +167,7 @@
                 </div>
             </fieldset>
 
-            <ul class="nav nav-tabs" id="myTabs">
+            <ul class="nav nav-tabs" id="myTabs" data-action-type="${actionType}"><%-- 2024.05.09 data 속성 추가 --%>
                 <li class="active tabClick"><a data-toggle="tab" href="#episdList">회차정보</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>> <a data-toggle="tab" href="#accsList">참여자 목록</a></li>
                 <li class="tabClick" <c:if test="${actionType ne 'update'}">style="display:none"</c:if>><a data-toggle="tab" href="#svResult">만족도 결과</a></li>
@@ -693,6 +693,7 @@
                                 <button type="button" class="btn btn-inverse btn-sm eduSrvSearch">
                                     설문 검색
                                 </button>
+                                <%--<span class="dtl-tab" style="margin-left:10px; color:red; font-size: 13px;"><strong>만족도조사는 필수 항목입니다.</strong></span>--%>
                                 <table class="table table-hover table-striped">
                                     <thead>
                                     <tr>
@@ -709,7 +710,7 @@
                                             <td class="text-center">${rtnDto.typeNm}</td>
                                             <td class="text-center">
                                                 <div class="input-group form-date-group mr-sm">
-                                                    <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rtnDto.srvSeq}" disabled="true">
+                                                    <input type="hidden" class="notRequired" name="srvSeq" id="srvSeq" value="${rtnDto.srvSeq}">
                                                     <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="srvStrtDtm" id="srvStrtDtm" value="${ kl:convertDate(rtnDto.srvStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="설문시작일시" readonly="readonly"/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="jQuery(this).parent().prev().focus();">
@@ -755,7 +756,7 @@
                                 <button type="button" class="btn btn-inverse btn-sm eduExamSearch">
                                     평가 검색
                                 </button>
-
+                                <%--<span class="dtl-tab" style="margin-left:10px; color:red; font-size: 13px;"><strong>평가는 필수 항목입니다.</strong></span>--%>
                                 <label class="checkbox-inline c-checkbox pull-right">
                                     <input type="checkbox" class="checkboxSingle notRequired otsdExamPtcptYn" value="Y"  name="otsdExamPtcptYn"  <c:if test="${rtnDto.otsdExamPtcptYn eq 'Y'}">checked</c:if> title="오프라인평가"/>
                                     <span class="ion-checkmark-round"></span> 오프라인평가
@@ -780,7 +781,7 @@
                                     <tr class="setExg" <c:if test="${rtnDto.examNm eq ''}">style="display: none;"</c:if>>
                                         <td class="text-center examNmForm" colspan="4" style="min-width: 200px;">${rtnDto.examNm}</td>
                                         <td colspan="6">
-                                            <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" disabled="true" title="평가">
+                                            <input type="hidden" class="notRequired" name="examSeq" id="examSeq" value="${rtnDto.examSeq}" title="평가">
                                             <div class="input-group form-date-group mr-sm">
                                                 <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" name="examStrtDtm" id="examStrtDtm" value="${ kl:convertDate(rtnDto.examStrtDtm, 'yyyy-MM-dd', 'yyyy-MM-dd', '') }" title="시험시작일시" readonly="readonly"/>
                                                 <span class="input-group-btn" style="z-index:0;">

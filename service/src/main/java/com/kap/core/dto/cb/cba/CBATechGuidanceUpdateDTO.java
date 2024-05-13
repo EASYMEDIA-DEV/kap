@@ -113,4 +113,9 @@ public class CBATechGuidanceUpdateDTO extends BaseDTO {
     @Schema(title = "진행상태 텍스트")
     private String rsumeSttsNm;
 
+    @Schema(title = "신청분야코드")
+    private String appctnFldCd;
+    @Schema(title = "신청분야코드이름")
+    private String appctnFldNm;
+
 }
