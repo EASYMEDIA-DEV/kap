@@ -94,6 +94,8 @@
             D.theme_cd,
             D.dtl_cntn,
             D.wdcrm_cd,
+            (SELECT CD_NM FROM CO_CODE_MST WHERE cd_id = 'WBK_AWD' and CD = D.wdcrm_cd AND dpth <![CDATA[>]]> 1) AS wdcrm_nm,
+            D.wdcrm_cd,
             D.ptcpt_type,
             D.hghst_winer_yn,
             F.file_seq,
@@ -122,7 +124,7 @@
         select a.*    /*WBKBRegisterMapper.selectFutureCarPartDtl*/
         ,(SELECT cd_nm FROM co_code_mst WHERE cd = a.grd_cd) as grd_cd_nm
         from cx_appctn_rsume_prize_car_tmmbr_dtl a
-        where rsume_seq=#{rsumeSeq};
+        where rsume_seq=#{rsumeSeq}
     </select>
 
     <!--
@@ -135,9 +137,15 @@
 
     <select id="selectFutureCarRsumeDtl" parameterType="wBKBRegisterDTO" resultType="WBKBRsumeDTO">
         SELECT   /*WBKBRegisterMapper.selectFutureCarRsumeDtl*/
-               RSUME_ORD , APPCTN_SEQ , APPCTN_STTS_CD , APPCTN_STTS_CHNG_DTM , MNG_STTS_CD , MNG_STTS_CHNG_DTM
-        FROM cx_appctn_rsume_dtl
-        WHERE RSUME_SEQ = #{rsumeSeq};
+               RSUME_ORD
+             , APPCTN_SEQ
+             , APPCTN_STTS_CD
+             , APPCTN_STTS_CHNG_DTM
+             , MNG_STTS_CD
+             , (SELECT CD_NM FROM co_code_mst WHERE CD = A.MNG_STTS_CD) AS MNG_STTS_CD_NM
+             , MNG_STTS_CHNG_DTM
+        FROM cx_appctn_rsume_dtl A
+        WHERE RSUME_SEQ = #{rsumeSeq}
     </select>
 
     <!--
