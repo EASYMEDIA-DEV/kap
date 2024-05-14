@@ -1068,7 +1068,7 @@
                                             <input type="text" id="picName" class="form-control notRequired" value="${rtnCmssr.name}" maxlength="50" title="점검위원" disabled/>
                                             <input type="hidden" class="notRequired" id="picCmssrSeq" name="picCmssrSeq" title="점검위원" value="${rtnPbsn[0].chkCmssrSeq}" />
                                             <input type="hidden" class="notRequired" id="chkCmssrSeq" name="pbsnDtlList[0].chkCmssrSeq" title="점검위원" value="${rtnPbsn[0].chkCmssrSeq}" />
-                                            <button type="button" class="btn btn-sm btn-info btnCmtSearch" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>>위원검색</button>
+                                            <button type="button" class="btn btn-sm btn-info btnCmtSearch" <%--<c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if> <c:if test="${rtnDtl[0].mngSttsNm eq '미선정' || rtnDtl[0].mngSttsNm eq '선정'}">disabled</c:if>--%>>위원검색</button>
                                         </div>
                                     </div>
                                 </fieldset>
