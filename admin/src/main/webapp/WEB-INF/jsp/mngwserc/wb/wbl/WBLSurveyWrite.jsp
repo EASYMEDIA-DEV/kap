@@ -69,7 +69,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <label class="col-sm-1 control-label">1차 부품사코드<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">1차 부품사코드<%--<span class="star"> *</span>--%></label>
                     <div class="col-sm-5">
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
@@ -77,7 +77,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnCd1}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnCd1" name="partCmpnCd1" maxlength="50" title="1차부품사명" placeholder="부품사명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm notRequired" id="partCmpnCd1" name="partCmpnCd1" maxlength="50" title="1차 부품사코드" placeholder="1차 부품사코드 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -96,11 +96,11 @@
                                 <p class="form-control-static">${rtnDto.partCmpnNm2}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnNm2" name="partCmpnNm2" maxlength="50" title="2차부품사명" placeholder="부품사명 입력" style="width:100%"/>
+                                <input type="text" class="form-control input-sm" id="partCmpnNm2" name="partCmpnNm2" maxlength="50" title="2차부품사명" placeholder="2차부품사명 입력" style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <label class="col-sm-1 control-label">2차 부품사코드<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">2차 부품사코드<%--<span class="star"> *</span>--%></label>
                     <div class="col-sm-5">
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
@@ -108,7 +108,7 @@
                                 <p class="form-control-static">${rtnDto.partCmpnCd2}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm" id="partCmpnCd2" name="partCmpnCd2" maxlength="50" title="2차부품사코드" placeholder="코드 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm notRequired" id="partCmpnCd2" name="partCmpnCd2" maxlength="50" title="2차부품사코드" placeholder="2차부품사코드 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
