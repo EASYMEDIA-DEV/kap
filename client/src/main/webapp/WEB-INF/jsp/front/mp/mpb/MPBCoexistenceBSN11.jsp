@@ -79,11 +79,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT001'}">
+                                <%--<c:if test="${rsumeList[0].appctnSttsCd eq 'WBKB_REG_FRT001'}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
-                                </c:if>
+                                </c:if>--%>
                             </div>
                         </div>
                     </form>
@@ -115,15 +115,19 @@
                                     <div class="row">
                                         <div class="th">
                                             <p class="title f-head">첨부파일</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                                            <c:if test="${empty fileDtlList[1]}">
+                                                <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                                            </c:if>
                                         </div>
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <P class="bullet-noti-txt f-caption2">*  확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개) 가능</P>
+                                                <c:if test="${empty fileDtlList[1]}">
+                                                    <div class="data-line">
+                                                        <div class="noti-txt-w">
+                                                            <P class="bullet-noti-txt f-caption2">*  확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,dox,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개) 가능</P>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </c:if>
                                                 <div class="data-line">
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
@@ -152,14 +156,7 @@
                                                                     <%--</c:if>--%>
                                                                 </c:otherwise>
                                                             </c:choose>
-                                                            <%--<div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
-                                                            </div>
-                                                            <div class="file-btn-area">
-                                                                <input type="file" id="searchFile2" class="searchFile" name="atchFile2">
-                                                                <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
-                                                                <input type="hidden" class="notRequired" name="wBKBRegisterDTO.fileCd" value="ATTACH_FILE_TYPE11" title="첨부파일유형"/>
-                                                            </div>--%>
+
                                                         </div>
                                                     </div>
                                                 </div>
@@ -167,11 +164,16 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeList[1].appctnSttsCd eq 'WBKB_REG_FRT001'}">
-                                    <div class="btn-wrap align-right">
-                                        <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
-                                    </div>
+
+                            
+                                <c:if test="${empty fileDtlList[1]}">
+                                    <c:if test="${rsumeList[1].appctnSttsCd eq 'WBKB_REG_FRT001'}">
+                                        <div class="btn-wrap align-right">
+                                            <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
+                                        </div>
+                                    </c:if>
                                 </c:if>
+
                             </div>
                         </div>
                     </form>
@@ -190,7 +192,6 @@
                                     <span>
                                         <c:choose>
                                             <c:when test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT001'}">접수완료</c:when>
-                                            <c:when test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                             <c:when test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT002'}">통과</c:when>
                                             <c:when test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT003'}">탈락</c:when>
                                             <c:otherwise>접수전</c:otherwise>
@@ -216,36 +217,31 @@
                                                     <div class="inner-line">
                                                         <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
                                                         <div class="form-group">
-                                                            <c:if test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT001'}">
-                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                    <div class="file-list">
-                                                                        <p class="empty-txt">선택된 파일 없음</p>
-                                                                        <button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>
+
+                                                            <c:choose>
+                                                                <c:when test="${not empty fileDtlList[2]}">
+                                                                    <div class="file-prev-area">
+                                                                        <a href="/file/download?fileSeq=${fileDtlList[2].fileSeq}&fileOrd=${fileDtlList[2].fileOrd}"
+                                                                           download=""
+                                                                           title="파일 다운로드"
+                                                                        >${fileDtlList[2].orgFileNm}</a>
                                                                     </div>
-                                                                </div>
-                                                                <div class="file-btn-area">
-                                                                    <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
-                                                                    <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
-                                                                    <input type="hidden" class="notRequired" name="wBKBRegisterDTO.fileCd" value="ATTACH_FILE_TYPE12" title="첨부파일유형"/>
-                                                                </div>
-                                                            </c:if>
+                                                                </c:when>
+                                                                <c:otherwise>
+                                                                    <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                        <div class="file-list">
+                                                                            <p class="empty-txt">선택된 파일 없음</p>
+                                                                            <button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="file-btn-area">
+                                                                        <input type="file" id="searchFile3" class="searchFile" name="atchFile3">
+                                                                        <label class="btn-solid gray-bg" for="searchFile3">파일 찾기</label>
+                                                                        <input type="hidden" class="notRequired" name="wBKBRegisterDTO.fileCd" value="ATTACH_FILE_TYPE12" title="첨부파일유형"/>
+                                                                    </div>
+                                                                </c:otherwise>
+                                                            </c:choose>
 
-                                                            <!-- 2023-12-21 추가 -->
-                                                            <c:if test="${not empty fileDtlList[2]}">
-                                                                <div class="file-prev-area">
-                                                                    <a href="/file/download?fileSeq=${fileDtlList[2].fileSeq}&fileOrd=${fileDtlList[2].fileOrd}"
-                                                                       download=""
-                                                                       title="파일 다운로드"
-                                                                    >${fileDtlList[2].orgFileNm}</a>
-
-                                                                    <%--<a href="/file/download?fileSeq=${rsumeTaskDtl[2].appctnFileInfo[2].fileSeq}&fileOrd=${rsumeTaskDtl[2].appctnFileInfo[0].fileOrd}"
-                                                                   download=""
-                                                                   title="파일 다운로드"
-                                                                >${rsumeTaskDtl[2].appctnFileInfo[2].orgnFileNm}</a>--%><!-- 204-01-03 속성 변경 -->
-                                                                </div>
-                                                            </c:if>
-
-                                                            <!-- // 2023-12-21 추가 -->
                                                         </div>
                                                     </div>
                                                 </div>
@@ -253,11 +249,13 @@
                                         </div>
                                     </div>
                                 </div>
-                                <c:if test="${rsumeList[2].appctnSttsCd eq 'WBKB_REG_FRT001'}">
+
+                                <c:if test="${empty fileDtlList[2]}">
                                     <div class="btn-wrap align-right">
                                         <a class="btn-solid small black-bg btnUpdate" href="javascript:"><span>저장</span></a>
                                     </div>
                                 </c:if>
+
                             </div>
                         </div>
                     </form>

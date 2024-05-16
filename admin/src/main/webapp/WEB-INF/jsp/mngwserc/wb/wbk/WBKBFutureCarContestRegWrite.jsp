@@ -92,9 +92,9 @@
                     <div class="col-sm-5">
                         <p class="form-control-static" id="email" name="email" value="<c:if test="${not empty rtnDto}">${rtnDto.email}</c:if>">${rtnDto.email}</p>
                     </div>
-                    <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">전화번호</label>
                     <div class="col-sm-5">
-                        <input type="text" class="form-control" id="telNo" name="telNo" value="<c:if test="${not empty rtnDto}">${rtnDto.telNo}</c:if><c:if test="${empty rtnDto}"></c:if>" title="전화번호" maxlength="50"/>
+                        <input type="text" class="form-control notRequired" id="telNo" name="telNo" value="<c:if test="${not empty rtnDto}">${rtnDto.telNo}</c:if><c:if test="${empty rtnDto}"></c:if>" title="전화번호" maxlength="50"/>
                     </div>
                 </div>
             </fieldset>
@@ -392,14 +392,77 @@
                                         <div class="form-group text-sm">
                                             <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                             <div class="col-sm-6 form-inline">
-                                                <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd1" title="관리자 상태값/결과">
-                                                    <option value="" >미확인</option>
-                                                    <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
+
+                                                <%--<c:choose>
+                                                    <c:when test="${rtnDtl[0].mngSttsNm eq '미선정'}">
+                                                        <p class="form-control-static">미선정</p>
+                                                        <input type="hidden" name="rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd1" name="rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:when test="${rtnDtl[0].mngSttsNm eq '선정'}">
+                                                        <p class="form-control-static">선정</p>
+                                                        <input type="hidden" name="rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
+                                                        <input type="hidden" id="mngSttsCd1" name="rsumeDtlList[0].mngSttsCd" value="${rtnDtl[0].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd1" name="rsumeDtlList[0].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 1}">disabled</c:if>>
+                                                            <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01001_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDtl[0].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+                                                </c:choose>--%>
+
+                                                <%--<c:choose>
+                                                    <c:when test="${not empty rsumeList[0].mngSttsCd}">
+                                                        <c:set var="mngSttsCdNm" value=""/>
+                                                        <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
                                                             <option value="${cdList.cd}" <c:if test="${rsumeList[0].mngSttsCd eq cdList.cd}">selected</c:if> >
-                                                                    ${cdList.cdNm}
+                                                                    <c:if test="${empty mngSttsCdNm}">
+                                                                        <c:set var="mngSttsCdNm" value="${cdList.cdNm}"/>
+                                                                    </c:if>
                                                             </option>
-                                                    </c:forEach>
-                                                </select>
+                                                        </c:forEach>
+                                                        <p class="form-control-static">${mngSttsCdNm}</p>
+                                                        <input type="hidden" id="mngSttsCd1" value="${rtnDtl[0].mngSttsCd}">
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd1" title="관리자 상태값/결과">
+                                                            <option value="" >미확인</option>
+                                                            <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
+                                                                <option value="${cdList.cd}" <c:if test="${rsumeList[0].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                        ${cdList.cdNm}
+                                                                </option>
+                                                            </c:forEach>
+                                                        </select>
+                                                    </c:otherwise>
+
+
+                                                </c:choose>--%>
+
+                                                    <c:choose>
+                                                        <c:when test="${not empty rsumeList[0].mngSttsCd}">
+                                                            <p class="form-control-static">
+                                                                <input type="hidden" id="mngSttsCd1" value="${rsumeList[0].mngSttsCd}"/>
+                                                                    ${rsumeList[0].mngSttsCdNm}
+                                                            </p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd1" title="관리자 상태값/결과" <c:if test="${not empty rsumeList[0].mngSttsCd}">disabled</c:if>>
+                                                                <option value="" >미확인</option>
+                                                                <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeList[0].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+
+
                                             </div>
                                         </div>
                                     </fieldset>
@@ -491,14 +554,34 @@
                                             <div class="form-group text-sm">
                                                 <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                                 <div class="col-sm-6 form-inline">
-                                                    <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd2" title="관리자 상태값/결과">
+
+                                                    <c:choose>
+                                                        <c:when test="${not empty rsumeList[1].mngSttsCd}">
+                                                            <p class="form-control-static">
+                                                                <input type="hidden" id="mngSttsCd2" value="${rsumeList[1].mngSttsCd}"/>
+                                                                    ${rsumeList[2].mngSttsCdNm}
+                                                            </p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd2" title="관리자 상태값/결과">
+                                                                <option value="" >미확인</option>
+                                                                <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeList[1].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:otherwise>
+                                                    </c:choose>
+
+                                                    <%--<select class="form-control input-sm notRequired sttsChange" id="mngSttsCd2" title="관리자 상태값/결과" <c:if test="${not empty rsumeList[1].mngSttsCd}">disabled</c:if>>
                                                         <option value="" >미확인</option>
                                                         <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
                                                             <option value="${cdList.cd}"  <c:if test="${rsumeList[1].mngSttsCd eq cdList.cd}">selected</c:if>>
                                                                     ${cdList.cdNm}
                                                             </option>
                                                         </c:forEach>
-                                                    </select>
+                                                    </select>--%>
 
                                                 </div>
                                             </div>
@@ -592,14 +675,25 @@
                                             <div class="form-group text-sm">
                                                 <label class="col-sm-2 control-label">시상부문<span class="star rqWdcrmCd" style="display: none"> *</span></label>
                                                 <div class="col-sm-6 form-inline">
-                                                    <select class="form-control input-sm notRequired wdcrmCdBtn" name="wdcrmCd" title="시상부문" disabled="disabled">
-                                                        <option value="" >선택</option>
-                                                        <c:forEach var="cdList" items="${cdDtlList.WBK_AWD}" varStatus="status">
-                                                            <option value="${cdList.cd}" <c:if test="${rtnDto.wdcrmCd eq cdList.cd}">selected</c:if>>
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
+
+                                                    <c:choose>
+                                                        <c:when test="${not empty rtnDto.wdcrmCd}">
+                                                            <p class="form-control-static">
+                                                                ${rtnDto.wdcrmNm}
+                                                            </p>
+
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <select class="form-control input-sm notRequired wdcrmCdBtn" name="wdcrmCd" title="시상부문" disabled="disabled">
+                                                                <option value="" >선택</option>
+                                                                <c:forEach var="cdList" items="${cdDtlList.WBK_AWD}" varStatus="status">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDto.wdcrmCd eq cdList.cd}">selected</c:if>>
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                         </fieldset>
@@ -607,14 +701,25 @@
                                             <div class="form-group text-sm">
                                                 <label class="col-sm-2 control-label">관리자 상태값/결과</label>
                                                 <div class="col-sm-6 form-inline">
-                                                    <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd3" title="관리자 상태값/결과">
-                                                        <option value="" >미확인</option>
-                                                        <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
-                                                            <option value="${cdList.cd}" <c:if test="${rsumeList[2].mngSttsCd eq cdList.cd}">selected</c:if> >
-                                                                    ${cdList.cdNm}
-                                                            </option>
-                                                        </c:forEach>
-                                                    </select>
+
+                                                    <c:choose>
+                                                        <c:when test="${not empty rsumeList[2].mngSttsCd}">
+                                                            <p class="form-control-static">
+                                                                <input type="hidden" id="mngSttsCd3" value="${rsumeList[2].mngSttsCd}"/>
+                                                                ${rsumeList[2].mngSttsCdNm}
+                                                            </p>
+                                                        </c:when>
+                                                        <c:otherwise>
+                                                            <select class="form-control input-sm notRequired sttsChange" id="mngSttsCd3" title="관리자 상태값/결과">
+                                                                <option value="" >미확인</option>
+                                                                <c:forEach var="cdList" items="${adminStateCd}" varStatus="status">
+                                                                    <option value="${cdList.cd}" <c:if test="${rsumeList[2].mngSttsCd eq cdList.cd}">selected</c:if> >
+                                                                            ${cdList.cdNm}
+                                                                    </option>
+                                                                </c:forEach>
+                                                            </select>
+                                                        </c:otherwise>
+                                                    </c:choose>
                                                 </div>
                                             </div>
                                         </fieldset>

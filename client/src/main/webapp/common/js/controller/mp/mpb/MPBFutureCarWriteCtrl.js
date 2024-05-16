@@ -128,7 +128,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             //서류 진행 상태 확인
             var laststep = !($(".lastStep").data("laststep") === undefined || $(".lastStep").data("laststep") == '') ? $(".lastStep").data("laststep") : 1;
             var step = laststep -1
+            $('.list-item:eq('+step+')').find("a.acco-click-area").trigger("click");
             $('.list-item:eq('+step+')').addClass("active");
+
 
             $("#rsumeFrm  [name='rsumeOrd']").val(laststep);
             $("#rsumeFrm  [name='appctnSttsCd']").val($("#mngSttsCd"+laststep).val());
