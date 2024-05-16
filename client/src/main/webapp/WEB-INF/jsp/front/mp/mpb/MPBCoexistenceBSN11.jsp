@@ -130,7 +130,10 @@
                                                 </c:if>
                                                 <div class="data-line">
                                                     <div class="inner-line">
-                                                        <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
+                                                        <c:if test="${empty fileDtlList[1]}">
+                                                            <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
+                                                        </c:if>
+
                                                         <div class="form-group">
 
 
@@ -202,20 +205,30 @@
                             <div class="acco-hide-area">
                                 <div class="data-enter-form">
                                     <div class="row">
-                                        <div class="th">
-                                            <p class="title f-head">첨부파일</p>
-                                            <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
-                                        </div>
+
+                                            <div class="th">
+                                                <p class="title f-head">첨부파일</p>
+                                                <c:if test="${empty fileDtlList[2]}">
+                                                    <p class="f-caption1"><span class="essential-mark color-sky">*</span> 표시는 필수 기재 항목입니다.</p>
+                                                </c:if>
+                                            </div>
+
+
                                         <div class="td">
                                             <div class="data-line-w">
-                                                <div class="data-line">
-                                                    <div class="noti-txt-w">
-                                                        <p class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</p>
+                                                <c:if test="${empty fileDtlList[2]}">
+                                                    <div class="data-line">
+                                                        <div class="noti-txt-w">
+                                                            <p class="bullet-noti-txt f-caption2">* 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</p>
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </c:if>
+
                                                 <div class="data-line">
                                                     <div class="inner-line">
-                                                        <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
+                                                        <c:if test="${empty fileDtlList[2]}">
+                                                            <p class="data-title f-body1">신청서<span class="essential-mark color-sky">*</span></p>
+                                                        </c:if>
                                                         <div class="form-group">
 
                                                             <c:choose>
