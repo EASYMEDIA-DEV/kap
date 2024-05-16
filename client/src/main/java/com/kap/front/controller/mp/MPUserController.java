@@ -417,6 +417,12 @@ public class MPUserController {
             ip = req.getRemoteAddr();
         }
 
+        /* 2024-05-16 사용자 ip 여러 개 들어올 시 예외처리 s */
+        if(ip.contains(",")){
+            ip = ip.split(",")[0];
+        }
+        /* 2024-05-16 사용자 ip 여러 개 들어올 시 예외처리 e */
+
         return ip;
 
     }
