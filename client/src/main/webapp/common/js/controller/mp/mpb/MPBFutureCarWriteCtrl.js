@@ -98,10 +98,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         if (valid) {
                             if(confirm("저장 후 내용을 수정할 수 없습니다.\n저장하시겠습니까?")) {
                                  cmmCtrl.fileFrm(function (data) {
-                                     console.log(data)
-                                    if (data.respCnt > 0) {
+                                     console.log(data);
+                                     //debugger;
+                                     if(data != undefined){
                                          location.href = "/my-page/coexistence/list";
                                      }
+                                    /*if (data.respCnt > 0) {
+
+                                    }*/
                                  }, "./update", $formObj, "json");
                             }
                         }
