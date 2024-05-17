@@ -121,6 +121,25 @@
                 <div class="right">
                     <div class="status-info-w">
                         <p class="box-label bigger">
+                            <span>
+
+                                <c:if test="${rtnInfo.cnstgCd eq 'CONSULT_GB01'}">
+                                    <c:if test="${rtnInfo.rsumeList[0].guidePscndCd eq 'GUIDE_PSCND04'}">
+                                        ${rtnInfo.rsumeList[0].guideBgnDt}  ~ ${rtnInfo.rsumeList[0].guidePscndDt}
+                                    </c:if>
+
+                                </c:if>
+                                <c:if test="${rtnInfo.cnstgCd eq 'CONSULT_GB02'}">
+                                    <c:if test="${rtnInfo.rsumeList[0].cnstgPscndCd eq 'CNSTG_PSCND03'}">
+                                        ${rtnInfo.rsumeList[0].vstDt} ~ ${rtnInfo.rsumeList[0].cnstgPscndDt}
+                                    </c:if>
+                                </c:if>
+
+
+
+                        </span>
+                        </p>
+                        <p class="box-label bigger">
                             <c:choose>
                                 <c:when test="${rtnInfo.cnstgCd eq 'CONSULT_GB02'}">
                                     ${rtnInfo.appctnFldNm}

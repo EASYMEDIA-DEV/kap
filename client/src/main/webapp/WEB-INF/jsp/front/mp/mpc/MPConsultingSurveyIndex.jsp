@@ -41,20 +41,23 @@
                         <c:choose>
                             <c:when test="${rtnData.cnstgCd eq 'CONSULT_GB02'}">
                                 <!--경영컨설팅-->
-                                <div class="def-list">
-                                    <p class="tit f-head">방문일</p>
-                                    <p class="txt f-sub-head">
-                                        <c:choose>
-                                            <c:when test="${not empty rtnData.rsumeList[0].vstDt}">
-                                                ${rtnData.rsumeList[0].vstDt}
-                                            </c:when>
-                                            <c:otherwise>
-                                                -
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </p>
-                                </div>
-                                <div class="def-list">
+                                <c:if test="${rtnData.rsumeList[0].cnstgPscndCd eq 'CNSTG_PSCND03'}">
+                                    <div class="def-list">
+                                        <p class="tit f-head">지도기간</p>
+                                        <p class="txt f-sub-head">
+                                            <c:choose>
+                                                <c:when test="${not empty rtnData.rsumeList[0].vstDt && not empty rtnData.rsumeList[0].cnstgPscndDt}">
+                                                    ${rtnData.rsumeList[0].vstDt} ~ ${rtnData.rsumeList[0].cnstgPscndDt}
+                                                </c:when>
+                                                <c:otherwise>
+                                                    -
+                                                </c:otherwise>
+                                            </c:choose>
+                                        </p>
+                                    </div>
+                                </c:if>
+
+                                <%--<div class="def-list">
                                     <p class="tit f-head">킥오프일</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
@@ -66,8 +69,8 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </p>
-                                </div>
-                                <div class="def-list">
+                                </div>--%>
+                                <%--<div class="def-list">
                                     <p class="tit f-head">현황</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
@@ -78,11 +81,11 @@
                                                 -
                                             </c:otherwise>
                                         </c:choose>
-                                </div>
+                                </div>--%>
                             </c:when>
                             <c:otherwise>
                                 <!--기술지도-->
-                                <div class="def-list">
+                                <%--<div class="def-list">
                                     <p class="tit f-head">초도방문일</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
@@ -94,21 +97,18 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </p>
-                                </div>
-                                <div class="def-list">
-                                    <p class="tit f-head">지도착수일</p>
-                                    <p class="txt f-sub-head">
-                                        <c:choose>
-                                            <c:when test="${not empty rtnData.rsumeList[0].guideBgnDt}">
-                                                ${rtnData.rsumeList[0].guideBgnDt}
-                                            </c:when>
-                                            <c:otherwise>
-                                                -
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </p>
-                                </div>
-                                <div class="def-list">
+                                </div>--%>
+
+                                <c:if test="${rtnData.rsumeList[0].guidePscndCd eq 'GUIDE_PSCND04'}">
+                                    <div class="def-list">
+                                        <p class="tit f-head">지도기간</p>
+                                        <p class="txt f-sub-head">
+                                            ${rtnData.rsumeList[0].guideBgnDt}  ~ ${rtnData.rsumeList[0].guidePscndDt}
+                                        </p>
+                                    </div>
+                                </c:if>
+
+                                <%--<div class="def-list">
                                     <p class="tit f-head">킥오프일</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
@@ -120,8 +120,8 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </p>
-                                </div>
-                                <div class="def-list">
+                                </div>--%>
+                                <%--<div class="def-list">
                                     <p class="tit f-head">현황</p>
                                     <p class="txt f-sub-head">
                                         <c:choose>
@@ -133,7 +133,7 @@
                                             </c:otherwise>
                                         </c:choose>
                                     </p>
-                                </div>
+                                </div>--%>
 
                             </c:otherwise>
 

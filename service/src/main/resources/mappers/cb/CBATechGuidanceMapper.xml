@@ -894,8 +894,11 @@
              , (SELECT TITL FROM SV_MST WHERE SRV_SEQ = A.SRV_SEQ) AS SRV_NM
              , SRV_STRT_DTM
              , SRV_END_DTM
+             , GUIDE_PSCND_CD
              , (SELECT CD_NM FROM CO_CODE_MST WHERE CD_ID = 'GUIDE_PSCND' AND CD = A.GUIDE_PSCND_CD) AS GUIDE_PSCND_CD_NM
              , GUIDE_PSCND_DT
+             , CNSTG_PSCND_CD
+             , CNSTG_PSCND_DT
              , REG_ID
              , REG_IP
              , REG_DTM

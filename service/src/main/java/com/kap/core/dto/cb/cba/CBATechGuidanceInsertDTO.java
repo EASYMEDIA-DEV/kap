@@ -249,8 +249,12 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String dpndnCmpnNm;
     @Schema(title="완성차 의존율 매출비중")
     private String dpndnRate;
+
+    @Schema(title = "지도현황코드")
+    private String guidePscndCd;
     @Schema(title = "지도현황일자")
     private String guidePscndDt;
+
     @Schema(title = "신청업종")
     private String cbsnNm;
     @Schema(title = "품질담당자수")
@@ -382,5 +386,12 @@ public class CBATechGuidanceInsertDTO extends BaseDTO {
     private String initVstOpnnCntn;
     @Schema(title = "관리자 대시보드 검색타입", example = "A/B")
     private String dashBoardType;
+
+    @Schema(title = "컨설팅 현황")
+    private String cnstgPscndCd;
+    @Schema(title = "컨설팅 현황 날짜")
+    private String cnstgPscndDt;
+
+
 
 }
