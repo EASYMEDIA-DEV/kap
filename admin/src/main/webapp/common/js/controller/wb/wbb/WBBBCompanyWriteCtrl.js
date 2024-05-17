@@ -378,7 +378,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                         isValid = false;
                         return false;
                     }
-                    if($(".dropzone .dz-preview").length < 1) {
+                    if($formObj.find("input[name='detailsKey']").val() != "" && $(".dropzone .dz-preview").length < 1) {
                         alert(msgCtrl.getMsg("fail.notFileRequired"));
                         isValid = false;
                         return false;
