@@ -348,7 +348,8 @@ public class EBBEpisdDTO extends BaseDTO {
     private String sttsCdNm;
 
     @Schema(title = "수료여부", example = "텍스트")
-    private String cmptnYn;
+    @Builder.Default
+    private String cmptnYn = "N";
 
     @Schema(title = "수료일", example = "yyyy-mm-dd HH:mm:ss")
     private String cmptnDtm;
