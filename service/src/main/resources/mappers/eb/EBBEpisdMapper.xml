@@ -355,6 +355,8 @@
 				AND EXPS_YN = 'Y'
 				<!--사용자는 교육 시작일 이전만 출력-->
 				/*AND NOW()  <![CDATA[<]]>  edctn_strt_dtm*/
+				<!-- 2024-05-17 사용자는 교육 종료 이전만 출력 -->
+				AND NOW() <![CDATA[<]]> edctn_end_dtm
 			</if>
 
 			<if test='mypageYn == "Y".toString() '>

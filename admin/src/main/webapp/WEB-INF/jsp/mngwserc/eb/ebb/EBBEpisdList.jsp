@@ -344,7 +344,7 @@
 								<th class="text-center" rowspan="2">최초 등록일시</th>
 								<th class="text-center" rowspan="2">최종 수정자</th>
 								<th class="text-center" rowspan="2">최종 수정일시</th>
-								<th class="text-center" rowspan="2">노출여부</th>
+								<th class="text-center" rowspan="2">사용여부</th> <%-- 2024-05-17 텍스트 수정--%>
 							</tr>
 							<tr>
 								<th class="text-center">이름</th>

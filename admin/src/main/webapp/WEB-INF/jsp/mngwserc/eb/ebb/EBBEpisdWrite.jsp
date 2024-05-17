@@ -838,16 +838,16 @@
 
                     <fieldset class="last-child">
                         <div class="form-group text-sm">
-                            <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
+                            <label class="col-sm-1 control-label">사용여부<span class="star"> *</span></label>
                             <div class="col-sm-11">
                                 <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
                                 <label class="radio-inline c-radio">
-                                    <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
-                                    <span class="ion-record"></span> 노출
+                                    <input type="radio" name="expsYn" value="Y" title="사용여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                                    <span class="ion-record"></span> 사용<%-- 2024-05-17 텍스트 수정--%>
                                 </label>
                                 <label class="radio-inline c-radio">
-                                    <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
-                                    <span class="ion-record"></span> 미노출
+                                    <input type="radio" name="expsYn" value="N" title="사용여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                                    <span class="ion-record"></span> 미사용<%-- 2024-05-17 텍스트 수정--%>
                                 </label>
                             </div>
                         </div>
