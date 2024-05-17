@@ -3041,7 +3041,7 @@ footer .copy-area span:last-child:after {display: none;}
 .training-confirm .training-view-page .training-list .img-area {flex-shrink: 0; width: 184rem; height: 114rem; margin-right: 24rem; background-size: 80rem auto;}
 .training-confirm .training-view-page .training-list .txt-area {position:relative; flex-direction: row; align-items: stretch; width: 100%;}
 .training-confirm .training-view-page .training-list .txt-area .sort-label-area {margin-bottom: 10rem;}
-.training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem; border-right: 1px solid #ECEEEF;}
+.training-confirm .training-view-page .training-list .txt-area .top-line {width: calc(75% - 66rem); /*width: 387rem;*/ padding-right: 24rem;} /* 2024-05-17 수정 */
 .training-confirm .training-view-page .training-list:not(:has(.img-area)) .txt-area .top-line {flex-shrink: 0; width: calc(75% - 13rem); }
 .training-confirm .training-view-page .training-list .txt-area .top-line + * {align-self: flex-start;}
 .training-confirm .training-view-page .training-list .top-line + .status-info-w {flex-wrap: wrap; padding-left: 24rem;}

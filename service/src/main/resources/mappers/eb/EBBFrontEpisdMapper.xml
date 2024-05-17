@@ -2221,6 +2221,7 @@
 		  AND episd_year = #{episdYear}
 		  AND episd_ord = #{episdOrd}
 		  AND mem_seq = #{memSeq}
+		  AND stts_cd = 'EDU_STTS_CD01'
 	</select>
 
 </mapper>

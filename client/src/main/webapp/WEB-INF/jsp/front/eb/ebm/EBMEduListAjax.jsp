@@ -39,6 +39,11 @@
                                         </div>
                                         <div class="group">
                                             <p class="f-head">${list.episdOrd}회차</p>
+                                            <!-- 2024-05-17 추가 s -->
+                                            <c:if test="${not empty list.cbsnCdNm}">
+                                                <p class="box-label bigger"><span>${list.cbsnCdNm}</span></p>
+                                            </c:if>
+                                            <!-- 2024-05-17 추가 e -->
                                             <div class="status-info-w">
                                                 <c:choose>
                                                     <c:when test="${list.trnsfYn eq 'N' and (list.eduStat eq '교육대기' or list.eduStat eq '신청대기' or list.eduStat eq '협의중')}">
