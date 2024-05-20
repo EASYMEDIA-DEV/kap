@@ -248,6 +248,11 @@ public interface EBBEpisdMapper {
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 설문결과초기화 (종합 점수)
+	 */
+	public int resetEduSrvRslt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 - 설문 개수
 	 */
 	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;

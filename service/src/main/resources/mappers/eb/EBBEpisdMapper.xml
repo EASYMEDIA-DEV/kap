@@ -2395,7 +2395,30 @@
 		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
 		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
 		where sv_rspn_mst.srv_seq = #{srvSeq}
+			and sv_rspn_mst.rfnc_seq = #{episdSeq}
 	</delete>
+
+	<!--
+         쿼리명 : EBBEpisdMapper.resetEduSrvRslt
+         설  명 : 교육 회차별 만족도 결과 상세 초기화
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.05.20   장두석       최초생성
+    -->
+	<update id="resetEduSrvRslt" parameterType="EBBEpisdDTO">
+		UPDATE /* EBBEpisdMapper.resetEduSrvRslt */
+			ed_edctn_srv_rslt_dtl
+		SET
+			vrll_avrg = 0.0
+			, ttl_co_score = 0.0
+			, edctn_envrnmt_score = 0.0
+			, edctn_spprt_score = 0.0
+			, edctn_cntn_score = 0.0
+			, isttr_score = 0.0
+			, ttl_ptcpt_cnt = 0
+		WHERE
+			episd_seq = #{episdSeq}
+	</update>
 
 	<!--
          쿼리명 : EBBEpisdMapper.checkSurveyCnt

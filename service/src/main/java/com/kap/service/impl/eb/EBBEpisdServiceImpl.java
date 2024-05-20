@@ -1002,6 +1002,10 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 		int rtnCnt = eBBEpisdMapper.deleteSurveyRspn(eBBEpisdDTO);
+		if (rtnCnt > 0) {
+			eBBEpisdMapper.resetEduSrvRslt(eBBEpisdDTO);
+		}
+
 		return rtnCnt;
 	}
 
