@@ -72,6 +72,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			//교육 양도 갯수
 			var typeCCnt = $("#ptcptListContainer").find("tr:first").data("typecCount");
 
+			//교육 출석 100% 개수
+			var typeDCnt = $("#ptcptListContainer").find("tr:first").data("typedCount");
+
 
 			//총 건수
 			ctrl.obj.find("#ptcptListContainerTotCnt").text(totCnt);
@@ -84,6 +87,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			//교육 양도 건수
 			ctrl.obj.find("#ptcptListContainerTypeCCnt").text(typeCCnt);
+
+			//교육 출석 100% 건수
+			ctrl.obj.find("#ptcptListContainerTypeDCnt").text(typeDCnt);
 
 			$(".ptcptField").validation({});
 
