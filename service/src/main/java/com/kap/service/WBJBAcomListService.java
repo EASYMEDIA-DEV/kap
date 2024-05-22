@@ -91,6 +91,11 @@ public interface WBJBAcomListService {
     public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
 
     /**
+     * 포상값 dto리스트로 리턴
+     */
+    public List<WBJAcomSearchDTO> getPrizeDtoList(WBJAcomSearchDTO wBJAcomSearchDTO) throws Exception;
+
+    /**
      * 신청 부품사 등록 Insert
      */
     public int insertApply(WBJAcomDTO wBJAcomDTO, HttpServletRequest request) throws Exception;
