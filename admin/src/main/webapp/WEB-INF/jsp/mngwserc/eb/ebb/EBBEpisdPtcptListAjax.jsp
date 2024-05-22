@@ -3,7 +3,7 @@
 <c:choose>
   <c:when test="${ not empty rtnData.ptcptList}">
     <c:forEach var="ptcptList" items="${rtnData.ptcptList}" varStatus="status">
-      <tr  data-total-count="${rtnData.totalCount}" data-typea-count="${rtnData.typeACount}" data-typeb-count="${rtnData.typeBCount}" data-typec-count="${rtnData.typeCCount}">
+      <tr  data-total-count="${rtnData.totalCount}" data-typea-count="${rtnData.typeACount}" data-typeb-count="${rtnData.typeBCount}" data-typec-count="${rtnData.typeCCount}" data-typed-count="${rtnData.typeDCount}">
         <td class="text-center">
           <label class="checkbox-inline c-checkbox">
 

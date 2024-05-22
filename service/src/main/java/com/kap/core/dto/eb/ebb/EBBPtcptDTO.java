@@ -199,6 +199,9 @@ public class EBBPtcptDTO extends BaseDTO {
     @Builder.Default
     private int typeCCount = 0;//교육양도 카운트
 
+    @Builder.Default
+    private int typeDCount = 0;//출석 100% 카운트
+
     private List<EBBPtcptDTO> list;
 
 

@@ -1896,6 +1896,73 @@
 	</select>
 
 	<!--
+      쿼리명 : EBBEpisdMapper.selectEpisdPtcptListTypeDCnt
+      설  명 : 교육차수관리 - 참여자 목록 카운트 (출석 100%만)
+       수정일     수정자       수정내용
+     ==========   ======    ==============
+     2024.05.21   장두석       최초생성
+ 	-->
+	<select id="selectEpisdPtcptListTypeDCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		SELECT /* EBBEpisdMapper.selectEpisdPtcptListTypeDCnt */
+			count(*)
+		FROM (
+				 SELECT
+					 a.ptcpt_seq
+					  , a.mem_seq
+					  , b.id
+					  , b.name
+					  , (select cmpn_nm from cp_cmpn_mst where bsnm_no = a.ptcpt_bsnm_no) as cmpn_nm
+					  , (select cd_nm from co_code_mst where cd = c.ctgry_cd) as ctgry_nm
+					  , a.ptcpt_bsnm_no /*사업자등록번호*/
+					  , b.hp_no
+					  , b.email
+					  , b.dept_cd
+					  , case when b.dept_cd = null or  b.dept_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.dept_cd ) end as dept_cd_nm
+					  , b.dept_dtl_nm
+					  , b.pstn_cd
+					  , case when b.pstn_cd = null or  b.pstn_cd = '' then null else (select cd_nm from co_code_mst where  cd=b.pstn_cd ) end as pstn_cd_nm
+					  , b.pstn_nm
+					  , a.stts_cd
+					  , case when a.stts_cd = null or  a.stts_cd = '' then null else (select cd_nm from co_code_mst where  cd=a.stts_cd ) end as stts_cd_nm
+					  , a.reg_dtm as edu_dtm
+					  , b.reg_dtm
+					  , a.cmptn_yn
+					  , a.exam_score
+					  , e.exam_ptcpt_seq
+					  , otsd_exam_ptcpt_yn
+					  , case when d.edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+								 case when a.stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+										  case when NOW()   <![CDATA[<]]>  d.edctn_strt_dtm then '교육대기'
+											   when d.edctn_strt_dtm  <![CDATA[<]]>  NOW() AND NOW()  <![CDATA[<]]>   d.edctn_end_dtm  then '교육중'
+											   when d.edctn_end_dtm  <![CDATA[<]]>  NOW()  then '교육완료'
+											  end
+									  when a.stts_cd = 'EDU_STTS_CD02' then '신청취소'
+									  when a.stts_cd = 'EDU_STTS_CD06' then '교육취소'
+									 end
+
+							 when d.edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+					 end edu_stat
+
+					  , ifnull(ROUND(((SELECT COUNT(atndc_dtm) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq AND atndc_dtm IS NOT NULL) / (select COUNT(edctn_dt) FROM ep_edctn_atndc_dtl WHERE ptcpt_seq = a.ptcpt_seq))*100), '0') as  edu_atndc/*출석률*/
+					  , (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND A.EPISD_ORD) AS PTCPT_INFO
+					  , (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = A.EDCTN_SEQ AND EPISD_YEAR = A.EPISD_YEAR AND EPISD_ORD = A.EPISD_ORD) AS LCRT_INFO
+					  , (SELECT stduy_mthd_cd FROM ed_edctn_prcs_mst WHERE EDCTN_SEQ = A.EDCTN_SEQ) AS stduy_mthd_cd
+				 from ep_edctn_ptcpt_mst a
+						  left join(select mem_seq, id, name, hp_no, email, dept_cd, dept_dtl_nm, pstn_cd, pstn_nm, reg_dtm from co_mem_mst where 1=1 and mem_cd = 'CP') b on a.mem_seq = b.mem_seq
+						  left join(select cmpn_nm, ctgry_cd, bsnm_no from cp_cmpn_mst where 1=1) c on c.bsnm_no = a.ptcpt_bsnm_no
+						  left join(SELECT edctn_seq, episd_year, episd_ord, edctn_strt_dtm, edctn_end_dtm, otsd_exam_ptcpt_yn, edctn_stts_cd FROM ed_edctn_episd_mst) d ON d.edctn_seq = a.edctn_seq AND d.episd_year = a.episd_year AND d.episd_ord = a.episd_ord
+						  left join(select ptcpt_seq, exam_ptcpt_seq from ep_edctn_exam_ptcpt_mst) e on e.ptcpt_seq = a.ptcpt_seq
+				 where 1=1
+				   and a.edctn_seq = #{edctnSeq}
+				   and a.episd_year = #{episdYear}
+				   and a.episd_ord = #{episdOrd}
+
+				   and a.stts_cd = 'EDU_STTS_CD01'
+			 ) AA
+		where edu_atndc = 100
+	</select>
+
+	<!--
       쿼리명 : EBBEpisdMapper.selectEpisdPtcptList
       설  명 : 교육차수관리 - 참여자 목록
        수정일     수정자       수정내용
@@ -2395,7 +2462,30 @@
 		left join sv_sbjct_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_sbjct_rspn_dtl.srv_rspn_seq
 		left join sv_mtlcc_rspn_dtl on sv_rspn_mst.srv_rspn_seq = sv_mtlcc_rspn_dtl.srv_rspn_seq
 		where sv_rspn_mst.srv_seq = #{srvSeq}
+			and sv_rspn_mst.rfnc_seq = #{episdSeq}
 	</delete>
+
+	<!--
+         쿼리명 : EBBEpisdMapper.resetEduSrvRslt
+         설  명 : 교육 회차별 만족도 결과 상세 초기화
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.05.20   장두석       최초생성
+    -->
+	<update id="resetEduSrvRslt" parameterType="EBBEpisdDTO">
+		UPDATE /* EBBEpisdMapper.resetEduSrvRslt */
+			ed_edctn_srv_rslt_dtl
+		SET
+			vrll_avrg = 0.0
+			, ttl_co_score = 0.0
+			, edctn_envrnmt_score = 0.0
+			, edctn_spprt_score = 0.0
+			, edctn_cntn_score = 0.0
+			, isttr_score = 0.0
+			, ttl_ptcpt_cnt = 0
+		WHERE
+			episd_seq = #{episdSeq}
+	</update>
 
 	<!--
          쿼리명 : EBBEpisdMapper.checkSurveyCnt

@@ -746,7 +746,7 @@
 			 ,a.mod_id
 			 ,a.mod_dtm
 			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
-			 , (select group_concat(sbjct_rply) from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+			 , (select group_concat(sbjct_rply SEPARATOR ';') from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where rfnc_cd = 'EDU' and rfnc_seq = #{rfncSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc

@@ -920,7 +920,7 @@
                     <fieldset class="ptcptField">
                         <div class="clearfix">
                             <h6 class="pull-left mt0">
-                                <em class="ion-play mr-sm"></em>참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건 / 신청 <span id="ptcptListContainerTypeACnt">0</span>건 / 취소 <span id="ptcptListContainerTypeBCnt">0</span> 건 / 양도 <span id="ptcptListContainerTypeCCnt">0</span> 건)
+                                <em class="ion-play mr-sm"></em>참여자 목록 (총 <span id="ptcptListContainerTotCnt">0</span> 건 / 신청 <span id="ptcptListContainerTypeACnt">0</span>건 / 취소 <span id="ptcptListContainerTypeBCnt">0</span> 건 / 양도 <span id="ptcptListContainerTypeCCnt">0</span> 건 / 참석 <span id="ptcptListContainerTypeDCnt">0</span> 건)
                             </h6>
                             <!-- 현재 페이징 번호 -->
                             <input type="hidden" id="pageIndex" name="pageIndex" class="notRequired" value="${ rtnData.pageIndex }" />
@@ -1203,7 +1203,7 @@
                                                     <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                         <c:choose>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
-                                                                <c:forTokens var="item" items="${exmplList.winAnswerText}" delims="," varStatus="status">
+                                                                <c:forTokens var="item" items="${exmplList.winAnswerText}" delims=";" varStatus="status">
                                                                    - ${item} <br>
                                                                 </c:forTokens>
                                                             </c:when>

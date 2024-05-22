@@ -170,6 +170,11 @@ public interface EBBEpisdMapper {
 	public int selectEpisdPtcptListTypeCCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 교육 참여자 목록 카운트(출석 100%만)
+	 */
+	public int selectEpisdPtcptListTypeDCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 - 교육 참여자 목록
 	 */
 	public List<EBBPtcptDTO> selectEpisdPtcptList(EBBEpisdDTO eBBEpisdDTO) throws Exception;
@@ -246,6 +251,11 @@ public interface EBBEpisdMapper {
 	 * 교육차수 - 설문초기화
 	 */
 	public int deleteSurveyRspn(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
+	 * 교육차수 - 설문결과초기화 (종합 점수)
+	 */
+	public int resetEduSrvRslt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
 	 * 교육차수 - 설문 개수
