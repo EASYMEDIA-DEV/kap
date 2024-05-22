@@ -5,6 +5,8 @@
     <input type="hidden" class="notRequired" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
     <input type="hidden" class="notRequired" id="firstIndex" name="firstIndex" value="${ rtnData.firstIndex }" />
     <input type="hidden" class="notRequired" id="recordCountPerPage" name="recordCountPerPage" value="${ rtnData.recordCountPerPage }" />
+
+    <input type="hidden" class="notRequired" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
     <input type="hidden" class="notRequired" id="totalCount" name="totalCount" value="${ rtnData.totalCount }" />
     <input type="hidden" class="notRequired" id="episdSeq" name="episdSeq" value="${param.episdSeq}" />
     <input type="hidden" class="notRequired" id="bsnmNo" name="bsnmNo" value="${param.bsnmNo}" />

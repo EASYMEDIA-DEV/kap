@@ -121,21 +121,27 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     click : function() {
                         //검색버튼 클릭시
                         $('#firstIndex').val(0);
+                        $('#pageIndex').val(1);
                         cmmCtrl.listFrmAjax(function(respObj) {
                             //CALLBACK 처리
 
                             $('.divide').empty();
                             $('.divide').append(respObj);
-                            addCount = addCount;
+                            //addCount = addCount;
                             //전체 갯수
-                            var totalCnt = $(respObj).eq(0).data("totalCount");
-                            totalCnt = (totalCnt === undefined)? 0 : totalCnt;
+                            //var totalCnt = $(respObj).eq(0).data("totalCount");
+                            var totalCnt = $("#totalCnt").val();
+                            totalCnt = (totalCnt === undefined)? 0 :totalCnt;
 
-                            if (addCount >= totalCnt) {
+                            //var totalCnt = $("#totalCount").val();
+
+                            $("#totalCount").val(totalCnt);
+
+                            if (($("#pageIndex").val()*10) >= totalCnt) {
                                 $('.add-load').hide();
                             } else {
                                 $('.add-load').show();
-                                $('.item-count').text("("+ addCount + "/" + totalCnt +")");
+                                $('.item-count').text("("+ ($("#pageIndex").val()*10) + "/" + totalCnt +")");
                             }
                             //페이징 처리
                         }, "./addRoundMore", $formObj, "POST", "html");
@@ -237,18 +243,26 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             addMore : {
                 event : {
                     click : function() {
+
+                        var pageIndex = $('#pageIndex').val();
+                        $('#pageIndex').val(++pageIndex);
+
                         cmmCtrl.listFrmAjax(function(respObj) {
                             //CALLBACK 처리
                             $('.divide').empty();
                             $('.divide').append(respObj);
                             addCount = 10+addCount;
                             //전체 갯수
-                            var totalCnt = $("#totalCount").val();
-                            if (addCount >= totalCnt) {
+                            var totalCnt = $("#totalCnt").val();
+
+                            $("#totalCount").val(totalCnt);
+
+
+                            if (($('#pageIndex').val()*10) >= totalCnt) {
                                 $('.add-load').hide();
                             } else {
-                                $('#firstIndex').val(addCount);
-                                $('.item-count').text("("+ addCount + "/" + totalCnt +")");
+
+                                $('.item-count').text("("+ ($('#pageIndex').val()*10) + "/" + totalCnt +")");
                             }
                             //페이징 처리
                         }, "./addRoundMore", $formObj, "POST", "html");

@@ -22,7 +22,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * <pre>
@@ -145,7 +147,7 @@ public class WBJAutoMotiveController {
     public String getStep2Page(WBBACompanySearchDTO wbbCompanySearchDTO, WBRoundMstSearchDTO wBRoundMstSearchDTO,
                                MPEPartsCompanyDTO mpePartsCompanyDTO, WBJAcomSearchDTO wBJAcomSearchDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         String vwUrl = "front/wb/wbj/WBJAutoMotiveStep2.front";
-        try {
+        //try {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION));
 
             if (RequestContextHolder.getRequestAttributes().getAttribute("step1Auth", RequestAttributes.SCOPE_SESSION) == null || !contentAuth.equals(String.valueOf(wBRoundMstSearchDTO.getEpisdSeq()))) {
@@ -174,19 +176,22 @@ public class WBJAutoMotiveController {
                 mpePartsCompanyDTO.setRecordCountPerPage(page.getRecordCountPerPage());
                 modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
                 modelMap.addAttribute("rtnUser", cOUserDetailsDTO);
-                modelMap.addAttribute("optPrizeList", wBJBAcomListService.getPrizeList(wBJAcomSearchDTO));
+
+                //modelMap.addAttribute("optPrizeList", wBJBAcomListService.getPrizeList(wBJAcomSearchDTO));
+                modelMap.addAttribute("optPrizeList", wBJBAcomListService.getPrizeDtoList(wBJAcomSearchDTO));
+
                 modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
                 modelMap.addAttribute("rtnRoundDtl", wBJARoundListService.getRoundDtl(wBRoundMstSearchDTO));
 
                 RequestContextHolder.getRequestAttributes().removeAttribute("step1Auth", RequestAttributes.SCOPE_SESSION);
                 RequestContextHolder.getRequestAttributes().setAttribute("step2Auth", wBRoundMstSearchDTO.getEpisdSeq(), RequestAttributes.SCOPE_SESSION);
             }
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }
+        }*/
 
         return vwUrl;
     }
@@ -273,6 +278,9 @@ public class WBJAutoMotiveController {
     @RequestMapping(value = "/addRoundMore")
     public String addRoundMore(MPEPartsCompanyDTO mpePartsCompanyDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
         try {
+
+            //사용자+레이어 팝업으로 조회시 pageIndex는 1로 고정한다.
+            mpePartsCompanyDTO.setSrchLayer("Y");
             modelMap.addAttribute("rtnData", wBIBSupplyCompanyService.selectPartsCompanyList(mpePartsCompanyDTO));
         } catch (Exception e) {
             if (log.isDebugEnabled()) {

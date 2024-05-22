@@ -449,7 +449,7 @@
                         <div class="col-sm-3">
                             <input type="hidden" value="${rtnInfo.prizeCd}" id="userPirzeCd" name="userPirzeCd" />
                             <select class="form-control srvTypeCd prizeCd" id="optPrize" name="prizeCd">
-                                <c:forEach var="cdList" items="${rtnInfo.prizeList}" varStatus="status">
+                                <c:forEach var="cdList" items="${rtnInfo.prizeDtoList}" varStatus="status">
                                     <option value="${cdList.prizeCd}" <c:if test="${rtnInfo.prizeCd eq cdList.prizeCd}">selected</c:if>>${cdList.prizeCdNm}</option>
                                 </c:forEach>
                             </select>

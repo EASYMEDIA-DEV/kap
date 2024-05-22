@@ -464,6 +464,30 @@
     </select>
 
     <!--
+         쿼리명 : WBJBAcomMapper.getOptPrizeList
+         설  명 : 포상 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getOptPrizeDtoList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.PRIZE_CD) as PRIZE_CD_NM,
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.MRTS_CD) as MRTS_CD_NM,
+                A.EPISD_SEQ,
+                A.PRIZE_CD,
+                A.MRTS_CD,
+                A.PRIZE_PMT,
+                B.YEAR
+        FROM CX_EPISD_PRIZE_DTL A INNER JOIN CX_EPISD_MST B
+                                             ON A.EPISD_SEQ = B.EPISD_SEQ
+        WHERE b.bsn_cd = #{bsnCd}
+          AND B.year = #{year}
+        GROUP BY prize_cd, episd_seq, prize_cd_nm
+        ORDER BY A.PRIZE_SEQ DESC
+    </select>
+
+    <!--
          쿼리명 : WBJBAcomMapper.getOptMrtsList
          설  명 : 훈격 Option 검색
          수정일     수정자     수정내용
@@ -1138,6 +1162,27 @@
                 A.PRIZE_PMT
         FROM CX_EPISD_PRIZE_DTL A
         WHERE EPISD_SEQ = ${episdSeq}
+        ORDER BY A.PRIZE_SEQ DESC
+    </select>
+
+    <!--
+         쿼리명 : WBJBAcomMapper.getPrizeList
+         설  명 : 포상 Option 검색
+         수정일     수정자     수정내용
+        ==========  ======  ==============
+        2023.11.30  오병호     최초 생성
+    -->
+    <select id="getPrizeDtoList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+        SELECT
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.PRIZE_CD) as PRIZE_CD_NM,
+                (SELECT cd_nm FROM co_code_mst WHERE cd = A.MRTS_CD) as MRTS_CD_NM,
+                A.EPISD_SEQ,
+                A.PRIZE_CD,
+                A.MRTS_CD,
+                A.PRIZE_PMT
+        FROM CX_EPISD_PRIZE_DTL A
+        WHERE EPISD_SEQ = ${episdSeq}
+        GROUP BY prize_cd, episd_seq, prize_cd_nm
         ORDER BY A.PRIZE_SEQ DESC
     </select>
 

@@ -89,9 +89,15 @@ public interface WBJBAcomListMapper {
 
     /**
      *  Write Page
-     *  사업회차 연도 기준 회차 검색
+     *  포상부문 조회(String)
      */
     public List<String> getOptPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO);
+
+    /**
+     *  Write Page
+     *  포상부문 조회(DTO)
+     */
+    public List<WBJAcomSearchDTO> getOptPrizeDtoList(WBJAcomSearchDTO wBJAcomSearchDTO);
 
     /**
      *  Write Page
@@ -215,6 +221,12 @@ public interface WBJBAcomListMapper {
      *  회차 값에 따른 포상 검색
      */
     public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO);
+
+    /**
+     *  Write Page
+     *  회차 값에 따른 포상 검색 (dto형태로 반환)
+     */
+    public List<WBJAcomSearchDTO> getPrizeDtoList(WBJAcomSearchDTO wBJAcomSearchDTO);
 
     /**
      * 상생신청 마스터 생성

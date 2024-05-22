@@ -102,7 +102,8 @@ public class WBJARoundListServiceImpl implements WBJARoundListService {
         int firstEpisdGiveSeqIdgen = 0;
 
         List<String> episdCnt =  wBJARoundListMapper.episdCnt(wBRoundMstDTO);
-        if(episdCnt.contains("0")){
+        if(episdCnt.size()>0){
+        //if(episdCnt.contains("0")){
             wBJARoundListMapper.deletePrizeList(wBRoundMstDTO);
 
             for(int i = 0; i < wBRoundMstDTO.getPrizeList().size(); i++){

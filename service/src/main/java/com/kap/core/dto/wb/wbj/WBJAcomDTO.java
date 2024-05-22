@@ -208,6 +208,9 @@ public class WBJAcomDTO extends BaseDTO {
     @Schema(title = "포상 리스트")
     private List<String> prizeList;
 
+    @Schema(title = "포상 리스트(DTO)")
+    private List<WBJAcomSearchDTO> prizeDtoList;
+
     @Schema(title = "훈격 리스트")
     private List<String> mrtsList;
 

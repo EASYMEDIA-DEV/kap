@@ -159,4 +159,8 @@ public class WBJAcomSearchDTO extends BaseDTO {
     @Schema(title = "노출여부 리스트")
     private List expsYnList;
 
+    @Schema(title = "신청부품사관리 수정여부")
+    @Builder.Default
+    private String editYn = "N";
+
 }

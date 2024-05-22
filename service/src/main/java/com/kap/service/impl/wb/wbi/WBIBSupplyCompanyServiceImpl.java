@@ -708,6 +708,13 @@ public class WBIBSupplyCompanyServiceImpl implements WBIBSupplyCompanyService {
         page.setRecordCountPerPage(mpePartsCompanyDTO.getListRowSize());
         page.setPageSize(mpePartsCompanyDTO.getPageRowSize());
 
+
+        if("Y".equals(mpePartsCompanyDTO.getSrchLayer()) && "front".equals(mpePartsCompanyDTO.getSiteGubun())){
+            mpePartsCompanyDTO.setFirstIndex(0);
+            int recordCountPerPage = (mpePartsCompanyDTO.getPageIndex() * mpePartsCompanyDTO.getPageRowSize() >= mpePartsCompanyDTO.getTotalCount()) ? mpePartsCompanyDTO.getTotalCount() : mpePartsCompanyDTO.getPageIndex() * mpePartsCompanyDTO.getPageRowSize();
+            mpePartsCompanyDTO.setRecordCountPerPage(recordCountPerPage);
+        }
+
         mpePartsCompanyDTO.setList(wBIBSupplyCompanyMapper.selectPartsCompanyList(mpePartsCompanyDTO));
         mpePartsCompanyDTO.setTotalCount(wBIBSupplyCompanyMapper.selectPartsCompanyCnt(mpePartsCompanyDTO));
 

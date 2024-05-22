@@ -20,8 +20,8 @@
                 <td class="text-center">${list.ctgryCdNm}</td> <%-- 구분 --%>
                 <td class="text-center">${list.sizeCdNm}</td> <%-- 규모 --%>
                 <td class="text-center">${bsnmNo1}-${bsnmNo2}-${bsnmNo3}</td> <%-- 사업자등록번호 --%>
-                <td class="text-center">${list.prizeCdNm}</td> <%-- 포상훈격 --%>
                 <td class="text-center">${not empty list.mrtsCdNm ? list.mrtsCdNm : "-"}</td> <%-- 훈격부문 --%>
+                <td class="text-center">${list.prizeCdNm}</td> <%-- 포상 --%>
                 <td class="text-center">${list.name}</td> <%-- 포상대상자 --%>
                 <td class="text-center">${list.hpNo}</td> <%-- 핸드폰번호 --%>
                 <td class="text-center">${list.appctnSttsCdNm}</td> <%-- 1차 결과 --%>

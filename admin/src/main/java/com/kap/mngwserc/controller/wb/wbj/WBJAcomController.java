@@ -287,6 +287,8 @@ public class WBJAcomController {
             wBJAcomSearchDTO.setBsnCd("BSN10");
 
             WBJBAcomMstDTO wBJBAcomMstDTO;
+
+            wBJAcomSearchDTO.setEditYn("Y");
             wBJBAcomMstDTO = wBJBAcomListService.selectAppctnRsumeDtl(wBJAcomSearchDTO);
             modelMap.addAttribute("rtnAppctnRsume", wBJBAcomMstDTO);
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));

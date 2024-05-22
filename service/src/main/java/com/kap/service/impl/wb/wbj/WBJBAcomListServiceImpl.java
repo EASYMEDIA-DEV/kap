@@ -214,10 +214,18 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
         String detailsKey = wBJAcomSearchDTO.getDetailsKey();
 
         WBJAcomDTO wBJAcomDTO = wBJBAcomListMapper.selectAcomDtl(wBJAcomSearchDTO);
-        List<String> optPrizeList = wBJBAcomListMapper.getOptPrizeList(wBJAcomSearchDTO);
+
+        if("Y".equals(wBJAcomSearchDTO.getEditYn())){
+            List<WBJAcomSearchDTO> optPrizeList = wBJBAcomListMapper.getOptPrizeDtoList(wBJAcomSearchDTO);
+            wBJAcomDTO.setPrizeDtoList(optPrizeList);
+        }else{
+            List<String> optPrizeList = wBJBAcomListMapper.getOptPrizeList(wBJAcomSearchDTO);
+            wBJAcomDTO.setPrizeList(optPrizeList);
+        }
+
         List<String> optMrtsList = wBJBAcomListMapper.getOptMrtsList(wBJAcomSearchDTO);
         List<WBJAcomSearchDTO> optFileList = wBJBAcomListMapper.getFileList(wBJAcomSearchDTO);
-        wBJAcomDTO.setPrizeList(optPrizeList);
+
         wBJAcomDTO.setMrtsList(optMrtsList);
         wBJAcomDTO.setOptFileList(optFileList);
         /* 상생신청파일 상세 */
@@ -619,6 +627,13 @@ public class WBJBAcomListServiceImpl implements WBJBAcomListService {
     public List<String> getPrizeList(WBJAcomSearchDTO wBJAcomSearchDTO)  throws Exception
     {
         return wBJBAcomListMapper.getPrizeList(wBJAcomSearchDTO);
+    }
+    /**
+     *  회차 값에 따른 포상 검색
+     */
+    public List<WBJAcomSearchDTO> getPrizeDtoList(WBJAcomSearchDTO wBJAcomSearchDTO)  throws Exception
+    {
+        return wBJBAcomListMapper.getPrizeDtoList(wBJAcomSearchDTO);
     }
 
     /**
