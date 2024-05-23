@@ -26,7 +26,7 @@
 					<div class="form-group text-sm">
 						<label class="col-sm-1 control-label">사업연도</label>
 						<div class="col-sm-11"  style="margin-bottom: 15px; width: 150px;">
-							<select class="form-control input-sm" id="optYear" name="optYear" data-name="optYear">
+							<select class="form-control input-sm" id="optYear" name="optYear">
 								<option value="">연도 전체</option>
 								<c:forEach var="optYear" items="${optYearList}" varStatus="status">
 									<option value="${optYear}">${optYear}</option>
@@ -64,12 +64,13 @@
 								<input type="checkbox" class="checkboxAll" />
 								<span class="ion-checkmark-round"></span> 전체
 							</label>
-							<c:forEach var="cdList" items="${classTypeList.MNGCNSLT_DIS}" varStatus="status">
+							<c:forEach var="cdList" items="${classTypeList.MNGCNSLT_REW}" varStatus="status">
 								<label class="checkbox-inline c-checkbox classType">
-									<input type="checkbox" class="checkboxSingle" data-name="mrtsCdList" name="cd" value="${cdList.cd}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="prizeCdList" name="cd" value="${cdList.cd}"/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
+
 						</div>
 					</div>
 				</fieldset>
@@ -82,9 +83,9 @@
 								<input type="checkbox" class="checkboxAll" />
 								<span class="ion-checkmark-round"></span> 전체
 							</label>
-							<c:forEach var="cdList" items="${classTypeList.MNGCNSLT_REW}" varStatus="status">
+							<c:forEach var="cdList" items="${classTypeList.MNGCNSLT_DIS}" varStatus="status">
 								<label class="checkbox-inline c-checkbox classType">
-									<input type="checkbox" class="checkboxSingle" data-name="prizeCdList" name="cd" value="${cdList.cd}"/>
+									<input type="checkbox" class="checkboxSingle" data-name="mrtsCdList" name="cd" value="${cdList.cd}"/>
 									<span class="ion-checkmark-round"></span> ${cdList.cdNm}
 								</label>
 							</c:forEach>
@@ -138,6 +139,13 @@
 						<label class="col-sm-1 control-label">검색키워드</label>
 						<div class="col-sm-6">
 							<div class="row">
+								<div class="col-sm-3 pr0">
+									<select class="form-control input-sm" data-name="f">
+										<option value="">전체</option>
+										<option value="1" <c:if test="${rtnData.f eq '1'}">selected</c:if>>부품사명</option>
+										<option value="2" <c:if test="${rtnData.f eq '2'}">selected</c:if>>포상대상자</option>
+									</select>
+								</div>
 								<div class="col-sm-9 pr0">
 									<input type="text" class="form-control input-sm" id="q" data-name="q" value="${rtnData.q}" maxlength="50" />
 								</div>
@@ -205,6 +213,8 @@
 		</div>
 	</div>
 
+
+<!-- 사유 레이어 팝업(Modal) -->
 <div class="modal fade excel-down" tabindex="-1" role="dialog" >
 	<div class="modal-dialog modal-lg modal-center" role="document">
 		<div class="modal-content">
@@ -225,7 +235,7 @@
 			</div>
 			<div class="modal-footer row">
 				<div class="text-center">
-					<button type="button" class="btn btn-primary down mt">다운로드</button>
+					<button type="button" class="btn btn-primary down mt">저장</button>
 				</div>
 			</div>
 		</div>

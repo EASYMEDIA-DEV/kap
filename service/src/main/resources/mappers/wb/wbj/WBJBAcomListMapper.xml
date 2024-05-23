@@ -9,7 +9,12 @@
        2023.11.30  오병호     최초 생성
    -->
     <select id="getRegisterCompanyList" parameterType="WBJAcomSearchDTO" resultType="WBJAcomSearchDTO">
+
         SELECT
+            TBL.*
+        FROM (
+
+        SELECT /* wBJBAcomListMapper.getRegisterCompanyList */
         DISTINCT YEAR(A.year) as year
         , B.appctn_seq
         , B.reg_id
@@ -29,6 +34,13 @@
         , F.NAME
         , F.HP_NO
         , (SELECT cmpn_nm FROM cp_cmpn_mst WHERE bsnm_no = B.appctn_bsnm_no) as cmpn_nm
+        , BSN_CD
+        , A.episd
+        , C.ctgry_cd
+        , F.PRIZE_CD
+        , F.mrts_cd
+        , E.APPCTN_STTS_CD
+        , G.APPCTN_STTS_CD AS MNG_STTS_CD
         FROM
         (
         SELECT * FROM cx_episd_mst
@@ -63,6 +75,9 @@
         WHERE RSUME_STTS_CD = 'PRO_TYPE05002'
         )G
         ON B.APPCTN_SEQ = G.APPCTN_SEQ
+
+        ) TBL
+
         <include refid="selectAcomListWhereSql" />
         GROUP BY APPCTN_SEQ
         ORDER BY year DESC, episd DESC, reg_dtm desc
@@ -79,63 +94,79 @@
     <select id="getAcomListTotCnt" parameterType="wBJAcomSearchDTO" resultType="java.lang.Integer">
         SELECT /* WBJBAcomListMapper.getAcomListTotCnt*/ COUNT(*)
         FROM (
-        SELECT
-        DISTINCT YEAR(A.year) as year
-        , B.appctn_seq
-        , B.reg_id
-        , B.reg_dtm
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.REG_ID) AS REG_NAME
-        , F.mod_id
-        , F.mod_dtm
-        , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
-        , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
-        , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), F.CMPN_NM) AS CMPN_SEQ_NM
-        , C.BSNM_NO
-        , F.NAME
-        , F.HP_NO
-        , F.MRTS_CD AS MRTS_CD
-        , F.PRIZE_CD AS PRIZE_CD
-        , E.APPCTN_STTS_CD AS APPCTN_STTS_CD
-        , G.APPCTN_STTS_CD AS MNG_STTS_CD
-        FROM
-        (
-        SELECT * FROM cx_episd_mst
-        WHERE bsn_cd = 'BSN10'
-        ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
-        INNER JOIN
-        (
-        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
-        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
-        ) C /* 회원-회사 JOIN 테이블 */
-        ON C.mem_seq = B.mem_seq
-        INNER JOIN
-        (
-        SELECT EPISD_SEQ,MRTS_CD, PRIZE_CD FROM CX_EPISD_PRIZE_DTL
-        )D
-        ON A.EPISD_SEQ = D.EPISD_SEQ
-        INNER JOIN
-        (
-        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
-        WHERE RSUME_STTS_CD = 'PRO_TYPE05001'
-        )E
-        ON B.APPCTN_SEQ = E.APPCTN_SEQ
-        INNER JOIN
-        (
-        SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, CMPN_NM, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
-        FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
-        )F
-        ON E.RSUME_SEQ = F.RSUME_SEQ
-        LEFT JOIN
-        (
-        SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
-        WHERE RSUME_STTS_CD = 'PRO_TYPE05002'
-        )G
-        ON B.APPCTN_SEQ = G.APPCTN_SEQ
+
+            SELECT
+                TBL.*
+                FROM (
+
+                    SELECT
+                    DISTINCT YEAR(A.year) as year
+                    , B.appctn_seq
+                    , B.reg_id
+                    , B.reg_dtm
+                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.REG_ID) AS REG_NAME
+                    , F.mod_id
+                    , F.mod_dtm
+                    , (SELECT NAME FROM CO_ADM_MST WHERE ID = F.MOD_ID) AS MOD_NAME
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = F.PRIZE_CD) as PRIZE_CD_nm
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = f.mrts_cd) as mrts_cd_nm
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = E.APPCTN_STTS_CD) as APPCTN_STTS_CD_nm
+                    , (SELECT cd_nm FROM co_code_mst WHERE cd = G.APPCTN_STTS_CD) as MNG_STTS_CD_nm
+                    , COALESCE((SELECT CMPN_NM FROM cp_cmpn_mst WHERE BSNM_NO = F.CMPN_SEQ), F.CMPN_NM) AS CMPN_SEQ_NM
+                    , C.BSNM_NO
+                    , F.NAME
+                    , F.HP_NO
+                    <!--, F.MRTS_CD AS MRTS_CD
+                    , F.PRIZE_CD AS PRIZE_CD
+                    , E.APPCTN_STTS_CD AS APPCTN_STTS_CD
+                    , G.APPCTN_STTS_CD AS MNG_STTS_CD-->
+                    , BSN_CD
+                    , A.episd
+                    , C.ctgry_cd
+                    , F.PRIZE_CD
+                    , F.mrts_cd
+                    , E.APPCTN_STTS_CD
+                    , G.APPCTN_STTS_CD AS MNG_STTS_CD
+                    FROM
+                    (
+                    SELECT * FROM cx_episd_mst
+                    WHERE bsn_cd = 'BSN10'
+                    ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+                    INNER JOIN
+                    (
+                    SELECT a.mem_seq, a.name, a.id, a.hp_no, a.email, b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+                    FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+                    ) C /* 회원-회사 JOIN 테이블 */
+                    ON C.mem_seq = B.mem_seq
+                    INNER JOIN
+                    (
+                    SELECT EPISD_SEQ,MRTS_CD, PRIZE_CD FROM CX_EPISD_PRIZE_DTL
+                    )D
+                    ON A.EPISD_SEQ = D.EPISD_SEQ
+                    INNER JOIN
+                    (
+                    SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+                    WHERE RSUME_STTS_CD = 'PRO_TYPE05001'
+                    )E
+                    ON B.APPCTN_SEQ = E.APPCTN_SEQ
+                    INNER JOIN
+                    (
+                    SELECT RSUME_SEQ, NAME, DEPT_NM, PSTN_CD, AGE, YRSSV_YEAR_CNT, HP_NO, CMPN_TEL_NO, EMAIL, CMPN_SEQ, CMPN_NM, REG_ID, REG_IP, MOD_ID, MOD_IP, MOD_DTM, MRTS_CD, PRIZE_CD
+                    FROM CX_APPCTN_RSUME_PRIZE_PART_DTL
+                    )F
+                    ON E.RSUME_SEQ = F.RSUME_SEQ
+                    LEFT JOIN
+                    (
+                    SELECT APPCTN_SEQ, RSUME_SEQ, RSUME_STTS_CD, APPCTN_STTS_CD, MNG_STTS_CD, RSUME_ORD FROM CX_APPCTN_RSUME_DTL
+                    WHERE RSUME_STTS_CD = 'PRO_TYPE05002'
+                    )G
+                    ON B.APPCTN_SEQ = G.APPCTN_SEQ
+
+                 ) TBL
+
+
         <include refid="selectAcomListWhereSql" />
         GROUP BY APPCTN_SEQ
         ORDER BY year DESC, episd DESC
@@ -1027,18 +1058,18 @@
                 <choose>
                     <when test="carbonDate == 1">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND DATE(A.REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND DATE(A.REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 2">
                         <if test="strtDt != null and strtDt != ''.toString()">
-                            AND DATE(A.REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[>=]]> STR_TO_DATE(#{strtDt}, '%Y-%m-%d')
                         </if>
                         <if test="endDt != null and endDt != ''.toString()">
-                            AND DATE(A.REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
+                            AND DATE(REG_DTM) <![CDATA[<=]]> STR_TO_DATE(#{endDt}, '%Y-%m-%d')
                         </if>
                     </when>
                     <when test="carbonDate == 3">
@@ -1052,17 +1083,17 @@
                 </choose>
             </if>
 
-            <if test="year != null and year != ''">
+            <if test="optYear != null and optYear != ''">
                 AND
                 (
-                A.YEAR = #{optYear}
+                YEAR = #{optYear}
                 )
             </if>
 
             <if test="ctgryCdList != null and ctgryCdList.size() > 0">
                 AND (
                 <foreach collection="ctgryCdList" item="ctgryCdList" index="index" open="" close="" separator=" or ">
-                    C.CTGRY_CD = #{ctgryCdList}
+                    CTGRY_CD = #{ctgryCdList}
                 </foreach>
                 )
             </if>
@@ -1070,14 +1101,14 @@
             <if test="prizeCdList != null and prizeCdList.size() > 0">
                 AND (
                 <foreach collection="prizeCdList" item="prizeCdList" index="index" open="" close="" separator=" or ">
-                    F.PRIZE_CD = #{prizeCdList}
+                    PRIZE_CD = #{prizeCdList}
                 </foreach>
                 )
             </if>
             <if test="mrtsCdList != null and mrtsCdList.size() > 0">
                 AND (
                 <foreach collection="mrtsCdList" item="mrtsCdList" index="index" open="" close="" separator=" or ">
-                    F.MRTS_CD = #{mrtsCdList}
+                    MRTS_CD = #{mrtsCdList}
                 </foreach>
                 )
             </if>
@@ -1085,7 +1116,7 @@
             <if test="appctnSttsCdList != null and appctnSttsCdList != ''">
                 AND (
                 <foreach collection="appctnSttsCdList" item="appctnSttsCdList" index="index" open="" close="" separator=" or ">
-                    E.APPCTN_STTS_CD = #{appctnSttsCdList}
+                    APPCTN_STTS_CD = #{appctnSttsCdList}
                 </foreach>
                 )
             </if>
@@ -1093,7 +1124,7 @@
             <if test="mngSttsCdList != null and mngSttsCdList != ''">
                 AND (
                 <foreach collection="mngSttsCdList" item="mngSttsCdList" index="index" open="" close="" separator=" or ">
-                    G.APPCTN_STTS_CD = #{mngSttsCdList}
+                    MNG_STTS_CD = #{mngSttsCdList}
                 </foreach>
                 )
             </if>
@@ -1102,21 +1133,15 @@
             <if test="q != null and q != ''.toString() ">
                 <choose>
                     <when test="f == 1">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
+                        AND INSTR(CMPN_SEQ_NM,  #{q})
                     </when>
                     <when test="f == 2">
-                        AND EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                    </when>
-                    <when test="f == 3">
-                        AND PLACE_NM LIKE CONCAT('%', #{q}, '%')
+                        AND INSTR(NAME, #{q})
                     </when>
                     <otherwise>
                         AND (
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.REG_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                        OR
-                        EXISTS (SELECT ID FROM CO_ADM_MST WHERE ID = A.MOD_ID AND (NAME LIKE CONCAT('%', #{q}, '%') OR ID LIKE CONCAT('%', #{q}, '%')))
-                        OR
-                        PLACE_NM LIKE CONCAT('%', #{q}, '%')
+                        INSTR(NAME, #{q}) > 0 OR
+                        INSTR(CMPN_SEQ_NM,  #{q}) > 0
                         )
                     </otherwise>
                 </choose>

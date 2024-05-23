@@ -12,7 +12,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
-    var $excelObj = ctrl.obj.parent().find(".excelDown");
+    var $excelObj = ctrl.obj.parent().find(".excel-down");
 
 
     //목록 조회
@@ -70,18 +70,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnExcelDown : {
                 event : {
                     click: function () {
-                        $.fileDownload("./excelDown?" + frmDataObj.serialize() , {
-                            prepareCallback : function(url){
-                                jQuery(".loadingbar").stop().fadeIn(200);
-                            },
-                            successCallback : function(url){
-                                jQuery(".loadingbar").stop().fadeOut(200);
-                                $excelObj.find("button.close").trigger('click');
-                            },
-                            failCallback : function(html,url){
-                                jQuery(".loadingbar").stop().fadeOut(200);
-                            }
-                        });
+
+                        //사유입력 레이어팝업 활성화
+                        $excelObj.find("#rsn").val('');
+                        $excelObj.modal("show");
+
                     }
                 }
             },
@@ -170,21 +163,32 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
             search($formObj.find("input[name=pageIndex]").val());
 
-            $excelObj.find("buttonDown").on('click', function(){
-                var rsn = $excelObj.find("#rsn").val().trim();
-                var frmDataObj    = $formObj.closest("form");
+            $excelObj.find("button.down").on('click', function(){
+                if (confirm("저장하시겠습니까?")){
+                    var rsn = $excelObj.find("#rsn").val().trim();
+                    var frmDataObj    = $formObj.closest("form");
 
-                frmDataObj.find("input[name='rsn']").remove();
+                    frmDataObj.find("input[name='rsn']").remove();
 
-                if (rsn != "") {
-                    frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
+                    if (rsn != "") {
+                        frmDataObj.append($('<input/>', { type: 'hidden',  name: 'rsn', value: rsn, class: 'notRequired' }));
 
-                    //파라미터를 물고 가야함.
-                    location.href = "./excelDown?" + frmDataObj.serialize();
-
-                } else {
-                    alert(msgCtrl.getMsg("fail.reason"));
-                    return;
+                        $.fileDownload("./excelDown?" + frmDataObj.serialize() , {
+                            prepareCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeIn(200);
+                            },
+                            successCallback : function(url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                                $excelObj.find("button.close").trigger('click');
+                            },
+                            failCallback : function(html,url){
+                                jQuery(".loadingbar").stop().fadeOut(200);
+                            }
+                        });
+                    } else {
+                        alert(msgCtrl.getMsg("fail.reason"));
+                        return;
+                    }
                 }
 
             });
