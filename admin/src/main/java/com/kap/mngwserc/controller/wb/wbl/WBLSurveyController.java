@@ -1,14 +1,19 @@
 package com.kap.mngwserc.controller.wb.wbl;
 
+import com.kap.common.utility.CODateUtil;
+import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COAAdmDTO;
+import com.kap.core.dto.COMailDTO;
+import com.kap.core.dto.COMessageReceiverDTO;
+import com.kap.core.dto.COSmsDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
+import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
 import com.kap.core.dto.wb.wbl.WBLEpisdMstDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstInsertDTO;
 import com.kap.core.dto.wb.wbl.WBLSurveyMstSearchDTO;
-import com.kap.service.COCodeService;
-import com.kap.service.SVASurveyService;
-import com.kap.service.WBLSurveyService;
+import com.kap.service.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +30,7 @@ import javax.validation.Valid;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -56,6 +62,12 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     private final WBLSurveyService wLSurveyService;
 
     private final SVASurveyService sVSurveyService;
+
+    /** 메일 서비스 **/
+    private final COMessageService cOMessageService;
+
+    // SMS 내용 관리 서비스
+    private final SMISmsCntnService smiSmsCntnService;
 
 
     /**
@@ -356,4 +368,53 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             throw new Exception(e.getMessage());
         }
     }
+
+
+    /**
+     * 상생협력체감도조사 인증번호 발송
+     */
+    @PostMapping(value = "/submitCrtfnNo")
+    public void submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+        try {
+
+            //상생협력체감도조사 메일발송 시작
+
+            //메일 발송
+            COMailDTO cOMailDTO = new COMailDTO();
+            cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
+
+            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+            receiverDto.setEmail(wBLSurveyMstInsertDTO.getEmail());
+            receiverDto.setName(wBLSurveyMstInsertDTO.getPicNm());
+            receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
+
+            cOMailDTO.getReceiver().add(receiverDto);
+
+            cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
+
+            //상생협력체감도조사 메일발송 끝
+
+            //SMS 발송 시작
+            //SMS 발송
+            receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
+            COSmsDTO smsDto = new COSmsDTO();
+
+            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+            smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
+            smiSmsCntnDTO.setSmsCntnSeq(10);
+            smsDto.getReceiver().add(receiverDto);
+            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+
+            cOMessageService.sendSms(smsDto, "");
+            //SMS 발송 끝
+
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+
 }

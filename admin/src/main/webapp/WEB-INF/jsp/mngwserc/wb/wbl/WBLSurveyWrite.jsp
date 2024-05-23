@@ -119,7 +119,12 @@
                     <div class="form-group form-inline">
                         <label class="col-sm-1 control-label">인증번호<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                             <p class="form-control-static">${rtnDto.crtfnNo}</p>
+                            <p class="form-control-static">${rtnDto.crtfnNo}</p>
+                            <p class="form-control-static">
+                                <button type="button" class="btn btn-inverse btn-sm submitCrtfnNo" data-crtfn-no="${rtnDto.crtfnNo}" data-pic-nm="${rtnDto.picNm}" data-email="${rtnDto.email}" data-tel-no="${rtnDto.telNo}">
+                                    인증번호 발송
+                                </button>
+                            </p>
                         </div>
                     </div>
                 </fieldset>

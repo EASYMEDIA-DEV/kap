@@ -51,6 +51,29 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
         id : {
         },
         classname : {
+
+
+            submitCrtfnNo : {
+                event : {
+                    click : function(){
+                        if(confirm("발송하시겠습니까?")){
+
+                            var tempForm = {};
+
+                            tempForm.crtfnNo = $(this).data("crtfnNo");
+                            tempForm.picNm = $(this).data("picNm");
+                            tempForm.email = $(this).data("email");
+                            tempForm.telNo = $(this).data("telNo");
+
+                            cmmCtrl.jsonAjax(function(data){
+
+                            }, './submitCrtfnNo', tempForm, "text")
+
+
+                        }
+                    }
+                }
+            },
             episdSurveySelect : {
                 event : {
                     change : function(){
