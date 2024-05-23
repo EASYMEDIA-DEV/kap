@@ -69,6 +69,8 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     // SMS 내용 관리 서비스
     private final SMISmsCntnService smiSmsCntnService;
 
+    private final String profile = System.getProperty("spring.profiles.active");
+
 
     /**
      * 목록 페이지
@@ -185,6 +187,10 @@ public class WBLSurveyController<sVASurveyMstDTO> {
                     SVASurveyMstInsertDTO sVASurveyMstInsertDTO = sVSurveyService.selectSurveyTypeWinDtl(sVASurveyDTO);
                     if (sVASurveyMstInsertDTO != null){
                         modelMap.addAttribute("rtnSurveyData", sVASurveyMstInsertDTO);
+
+                        modelMap.addAttribute("profile", profile);
+
+
                     }
                 }
             }
