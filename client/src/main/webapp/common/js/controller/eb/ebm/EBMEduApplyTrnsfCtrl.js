@@ -119,7 +119,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						var memId = $($this).data("id");
 						$("#memId").val(memId);
 
-						var gndr= ($($this).data("gndr") == '2') ? 'F' : 'M';
+						//var gndr= ($($this).data("gndr") == '2' || $($this).data("gndr") == '0' ) ? 'F' : 'M';
+						var gndr= ($($this).data("gndr") == '1' ) ? 'M' : 'F';
 
 						$("#gndr").val(gndr);
 
