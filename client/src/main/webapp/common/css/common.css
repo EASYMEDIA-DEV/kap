@@ -2555,9 +2555,15 @@ footer .copy-area span:last-child:after {display: none;}
 
 .sub-top-vis-area {position:relative; margin: 0 auto 120rem; width:1600rem;}
 .sub-top-vis-area .page-tit-area {position:relative; z-index:1;}
+/* 2024-05-23 수정 s */
+.sub-top-vis-area .page-tit-area .page-tit {font-size: max(60rem, 56px); font-family: "Pretendard_Bold", sans-serif; color: #06161E; line-height: 130%; letter-spacing: -.04em;}
 .sub-top-vis-area:not(.apply-page) .page-tit-area .page-tit {position:relative; left: 0; top: 0; margin-left: 0; opacity:1; overflow: hidden;}
 .sub-top-vis-area:not(.apply-page) .page-tit-area .page-tit .for-move {position:relative; top: 200rem; margin-left: 0;}
-.sub-top-vis-area.basic-page .img-area {position:relative; top:0; margin-top: 120rem; width: 1600rem; height: 520rem; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); transition: 1s clip-path cubic-bezier(0.62, 0, 0.43, 1); overflow: hidden;}
+
+.sub-top-vis-area.basic-page .page-tit-area {position:absolute; top: 50%; left: 0; z-index:1; width: 100%; transform: translateY(-50%);}
+.sub-top-vis-area.basic-page .page-tit-area .page-tit{ transition: all 1s cubic-bezier(0.62, 0, 0.43, 1);}
+.sub-top-vis-area.basic-page.scroll-down .page-tit-area .page-tit{margin-left: 30rem; color: #fff;}
+.sub-top-vis-area.basic-page .img-area {position:relative; top:0; margin-top: 120rem; width: 1600rem; height: 210rem; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); transition: 1s clip-path cubic-bezier(0.62, 0, 0.43, 1); overflow: hidden;}
 .sub-top-vis-area.basic-page .img-area .img {position:relative; left: 100rem; width:100%; height: 100%; transition: 1s clip-path cubic-bezier(0.62, 0, 0.43, 1), 1s left cubic-bezier(0.62, 0, 0.43, 1);}
 .sub-top-vis-area.basic-page .img-area .img img {width: 100%; height: 100%; object-fit: cover; transform: scale(1.1); transition: 1s transform cubic-bezier(0.62, 0, 0.43, 1);}
 .sub-top-vis-area.basic-page .img-area .img:before {content: ''; display:block; position: absolute; left: 0; top:0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.4); opacity: 0; transition: 1s opacity cubic-bezier(0.62, 0, 0.43, 1); z-index: 1;}
@@ -2566,6 +2572,7 @@ footer .copy-area span:last-child:after {display: none;}
 .sub-top-vis-area.basic-page.scroll-down .img-area {clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}/* scroll down  */
 .sub-top-vis-area.basic-page.scroll-down .img-area .img img {transform: scale(1);}
 .sub-top-vis-area.basic-page.scroll-down .img-area .img:before {opacity:1;}
+/* //2024-05-23 수정 e */
 
 .sub-top-vis-area.apply-page {margin-top: -260rem; width:100%; height: 562rem; overflow: hidden;} /* 신청하기 페이지 */
 .sub-top-vis-area.apply-page .page-tit-area {padding-top: 220rem; text-align: center;}
@@ -2600,17 +2607,20 @@ footer .copy-area span:last-child:after {display: none;}
 .sub-top-vis-area.map-page.init-active .map-area .map-div {left: 0;}
 
 @media all and (max-width: 1023px) {
+ /* 2024-05-23 수정 s */
   .inner .sub-top-vis-area {margin-bottom: 24rem;}
-
   .sub-top-vis-area {margin-bottom: 32rem; width: 100%;}
   .sub-top-vis-area .page-tit-area {width: -webkit-calc(100% - 40rem); width: calc(100% - 40rem); margin: 0 auto;}
-  .sub-top-vis-area.basic-page {margin-top: 20vh; margin-bottom: 48rem;}
-  .sub-top-vis-area.basic-page .img-area {margin-top: -147rem; width: 100%; height: 390rem; clip-path: polygon(100% 50%, 100% 50%, 100% 100%, 100% 100%); transition: clip-path .8s cubic-bezier(0.62, 0, 0.43, 1), margin-top .8s cubic-bezier(0.62, 0, 0.43, 1);}
-  .sub-top-vis-area.basic-page .img-area .img {position: absolute; left: 0; right: 0; bottom: 0; width: 100vw; height: 390rem;}
-  .sub-top-vis-area.basic-page .page-tit-area {width: 100%;}
+  .sub-top-vis-area .page-tit-area .page-tit {font-size: 28rem; line-height: 150%; letter-spacing: -.04em;}
+  .sub-top-vis-area.basic-page {margin-top: 250rem; margin-bottom: 48rem;}
+  .sub-top-vis-area.basic-page.scroll-down .page-tit-area .page-tit{margin-left: 0;}
+  .sub-top-vis-area.basic-page .img-area {margin-top: -147rem; width: 100%; height: 200rem; clip-path: polygon(100% 0%, 100% 0%, 100% 100%, 100% 100%); transition: clip-path .8s cubic-bezier(0.62, 0, 0.43, 1), margin-top .8s cubic-bezier(0.62, 0, 0.43, 1);}
+  .sub-top-vis-area.basic-page .img-area .img {position: absolute; left: 0; right: 0; bottom: 0; width: 100vw; height: 200rem;}
+  .sub-top-vis-area.basic-page .page-tit-area {width: 100%; }
   .sub-top-vis-area.basic-page .page-tit-area .page-tit {left: 20rem;}
-  .sub-top-vis-area.basic-page.init-active .img-area {clip-path: polygon(105rem 50%, 100% 50%, 100% 100%, 105rem 100%);}
-  .sub-top-vis-area.basic-page.scroll-down .img-area {height: 390rem; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+  .sub-top-vis-area.basic-page.init-active .img-area {clip-path: polygon(200rem 0%, 100% 0%, 100% 100%, 200rem 100%);}
+  .sub-top-vis-area.basic-page.scroll-down .img-area {height: 200rem; clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);}
+  /* //2024-05-23 수정 e */
 
   .sub-top-vis-area.apply-page {margin-top: -120rem; height: 309rem;} /* 신청하기 페이지 */
   .sub-top-vis-area.apply-page .page-tit-area {padding-top: 120rem;}

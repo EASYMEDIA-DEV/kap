@@ -17,7 +17,7 @@
         <c:otherwise>
             <div class="sub-top-vis-area basic-page">
                 <div class="page-tit-area">
-                    <p class="page-tit f-xlarge-title"><span class="for-move">${ pageMenuDto.menuNm }</span></p>
+                    <p class="page-tit"><span class="for-move">${ pageMenuDto.menuNm }</span></p> <%-- 2024-05-23 수정 --%>
                 </div>
 
                 <jsp:include page="/WEB-INF/jsp/front/co/COGCntsInclude.jsp" />

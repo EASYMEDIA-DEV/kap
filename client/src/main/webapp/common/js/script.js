@@ -1125,64 +1125,66 @@ var commonScript = (function(){
         }
       }
 
-      ScrollTrigger.matchMedia({
-        "(min-width: 1024px)": function() {
-          if($(".sub-top-vis-area.basic-page").length){
-            gsap.to(".sub-top-vis-area.basic-page .f-xlarge-title", {
-              scrollTrigger: {
-                trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
-                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
-                endTrigger: ".sub-top-vis-area.basic-page .img-area",
-                end:"top top",
-                pin: true,
-                pinSpacing: false,
-              },
-            });
+       // 2024-05-23 수정 s
+      // ScrollTrigger.matchMedia({
+      //   "(min-width: 1024px)": function() {
+      //     if($(".sub-top-vis-area.basic-page").length){
+      //       gsap.to(".sub-top-vis-area.basic-page .f-xlarge-title", {
+      //         scrollTrigger: {
+      //           trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
+      //           start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
+      //           endTrigger: ".sub-top-vis-area.basic-page .img-area",
+      //           end:"top top",
+      //           pin: true,
+      //           pinSpacing: false,
+      //         },
+      //       });
   
-            let kvTitleChangeMotion = gsap.timeline({
-              scrollTrigger: {
-                trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
-                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
-                endTrigger: ".sub-top-vis-area.basic-page .img-area",
-                end:"top top",
-                scrub: 1,
-              },
-            });
+      //       let kvTitleChangeMotion = gsap.timeline({
+      //         scrollTrigger: {
+      //           trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
+      //           start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
+      //           endTrigger: ".sub-top-vis-area.basic-page .img-area",
+      //           end:"top top",
+      //           scrub: 1,
+      //         },
+      //       });
   
-            kvTitleChangeMotion.kill();
-            kvTitleChangeMotion.to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title .for-move"), {marginLeft: "97rem", duration:1, ease: "Power3.ease"}, 0)
-                                .to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title"), {color: "#fff", duration:1, ease: "Power3.ease"}, 0)
-          }
-        },
-        "(max-width: 1023px)": function() {
-          if($(".sub-top-vis-area.basic-page").length){
-            gsap.to(".sub-top-vis-area.basic-page", {
-              scrollTrigger: {
-                trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
-                start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
-                endTrigger: ".sub-top-vis-area.basic-page",
-                end:"top-=100rem top",
-                pin: true,
-                pinSpacing: false,
-              },
-            });
+      //       kvTitleChangeMotion.kill();
+      //       kvTitleChangeMotion.to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title .for-move"), {marginLeft: "97rem", duration:1, ease: "Power3.ease"}, 0)
+      //                           .to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title"), {color: "#fff", duration:1, ease: "Power3.ease"}, 0)
+      //     }
+      //   },
+      //   "(max-width: 1023px)": function() {
+      //     if($(".sub-top-vis-area.basic-page").length){
+      //       gsap.to(".sub-top-vis-area.basic-page", {
+      //         scrollTrigger: {
+      //           trigger: ".sub-top-vis-area.basic-page .f-xlarge-title",
+      //           start: () => "top " + $(".sub-top-vis-area.basic-page").offset().top,
+      //           endTrigger: ".sub-top-vis-area.basic-page",
+      //           end:"top-=100rem top",
+      //           pin: true,
+      //           pinSpacing: false,
+      //         },
+      //       });
   
-            let kvTitleChangeMotion = gsap.timeline({
-              scrollTrigger: {
-                trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
-                start: () => "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
-                endTrigger: ".sub-top-vis-area.basic-page .img-area",
-                end:"top top",
-                scrub: 1,
-              },
-            });
+      //       let kvTitleChangeMotion = gsap.timeline({
+      //         scrollTrigger: {
+      //           trigger: $(".sub-top-vis-area.basic-page .page-tit-area"),
+      //           start: () => "top-=1px " + $(".sub-top-vis-area.basic-page").offset().top,
+      //           endTrigger: ".sub-top-vis-area.basic-page .img-area",
+      //           end:"top top",
+      //           scrub: 1,
+      //         },
+      //       });
   
-            kvTitleChangeMotion.kill();
-            kvTitleChangeMotion.to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title .for-move"), {duration:1, ease: "Power3.ease"}, 0)
-                                .to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title"), {color: "#fff", duration:1, ease: "Power3.ease"}, 0)
-          }
-        },
-      })      
+      //       kvTitleChangeMotion.kill();
+      //       kvTitleChangeMotion.to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title .for-move"), {duration:1, ease: "Power3.ease"}, 0)
+      //                           .to($(".sub-top-vis-area.basic-page .page-tit-area .f-xlarge-title"), {color: "#fff", duration:1, ease: "Power3.ease"}, 0)
+      //     }
+      //   },
+      // })  
+      // 2024-05-23 수정 e    
     },
     popupFn: function(){
       let popIdxNum = 200;
