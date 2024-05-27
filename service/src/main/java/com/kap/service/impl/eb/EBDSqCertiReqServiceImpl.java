@@ -248,8 +248,8 @@ public class EBDSqCertiReqServiceImpl implements EBDSqCertiReqService {
             cOMailDTO.setSubject("[KAP] SQ평가원 자격증 발급 신청 접수 안내");
 
             COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-            receiverDto.setEmail("jkh8258@easymedia.net"); //수신자 이메일
-            receiverDto.setName("주경희"); //수신자
+            receiverDto.setEmail("skill@kapkorea.org"); //수신자 이메일
+//            receiverDto.setName("주경희"); //수신자
             receiverDto.setNote1(coUserDetailsDTO.getName() + " / " + coUserDetailsDTO.getId()); //신청자명 / 아이디
             receiverDto.setNote2(coUserDetailsDTO.getCmpnNm()); //신청자 부품사명
             receiverDto.setNote3(cbsnNmList); //신청자의 "업종별 기술 이해" 과정 수료 업종 리스트
