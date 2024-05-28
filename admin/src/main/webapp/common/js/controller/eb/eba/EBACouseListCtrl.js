@@ -265,6 +265,7 @@ define(["ezCtrl"], function(ezCtrl) {
 									var ctgryCdNm= $(this).find("td").eq(2).text().trim();//과정분류
 									var nm= $(this).find("td").eq(3).text().trim();//과정명
 									var stduyMthd= $(this).find("td").eq(4).text().trim();//학습방식
+									var gpcYn= $(this).find("td").eq(4).data("gpcYn");//gpc여부
 									var jdgmtYn= $(this).find("td").eq(4).data("jdgmtyn");//평가여부
 									var stduyDtm = $(this).find("td").eq(5).text().trim();//학습시간
 
@@ -274,6 +275,8 @@ define(["ezCtrl"], function(ezCtrl) {
 									tempObj.nm = nm;
 									tempObj.stduyMthd = stduyMthd;
 									tempObj.jdgmtYn = jdgmtYn;
+
+									tempObj.gpcYn = gpcYn;
 
 									tempObj.stduyDtm = stduyDtm;
 									tempObj.choiceCnt = choiceCnt;
@@ -291,6 +294,7 @@ define(["ezCtrl"], function(ezCtrl) {
 								var ctgryCdNm= trObj.find("td").eq(2).text().trim();//과정분류
 								var nm= trObj.find("td").eq(3).text().trim();//과정명
 								var stduyMthd= trObj.find("td").eq(4).text().trim();//학습방식
+								var gpcYn= trObj.find("td").eq(4).data("gpcYn");//gpc여부
 								var stduyMthdCd= trObj.find("td").eq(4).data("stduymthdcd");//학습방식코드
 								var jdgmtYn= trObj.find("td").eq(4).data("jdgmtyn");//평가여부
 								var stduyDtm = trObj.find("td").eq(5).text().trim();//학습시간
@@ -302,6 +306,8 @@ define(["ezCtrl"], function(ezCtrl) {
 								clickObj.stduyMthd = stduyMthd;
 								clickObj.stduyMthdCd = stduyMthdCd;
 								clickObj.jdgmtYn = jdgmtYn;
+
+								clickObj.gpcYn = gpcYn;
 
 								clickObj.stduyDtm = stduyDtm;
 								clickObj.choiceCnt = choiceCnt;

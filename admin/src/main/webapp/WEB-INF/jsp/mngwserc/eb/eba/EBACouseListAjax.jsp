@@ -23,7 +23,7 @@
               </c:otherwise>
           </c:choose>
         </td><!--과정명-->
-        <td class="text-center" data-stduyMthdCd="${list.stduyMthdCd}" data-jdgmtYn="${list.jdgmtYn}">${list.stduyMthdCdNm}</td><!--학습방식-->
+        <td class="text-center" data-stduyMthdCd="${list.stduyMthdCd}" data-jdgmtYn="${list.jdgmtYn}" data-gpc-yn="${list.gpcYn}">${list.stduyMthdCdNm}</td><!--학습방식-->
         <td class="text-center">${list.stduyDdCdNm}일/${list.stduyTimeCdNm}시간</td><!--학습시간-->
         <td class="text-center">${list.regName}(${list.regId})</td><!--최초 등록자-->
         <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->

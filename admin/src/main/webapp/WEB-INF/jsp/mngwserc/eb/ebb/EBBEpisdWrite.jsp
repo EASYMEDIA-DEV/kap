@@ -72,6 +72,7 @@
 
             <input type="hidden" class="notRequired" id="modifyYn" name="modifyYn" value="${modifyYn}" />
             <input type="hidden" class="notRequired" id="eduIng" name="eduIng" value="${eduIng}" />
+            <input type="hidden" class="notRequired" id="gpcYn" name="gpcYn" value="${rtnDto.gpcYn}" />
 
             <c:choose>
                 <c:when test="${not empty rtnDto}">

@@ -18,7 +18,7 @@
 				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = aa.ctgry_cd) AND rht_val <![CDATA[>=]]>
 				(SELECT rht_val FROM co_code_mst WHERE cd = aa.ctgry_cd)
 				AND dpth =  2 AND dpth <![CDATA[>]]> 1) prnt_cd
-
+				, gpc_yn
 				, (SELECT GROUP_CONCAT(cd_nm SEPARATOR ' > ') FROM co_code_mst
 				WHERE lft_val <![CDATA[<=]]> (SELECT lft_val FROM co_code_mst WHERE cd = aa.ctgry_cd) AND rht_val <![CDATA[>=]]>
 				(SELECT rht_val FROM co_code_mst WHERE cd = aa.ctgry_cd)
