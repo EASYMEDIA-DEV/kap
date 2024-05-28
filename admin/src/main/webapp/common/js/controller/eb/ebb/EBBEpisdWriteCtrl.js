@@ -20,7 +20,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	//gpc과정 Y, GPC차수가 N일경우 기본 컨펌메시지가 아닌 별도의 메시지 출력 ( GPC 교육입니다. GPC 전송여부가 미전송일때 교육 신청한 분들은 GPC 인증이 안되어 있어
 	// 양도나 GPC 계정 연결이 불가능 합니다. 등록하시겠습니까? )
 	var confirmText = "저장하시겠습니까?";
-	if("N" == $("input[name='episdGpcYn']:checked").val()){
+	if("N" == $("input[name='episdGpcYn']:checked").val() && "Y" == $("#gpcYn").val()){
 		confirmText = "GPC 교육입니다. GPC 전송여부가 미전송일때 교육 신청한 분들은 GPC 인증이 안되어 있어 양도나 GPC 계정 연결이 불가능 합니다. \n등록하시겠습니까?";
 	}
 
