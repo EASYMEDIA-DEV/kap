@@ -178,7 +178,7 @@ define(["ezCtrl"], function(ezCtrl) {
         },
         immediately : function() {
 
-            cmmCtrl.setCalendarInit(12,0);
+            //cmmCtrl.setCalendarInit(12,0);
 
             //폼 데이터 처리
             cmmCtrl.setFormData($formObj);
