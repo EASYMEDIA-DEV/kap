@@ -764,6 +764,7 @@
 				if (!!msg)
 				{
 					alert(msg);
+					$(".loading-area").stop().fadeOut(200);
 				}
 
 				if (obj[0].nodeName == "INPUT" && obj.attr("type") == "text")
@@ -1245,6 +1246,7 @@
 								msg.confirm = settings.msg.confirm.init;
 
 								e.preventDefault();
+								$(".loading-area").stop().fadeOut(200);
 							}
 						}
 					}

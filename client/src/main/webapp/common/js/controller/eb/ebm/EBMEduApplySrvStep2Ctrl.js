@@ -13,6 +13,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
 
+	var submitFlag = true;
+
 	var questionSet = function(surveyType) {
 
 
@@ -43,7 +45,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			btnSubmit : {
 				event : {
 					click : function() {
-						$formObj.submit();
+						if(submitFlag) {
+							$(".loading-area").stop().fadeIn(200);
+							$formObj.submit();
+						}
+						else {
+							alert("현재 설문을 처리 중이니 잠시만 기다려주세요.");
+						}
 					}
 				}
 			},
@@ -139,9 +147,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							svRepnMst.svSurveyQstnRspnDtlList.push(svQstnDtl);
 						});
 
-						cmmCtrl.jsonAjax(function(data){
-							location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()+"&ptcptSeq="+$formObj.find("input[name=ptcptSeq]").val()
-						}, actionUrl, svRepnMst, "text")
+						if(submitFlag) {
+							submitFlag = false;
+
+							cmmCtrl.jsonAjax(function(data){
+								location.href = "./srvStep3?detailsKey="+$formObj.find("input[name=edctnSeq]").val()+"&episdYear="+$formObj.find("input[name=episdYear]").val()+"&episdOrd="+$formObj.find("input[name=episdOrd]").val()+"&ptcptSeq="+$formObj.find("input[name=ptcptSeq]").val()
+							}, actionUrl, svRepnMst, "text")
+						}
 					}
 				},
 				msg : {
