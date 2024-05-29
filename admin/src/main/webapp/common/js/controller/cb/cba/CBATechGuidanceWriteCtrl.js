@@ -1059,6 +1059,26 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function (ezCtrl
                         event.target.value = phoneNumber;
                     }
                 }
+            },
+
+            //2024-05-29 거래처 매출비중, 완성차 의존율 업체명에 콤마(,) 입력 방지 추가
+            dlvryCmpnNm : {
+                event : {
+                    input : function() {
+                        var inputVal = $(this).val();
+                        var newVal = inputVal.replace(/,/g, '');
+                        $(this).val(newVal);
+                    }
+                }
+            },
+            dpndnCmpnNm : {
+                event : {
+                    input : function() {
+                        var inputVal = $(this).val();
+                        var newVal = inputVal.replace(/,/g, '');
+                        $(this).val(newVal);
+                    }
+                }
             }
         },
         immediately: function () {
