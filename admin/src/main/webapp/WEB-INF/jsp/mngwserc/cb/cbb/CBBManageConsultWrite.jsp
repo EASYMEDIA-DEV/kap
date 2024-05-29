@@ -551,7 +551,7 @@
                                     <div class="row tempRow" id="dlvryRow" style="border:solid; border-width:1px; margin-top: 10px;">
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                         <label class="col-sm-3 control-label">
-                                            <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                            <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${fn:replace(dlvryCmpnList.dlvryCmpnNm, ',', '')}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                         </label>
                                         <label class="col-sm-2 control-label" style="margin-top: 15px;">납품비율</label>
                                         <label class="col-sm-3 control-label">
@@ -568,7 +568,7 @@
                                 <div class="row tempRow" id="dlvryRow" style="border:solid; border-width:1px; margin-top: 10px;">
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">업체명</label>
                                     <label class="col-sm-3 control-label">
-                                        <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${dlvryCmpnList.dlvryCmpnNm}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
+                                        <input type="text" class="form-control input-sm dlvryCmpnNm" data-name="dlvryCmpnNmList" name="dlvryCmpnNm" value="${fn:replace(dlvryCmpnList.dlvryCmpnNm, ',', '')}" data-dlvryCmpnSeq="${dlvryCmpnList.cmpnDlvrySeq}" style="margin-bottom: 10px; margin-top:10px" title="업체명" placeholder="업체명 입력"/>
                                     </label>
                                     <label class="col-sm-2 control-label" style="margin-top: 15px;">납품비율</label>
                                     <label class="col-sm-3 control-label">
