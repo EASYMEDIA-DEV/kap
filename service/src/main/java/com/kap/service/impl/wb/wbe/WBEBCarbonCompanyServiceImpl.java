@@ -768,11 +768,11 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(18);
-        cell.setCellValue("지원금");
+        cell.setCellValue("사업비");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(19);
-        cell.setCellValue("신청사업비");
+        cell.setCellValue("지원금");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(20);
@@ -921,10 +921,17 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             }
             cell.setCellStyle(style_body);
 
-
+            //사업비
+            cell = row.createCell(18);
+            if(maxOrd >= 1){
+                cell.setCellValue(pbsnList.get(0).getBsnPmt());
+            }else{
+                cell.setCellValue("");
+            }
+            cell.setCellStyle(style_body);
 
             //지원금
-            cell = row.createCell(18);
+            cell = row.createCell(19);
             if(maxOrd >= 2){
                 cell.setCellValue(pbsnList.get(1).getSpprtPmt());
             }else{
@@ -932,14 +939,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             }
             cell.setCellStyle(style_body);
 
-            //신청사업비
-            cell = row.createCell(19);
-            if(maxOrd >= 1){
-                cell.setCellValue(pbsnList.get(0).getBsnPmt());
-            }else{
-                cell.setCellValue("");
-            }
-            cell.setCellStyle(style_body);
+
 
             //자부담
             cell = row.createCell(20);
