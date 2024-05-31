@@ -183,7 +183,7 @@
                                     <div class="txt-box">
                                         <p class="tit f-head">1차 심사</p>
                                     </div>
-                                    <p class="box-label bigger arr">
+                                    <p class="box-label bigger">
                                         <span>
                                         <input type="hidden" id="finalAppctnSttsCd" name="finalAppctnSttsCd" value="">
                                             <c:choose>
@@ -192,6 +192,9 @@
                                                 </c:when>
                                                 <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE05001_01_002'}">
                                                     탈락
+                                                </c:when>
+                                                <c:when test="${rtnData.appctnSttsCd eq 'PRO_TYPE05001_01_004'}">
+                                                    사용자취소
                                                 </c:when>
                                                 <c:otherwise>
                                                     통과

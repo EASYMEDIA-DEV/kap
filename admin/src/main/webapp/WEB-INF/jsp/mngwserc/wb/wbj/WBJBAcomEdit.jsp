@@ -580,11 +580,14 @@
                                                     <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_002'}">
                                                         전체 진행상태 : 1차 심사(탈락)
                                                     </c:when>
-                                                    <c:otherwise>
-                                                        전체 진행상태 : 1차 심사(통과)
-                                                    </c:otherwise>
+                                                    <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_004'}">
+                                                        전체 진행상태 : 1차 심사(사용자취소)
+                                                    </c:when>
                                                 </c:choose>
                                             </c:when>
+                                            <c:otherwise>
+                                                전체 진행상태 : 1차 심사(통과)
+                                            </c:otherwise>
                                         </c:choose>
                                     </c:when>
                                     <c:otherwise>
@@ -633,6 +636,9 @@
                                                         </c:when>
                                                         <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_002'}">
                                                             탈락
+                                                        </c:when>
+                                                        <c:when test="${rtnInfo.appctnSttsCd eq 'PRO_TYPE05001_01_004'}">
+                                                            사용자취소
                                                         </c:when>
                                                         <c:otherwise>
                                                             통과

@@ -217,7 +217,7 @@
         SELECT /* WBBARoundMapper.getApplyCount */ COUNT(*)
         FROM CX_APPCTN_MST A
         JOIN CX_APPCTN_RSUME_DTL B ON A.appctn_seq = B.appctn_seq AND B.rsume_ord = 1
-        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD NOT IN ('PRO_TYPE04_2_5', 'WBKB_REG_FRT004', 'WBKB_REG_LRT004')
+        WHERE EPISD_SEQ = #{episdSeq} AND MEM_SEQ = #{memSeq} AND APPCTN_STTS_CD NOT IN ('PRO_TYPE04_2_5', 'WBKB_REG_FRT004', 'WBKB_REG_LRT004', 'PRO_TYPE05001_01_004', 'PRO_TYPE07001_01_004')
     </select>
 
     <!--
@@ -235,7 +235,7 @@
              WHERE BSN_CD = #{bsnCd} AND YEAR = #{year}
          ) cem
         JOIN CX_APPCTN_MST cam ON cem.EPISD_SEQ = cam.episd_seq
-        JOIN CX_APPCTN_RSUME_DTL B ON cam.appctn_seq = B.appctn_seq AND B.rsume_ord = 1 AND APPCTN_STTS_CD != 'PRO_TYPE07001_01_004'
+        JOIN CX_APPCTN_RSUME_DTL B ON cam.appctn_seq = B.appctn_seq AND B.rsume_ord = 1 AND APPCTN_STTS_CD NOT IN ('PRO_TYPE04_2_5', 'WBKB_REG_FRT004', 'WBKB_REG_LRT004', 'PRO_TYPE05001_01_004', 'PRO_TYPE07001_01_004')
         WHERE 1=1
           AND appctn_bsnm_no = #{bsnmNo}
           AND mem_seq != #{memSeq}
