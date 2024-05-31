@@ -11,6 +11,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    var submitFlag = true;
+
     var questionSet = function(surveyType) {
 
 
@@ -40,7 +42,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnSubmit : {
                 event : {
                     click : function() {
-                        $formObj.submit();
+                        if(submitFlag) {
+                            $(".loading-area").stop().fadeIn(200);
+                            $formObj.submit();
+                        }
+                        else {
+                            alert("현재 설문을 처리 중이니 잠시만 기다려주세요.");
+                        }
                     }
                 }
             },
@@ -138,10 +146,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 console.log(svRepnMst);
                         });
 
-                        cmmCtrl.jsonAjax(function(data){
-                            $(".loading-area").stop().fadeOut(200);
-                            location.href = "./step3"
-                        }, actionUrl, svRepnMst, "text")
+                        if(submitFlag) {
+                            submitFlag = false;
+
+                            cmmCtrl.jsonAjax(function(data){
+                                $(".loading-area").stop().fadeOut(200);
+                                location.href = "./step3"
+                            }, actionUrl, svRepnMst, "text")
+                        }
                     }
                 }
             });

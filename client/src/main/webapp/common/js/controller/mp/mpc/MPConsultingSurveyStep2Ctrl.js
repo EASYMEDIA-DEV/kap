@@ -9,6 +9,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    var submitFlag = true;
+
     //자리수 콤마 사용을 위한 설정
     var naviLang= navigator.language;
 
@@ -46,7 +48,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             btnSubmit : {
                 event : {
                     click : function() {
-                        $formObj.submit();
+                        if(submitFlag) {
+                            $(".loading-area").stop().fadeIn(200);
+                            $formObj.submit();
+                        }
+                        else {
+                            alert("현재 설문을 처리 중이니 잠시만 기다려주세요.");
+                        }
                     }
                 }
             },
@@ -222,9 +230,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                             svRepnMst.svSurveyQstnRspnDtlList.push(svQstnDtl);
                         });
 
-                        cmmCtrl.jsonAjax(function(data){
-                            location.href = "./surveyStep3?detailsKey="+$formObj.find("input[name=rtnCnstgSeq]").val()
-                        }, actionUrl, svRepnMst, "text")
+                        if(submitFlag) {
+                            submitFlag = false;
+
+                            cmmCtrl.jsonAjax(function(data){
+                                location.href = "./surveyStep3?detailsKey="+$formObj.find("input[name=rtnCnstgSeq]").val()
+                            }, actionUrl, svRepnMst, "text")
+                        }
                     }
                 }
             });
