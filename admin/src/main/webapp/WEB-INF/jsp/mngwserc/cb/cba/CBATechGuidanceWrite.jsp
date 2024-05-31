@@ -729,7 +729,7 @@
                     <div class="form-group text-sm">
                         <label class="col-sm-1 control-label">관리자 메모</label>
                         <div class="col-sm-11">
-                            <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="500" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
+                            <textarea class="form-control input-sm notRequired" id="admMemo" name="admMemo" title="관리자메모" placeholder="관리자 메모 입력" maxlength="2000" style="height: 156px; width: 1000px;">${rtnDto.admMemo}</textarea>
                             <div class="col-sm-8" style="margin-left: 35px;">
                                 <p class="form-control-static" style="text-align: right;"><c:if test="${ not empty rtnDto.admMemoModDtm }">${kl:convertDate(rtnDto.admMemoModDtm, 'yyyy-MM-dd HH:mm', 'yyyy-MM-dd HH:mm', '')}</c:if><c:if test="${empty rtnDto.admMemoModDtm}">-</c:if></p>
                             </div>
