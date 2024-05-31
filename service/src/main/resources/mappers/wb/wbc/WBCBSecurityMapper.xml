@@ -32,6 +32,12 @@
         ,D.EMAIL
         ,C.APPCTN_STTS_CHNG_DTM
         ,C.MNG_STTS_CHNG_DTM
+        , CASE WHEN BSN_CD = 'BSN03' OR BSN_CD = 'BSN04' OR BSN_CD = 'BSN05' OR BSN_CD = 'BSN06'
+            THEN
+            (SELECT NAME FROM CP_ISTTR_MST WHERE ISTTR_SEQ = B.pic_cmssr_seq)
+            ELSE
+            (SELECT NAME FROM co_mem_mst WHERE MEM_SEQ = B.pic_cmssr_seq AND mem_cd = 'CS')
+        END AS PIC_CMSSR_NM
         ,B.REG_ID
         ,(SELECT NAME FROM CO_ADM_MST WHERE ID = B.REG_ID) AS REG_NM
         ,B.REG_DTM
