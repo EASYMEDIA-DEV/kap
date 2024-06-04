@@ -401,17 +401,20 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             //상생협력체감도조사 메일발송 끝
 
             //SMS 발송 시작
-            //SMS 발송
-            receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
-            COSmsDTO smsDto = new COSmsDTO();
+            //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
+            if(!"".equals(wBLSurveyMstInsertDTO.getTelNo())){
+                receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
+                COSmsDTO smsDto = new COSmsDTO();
 
-            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
-            smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
-            smiSmsCntnDTO.setSmsCntnSeq(10);
-            smsDto.getReceiver().add(receiverDto);
-            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+                SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+                smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
+                smiSmsCntnDTO.setSmsCntnSeq(10);
+                smsDto.getReceiver().add(receiverDto);
+                smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
-            cOMessageService.sendSms(smsDto, "");
+                cOMessageService.sendSms(smsDto, "");
+            }
+
             //SMS 발송 끝
 
         } catch (Exception e) {

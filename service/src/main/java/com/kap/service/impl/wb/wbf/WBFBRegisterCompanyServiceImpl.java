@@ -814,7 +814,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         row = sheet.createRow(rowNum++);
 
         List<String> cellVal = new ArrayList<>(Arrays.asList(
-                "번호","사업연도","회차","부품사명","사업자등록번호(종사업장번호)","구분","규모","선정결과","시스템","현재수준","목표수준","(최종)수준확인"
+                "번호","사업연도","회차","부품사명","사업자등록번호(종사업장번호)","구분","규모","선정결과", "공급기업명", "공급기업사업자번호","시스템","현재수준","목표수준","(최종)수준확인"
                 ,"평가위원","계획","실적","평점","결과","원가계산기","의뢰","회신","총사업비(예산)","원가계산금액","차이","정부지원","대기업출연","도입기업"
                 ,"총시스템구축비","시스템구축지원(정부지원+대기업출연)","선정","협약","기간","차수","접수","정부지원금","대기업출연금"
                 ,"금액계","지급","차수","접수","정부지원금","대기업출연금","금액계","지급","차수","접수","수수료-지급","지급","은행","계좌번호","예금주"
@@ -829,15 +829,15 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             cell.setCellStyle(style_header);
         }
 
-        mergedRegion = new CellRangeAddress(0, 0, 50, 53);
+        mergedRegion = new CellRangeAddress(0, 0, 52, 55);
         sheet.addMergedRegion(mergedRegion);
-        cell = row.createCell(50);
+        cell = row.createCell(52);
         cell.setCellValue("도입기업 담당자");
         cell.setCellStyle(style_header);
 
-        mergedRegion = new CellRangeAddress(0, 0, 54, 56);
+        mergedRegion = new CellRangeAddress(0, 0, 56, 58);
         sheet.addMergedRegion(mergedRegion);
-        cell = row.createCell(54);
+        cell = row.createCell(56);
         cell.setCellValue("공급기업 담당자");
         cell.setCellStyle(style_header);
 
@@ -850,7 +850,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
         for(int cellIdx=0; cellIdx<(cellValSub.size()+cellVal.size()); cellIdx++) {
             cell = row.createCell(cellIdx);
             cell.setCellStyle(style_header);
-            if(cellIdx >= 50){
+            if(cellIdx >= 52){
                 cell.setCellValue(cellValSub.get(cellIdx-cellVal.size()));
             }
         }
@@ -916,18 +916,19 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             cell.setCellValue(defaultRsumeTaskDtlDTO.getBsnTypeCdNm());
             cell.setCellStyle(style_body);
 
+
             //시스템 - 선택 과제
-            cell = row.createCell(8);
+            cell = row.createCell(10);
             cell.setCellValue(defaultRsumeTaskDtlDTO.getTaskCdNm());
             cell.setCellStyle(style_body);
 
             //현재수준 - 선택 스마트화 현재 수준
-            cell = row.createCell(9);
+            cell = row.createCell(11);
             cell.setCellValue(defaultRsumeTaskDtlDTO.getSmtfnPrsntCdNm());
             cell.setCellStyle(style_body);
 
             //현재수준 - 선택 스마트화 목표 수준
-            cell = row.createCell(10);
+            cell = row.createCell(12);
             cell.setCellValue(defaultRsumeTaskDtlDTO.getSmtfnTrgtCdNm());
             cell.setCellStyle(style_body);
 
@@ -936,11 +937,11 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             if(rsumeTaskList.size() > 6) {
                 rsumeTaskDtlDTO = rsumeTaskList.get(6);
                 //최종수준 - 최종점검 단계의 스마트화 수준
-                cell = row.createCell(11);
+                cell = row.createCell(13);
                 cell.setCellValue(rsumeTaskDtlDTO.getSmtfnLvlChkCdNm());
                 cell.setCellStyle(style_body);
             } else {
-                cell = row.createCell(11);
+                cell = row.createCell(13);
                 cell.setCellStyle(style_body);
             }
 
@@ -948,48 +949,48 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 rsumeTaskDtlDTO = rsumeTaskList.get(2);
 
                 //평가위원 - 최초점검 단계의 평가위원
-                cell = row.createCell(12);
+                cell = row.createCell(14);
                 cell.setCellValue(rsumeTaskDtlDTO.getChkCmssrNm());
                 cell.setCellStyle(style_body);
 
                 //계획 - 최초점검 단계의 점검계획일
-                cell = row.createCell(13);
+                cell = row.createCell(15);
                 cell.setCellValue(rsumeTaskDtlDTO.getChkPlanDtFmt());
                 cell.setCellStyle(style_body);
 
                 //실적 - 최초점검 단계의 점검시행일
-                cell = row.createCell(14);
+                cell = row.createCell(16);
                 cell.setCellValue(rsumeTaskDtlDTO.getChkImplmnDtFmt());
                 cell.setCellStyle(style_body);
 
                 //평점 - 최초점검 단계의 평점
-                cell = row.createCell(15);
+                cell = row.createCell(17);
                 cell.setCellValue(rsumeTaskDtlDTO.getExamScore() != null ? rsumeTaskDtlDTO.getExamScore().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //결과 - 최초점검 단계의 관리자 상태값
-                cell = row.createCell(16);
+                cell = row.createCell(18);
                 cell.setCellValue(rsumeTaskDtlDTO.getMngSttsCdNm());
                 cell.setCellStyle(style_body);
             } else {
                 //평가위원 - 최초점검 단계의 평가위원
-                cell = row.createCell(12);
-                cell.setCellStyle(style_body);
-
-                //계획 - 최초점검 단계의 점검계획일
-                cell = row.createCell(13);
-                cell.setCellStyle(style_body);
-
-                //실적 - 최초점검 단계의 점검시행일
                 cell = row.createCell(14);
                 cell.setCellStyle(style_body);
 
-                //평점 - 최초점검 단계의 평점
+                //계획 - 최초점검 단계의 점검계획일
                 cell = row.createCell(15);
                 cell.setCellStyle(style_body);
 
-                //결과 - 최초점검 단계의 관리자 상태값
+                //실적 - 최초점검 단계의 점검시행일
                 cell = row.createCell(16);
+                cell.setCellStyle(style_body);
+
+                //평점 - 최초점검 단계의 평점
+                cell = row.createCell(17);
+                cell.setCellStyle(style_body);
+
+                //결과 - 최초점검 단계의 관리자 상태값
+                cell = row.createCell(18);
                 cell.setCellStyle(style_body);
             }
 
@@ -1003,29 +1004,29 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 }
 
                 //원가계산기관 - 원가계산 단계의 원가계산기관
-                cell = row.createCell(17);
+                cell = row.createCell(19);
                 cell.setCellValue(rsumeTaskDtlDTO.getPrmcstClcltnInstt());
                 cell.setCellStyle(style_body);
 
                 //의뢰 - 원가계산 단계의 의뢰일
-                cell = row.createCell(18);
+                cell = row.createCell(20);
                 cell.setCellValue(rsumeTaskDtlDTO.getRqstDtFmt());
                 cell.setCellStyle(style_body);
 
                 //회신 - 원가계산 단계의 회신일
-                cell = row.createCell(19);
+                cell = row.createCell(21);
                 cell.setCellValue(rsumeTaskDtlDTO.getRplyDtFmt());
                 cell.setCellStyle(style_body);
             } else {
-                cell = row.createCell(17);
+                cell = row.createCell(19);
                 cell.setCellStyle(style_body);
 
                 //의뢰 - 원가계산 단계의 의뢰일
-                cell = row.createCell(18);
+                cell = row.createCell(20);
                 cell.setCellStyle(style_body);
 
                 //회신 - 원가계산 단계의 회신일
-                cell = row.createCell(19);
+                cell = row.createCell(21);
                 cell.setCellStyle(style_body);
             }
 
@@ -1038,23 +1039,23 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 }
 
                 //총사업비 - 사업계획 단계의 총사업비
-                cell = row.createCell(20);
+                cell = row.createCell(22);
                 cell.setCellValue(rsumeTaskDtlDTO.getTtlBsnPmt() != null ? rsumeTaskDtlDTO.getTtlBsnPmt().toString() : "");
                 cell.setCellStyle(style_body);
             } else {
-                cell = row.createCell(20);
+                cell = row.createCell(22);
                 cell.setCellStyle(style_body);
             }
 
             //원가계산금액 - 원가계산 단계의 총금액
-            cell = row.createCell(21);
+            cell = row.createCell(23);
             cell.setCellValue(ttlPmt);
             cell.setCellStyle(style_body);
 
             DecimalFormat decimalFormat = new DecimalFormat("###,###");
             int diffTtl = ttlBsnPmt - ttlPmt;
 
-            cell = row.createCell(22);
+            cell = row.createCell(24);
             cell.setCellValue(diffTtl == 0 ? "-" : decimalFormat.format(diffTtl));
             cell.setCellStyle(style_body);
 
@@ -1062,7 +1063,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 rsumeTaskDtlDTO = rsumeTaskList.get(4);
 
                 //정부지원 - 원가계산 단계의 정부지원금
-                cell = row.createCell(23);
+                cell = row.createCell(25);
                 cell.setCellValue(rsumeTaskDtlDTO.getGvmntSpprtPmt() != null ? rsumeTaskDtlDTO.getGvmntSpprtPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
@@ -1071,7 +1072,7 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 if(rsumeTaskDtlDTO.getMjcmnAprncPmt() != null) {
                     mjcmnAprncPmt = rsumeTaskDtlDTO.getMjcmnAprncPmt();
                 }
-                cell = row.createCell(24);
+                cell = row.createCell(26);
                 cell.setCellValue(rsumeTaskDtlDTO.getMjcmnAprncPmt() != null ? rsumeTaskDtlDTO.getNtdcnCmpnBrdnPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
@@ -1080,44 +1081,44 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 if(rsumeTaskDtlDTO.getNtdcnCmpnBrdnPmt() != null) {
                     ntdcnCmpnBrdnPmt = rsumeTaskDtlDTO.getNtdcnCmpnBrdnPmt();
                 }
-                cell = row.createCell(25);
+                cell = row.createCell(27);
                 cell.setCellValue(rsumeTaskDtlDTO.getNtdcnCmpnBrdnPmt() != null ? rsumeTaskDtlDTO.getNtdcnCmpnBrdnPmt().toString() : "" );
                 cell.setCellStyle(style_body);
 
                 //총시스템구축비 - 원가계산 단계의 총금액
-                cell = row.createCell(26);
+                cell = row.createCell(28);
                 cell.setCellValue(rsumeTaskDtlDTO.getTtlPmt() != null ? rsumeTaskDtlDTO.getTtlPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
                 int sumPmt = mjcmnAprncPmt + ntdcnCmpnBrdnPmt;
                 //시스템구축지원 - (정부지원+대기업출연)
-                cell = row.createCell(27);
+                cell = row.createCell(29);
                 cell.setCellValue(sumPmt);
                 cell.setCellStyle(style_body);
             } else {
                 //정부지원 - 원가계산 단계의 정부지원금
-                cell = row.createCell(23);
-                cell.setCellStyle(style_body);
-
-                //대기업출연 - 원가계산 단계의 대기업출연금
-                cell = row.createCell(24);
-                cell.setCellStyle(style_body);
-
-                //도입기업 - 원가계산 단계의 도입기업부담금
                 cell = row.createCell(25);
                 cell.setCellStyle(style_body);
 
-                //총시스템구축비 - 원가계산 단계의 총금액
+                //대기업출연 - 원가계산 단계의 대기업출연금
                 cell = row.createCell(26);
                 cell.setCellStyle(style_body);
 
-                //시스템구축지원 - (정부지원+대기업출연)
+                //도입기업 - 원가계산 단계의 도입기업부담금
                 cell = row.createCell(27);
+                cell.setCellStyle(style_body);
+
+                //총시스템구축비 - 원가계산 단계의 총금액
+                cell = row.createCell(28);
+                cell.setCellStyle(style_body);
+
+                //시스템구축지원 - (정부지원+대기업출연)
+                cell = row.createCell(29);
                 cell.setCellStyle(style_body);
             }
 
             //선정 - 신청 단계의 관리자상태값
-            cell = row.createCell(28);
+            cell = row.createCell(30);
             cell.setCellValue(defaultRsumeTaskDtlDTO.getMngSttsCdNm());
             cell.setCellStyle(style_body);
 
@@ -1125,52 +1126,52 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 rsumeTaskDtlDTO = rsumeTaskList.get(5);
 
                 //협약 - 협약 단계의 협약일
-                cell = row.createCell(29);
+                cell = row.createCell(31);
                 cell.setCellValue(rsumeTaskDtlDTO.getAgrmtDtFmt());
                 cell.setCellStyle(style_body);
 
                 //기간 - 협약 단계의 기간
-                cell = row.createCell(30);
+                cell = row.createCell(32);
                 cell.setCellValue(rsumeTaskDtlDTO.getAgrmtTermDtFmt());
                 cell.setCellStyle(style_body);
             } else {
-                cell = row.createCell(29);
+                cell = row.createCell(21);
                 cell.setCellStyle(style_body);
 
                 //기간 - 협약 단계의 기간
-                cell = row.createCell(30);
+                cell = row.createCell(32);
                 cell.setCellStyle(style_body);
             }
             /*지급 단계 별 공통 DTO */
             WBSpprtDtlDTO SpprtDtlDTO = spprList.get(0);
 
             //차수 - 선급금지급 영역의 지급차수
-            cell = row.createCell(31);
+            cell = row.createCell(33);
             cell.setCellValue(SpprtDtlDTO.getGiveOrd() != null ? SpprtDtlDTO.getGiveOrd().toString() : "");
             cell.setCellStyle(style_body);
 
             //접수 - 선급금지급 영역의 접수일
-            cell = row.createCell(32);
+            cell = row.createCell(34);
             cell.setCellValue(SpprtDtlDTO.getAccsDtFmt());
             cell.setCellStyle(style_body);
 
             //정부지원금 - 선급금지급 영역의 정부지원금
-            cell = row.createCell(33);
+            cell = row.createCell(35);
             cell.setCellValue(SpprtDtlDTO.getGvmntSpprtPmt() != null ? SpprtDtlDTO.getGvmntSpprtPmt().toString() : "");
             cell.setCellStyle(style_body);
 
             //대기업출연금 - 선급금지급 영역의 대기업출연금
-            cell = row.createCell(34);
+            cell = row.createCell(36);
             cell.setCellValue(SpprtDtlDTO.getMjcmnAprncPmt() != null ? SpprtDtlDTO.getMjcmnAprncPmt().toString() : "");
             cell.setCellStyle(style_body);
 
             //금액계 - 선급금지급 영역의 총금액
-            cell = row.createCell(35);
+            cell = row.createCell(37);
             cell.setCellValue(SpprtDtlDTO.getTtlPmt() != null ? SpprtDtlDTO.getTtlPmt().toString() : "");
             cell.setCellStyle(style_body);
 
             //지급 - 선급금지급 영역의 지급일
-            cell = row.createCell(36);
+            cell = row.createCell(38);
             cell.setCellValue(SpprtDtlDTO.getGiveDtFmt());
             cell.setCellStyle(style_body);
 
@@ -1179,57 +1180,57 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 SpprtDtlDTO = spprList.get(1);
 
                 //차수 - 지원금지급 영역의 지급차수
-                cell = row.createCell(37);
+                cell = row.createCell(39);
                 cell.setCellValue(SpprtDtlDTO.getGiveOrd() != null ? SpprtDtlDTO.getGiveOrd().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //접수 - 지원금지급 영역의 접수일
-                cell = row.createCell(38);
+                cell = row.createCell(40);
                 cell.setCellValue(SpprtDtlDTO.getAccsDtFmt());
                 cell.setCellStyle(style_body);
 
                 //정부지원금 - 지원금지급 영역의 정부지원금
-                cell = row.createCell(39);
+                cell = row.createCell(41);
                 cell.setCellValue(SpprtDtlDTO.getGvmntSpprtPmt() != null ? SpprtDtlDTO.getGvmntSpprtPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //대기업출연금 - 지원금지급 영역의 대기업출연금
-                cell = row.createCell(40);
+                cell = row.createCell(42);
                 cell.setCellValue(SpprtDtlDTO.getMjcmnAprncPmt() != null ? SpprtDtlDTO.getMjcmnAprncPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //금액계 - 지원금지급 영역의 총금액
-                cell = row.createCell(41);
+                cell = row.createCell(43);
                 cell.setCellValue(SpprtDtlDTO.getTtlPmt() != null ? SpprtDtlDTO.getTtlPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //지급 - 지원금지급 영역의 지급일
-                cell = row.createCell(42);
+                cell = row.createCell(44);
                 cell.setCellValue(SpprtDtlDTO.getGiveDtFmt());
                 cell.setCellStyle(style_body);
             } else {
                 //차수 - 지원금지급 영역의 지급차수
-                cell = row.createCell(37);
-                cell.setCellStyle(style_body);
-
-                //접수 - 지원금지급 영역의 접수일
-                cell = row.createCell(38);
-                cell.setCellStyle(style_body);
-
-                //정부지원금 - 지원금지급 영역의 정부지원금
                 cell = row.createCell(39);
                 cell.setCellStyle(style_body);
 
-                //대기업출연금 - 지원금지급 영역의 대기업출연금
+                //접수 - 지원금지급 영역의 접수일
                 cell = row.createCell(40);
                 cell.setCellStyle(style_body);
 
-                //금액계 - 지원금지급 영역의 총금액
+                //정부지원금 - 지원금지급 영역의 정부지원금
                 cell = row.createCell(41);
                 cell.setCellStyle(style_body);
 
-                //지급 - 지원금지급 영역의 지급일
+                //대기업출연금 - 지원금지급 영역의 대기업출연금
                 cell = row.createCell(42);
+                cell.setCellStyle(style_body);
+
+                //금액계 - 지원금지급 영역의 총금액
+                cell = row.createCell(43);
+                cell.setCellStyle(style_body);
+
+                //지급 - 지원금지급 영역의 지급일
+                cell = row.createCell(44);
                 cell.setCellStyle(style_body);
             }
 
@@ -1237,38 +1238,38 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 SpprtDtlDTO = spprList.get(2);
 
                 //차수 - 기술임치 영역의 지급차수
-                cell = row.createCell(43);
+                cell = row.createCell(45);
                 cell.setCellValue(SpprtDtlDTO.getGiveOrd() != null ? SpprtDtlDTO.getGiveOrd().toString() : "" );
                 cell.setCellStyle(style_body);
 
                 //접수 - 기술임치 영역의 접수일
-                cell = row.createCell(44);
+                cell = row.createCell(46);
                 cell.setCellValue(SpprtDtlDTO.getAccsDtFmt());
                 cell.setCellStyle(style_body);
 
                 //수수료 - 기술임치 영역의 수수료
-                cell = row.createCell(45);
+                cell = row.createCell(47);
                 cell.setCellValue(SpprtDtlDTO.getCmssnPmt() != null ? SpprtDtlDTO.getCmssnPmt().toString() : "");
                 cell.setCellStyle(style_body);
 
                 //지급 - 기술임치 영역의 지급일
-                cell = row.createCell(46);
+                cell = row.createCell(48);
                 cell.setCellValue(SpprtDtlDTO.getGiveDtFmt());
                 cell.setCellStyle(style_body);
             } else {
-                cell = row.createCell(43);
-                cell.setCellStyle(style_body);
-
-                //접수 - 기술임치 영역의 접수일
-                cell = row.createCell(44);
-                cell.setCellStyle(style_body);
-
-                //수수료 - 기술임치 영역의 수수료
                 cell = row.createCell(45);
                 cell.setCellStyle(style_body);
 
-                //지급 - 기술임치 영역의 지급일
+                //접수 - 기술임치 영역의 접수일
                 cell = row.createCell(46);
+                cell.setCellStyle(style_body);
+
+                //수수료 - 기술임치 영역의 수수료
+                cell = row.createCell(47);
+                cell.setCellStyle(style_body);
+
+                //지급 - 기술임치 영역의 지급일
+                cell = row.createCell(48);
                 cell.setCellStyle(style_body);
             }
 
@@ -1276,50 +1277,50 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 SpprtDtlDTO = spprList.get(1);
 
                 //은행 - 지원금지급 영역의 은행명
-                cell = row.createCell(47);
+                cell = row.createCell(49);
                 cell.setCellValue(SpprtDtlDTO.getBankNm());
                 cell.setCellStyle(style_body);
 
                 //계좌번호 - 지원금지급 영역의 계좌번호
-                cell = row.createCell(48);
+                cell = row.createCell(50);
                 cell.setCellValue(SpprtDtlDTO.getAcntNo());
                 cell.setCellStyle(style_body);
 
                 //예금주 - 지원금지급 영역의 예금주
-                cell = row.createCell(49);
+                cell = row.createCell(51);
                 cell.setCellValue(SpprtDtlDTO.getDpsitNm());
                 cell.setCellStyle(style_body);
             } else {
                 //은행 - 지원금지급 영역의 은행명
-                cell = row.createCell(47);
+                cell = row.createCell(49);
                 cell.setCellStyle(style_body);
 
                 //계좌번호 - 지원금지급 영역의 계좌번호
-                cell = row.createCell(48);
+                cell = row.createCell(50);
                 cell.setCellStyle(style_body);
 
                 //예금주 - 지원금지급 영역의 예금주
-                cell = row.createCell(49);
+                cell = row.createCell(51);
                 cell.setCellStyle(style_body);
             }
 
             //신청자 - 신청자이름
-            cell = row.createCell(50);
+            cell = row.createCell(52);
             cell.setCellValue(registerDTO.getName());
             cell.setCellStyle(style_body);
 
             //직급 - 신청자직급
-            cell = row.createCell(51);
+            cell = row.createCell(53);
             cell.setCellValue(registerDTO.getPstnCdNm());
             cell.setCellStyle(style_body);
 
             // HP/사무실번호 - 신청자 휴대폰번호/일반전화번호
-            cell = row.createCell(52);
+            cell = row.createCell(54);
             cell.setCellValue(registerDTO.getTelNo() + "/" + registerDTO.getHpNo());
             cell.setCellStyle(style_body);
 
             // 이메일 - 신청자 이메일
-            cell = row.createCell(53);
+            cell = row.createCell(55);
             cell.setCellValue(registerDTO.getEmail());
             cell.setCellStyle(style_body);
 
@@ -1327,29 +1328,40 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
                 rsumeTaskDtlDTO = rsumeTaskList.get(1);
 
                 // 성명 - 사업계획 단계의 공급기업 담당자명
-                cell = row.createCell(54);
+                cell = row.createCell(56);
                 cell.setCellValue(rsumeTaskDtlDTO.getOfferPicNm());
                 cell.setCellStyle(style_body);
 
                 // HP - 사업계획 단계의 공급기업 담당자 휴대폰
-                cell = row.createCell(55);
+                cell = row.createCell(57);
                 cell.setCellValue(rsumeTaskDtlDTO.getOfferPicHpNo());
                 cell.setCellStyle(style_body);
 
                 // 이메일 - 사업계획 단계의 공급기업 담당자 이메일
-                cell = row.createCell(56);
+                cell = row.createCell(58);
                 cell.setCellValue(rsumeTaskDtlDTO.getOfferPicEmail());
                 cell.setCellStyle(style_body);
+
+                // 이메일 - 사업계획 단계의 공급기업 명
+                cell = row.createCell(8);
+                cell.setCellValue(rsumeTaskDtlDTO.getOfferCmpnNm());
+                cell.setCellStyle(style_body);
+
+                // 이메일 - 사업계획 단계의 공급기업  사업자번호
+                cell = row.createCell(9);
+                cell.setCellValue(rsumeTaskDtlDTO.getOfferBsnmNo());
+                cell.setCellStyle(style_body);
+
             } else {
-                cell = row.createCell(54);
+                cell = row.createCell(56);
                 cell.setCellStyle(style_body);
 
                 // HP - 사업계획 단계의 공급기업 담당자 휴대폰
-                cell = row.createCell(55);
+                cell = row.createCell(57);
                 cell.setCellStyle(style_body);
 
                 // 이메일 - 사업계획 단계의 공급기업 담당자 이메일
-                cell = row.createCell(56);
+                cell = row.createCell(58);
                 cell.setCellStyle(style_body);
             }
         }
