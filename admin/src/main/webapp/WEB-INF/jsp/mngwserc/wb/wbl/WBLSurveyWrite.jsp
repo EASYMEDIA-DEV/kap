@@ -184,7 +184,7 @@
                                 <p class="form-control-static">${rtnDto.telNo}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="10" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm phoneChk notRequired" id="telNo" name="telNo" value="" maxlength="13" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
