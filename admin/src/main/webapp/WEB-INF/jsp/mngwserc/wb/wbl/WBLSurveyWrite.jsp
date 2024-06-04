@@ -176,7 +176,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <label class="col-sm-1 control-label">휴대폰 번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">휴대폰 번호</label>
                     <div class="col-sm-5">
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
@@ -184,7 +184,7 @@
                                 <p class="form-control-static">${rtnDto.telNo}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="50" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="10" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
