@@ -168,9 +168,18 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     /* 현재 단계가 아닐 경우 disable 처리 js */
     let setDisable = (function() {
         let paint = function(panel) {
-            $(panel).find('.panel-body')
+            /*$(panel).find('.panel-body')
                 .css('pointer-events', 'none')
-                .css('cursor', 'default');
+                .css('cursor', 'default');*/
+
+
+            $(panel).find('.panel-body').find("fieldset").each(function(){
+
+                if($(this).find("div.dropzone ").length == 0){
+                    $(this).css('pointer-events', 'none').css('cursor', 'default');
+                }
+
+            });
         }
         let disPaint = function(panel) {
             $(panel).find('.panel-body').attr('style', '');
