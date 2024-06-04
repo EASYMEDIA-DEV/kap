@@ -176,7 +176,7 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <label class="col-sm-1 control-label">전화번호<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">휴대폰 번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
