@@ -395,6 +395,13 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
         wBDBSafetyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
 
+        //2024-06-04 사업비는 수정 가능하도록 변경
+        WBDBSafetyPbsnDtlDTO bsnPmtDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(0);
+        bsnPmtDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+        bsnPmtDTO.setModId(coaAdmDTO.getId());
+        bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBDBSafetyMapper.updateBsnPmtDtl(bsnPmtDTO);
+
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 

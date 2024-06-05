@@ -396,6 +396,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
         wBEBCarbonCompanyMapper.updateAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
 
+        //2024-06-04 사업비는 수정 가능하도록 변경
+        WBEBCarbonCompanyPbsnDtlDTO bsnPmtDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(0);
+        bsnPmtDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+        bsnPmtDTO.setModId(coaAdmDTO.getId());
+        bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
+        wBEBCarbonCompanyMapper.updateBsnPmtDtl(bsnPmtDTO);
+
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());
 

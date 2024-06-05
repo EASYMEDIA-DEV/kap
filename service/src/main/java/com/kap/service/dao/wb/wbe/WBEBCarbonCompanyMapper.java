@@ -2,13 +2,7 @@ package com.kap.service.dao.wb.wbe;
 
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
-import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
-import com.kap.core.dto.wb.wbc.WBCBCompanyDtlDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
-import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.*;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 
 import java.util.List;
 
@@ -77,6 +71,11 @@ public interface WBEBCarbonCompanyMapper {
      * 신청환경 상세 수정
      */
     public int updateAppctnPbsnDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
+
+    /**
+     * 신청환경 상세 사업비 수정
+     */
+    public int updateBsnPmtDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
 
 
     /**

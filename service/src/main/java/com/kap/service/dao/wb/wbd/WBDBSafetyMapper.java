@@ -3,7 +3,6 @@ package com.kap.service.dao.wb.wbd;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpc.MPCLecturerDTO;
 import com.kap.core.dto.wb.wbd.*;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 
 import java.util.List;
 
@@ -72,6 +71,11 @@ public interface WBDBSafetyMapper {
      * 신청환경 상세 수정
      */
     public int updateAppctnPbsnDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
+
+    /**
+     * 신청환경 상세 사업비 수정
+     */
+    public int updateBsnPmtDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
 
 
     /**
