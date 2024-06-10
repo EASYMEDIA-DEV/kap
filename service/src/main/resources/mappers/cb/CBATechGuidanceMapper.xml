@@ -1241,10 +1241,11 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.12.04    이옥정       최초 생성
+        2024.06.10    장두석       사업연도 -> 지도완료
     -->
     <select id="selectConsultSuveyRsltList" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
         SELECT /* CBATechGuidanceMapper.selectConsultSuveyRsltList */
-        BSN_YEAR                                                                           <!-- 사업연도 -->
+        BSN_YEAR                                                                           <!-- 지도완료연도 -->
         , COUNT(APPCTN_BSNM_NO) CMPN_CNT                                                   <!-- 대상부품사 -->
         , SUM(SRV_CMPLT_CMPN_CNT) SRV_CMPLT_CMPN_CNT                                       <!-- 설문완료 부품사 -->
         , SUM(RGLR_CMPN_CNT) RGLR_CMPN_CNT                                                 <!-- 정규 부품사 -->
@@ -1255,7 +1256,7 @@
         , IFNULL(ROUND((SUM(SHRT_SCORE) / SUM(SHRT_CMPN_CNT)),1),0) SHRT_AVG_SCORE         <!-- 단기점수평균 -->
         FROM (
         SELECT
-        CP_MST.BSN_YEAR
+        YEAR(CPR_MST.guide_pscnd_dt) BSN_YEAR <!-- 2024.06.10 지도완료 연도로 변경 -->
         , CP_MST.APPCTN_BSNM_NO
         , (SELECT COUNT(TTL_SCORE) FROM CP_CNSTG_SRV_RSLT_DTL CCSR WHERE CP_MST.CNSTG_SEQ = CCSR.CNSTG_SEQ ) SRV_CMPLT_CMPN_CNT
         , (SELECT COUNT(*) FROM CP_CNSTG_RSUME_MST CCR WHERE CP_MST.CNSTG_SEQ = CCR.CNSTG_SEQ AND CCR.GUIDE_TYPE_CD = 'GUIDE_TYPE_CD01' ) SHRT_CMPN_CNT
@@ -1285,7 +1286,7 @@
         ) MST
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
             WHERE
-            BSN_YEAR = #{rtnBsnYear}
+            MST.BSN_YEAR = #{rtnBsnYear}
         </if>
         GROUP BY
         MST.BSN_YEAR
@@ -1300,11 +1301,12 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2024.02.28    구은희      최초생성
+        2024.06.10    장두석      사업연도 -> 지도완료
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
         SELECT /* CBATechGuidanceMapper.selectConsultSuveyRsltDtlExcel */
             CP_MST.CNSTG_SEQ            <!-- 컨설팅 순번 -->
-            , CP_MST.BSN_YEAR             <!-- 사업연도 -->
+            , YEAR(CPR_MST.guide_pscnd_dt) BSN_YEAR             <!-- 지도완료연도 -->
             , CMPN_MST.CMPN_NM          <!-- 부품사명 -->
             , (SELECT NAME FROM CO_MEM_MST WHERE MEM_CD = 'CS' AND MEM_SEQ = (SELECT CMSSR_SEQ FROM CP_CNSTG_RSUME_MST WHERE CNSTG_SEQ = CP_MST.CNSTG_SEQ)) CMSSR_NM    <!-- 담당위원 -->
             , CPSR.PTCPT_NAME           <!-- 참여자 -->
@@ -1331,14 +1333,14 @@
         ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
         where 1=1
         <if test="rtnBsnYear != null and rtnBsnYear != ''">
-            AND BSN_YEAR = ${rtnBsnYear}
+            AND YEAR(CPR_MST.guide_pscnd_dt) = ${rtnBsnYear}
         </if>
         AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
         AND CPR_MST.GUIDE_PSCND_CD = 'GUIDE_PSCND04'
         ORDER BY
-        CP_MST.REG_DTM DESC
+        CPR_MST.guide_pscnd_dt DESC
     </select>
 
     <!--

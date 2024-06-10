@@ -26,7 +26,7 @@
           <div class="modal-body">
               <fieldset>
                 <div class="form-group text-sm">
-                  <label class="col-sm-1 control-label">사업연도</label>
+                  <label class="col-sm-1 control-label">지도완료</label> <%-- 2024.06.10 지도완료 연도로 변경 --%>
                   <div class="col-sm-6">
                     <div class="col-sm-3 pr0">
                       <select class="form-control input-sm" name="rtnBsnYear">
@@ -64,7 +64,7 @@
                   <thead>
                   <tr>
                     <th class="text-center">번호</th>
-                    <th class="text-center">사업연도</th>
+                    <th class="text-center">지도완료</th> <%-- 2024.06.10 지도완료 연도로 변경 --%>
                     <th class="text-center">대상부품사</th>
                     <th class="text-center">설문완료<br/>부품사</th>
                     <th class="text-center">정규부품사</th>

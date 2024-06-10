@@ -1030,7 +1030,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(2);
-        cell.setCellValue("사업연도");
+        cell.setCellValue("지도완료"); //2024-06-10 지도완료로 변경
         cell.setCellStyle(style_header);
 
         cell = row.createCell(3);
