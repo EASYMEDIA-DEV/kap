@@ -400,6 +400,9 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         bsnPmtDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
         bsnPmtDTO.setModId(coaAdmDTO.getId());
         bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
+        if(bsnPmtDTO.getBsnPmt() == null || bsnPmtDTO.getBsnPmt().isEmpty()) {
+            bsnPmtDTO.setBsnPmt("0");
+        }
         wBCBSecurityMapper.updateBsnPmtDtl(bsnPmtDTO);
 
 

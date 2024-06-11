@@ -400,6 +400,9 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         bsnPmtDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
         bsnPmtDTO.setModId(coaAdmDTO.getId());
         bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
+        if(bsnPmtDTO.getBsnPmt() == null || bsnPmtDTO.getBsnPmt().isEmpty()) {
+            bsnPmtDTO.setBsnPmt("0");
+        }
         wBDBSafetyMapper.updateBsnPmtDtl(bsnPmtDTO);
 
         //상생 신청 파일 상세
