@@ -378,7 +378,7 @@
 
                                                 <c:set var="examStart" value="" />
 
-                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq}">
+                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq && empty rtnData.examScore}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                     <c:set var="examStart" value="examStart" />
                                                 </c:if>
