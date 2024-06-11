@@ -182,7 +182,10 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             });
         }
         let disPaint = function(panel) {
-            $(panel).find('.panel-body').attr('style', '');
+            // $(panel).find('.panel-body').attr('style', '');
+            $(panel).find('.panel-body').find("fieldset").each(function(){
+                    $(this).attr('style', '');
+            });
         }
         /* All panel disable */
         let init = function() {
