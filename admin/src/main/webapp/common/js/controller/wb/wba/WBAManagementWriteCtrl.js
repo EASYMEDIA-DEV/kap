@@ -88,26 +88,28 @@ define(["ezCtrl", "ezVald", "CodeMirror", "controller/co/COMenuCtrl"], function(
             });
 
             /* 2024-06-11 신청자가 있어도 첨부파일 항목은 수정할 수 있도록 변경 s */
-            cmmCtrl.frmAjax(function(result) {
-                if (result > 0) {
-                    $formObj.find('fieldset').each(function () {
-                        var fieldset = $(this);
+            if($("#detailsKey").val() != "") {
+                cmmCtrl.frmAjax(function(result) {
+                    if (result > 0) {
+                        $formObj.find('fieldset').each(function () {
+                            var fieldset = $(this);
 
-                        // fieldset 내에 .dropzone 클래스가 있는지 확인
-                        if (fieldset.find('.dropzone').length === 0) {
-                            // .dropzone 클래스가 없으면 수정 불가
-                            fieldset.css('pointer-events', 'none').css('cursor', 'default');
-                        }
+                            // fieldset 내에 .dropzone 클래스가 있는지 확인
+                            if (fieldset.find('.dropzone').length === 0) {
+                                // .dropzone 클래스가 없으면 수정 불가
+                                fieldset.css('pointer-events', 'none').css('cursor', 'default');
+                            }
 
-                        //그러나 dropzone이 있는 fieldset 요소의 단계추가/삭제, 첨부파일 미포함, 첨부항목 추가/삭제는 수정 불가
-                        fieldset.find('.btnStepWrite').css('pointer-events', 'none').css('cursor', 'default');
-                        fieldset.find('.btnStepDelete').css('pointer-events', 'none').css('cursor', 'default');
-                        fieldset.find('.fileBtn').css('pointer-events', 'none').css('cursor', 'default');
-                        fieldset.find('.btnAddOptn').css('pointer-events', 'none').css('cursor', 'default');
-                        fieldset.find('.btnDeleteOptn').css('pointer-events', 'none').css('cursor', 'default');
-                    });
-                }
-            },"./applyCount", $formObj);
+                            //그러나 dropzone이 있는 fieldset 요소의 단계추가/삭제, 첨부파일 미포함, 첨부항목 추가/삭제는 수정 불가
+                            fieldset.find('.btnStepWrite').css('pointer-events', 'none').css('cursor', 'default');
+                            fieldset.find('.btnStepDelete').css('pointer-events', 'none').css('cursor', 'default');
+                            fieldset.find('.fileBtn').css('pointer-events', 'none').css('cursor', 'default');
+                            fieldset.find('.btnAddOptn').css('pointer-events', 'none').css('cursor', 'default');
+                            fieldset.find('.btnDeleteOptn').css('pointer-events', 'none').css('cursor', 'default');
+                        });
+                    }
+                },"./applyCount", $formObj);
+            }
 
             $("#btn_update").click(function () {
                 //신청자가 있는지 확인
