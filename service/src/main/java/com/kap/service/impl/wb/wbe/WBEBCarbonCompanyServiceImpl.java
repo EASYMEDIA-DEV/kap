@@ -401,6 +401,9 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         bsnPmtDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
         bsnPmtDTO.setModId(coaAdmDTO.getId());
         bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
+        if(bsnPmtDTO.getBsnPmt() == null || bsnPmtDTO.getBsnPmt().isEmpty()) {
+            bsnPmtDTO.setBsnPmt("0");
+        }
         wBEBCarbonCompanyMapper.updateBsnPmtDtl(bsnPmtDTO);
 
         //상생 신청 파일 상세
