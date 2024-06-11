@@ -27,8 +27,10 @@ spring:
       add-mappings: true
 
 nice :
-  return-url-adm : http://mng.kap.easymedia.kr
-  return-url-user : http://kap.easymedia.kr
+  #return-url-adm : http://mng.kap.easymedia.kr
+  #return-url-user : http://kap.easymedia.kr
+  return-url-adm : https://mng.kapkorea.org
+  return-url-user : https://www.kapkorea.org
 
 api :
   gpc:
@@ -137,7 +139,7 @@ nice :
   product-id : 2101764012
   url : https://svc.niceapi.co.kr:22001
   enc-product-id : 2101979031
-  return-url-adm : http://mng.kapkorea.org
+  return-url-adm : https://mng.kapkorea.org
   return-url-user : https://www.kapkorea.org
 
 #강제 로그인 여부
