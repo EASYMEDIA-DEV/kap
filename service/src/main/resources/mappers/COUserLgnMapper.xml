@@ -165,6 +165,7 @@
     2023.12.06   양현우       최초생성
     2024.01.04   양현우       위원 사용자 빼고 조회
     2024.04.01	 장두석		 휴대폰 번호 조회 추가
+    2024.06.05	 장두석		 order by, limit 추가
 -->
 	<select id="getIdFind" parameterType="COIdFindDto" resultType="MPAUserDto">
 		select /* COUserLgnMapper.idFind */
@@ -199,6 +200,9 @@
 		</if>
 		  and wthdrw_yn = 'Y'
 		  and a.mem_cd not in ('CS')
+
+		order by last_lgn_dtm desc
+		limit 1
 	</select>
 
 	<!--
