@@ -426,7 +426,17 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
             var accParentTemp = $("#accParent").data("mngSttsNm");
             if(accParentTemp == "부적합" || accParentTemp == "미선정") {
                 for(var i = 1; i < 8; i++) {
-                    $("#accEx"+i).css('pointer-events', 'none');
+
+                    //$("#accEx"+i).css('pointer-events', 'none');
+
+                    $("#accEx"+i).find('.panel-body').find("fieldset").each(function(){
+
+                        if($(this).find("div.dropzone ").length == 0 && $(this).find("#bsnPmt").length == 0){
+                            $(this).css('pointer-events', 'none').css('cursor', 'default');
+                        }
+
+                    });
+
                 }
             }
 
