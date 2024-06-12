@@ -5,15 +5,12 @@ import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.*;
-import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
 import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbb.*;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.*;
-import com.kap.service.dao.COUserLgnMapper;
 import com.kap.service.dao.wb.wbb.WBBARoundMapper;
 import com.kap.service.dao.wb.wbb.WBBBCompanyMapper;
 import lombok.RequiredArgsConstructor;
@@ -727,7 +724,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             //신청자(아이디)
             cell = row.createCell(9);
-            cell.setCellValue(list.get(i).getRegName() + "(" + list.get(i).getId() + ")");
+            cell.setCellValue(list.get(i).getName() + "(" + list.get(i).getId() + ")");
             cell.setCellStyle(style_body);
 
             //휴대폰번호
