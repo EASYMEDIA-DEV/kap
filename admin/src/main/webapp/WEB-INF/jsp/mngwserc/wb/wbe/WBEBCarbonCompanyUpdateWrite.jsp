@@ -1238,12 +1238,17 @@
                                                         <input type="hidden" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[1].mngSttsNm eq '부적합'}">
-                                                        <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd" value="${rtnDtl[1].mngSttsCd}">
+                                                        <select class="form-control input-sm mngSttsCd notRequired" title="관리자 상태값" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd"  <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if>>
+                                                            <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01002_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDtl[1].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" title="관리자 상태값" id="mngSttsCd2" name="rsumeDtlList[1].mngSttsCd"  <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if>>
-                                                            <option value="">선택</option>
+                                                            <c:if test="${rtnData.maxRsumeOrd ne 2}"><option value="">선택</option></c:if>
                                                             <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01002_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rtnDtl[1].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -1408,12 +1413,17 @@
                                                         <input type="hidden" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[2].mngSttsNm eq '부적합'}">
-                                                        <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" value="${rtnDtl[2].mngSttsCd}">
+                                                        <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 3}">disabled</c:if>>
+                                                            <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01003_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd3" name="rsumeDtlList[2].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 3}">disabled</c:if>>
-                                                            <option value="">선택</option>
+                                                            <c:if test="${rtnData.maxRsumeOrd ne 3}"><option value="">선택</option></c:if>
                                                             <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01003_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rtnDtl[2].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -1529,12 +1539,17 @@
                                                         <input type="hidden" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[3].mngSttsNm eq '부적합'}">
-                                                        <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" value="${rtnDtl[3].mngSttsCd}">
+                                                        <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 4}">disabled</c:if>>
+                                                            <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01004_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDtl[3].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd4" name="rsumeDtlList[3].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 4}">disabled</c:if>>
-                                                            <option value="">선택</option>
+                                                            <c:if test="${rtnData.maxRsumeOrd ne 4}"><option value="">선택</option></c:if>
                                                             <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01004_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rtnDtl[3].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -1652,12 +1667,17 @@
                                                         <input type="hidden" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
                                                     </c:when>
                                                     <c:when test="${rtnDtl[4].mngSttsNm eq '부적합'}">
-                                                        <p class="form-control-static">부적합</p>
-                                                        <input type="hidden" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" value="${rtnDtl[4].mngSttsCd}">
+                                                        <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 5}">disabled</c:if>>
+                                                            <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                                <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01005_02_')}">
+                                                                    <option value="${cdList.cd}" <c:if test="${rtnDtl[4].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                        </select>
                                                     </c:when>
                                                     <c:otherwise>
                                                         <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd5" name="rsumeDtlList[4].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 5}">disabled</c:if>>
-                                                            <option value="">선택</option>
+                                                            <c:if test="${rtnData.maxRsumeOrd ne 5}"><option value="">선택</option></c:if>
                                                             <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                                 <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01005_02_')}">
                                                                     <option value="${cdList.cd}" <c:if test="${rtnDtl[4].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
@@ -1772,12 +1792,17 @@
                                                     <input type="hidden" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
                                                 </c:when>
                                                 <c:when test="${rtnDtl[5].mngSttsNm eq '부적합'}">
-                                                    <p class="form-control-static">부적합</p>
-                                                    <input type="hidden" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" value="${rtnDtl[5].mngSttsCd}">
+                                                    <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 6}">disabled</c:if>>
+                                                        <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
+                                                            <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01006_02_')}">
+                                                                <option value="${cdList.cd}" <c:if test="${rtnDtl[5].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </select>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <select class="form-control input-sm mngSttsCd notRequired" id="mngSttsCd6" name="rsumeDtlList[5].mngSttsCd" <c:if test="${rtnData.maxRsumeOrd ne 6}">disabled</c:if>>
-                                                        <option value="">선택</option>
+                                                        <c:if test="${rtnData.maxRsumeOrd ne 6}"><option value="">선택</option></c:if>
                                                         <c:forEach var="cdList" items="${proTypeList.PRO_TYPE}" varStatus="status">
                                                             <c:if test="${fn:contains(cdList.cd, 'PRO_TYPE01006_02_')}">
                                                                 <option value="${cdList.cd}" <c:if test="${rtnDtl[5].mngSttsCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>

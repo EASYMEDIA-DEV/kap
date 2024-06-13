@@ -460,7 +460,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                     $("#accEx"+i).find('.panel-body').find("fieldset").each(function(){
 
-                        if($(this).find("div.dropzone ").length == 0 && $(this).find("#bsnPmt").length == 0){
+                        if($(this).find("div.dropzone ").length == 0 && $(this).find("#bsnPmt").length == 0 && $(this).find("select").length == 0){
                             $(this).css('pointer-events', 'none').css('cursor', 'default');
                         }
 

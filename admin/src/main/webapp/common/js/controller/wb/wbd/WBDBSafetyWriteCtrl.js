@@ -184,7 +184,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                            }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
+                            }, "/mngwserc/wb/" + wbUrl2 + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
                 }
