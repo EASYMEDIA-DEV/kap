@@ -76,7 +76,7 @@
 	</script>
 
 	<!--함수 공통-->
-	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js"></script>
+	<script type="text/javascript" src="/common/js/controller/co/COCmmCtrl.js?${sysDate}"></script>
 	<!--메시지 공통-->
 	<script type="text/javascript" src="/common/js/controller/co/COMsgCtrl.js"></script>
 
