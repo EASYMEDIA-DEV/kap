@@ -98,6 +98,8 @@
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
                             <input type="hidden" id="memSeq" class="notRequired" name="memSeq" value="${rtnMem.memSeq}" />
+                            <input type="hidden" id="orgMemSeq" class="notRequired" name="orgMemSeq" value="${rtnMem.memSeq}" /><!-- 신청자 변경시에만 구분하는 히든값 -->
+
                             <input type="text" id="mem" class="form-control" value="${rtnMem.name}(${rtnMem.id})" title="신청자" readonly/>
                         </div>
                         <div class="col-sm-1">
