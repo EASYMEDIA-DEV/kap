@@ -66,17 +66,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         var delType = frmDataObj.data("delType");
                         if (delActCnt > 0)
                         {
+                            /* 2024.06.13 단계 상관없이 삭제 가능하도록 변경 s */
                             //삭제 전송
-                            cmmCtrl.frmAjax(function(respObj){
-                                if(respObj != undefined && respObj.respCnt > 0){
-                                    alert("접수 이후의 신청 건은 삭제가 불가합니다.");
-                                }else{
-                                    if(confirm('삭제하시겠습니까?'))
+                            // cmmCtrl.frmAjax(function(respObj){
+                            //     if(respObj != undefined && respObj.respCnt > 0){
+                            //         alert("접수 이후의 신청 건은 삭제가 불가합니다.");
+                            //     }else{
+                                    if(confirm('삭제 후 복구가 불가능합니다\n정말 삭제하시겠습니까?'))
                                     {
                                         //삭제 전송
                                         cmmCtrl.frmAjax(function(respObj){
                                             if(respObj != undefined && respObj.respCnt > 0){
-                                                alert('게시물이 삭제되었습니다.');
+                                                alert('해당 신청이 삭제되었습니다.');
                                                 $formObj.find("#btnSearch").click();
                                             }
                                             else{
@@ -84,9 +85,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                             }
                                         }, "./deleteList", frmDataObj, "POST", "json");
                                     }
-                                }
+                                // }
 
-                            }, "./getRsumePbsnCnt", frmDataObj, "POST", "json");
+                            // }, "./getRsumePbsnCnt", frmDataObj, "POST", "json");
+                            /* 2024.06.13 단계 상관없이 삭제 가능하도록 변경 e */
                         }
                         else
                         {
