@@ -124,7 +124,6 @@
 		, sub_menu_nm
 		, adm_url
 		, user_url
-		, gnb_yn
 		, wnpp_yn
 		, seo_kwrd
 		, seo_cntn
@@ -148,7 +147,6 @@
 			, #{subMenuNm}
 			, #{admUrl}
 			, #{userUrl}
-			, #{gnbYn}
 			, #{wnppYn}
 			, #{seoKwrd}
 			, #{seoCntn}

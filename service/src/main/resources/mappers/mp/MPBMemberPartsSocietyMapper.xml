@@ -483,22 +483,7 @@
         select m1.episd_seq as san_ctn_seq  /*MPBMemberPartsSocietyMapper.selectSanList */
              , m1.year-- 사업년도
              , m1.episd-- 회차
-        , case when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('미래차다각화',
-                                                                            '사업재편지원',
-                                                                            '글로벌스탠다드',
-                                                                            '청년인재양성',
-                                                                            '보안환경구축',
-                                                                            '안전설비구축',
-                                                                            '탄소배출저감',
-                                                                            '스마트공장구축',
-                                                                            '기획전용사업') then '경쟁력향상지원'
-                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('시험계측장비',
-                                                                              '검교정',
-                                                                              '공급망안정화기금') then '자금지원'
-                when (select cd_nm from co_code_mst where  cd=m1.bsn_cd ) in ('자동차부품산업대상',
-                                                                              '미래차공모전',
-                                                                              '역대 수상자') then '포상지원'
-                    else '설문조사' end  as type_cd_nm
+        , IFNULL((select menu_nm from co_menu_mst where menu_seq = (select parnt_seq from co_menu_mst WHERE gnb_yn IS NOT NULL AND menu_nm = (select cd_nm from co_code_mst where  cd=m1.bsn_cd ))), '설문조사') as type_cd_nm
         , (select cd_nm from co_code_mst where cd =(select rsume_stts_cd from cx_appctn_rsume_dtl where appctn_seq = m2.appctn_seq order by rsume_ord desc limit 1)) as status
              , (select cd_nm from co_code_mst where  cd=m1.bsn_cd )  as bsn_cd_nm-- 과제명
              , (select menu_nm from co_menu_mst cmm where menu_seq =  (select user_menu_seq from cx_mst where bsn_cd = m1.bsn_cd) ) as menu_cd_nm -- 사업구분
