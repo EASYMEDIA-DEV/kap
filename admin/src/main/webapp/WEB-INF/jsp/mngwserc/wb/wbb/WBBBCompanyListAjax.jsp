@@ -13,6 +13,7 @@
                 <td class="text-center">${list.year}</td>
                 <td class="text-center">${list.episd}</td>
                 <td class="text-center">${list.rsumeSttsCd}</td>
+                <td class="text-center">${list.appctnSttsCd}</td>
                 <td class="text-center">${list.mngSttsCd}</td>
                 <td class="text-center"><a href="javascript:" class="listView"  data-details-key="${list.appctnSeq}" data-bsnm-no="${list.bsnmNo}" data-mem-Seq="${list.memSeq}">${list.cmpnNm}</a></td>
                 <td class="text-center">${list.ctgryCdNm}</td>

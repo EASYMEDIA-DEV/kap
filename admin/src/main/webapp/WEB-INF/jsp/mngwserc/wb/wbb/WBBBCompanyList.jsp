@@ -117,6 +117,7 @@
                         <th class="text-center">사업연도</th>
                         <th class="text-center">회차</th>
                         <th class="text-center">진행상태</th>
+                        <th class="text-center">신청자</br>상태값</th>
                         <th class="text-center">관리자</br>상태값</th>
                         <th class="text-center">부품사명</th>
                         <th class="text-center">구분</th>

@@ -597,71 +597,75 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(4);
+        cell.setCellValue("신청자상태값");
+        cell.setCellStyle(style_header);
+
+        cell = row.createCell(5);
         cell.setCellValue("관리자상태값");
         cell.setCellStyle(style_header);
 
 
-        cell = row.createCell(5);
+        cell = row.createCell(6);
         cell.setCellValue("부품사명");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(6);
+        cell = row.createCell(7);
         cell.setCellValue("사업자등록번호");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(7);
+        cell = row.createCell(8);
         cell.setCellValue("구분");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(8);
+        cell = row.createCell(9);
         cell.setCellValue("규모");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(9);
+        cell = row.createCell(10);
         cell.setCellValue("신청자(아이디)");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(10);
+        cell = row.createCell(11);
         cell.setCellValue("휴대폰번호");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(11);
+        cell = row.createCell(12);
         cell.setCellValue("이메일");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(12);
+        cell = row.createCell(13);
         cell.setCellValue("신청일시");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(13);
+        cell = row.createCell(14);
         cell.setCellValue("사용자수정일");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(14);
+        cell = row.createCell(15);
         cell.setCellValue("대표자명");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(15);
+        cell = row.createCell(16);
         cell.setCellValue("설립일자");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(16);
+        cell = row.createCell(17);
         cell.setCellValue("본사주소");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(17);
+        cell = row.createCell(18);
         cell.setCellValue("우편번호");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(18);
+        cell = row.createCell(19);
         cell.setCellValue("매출액(연도)");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(19);
+        cell = row.createCell(20);
         cell.setCellValue("직원수");
         cell.setCellStyle(style_header);
 
-        cell = row.createCell(20);
+        cell = row.createCell(21);
         cell.setCellValue("주생산품");
         cell.setCellStyle(style_header);
 
@@ -697,88 +701,93 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
             cell.setCellValue(list.get(i).getRsumeSttsCd());
             cell.setCellStyle(style_body);
 
-            //관리자상태값
+            //신청자상태값
             cell = row.createCell(4);
+            cell.setCellValue(list.get(i).getAppctnSttsCd());
+            cell.setCellStyle(style_body);
+
+            //관리자상태값
+            cell = row.createCell(5);
             cell.setCellValue(list.get(i).getMngSttsCd());
             cell.setCellStyle(style_body);
 
             //부품사명
-            cell = row.createCell(5);
+            cell = row.createCell(6);
             cell.setCellValue(list.get(i).getCmpnNm());
             cell.setCellStyle(style_body);
 
             //사업장번호
-            cell = row.createCell(6);
+            cell = row.createCell(7);
             cell.setCellValue(list.get(i).getBsnmNo().substring(0, 3) + "-" + list.get(i).getBsnmNo().substring(3, 5) + "-" + list.get(i).getBsnmNo().substring(5));
             cell.setCellStyle(style_body);
 
             //구분
-            cell = row.createCell(7);
+            cell = row.createCell(8);
             cell.setCellValue(list.get(i).getCtgryCdNm());
             cell.setCellStyle(style_body);
 
             //규모
-            cell = row.createCell(8);
+            cell = row.createCell(9);
             cell.setCellValue(list.get(i).getSizeCdNm());
             cell.setCellStyle(style_body);
 
             //신청자(아이디)
-            cell = row.createCell(9);
+            cell = row.createCell(10);
             cell.setCellValue(list.get(i).getName() + "(" + list.get(i).getId() + ")");
             cell.setCellStyle(style_body);
 
             //휴대폰번호
-            cell = row.createCell(10);
+            cell = row.createCell(11);
             cell.setCellValue(list.get(i).getHpNo());
             cell.setCellStyle(style_body);
 
             //이메일
-            cell = row.createCell(11);
+            cell = row.createCell(12);
             cell.setCellValue(list.get(i).getEmail());
             cell.setCellStyle(style_body);
 
             //등록일시
-            cell = row.createCell(12);
+            cell = row.createCell(13);
             cell.setCellValue(list.get(i).getMngSttsChngDtm());
             cell.setCellStyle(style_body);
 
             //사용자수정일
-            cell = row.createCell(13);
+            cell = row.createCell(14);
             cell.setCellValue(list.get(i).getAppctnSttsChngDtm());
             cell.setCellStyle(style_body);
 
             //대표자명
-            cell = row.createCell(14);
+            cell = row.createCell(15);
             cell.setCellValue(list.get(i).getRprsntNm());
             cell.setCellStyle(style_body);
 
             //설립일자
-            cell = row.createCell(15);
+            cell = row.createCell(16);
             cell.setCellValue(list.get(i).getStbsmDt());
             cell.setCellStyle(style_body);
 
             //본사주소
-            cell = row.createCell(16);
+            cell = row.createCell(17);
             cell.setCellValue(list.get(i).getBscAddr() + " " + list.get(i).getDtlAddr());
             cell.setCellStyle(style_body);
 
             //우편번호
-            cell = row.createCell(17);
+            cell = row.createCell(18);
             cell.setCellValue(list.get(i).getZipcode());
             cell.setCellStyle(style_body);
 
             //매출액
-            cell = row.createCell(18);
+            cell = row.createCell(19);
             cell.setCellValue(list.get(i).getSlsPmt() + "억(" + list.get(i).getSlsYear() + "년)");
             cell.setCellStyle(style_body);
 
             //직원수
-            cell = row.createCell(19);
+            cell = row.createCell(20);
             cell.setCellValue(list.get(i).getMpleCnt() + "명");
             cell.setCellStyle(style_body);
 
             //주요상품
-            cell = row.createCell(20);
+            cell = row.createCell(21);
             cell.setCellValue(list.get(i).getMjrPrdct1() + "/" + list.get(i).getMjrPrdct2() + "/" + list.get(i).getMjrPrdct3());
             cell.setCellStyle(style_body);
 
