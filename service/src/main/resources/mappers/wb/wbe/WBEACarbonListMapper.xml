@@ -56,6 +56,11 @@
             FROM CX_EPISD_MST A
         ) A
         <include refid="selectCarbonListwhereSql" />
+
+        <if test="siteGubun == 'front' ">
+            AND EXPS_YN = 'Y'
+        </if>
+
         <if test='siteGubun != "front"'>
         ORDER BY A.REG_DTM DESC
         </if>
@@ -112,6 +117,10 @@
             FROM CX_EPISD_MST A
         ) A
         <include refid="selectCarbonListwhereSql" />
+
+        <if test="siteGubun == 'front' ">
+            AND EXPS_YN = 'Y'
+        </if>
     </select>
 
 
