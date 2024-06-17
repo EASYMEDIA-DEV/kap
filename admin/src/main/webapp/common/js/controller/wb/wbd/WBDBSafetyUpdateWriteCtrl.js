@@ -598,7 +598,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                     var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
 
-                    if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                    if((sbrdnBsnmNo == null || sbrdnBsnmNo == '') && ($("#orgMemSeq").val() == $("#memSeq").val())){
                         jQuery.ajax({
                             url : "./getBsnmNoCnt",
                             type : "POST",
