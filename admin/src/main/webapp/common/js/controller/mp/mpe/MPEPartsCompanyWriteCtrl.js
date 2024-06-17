@@ -14,6 +14,26 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
 
+    var bsnmNoChk = function(bizNum){
+
+        var checkSum = 0;
+        var checkID = [1,3,7,1,3,7,1,3,5];
+        var bizNum = (bizNum + '').match(/\d{1}/g);
+
+        if (bizNum.length != 10) {
+            return false;
+        }
+        for (var i= 0; i < 9; i++)    checkSum += checkID[i] * Number(bizNum[i]);
+
+        if (10 - ((checkSum + Math.floor(checkID[8] * Number(bizNum[8]) / 10)) % 10) != Number(bizNum[9])){
+            return false;
+        }
+
+        return true;
+
+    }
+
+
     var tabTwo = function () {
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
@@ -99,7 +119,15 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                       workChk = false;
                                       return false;
                                     } else {
-                                        jQuery.ajax({
+
+                                        if(!bsnmNoChk($("#bsnmNo").val())){
+                                            alert("사업자번호가 올바르지않습니다");
+                                            $("#bsnmNo").val("");
+                                            return false;
+                                        }
+
+                                        workChk = true;
+                                        /*jQuery.ajax({
                                             url : "/mngwserc/nice/comp-chk",
                                             type : "post",
                                             data :
@@ -141,7 +169,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                                 cmmCtrl.errorAjax(xhr);
                                                 jQuery.jstree.rollback(data.rlbk);
                                             }
-                                        });
+                                        });*/
                                     }
                                 },
                                 error: function (xhr, ajaxSettings, thrownError) {
