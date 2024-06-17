@@ -45,14 +45,7 @@
             BD_FNDN_NEWS_MST A
         WHERE 1=1
           <include refid="selectCompanyNewsListwhereSql" />
-        <if test='siteGubun == "front"'>
-            <if test='mainYn == "Y"'>
-                LIMIT #{firstIndex}, #{recordCountPerPage}
-            </if>
-        </if>
-        <if test='siteGubun == "admin"'>
-            LIMIT #{firstIndex}, #{recordCountPerPage}
-        </if>
+        LIMIT #{firstIndex}, #{recordCountPerPage}
 
     </select>
 
@@ -71,6 +64,10 @@
         , EXPS_YN
         , REG_DTM
         <if test='siteGubun == "front"'>
+            , CASE
+            WHEN DATE_ADD(REG_DTM, INTERVAL 3 DAY) <![CDATA[ >= ]]> now() THEN 'Y'
+            ELSE 'N'
+            END AS NEW_POST_YN
             <if test='deviceGubun == "pc"'>
                 ,(SELECT web_path FROM CO_FILE_DTL  WHERE FILE_SEQ = A.pc_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) WEB_PATH
                 ,(SELECT FILE_EXTN FROM CO_FILE_DTL  WHERE FILE_SEQ = A.pc_thnl_seq ORDER BY FILE_ORD DESC LIMIT 1) FILE_EXTN

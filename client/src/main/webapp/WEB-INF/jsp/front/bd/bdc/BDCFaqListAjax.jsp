@@ -1,8 +1,18 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
+	<c:when test="${rtnData.pageIndex eq 1}">
+        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+        <!-- 페이징 버튼 사이즈 -->
+        <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
+        <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
+        <input type="hidden" id="totalCount" name="totalCount" value="${ rtnData.totalCount }" />
+	</c:when>
+	<c:otherwise></c:otherwise>
+</c:choose>
+<c:choose>
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <div class="list-item open" data-total-count="${rtnData.totalCount}" data-details-key="${list.faqSeq}">
+            <div class="list-item" data-total-count="${rtnData.totalCount}" data-details-key="${list.faqSeq}">
                 <a class="acco-click-area" href="javascript:">
                     <div class="sub-info-wrap">
                         <span class="f-body2">${list.ctgryName}</span>

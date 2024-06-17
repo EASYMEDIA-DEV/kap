@@ -54,7 +54,7 @@ public class BDBCompanyNewsController {
             } else {
                 pBDBCompanyNewsDTO.setDeviceGubun("mobile");
             }
-            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
+            // modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
         }
         catch (Exception e)
         {
@@ -66,6 +66,35 @@ public class BDBCompanyNewsController {
         }
 
         return "front/bd/bdb/BDBCompanyNewsList.front";
+    }
+
+    /**
+     * 고객센터 재단소식 조회
+     */
+    @GetMapping(value="/selectList")
+    public String getCompanyNewsBoardListAjax(BDBCompanyNewsDTO pBDBCompanyNewsDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDBCompanyNewsDTO.setDeviceGubun("pc");
+            } else {
+                pBDBCompanyNewsDTO.setDeviceGubun("mobile");
+            }
+
+            modelMap.addAttribute("rtnData", bDBCompanyNewsService.selectCompanyNewsList(pBDBCompanyNewsDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bdb/BDBCompanyNewsBoardListAjax";
     }
 
 

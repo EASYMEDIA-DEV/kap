@@ -44,9 +44,8 @@ public class BDANoticeController {
     {
         try
         {
-
-            modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
-            modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostList(pBDANoticeDTO));
+            //modelMap.addAttribute("rtnData", bDANoticeService.selectNoticeList(pBDANoticeDTO));
+            //modelMap.addAttribute("mainPostData", bDANoticeService.selectMainPostList(pBDANoticeDTO));
 
         }
         catch (Exception e)
@@ -59,6 +58,39 @@ public class BDANoticeController {
         }
 
         return "front/bd/bda/BDANoticeList.front";
+    }
+
+    /**
+     * 고객센터 공지사항 조회
+     */
+    @GetMapping(value="/selectList")
+    public String getNoticeBoardListAjax(BDANoticeDTO pBDANoticeDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            BDANoticeDTO mainPostList = bDANoticeService.selectMainPostList(pBDANoticeDTO);
+            pBDANoticeDTO.setMainPostCnt(mainPostList.getMainPostList().size());
+            BDANoticeDTO totalList = bDANoticeService.selectNoticeList(pBDANoticeDTO);
+
+            modelMap.addAttribute("rtnData", totalList);
+
+            if(pBDANoticeDTO.getPageIndex() > 1) {
+                modelMap.addAttribute("mainPostData", null);
+            } else {
+                modelMap.addAttribute("mainPostData", mainPostList);
+            }
+
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+
+        return "front/bd/bda/BDANoticeBoardListAjax";
     }
 
 

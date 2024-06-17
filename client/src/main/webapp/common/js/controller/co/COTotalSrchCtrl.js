@@ -151,7 +151,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				//뉴스레터 탭 클릭
 				if(menuType == 'newsletter')
 					cmmCtrl.listFrmAjax(function(respObj) {
-						$("#letterTabContainer").html(respObj);
+						$("#letterTabContainer").append(respObj);
+
 						//링크연결 여기서
 					}, "/foundation/board/newsletter/search/newsletter", $formObj, "GET", "html", false, false);
 			}

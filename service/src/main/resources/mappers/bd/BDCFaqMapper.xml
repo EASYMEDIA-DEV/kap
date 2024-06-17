@@ -33,14 +33,7 @@
             BD_FAQ_MST A
         WHERE 1=1
           <include refid="selectFaqListwhereSql" />
-        <if test='siteGubun == "admin"'>
-            LIMIT #{firstIndex}, #{recordCountPerPage}
-        </if>
-        <if test='siteGubun == "front"'>
-            <if test='mainYn == "Y"'>
-                LIMIT #{firstIndex}, #{recordCountPerPage}
-            </if>
-        </if>
+        LIMIT #{firstIndex}, #{recordCountPerPage}
     </select>
 
     <!--
@@ -202,8 +195,8 @@
         <if test='siteGubun == "front"'>
             AND EXPS_YN = 'Y'
             <if test="srchVal != null and srchVal != ''">
-                AND TITL LIKE CONCAT('%', #{srchVal}, '%') OR
-                CNTN LIKE CONCAT('%', #{srchVal}, '%')
+                AND (TITL LIKE CONCAT('%', #{srchVal}, '%') OR
+                CNTN LIKE CONCAT('%', #{srchVal}, '%'))
             </if>
             <if test="ctgryCd != null and ctgryCd != ''">
                 AND CTGRY_CD = #{ctgryCd}

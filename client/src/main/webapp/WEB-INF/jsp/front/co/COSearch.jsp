@@ -153,14 +153,20 @@
                             </div>
                         </c:if>
                     </div>
-                    <div class="tab-con-area" id="foundationContainer">
-                        <c:if test="${ newsCnt eq 0 }">
-                            <div class="no-data-area">
-                                <div class="txt-box">
-                                    <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                    <div class="tab-con-area">
+                        <c:choose>
+                            <c:when test="${ newsCnt eq 0 }">
+                                <div class="no-data-area">
+                                    <div class="txt-box">
+                                        <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                    </div>
                                 </div>
-                            </div>
-                        </c:if>
+                            </c:when>
+                            <c:otherwise>
+                                <div class="article-list-w card-list" id="foundationContainer"><!-- card-list: 썸네일 있는 경우 -->
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
                     </div>
                 </div>
             </div>
@@ -175,18 +181,25 @@
                             </div>
                         </c:if>
                     </div>
-                    <div class="tab-con-area" id="letterContainer">
-                        <c:if test="${ letterCnt eq 0 }">
-                            <div class="no-data-area">
-                                <div class="txt-box">
-                                    <p class="txt f-body1">조회된 데이터가 없습니다.</p>
-                                </div>
-                            </div>
-                        </c:if>
+                    <div class="tab-con-area">
+                        <div class="board-list">
+                            <c:choose>
+                                <c:when test="${ letterCnt eq 0 }">
+                                    <div class="no-data-area">
+                                        <div class="txt-box">
+                                            <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                        </div>
+                                    </div>
+                                </c:when>
+                                <c:otherwise>
+                                    <div class="article-list-w card-list" id="letterContainer"><!-- card-list: 썸네일 있는 경우 -->
+                                    </div>
+                                </c:otherwise>
+                            </c:choose>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 </div>

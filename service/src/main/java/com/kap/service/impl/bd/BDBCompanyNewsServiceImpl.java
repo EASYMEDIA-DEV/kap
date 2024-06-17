@@ -31,6 +31,7 @@ import java.util.HashMap;
  *  -------    -------------    ----------------------
  *   2023.11.20  장두석         최초 생성
  *   2024.01.05  이옥정         사용자에서 재단소식 리스트 가져올때 건수를 1건으로 예외 처리 추가
+ *   2024.06.12  구은희         사용자 재단소식 리스트 페이징 처리
  * </pre>
  */
 @Slf4j
@@ -58,8 +59,8 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(pBDBCompanyNewsDTO.getPageIndex());
-        page.setRecordCountPerPage(pBDBCompanyNewsDTO.getListRowSize());
-
+        int recordCountPerPage = pBDBCompanyNewsDTO.getSiteGubun().equals("front") ? 9 : 10;
+        page.setRecordCountPerPage(recordCountPerPage);
         page.setPageSize(pBDBCompanyNewsDTO.getPageRowSize());
 
         pBDBCompanyNewsDTO.setFirstIndex(page.getFirstRecordIndex());
@@ -73,6 +74,7 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
         pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
         pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsList(pBDBCompanyNewsDTO));
         return pBDBCompanyNewsDTO;
+
     }
 
     /**
@@ -185,11 +187,22 @@ public class BDBCompanyNewsServiceImpl implements BDBCompanyNewsService {
      */
     public BDBCompanyNewsDTO selectCompanyNewsTabList(BDBCompanyNewsDTO pBDBCompanyNewsDTO) throws Exception {
 
-        pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
+        COPaginationUtil page = new COPaginationUtil();
 
-        int recordCountPerPage = (pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize() >= pBDBCompanyNewsDTO.getTotalCount()) ? pBDBCompanyNewsDTO.getTotalCount() : pBDBCompanyNewsDTO.getPageIndex() * pBDBCompanyNewsDTO.getPageRowSize();
-        pBDBCompanyNewsDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsTotalList(pBDBCompanyNewsDTO));
+        page.setCurrentPageNo(pBDBCompanyNewsDTO.getPageIndex());
+        page.setRecordCountPerPage(9);
+        page.setPageSize(pBDBCompanyNewsDTO.getPageRowSize());
+
+        // 1페이지인 경우에는 LIMIT 0부터 SELECT
+        if(pBDBCompanyNewsDTO.getPageIndex() == 1) {
+            pBDBCompanyNewsDTO.setFirstIndex(page.getFirstRecordIndex());
+        } else {
+            pBDBCompanyNewsDTO.setFirstIndex((pBDBCompanyNewsDTO.getPageIndex() - 1) * pBDBCompanyNewsDTO.getPageRowSize());
+        }
+
+        pBDBCompanyNewsDTO.setRecordCountPerPage(9);
+        pBDBCompanyNewsDTO.setTotalCount(bDBCompanyNewsMapper.getCompanyNewsListTotCnt(pBDBCompanyNewsDTO));
+        pBDBCompanyNewsDTO.setList(bDBCompanyNewsMapper.selectCompanyNewsList(pBDBCompanyNewsDTO));
         return pBDBCompanyNewsDTO;
     }
 

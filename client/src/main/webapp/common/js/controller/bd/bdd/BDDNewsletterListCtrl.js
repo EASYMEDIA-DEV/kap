@@ -9,10 +9,6 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
-    var chilCnt = $("#infoCard").children("a").length; // 게시물 수
-    var pageCnt = 1; // 페이지 카운트
-    var page = (chilCnt / 9); // 더보기 페이지
-
     var agreeYn = 'N';
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
@@ -41,6 +37,58 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }
     }
 
+    // 목록 조회
+    var search = function (page){
+
+        if(page != undefined){
+            $formObj.find("#pageIndex").val(page);
+        }
+
+        if($("#srchVal").val() != ""){
+            localStorage.setItem('newsLetterSrchVal', $("#srchVal").val());
+        }
+
+        cmmCtrl.listFrmAjax(function(respObj) {
+
+            //CALLBACK 처리
+            if($formObj.find("#pageIndex").val() == 1) {
+                ctrl.obj.find("#listContainer").html(respObj);
+            } else {
+                ctrl.obj.find("#listContainer").append(respObj);
+            }
+
+            if(!$("#listContainer").hasClass("card-list")) {
+                $("#listContainer").addClass("card-list");
+            }
+
+            //총 건수
+            var totCnt = $("#totalCount").val();
+
+            if(totCnt <= 9){
+                $(".btn-wrap.add-load.align-center").hide();
+                totCnt == 0 && $("#listContainer").removeClass("card-list"); // list가 비어있는 경우 css 깨짐 방지
+
+            }else{
+                var tempPage = (page === undefined || page == "") ? 1 : page;
+                var rtnPage = 0;
+
+                if((tempPage * 9) >= totCnt){
+                    $(".btn-wrap.add-load.align-center").hide();
+                    rtnPage = totCnt
+                }else{
+                    $(".btn-wrap.add-load.align-center").show();
+                    rtnPage = (tempPage * 9);
+                }
+                $(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+            }
+            $(".article-total-count.f-body2").find("span").text(totCnt);
+            $(".item-count").text();
+
+            ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+
+        }, "/foundation/board/newsletter/selectList", $formObj, "GET", "html");
+    }
+
     // set model
     ctrl.model = {
         id : {
@@ -63,7 +111,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             searchBtn : {
                 event : {
                     click : function() {
-                        location.href = "./list?srchVal=" + $("#srchVal").val();
+                        cmmCtrl.setFormData($formObj);
+                        search(1);
                     }
                 }
             }
@@ -72,18 +121,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             moreBtn : {
                 event : {
                     click : function(){
-                        pageCnt = pageCnt + 1; // 더보기 누를 때마다 1씩 증가
-                        var openCnt =  parseInt($("#infoCard").find(".open").length) // 보이는 게시물
-                        if(pageCnt < page){
-                            $("#infoCard").children("a").slice(openCnt,openCnt+9).show();
-                            $("#infoCard").children("a").slice(openCnt,openCnt+9).removeClass("open");
-                            $("#infoCard").children("a").slice(openCnt,openCnt+9).addClass("open");
-                            openCnt = openCnt + 9;
-                            $(".cntText").text("(" + openCnt +"/"+ chilCnt + ")");
-                        }else{
-                            $("#infoCard").find(".close").show();
-                            $(".moreBtn").hide();
-                        }
+                        var pageIndex = $formObj.find("input[name=pageIndex]").val();
+                        search(++pageIndex);
                     }
                 }
             },
@@ -136,19 +175,35 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
-            if(chilCnt > 9){
-                $("#infoCard").children("a").slice(9,chilCnt).hide();
-                $("#infoCard").children("a").slice(9,chilCnt).removeClass("open");
-                $("#infoCard").children("a").slice(9,chilCnt).addClass("close");
-                var openCnt = parseInt($("#infoCard").find(".open").length) // 보이는 게시물
-                $(".cntText").text("(" + openCnt + "/" + chilCnt + ")");
-            }else{
-                $(".moreBtn").hide();
+            if (localStorage.getItem('newsLetterSrchVal')) {
+                $formObj.find("#srchVal").val(localStorage.getItem('newsLetterSrchVal'));
             }
+            // 페이지 새로고침 시 검색어 유지
+            if (performance.navigation.type === 1) {
+                $('#srchVal').val(localStorage.getItem("newsLetterSrchVal"));
+
+            } else { // 페이지 첫 진입 시 검색어 초기화
+                localStorage.removeItem("newsLetterSrchVal");
+                $('#srchVal').val("");
+            }
+
+            cmmCtrl.setFormData($formObj);
+            search();
+
+            $(document).on('keydown', function(event) {
+                // 눌린 키가 Enter 키인지 확인
+                if (event.which === 13) {
+                    // 다른 이벤트 중지
+                    if ($('.all-srch').css("display") === "none") {
+                        event.preventDefault();
+                        cmmCtrl.setFormData($formObj);
+                        search(1);
+                        return false;
+                    }
+                }
+            });
         }
     };
-
-
     ctrl.exec();
 
     return ctrl;

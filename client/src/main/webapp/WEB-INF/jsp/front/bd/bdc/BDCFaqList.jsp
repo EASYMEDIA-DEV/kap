@@ -55,7 +55,7 @@
                                         <input type="text" id="srchVal" name="srchVal" value="${rtnData.srchVal}" placeholder="검색어를 입력해 주세요.">
                                         <div class="input-btn-wrap">
                                             <button class="delete-btn" title="지우기" type="button"></button>
-                                            <button class="srch-btn" id="searchBtn" title="검색"></button>
+                                            <button class="srch-btn" id="searchBtn" type="button" title="검색"></button>
                                         </div>
                                     </div>
                                 </div>

@@ -188,8 +188,36 @@
                                     <p class="tit f-title2"><span class="menu-name">${tabName}</span> (<span
                                             class="item-count">${cnt}</span>)</p>
                                 </div>
-                                <div class="tab-con-area" id="tabContainer">
-                                </div>
+
+                                <c:choose>
+                                    <c:when test="${tabName != '교육/세미나'}">
+                                         <div class="tab-con-area">
+                                            <div class="board-list">
+
+                                                <c:choose>
+                                                    <c:when test="${ cnt eq 0 }">
+                                                        <div class="no-data-area">
+                                                            <div class="txt-box">
+                                                                <p class="txt f-body1">조회된 데이터가 없습니다.</p>
+                                                            </div>
+                                                        </div>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <div class="article-list-w ${ tabName != "공지"? 'card-list' : "txt-list"}" id="tabContainer"><!-- card-list: 썸네일 있는 경우 -->
+                                                        </div>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <div class="article-list-w ${ tabName != "공지"? 'card-list' : "txt-list"}" id="tabContainer"><!-- card-list: 썸네일 있는 경우 -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <div class="tab-con-area" id="tabContainer">
+                                        </div>
+                                    </c:otherwise>
+                                </c:choose>
+
                                 <div class="btn-wrap add-load align-center">
                                     <a class="btn-solid small black-line pageSet"
                                        href="javascript:"><span>더보기</span><span class="item-count"></span></a>

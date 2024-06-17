@@ -33,6 +33,7 @@ import java.util.HashMap;
  *   수정일      수정자           수정내용
  *  -------    -------------    ----------------------
  *   2023.11.22  장두석         최초 생성
+ *   2024.06.12  구은희         사용자 뉴스레터 리스트 페이징 처리
  * </pre>
  */
 @Slf4j
@@ -69,8 +70,8 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(pBDDNewsletterDTO.getPageIndex());
-        page.setRecordCountPerPage(pBDDNewsletterDTO.getListRowSize());
-
+        int recordCountPerPage = pBDDNewsletterDTO.getSiteGubun().equals("front") ? 9 : 10;
+        page.setRecordCountPerPage(recordCountPerPage);
         page.setPageSize(pBDDNewsletterDTO.getPageRowSize());
 
         pBDDNewsletterDTO.setFirstIndex(page.getFirstRecordIndex());
@@ -85,12 +86,24 @@ public class BDDNewsletterServiceImpl implements BDDNewsletterService {
      * 통합검색 뉴스레터 탭 조회
      */
     public BDDNewsletterDTO selectNewsletterTabList(BDDNewsletterDTO pBDDNewsletterDTO) throws Exception {
-        pBDDNewsletterDTO.setTotalCount(bDDNewsletterMapper.getNewsletterListTotCnt(pBDDNewsletterDTO));
+        COPaginationUtil page = new COPaginationUtil();
 
-        int recordCountPerPage = (pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize() >= pBDDNewsletterDTO.getTotalCount()) ? pBDDNewsletterDTO.getTotalCount() : pBDDNewsletterDTO.getPageIndex() * pBDDNewsletterDTO.getPageRowSize();
-        pBDDNewsletterDTO.setRecordCountPerPage(recordCountPerPage);
-        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterTotalList(pBDDNewsletterDTO));
+        page.setCurrentPageNo(pBDDNewsletterDTO.getPageIndex());
+        page.setRecordCountPerPage(9);
+        page.setPageSize(pBDDNewsletterDTO.getPageRowSize());
+
+        // 1페이지인 경우에는 LIMIT 0부터 SELECT
+        if(pBDDNewsletterDTO.getPageIndex() == 1) {
+            pBDDNewsletterDTO.setFirstIndex(page.getFirstRecordIndex());
+        } else {
+            pBDDNewsletterDTO.setFirstIndex((pBDDNewsletterDTO.getPageIndex() - 1) * pBDDNewsletterDTO.getPageRowSize());
+        }
+
+        pBDDNewsletterDTO.setRecordCountPerPage(9);
+        pBDDNewsletterDTO.setTotalCount(bDDNewsletterMapper.getNewsletterListTotCnt(pBDDNewsletterDTO));
+        pBDDNewsletterDTO.setList(bDDNewsletterMapper.selectNewsletterList(pBDDNewsletterDTO));
         return pBDDNewsletterDTO;
+
     }
 
     /**

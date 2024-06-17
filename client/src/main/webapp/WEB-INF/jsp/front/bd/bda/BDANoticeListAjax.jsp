@@ -1,4 +1,5 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
+
 <div class="board-list">
     <c:set var="dynamicEnd" value="${2 - mainPostData.mainPostList.size()}" />
     <c:choose>
@@ -59,7 +60,7 @@
                             </a>
                         </c:forEach>--%>
                         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-                            <a class="list-item noticeListView normalPost open" href="javascript:" title="링크 이동"
+                            <a class="list-item noticeListView normalPost" href="javascript:" title="링크 이동"
                                data-details-key="${list.ntfySeq}">
                                 <div class="sub-info-wrap">
                                     <span class="num f-body2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</span>
@@ -80,7 +81,7 @@
                     </c:when>
                     <c:otherwise>
                         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-                            <a class="list-item noticeListView normalPost open" href="javascript:" title="링크 이동"
+                            <a class="list-item noticeListView normalPost" href="javascript:" title="링크 이동"
                                data-details-key="${list.ntfySeq}">
                                 <div class="sub-info-wrap">
                                     <span class="num f-body2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</span>

@@ -34,7 +34,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#tabContainer").html(respObj);
+            ctrl.obj.find("#tabContainer").append(respObj);
+            if(url.includes("/foundation/board/notice")) {
+                $(".normalPost").css("paddingTop", "24px");
+            }
             //전체 갯수
             var totCnt = cnt;
             //총 건수

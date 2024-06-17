@@ -1,6 +1,7 @@
 package com.kap.front.controller.bd;
 
 import com.kap.core.dto.bd.bdd.BDDNewsletterDTO;
+import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.mp.mph.MPHNewsLetterDTO;
 import com.kap.service.BDDNewsletterService;
 import com.kap.service.MPHNewsLetterService;
@@ -59,7 +60,7 @@ public class BDDNewsletterController {
             } else {
                 pBDDNewsletterDTO.setDeviceGubun("mobile");
             }
-            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
+            //modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
         }
         catch (Exception e)
         {
@@ -71,6 +72,34 @@ public class BDDNewsletterController {
         }
 
         return "front/bd/bdd/BDDNewsletterList.front";
+    }
+
+    /**
+     * 고객센터 뉴스레터 목록 조회
+     */
+    @RequestMapping(value = "/selectList")
+    public String selectNewsletterBoardListAjax(BDDNewsletterDTO pBDDNewsletterDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
+    {
+        try
+        {
+            Device device = DeviceUtils.getCurrentDevice(request);
+            if(device.isNormal() == true || device.isTablet() == true){
+                pBDDNewsletterDTO.setDeviceGubun("pc");
+            } else {
+                pBDDNewsletterDTO.setDeviceGubun("mobile");
+            }
+
+            modelMap.addAttribute("rtnData", bDDNewsletterService.selectNewsletterList(pBDDNewsletterDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "front/bd/bdd/BDDNewsletterBoardListAjax";
     }
 
     /**

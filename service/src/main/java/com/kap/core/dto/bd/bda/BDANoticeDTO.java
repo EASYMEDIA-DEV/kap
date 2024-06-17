@@ -113,5 +113,9 @@ public class BDANoticeDTO extends BaseDTO {
     @Schema(title = "사용자 실제 노출되고 있는 중요공지 여부", example = "Y/N")
     private String mainPostYn;
 
+    @Schema(title = "중요공지 수", example = "숫자")
+    private Integer mainPostCnt;
+
+
     
 }

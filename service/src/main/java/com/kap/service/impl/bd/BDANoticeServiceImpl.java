@@ -31,6 +31,7 @@ import java.util.HashMap;
  *  -------    -------------    ----------------------
  *   2023.11.20  장두석         최초 생성
  *   2024.01.05  이옥정         사용자에서 공지사항 리스트 가져올때 건수를 3건만 가져오므로 예외 처리 추가
+ *   2024.06.12  구은희         사용자 공지사항 리스트 페이징 처리
  * </pre>
  */
 @Slf4j
@@ -55,22 +56,32 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      * 공지사항 조회
      */
     public BDANoticeDTO selectNoticeList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+
         COPaginationUtil page = new COPaginationUtil();
 
         page.setCurrentPageNo(pBDANoticeDTO.getPageIndex());
         page.setRecordCountPerPage(pBDANoticeDTO.getListRowSize());
-
         page.setPageSize(pBDANoticeDTO.getPageRowSize());
 
         pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
 
-        // 사용자 메인 노출 갯수 조건문 추가
-        if (pBDANoticeDTO.getMainYn().equals("Y")) {
-            pBDANoticeDTO.setRecordCountPerPage(3);
-        }else {
+        if(pBDANoticeDTO.getSiteGubun().equals("front")) {
+            // 사용자 메인 노출 갯수 조건문 추가
+            if (pBDANoticeDTO.getMainYn().equals("Y")) {
+                pBDANoticeDTO.setRecordCountPerPage(3);
+            } else {
+                if(pBDANoticeDTO.getMainPostCnt() > 0 && pBDANoticeDTO.getFirstIndex() == 0) {
+                    pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+                    pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage() - pBDANoticeDTO.getMainPostCnt());
+                } else {
+                    pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex() - pBDANoticeDTO.getMainPostCnt());
+                    pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+                }
+            }
+        } else { // admin인 경우 중요공지 개수 필요 없음
+            pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
             pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
         }
-
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
         pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
@@ -80,9 +91,22 @@ public class BDANoticeServiceImpl implements BDANoticeService {
      * 통합검색 공지사항 탭 조회
      */
     public BDANoticeDTO selectNoticeTabList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pBDANoticeDTO.getPageIndex());
+        page.setRecordCountPerPage(pBDANoticeDTO.getListRowSize());
+        page.setPageSize(pBDANoticeDTO.getPageRowSize());
+
+        // 1페이지인 경우에는 LIMIT 0부터 SELECT
+        if(pBDANoticeDTO.getPageIndex() == 1) {
+            pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+        } else {
+            pBDANoticeDTO.setFirstIndex((pBDANoticeDTO.getPageIndex() - 1) * pBDANoticeDTO.getPageRowSize());
+        }
+
+        pBDANoticeDTO.setRecordCountPerPage(9);
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
-        int recordCountPerPage = (pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize() >= pBDANoticeDTO.getTotalCount()) ? pBDANoticeDTO.getTotalCount() : pBDANoticeDTO.getPageIndex() * pBDANoticeDTO.getPageRowSize();
-        pBDANoticeDTO.setRecordCountPerPage(recordCountPerPage);
         pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
