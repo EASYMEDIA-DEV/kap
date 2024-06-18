@@ -124,6 +124,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                             alert("사업자번호가 올바르지않습니다");
                                             $("#bsnmNo").val("");
                                             return false;
+                                        }else{
+                                            alert("인증이 완료되었습니다.");
                                         }
 
                                         workChk = true;
