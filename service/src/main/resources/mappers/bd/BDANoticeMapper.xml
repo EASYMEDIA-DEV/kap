@@ -40,6 +40,67 @@
     </select>
 
     <!--
+     쿼리명 : BDANoticeMapper.selectBoardNoticeList
+     설  명 : 사용자 공지사항 리스트(중요공지 상단 배치 + 전체 게시물 union all)
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.06.19  구은희     최초 생성
+    -->
+    <select id="selectBoardNoticeList" parameterType="BDANoticeDTO" resultType="BDANoticeDTO">
+        SELECT /* BDANoticeMapper.selectBoardNoticeList */
+            *
+        FROM
+        (
+            SELECT
+            NTFY_SEQ
+            , TITL
+            , READ_CNT
+            , REG_DTM
+            , "" AS NEW_POST_YN
+            , NTFY_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
+            , EXPS_YN
+            , 'Y' AS MAIN_POST_YN
+        FROM BD_NTFY_MST A
+        WHERE 1=1
+         AND NTFY_YN = 'Y'
+         AND ((EXPS_STRT_DTM <![CDATA[ <= ]]> SYSDATE() AND EXPS_END_DTM <![CDATA[ > ]]> DATE_ADD(now(), INTERVAL 1 minute)) OR ODTM_YN ='Y')
+         AND EXPS_YN = 'Y'
+         <if test="srchVal != null and srchVal != ''">
+            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+         </if>
+
+        UNION ALL
+
+        SELECT
+            NTFY_SEQ
+            , TITL
+            , READ_CNT
+            , REG_DTM
+            , CASE
+                WHEN DATE_ADD(REG_DTM, INTERVAL 3 DAY) <![CDATA[ >= ]]>  now() THEN 'Y'
+                ELSE 'N'
+                END AS NEW_POST_YN
+            , NTFY_YN
+            , EXPS_STRT_DTM
+            , EXPS_END_DTM
+            , EXPS_YN
+            , 'N' AS MAIN_POST_YN
+        FROM BD_NTFY_MST A
+        WHERE 1=1
+        <if test="srchVal != null and srchVal != ''">
+            AND (TITL LIKE CONCAT('%', #{srchVal}, '%')
+            OR CNTN LIKE CONCAT('%', #{srchVal}, '%'))
+        </if>
+
+       ) TBL
+       ORDER BY MAIN_POST_YN DESC, REG_DTM DESC
+       LIMIT #{firstIndex}, #{recordCountPerPage}
+    </select>
+
+    <!--
          쿼리명 : BDANoticeMapper.selectMainPostTotalList
          설  명 : [사용자] 통합검색 공지사항 중요공지 목록을 조회
           수정일     수정자       수정내용

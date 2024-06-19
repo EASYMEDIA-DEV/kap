@@ -68,18 +68,10 @@ public class BDANoticeController {
     {
         try
         {
-            BDANoticeDTO mainPostList = bDANoticeService.selectMainPostList(pBDANoticeDTO);
-            pBDANoticeDTO.setMainPostCnt(mainPostList.getMainPostList().size());
-            BDANoticeDTO totalList = bDANoticeService.selectNoticeList(pBDANoticeDTO);
-
+            BDANoticeDTO totalList = bDANoticeService.selectBoardNoticeList(pBDANoticeDTO);
             modelMap.addAttribute("rtnData", totalList);
-
-            if(pBDANoticeDTO.getPageIndex() > 1) {
-                modelMap.addAttribute("mainPostData", null);
-            } else {
-                modelMap.addAttribute("mainPostData", mainPostList);
-            }
-
+            pBDANoticeDTO.setMainPostCnt(bDANoticeService.selectMainPostList(pBDANoticeDTO).getMainPostList().size());
+            modelMap.addAttribute("mainPostCnt", pBDANoticeDTO.getMainPostCnt());
         }
         catch (Exception e)
         {

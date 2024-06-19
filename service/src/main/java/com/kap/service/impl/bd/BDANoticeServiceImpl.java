@@ -64,28 +64,43 @@ public class BDANoticeServiceImpl implements BDANoticeService {
         page.setPageSize(pBDANoticeDTO.getPageRowSize());
 
         pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
-
-        if(pBDANoticeDTO.getSiteGubun().equals("front")) {
-            // 사용자 메인 노출 갯수 조건문 추가
-            if (pBDANoticeDTO.getMainYn().equals("Y")) {
-                pBDANoticeDTO.setRecordCountPerPage(3);
-            } else {
-                if(pBDANoticeDTO.getMainPostCnt() > 0 && pBDANoticeDTO.getFirstIndex() == 0) {
-                    pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
-                    pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage() - pBDANoticeDTO.getMainPostCnt());
-                } else {
-                    pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex() - pBDANoticeDTO.getMainPostCnt());
-                    pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-                }
-            }
-        } else { // admin인 경우 중요공지 개수 필요 없음
-            pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+        // 사용자 메인 노출 갯수 조건문 추가
+        if(pBDANoticeDTO.getMainYn().equals("Y")) {
+            pBDANoticeDTO.setRecordCountPerPage(3);
+        }else{
             pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
         }
+
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
         pBDANoticeDTO.setList(bDANoticeMapper.selectNoticeList(pBDANoticeDTO));
         return pBDANoticeDTO;
     }
+
+    /**
+     * 공지사항 조회
+     */
+    public BDANoticeDTO selectBoardNoticeList(BDANoticeDTO pBDANoticeDTO) throws Exception {
+
+        COPaginationUtil page = new COPaginationUtil();
+
+        page.setCurrentPageNo(pBDANoticeDTO.getPageIndex());
+        page.setRecordCountPerPage(pBDANoticeDTO.getListRowSize());
+        page.setPageSize(pBDANoticeDTO.getPageRowSize());
+
+        pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+        // 사용자 메인 노출 갯수 조건문 추가
+        if(pBDANoticeDTO.getMainYn().equals("Y")) {
+            pBDANoticeDTO.setRecordCountPerPage(3);
+        }else{
+            pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
+        }
+
+        pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
+        pBDANoticeDTO.setList(bDANoticeMapper.selectBoardNoticeList(pBDANoticeDTO));
+        return pBDANoticeDTO;
+    }
+
+
 
     /**
      * 통합검색 공지사항 탭 조회

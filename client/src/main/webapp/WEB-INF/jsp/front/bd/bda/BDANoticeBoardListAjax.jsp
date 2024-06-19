@@ -12,22 +12,18 @@
 
 <c:choose>
     <c:when test="${ not empty rtnData.list}">
-        <c:forEach var="mainPostList" items="${mainPostData.mainPostList}" varStatus="status1">
-            <a class="list-item listView mainPost" href="javascript:" title="링크 이동" data-details-key="${mainPostList.ntfySeq}" data-main-post-yn="Y">
-                <div class="sub-info-wrap">
-                    <span class="info f-body1">중요</span>
-                </div>
-                <div class="txt-box">
-                    <p class="tit f-head">${mainPostList.titl}</p>
-                    <div class="sub-txt f-body2"><p class="date">${ kl:convertDate(mainPostList.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '') }</p><p class="view">조회수 <span>${mainPostList.readCnt}</span></p></div>
-                </div>
-            </a>
-        </c:forEach>
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
-            <a class="list-item listView normalPost" href="javascript:" title="링크 이동" data-details-key="${list.ntfySeq}" data-main-post-yn="N">
+            <a class="list-item listView ${list.mainPostYn eq 'Y' ? 'mainPost' : 'normalPost'}" href="javascript:" title="링크 이동" data-details-key="${list.ntfySeq}" data-main-post-yn="${list.mainPostYn}">
                 <div class="sub-info-wrap">
-                    <span class="num f-body2">${ rtnData.totalCount - rtnData.firstIndex - status.index }</span>
-                 </div>
+                    <c:choose>
+                        <c:when test="${list.mainPostYn eq 'Y'}">
+                            <span class="info f-body1">중요</span>
+                        </c:when>
+                        <c:otherwise>
+                            <span class="num f-body2">${ rtnData.totalCount - rtnData.firstIndex - status.index + mainPostCnt }</span>
+                        </c:otherwise>
+                    </c:choose>
+                </div>
                 <div class="txt-box">
                     <p class="tit f-head">
                         <c:if test="${list.newPostYn eq 'Y'}">

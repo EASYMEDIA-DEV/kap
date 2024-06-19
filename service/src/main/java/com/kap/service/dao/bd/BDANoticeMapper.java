@@ -29,6 +29,10 @@ public interface BDANoticeMapper {
      * 공지사항 조회
    */
     public List<BDANoticeDTO> selectNoticeList(BDANoticeDTO pBDANoticeDTO);
+    /**
+     * 사용자 공지사항 중요공지 + 전체공지 리스트 조회
+     */
+    public List<BDANoticeDTO> selectBoardNoticeList(BDANoticeDTO pBDANoticeDTO);
 
     /**
      * 통합검색 공지사항 중요공지 목록을 조회
