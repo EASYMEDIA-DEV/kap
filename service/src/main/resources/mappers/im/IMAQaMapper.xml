@@ -21,7 +21,7 @@
             , MEM.HP_NO
             , A.REG_ID
             , A.REG_DTM
-            , (SELECT REG_DTM FROM BD_QA_RPLY_DTL RPLY WHERE RPLY.QA_SEQ = A.QA_SEQ) MOD_DTM
+            , (SELECT MAX(REG_DTM) FROM BD_QA_RPLY_DTL RPLY WHERE RPLY.QA_SEQ = A.QA_SEQ) MOD_DTM
             , A.RSUME_CD
         <if test="mypageYn != null and mypageYn != '' and 'Y'.toString().equals(mypageYn)">
             , A.MEM_SEQ
