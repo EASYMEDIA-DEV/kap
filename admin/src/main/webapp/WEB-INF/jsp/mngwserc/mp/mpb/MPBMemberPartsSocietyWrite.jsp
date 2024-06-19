@@ -40,7 +40,9 @@
                     </tr>
                     <tr>
                         <th scope="row" class="bg-gray-lighter">휴대폰번호</th>
-                        <td>${rtnInfo.hpNo}</td>
+                        <td class="text-center">
+                            <input type="text" class="form-control input-sm phoneChk" name="hpNo" id="hpNo" value="${rtnInfo.hpNo}" maxlength="13" title="휴대폰번호"/>
+                        </td>
                         <th scope="row" class="bg-gray-lighter">이메일</th>
                         <td>${rtnInfo.email}</td>
                     </tr>
