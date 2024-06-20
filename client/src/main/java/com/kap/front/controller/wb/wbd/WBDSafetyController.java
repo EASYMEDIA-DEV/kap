@@ -205,7 +205,7 @@ public class WBDSafetyController {
      */
     @RequestMapping(value = "/insert")
     public String insert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        try {
+        /*try {*/
 
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
@@ -216,12 +216,12 @@ public class WBDSafetyController {
                 modelMap.addAttribute("actCnt", wBDBSafetyService.carbonUserInsert(wBDBSafetyMstInsertDTO,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
             }
-        } catch (Exception e) {
+        /*} catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }
+        }*/
 
         return "jsonView";
     }

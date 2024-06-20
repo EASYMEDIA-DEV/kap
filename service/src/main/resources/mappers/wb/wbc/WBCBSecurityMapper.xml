@@ -1190,16 +1190,18 @@
         2023.11.08  김대성     최초 생성
     -->
     <select id="selectFileDtl" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecurityFileDtlDTO">
+
         SELECT /* WBCBSecurityMapper.selectFileDtl */
-            A.RSUME_SEQ
-             ,A.RSUME_ORD
-             ,A.FILE_CD
-             ,A.FILE_SEQ
-             , (SELECT orgn_file_nm FROM CO_FILE_DTL WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) AS FILE_NM
-             , (SELECT file_ord FROM CO_FILE_DTL  WHERE USE_YN = 'Y' AND FILE_SEQ = A.FILE_SEQ) as FILE_ORD
-        FROM CX_APPCTN_RSUME_FILE_DTL A
-         JOIN CX_APPCTN_RSUME_DTL B ON A.RSUME_SEQ = B.RSUME_SEQ AND A.RSUME_ORD = B.RSUME_ORD
-        WHERE B.APPCTN_SEQ = #{detailsKey}
+            B.RSUME_SEQ
+             , B.RSUME_ORD
+             , B.FILE_CD
+             , B.FILE_SEQ
+             , A.orgn_file_nm AS FILE_NM
+             , A.FILE_ORD
+        FROM co_file_dtl A
+                 JOIN cx_appctn_rsume_file_dtl B ON A.FILE_SEQ = B.FILE_SEQ
+                 JOIN CX_APPCTN_RSUME_DTL C ON B.RSUME_SEQ = C.RSUME_SEQ AND B.RSUME_ORD = C.RSUME_ORD
+        WHERE C.APPCTN_SEQ = #{detailsKey}
     </select>
 
     <!--

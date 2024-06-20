@@ -192,7 +192,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
 
         //상생 신청 파일 상세
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getOptnFileList());
+        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 
         WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = new WBDBSafetyFileDtlDTO();
         wBDBSafetyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
@@ -1300,8 +1300,14 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
                 } else {
                     rtnList.get(0).setStatus("success");
                     rtnList.get(0).setFieldNm("fileSeq");
-                    fileList.add(rtnList.get(0));
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    for(COFileDTO tempDto : rtnList){
+                        tempDto.setStatus("success");
+                        tempDto.setFieldNm("fileSeq");
+                    }
+
+                    //fileList.add(rtnList.get(0));
+                    //HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(rtnList);
 
                     fileSeq = fileSeqMap.get("fileSeq");
                 }

@@ -150,7 +150,12 @@
                                                             </div>
                                                         </c:if>
                                                         <div class="file-prev-area">
-                                                            <a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=${rtnFile[0].fileOrd}" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>
+                                                            <c:forEach var="file" items="${rtnFile}">
+                                                                <c:if test="${file.rsumeOrd eq 1}">
+                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            <%--<a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=${rtnFile[0].fileOrd}" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>--%>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -168,7 +173,7 @@
                     </div>
 
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 2}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
-                        <form name="frmData2" id="frmData2">
+                        <form name="frmData2" id="frmData2" enctype="multipart/form-data">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
                             <input type="hidden" name="wBDBSafetyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
@@ -262,19 +267,40 @@
                                                     <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
+
+                                                            <div class="file-list-area-wrap">
+
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                </div>
+
+
                                                             </div>
+
+
+
+
                                                             <div class="file-btn-area">
-                                                                <input type="file" name="atchFilee2" id="searchFile2" class="searchFile">
+                                                                <input type="file" name="atchFilee2" id="fileSearch0" class="searchFile fileOrd2">
+                                                                <input type="file" name="atchFilee3" id="fileSearch1" class="searchFile fileOrd2">
+                                                                <input type="file" name="atchFilee4" id="fileSearch2" class="searchFile fileOrd2">
+                                                                <input type="file" name="atchFilee5" id="fileSearch3" class="searchFile fileOrd2">
+                                                                <input type="file" name="atchFilee6" id="fileSearch4" class="searchFile fileOrd2">
                                                                 <input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>
-                                                                <label class="btn-solid gray-bg" for="searchFile2">파일 찾기</label>
+                                                                <label class="btn-solid gray-bg fileForm" for="fileSearch">파일 찾기</label>
                                                                 <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                             </div>
                                                         </c:if>
-                                                        <div class="file-prev-area">
-                                                            <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=${rtnFile[1].fileOrd}" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
+                                                        <div class="attatched-file-area">
+                                                        <c:forEach var="file" items="${rtnFile}">
+                                                            <c:if test="${file.rsumeOrd eq 2}">
+                                                                <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
+                                                            </c:if>
+                                                        </c:forEach>
                                                         </div>
+                                                        <%--<div class="file-prev-area">
+                                                            <a href="/file/download?fileSeq=${rtnFile[1].fileSeq}&fileOrd=${rtnFile[1].fileOrd}" download="" title="파일 다운로드">${rtnFile[1].fileNm}</a>
+                                                        </div>--%>
                                                     </div>
                                                 </div>
                                             </div>
@@ -381,7 +407,11 @@
                                                             </div>
                                                         </c:if>
                                                         <div class="file-prev-area">
-                                                            <a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=${rtnFile[3].fileOrd}" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>
+                                                            <c:forEach var="file" items="${rtnFile}">
+                                                                <c:if test="${file.rsumeOrd eq 3}">
+                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
+                                                                </c:if>
+                                                            </c:forEach>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -489,7 +519,12 @@
                                                             </div>
                                                         </c:if>
                                                         <div class="file-prev-area">
-                                                            <a href="/file/download?fileSeq=${rtnFile[5].fileSeq}&fileOrd=${rtnFile[5].fileOrd}" download="" title="파일 다운로드">${rtnFile[5].fileNm}</a>
+                                                            <c:forEach var="file" items="${rtnFile}">
+                                                                <c:if test="${file.rsumeOrd eq 4}">
+                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
+                                                                </c:if>
+                                                            </c:forEach>
+                                                            <%--<a href="/file/download?fileSeq=${rtnFile[5].fileSeq}&fileOrd=${rtnFile[5].fileOrd}" download="" title="파일 다운로드">${rtnFile[5].fileNm}</a>--%>
                                                         </div>
                                                     </div>
                                                 </div>

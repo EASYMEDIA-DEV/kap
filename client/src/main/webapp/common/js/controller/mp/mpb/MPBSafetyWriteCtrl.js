@@ -58,14 +58,35 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             }
 
             if (isFile) {
-                $('#'+fileId).closest(".form-group").find('.file-list').remove();
 
-                fileInput = jQuery(obj).clone(true);
-                var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
-                fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
-                fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
-                $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
-                $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
+                if(fileId == "fileSearch0" || fileId == "fileSearch1" || fileId == "fileSearch2" || fileId == "fileSearch3" || fileId == "fileSearch4"){
+
+                    /*if($('#'+fileId).closest(".form-group").find('.file-list-area').length == 1){
+                        $('#'+fileId).closest(".form-group").find('.file-list-area').remove();
+                    }*/
+
+
+
+                    fileInput = jQuery(obj).clone(true);
+                    var fileHtml = '<div class="file-list-area attached"><div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
+                    fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                    fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button" data-file-id="'+fileId+'"></button></div></div>';
+                    //$('#'+fileId).closest(".form-group").find(".file-list-area-wrap").find('.file-list-area').addClass("attached");
+                    $('#'+fileId).closest(".form-group").find(".file-list-area-wrap").append(fileHtml);
+
+
+                }else{
+                    $('#'+fileId).closest(".form-group").find('.file-list').remove();
+
+                    fileInput = jQuery(obj).clone(true);
+                    var fileHtml = '<div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
+                    fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                    fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
+                    $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
+                    $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
+                }
+
+
             }
         }
     };
@@ -135,6 +156,30 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
         },
         classname : {
+
+            fileForm : {
+                event : {
+                    click : function(e) {
+
+                        var breckIdx = 0;
+                        var idx = 0;
+
+                        $(this).closest("div").find("input:file").each(function(){
+
+                            if($(this).val() == ""){
+                                breckIdx = idx;
+                            }else{
+                                idx++;
+                            }
+
+                        });
+
+                        $(this).attr("for", "fileSearch"+breckIdx);
+
+                    }
+                }
+            },
+
             modify : {
                 event : {
                     click : function() {
@@ -169,8 +214,19 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if (status == "접수전") {
+
+                            if(file.length > 1){
+
+                                $("input:file").each(function(){
+                                    if($(this).val() == ""){
+                                        $(this).prop("disabled", true);
+                                    }
+                                });
+
+                            }
+
                             file.each(function(i) {
-                                if (!$(this).val()) {
+                                if (!$(this).val() && $(this).prop("disabled") == false) {
                                     alert('신청서류를 모두 등록해주세요.');
                                     valid = false;
                                     return false;
@@ -377,9 +433,30 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             fileDelete : {
                 event : {
                     click : function() {
-                        $(this).closest(".form-group").find("input[type=file]").val("");
-                        $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
-                        $(this).closest(".form-group").find('.file-list').remove();
+
+                        if($(this).closest(".form-group").find(".file-list-area-wrap").length == 0){
+                            console.log("사업계획 아닌곳에서 삭제버튼 누름");
+
+                            $(this).closest(".form-group").find("input[type=file]").val("");
+                            $(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                            $(this).closest(".form-group").find('.file-list').remove();
+
+                        }else{
+                            console.log("사업계획에서 삭제버튼 누름");
+
+                            $(this).closest(".file-list-area").remove();
+
+                            var fileId = $(this).data("fileId");
+
+                            $("#"+fileId+"").val("");
+                            $("#"+fileId+"").removeAttr("data-gtm-form-interact-field-id");
+
+                            //$(this).closest(".form-group").find("input[type=file]").val("");
+                            //$(this).closest(".form-group").find('.file-list-area').removeClass("attached");
+                            //$(this).closest(".form-group").find('.file-list').remove();
+                        }
+
+
                     }
                 }
             }
