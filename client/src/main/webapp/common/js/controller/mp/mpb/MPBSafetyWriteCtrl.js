@@ -9,6 +9,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
     // get controller object
     var ctrl = new ezCtrl.controller(exports.controller);
     var fileInput = "";
+    var firstFileFlag = 0;
 
     // 파일 체크
     var extnCheck = function(obj, extns, maxSize)
@@ -43,6 +44,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     + '</div>';
 
                 $('#'+fileId).closest(".form-group").find('.file-list-area-wrap').append(fileHtml);
+                $("#"+fileId+"").removeAttr("data-gtm-form-interact-field-id");
 
                 isFile = false;
                 return false;
@@ -65,18 +67,24 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                             + '</div>';
 
                         $('#'+fileId).closest(".form-group").find('.file-list-area-wrap').append(fileHtml);
+                        $("#"+fileId+"").removeAttr("data-gtm-form-interact-field-id");
 
                         isFile = false;
                         return false;
                     }
                 }
             }
+            //파일 개수 체크
+            if($('#'+fileId).closest(".form-group").find(".file-list-area-wrap").children().length >= 5) {
+                alert('파일 첨부는 5개까지 가능합니다.');
+                return false;
+            }
 
             if (isFile) {
 
-                if($('#'+fileId).closest(".form-group").find(".file-list-area-wrap").children().length > 5) {
-                    alert('파일 첨부는 5개까지 가능합니다.');
-                    return false;
+                if(firstFileFlag == 0) {
+                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().remove();
+                    firstFileFlag = -1;
                 }
 
                 if($('#frmData2').closest('div').hasClass('active')) {
@@ -107,13 +115,6 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button"></button></div>';
                     $('#'+fileId).closest(".form-group").find('.file-list-area').addClass("attached");
                     $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
-                }
-
-                if($('#'+fileId).closest(".form-group").find(".file-list-area-wrap").children().length > 1) {
-                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().addClass('attached');
-                }
-                else {
-                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().removeClass('attached');
                 }
 
             }
@@ -483,10 +484,15 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             //$(this).closest(".form-group").find("input[type=file]").val("");
                             //$(this).closest(".form-group").find('.file-list-area').removeClass("attached");
                             //$(this).closest(".form-group").find('.file-list').remove();
-                        }
 
-                        if($(this).siblings().length < 2) {
-                            $(this).siblings().first().removeClass('attached');
+                            if($("#frmData2").find('.file-list-area-wrap').children().length < 1) {
+                                var resetHtml = '<div class="file-list-area">'
+                                    + '<p class="empty-txt">선택된 파일 없음</p>'
+                                    + '</div>';
+                                $("#frmData2").find('.file-list-area-wrap').append(resetHtml);
+
+                                firstFileFlag = 0
+                            }
                         }
 
                     }
