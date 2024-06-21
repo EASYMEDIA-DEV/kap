@@ -3,7 +3,6 @@ package com.kap.front.controller.wb.wbd;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbd.WBDBSafetySearchDTO;
 import com.kap.service.*;
@@ -205,7 +204,7 @@ public class WBDSafetyController {
      */
     @RequestMapping(value = "/insert")
     public String insert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
-        /*try {*/
+        try {
 
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
@@ -216,12 +215,12 @@ public class WBDSafetyController {
                 modelMap.addAttribute("actCnt", wBDBSafetyService.carbonUserInsert(wBDBSafetyMstInsertDTO,request));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
             }
-        /*} catch (Exception e) {
+        } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
             throw new Exception(e.getMessage());
-        }*/
+        }
 
         return "jsonView";
     }

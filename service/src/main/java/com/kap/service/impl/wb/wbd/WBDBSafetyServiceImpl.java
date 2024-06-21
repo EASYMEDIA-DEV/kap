@@ -1291,6 +1291,20 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             }
 
             if (!files.isEmpty()) {
+                if(wBDBSafetyMstInsertDTO.getFileSeqList() != null && !wBDBSafetyMstInsertDTO.getFileSeqList().isEmpty()) {
+                    int delFileSeq = wBDBSafetyMstInsertDTO.getFileSeqList().get(0);
+//                    COFileDTO delFile;
+//                    List<COFileDTO> delFileList = new ArrayList<>();
+//                    for(int i = 0, max = wBDBSafetyMstInsertDTO.getFileSeqList().size(); i < max; i++) {
+//                        delFile = new COFileDTO();
+//                        delFile.setFileSeq(delFileSeq);
+//                        delFile.setFileOrd(i);
+//                        delFileList.add(delFile);
+//                    }
+//                    cOFileService.deleteFile(delFileList); //파일 dtl만 미사용(N) 처리
+                    cOFileService.deleteAllFile(delFileSeq); //파일 mst, dtl 미사용(N) 처리
+                }
+
                 rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
                 List<COFileDTO> fileList = new ArrayList();
                 Integer fileSeq;
@@ -1298,16 +1312,18 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
                 if ("99".equals(rtnList.get(0).getRespCd())) {
                     fileSeq = wBDBSafetyMstInsertDTO.getFileSeqList().get(0);
                 } else {
-                    rtnList.get(0).setStatus("success");
-                    rtnList.get(0).setFieldNm("fileSeq");
+//                    rtnList.get(0).setStatus("success");
+//                    rtnList.get(0).setFieldNm("fileSeq");
                     for(COFileDTO tempDto : rtnList){
-                        tempDto.setStatus("success");
-                        tempDto.setFieldNm("fileSeq");
+                        if(tempDto.getRespMsg() == null) {
+                            tempDto.setStatus("success");
+                            tempDto.setFieldNm("fileSeq");
+                            fileList.add(tempDto);
+                        }
                     }
 
                     //fileList.add(rtnList.get(0));
-                    //HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
-                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(rtnList);
+                    HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
 
                     fileSeq = fileSeqMap.get("fileSeq");
                 }

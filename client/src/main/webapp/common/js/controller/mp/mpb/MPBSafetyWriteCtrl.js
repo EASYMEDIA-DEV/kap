@@ -38,7 +38,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 $('#'+fileId).closest(".form-group").find('.file-list-area').remove();
                 alert('첨부 가능한 파일 확장자가 아닙니다.');
 
+                var fileHtml = '<div class="file-list-area">'
+                                    + '<p class="empty-txt">선택된 파일 없음</p>'
+                                    + '</div>';
+
+                $('#'+fileId).closest(".form-group").find('.file-list-area-wrap').append(fileHtml);
+
                 isFile = false;
+                return false;
             } else {
                 //파일용량 체크
                 if (typeof obj.files != "undefined")
@@ -52,28 +59,44 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         $('#'+fileId).closest(".form-group").find('.file-list-area').removeClass("attached");
                         $('#'+fileId).closest(".form-group").find('.file-list-area').remove();
                         alert("첨부파일 용량은 최대 " + maxSize + "MB까지만 등록 가능합니다.");
+
+                        var fileHtml = '<div class="file-list-area">'
+                                            + '<p class="empty-txt">선택된 파일 없음</p>'
+                                            + '</div>';
+
+                        $('#'+fileId).closest(".form-group").find('.file-list-area-wrap').append(fileHtml);
+
                         isFile = false;
+                        return false;
                     }
                 }
             }
 
             if (isFile) {
 
-                if(fileId == "fileSearch0" || fileId == "fileSearch1" || fileId == "fileSearch2" || fileId == "fileSearch3" || fileId == "fileSearch4"){
+                if($('#'+fileId).closest(".form-group").find(".file-list-area-wrap").children().length > 5) {
+                    alert('파일 첨부는 5개까지 가능합니다.');
+                    return false;
+                }
 
-                    /*if($('#'+fileId).closest(".form-group").find('.file-list-area').length == 1){
-                        $('#'+fileId).closest(".form-group").find('.file-list-area').remove();
-                    }*/
+                if($('#frmData2').closest('div').hasClass('active')) {
+
+                    if(fileId == "fileSearch0" || fileId == "fileSearch1" || fileId == "fileSearch2" || fileId == "fileSearch3" || fileId == "fileSearch4"){
+
+                        /*if($('#'+fileId).closest(".form-group").find('.file-list-area').length == 1){
+                            $('#'+fileId).closest(".form-group").find('.file-list-area').remove();
+                        }*/
 
 
 
-                    fileInput = jQuery(obj).clone(true);
-                    var fileHtml = '<div class="file-list-area attached"><div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
-                    fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
-                    fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button" data-file-id="'+fileId+'"></button></div></div>';
-                    //$('#'+fileId).closest(".form-group").find(".file-list-area-wrap").find('.file-list-area').addClass("attached");
-                    $('#'+fileId).closest(".form-group").find(".file-list-area-wrap").append(fileHtml);
+                        fileInput = jQuery(obj).clone(true);
+                        var fileHtml = '<div class="file-list-area attached"><div class="file-list"><p class="file-name"><span class="name">' + fileName + '</span>';
+                        fileHtml += '<span class="unit">.' + fileExtn + '</span></p>';
+                        fileHtml += '<button class="btn-delete fileDelete" title="파일 삭제하기" type="button" data-file-id="'+fileId+'"></button></div></div>';
+                        //$('#'+fileId).closest(".form-group").find(".file-list-area-wrap").find('.file-list-area').addClass("attached");
+                        $('#'+fileId).closest(".form-group").find(".file-list-area-wrap").append(fileHtml);
 
+                    }
 
                 }else{
                     $('#'+fileId).closest(".form-group").find('.file-list').remove();
@@ -86,6 +109,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     $('#'+fileId).closest(".form-group").find('.file-list-area').append(fileHtml);
                 }
 
+                if($('#'+fileId).closest(".form-group").find(".file-list-area-wrap").children().length > 1) {
+                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().addClass('attached');
+                }
+                else {
+                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().removeClass('attached');
+                }
 
             }
         }
@@ -456,6 +485,9 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             //$(this).closest(".form-group").find('.file-list').remove();
                         }
 
+                        if($(this).siblings().length < 2) {
+                            $(this).siblings().first().removeClass('attached');
+                        }
 
                     }
                 }

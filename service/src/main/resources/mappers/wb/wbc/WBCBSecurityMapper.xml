@@ -1202,6 +1202,7 @@
                  JOIN cx_appctn_rsume_file_dtl B ON A.FILE_SEQ = B.FILE_SEQ
                  JOIN CX_APPCTN_RSUME_DTL C ON B.RSUME_SEQ = C.RSUME_SEQ AND B.RSUME_ORD = C.RSUME_ORD
         WHERE C.APPCTN_SEQ = #{detailsKey}
+          AND A.USE_YN = 'Y'
     </select>
 
     <!--
