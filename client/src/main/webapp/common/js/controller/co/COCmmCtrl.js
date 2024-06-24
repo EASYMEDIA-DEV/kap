@@ -1237,6 +1237,31 @@ var cmmCtrl = (function(){
 		return trgtDay = trgtYear + "." + trgtMonth  + "." + trgtDay;
 	}
 
+	var search_memory = function(){
+
+		cmmCtrl.jsonAjax(function(data){
+			var rtnData = JSON.parse(data);
+
+			var now = rtnData.nowMemory;
+			var max = rtnData.maxMemory;
+
+			console.log(Math.round((now/max)*100, 2)+"%");
+
+
+		}, "/searchMemory", "", "text");
+
+	}
+
+	var clear_memory = function(){
+
+		cmmCtrl.jsonAjax(function(data){
+
+			search_memory();
+
+		}, "/clearMemory", "", "text");
+
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -1269,6 +1294,10 @@ var cmmCtrl = (function(){
 
 		// 이메일_체크
 		getEmailChk : fn_email_validation_chk,
+
+		searchMemory : search_memory,
+
+		clearMemory : clear_memory
 
 	}
 }());

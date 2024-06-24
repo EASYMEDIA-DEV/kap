@@ -2010,6 +2010,31 @@ var cmmCtrl = (function(){
 			       splitEmail[1].length < 255
 	}
 
+	var search_memory = function(){
+
+		cmmCtrl.jsonAjax(function(data){
+			var rtnData = JSON.parse(data);
+
+			var now = rtnData.nowMemory;
+			var max = rtnData.maxMemory;
+
+			console.log(Math.round((now/max)*100, 2)+"%");
+
+
+		}, "/mngwserc/co/coa/searchMemory", "", "text");
+
+	}
+
+	var clear_memory = function(){
+
+		cmmCtrl.jsonAjax(function(data){
+
+			search_memory();
+
+		}, "/mngwserc/co/coa/clearMemory", "", "text");
+
+	}
+
 
 	return {
 		nvl : fn_replace_null,
@@ -2073,6 +2098,11 @@ var cmmCtrl = (function(){
 		getCnstgPdfDownload : fn_cnstg_pdf_download,
 
 		// 이메일_체크
-		getEmailChk : fn_email_validation_chk
+		getEmailChk : fn_email_validation_chk,
+
+		searchMemory : search_memory,
+
+		clearMemory : clear_memory
+
 	}
 }());

@@ -26,7 +26,11 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.lang.management.ManagementFactory;
+import java.lang.management.MemoryMXBean;
+import java.lang.management.MemoryUsage;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -245,6 +249,54 @@ public class COMainController
                 throw new Exception(e.getMessage());
             }
             return mPHNewsLetterDTO;
+        }
+
+        @PostMapping(value="/searchMemory")
+        public HashMap<String, Object> memorySearch(){
+
+            MemoryMXBean memoryMXBean = ManagementFactory.getMemoryMXBean();
+            MemoryUsage heapMemoryUsage = memoryMXBean.getHeapMemoryUsage();
+
+            long usedMemory = heapMemoryUsage.getUsed();
+            long maxMemory = heapMemoryUsage.getMax();
+
+            //바이트
+            long usedMemory2= (usedMemory/1024);//킬로
+            long usedMemory3= (usedMemory2/1024);//메가
+            long usedMemory4= (usedMemory3/1024);//기가
+
+            long maxMemory2= (maxMemory/1024);//킬로
+            long maxMemory3= (maxMemory2/1024);//메가
+            long maxMemory4= (maxMemory3/1024);//기가
+
+            double usedPercent = (double) usedMemory3 / maxMemory3 * 100.0;
+
+            //out.println("Heap Memory Usage: Used = " + usedMemory3 + " Mega, Max = " + maxMemory3 + " Mega, Used Percent = " + String.format("%.2f", usedPercent) + "%<br>");
+            System.out.println("@@ usedPercent = " + usedPercent);
+            // 임계값 설정 (90% 이상)
+            if (usedPercent > 90.0) {
+                //out.println("<p style='color: red;'>Memory usage is over 90% - Running Garbage Collection</p>");
+                //System.gc(); // 강제로 가비지 컬렉션 실행
+            }
+
+            HashMap<String, Object> tempMap = new HashMap();
+
+            tempMap.put("nowMemory", usedMemory3);
+            tempMap.put("maxMemory", maxMemory3);
+
+
+            return tempMap;
+        }
+
+
+        @PostMapping(value="/clearMemory")
+        public HashMap<String, Object> clearMemory(){
+            HashMap<String, Object> tempMap = new HashMap();
+
+            System.gc(); // 강제로 가비지 컬렉션 실행
+
+
+            return tempMap;
         }
 
     }
