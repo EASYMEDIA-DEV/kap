@@ -148,10 +148,10 @@
                         <th class="text-center">신청업종</th>
                         <th class="text-center">신청 소재지</th>
                         <th class="text-center">SQ 인증 주관사</th>
+                        <th class="text-center">신청일</th>
                         <th class="text-center">방문일</th>
                         <th class="text-center">담당위원</th>
                         <th class="text-center">방문횟수</th>
-                        <th class="text-center">신청일</th>
                         <th class="text-center">킥오프일</th>
                         <th class="text-center" style="display: none">지도착수일</th>
                         <th class="text-center">킥오프자료</th>

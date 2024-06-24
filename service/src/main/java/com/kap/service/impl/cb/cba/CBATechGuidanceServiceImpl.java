@@ -741,31 +741,31 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
-        cell.setCellValue("방문일");
+        cell.setCellValue("신청일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(14);
-        cell.setCellValue("담당위원");
+        cell.setCellValue("방문일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(15);
-        cell.setCellValue("방문횟수");
+        cell.setCellValue("담당위원");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(16);
-        cell.setCellValue("지도착수일");
+        cell.setCellValue("방문횟수");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(17);
-        cell.setCellValue("킥오프일");
+        cell.setCellValue("지도착수일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(18);
-        cell.setCellValue("렙업일");
+        cell.setCellValue("킥오프일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(19);
-        cell.setCellValue("신청일");
+        cell.setCellValue("렙업일");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(20);
@@ -867,39 +867,39 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cell.setCellValue(excelList.get(i).getCrtfnCmpnNm());
             cell.setCellStyle(style_body);
 
-            //방문일
+            //신청일
             cell = row.createCell(13);
+            cell.setCellValue(excelList.get(i).getAppctnDt());
+            cell.setCellStyle(style_body);
+
+            //방문일
+            cell = row.createCell(14);
             cell.setCellValue(excelList.get(i).getVstDt() == null ? "-" : excelList.get(i).getVstDt());
             cell.setCellStyle(style_body);
 
             //담당위원
-            cell = row.createCell(14);
+            cell = row.createCell(15);
             cell.setCellValue(excelList.get(i).getCmssrNm() == null ? "-" : excelList.get(i).getCmssrNm());
             cell.setCellStyle(style_body);
 
             //방문횟수
-            cell = row.createCell(15);
+            cell = row.createCell(16);
             cell.setCellValue(excelList.get(i).getVstCnt() == null ? "-" : excelList.get(i).getVstCnt());
             cell.setCellStyle(style_body);
 
             //지도착수일
-            cell = row.createCell(16);
+            cell = row.createCell(17);
             cell.setCellValue(excelList.get(i).getGuideBgnDt() == null ? "-" : excelList.get(i).getGuideBgnDt());
             cell.setCellStyle(style_body);
 
             //킥오프일
-            cell = row.createCell(17);
+            cell = row.createCell(18);
             cell.setCellValue(excelList.get(i).getGuideKickfDt() == null ? "-" : excelList.get(i).getGuideKickfDt());
             cell.setCellStyle(style_body);
 
             //렙업일
-            cell = row.createCell(18);
-            cell.setCellValue(excelList.get(i).getGuidePscndDt() == null ? "-" : excelList.get(i).getGuidePscndDt());
-            cell.setCellStyle(style_body);
-
-            //신청일
             cell = row.createCell(19);
-            cell.setCellValue(excelList.get(i).getAppctnDt());
+            cell.setCellValue(excelList.get(i).getGuidePscndDt() == null ? "-" : excelList.get(i).getGuidePscndDt());
             cell.setCellStyle(style_body);
 
             //신청자명

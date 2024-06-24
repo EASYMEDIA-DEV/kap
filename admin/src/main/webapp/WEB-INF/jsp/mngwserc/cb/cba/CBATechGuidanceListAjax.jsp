@@ -21,10 +21,10 @@
                 <td class="text-center">${ list.cbsnNm }</td>                                                                                      <%--신청업종--%>
                 <td class="text-center">${ list.firstRgnsNm } ${ list.scndRgnsNm }</td>                                                            <%--신청소재지--%>
                 <td class="text-center">${ empty list.crtfnCmpnNm ? '-' : list.crtfnCmpnNm}</td>                                                   <%--SQ 인증 주관사--%>
+                <td class="text-center">${ list.appctnDt }</td>                                                                                    <%--신청일--%>
                 <td class="text-center">${ empty list.vstDt ? '-' : list.vstDt }</td>                                                              <%--방문일--%>
                 <td class="text-center">${ empty list.cmssrNm ? '-' : list.cmssrNm}</td>                                                           <%--담당위원--%>
                 <td class="text-center">${ empty list.vstCnt ? '-' : list.vstCnt}</td>                                                             <%--방문횟수--%>
-                <td class="text-center">${ list.appctnDt }</td>                                                                                       <%--신청일--%>
                 <td class="text-center">${ empty list.guideKickfDt ? '-' : list.guideKickfDt }</td>                                                <%--킥오프일--%>
                 <td class="text-center">  <%--킥오프자료--%>
                     <c:choose>
