@@ -264,7 +264,7 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">사업계획서<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">사업계획서 (최대 5개까지 첨부 가능)<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
 
