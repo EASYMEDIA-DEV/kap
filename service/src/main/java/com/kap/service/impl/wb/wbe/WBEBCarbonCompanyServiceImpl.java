@@ -5,6 +5,7 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
+import com.kap.core.dto.wb.wbc.WBCBSecurityPbsnDtlDTO;
 import com.kap.core.dto.wb.wbe.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -405,6 +406,15 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             bsnPmtDTO.setBsnPmt("0");
         }
         wBEBCarbonCompanyMapper.updateBsnPmtDtl(bsnPmtDTO);
+
+        //단계가 사업계획을 넘어갔을때만 수정
+        if(maxRsumeOrd > 2){
+            WBEBCarbonCompanyPbsnDtlDTO bsnPmtGroupDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(1);
+            bsnPmtGroupDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+
+            //사업계획, 지원금, 자부담 수정
+            wBEBCarbonCompanyMapper.updateBsnPmtGroupDtl(bsnPmtGroupDTO);
+        }
 
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());

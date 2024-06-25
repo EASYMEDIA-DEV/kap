@@ -77,6 +77,11 @@ public interface WBDBSafetyMapper {
      */
     public int updateBsnPmtDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
 
+    /**
+     * 신청환경 상세 사업계획일자 지원금 자부담 수정
+     */
+    public int updateBsnPmtGroupDtl(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO);
+
 
     /**
      * 신청환경 상세 등록

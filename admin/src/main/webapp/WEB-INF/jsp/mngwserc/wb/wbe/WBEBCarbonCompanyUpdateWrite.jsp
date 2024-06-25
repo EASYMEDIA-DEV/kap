@@ -1161,6 +1161,24 @@
                         <div id="accEx2" class="panel-collapse collapse<c:if test="${rtnDtl[1].mngSttsNm eq '미확인'}"> in</c:if><c:if test="${rtnData.maxRsumeOrd eq 2}"> in</c:if>" role="tabpanel">
                             <div class="panel-body">
                                 <h6 class="mt0">신청자</h6>
+                                <c:set var="disabledChk" value="false"/>
+                                <c:choose>
+                                    <c:when test="${rtnData.maxRsumeOrd <2 }">
+                                        <c:set var="disabledChk" value="true"/>
+                                    </c:when>
+                                    <c:when test="${rtnData.maxRsumeOrd eq 2 &&  rtnDtl[1].mngSttsNm ne '부적합' }">
+                                        <c:set var="disabledChk" value="false"/>
+                                    </c:when>
+                                    <c:when test="${rtnData.maxRsumeOrd > 2 &&  rtnDtl[1].mngSttsNm eq '적합'}">
+                                        <c:set var="disabledChk" value="false"/>
+                                    </c:when>
+                                    <c:when test="${rtnData.maxRsumeOrd > 1 &&  rtnDtl[1].mngSttsNm eq '부적합'}">
+                                        <c:set var="disabledChk" value="true"/>
+                                    </c:when>
+                                    <c:otherwise>
+                                        <c:set var="disabledChk" value="true"/>
+                                    </c:otherwise>
+                                </c:choose>
                                 <fieldset>
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">사업계획</label>
@@ -1169,7 +1187,7 @@
                                                 <div class="input-group">
                                                     <input type="text" class="form-control input-sm datetimepicker_strtDt notRequired" id="bsnPlanDt" name="pbsnDtlList[1].bsnPlanDt"
                                                            value="${kl:convertDate(rtnPbsn[1].bsnPlanDt , 'yyyy-MM-dd', 'yyyy-MM-dd', '')}"
-                                                           title="점검일" readonly onclick="cmmCtrl.initCalendar(this);" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                                           title="점검일" readonly onclick="cmmCtrl.initCalendar(this);" <c:if test="${disabledChk eq 'true'}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
                                                     <span class="input-group-btn" style="z-index:0;">
                                                         <button type="button" class="btn btn-inverse btn-sm" onclick="cmmCtrl.initCalendar(this); jQuery(this).parent().prev().focus();">
                                                             <em class="ion-calendar"></em>
@@ -1184,7 +1202,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">지원금(①)</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="spprtPmt" name="pbsnDtlList[1].spprtPmt" value="${rtnPbsn[1].spprtPmt}" title="지원금" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="spprtPmt" name="pbsnDtlList[1].spprtPmt" value="${rtnPbsn[1].spprtPmt}" title="지원금" maxlength="50" value="" <c:if test="${disabledChk eq 'true'}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>
@@ -1192,7 +1210,7 @@
                                     <div class="form-group text-sm">
                                         <label class="col-sm-1 control-label">자부담(②)</label>
                                         <div class="col-sm-5 form-inline">
-                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="phswPmt" name="pbsnDtlList[1].phswPmt" value="${rtnPbsn[1].phswPmt}" title="신청자" maxlength="50" value="" <c:if test="${rtnData.maxRsumeOrd ne 2}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
+                                            <input type="text" class="form-control comma notRequired" maxlength="50" id="phswPmt" name="pbsnDtlList[1].phswPmt" value="${rtnPbsn[1].phswPmt}" title="신청자" maxlength="50" value="" <c:if test="${disabledChk eq 'true'}">disabled</c:if> <c:if test="${rtnDtl[1].mngSttsNm eq '미선정' || rtnDtl[1].mngSttsNm eq '선정'}">disabled</c:if>/>
                                         </div>
                                     </div>
                                 </fieldset>

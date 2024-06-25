@@ -6,6 +6,7 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbc.*;
+import com.kap.core.dto.wb.wbd.WBDBSafetyPbsnDtlDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -405,6 +406,14 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         }
         wBCBSecurityMapper.updateBsnPmtDtl(bsnPmtDTO);
 
+        //단계가 사업계획을 넘어갔을때만 수정
+        if(maxRsumeOrd > 2){
+            WBCBSecurityPbsnDtlDTO bsnPmtGroupDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(1);
+            bsnPmtGroupDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+
+            //사업계획, 지원금, 자부담 수정
+            wBCBSecurityMapper.updateBsnPmtGroupDtl(bsnPmtGroupDTO);
+        }
 
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBCBSecurityMstInsertDTO.getFileList());

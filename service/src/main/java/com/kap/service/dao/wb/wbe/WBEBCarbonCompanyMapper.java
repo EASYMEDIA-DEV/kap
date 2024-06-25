@@ -77,6 +77,11 @@ public interface WBEBCarbonCompanyMapper {
      */
     public int updateBsnPmtDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
 
+    /**
+     * 사업계획, 지원금, 자부담 수정
+     */
+    public int updateBsnPmtGroupDtl(WBEBCarbonCompanyPbsnDtlDTO wBEBCarbonCompanyPbsnDtlDTO);
+
 
     /**
      * 신청환경 상세 등록

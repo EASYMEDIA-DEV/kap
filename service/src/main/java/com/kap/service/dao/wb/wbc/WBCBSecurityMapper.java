@@ -77,6 +77,11 @@ public interface WBCBSecurityMapper {
      */
     public int updateBsnPmtDtl(WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO);
 
+    /**
+     * 사업계획, 지원금, 자부담 수정
+     */
+    public int updateBsnPmtGroupDtl(WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO);
+
 
     /**
      * 신청환경 상세 등록

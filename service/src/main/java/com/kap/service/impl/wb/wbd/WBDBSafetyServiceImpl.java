@@ -405,6 +405,16 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         }
         wBDBSafetyMapper.updateBsnPmtDtl(bsnPmtDTO);
 
+        //단계가 사업계획을 넘어갔을때만 수정
+        if(maxRsumeOrd > 2){
+            WBDBSafetyPbsnDtlDTO bsnPmtGroupDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(1);
+            bsnPmtGroupDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+
+            //사업계획, 지원금, 자부담 수정
+            wBDBSafetyMapper.updateBsnPmtGroupDtl(bsnPmtGroupDTO);
+        }
+
+
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 

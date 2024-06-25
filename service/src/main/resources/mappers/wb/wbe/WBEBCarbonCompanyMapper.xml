@@ -752,20 +752,40 @@
     </update>
 
     <!--
-     쿼리명 : WBCBSecurityMapper.updateBsnPmtDtl
+     쿼리명 : WBEBCarbonCompanyMapper.updateBsnPmtDtl
      설  명 : 사업비 수정
      수정일     수정자     수정내용
     ==========  ======  ==============
     2024.06.04  장두석     최초 생성
     -->
     <update id="updateBsnPmtDtl" parameterType="wBCBSecurityPbsnDtlDTO">
-        UPDATE /* WBCBSecurityMapper.updateBsnPmtDtl */ CX_APPCTN_RSUME_PBSN_DTL
+        UPDATE /* WBEBCarbonCompanyMapper.updateBsnPmtDtl */ CX_APPCTN_RSUME_PBSN_DTL
         SET
             BSN_PMT = #{bsnPmt}
           ,MOD_ID = #{modId}
           ,MOD_IP = #{modIp}
           ,MOD_DTM = NOW()
         WHERE RSUME_SEQ = (SELECT RSUME_SEQ FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{detailsKey} AND RSUME_ORD = 1)
+    </update>
+
+    <!--
+     쿼리명 : WBEBCarbonCompanyMapper.updateBsnPmtGroupDtl
+     설  명 :  사업계획 - 사업계획일자 지원금 자부담비용 수정
+     수정일     수정자     수정내용
+    ==========  ======  ==============
+    2024.06.24  김학규     최초 생성
+    -->
+    <update id="updateBsnPmtGroupDtl" parameterType="wBCBSecurityPbsnDtlDTO">
+        UPDATE /* WBEBCarbonCompanyMapper.updateBsnPmtGroupDtl */ CX_APPCTN_RSUME_PBSN_DTL
+        SET
+            BSN_PLAN_DT = #{bsnPlanDt}
+            , SPPRT_PMT = #{spprtPmt}
+            , PHSW_PMT = #{phswPmt}
+          , TTL_PMT = #{ttlPmt}
+          ,MOD_ID = #{modId}
+          ,MOD_IP = #{modIp}
+          ,MOD_DTM = NOW()
+        WHERE RSUME_SEQ = (SELECT RSUME_SEQ FROM cx_appctn_rsume_dtl WHERE appctn_seq = #{detailsKey} AND RSUME_ORD = 2)
     </update>
 
     <!--
