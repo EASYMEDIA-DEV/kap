@@ -496,7 +496,7 @@
                     <label class="col-sm-1 control-label">종된사업장번호</label>
                     <div class="col-sm-5" style="margin-left: -15px">
                         <div class="col-sm-3">
-                            <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}" title="종된사업장번호" maxlength="50"/>
+                            <input type="text" class="form-control input-sm notRequired" id="sbrdnBsnmNo" name="sbrdnBsnmNo" value="${rtnData.sbrdnBsnmNo}" title="종된사업장번호" maxlength="50" data-bef="${rtnData.sbrdnBsnmNo}"/>
                         </div>
                     </div>
                 </div>

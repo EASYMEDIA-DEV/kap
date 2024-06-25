@@ -5,7 +5,6 @@ import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
-import com.kap.core.dto.wb.wbc.WBCBSecurityPbsnDtlDTO;
 import com.kap.core.dto.wb.wbe.*;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
@@ -1444,21 +1443,21 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         int respCnt = 0;
 
-        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
-        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
-        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
-        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
+//        wBEBCarbonCompanyMstInsertDTO.setEpisdSeq(wBEBCarbonCompanyMapper.selectEpisdSeq(wBEBCarbonCompanyMstInsertDTO));
+//        WBEBCarbonCompanySearchDTO wBEBCarbonCompanySearchDTO = new WBEBCarbonCompanySearchDTO();
+//        wBEBCarbonCompanySearchDTO.setDetailsKey(wBEBCarbonCompanyMstInsertDTO.getDetailsKey());
+//        WBEBCarbonCompanyMstInsertDTO wBEBTrnsfDTO = wBEBCarbonCompanyMapper.selectCarbonCompanyDtl(wBEBCarbonCompanySearchDTO);
 
 
-        System.out.println("22wBEBTrnsfDTO.getMemSeq()  " + wBEBTrnsfDTO.getMemSeq());
+//        System.out.println("22wBEBTrnsfDTO.getMemSeq()  " + wBEBTrnsfDTO.getMemSeq());
 
-        System.out.println("22wBEBCarbonCompanyMstInsertDTO.getMemSeq()   " + wBEBCarbonCompanyMstInsertDTO.getMemSeq());
+//        System.out.println("22wBEBCarbonCompanyMstInsertDTO.getMemSeq()   " + wBEBCarbonCompanyMstInsertDTO.getMemSeq());
 
-        if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
-        {
+//        if(!wBEBTrnsfDTO.getMemSeq().equals(wBEBCarbonCompanyMstInsertDTO.getMemSeq()))
+//        {
             respCnt = wBEBCarbonCompanyMapper.getSbrdnBsnmNoCnt(wBEBCarbonCompanyMstInsertDTO);
-        }
-        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
+//        }
+//        wBEBCarbonCompanyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }

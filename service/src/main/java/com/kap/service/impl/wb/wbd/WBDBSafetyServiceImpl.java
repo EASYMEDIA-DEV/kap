@@ -1438,17 +1438,17 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
         int respCnt = 0;
 
-        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
+//        wBDBSafetyMstInsertDTO.setEpisdSeq(wBDBSafetyMapper.selectEpisdSeq(wBDBSafetyMstInsertDTO));
 
-        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
-        wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
-        WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
+//        WBDBSafetySearchDTO wBDBSafetySearchDTO = new WBDBSafetySearchDTO();
+//        wBDBSafetySearchDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
+//        WBDBSafetyMstInsertDTO wBEBTrnsfDTO = wBDBSafetyMapper.selectCarbonCompanyDtl(wBDBSafetySearchDTO);
 
-        if(!wBEBTrnsfDTO.getMemSeq().equals(wBDBSafetyMstInsertDTO.getMemSeq())) {
+//        if(!wBEBTrnsfDTO.getMemSeq().equals(wBDBSafetyMstInsertDTO.getMemSeq())) {
             respCnt = wBDBSafetyMapper.getSbrdnBsnmNoCnt(wBDBSafetyMstInsertDTO);
-        }
+//        }
 
-        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
+//        wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
         return respCnt;
     }

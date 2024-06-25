@@ -6,7 +6,6 @@ import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.wb.WBSendDTO;
 import com.kap.core.dto.wb.wbc.*;
-import com.kap.core.dto.wb.wbd.WBDBSafetyPbsnDtlDTO;
 import com.kap.core.utility.COFileUtil;
 import com.kap.service.COFileService;
 import com.kap.service.COUserDetailsHelperService;
@@ -1415,7 +1414,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 
         int respCnt = 0;
 
-        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+//        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
 
         WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
         wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
@@ -1437,15 +1436,15 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 
         int respCnt = 0;
 
-        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
+//        wBCBSecurityMstInsertDTO.setEpisdSeq(wBCBSecurityMapper.selectEpisdSeq(wBCBSecurityMstInsertDTO));
 
-        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
-        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
-        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
+//        WBCBSecuritySearchDTO wBCBSecuritySearchDTO = new WBCBSecuritySearchDTO();
+//        wBCBSecuritySearchDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
+//        WBCBSecurityMstInsertDTO wBCBTrnsfDTO = wBCBSecurityMapper.selectCarbonCompanyDtl(wBCBSecuritySearchDTO);
 
-        if(!wBCBTrnsfDTO.getMemSeq().equals(wBCBSecurityMstInsertDTO.getMemSeq())) {
+//        if(!wBCBTrnsfDTO.getMemSeq().equals(wBCBSecurityMstInsertDTO.getMemSeq())) {
             respCnt = wBCBSecurityMapper.getSbrdnBsnmNoCnt(wBCBSecurityMstInsertDTO);
-        }
+//        }
 
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
 

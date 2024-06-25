@@ -563,6 +563,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     });
 
                     var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
+                    var sbrdnBsnmNoBef = $("#sbrdnBsnmNo").data("bef");
                     /*if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
                         jQuery.ajax({
                             url : "./getBsnmNoCnt",
@@ -581,7 +582,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }
                         });
                     }else{*/
-                    if(sbrdnBsnmNo != null && sbrdnBsnmNo != ''){
+                    if(sbrdnBsnmNo != sbrdnBsnmNoBef){
                         jQuery.ajax({
                             url : "./getSbrdnBsnmNoCnt",
                             type : "POST",
