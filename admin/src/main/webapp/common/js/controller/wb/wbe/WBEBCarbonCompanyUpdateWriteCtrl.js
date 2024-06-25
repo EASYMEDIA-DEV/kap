@@ -566,7 +566,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     });
 
                     var sbrdnBsnmNo = $("#sbrdnBsnmNo").val();
-                    if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
+                    /*if(sbrdnBsnmNo == null || sbrdnBsnmNo == ''){
                         jQuery.ajax({
                             url : "./getBsnmNoCnt",
                             type : "POST",
@@ -583,7 +583,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 }
                             }
                         });
-                    }else{
+                    }else{*/
+                    if(sbrdnBsnmNo != null && sbrdnBsnmNo != ''){
                         jQuery.ajax({
                             url : "./getSbrdnBsnmNoCnt",
                             type : "POST",
