@@ -74,7 +74,7 @@
             </div>
             <div class="def-list">
                 <p class="tit f-head">과정분류</p>
-                <p class="txt f-sub-head">${rtnData.prntCdNm}・${rtnData.ctgryCdNm} (${rtnData.cbsnCdNm})</p>
+                <p class="txt f-sub-head">${rtnData.prntCdNm}・${rtnData.ctgryCdNm} <c:if test="${not empty rtnData.cbsnCdNm}">(${rtnData.cbsnCdNm})</c:if></p>
             </div>
             <div class="def-list">
                 <p class="tit f-head">과정명</p>
