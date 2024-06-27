@@ -549,10 +549,16 @@ define(["ezCtrl"], function(ezCtrl) {
 
 			/*cmmCtrl.setCalendar();*/
 			if($("#paramStrtDt").val() =="" && $("#paramEndDt").val() ==""){
-				cmmCtrl.setCalendarInit(3,-3);
+				//cmmCtrl.setCalendarInit(3,-3);
 			}else{
-				cmmCtrl.setCalendar();
+				//cmmCtrl.setCalendar();
 			}
+			var eduDate  = new Date();
+
+			var eduYear = eduDate.getFullYear();
+
+			$("#strtDt").val(eduYear+".01.01");
+			$("#endDt").val(eduYear+".12.31");
 
 
 			//뒤로가기, 목록으로 왔을때 과정분류값있으면 자동세팅
