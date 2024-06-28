@@ -182,7 +182,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }, "./changeList.ajax", $formObj, "POST", "html");
     }
 
-    let fnpstnNmShow = function(pstnCd) {
+    /*let fnpstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
             $("#pstnNm").css("display", "block");
         }else{
@@ -190,9 +190,9 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             $("#pstnNm").css("display", "none");
             $("#pstnNm").addClass("notRequired");
         }
-    }
+    }*/
 
-    let fnNewPstnNmShow = function(pstnCd) {
+    /*let fnNewPstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
             $("#newPstnNm").css("display", "block");
         }else{
@@ -200,7 +200,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             $("#newPstnNm").css("display" , "none");
             $("#newPstnNm").addClass("notRequired");
         }
-    }
+    }*/
 
     // set model
     ctrl.model = {
@@ -302,22 +302,22 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            pstnCd : {
+            /*pstnCd : {
                 event : {
                     change : function() {
                         var pstnCd = $(this).val();
                         fnpstnNmShow(pstnCd);
                     }
                 }
-            },
-            newPstnCd : {
+            },*/
+            /*newPstnCd : {
                 event : {
                     change : function() {
                         var pstnCd = $(this).val();
                         fnNewPstnNmShow(pstnCd);
                     }
                 }
-            },
+            },*/
         },
         classname : {
             // 회원검색 모달
@@ -341,7 +341,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                fnpstnNmShow($('#pstnCd').val());
+                                // fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -371,7 +371,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             $("#newBsnmNo").val(data.seq);
                             $("#bsnmNoNm").val(data.titl);
                             $("#ctgryNm").val(data.ctgryNm);
-                            fnNewPstnNmShow($('#newPstnCd').val());
+                            // fnNewPstnNmShow($('#newPstnCd').val());
                         });
                     }
                 }
@@ -422,25 +422,25 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
-            var pstnCd = $("#pstnCd").val();
+            // var pstnCd = $("#pstnCd").val();
 
-            if(pstnCd =='MEM_CD01007'){
+            /*if(pstnCd =='MEM_CD01007'){
                 $("#pstnNm").css("display", "block");
             }else{
                 $("#pstnNm").val("");
                 $("#pstnNm").css("display", "none");
                 $("#pstnNm").addClass("notRequired");
-            }
+            }*/
 
-            var newPstnCd = $("#newPstnNm").val();
+            // var newPstnCd = $("#newPstnNm").val();
 
-            if(newPstnCd =='MEM_CD01007'){
+            /*if(newPstnCd =='MEM_CD01007'){
                 $("#newPstnNm").css("display", "block");
             }else{
                 $("#newPstnNm").val("");
                 $("#newPstnNm").css("display" , "none");
                 $("#newPstnNm").addClass("notRequired");
-            }
+            }*/
 
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);

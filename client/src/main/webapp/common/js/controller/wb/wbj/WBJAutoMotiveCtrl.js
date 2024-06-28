@@ -174,6 +174,32 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                     }
                 }
             },
+            //2024.06.28 추천자 정보 휴대폰 번호 하이픈
+            rcmndHpNo : {
+                event : {
+                    input : function() {
+                        var val = this.value.replace(/\D/g,'');
+                        var newVal = '';
+
+                        if(val.startsWith('02')) {
+                            if(val.length === 9) {
+                                newVal = val.replace(/^(\d{2})(\d{3})(\d{4})/, '$1-$2-$3');
+                            }
+                            else {
+                                newVal = val.replace(/^(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+                            }
+                        } else {
+                            if(val.length === 10) {
+                                newVal = val.replace(/^(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+                            }
+                            else {
+                                newVal = val.replace(/^(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+                            }
+                        }
+                        this.value = newVal;
+                    }
+                }
+            }
         },
         classname : {
             fileDown : {
@@ -280,10 +306,81 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var email = $(".firstEmail").val() + "@" + $(".secondEmail").val();
                         $(".newEmail").val(email);
 
+                        //2024-06-28 포상 대상자 유효성 검사 추가
+                        if($("#optPrize").val() == ""){
+                            alert("포상부문을 선택해주세요");
+                            $("#optPrize").focus();
+                            return false;
+                        }
+
+                        if($("#newBsnmNo").val() == ""){
+                            alert("부품사명을 검색해주세요");
+                            $("#bsnmNoNm").focus();
+                            return false;
+                        }
+                        if($("#ctgryNm").val() == "") {
+                            alert("부품사명을 검색해주세요");
+                            $("#bsnmNoNm").focus();
+                        }
+
+                        if($("#newName").val() == ""){
+                            alert("이름을 입력해주세요");
+                            $("#newName").focus();
+                            return false;
+                        }
+
+                        if($("#deptNm").val() == ""){
+                            alert("부서를 입력해주세요");
+                            $("#deptNm").focus();
+                            return false;
+                        }
+
+                        if($("#newPstnCd").val() == ""){
+                            alert("직급을 선택해주세요");
+                            $("#newPstnCd").focus();
+                            return false;
+                        }
+
+                        if($("#age").val() == ""){
+                            alert("연령을 입력해주세요");
+                            $("#age").focus();
+                            return false;
+                        }
+
+                        if($("#yrssvYearCnt").val() == ""){
+                            alert("근속년수를 입력해주세요");
+                            $("#yrssvYearCnt").focus();
+                            return false;
+                        }
+
+                        if($("#newHpNo").val() == ""){
+                            alert("휴대폰 번호를 입력해주세요");
+                            $("#newHpNo").focus();
+                            return false;
+                        }
+
+                        if($("#newHpNo").val() == ""){
+                            alert("휴대폰 번호를 입력해주세요");
+                            $("#newHpNo").focus();
+                            return false;
+                        }
+
+                        if($(".firstEmail").val() == ""){
+                            alert("이메일을 입력해주세요");
+                            $(".firstEmail").focus();
+                            return false;
+                        }
+                        if($(".secondEmail").val() == ""){
+                            alert("이메일을 입력해주세요");
+                            $(".secondEmail").focus();
+                            return false;
+                        }
+
                         file.each(function(i) {
                             if (!$(this).val()) {
                                 alert('신청서류를 모두 등록해주세요.');
                                 valid = false;
+                                $(this).focus();
                                 return false;
                             }
                         });
@@ -304,6 +401,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                 }
                             } else {
                                 alert('약관에 동의해주세요.')
+                                $("#agreeChk").focus();
                             }
                         }
                     }
