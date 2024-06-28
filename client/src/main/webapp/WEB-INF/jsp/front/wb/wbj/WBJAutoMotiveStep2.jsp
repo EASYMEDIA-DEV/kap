@@ -189,7 +189,7 @@
                       <div class="form-group">
                         <div class="form-input">
                           <input type="hidden" class="notRequired" id="newBsnmNo" name="cmpnSeq" value="" />
-                          <input type="text" id="bsnmNoNm" placeholder="">
+                          <input type="text" id="bsnmNoNm" placeholder="" readonly>
                         </div>
                         <div class="btn-wrap">
                           <button type="button" class="btn-solid small gray-bg bsnmNoBtn" ><span>검색</span></button>
