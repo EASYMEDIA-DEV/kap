@@ -354,14 +354,14 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if($("#newHpNo").val() == ""){
-                            alert("휴대폰 번호를 입력해주세요");
+                            alert("휴대폰번호를 입력해주세요");
                             $("#newHpNo").focus();
                             return false;
                         }
 
-                        if($("#newHpNo").val() == ""){
-                            alert("휴대폰 번호를 입력해주세요");
-                            $("#newHpNo").focus();
+                        if($("#newCmpnTelNo").val() == ""){
+                            alert("회사 전화번호를 입력해주세요");
+                            $("#newCmpnTelNo").focus();
                             return false;
                         }
 
