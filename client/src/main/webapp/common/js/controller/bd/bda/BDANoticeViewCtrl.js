@@ -46,7 +46,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         },
         immediately : function() {
-
+            
+            // 메인페이지에서 접근 후 목록으로 갈 시 초기화
+            if(document.referrer.indexOf('board/notice/list') < 0) {
+                localStorage.removeItem('pageIndex');
+                localStorage.removeItem('detailsKey');
+                localStorage.removeItem('mainPostYn');
+            }
         }
     };
     ctrl.exec();

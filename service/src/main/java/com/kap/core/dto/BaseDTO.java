@@ -70,6 +70,7 @@ public class BaseDTO {
     //페이징 조회
     private int totalCount = 0;
     private int pageIndex = 1;
+    private int pageBeforeIndex = 0;
     private Integer listRowSize = 10;
     private Integer pageRowSize = 10;
     private Integer firstIndex;

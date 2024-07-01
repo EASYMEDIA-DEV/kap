@@ -4,6 +4,7 @@
         <!-- 상세로 이동시 시퀀스 -->
         <input type="hidden" id="detailsKey" name="detailsKey" value="" />
         <input type="hidden" id="mainPostYn" name="mainPostYn" value="" />
+        <input type="hidden" id="pageIndex" name="pageIndex" value="1" />
         <div class="cont-wrap">
             <div class="sub-top-vis-area basic-page">
                 <div class="page-tit-area">

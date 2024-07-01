@@ -1,13 +1,12 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <c:choose>
-	<c:when test="${rtnData.pageIndex eq 1}">
-        <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
+	<c:when test="${rtnData.pageBeforeIndex eq 0}">
         <!-- 페이징 버튼 사이즈 -->
+        <input type="hidden" id="pageBeforeIndex" name="pageBeforeIndex" value="1" />
         <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
         <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="totalCount" name="totalCount" value="${ rtnData.totalCount }" />
 	</c:when>
-	<c:otherwise></c:otherwise>
 </c:choose>
 
 <c:choose>

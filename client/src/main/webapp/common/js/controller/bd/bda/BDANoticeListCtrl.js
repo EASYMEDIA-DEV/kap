@@ -13,9 +13,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     // form Object
     var $formObj = ctrl.obj.find("form").eq(0);
 
+    var [navigation] = performance.getEntriesByType('navigation');
     // 목록 조회
     var search = function (page){
-
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
         }
@@ -25,19 +25,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
         }
 
         cmmCtrl.listFrmAjax(function(respObj) {
-
             //CALLBACK 처리
-            if($formObj.find("#pageIndex").val() == 1) {
-                $(".mainPost").css("paddingTop", "24px");
-                ctrl.obj.find("#listContainer").html(respObj);
-
-            } else {
-                ctrl.obj.find("#listContainer").append(respObj);
-                $(".normalPost").css("paddingTop", "24px");
-            }
+            ctrl.obj.find("#listContainer").append(respObj);
 
             // 중요공지 수
             var mainPostCnt = parseInt($("a.mainPost").length);
+            // 일반공지 수
+            var normalPostCnt = parseInt($("a.normalPost").length);
             //총 건수
             var totCnt = parseInt($("#totalCount").val());
 
@@ -45,23 +39,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $(".btn-wrap.add-load.align-center").hide();
 
             }else{
-                var tempPage = (page === undefined || page == "") ? 1 : page;
-                var rtnPage = 0;
-
-                if((tempPage * 10) > totCnt){
-                    $(".btn-wrap.add-load.align-center").hide();
-                    rtnPage = totCnt;
-                }else{
-                    $(".btn-wrap.add-load.align-center").show();
-                    rtnPage = (tempPage * 10) - mainPostCnt;
-                }
-                $(".btn-wrap.add-load.align-center").find(".item-count").text("("+rtnPage+"/"+totCnt+")");
+                $(".btn-wrap.add-load.align-center").find(".item-count").text("("+normalPostCnt+"/"+totCnt+")");
             }
             $(".article-total-count.f-body2").find("span").text(totCnt);
             $(".item-count").text();
 
             ctrl.obj.find("#listContainerTotCnt").text(totCnt);
+            
+            // 이전 페이징 기록
+            if(page != undefined) {
+                $formObj.find("#pageBeforeIndex").val(page);
+            }
 
+            // 뒤로가기 시 해당게시물 포커스
+            if (event.persisted || navigation.type == 'back_forward' || document.referrer.indexOf('board/notice/view') > 0) {
+                $('.list-item[data-details-key=' + localStorage.getItem('detailsKey') + '][data-main-post-yn=' + localStorage.getItem('mainPostYn') + ']').focus();
+            }
         }, "/foundation/board/notice/selectList", $formObj, "GET", "html");
     }
 
@@ -91,6 +84,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             listView : {
                 event : {
                     click : function() {
+                        // 뒤로가기 시 페이징, 위치 유지해주기 위해 localStorage사용
+                        localStorage.setItem('pageIndex', $formObj.find("#pageIndex").val());
+                        localStorage.setItem('detailsKey', $(this).data("detailsKey"));
+                        localStorage.setItem('mainPostYn', $(this).data("mainPostYn"));
                         //상세보기
                         $formObj.find("input[name=detailsKey]").val($(this).data("detailsKey"));
                         $formObj.find("input[name=mainPostYn]").val($(this).data("mainPostYn"));
@@ -116,7 +113,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
 
             cmmCtrl.setFormData($formObj);
-            search();
+
+            // 뒤로가기 시 localStorage 저장된 페이지 호출
+            if (event.persisted || navigation.type == 'back_forward' || document.referrer.indexOf('board/notice/view') > 0) {
+                search(localStorage.getItem('pageIndex'));
+            } else {
+                search();
+            }
 
             $(document).on('keydown', function(event) {
                 // 눌린 키가 Enter 키인지 확인

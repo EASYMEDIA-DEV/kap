@@ -85,15 +85,16 @@ public class BDANoticeServiceImpl implements BDANoticeService {
 
         page.setCurrentPageNo(pBDANoticeDTO.getPageIndex());
         page.setRecordCountPerPage(pBDANoticeDTO.getListRowSize());
-        page.setPageSize(pBDANoticeDTO.getPageRowSize());
+        page.setBeforePageCount(pBDANoticeDTO.getPageBeforeIndex());
+        pBDANoticeDTO.setRecordCountPerPage(page.getMoreRecordCountPerPage(pBDANoticeDTO.getListRowSize()));
 
-        pBDANoticeDTO.setFirstIndex(page.getFirstRecordIndex());
+        pBDANoticeDTO.setFirstIndex(page.getMoreFirstRecordIndex(pBDANoticeDTO.getListRowSize()));
         // 사용자 메인 노출 갯수 조건문 추가
-        if(pBDANoticeDTO.getMainYn().equals("Y")) {
+        /*if(pBDANoticeDTO.getMainYn().equals("Y")) {
             pBDANoticeDTO.setRecordCountPerPage(3);
         }else{
             pBDANoticeDTO.setRecordCountPerPage(page.getRecordCountPerPage());
-        }
+        }*/
 
         pBDANoticeDTO.setTotalCount(bDANoticeMapper.getNoticeListTotCnt(pBDANoticeDTO));
         pBDANoticeDTO.setList(bDANoticeMapper.selectBoardNoticeList(pBDANoticeDTO));
