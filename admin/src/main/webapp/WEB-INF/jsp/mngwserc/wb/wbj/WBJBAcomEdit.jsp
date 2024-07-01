@@ -395,9 +395,9 @@
                 <h7 class="mt0">추천자 정보</h7>
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">이름</label>
+                        <label class="col-sm-1 control-label">이름<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm same notRequired" id="rcmndName" name="rcmndName" value="${rtnInfo.rcmndName}" title="이름"  placeholder="이름 입력">
+                            <input type="text" class="form-control input-sm same" id="rcmndName" name="rcmndName" value="${rtnInfo.rcmndName}" title="이름"  placeholder="이름 입력">
                         </div>
                         <div class="pull-right">
                             <label class="checkbox-inline c-checkbox" style="margin-left: 30px !important; margin-right: 32px !important;">
@@ -409,34 +409,34 @@
                 </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">휴대폰번호</label>
+                        <label class="col-sm-1 control-label">휴대폰번호<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control phoneChk input-sm same notRequired" id="rcmndHpNo" name="rcmndHpNo" value="${rtnInfo.rcmndHpNo}" title="휴대폰번호"  placeholder="휴대폰번호 입력"
+                            <input type="text" class="form-control phoneChk input-sm same" id="rcmndHpNo" name="rcmndHpNo" value="${rtnInfo.rcmndHpNo}" title="휴대폰번호"  placeholder="휴대폰번호 입력"
                                    oninput="this.value=this.value.replace(/[^0-9]/g, '')" maxlength="14">
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">부품사명</label>
+                        <label class="col-sm-1 control-label">부품사명<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm same notRequired" id="rcmndCmpnNm" name="rcmndCmpnNm" value="${rtnInfo.rcmndCmpnNm}" title="부품사명" placeholder="부품사명 입력">
+                            <input type="text" class="form-control input-sm same" id="rcmndCmpnNm" name="rcmndCmpnNm" value="${rtnInfo.rcmndCmpnNm}" title="부품사명" placeholder="부품사명 입력">
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">부서</label>
+                        <label class="col-sm-1 control-label">부서<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm same notRequired" id="rcmndDeptNm" name="rcmndDeptNm" value="${rtnInfo.rcmndDeptNm}" title="부서" placeholder="부서 입력">
+                            <input type="text" class="form-control input-sm same" id="rcmndDeptNm" name="rcmndDeptNm" value="${rtnInfo.rcmndDeptNm}" title="부서" placeholder="부서 입력">
                         </div>
                     </div>
                 </fieldset>
                 <fieldset>
                     <div class="form-group text-sm">
-                        <label class="col-sm-1 control-label">직급</label>
+                        <label class="col-sm-1 control-label">직급<span class="star"> *</span></label>
                         <div class="col-sm-2">
-                            <input type="text" class="form-control input-sm same notRequired" id="rcmndPstnNm" name="rcmndPstnNm" value="${rtnInfo.rcmndPstnNm}" title="직급"  placeholder="직급 입력">
+                            <input type="text" class="form-control input-sm same" id="rcmndPstnNm" name="rcmndPstnNm" value="${rtnInfo.rcmndPstnNm}" title="직급"  placeholder="직급 입력">
                         </div>
                     </div>
                 </fieldset>

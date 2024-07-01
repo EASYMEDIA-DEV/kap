@@ -306,7 +306,38 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var email = $(".firstEmail").val() + "@" + $(".secondEmail").val();
                         $(".newEmail").val(email);
 
-                        //2024-06-28 포상 대상자 유효성 검사 추가
+                        //2024-07-01 추천자 유효성 검사 추가
+                        if($("#rcmndName").val() == ""){
+                            alert("추천자 이름을 입력해주세요");
+                            $("#rcmndName").focus();
+                            return false;
+                        }
+
+                        if($("#rcmndHpNo").val() == ""){
+                            alert("추천자 휴대폰번호를 입력해주세요");
+                            $("#rcmndHpNo").focus();
+                            return false;
+                        }
+
+                        if($("#rcmndCmpnNm").val() == ""){
+                            alert("추천자 부품사명을 입력해주세요");
+                            $("#rcmndCmpnNm").focus();
+                            return false;
+                        }
+
+                        if($("#rcmndDeptNm").val() == ""){
+                            alert("추천자 부서를 입력해주세요");
+                            $("#rcmndDeptNm").focus();
+                            return false;
+                        }
+
+                        if($("#rcmndPstnNm").val() == ""){
+                            alert("추천자 직급을 입력해주세요");
+                            $("#rcmndPstnNm").focus();
+                            return false;
+                        }
+
+                        //2024-06-28 포상대상자 유효성 검사 추가
                         if($("#optPrize").val() == ""){
                             alert("포상부문을 선택해주세요");
                             $("#optPrize").focus();
@@ -314,29 +345,29 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if($("#newBsnmNo").val() == ""){
-                            alert("부품사명을 검색해주세요");
+                            alert("포상대상자 부품사명을 검색해주세요");
                             $("#bsnmNoNm").focus();
                             return false;
                         }
                         if($("#ctgryNm").val() == "") {
-                            alert("부품사명을 검색해주세요");
+                            alert("포상대상자 부품사명을 검색해주세요");
                             $("#bsnmNoNm").focus();
                         }
 
                         if($("#newName").val() == ""){
-                            alert("이름을 입력해주세요");
+                            alert("포상대상자 이름을 입력해주세요");
                             $("#newName").focus();
                             return false;
                         }
 
                         if($("#deptNm").val() == ""){
-                            alert("부서를 입력해주세요");
+                            alert("포상대상자 부서를 입력해주세요");
                             $("#deptNm").focus();
                             return false;
                         }
 
                         if($("#newPstnCd").val() == ""){
-                            alert("직급을 선택해주세요");
+                            alert("포상대상자 직급을 선택해주세요");
                             $("#newPstnCd").focus();
                             return false;
                         }
@@ -354,7 +385,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if($("#newHpNo").val() == ""){
-                            alert("휴대폰번호를 입력해주세요");
+                            alert("포상대상자 휴대폰번호를 입력해주세요");
                             $("#newHpNo").focus();
                             return false;
                         }
