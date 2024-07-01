@@ -68,7 +68,7 @@
               </div>
               <div class="row">
                 <div class="th">
-                  <p class="title f-head">이름</p>
+                  <p class="title f-head">이름<span class="essential-mark color-sky">*</span></p>
                 </div>
                 <div class="td">
                   <div class="data-line-w">
@@ -84,7 +84,7 @@
               </div>
               <div class="row">
                 <div class="th">
-                  <p class="title f-head">휴대폰번호</p>
+                  <p class="title f-head">휴대폰번호<span class="essential-mark color-sky">*</span></p>
                 </div>
                 <div class="td">
                   <div class="data-line-w">
@@ -100,7 +100,7 @@
               </div>
               <div class="row">
                 <div class="th">
-                  <p class="title f-head">부품사명</p>
+                  <p class="title f-head">부품사명<span class="essential-mark color-sky">*</span></p>
                 </div>
                 <div class="td">
                   <div class="data-line-w">
@@ -116,7 +116,7 @@
               </div>
               <div class="row">
                 <div class="th">
-                  <p class="title f-head">부서</p>
+                  <p class="title f-head">부서<span class="essential-mark color-sky">*</span></p>
                 </div>
                 <div class="td">
                   <div class="data-line-w">
@@ -132,7 +132,7 @@
               </div>
               <div class="row">
                 <div class="th">
-                  <p class="title f-head">직급</p>
+                  <p class="title f-head">직급<span class="essential-mark color-sky">*</span></p>
                 </div>
                 <div class="td">
                   <div class="data-line-w">
