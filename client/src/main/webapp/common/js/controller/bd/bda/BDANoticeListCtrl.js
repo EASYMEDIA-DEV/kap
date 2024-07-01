@@ -51,9 +51,12 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $formObj.find("#pageBeforeIndex").val(page);
             }
 
-            // 뒤로가기 시 해당게시물 포커스
+            // 뒤로가기 시 해당게시물 포커스 후 localStorage 삭제
             if (event.persisted || navigation.type == 'back_forward' || document.referrer.indexOf('board/notice/view') > 0) {
                 $('.list-item[data-details-key=' + localStorage.getItem('detailsKey') + '][data-main-post-yn=' + localStorage.getItem('mainPostYn') + ']').focus();
+                localStorage.removeItem('pageIndex');
+                localStorage.removeItem('detailsKey');
+                localStorage.removeItem('mainPostYn');
             }
         }, "/foundation/board/notice/selectList", $formObj, "GET", "html");
     }
