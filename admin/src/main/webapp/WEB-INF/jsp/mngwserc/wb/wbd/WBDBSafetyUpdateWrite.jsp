@@ -1145,7 +1145,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq0" value="${rtnFile[0].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 1}">
+                                            <input type="hidden" class="notRequired" name="fileSeq0" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq0" value="${rtnFile[0].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01" />
                                 </fieldset>
                             </div>
@@ -1312,7 +1317,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq1" value="${rtnFile[1].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 2}">
+                                            <input type="hidden" class="notRequired" name="fileSeq1" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq1" value="${rtnFile[1].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[1].fileCd" value="ATTACH_FILE_TYPE08" />
                                 </fieldset>
 
@@ -1488,7 +1498,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq2" value="${rtnFile[2].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 3}">
+                                            <input type="hidden" class="notRequired" name="fileSeq2" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq2" value="${rtnFile[2].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[2].fileCd" value="ATTACH_FILE_TYPE09" />
                                 </fieldset>
 
@@ -1612,7 +1627,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq3" value="${rtnFile[3].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 4}">
+                                            <input type="hidden" class="notRequired" name="fileSeq3" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq3" value="${rtnFile[3].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[3].fileCd" value="ATTACH_FILE_TYPE10" />
                                 </fieldset>
 
@@ -1741,7 +1761,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq4" value="${rtnFile[4].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 5}">
+                                            <input type="hidden" class="notRequired" name="fileSeq4" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq4" value="${rtnFile[4].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[4].fileCd" value="ATTACH_FILE_TYPE09" />
                                 </fieldset>
                             </div>
@@ -1865,7 +1890,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <input type="hidden" class="notRequired" name="fileSeq5" value="${rtnFile[5].fileSeq}" />
+                                    <c:forEach var="file" items="${rtnFile}" varStatus="status">
+                                        <c:if test="${file.rsumeOrd eq 6}">
+                                            <input type="hidden" class="notRequired" name="fileSeq5" value="${file.fileSeq}" />
+                                        </c:if>
+                                    </c:forEach>
+                                    <%--<input type="hidden" class="notRequired" name="fileSeq5" value="${rtnFile[5].fileSeq}" />--%>
                                     <input type="hidden" class="notRequired" name="fileDtlList[5].fileCd" value="ATTACH_FILE_TYPE09" />
                                 </fieldset>
                             </div>
