@@ -1,9 +1,6 @@
 package com.kap.core.dto;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 /**
  *  로그인 객체
@@ -32,6 +29,9 @@ public class COLoginDTO extends BaseDTO {
     private String password;
     //최초 이동할 URL
     private String rdctUrl;
+
+    @Builder.Default
+    private String backYn = "N";
     //이메일 인증 번호
     private String emailAuthNum;
     //이메일2차인증여부

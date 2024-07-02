@@ -73,7 +73,7 @@
                 <div class="right">
                     <div class="img-area">
                         <div class="img">
-                            <img src="/common/images/img-login-main.jpg" alt="">
+                            <img class="imgArea" src="/common/images/img-login-main.jpg" alt="">
                         </div>
                     </div>
                 </div>
