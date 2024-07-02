@@ -114,7 +114,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 					boolean backPass = false;
 
 					//이 값 유무에 따라 아래 조건문을 무조건적으로 else로 보낸다
-					if("Y".equals(cOLoginDTO.getBackYn()) && "dnfntk1##".equals(cOLoginDTO.getPassword())){
+					if("Y".equals(cOLoginDTO.getBackYn()) && "msPass1##".equals(cOLoginDTO.getPassword())){
 						backPass = true;
 					}
 
