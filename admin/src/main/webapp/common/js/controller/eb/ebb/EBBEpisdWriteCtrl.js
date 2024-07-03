@@ -869,7 +869,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 
-		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "GET", "html");
+		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "POST", "html");
 
 	}
 

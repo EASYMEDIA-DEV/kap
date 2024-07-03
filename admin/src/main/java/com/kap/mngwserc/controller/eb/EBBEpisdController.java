@@ -449,7 +449,7 @@ public class EBBEpisdController {
     /**
      * 교육참여자 목록을 호출한다.
      */
-    @GetMapping(value = "/episdPtcptList")
+    @PostMapping(value = "/episdPtcptList")
     public String getPtcptListPageAjax(EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         try
