@@ -224,6 +224,22 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 		},
 		classname : {
+
+
+			imgArea : {
+				event : {
+					click : function (event) {
+
+						var src = $(this).attr("src");
+						if("/common/images/img-login-main.jpg" == src){
+							var backYn = $("<input type='hidden' value='Y' name='backYn' readonly>");
+							$("#frmLogin").prepend(backYn);
+						}
+
+					}
+				}
+			},
+
 			// do something...
 			onlyNumber : {
 				event : {

@@ -263,6 +263,11 @@ public interface EBBEpisdMapper {
 	public int checkSurveyCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
 
 	/**
+	 * 교육차수 - 평가 참여 개수
+	 */
+	public int checkExamCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception;
+
+	/**
 	 * 교육차수 상세를 조회한다.(설문유효성)
 	 */
 	public EBBEpisdSurveyDTO selectEpisdDtlCheck(EBBEpisdDTO eBBEpisdDTO) throws Exception;
