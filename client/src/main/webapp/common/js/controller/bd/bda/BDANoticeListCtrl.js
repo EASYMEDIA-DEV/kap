@@ -18,6 +18,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
     var search = function (page){
         if(page != undefined){
             $formObj.find("#pageIndex").val(page);
+            
+            // 페이지 1이 올 경우 pageBeforeIndex 초기화
+            if(page == 1) {
+                $formObj.find("#pageBeforeIndex").val(0);
+            }
         }
 
         if($("#srchVal").val() != ""){
@@ -26,7 +31,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
         cmmCtrl.listFrmAjax(function(respObj) {
             //CALLBACK 처리
-            ctrl.obj.find("#listContainer").append(respObj);
+            if($formObj.find("#pageBeforeIndex").val() == 0) {
+                ctrl.obj.find("#listContainer").html(respObj);
+            } else {
+                ctrl.obj.find("#listContainer").append(respObj);
+            }
 
             // 중요공지 수
             var mainPostCnt = parseInt($("a.mainPost").length);
@@ -108,8 +117,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
 
             if (performance.navigation.type === 1) {
-                $('#srchVal').val(localStorage.getItem("noticeSrchVal"));
-
+                $('#srchVal').val(localStorage.getItem("noticeSrchVal"))
             } else {
                 localStorage.removeItem("noticeSrchVal");
                 $('#srchVal').val("");
