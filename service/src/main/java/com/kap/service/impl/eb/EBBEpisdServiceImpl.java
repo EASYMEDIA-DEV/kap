@@ -1020,6 +1020,15 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		return eBBEpisdMapper.checkSurveyCnt(eBBEpisdDTO);
 	}
 
+	/**
+	 * 평가 참여 개수 조회
+	 */
+	@Transactional
+	public int checkExamCnt(EBBEpisdDTO eBBEpisdDTO) throws Exception
+	{
+		return eBBEpisdMapper.checkExamCnt(eBBEpisdDTO);
+	}
+
 
 
 
