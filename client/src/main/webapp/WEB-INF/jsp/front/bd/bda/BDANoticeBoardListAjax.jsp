@@ -2,7 +2,7 @@
 <c:choose>
 	<c:when test="${rtnData.pageBeforeIndex eq 0}">
         <!-- 페이징 버튼 사이즈 -->
-        <input type="hidden" id="pageBeforeIndex" name="pageBeforeIndex" value="1" />
+        <input type="hidden" id="pageBeforeIndex" name="pageBeforeIndex" value="0" />
         <input type="hidden" id="pageRowSize" name="pageRowSize" value="10" />
         <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="totalCount" name="totalCount" value="${ rtnData.totalCount }" />

@@ -797,10 +797,26 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 			// alert(rtn.respCnt);
 			if(rtn.respCnt == 0 ){
-				$(".eduSrvSearch").attr("disabled", false); //만족도조사 추가버튼 사용 가능
-				$("#srvStrtDtm, #srvEndDtm").attr("disabled", false); //설문, 시험 달력 사용 가능
+				$(".eduSrvSearch").attr("disabled", false); //만족도조사 버튼 사용 가능
+				// $("#srvStrtDtm, #srvEndDtm").attr("disabled", false); //설문, 시험 달력 사용 가능, 2024-07-03 삭제 (항상 허용)
 			}
 		}, './checkSurveyCnt', svMst, "text")
+	}
+
+	//2024-07-03 추가, 평가 진행한 참여자 확인
+	var examCntCheck = function () {
+		var examMst = {};
+		examMst.episdSeq = $("#episdSeq").val();
+
+		cmmCtrl.jsonAjax(function(data){
+			var rtn = JSON.parse(data);
+
+			// alert(rtn.respCnt);
+			if(rtn.respCnt == 0 ){
+				$(".eduExamSearch").attr("disabled", false); //평가 검색 버튼 사용 가능
+			}
+
+		}, './checkExamCnt', examMst, "text")
 	}
 
 	// 교육 참여자 목록 호출
@@ -1839,6 +1855,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			eduExamSearch : {
 				event : {
 					click : function(){
+
 						cmmCtrl.getExamLayerPop(function(data){
 							if(data.choiceCnt > 1){
 								alert(msgCtrl.getMsg("fail.ex.notSrchExam1"));
@@ -1851,6 +1868,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								$("tr.setExg").css("display", "");
 							}
 						});
+
 					}
 				}
 			},
@@ -2237,7 +2255,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 						$(".otsdExamPtcptYn ").attr("disabled", true);//오프라인평가버튼 사용불가
 
 						//설문, 시험 달력 사용불가
-						$("#srvStrtDtm, #srvEndDtm, #examStrtDtm, #examEndDtm").attr("disabled", true);
+						// $("#srvStrtDtm, #srvEndDtm, #examStrtDtm, #examEndDtm").attr("disabled", true); //2024-07-03 삭제
 
 						$(".jdgmtYn").find("input").each(function(e){
 							$(this).click(function(e){
@@ -2289,7 +2307,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				expnsPmt();
 			});
 
-
+			//페이지 로드 시 평가 참여자 여부 확인
+			examCntCheck();
 
 
 			var _readOnly = $formObj.data("prcsCd") == "20" ? true : false;

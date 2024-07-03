@@ -1014,5 +1014,25 @@ public class EBBEpisdController {
         return "jsonView";
     }
 
+
+    @Operation(summary = "평가 참여 개수 조회", tags = "", description = "")
+    @PostMapping(value="/checkExamCnt")
+    public String checkExamCnt(@RequestBody EBBEpisdDTO eBBEpisdDTO, ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", eBBEpisdService.checkExamCnt(eBBEpisdDTO));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
 }
 

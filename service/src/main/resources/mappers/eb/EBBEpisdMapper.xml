@@ -2505,6 +2505,22 @@
 	</select>
 
 	<!--
+         쿼리명 : EBBEpisdMapper.checkExamCnt
+         설  명 : 설문 개수 조회
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2024.07.03   장두석       최초생성
+    -->
+	<select id="checkExamCnt" parameterType="EBBEpisdDTO" resultType="java.lang.Integer">
+		select /* EBBEpisdMapper.checkExamCnt */
+			COUNT(a.exam_score)
+		from
+			ep_edctn_ptcpt_mst a
+		where
+		    episd_seq = #{episdSeq}
+	</select>
+
+	<!--
          쿼리명 : EBBEpisdMapper.selectEpisdExelList
          설  명 : 교육차수관리 목록 출력(엑셀용)
           수정일     수정자       수정내용
