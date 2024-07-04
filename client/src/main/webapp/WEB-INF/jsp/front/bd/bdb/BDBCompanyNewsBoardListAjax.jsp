@@ -4,7 +4,6 @@
         <input type="hidden" id="pageIndex" name="pageIndex" value="${ rtnData.pageIndex }" />
         <!-- 페이징 버튼 사이즈 -->
         <input type="hidden" id="pageRowSize" name="pageRowSize" value="9" />
-        <input type="hidden" id="listRowSize" name="listRowSize" value="${ rtnData.listRowSize }" />
         <input type="hidden" id="totalCount" name="totalCount" value="${ rtnData.totalCount }" />
 	</c:when>
 	<c:otherwise></c:otherwise>
