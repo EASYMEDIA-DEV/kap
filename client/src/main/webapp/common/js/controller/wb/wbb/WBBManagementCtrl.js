@@ -213,7 +213,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             searchFile : {
                 event : {
                     change : function() {
-                        extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 50);
+                        extnCheck(this, "jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip", 100);
                     }
                 }
             },
