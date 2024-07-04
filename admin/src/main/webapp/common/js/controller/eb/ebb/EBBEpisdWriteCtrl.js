@@ -811,9 +811,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		cmmCtrl.jsonAjax(function(data){
 			var rtn = JSON.parse(data);
 
+			//평가 진행자 없으면
 			// alert(rtn.respCnt);
-			if(rtn.respCnt == 0 ){
+			if(rtn.respCnt == 0 ) {
 				$(".eduExamSearch").attr("disabled", false); //평가 검색 버튼 사용 가능
+			}
+			//평가 진행자 있으면
+			else {
+				$(".eduExamSearch").attr("disabled", true); //평가 검색 버튼 사용 불가
 			}
 
 		}, './checkExamCnt', examMst, "text")

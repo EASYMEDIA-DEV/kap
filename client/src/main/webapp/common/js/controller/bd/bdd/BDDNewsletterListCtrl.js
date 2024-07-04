@@ -175,19 +175,21 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             }
         },
         immediately : function() {
+
             if (localStorage.getItem('newsLetterSrchVal')) {
                 $formObj.find("#srchVal").val(localStorage.getItem('newsLetterSrchVal'));
             }
-            // 페이지 새로고침 시 검색어 유지
-            if (performance.navigation.type === 1) {
-                $('#srchVal').val(localStorage.getItem("newsLetterSrchVal"));
+            cmmCtrl.setFormData($formObj);
 
-            } else { // 페이지 첫 진입 시 검색어 초기화
+            // view 페이지에서 뒤로가기, 새로고침 시 이동 시 검색어 유지 // performance.navigation.type 가 1인 경우 새로고침, 2인 경우 뒤로가기
+            if (document.referrer.indexOf('board/newsletter/view') > 0 || performance.navigation.type === 1 || performance.navigation.type === 2) {
+                $('#srchVal').val(localStorage.getItem("newsLetterSrchVal"))
+
+            } else {
                 localStorage.removeItem("newsLetterSrchVal");
                 $('#srchVal').val("");
-            }
 
-            cmmCtrl.setFormData($formObj);
+            }
             search();
 
             $(document).on('keydown', function(event) {

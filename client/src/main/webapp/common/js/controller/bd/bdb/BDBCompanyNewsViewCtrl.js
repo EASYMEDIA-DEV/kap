@@ -28,14 +28,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 event : {
                     click : function() {
                         $formObj.find("input[name=detailsKey]").val($(this).data("prevSeq"));
-                        location.href = "./view?" + $formObj.serialize();
+                        location.href = "./view";
                     }
                 }
             },
             listBtn : {
                 event : {
                     click : function(){
-                        location.href = "./list?" + $formObj.serialize();
+                        location.href = "./list";
                     }
                 }
             }

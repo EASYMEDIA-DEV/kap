@@ -48,6 +48,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                 $(".btn-wrap.add-load.align-center").hide();
 
             }else{
+                $(".btn-wrap.add-load.align-center").show();
                 $(".btn-wrap.add-load.align-center").find(".item-count").text("("+normalPostCnt+"/"+totCnt+")");
             }
             $(".article-total-count.f-body2").find("span").text(totCnt);
@@ -115,20 +116,15 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
             if (localStorage.getItem('noticeSrchVal')) {
                 $formObj.find("#srchVal").val(localStorage.getItem('noticeSrchVal'));
             }
+            cmmCtrl.setFormData($formObj);
 
-            if (performance.navigation.type === 1) {
+            // 뒤로가기 시 localStorage 저장된 페이지 호출, 새로고침 시 검색어 유지
+            if (event.persisted || navigation.type == 'back_forward' || document.referrer.indexOf('board/notice/view') > 0 || performance.navigation.type === 1) {
                 $('#srchVal').val(localStorage.getItem("noticeSrchVal"))
+                search(localStorage.getItem('pageIndex'));
             } else {
                 localStorage.removeItem("noticeSrchVal");
                 $('#srchVal').val("");
-            }
-
-            cmmCtrl.setFormData($formObj);
-
-            // 뒤로가기 시 localStorage 저장된 페이지 호출
-            if (event.persisted || navigation.type == 'back_forward' || document.referrer.indexOf('board/notice/view') > 0) {
-                search(localStorage.getItem('pageIndex'));
-            } else {
                 search();
             }
 
