@@ -19,6 +19,7 @@ spring:
       enabled: true
       max-file-size: 40MB
       max-request-size: 42MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
+    max-http-header-size: 4000000
   #OBJECTMAPPER CAMELCASE
   jackson:
     property-naming-strategy: LOWER_CAMEL_CASE
@@ -78,7 +79,7 @@ app:
     imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
-    max-size: 41943040
+    max-size: 104857600
     #썸네일 사이즈 관련
     #메인 비주얼 PC
     mainVslPcSize : 1920 x 1080
@@ -178,7 +179,7 @@ api:
 #강제 로그인 여부
 app:
   is-login: false
-  user-domain: https://mng.kapkorea.org/
+  user-domain: https://mng.kapkorea.org
   file:
     #파일 업로드 물리 경로
     upload-path: /uploadfiles
@@ -187,6 +188,6 @@ app:
     imageExtns: jpg,jpeg,gif,png,bmp
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
-    max-size: 41943040
+    max-size: 104857600
     #템플릿 경로
     template-file-path: /home/ec2-user/app/client/webapps/WEB-INF/template/

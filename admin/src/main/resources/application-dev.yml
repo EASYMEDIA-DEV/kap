@@ -18,7 +18,7 @@ app:
     imageExtns: jpg,jpeg,png
     videoExtns: mp4,webm,wmv,avi,mkv
     #파일 업로드 크기
-    max-size: 41943040
+    max-size: 104857600
     #템플릿 경로
     template-file-path: /home/app/kap/admin/webapps/WEB-INF/template/
   #사용자 도메인
