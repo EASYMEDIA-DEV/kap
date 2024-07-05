@@ -18,7 +18,7 @@ spring:
     multipart:
       enabled: true
       max-file-size: 100MB
-      max-request-size: 100MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
+      max-request-size: 102MB  # 파일 뿐만 아니라 제목, 내용등도 같이 전송되기때문에 file size보단 크게 설정
     max-http-header-size: 4000000
   #OBJECTMAPPER CAMELCASE
   jackson:
