@@ -64,10 +64,22 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             tempForm.picNm = $(this).data("picNm");
                             tempForm.email = $(this).data("email");
                             tempForm.telNo = $(this).data("telNo");
+                            tempForm.cxstnSrvSeq = $("#detailsKey").val();
 
                             cmmCtrl.jsonAjax(function(data){
+                                try {
+                                    console.log(data); // 서버에서 반환한 데이터 확인
+                                    if (data.respCnt > 0) {
+                                        alert("인증번호가 발송되었습니다.");
+                                        $("#sendDtm").text("발송");
+                                    } else {
+                                        alert("인증번호 발송에 실패했습니다.");
+                                    }
+                                } catch (e) {
+                                    console.error("Error processing response data:", e);
+                                }
 
-                            }, './submitCrtfnNo', tempForm, "text")
+                            }, './submitCrtfnNo', tempForm , 'json')
 
 
                         }

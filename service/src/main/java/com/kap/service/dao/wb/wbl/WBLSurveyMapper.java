@@ -123,4 +123,9 @@ public interface WBLSurveyMapper {
      */
     public int updateSurvey(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
 
+    /**
+     * 인증번호 발송
+     */
+    public int updateSendDtm(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
+
 }

@@ -145,6 +145,7 @@
                                 <span class="ion-checkmark-round"></span>
                             </label>
                         </th>
+                        <%-- 2024-07-08 추가개발 ppt 7 항목 수정 s --%>
                         <th class="text-center">번호</th>
                         <th class="text-center">년도</th>
                         <th class="text-center">회차</th>
@@ -159,10 +160,12 @@
                         <th class="text-center">평균점수</th>
                         <th class="text-center">HKMC평균점수</th>
                         <th class="text-center">참여일</th>
-                        <th class="text-center">최초 등록자</th>
+                        <th class="text-center">담당자명</th>
+                        <th class="text-center">담당자 핸드폰 번호</th>
+                        <th class="text-center">담당자 이메일</th>
+                        <th class="text-center">인증번호 발송여부</th>
                         <th class="text-center">최초 등록일시</th>
-                        <th class="text-center">최종 수정자</th>
-                        <th class="text-center">최종 수정일시</th>
+                        <%-- 2024-07-08 추가개발 ppt 7 항목 수정 e --%>
                     </tr>
                     </thead>
                     <!-- 리스트 목록 결과 -->

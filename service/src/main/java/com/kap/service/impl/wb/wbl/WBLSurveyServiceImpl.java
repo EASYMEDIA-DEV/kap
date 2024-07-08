@@ -1,7 +1,5 @@
 package com.kap.service.impl.wb.wbl;
 
-import lombok.Cleanup;
-import org.apache.poi.util.IOUtils;
 import com.kap.common.utility.CONetworkUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.core.dto.COSystemLogDTO;
@@ -22,9 +20,11 @@ import org.apache.poi.xssf.usermodel.*;
 import org.egovframe.rte.fdl.idgnr.EgovIdGnrService;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URLEncoder;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -739,6 +739,18 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 
 		int respCnt = 0;
 		respCnt = wBLSurveyMapper.updateSurvey( wBLSurveyMstInsertDTO );
+
+		return respCnt;
+	}
+
+	/**
+	 *  인증번호 발송
+	 */
+	@Override
+	public int updateSendDtm(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO) throws Exception {
+
+		int respCnt = 0;
+		respCnt = wBLSurveyMapper.updateSendDtm( wBLSurveyMstInsertDTO );
 
 		return respCnt;
 	}

@@ -1,12 +1,10 @@
 package com.kap.mngwserc.controller.wb.wbl;
 
-import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COMailDTO;
 import com.kap.core.dto.COMessageReceiverDTO;
 import com.kap.core.dto.COSmsDTO;
-import com.kap.core.dto.eb.ebb.EBBEpisdDTO;
 import com.kap.core.dto.sm.smi.SMISmsCntnDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstInsertDTO;
 import com.kap.core.dto.sv.sva.SVASurveyMstSearchDTO;
@@ -18,19 +16,18 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -376,11 +373,12 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     }
 
 
+    //2024-07-08 추가개발 ppt 3 발송일 업데이트
     /**
      * 상생협력체감도조사 인증번호 발송
      */
     @PostMapping(value = "/submitCrtfnNo")
-    public void submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+    public ResponseEntity<WBLSurveyMstInsertDTO> submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
         try {
 
             //상생협력체감도조사 메일발송 시작
@@ -417,11 +415,17 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
             //SMS 발송 끝
 
+            //2024-07-08 추가개발 ppt 3 발송일 업데이트
+            wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));
+
+            return ResponseEntity.ok(wBLSurveyMstInsertDTO);
+
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            throw new Exception(e.getMessage());
+//            throw new Exception(e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 

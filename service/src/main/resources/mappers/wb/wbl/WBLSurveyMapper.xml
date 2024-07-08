@@ -9,6 +9,7 @@
               수정일	 수정자     수정내용
          ==========   ======   =============
          2023.11.20   박준희     최초생성
+         2024.07.08   장두석		추가개발 ppt 3, 7 담당자 정보, 인증번호 발송일 항목 추가
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		select  /* WBLSurveyMapper.selectSurveyList */
@@ -25,10 +26,14 @@
 			,a.part_cmpn_cd_1
 			,a.part_cmpn_nm_2
 			,a.part_cmpn_cd_2
+			, a.pic_nm
+			, a.tel_no
+			, a.email
 			,a.ptcpt_cd
 			,a.ptcpt_cmpltn_dtm
 			,a.cmpltn_yn
 			,a.score
+			, a.send_dtm
 			,a.reg_id
 			,(SELECT NAME FROM CO_ADM_MST WHERE ID = A.REG_ID) AS REG_NAME
 			,a.reg_ip
@@ -267,6 +272,7 @@
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.23    박준희       최초생성
+        2024.07.08	  장두석		  추가개발 ppt 3 인증번호 발송일 항목 추가
     -->
 	<select id="selectSurveyDtl" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstInsertDTO">
 		select /* WBLSurveyMapper.selectSurveyDtl */
@@ -291,6 +297,7 @@
 			 , a.cmpltn_yn
 			 , a.ptcpt_cmpltn_dtm
 			 , a.score
+			 , a.send_dtm
 			 , a.reg_id
 			 , a.reg_ip
 			 , a.reg_dtm
@@ -627,4 +634,22 @@
 		where
 			cxstn_srv_seq = #{cxstnSrvSeq}
 	</update>
+
+
+	<!--
+	쿼리명 : WBLSurveyMapper.updateSendDtm
+	설  명 : 인증번호 발송
+	  수정일      수정자       수정내용
+	==========   ========   ==============
+	2024.07.08    장두석       최초생성
+	-->
+	<update id="updateSendDtm" parameterType="WBLSurveyMstInsertDTO">
+		update /* WBLSurveyMapper.updateSendDtm */ cx_appctn_rsume_srv_mst
+		set
+			send_dtm = now()
+		where
+			cxstn_srv_seq = #{cxstnSrvSeq}
+	</update>
+
+
 </mapper>

@@ -112,4 +112,9 @@ public interface WBLSurveyService {
 	 */
 	public int updateSurvey(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO) throws Exception;
 
+	/**
+	 * 인증번호 발송
+	 */
+	public int updateSendDtm(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO) throws Exception;
+
 }

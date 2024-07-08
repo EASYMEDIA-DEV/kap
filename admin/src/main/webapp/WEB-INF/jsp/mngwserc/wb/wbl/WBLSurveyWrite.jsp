@@ -128,7 +128,9 @@
                                     </button>
                                 </p>
                             </c:if>
-
+                            <span id="sendDtm" style="margin-left: 10px">
+                                    ${not empty rtnDto.sendDtm ? '발송' : '미발송'}
+                            </span>
                         </div>
                     </div>
                 </fieldset>

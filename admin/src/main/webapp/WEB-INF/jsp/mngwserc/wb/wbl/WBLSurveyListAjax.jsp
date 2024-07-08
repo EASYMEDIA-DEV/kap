@@ -3,6 +3,7 @@
     <c:when test="${ not empty rtnData.list}">
         <c:forEach var="list" items="${rtnData.list}" varStatus="status">
             <tr data-total-count="${rtnData.totalCount}">
+                <%-- 2024-07-08 추가개발 ppt 7 항목 수정 s --%>
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
                         <input type="checkbox" value="${list.cxstnSrvSeq}" name="delValueList" class="checkboxSingle notRequired" />
@@ -28,10 +29,12 @@
                 <td class="text-center"> ${list.avgScore}</td>
                 <td class="text-center"> ${list.hkmcAvgScore}</td>
                 <td class="text-center">${ kl:convertDate(list.ptcptCmpltnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } </td>
-                <td class="text-center" >${ list.regName }</td>
+                <td class="text-center"> ${list.picNm}</td>
+                <td class="text-center"> ${list.telNo}</td>
+                <td class="text-center"> ${list.email}</td>
+                <td class="text-center"> ${not empty list.sendDtm ? '발송' : '미발송'}</td>
                 <td class="text-center" data-reg-dtm="${list.regDtm}">${ kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
-                <td class="text-center" >${ list.modName }</td>
-                <td class="text-center" data-list-dtm="${list.modDtm}">${ kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }</td>
+                <%-- 2024-07-08 추가개발 ppt 7 항목 수정 e --%>
             </tr>
         </c:forEach>
     </c:when>
