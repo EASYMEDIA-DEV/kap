@@ -74,6 +74,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    박준희       최초생성
+        2024.07.08	  장두석		  추가개발 ppt6 검색 조건 INSTR 함수 파라미터 순서 바뀐거 수정
     -->
 	<sql id="selectSurveyListwhereSql">
 		<where>
@@ -145,25 +146,25 @@
 					</when>
 					<when test="f == 5">
 						AND (
-						INSTR(#{q}, A.REG_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						INSTR(A.REG_ID, #{q}) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
 						)
 					</when>
 					<when test="f == 6">
 						AND (
-						INSTR(#{q}, MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						INSTR(MOD_ID, #{q}) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
 						)
 					</when>
 					<otherwise>
 						AND (
-						INSTR(#{q}, a.part_cmpn_nm_1) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, a.part_cmpn_cd_1) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, a.part_cmpn_nm_2) <![CDATA[>]]> 0 OR
-						INSTR(#{q}, a.part_cmpn_cd_2) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0) OR
-						INSTR(#{q}, a.MOD_ID) <![CDATA[>]]> 0 OR
-						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(#{q}, NAME) <![CDATA[>]]> 0)
+						INSTR(a.part_cmpn_nm_1, #{q}) <![CDATA[>]]> 0 OR
+						INSTR(a.part_cmpn_cd_1, #{q}) <![CDATA[>]]> 0 OR
+						INSTR(a.part_cmpn_nm_2, #{q}) <![CDATA[>]]> 0 OR
+						INSTR(a.part_cmpn_cd_2, #{q}) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.REG_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0) OR
+						INSTR(a.MOD_ID, #{q}) <![CDATA[>]]> 0 OR
+						EXISTS(SELECT 'x' FROM CO_ADM_MST WHERE ID = A.MOD_ID AND INSTR(NAME, #{q}) <![CDATA[>]]> 0)
 						)
 					</otherwise>
 				</choose>

@@ -12,13 +12,17 @@
             <input type="hidden" id="csrfKey" name="${_csrf.parameterName}" value="${_csrf.token}" />
             <!-- 상세로 이동시 시퀀스 -->
             <input type="hidden" id="detailsKey" name="detailsKey" value="" />
+
+            <%-- 2024-07-08 추가개발 ppt6 수정 s --%>
             <!--기간 검색 시작-->
             <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPeriodSearch.jsp">
                 <jsp:param name="srchText" value="기간검색" />
                 <jsp:param name="srchOption" value="등록일,수정일,참여일" />
+                <jsp:param name="srchType" value="srvwbl" />
             </jsp:include>
-
             <!--기간 검색 종료-->
+            <%-- 2024-07-08 추가개발 ppt6 수정 e --%>
+
             <fieldset>
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">년도/회차</label>
@@ -117,9 +121,11 @@
                 </h6>
                 <div class="pull-right">
                     <select class="form-control input-sm listRowSizeContainer" >
+                        <%-- 2024-07-08 추가개발 ppt6 수정 s --%>
                         <jsp:include page="/WEB-INF/jsp/mngwserc/co/COPageOption.jsp">
-                            <jsp:param name="listRowSize" value="${ rtnData.listRowSize }" />
+                            <jsp:param name="listRowSize" value="100" />
                         </jsp:include>
+                        <%-- 2024-07-08 추가개발 ppt6 수정 s --%>
                     </select>
                 </div>
                 <div class="pull-right mr-sm">
