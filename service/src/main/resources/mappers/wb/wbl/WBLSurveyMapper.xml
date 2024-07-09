@@ -9,7 +9,7 @@
               수정일	 수정자     수정내용
          ==========   ======   =============
          2023.11.20   박준희     최초생성
-         2024.07.08   장두석		추가개발 ppt 3, 7 담당자 정보, 인증번호 발송일 항목 추가
+         2024.07.08   장두석		추가개발 ppt 4, 7 담당자 정보, 인증번호 발송일 항목 추가
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		select  /* WBLSurveyMapper.selectSurveyList */
@@ -79,7 +79,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.09    박준희       최초생성
-        2024.07.08	  장두석		  추가개발 ppt6 검색 조건 INSTR 함수 파라미터 순서 바뀐거 수정
+        2024.07.08	  장두석		  추가개발 ppt 6 검색 조건 INSTR 함수 파라미터 순서 바뀐거 수정
     -->
 	<sql id="selectSurveyListwhereSql">
 		<where>
@@ -272,7 +272,7 @@
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.23    박준희       최초생성
-        2024.07.08	  장두석		  추가개발 ppt 3 인증번호 발송일 항목 추가
+        2024.07.08	  장두석		  추가개발 ppt 4 인증번호 발송일 항목 추가
     -->
 	<select id="selectSurveyDtl" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstInsertDTO">
 		select /* WBLSurveyMapper.selectSurveyDtl */

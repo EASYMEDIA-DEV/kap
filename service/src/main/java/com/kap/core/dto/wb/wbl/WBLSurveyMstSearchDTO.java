@@ -101,7 +101,7 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "설문내용", example = "")
     private String cntn;
 
-    /* 2024-07-08 추가개발 ppt 3, 7 추가 s */
+    /* 2024-07-08 추가개발 ppt 4, 7 추가 s */
     @Schema(title = "담당자명")
     private String picNm;
 
@@ -113,6 +113,6 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
 
     @Schema(title = "인증번호 발송일")
     private String sendDtm;
-    /* 2024-07-08 추가개발 ppt 3, 7 추가 e */
+    /* 2024-07-08 추가개발 ppt 4, 7 추가 e */
 
 }

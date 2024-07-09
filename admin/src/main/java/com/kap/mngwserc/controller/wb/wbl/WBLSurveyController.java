@@ -373,7 +373,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     }
 
 
-    //2024-07-08 추가개발 ppt 3 발송일 업데이트
+    //2024-07-08 추가개발 ppt 4 발송일 업데이트
     /**
      * 상생협력체감도조사 인증번호 발송
      */
@@ -415,7 +415,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
             //SMS 발송 끝
 
-            //2024-07-08 추가개발 ppt 3 발송일 업데이트
+            //2024-07-08 추가개발 ppt 4 발송일 업데이트
             wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));
 
             return ResponseEntity.ok(wBLSurveyMstInsertDTO);

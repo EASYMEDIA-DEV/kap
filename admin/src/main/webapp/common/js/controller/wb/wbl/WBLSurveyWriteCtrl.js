@@ -67,6 +67,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             tempForm.cxstnSrvSeq = $("#detailsKey").val();
 
                             cmmCtrl.jsonAjax(function(data){
+                                /* 2024-07-08 추가개발 ppt 4, 7 추가 s */
                                 try {
                                     console.log(data); // 서버에서 반환한 데이터 확인
                                     if (data.respCnt > 0) {
@@ -78,7 +79,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 } catch (e) {
                                     console.error("Error processing response data:", e);
                                 }
-
+                                /* 2024-07-08 추가개발 ppt 4, 7 추가 e */
                             }, './submitCrtfnNo', tempForm , 'json')
 
 
