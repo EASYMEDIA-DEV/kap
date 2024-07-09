@@ -28,6 +28,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -318,7 +319,9 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     {
         try
         {
-            modelMap.addAttribute("respCnt", wLSurveyService.insertSurveyExcelList(wBLSurveyMstInsertDTO, request , excelFile ));
+            HashMap<String, Object> rtnMap = wLSurveyService.insertSurveyExcelList(wBLSurveyMstInsertDTO, request , excelFile );
+
+            modelMap.addAttribute("rtnMap", rtnMap);
 
         }
         catch (Exception e)

@@ -26,6 +26,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.sql.Array;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -353,30 +354,72 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	}
 
 	@Override
-	public int insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request , MultipartFile file) throws Exception {
+	public HashMap<String, Object> insertSurveyExcelList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request , MultipartFile file) throws Exception {
 
 		int respCnt = 0;
 
+		HashMap<String ,Object> rtnMap = new HashMap<String, Object>();
+
+
 		List<Map<String, Object>> listMap = getListData(file, 1, 8 );
+		rtnMap.put("uploadSize", listMap.size());
+		WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO = new WBLSurveyMstSearchDTO();
+		wBLSurveyMstSearchDTO.setExcelYn("Y");
 
-		if (listMap.size()>0){
-			for(int i = 0 ; i < listMap.size() ; i++) {
+		List<WBLSurveyMstSearchDTO> selectSurveyList = wBLSurveyMapper.selectSurveyList(wBLSurveyMstSearchDTO);
 
-				wBLSurveyMstInsertDTO.setPartCmpnNm1(listMap.get(i).get("0").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnCd1(listMap.get(i).get("1").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnNm2(listMap.get(i).get("2").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnCd2(listMap.get(i).get("3").toString());
-				wBLSurveyMstInsertDTO.setRprsntNm(listMap.get(i).get("4").toString().replaceAll("-",""));
-				wBLSurveyMstInsertDTO.setPicNm(listMap.get(i).get("5").toString());
-				wBLSurveyMstInsertDTO.setBsnmRegNo(listMap.get(i).get("6").toString());
-				wBLSurveyMstInsertDTO.setTelNo(listMap.get(i).get("7").toString());
-				wBLSurveyMstInsertDTO.setEmail(listMap.get(i).get("8").toString());
+		int duplCnt = 0;
+
+		List<Map<String, Object>> listMap2 = new ArrayList<Map<String, Object>>();
+
+		boolean inputData = true;
+		for(int i=0; i<listMap.size(); i++){
+			Map<String, Object> temp = listMap.get(i);
+			inputData = true;
+			for(WBLSurveyMstSearchDTO aa : selectSurveyList) {
+				if (
+					aa.getPartCmpnNm1().equals(temp.get("0").toString()) &&
+					aa.getPartCmpnCd1().equals(temp.get("1").toString()) &&
+					aa.getPartCmpnNm2().equals(temp.get("2").toString()) &&
+					aa.getPartCmpnCd2().equals(temp.get("3").toString()) &&
+					aa.getRprsntNm().equals(temp.get("4").toString()) &&
+					aa.getPicNm().equals(temp.get("5").toString()) &&
+					aa.getBsnmRegNo().equals(temp.get("6").toString().replaceAll("-","")) &&
+					aa.getTelNo().equals(temp.get("7").toString()) &&
+					aa.getEmail().equals(temp.get("8").toString())
+
+				){
+						//System.out.println("@@중복제거");
+						duplCnt++;
+						inputData = false;
+					}
+			}
+
+			if(inputData){
+				//여기다 새로 담는다.
+				listMap2.add(temp);
+			}
+		}
+		rtnMap.put("duplCnt", duplCnt);
+
+		if (listMap2.size()>0){
+			for(int i = 0 ; i < listMap2.size() ; i++) {
+
+				wBLSurveyMstInsertDTO.setPartCmpnNm1(listMap2.get(i).get("0").toString());
+				wBLSurveyMstInsertDTO.setPartCmpnCd1(listMap2.get(i).get("1").toString());
+				wBLSurveyMstInsertDTO.setPartCmpnNm2(listMap2.get(i).get("2").toString());
+				wBLSurveyMstInsertDTO.setPartCmpnCd2(listMap2.get(i).get("3").toString());
+				wBLSurveyMstInsertDTO.setRprsntNm(listMap2.get(i).get("4").toString().replaceAll("-",""));
+				wBLSurveyMstInsertDTO.setPicNm(listMap2.get(i).get("5").toString());
+				wBLSurveyMstInsertDTO.setBsnmRegNo(listMap2.get(i).get("6").toString());
+				wBLSurveyMstInsertDTO.setTelNo(listMap2.get(i).get("7").toString());
+				wBLSurveyMstInsertDTO.setEmail(listMap2.get(i).get("8").toString());
 
 				respCnt = insertSurveyList(wBLSurveyMstInsertDTO, request);
 			}
 		}
 
-		return respCnt;
+		return rtnMap;
 	}
 
 

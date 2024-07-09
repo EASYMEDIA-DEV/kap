@@ -104,7 +104,12 @@ define(["ezCtrl" ,"ezVald"], function(ezCtrl , ezVald) {
                             contentType: false,
                         })
                             .done(function(r) {
-                                alert("엑셀업로드가 완료되었습니다.");
+                                var rtnMap = r.rtnMap;
+
+                                var uploadSize = rtnMap.uploadSize;
+                                var duplCnt =rtnMap.duplCnt;
+
+                                alert("엑셀업로드가 완료되었습니다.\n전체 "+uploadSize+"건중 중복데이터 "+duplCnt+"건을 제외하고 등록");
                                 location.reload();
 
                             })

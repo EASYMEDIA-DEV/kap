@@ -63,6 +63,14 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "점수")
     private String score;
 
+    @Schema(title = "대표자명")
+    private String rprsntNm;
+
+    @Schema(title = "사업자번호")
+    private String bsnmRegNo;
+
+
+
     @Schema(title = "조회 리스트")
     private List<WBLSurveyMstSearchDTO> list;
     @Schema(title = "검색 사용 여부 리스트")

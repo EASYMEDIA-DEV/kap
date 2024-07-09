@@ -26,8 +26,10 @@
 			,a.part_cmpn_cd_1
 			,a.part_cmpn_nm_2
 			,a.part_cmpn_cd_2
+			,a.rprsnt_nm
 			, a.pic_nm
 			, a.tel_no
+			, a.bsnm_reg_no
 			, a.email
 			,a.ptcpt_cd
 			,a.ptcpt_cmpltn_dtm
