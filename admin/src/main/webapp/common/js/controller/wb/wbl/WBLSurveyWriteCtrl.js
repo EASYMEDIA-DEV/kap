@@ -64,7 +64,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             tempForm.picNm = $(this).data("picNm");
                             tempForm.email = $(this).data("email");
                             tempForm.telNo = $(this).data("telNo");
-                            tempForm.cxstnSrvSeq = $("#detailsKey").val();
+                            tempForm.cxstnSrvSeq = $("#detailsKey").val(); // 2024-07-08 추가개발 ppt 4, 7 추가
+                            tempForm.partCmpnNm2 = $('input[name="partCmpnNm2"]').val(); // 2024-07-09 추가개발 ppt 13 추가
+
 
                             cmmCtrl.jsonAjax(function(data){
                                 /* 2024-07-08 추가개발 ppt 4, 7 추가 s */

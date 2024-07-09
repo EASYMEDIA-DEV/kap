@@ -380,7 +380,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     @PostMapping(value = "/submitCrtfnNo")
     public ResponseEntity<WBLSurveyMstInsertDTO> submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
         try {
-
+            /* 2024-07-09 추가개발 ppt 13 수정 s */
             //상생협력체감도조사 메일발송 시작
 
             //메일 발송
@@ -391,6 +391,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             receiverDto.setEmail(wBLSurveyMstInsertDTO.getEmail());
             receiverDto.setName(wBLSurveyMstInsertDTO.getPicNm());
             receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
+            receiverDto.setNote2(wBLSurveyMstInsertDTO.getPartCmpnNm2());
 
             cOMailDTO.getReceiver().add(receiverDto);
 
@@ -400,7 +401,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
             //SMS 발송 시작
             //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
-            if(!"".equals(wBLSurveyMstInsertDTO.getTelNo())){
+            if(wBLSurveyMstInsertDTO.getTelNo() != null && !"".equals(wBLSurveyMstInsertDTO.getTelNo())){
                 receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
                 COSmsDTO smsDto = new COSmsDTO();
 
@@ -412,8 +413,8 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
                 cOMessageService.sendSms(smsDto, "");
             }
-
             //SMS 발송 끝
+            /* 2024-07-09 추가개발 ppt 13 수정 e */
 
             //2024-07-08 추가개발 ppt 4 발송일 업데이트
             wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));

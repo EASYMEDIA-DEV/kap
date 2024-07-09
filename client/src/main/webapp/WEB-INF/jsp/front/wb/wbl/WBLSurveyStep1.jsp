@@ -49,11 +49,11 @@
                                     <div class="training">
                                         <div class="dl">
                                             <div class="dt w-longer f-body2">대상업체</div>
-                                            <div class="dd f-body2">${list.partCmpnNm1}</div>
+                                            <div class="dd f-body2">${list.partCmpnNm1} (${list.partCmpnCd1})</div> <%-- 2024-07-09 추가개발 ppt 12 수정 --%>
                                         </div>
                                         <div class="dl">
                                             <div class="dt w-longer f-body2">수행 부품사</div>
-                                            <div class="dd f-body2">${list.partCmpnNm2}</div>
+                                            <div class="dd f-body2">${list.partCmpnNm2} (${list.partCmpnCd2})</div> <%-- 2024-07-09 추가개발 ppt 12 수정 --%>
                                         </div>
                                     </div>
                                 </div>
