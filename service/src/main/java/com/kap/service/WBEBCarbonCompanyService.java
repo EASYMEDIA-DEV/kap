@@ -1,13 +1,10 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
-import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyTrnsfDTO;
 import com.kap.core.dto.wb.wbe.WBEBCompanyDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -75,7 +72,7 @@ public interface WBEBCarbonCompanyService {
     /**
      * 사용자 신청 등록
      */
-    public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception;
+    public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 사용자 신청 수정

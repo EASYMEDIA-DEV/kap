@@ -1041,7 +1041,7 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
     /**
      * 사용자 신청 등록
      */
-    public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception {
+    public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception {
 
         int respCnt = 0;
 
@@ -1082,12 +1082,47 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
         wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
 
         //상생 신청 파일 상세
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                atchFileCnt++;
+            }
+        }
+
+        rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+        List<COFileDTO> fileList = new ArrayList();
+        Integer fileSeq;
+
+        if ("99".equals(rtnList.get(0).getRespCd())) {
+            fileSeq = wBDBSafetyMstInsertDTO.getFileSeqList().get(0);
+        } else {
+            for(COFileDTO tempDto : rtnList){
+                if(tempDto.getRespMsg() == null) {
+                    tempDto.setStatus("success");
+                    tempDto.setFieldNm("fileSeq");
+                    fileList.add(tempDto);
+                }
+            }
+
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+            fileSeq = fileSeqMap.get("fileSeq");
+        }
+
+//        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 
         WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = new WBDBSafetyFileDtlDTO();
         wBDBSafetyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
         wBDBSafetyFileDtlDTO.setRsumeOrd(1);
-        wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("atchFile"));
+        wBDBSafetyFileDtlDTO.setFileSeq(fileSeq);
         wBDBSafetyFileDtlDTO.setFileCd("ATTACH_FILE_TYPE01");
         wBDBSafetyFileDtlDTO.setRegId(cOUserDetailsDTO.getId());
         wBDBSafetyFileDtlDTO.setRegIp(cOUserDetailsDTO.getLoginIp());

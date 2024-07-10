@@ -1042,7 +1042,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
     /**
      * 사용자 신청 등록
      */
-    public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request) throws Exception {
+    public int carbonUserInsert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception {
 
         int respCnt = 0;
 
@@ -1083,12 +1083,47 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBEBCarbonCompanyPbsnDtlDTO);
 
         //상생 신청 파일 상세
-        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());
+        List<COFileDTO> rtnList = null;
+        Map<String, MultipartFile> files = multiRequest.getFileMap();
+        Iterator<Map.Entry<String, MultipartFile>> itr = files.entrySet().iterator();
+        MultipartFile file;
+        int atchFileCnt = 0;
+
+        while (itr.hasNext()) {
+            Map.Entry<String, MultipartFile> entry = itr.next();
+            file = entry.getValue();
+
+            if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
+                atchFileCnt++;
+            }
+        }
+
+        rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
+        List<COFileDTO> fileList = new ArrayList();
+        Integer fileSeq;
+
+        if ("99".equals(rtnList.get(0).getRespCd())) {
+            fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(0);
+        } else {
+            for(COFileDTO tempDto : rtnList){
+                if(tempDto.getRespMsg() == null) {
+                    tempDto.setStatus("success");
+                    tempDto.setFieldNm("fileSeq");
+                    fileList.add(tempDto);
+                }
+            }
+
+            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+            fileSeq = fileSeqMap.get("fileSeq");
+        }
+
+//        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBEBCarbonCompanyMstInsertDTO.getFileList());
 
         WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO = new WBEBCarbonCompanyFileDtlDTO();
         wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
         wBEBCarbonCompanyFileDtlDTO.setRsumeOrd(1);
-        wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("atchFile"));
+        wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeq);
         wBEBCarbonCompanyFileDtlDTO.setFileCd("ATTACH_FILE_TYPE01");
         wBEBCarbonCompanyFileDtlDTO.setRegId(cOUserDetailsDTO.getId());
         wBEBCarbonCompanyFileDtlDTO.setRegIp(cOUserDetailsDTO.getLoginIp());

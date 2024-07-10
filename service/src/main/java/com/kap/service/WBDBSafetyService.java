@@ -75,7 +75,7 @@ public interface WBDBSafetyService {
     /**
      * 사용자 신청 등록
      */
-    public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request) throws Exception;
+    public int carbonUserInsert(WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 사용자 신청 수정

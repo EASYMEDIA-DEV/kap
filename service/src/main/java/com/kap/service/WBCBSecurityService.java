@@ -1,12 +1,10 @@
 package com.kap.service;
 
 
-import com.kap.core.dto.wb.WBRoundMstDTO;
 import com.kap.core.dto.wb.wbc.WBCBCompanyDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityMstInsertDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecuritySearchDTO;
 import com.kap.core.dto.wb.wbc.WBCBSecurityTrnsfDTO;
-import com.kap.core.dto.wb.wbf.WBFBRegisterDTO;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +72,7 @@ public interface WBCBSecurityService {
     /**
      * 사용자 신청 등록
      */
-    public int carbonUserInsert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request) throws Exception;
+    public int carbonUserInsert(WBCBSecurityMstInsertDTO wBCBSecurityMstInsertDTO, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception;
 
     /**
      * 사용자 신청 수정

@@ -35,7 +35,7 @@
             <div class="article-sec">
                 <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 1}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
-                        <form name="frmData1" id="frmData1">
+                        <form name="frmData1" id="frmData1" enctype="multipart/form-data">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
@@ -139,17 +139,24 @@
                                                 <p class="data-title f-body1">사업신청서<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <c:if test="${rtnDtl[0].appctnSttsCd eq 'PRO_TYPE01001_01_002'}">
-                                                        <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
+                                                        <div class="file-list-area-wrap">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
                                                         </div>
                                                         <div class="file-btn-area">
-                                                            <input type="file" name="atchFile1" id="searchFile1" class="searchFile">
+                                                            <%--<input type="file" name="atchFile1" id="searchFile1" class="searchFile">--%>
+                                                            <input type="file" name="atchFile1" id="ord1FileSearch0" class="searchFile fileOrd1">
+                                                            <input type="file" name="atchFile2" id="ord1FileSearch1" class="searchFile fileOrd1">
+                                                            <input type="file" name="atchFile3" id="ord1FileSearch2" class="searchFile fileOrd1">
+                                                            <input type="file" name="atchFile4" id="ord1FileSearch3" class="searchFile fileOrd1">
+                                                            <input type="file" name="atchFile5" id="ord1FileSearch4" class="searchFile fileOrd1">
+                                                            <label class="btn-solid gray-bg fileForm" for="ord1FileSearch">파일 찾기</label>
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[0].fileSeq}"/>
-                                                            <label class="btn-solid gray-bg" for="searchFile1">파일 찾기</label>
                                                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                         </div>
                                                     </c:if>
-                                                    <div class="file-prev-area">
+                                                    <div class="attatched-file-area">
                                                         <%--<a href="/file/download?fileSeq=${rtnFile[0].fileSeq}&fileOrd=${rtnFile[0].fileOrd}" download="" title="파일 다운로드">${rtnFile[0].fileNm}</a>--%>
                                                         <c:forEach var="file" items="${rtnFile}">
                                                             <c:if test="${file.rsumeOrd eq 1}">
@@ -267,27 +274,19 @@
                                                 <p class="data-title f-body1">사업계획서 (최대 5개까지 첨부 가능)<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <c:if test="${rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_001' or rtnDtl[1].appctnSttsCd eq 'PRO_TYPE01002_01_003'}">
-
                                                         <div class="file-list-area-wrap">
-
                                                             <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                                                                 <p class="empty-txt">선택된 파일 없음</p>
                                                             </div>
-
-
                                                         </div>
-
-
-
-
                                                         <div class="file-btn-area">
-                                                            <input type="file" name="atchFilee2" id="fileSearch0" class="searchFile fileOrd2">
-                                                            <input type="file" name="atchFilee3" id="fileSearch1" class="searchFile fileOrd2">
-                                                            <input type="file" name="atchFilee4" id="fileSearch2" class="searchFile fileOrd2">
-                                                            <input type="file" name="atchFilee5" id="fileSearch3" class="searchFile fileOrd2">
-                                                            <input type="file" name="atchFilee6" id="fileSearch4" class="searchFile fileOrd2">
+                                                            <input type="file" name="atchFile1" id="ord2FileSearch0" class="searchFile fileOrd2">
+                                                            <input type="file" name="atchFile2" id="ord2FileSearch1" class="searchFile fileOrd2">
+                                                            <input type="file" name="atchFile3" id="ord2FileSearch2" class="searchFile fileOrd2">
+                                                            <input type="file" name="atchFile4" id="ord2FileSearch3" class="searchFile fileOrd2">
+                                                            <input type="file" name="atchFile5" id="ord2FileSearch4" class="searchFile fileOrd2">
+                                                            <label class="btn-solid gray-bg fileForm" for="ord2FileSearch">파일 찾기</label>
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>
-                                                            <label class="btn-solid gray-bg fileForm" for="fileSearch">파일 찾기</label>
                                                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                         </div>
                                                     </c:if>
@@ -341,7 +340,7 @@
                     </div>
 
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 4}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
-                        <form name="frmData4" id="frmData4">
+                        <form name="frmData4" id="frmData4" enctype="multipart/form-data">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
@@ -393,20 +392,27 @@
                                     <div class="td">
                                         <div class="data-line-w">
                                             <div class="data-line">
-                                                <p class="data-title f-body1">완료보고서<span class="essential-mark color-sky">*</span></p>
+                                                <p class="data-title f-body1">완료보고서 (최대 5개까지 첨부 가능)<span class="essential-mark color-sky">*</span></p>
                                                 <div class="form-group">
                                                     <c:if test="${rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_001' or rtnDtl[3].appctnSttsCd eq 'PRO_TYPE01004_01_003'}">
-                                                        <div class="file-list-area attached"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                            <p class="empty-txt">선택된 파일 없음</p>
+                                                        <div class="file-list-area-wrap">
+                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            </div>
                                                         </div>
                                                         <div class="file-btn-area">
-                                                            <input type="file" name="atchFile4" id="searchFile4" class="searchFile">
+                                                            <%--<input type="file" name="atchFile4" id="searchFile4" class="searchFile">--%>
+                                                            <input type="file" name="atchFile1" id="ord4FileSearch0" class="searchFile fileOrd4">
+                                                            <input type="file" name="atchFile2" id="ord4FileSearch1" class="searchFile fileOrd4">
+                                                            <input type="file" name="atchFile3" id="ord4FileSearch2" class="searchFile fileOrd4">
+                                                            <input type="file" name="atchFile4" id="ord4FileSearch3" class="searchFile fileOrd4">
+                                                            <input type="file" name="atchFile5" id="ord4FileSearch4" class="searchFile fileOrd4">
+                                                            <label class="btn-solid gray-bg fileForm" for="ord4FileSearch">파일 찾기</label>
                                                             <input type="hidden" name="fileSeqList" value="${rtnFile[3].fileSeq}"/>
-                                                            <label class="btn-solid gray-bg" for="searchFile4">파일 찾기</label>
                                                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                         </div>
                                                     </c:if>
-                                                    <div class="file-prev-area">
+                                                    <div class="attatched-file-area">
                                                         <%--<a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=${rtnFile[3].fileOrd}" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>--%>
                                                         <c:forEach var="file" items="${rtnFile}">
                                                             <c:if test="${file.rsumeOrd eq 4}">
@@ -454,7 +460,7 @@
                     </div>
 
                     <div class="list-item <c:if test="${rtnData.maxRsumeOrd eq 6}">active</c:if>"><!-- 활성화된 단계 active 클래스 추가 (아코디언 열림) -->
-                        <form name="frmData4" id="frmData6">
+                        <form name="frmData6" id="frmData6" enctype="multipart/form-data">
                             <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
                             <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.detailsKey" value="${rtnData.appctnSeq}" />
@@ -506,20 +512,27 @@
                                         <div class="td">
                                             <div class="data-line-w">
                                                 <div class="data-line">
-                                                    <p class="data-title f-body1">검수보고서<span class="essential-mark color-sky">*</span></p>
+                                                    <p class="data-title f-body1">검수보고서 (최대 5개까지 첨부 가능)<span class="essential-mark color-sky">*</span></p>
                                                     <div class="form-group">
                                                         <c:if test="${rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_001' or rtnDtl[5].appctnSttsCd eq 'PRO_TYPE01006_01_005'}">
-                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                            <div class="file-list-area-wrap">
+                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                </div>
                                                             </div>
                                                             <div class="file-btn-area">
-                                                                <input type="file" name="atchFile6" id="searchFile6" class="searchFile">
-                                                                <label class="btn-solid gray-bg" for="searchFile6">파일 찾기</label>
+                                                                <%--<input type="file" name="atchFile6" id="searchFile6" class="searchFile">--%>
+                                                                <input type="file" name="atchFile1" id="ord6FileSearch0" class="searchFile fileOrd6">
+                                                                <input type="file" name="atchFile2" id="ord6FileSearch1" class="searchFile fileOrd6">
+                                                                <input type="file" name="atchFile3" id="ord6FileSearch2" class="searchFile fileOrd6">
+                                                                <input type="file" name="atchFile4" id="ord6FileSearch3" class="searchFile fileOrd6">
+                                                                <input type="file" name="atchFile5" id="ord6FileSearch4" class="searchFile fileOrd6">
+                                                                <label class="btn-solid gray-bg fileForm" for="ord6FileSearch">파일 찾기</label>
                                                                 <input type="hidden" name="fileSeqList" value="${rtnFile[5].fileSeq}"/>
                                                                 <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE09">
                                                             </div>
                                                         </c:if>
-                                                        <div class="file-prev-area">
+                                                        <div class="attatched-file-area">
                                                             <%--<a href="/file/download?fileSeq=${rtnFile[5].fileSeq}&fileOrd=${rtnFile[5].fileOrd}" download="" title="파일 다운로드">${rtnFile[5].fileNm}</a>--%>
                                                             <c:forEach var="file" items="${rtnFile}">
                                                                 <c:if test="${file.rsumeOrd eq 6}">

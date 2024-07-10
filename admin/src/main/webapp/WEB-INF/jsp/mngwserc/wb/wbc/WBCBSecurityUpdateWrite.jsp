@@ -1130,13 +1130,13 @@
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="104857600" />
-                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq0" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="사업신청서">
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq0" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="사업신청서">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                                             </p>
                                         </div>
                                     </div>
@@ -1486,13 +1486,13 @@
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="104857600" />
-                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="점검보고서">
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq2" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="점검보고서">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                                             </p>
                                         </div>
                                     </div>
@@ -1615,13 +1615,13 @@
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="104857600" />
-                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="완료보고서">
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq3" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="완료보고서">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                                             </p>
                                         </div>
                                     </div>
@@ -1749,13 +1749,13 @@
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="104857600" />
-                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="점검보고서">
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq4" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="점검보고서">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                                             </p>
                                         </div>
                                     </div>
@@ -1878,13 +1878,13 @@
                                         <div class="col-sm-10 col-md-11">
                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                             <spring:eval var="atchUploadMaxSize" expression="104857600" />
-                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="점검보고서">
+                                            <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq5" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="5" data-title="점검보고서">
                                                 <div class="dz-default dz-message">
                                                     <span><em class="ion-upload text-info icon-2x"></em><br />파일을 드래그&드랍 또는 선택해주세요</span>
                                                 </div>
                                             </div>
                                             <p class="text-bold mt">
-                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 1개 파일 등록 가능)
+                                                ※ ${fileExtns} 파일만 등록 가능합니다. (<fmt:formatNumber value="${atchUploadMaxSize / 1024 / 1024}" maxFractionDigits="1" />MB 이하, 최대 5개 파일 등록 가능)
                                             </p>
                                         </div>
                                     </div>

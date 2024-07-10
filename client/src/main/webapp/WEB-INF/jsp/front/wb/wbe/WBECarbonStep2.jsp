@@ -135,19 +135,32 @@
                         <div class="noti-txt-w">
                           <p class="f-body2">사업 신청 시 구비서류가 필수로 첨부되어야 합니다.</p>
                           <p class="bullet-noti-txt f-caption2">※ 아래 [양식 다운로드] 후 양식에 맞게 작성 후 첨부 부탁드립니다.</p>
-                          <p class="bullet-noti-txt f-caption2">※ 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(1개)</p>
+                          <p class="bullet-noti-txt f-caption2">※ 첨부 가능 확장자(jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip) / 용량(최대50MB) / 최대개수(5개)</p>
                         </div>
                       </div>
                       <div class="data-line">
                         <p class="data-title f-body1">사업신청서</p>
                         <div class="form-group">
-                          <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                          <%--<div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
                             <p class="empty-txt">선택된 파일 없음</p>
                           </div>
                           <div class="file-btn-area">
                             <input type="file" id="searchFile" name="atchFile" data-max-size="51943040" data-accept="jpg,jpeg,png,pdf,ppt,pptx,xlsx,doc,docx,hwp,hwpx,txt,zip" class="fileInput notRequired"/>
                             <label class="btn-solid gray-bg" for="searchFile">파일 찾기</label>
-                          </div>
+                          </div>--%>
+                            <div class="file-list-area-wrap">
+                              <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                <p class="empty-txt">선택된 파일 없음</p>
+                              </div>
+                            </div>
+                            <div class="file-btn-area">
+                              <input type="file" name="atchFile1" id="ord1FileSearch0" class="searchFile fileOrd1">
+                              <input type="file" name="atchFile2" id="ord1FileSearch1" class="searchFile fileOrd1">
+                              <input type="file" name="atchFile3" id="ord1FileSearch2" class="searchFile fileOrd1">
+                              <input type="file" name="atchFile4" id="ord1FileSearch3" class="searchFile fileOrd1">
+                              <input type="file" name="atchFile5" id="ord1FileSearch4" class="searchFile fileOrd1">
+                              <label class="btn-solid gray-bg fileForm" for="ord1FileSearch">파일 찾기</label>
+                            </div>
                           <div class="btn-wrap btn-down-wrap">
                             <c:forEach var="item" items="${rtnRoundDtl.smjList}" varStatus="status">
                               <a class="btn-text-icon download fileDown" href="javascript:" data-url="/file/download?fileSeq=${item.crbnEmsnsFileSeq}&fileOrd=${item.fileOrd}" download="" title="양식 다운로드"><span>양식 다운로드</span></a>

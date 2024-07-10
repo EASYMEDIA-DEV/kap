@@ -3,7 +3,6 @@ package com.kap.front.controller.wb.wbe;
 import com.kap.core.dto.COGCntsDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.wb.WBRoundMstSearchDTO;
-import com.kap.core.dto.wb.wbd.WBDBSafetyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanyMstInsertDTO;
 import com.kap.core.dto.wb.wbe.WBEBCarbonCompanySearchDTO;
 import com.kap.service.*;
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -203,7 +203,7 @@ public class WBECarbonController {
      * 사업신청 신청
      */
     @RequestMapping(value = "/insert")
-    public String insert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request) throws Exception {
+    public String insert(WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, ModelMap modelMap, HttpServletRequest request, MultipartHttpServletRequest multiRequest) throws Exception {
         try {
             String contentAuth = String.valueOf(RequestContextHolder.getRequestAttributes().getAttribute("step2Auth", RequestAttributes.SCOPE_SESSION));
 
@@ -211,7 +211,7 @@ public class WBECarbonController {
                 RequestContextHolder.getRequestAttributes().removeAttribute("step2Auth", RequestAttributes.SCOPE_SESSION);
                 return "redirect:/";
             }else {
-                modelMap.addAttribute("actCnt", wBEBCarbonCompanyService.carbonUserInsert(wBEBCarbonCompanyMstInsertDTO, request));
+                modelMap.addAttribute("actCnt", wBEBCarbonCompanyService.carbonUserInsert(wBEBCarbonCompanyMstInsertDTO, request, multiRequest));
                 RequestContextHolder.getRequestAttributes().setAttribute("complete", "Y", RequestAttributes.SCOPE_SESSION);
             }
         } catch (Exception e) {
