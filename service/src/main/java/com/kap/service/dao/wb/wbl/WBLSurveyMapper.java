@@ -34,6 +34,16 @@ public interface WBLSurveyMapper {
      */
     public List<WBLSurveyMstSearchDTO> selectSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
 
+    /**
+     *  조회정보의 설문문항정보목록 조회
+     */
+    public List<WBLSurveyMstSearchDTO> selecrSurveyQstnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+    /**
+     *  응답자별 설문결과 조회
+     */
+    public List<WBLSurveyMstSearchDTO> selectSurveyRspnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
 
     /**
      * 목록개수를 조회

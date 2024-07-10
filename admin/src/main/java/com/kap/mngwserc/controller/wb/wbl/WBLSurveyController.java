@@ -361,8 +361,67 @@ public class WBLSurveyController<sVASurveyMstDTO> {
         try
         {
             wBLSurveyMstSearchDTO.setExcelYn("Y");
+
+            //설문참여 데이터 목록 조회
+            WBLSurveyMstSearchDTO surveyList = wLSurveyService.selectSurveyList(wBLSurveyMstSearchDTO);
+
+            List<WBLSurveyMstSearchDTO> qstnList = wLSurveyService.selecrSurveyQstnList(wBLSurveyMstSearchDTO);
+
+            ArrayList<Integer> seqList = new ArrayList<>();
+
+            //참여자아들의 설문 참여번호문 호출해서 응답데이터를 조회한다.
+            for(WBLSurveyMstSearchDTO wblDto : surveyList.getList()) {
+                if(wblDto.getSrvRspnSeq()>0){
+                    seqList.add(wblDto.getSrvRspnSeq());
+                }
+            }
+
+            wBLSurveyMstSearchDTO.setSrvRspnSeqList(seqList);
+
+            List<WBLSurveyMstSearchDTO> rspnList = wLSurveyService.selectSurveyRspnList(wBLSurveyMstSearchDTO);
+
+            /*for(WBLSurveyMstSearchDTO temp : surveyList.getList()){
+                System.out.println("@@@@ 1 getSrvRspnSeq = " + temp.getSrvRspnSeq() + " getSrvTypeNm = " + temp.getSrvTypeNm()+" getQstnOrd = " + temp.getQstnOrd()+" getQstnNm = " + temp.getQstnNm() + " getExmplAnswer = " + temp.getExmplAnswer());
+            }*/
+
+
+            List<WBLSurveyMstSearchDTO> list = new ArrayList<>();
+
+            //호출한 응답데이터를 설문 응답자 목록에 편입시킨다.
+            for(WBLSurveyMstSearchDTO temp : surveyList.getList()){
+
+                for(WBLSurveyMstSearchDTO tempRspn : rspnList){
+
+
+                    if(temp.getSrvRspnSeq() != tempRspn.getSrvRspnSeq()){
+                        list = new ArrayList<>();
+                    }
+
+                    if(temp.getSrvRspnSeq() == tempRspn.getSrvRspnSeq()){
+                        list.add(tempRspn);
+                        temp.setList(list);
+                    }
+                }
+            }
+
+            for(WBLSurveyMstSearchDTO temp : surveyList.getList()){
+                //System.out.println("@@@@ 2 getSrvRspnSeq = " + temp.getSrvRspnSeq());
+
+                if(temp.getList() != null && temp.getList().size()>0){
+
+                    for(WBLSurveyMstSearchDTO temp2 : temp.getList()){
+                        /*System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
+                        System.out.println("@ temp2 getSrvTypeNm = " + temp2.getSrvTypeNm());
+                        System.out.println("@ temp2 getQstnOrd = " + temp2.getQstnOrd());
+                        System.out.println("@ temp2 getQstnNm = " + temp2.getQstnNm());
+                        System.out.println("@ temp2 getExmplAnswer = " + temp2.getExmplAnswer());
+                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());*/
+                    }
+                }
+            }
+
             //엑셀 생성
-            wLSurveyService.excelDownload(wLSurveyService.selectSurveyList(wBLSurveyMstSearchDTO), response);
+            wLSurveyService.excelDownload(surveyList, qstnList, response);
 
         }
         catch (Exception e)

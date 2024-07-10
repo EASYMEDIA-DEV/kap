@@ -33,6 +33,7 @@
 			, a.email
 			,a.ptcpt_cd
 			,a.ptcpt_cmpltn_dtm
+			, srv_rspn_seq
 			,a.cmpltn_yn
 			,a.score
 			, a.send_dtm
@@ -73,6 +74,76 @@
 		FROM
 		cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 		<include refid="selectSurveyListwhereSql" />
+	</select>
+
+	<!--
+         쿼리명 : WBLSurveyMapper.selecrSurveyQstnList
+         설  명 : 조회하려는 정보의 설문문항정보를 가져온다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<select id="selecrSurveyQstnList" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstSearchDTO">
+		SELECT /*  */
+			QSTN_SEQ
+			 , QSTN_NM
+			 , QSTN_ORD
+		from cx_cmpn_episd_mst A
+				 JOIN sv_qstn_dtl B ON A.srv_seq = B.srv_seq
+		WHERE 1=1
+		  AND YEAR = #{year}
+		  AND EPISD = #{episd}
+		ORDER BY QSTN_ORD;
+	</select>
+
+
+
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.selectSurveyRspnList
+         설  명 : 참여자별 설문을 조회한다.
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2023.11.20    박준희       최초생성
+    -->
+	<select id="selectSurveyRspnList" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstSearchDTO">
+		SELECT /* WBLSurveyMapper.selectSurveyRspnList */
+			 SRV_RSPN_SEQ
+			 , SRV_TYPE_CD /*문항타입*/
+			 , (SELECT CD_NM FROM co_code_mst WHERE CD = SRV_TYPE_CD) AS SRV_TYPE_NM
+			 , QSTN_ORD /*문항순번*/
+			 , QSTN_NM /*문항명*/
+			 , CASE WHEN SRV_TYPE_CD = 'QST03' THEN SBJCT_RPLY /*주관식(단답)*/
+					WHEN SRV_TYPE_CD = 'QST04' THEN SBJCT_RPLY /*주관식(서술)*/
+					WHEN SRV_TYPE_CD = 'QST01' THEN EXMPL_NM /*객관식(단일선택)*/
+					WHEN SRV_TYPE_CD = 'QST02' THEN EXMPL_NM /*객관식(복수선택)*/
+					ELSE EXMPL_ORD /*5,7,10점 척도*/
+			END AS EXMPL_ANSWER /*답변항목*/
+		FROM (SELECT
+				   T1.SRV_RSPN_SEQ
+				   , B.SRV_TYPE_CD /*문항타입*/
+				   , B.QSTN_ORD /*문항순번*/
+				   , B.QSTN_SEQ /*문항*/
+				   , B.QSTN_NM
+				   , A.EXMPL_NM /*보기명*/
+				   , A.EXMPL_ORD
+				   , F.SBJCT_RSPN_SEQ
+				   , F.SBJCT_RPLY
+			  FROM sv_qstn_dtl B
+					   JOIN (SELECT SRV_RSPN_SEQ, SRV_SEQ FROM sv_rspn_mst) T1 ON B.SRV_SEQ = T1.SRV_SEQ
+					   JOIN (SELECT EXMPL_SEQ, QSTN_SEQ, EXMPL_NM, EXMPL_ORD FROM sv_exmpl_dtl) A ON B.QSTN_SEQ = A.QSTN_SEQ
+					   LEFT JOIN (SELECT MTLCC_RSPN_SEQ, EXMPL_SEQ, SRV_RSPN_SEQ   FROM sv_mtlcc_rspn_dtl) C ON A.EXMPL_SEQ = C.EXMPL_SEQ AND C.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ /*응답한 객관식*/
+					   LEFT JOIN (SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY FROM sv_sbjct_rspn_dtl) F ON B.QSTN_SEQ = F.QSTN_SEQ
+			  WHERE 1=1
+				AND T1.SRV_RSPN_SEQ IN
+				<foreach collection="srvRspnSeqList" item="srvRspnSeqList" index="index" separator=", " open="(" close=")">
+					#{srvRspnSeqList}
+				</foreach>
+
+			  GROUP BY B.QSTN_SEQ, T1.SRV_RSPN_SEQ) TT
+
+		ORDER BY SRV_RSPN_SEQ ASC, QSTN_ORD ASC
 	</select>
 
 	<!--

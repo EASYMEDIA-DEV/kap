@@ -91,6 +91,23 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	}
 
 
+	/**
+	 *  조회정보의 설문문항정보목록 조회
+	 */
+	public List<WBLSurveyMstSearchDTO> selecrSurveyQstnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception {
+		return wBLSurveyMapper.selecrSurveyQstnList(wBLSurveyMstSearchDTO);
+	}
+
+	/**
+	 *  응답자별 설문정보를 불러온다
+	 */
+	public List<WBLSurveyMstSearchDTO> selectSurveyRspnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception {
+		return wBLSurveyMapper.selectSurveyRspnList(wBLSurveyMstSearchDTO);
+	}
+
+
+
+
 	@Override
 	public int insertSurveyList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request) throws Exception {
 		int respCnt = 0;
@@ -526,7 +543,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	}
 
 	@Override
-	public void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response) throws Exception {
+	public void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, List<WBLSurveyMstSearchDTO> qstnList, HttpServletResponse response) throws Exception {
 
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFCellStyle style_header = workbook.createCellStyle();
@@ -632,6 +649,14 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		cell.setCellValue("최종수정일시");
 		cell.setCellStyle(style_header);
 
+		int qstnRow = 18;
+		for(WBLSurveyMstSearchDTO qstnDto : qstnList){
+			cell = row.createCell(qstnRow);
+			cell.setCellValue(qstnDto.getQstnNm());
+			cell.setCellStyle(style_header);
+			qstnRow++;
+		}
+
 
 		// Body
 		List<WBLSurveyMstSearchDTO> list = wBLSurveyMstSearchDTO.getList();
@@ -712,6 +737,29 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellValue(list.get(i).getModDtm() == null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getModDtm().lastIndexOf(":")));
 			cell.setCellStyle(style_body);
 
+						/*System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
+                        System.out.println("@ temp2 getSrvTypeNm = " + temp2.getSrvTypeNm());
+                        System.out.println("@ temp2 getQstnOrd = " + temp2.getQstnOrd());
+                        System.out.println("@ temp2 getQstnNm = " + temp2.getQstnNm());
+                        System.out.println("@ temp2 getExmplAnswer = " + temp2.getExmplAnswer());
+                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());*/
+
+			int rspnRow = 18;
+			if(list.get(i).getList() != null && list.get(i).getList().size()>0){
+
+				for(WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()){
+
+					if(list.get(i).getSrvRspnSeq() == rspnDto.getSrvRspnSeq()){
+						cell = row.createCell(rspnRow);
+						cell.setCellValue(rspnDto.getExmplAnswer());
+						cell.setCellStyle(style_body);
+						rspnRow++;
+					}
+
+
+				}
+
+			}
 		}
 
 		// 열 너비 설정

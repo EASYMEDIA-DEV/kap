@@ -94,6 +94,12 @@ define(["ezCtrl"], function(ezCtrl) {
                 event : {
                     click: function () {
 
+                        if($("select[name='year']").val() == "" || $("select[name='episd']").val() == ""){
+                            alert("년도와 회차를 선택해 주세요");
+
+                            return false;
+                        }
+
                         $(".excel-down").one('show.bs.modal', function() {
                             var modal = $(this);
                             modal.appendTo("body");// 한 화면에 여러개 창이 뜰경우를 위해 위치 선정

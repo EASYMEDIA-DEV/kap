@@ -8,6 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * <pre> 
@@ -34,6 +35,17 @@ public interface WBLSurveyService {
 	 *  목록을 조회한다.
 	 */
 	public WBLSurveyMstSearchDTO selectSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+
+	/**
+	 *  조회정보의 설문문항정보목록 조회
+	 */
+	public List<WBLSurveyMstSearchDTO> selecrSurveyQstnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
+
+	/**
+	 *  응답자별 설문정보를 불러온다
+	 */
+	public List<WBLSurveyMstSearchDTO> selectSurveyRspnList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;
 
 	/**
 	 * 리스트 등록
@@ -90,7 +102,7 @@ public interface WBLSurveyService {
 	/**
 	 * 엑셀 생성
 	 */
-	void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, HttpServletResponse response ) throws Exception;
+	void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, List<WBLSurveyMstSearchDTO> qstnList, HttpServletResponse response ) throws Exception;
 
 
 	/**

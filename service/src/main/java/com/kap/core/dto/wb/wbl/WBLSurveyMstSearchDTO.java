@@ -69,6 +69,10 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "사업자번호")
     private String bsnmRegNo;
 
+    @Schema(title = "설문참여번호")
+    private int srvRspnSeq;
+
+
 
 
     @Schema(title = "조회 리스트")
@@ -122,5 +126,24 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "인증번호 발송일")
     private String sendDtm;
     /* 2024-07-08 추가개발 ppt 4, 7 추가 e */
+
+    @Schema(title = "설문참여번호 목록")
+    private List<Integer> srvRspnSeqList;
+
+    @Schema(title = "문항타입")
+    private String srvTypeCd;
+
+    @Schema(title = "문항타입명")
+    private String srvTypeNm;
+
+    @Schema(title = "문항순번")
+    private String qstnOrd;
+
+    @Schema(title = "문항명")
+    private String qstnNm;
+
+    @Schema(title = "설문응답값")
+    private String exmplAnswer;
+
 
 }
