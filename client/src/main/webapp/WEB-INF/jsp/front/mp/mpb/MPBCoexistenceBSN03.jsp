@@ -410,7 +410,7 @@
                                                     <div class="file-prev-area">
                                                         <%--<a href="/file/download?fileSeq=${rtnFile[3].fileSeq}&fileOrd=${rtnFile[3].fileOrd}" download="" title="파일 다운로드">${rtnFile[3].fileNm}</a>--%>
                                                         <c:forEach var="file" items="${rtnFile}">
-                                                            <c:if test="${file.rsumeOrd eq 3}">
+                                                            <c:if test="${file.rsumeOrd eq 4}">
                                                                 <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
                                                             </c:if>
                                                         </c:forEach>
@@ -524,7 +524,7 @@
                                                         <div class="file-prev-area">
                                                             <%--<a href="/file/download?fileSeq=${rtnFile[5].fileSeq}&fileOrd=${rtnFile[5].fileOrd}" download="" title="파일 다운로드">${rtnFile[5].fileNm}</a>--%>
                                                             <c:forEach var="file" items="${rtnFile}">
-                                                                <c:if test="${file.rsumeOrd eq 4}">
+                                                                <c:if test="${file.rsumeOrd eq 6}">
                                                                     <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${file.fileSeq}&fileOrd=${file.fileOrd}" title="파일 다운로드" download=""><span>${file.fileNm}</span></a>
                                                                 </c:if>
                                                             </c:forEach>
