@@ -152,7 +152,13 @@
                                                                 <input type="file" name="atchFile4" id="ord1FileSearch3" class="searchFile fileOrd1">
                                                                 <input type="file" name="atchFile5" id="ord1FileSearch4" class="searchFile fileOrd1">
                                                                 <label class="btn-solid gray-bg fileForm" for="ord1FileSearch">파일 찾기</label>
-                                                                <input type="hidden" name="fileSeqList" value="${rtnFile[0].fileSeq}"/>
+                                                                <%--<input type="hidden" name="fileSeqList" value="${rtnFile[0].fileSeq}"/>--%>
+                                                                <c:forEach var="file" items="${rtnFile}">
+                                                                    <c:if test="${file.rsumeOrd eq 1}">
+                                                                        <c:set var="ord1FileSeq" value="${file.fileSeq}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <input type="hidden" name="fileSeqList" value="${ord1FileSeq}"/>
                                                                 <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE01">
                                                             </div>
                                                         </c:if>
@@ -286,7 +292,13 @@
                                                                 <input type="file" name="atchFile4" id="ord2FileSearch3" class="searchFile fileOrd2">
                                                                 <input type="file" name="atchFile5" id="ord2FileSearch4" class="searchFile fileOrd2">
                                                                 <label class="btn-solid gray-bg fileForm" for="ord2FileSearch">파일 찾기</label>
-                                                                <input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>
+                                                                <%--<input type="hidden" name="fileSeqList" value="${rtnFile[1].fileSeq}"/>--%>
+                                                                <c:forEach var="file" items="${rtnFile}">
+                                                                    <c:if test="${file.rsumeOrd eq 2}">
+                                                                        <c:set var="ord2FileSeq" value="${file.fileSeq}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <input type="hidden" name="fileSeqList" value="${ord2FileSeq}"/>
                                                                 <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE08">
                                                             </div>
                                                         </c:if>
@@ -408,7 +420,13 @@
                                                                 <input type="file" name="atchFile4" id="ord4FileSearch3" class="searchFile fileOrd4">
                                                                 <input type="file" name="atchFile5" id="ord4FileSearch4" class="searchFile fileOrd4">
                                                                 <label class="btn-solid gray-bg fileForm" for="ord4FileSearch">파일 찾기</label>
-                                                                <input type="hidden" name="fileSeqList" value="${rtnFile[3].fileSeq}"/>
+                                                                <%--<input type="hidden" name="fileSeqList" value="${rtnFile[3].fileSeq}"/>--%>
+                                                                <c:forEach var="file" items="${rtnFile}">
+                                                                    <c:if test="${file.rsumeOrd eq 4}">
+                                                                        <c:set var="ord4FileSeq" value="${file.fileSeq}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <input type="hidden" name="fileSeqList" value="${ord4FileSeq}"/>
                                                                 <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE10">
                                                             </div>
                                                         </c:if>
@@ -527,7 +545,13 @@
                                                                 <input type="file" name="atchFile4" id="ord6FileSearch3" class="searchFile fileOrd6">
                                                                 <input type="file" name="atchFile5" id="ord6FileSearch4" class="searchFile fileOrd6">
                                                                 <label class="btn-solid gray-bg fileForm" for="ord6FileSearch">파일 찾기</label>
-                                                                <input type="hidden" name="fileSeqList" value="${rtnFile[5].fileSeq}"/>
+                                                                <%--<input type="hidden" name="fileSeqList" value="${rtnFile[5].fileSeq}"/>--%>
+                                                                <c:forEach var="file" items="${rtnFile}">
+                                                                    <c:if test="${file.rsumeOrd eq 6}">
+                                                                        <c:set var="ord6FileSeq" value="${file.fileSeq}" />
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                <input type="hidden" name="fileSeqList" value="${ord6FileSeq}"/>
                                                                 <input type="hidden" name="wBDBSafetyMstInsertDTO.fileDtlList[0].fileCd" value="ATTACH_FILE_TYPE09">
                                                             </div>
                                                         </c:if>
