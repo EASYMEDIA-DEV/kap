@@ -10,6 +10,7 @@
          ==========   ======   =============
          2023.11.20   박준희     최초생성
          2024.07.08   장두석		추가개발 ppt 4, 7 담당자 정보, 인증번호 발송일 항목 추가
+         2024.07.11	  장두석		추가개발 ppt 11 인증번호 추가
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		select  /* WBLSurveyMapper.selectSurveyList */
@@ -31,6 +32,7 @@
 			, a.tel_no
 			, a.bsnm_reg_no
 			, a.email
+			, a.crtfn_no
 			,a.ptcpt_cd
 			,a.ptcpt_cmpltn_dtm
 			, srv_rspn_seq

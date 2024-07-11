@@ -6,7 +6,7 @@
                 <%-- 2024-07-08 추가개발 ppt 7 항목 수정 s --%>
                 <td class="text-center">
                     <label class="checkbox-inline c-checkbox">
-                        <input type="checkbox" value="${list.cxstnSrvSeq}" name="delValueList" class="checkboxSingle notRequired" />
+                        <input type="checkbox" value="${list.cxstnSrvSeq}" name="delValueList" class="checkboxSingle notRequired" data-email="${list.email}" data-crtfnNo="${list.crtfnNo}" data-telNo="${list.telNo}" data-partCmpnNm2="${list.partCmpnNm2}" /> <%-- 2024-07-11 추가개발 ppt 11 수정 --%>
                         <span class="ion-checkmark-round"></span>
                     </label>
                 </td>

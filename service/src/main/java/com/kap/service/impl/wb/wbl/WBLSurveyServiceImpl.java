@@ -26,7 +26,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
-import java.sql.Array;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -133,7 +132,9 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		}else{
 			episdText = Integer.toString(wBLSurveyMstInsertDTO.getEpisd());
 		}
-		crtfnNo = wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo().replaceAll("-","");
+
+		//2024-07-11 추가개발 ppt 5 인증번호 형식 변경
+		crtfnNo = wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo().replaceAll("-","")+wBLSurveyMstInsertDTO.getTelNo().substring(3).replaceAll("-", "");
 
 		wBLSurveyMstInsertDTO.setCrtfnNo(crtfnNo);
 		wBLSurveyMstInsertDTO.setPtcptCd("E");

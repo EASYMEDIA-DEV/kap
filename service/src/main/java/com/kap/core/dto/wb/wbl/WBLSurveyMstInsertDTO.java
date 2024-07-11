@@ -6,6 +6,8 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import java.util.List;
+
 /**
  *  상생협력체감도조사
  *
@@ -97,10 +99,13 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "점수")
     private String score;
 
-    /* 2024-07-08 추가개발 ppt 4 추가 s */
+    /* 2024-07-08 추가개발 ppt 4 추가 */
     @Schema(title = "인증번호 발송일")
     private String sendDtm;
-    /* 2024-07-08 추가개발 ppt 4 추가 e */
+
+    /* 2024-07-11 추가개발 ppt 11 추가 */
+    @Schema(title = "인증번호 발송 부품사 리스트")
+    private List<WBLSurveyMstInsertDTO> sendList;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
