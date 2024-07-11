@@ -154,7 +154,7 @@
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
                                 <input type="hidden" name="bsnmRegNo" value="${rtnDto.bsnmRegNo}"/>
-                                <p class="form-control-static">${rtnDto.bsnmRegNo}</p>
+                                <p class="form-control-static">${kl:bsnmNoConvert(rtnDto.bsnmRegNo)}</p>
                             </c:when>
                             <c:otherwise>
                                 <input type="text" class="form-control input-sm numberChk" id="bsnmRegNo" name="bsnmRegNo" maxlength="10" title="사업자등록번호" placeholder="사업자등록번호 입력"  style="width:100%"/>

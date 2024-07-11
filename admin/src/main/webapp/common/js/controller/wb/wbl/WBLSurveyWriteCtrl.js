@@ -61,7 +61,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             var tempForm = {};
 
                             tempForm.crtfnNo = $(this).data("crtfnNo");
-                            tempForm.picNm = $(this).data("picNm");
+                            // tempForm.picNm = $(this).data("picNm");
                             tempForm.email = $(this).data("email");
                             tempForm.telNo = $(this).data("telNo");
                             tempForm.cxstnSrvSeq = $("#detailsKey").val(); // 2024-07-08 추가개발 ppt 4, 7 추가
@@ -71,7 +71,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             cmmCtrl.jsonAjax(function(data){
                                 /* 2024-07-08 추가개발 ppt 4, 7 추가 s */
                                 try {
-                                    console.log(data); // 서버에서 반환한 데이터 확인
+                                    // console.log(data); // 서버에서 반환한 데이터 확인
                                     if (data.respCnt > 0) {
                                         alert("인증번호가 발송되었습니다.");
                                         $("#sendDtm").text("발송");
