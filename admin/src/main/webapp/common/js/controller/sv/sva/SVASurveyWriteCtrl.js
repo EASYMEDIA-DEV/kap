@@ -54,7 +54,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     .end()
                     .find(".answer").removeClass("notRequired")
                     .end()
-                    .find('input[name=dpth]').val("1");
+                    .find('input[name=dpth]').val("1")
+                    .end()
+                    .find('input[name=nonApplicableYn]').prop("checked",false); //2024-07-12 추가개발 ppt 3 추가
                     $("."+surveyTypeData+":not(:eq(0))").remove();
             }else{
                 filedset.find("input[name=qstn_nm]").addClass("notRequired")
@@ -198,6 +200,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .find('input[name=dpth]').val(dpth)
                             .end()
                             .find('.answerForm th').html('응답<span class="star"> *</span>')
+                            .end()
+                            .find('input[name=nonApplicableYn]').prop("checked",false); //2024-07-12 추가개발 ppt 3 추가
 
                         if (dpth == "2"){                                    // 하위문항일때 폼 (객관식(단일선택) 으로 폼을 셋팅한다.
                             clone.find(".addSubQuestion").hide()
@@ -245,6 +249,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .find('input[name=dpth]').val("2")
                             .end()
                             .find('.answerForm th').html('응답<span class="star"> *</span>')
+                            .end()
+                            .find('input[name=nonApplicableYn]').prop("checked",false); //2024-07-12 추가개발 ppt 3 추가
                         filedset.find(".subNumber").attr("disabled",false);
                         $(filedset).last().after(clone);
                         questionSet(surveyType);
@@ -752,6 +758,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 svQstnDtl.dpth = filedset.find("input[name=dpth]").val();
                                 svQstnDtl.qstnNm = filedset.find("input[name=qstn_nm]").val();
                                 svQstnDtl.ncsYn = filedset.find("input[name=ncs_yn]").is(":checked") ? "Y" : "N";
+                                svQstnDtl.nonApplicableYn = filedset.find("input[name=nonApplicableYn]").is(":checked") ? "Y" : "N"; //2024-07-12 추가개발 ppt 3 추가
                                 svQstnDtl.srvTypeCd = filedset.find("select[name=srv_type_cd] option:selected").val();
                                 svQstnDtl.ctgryCd = filedset.data('survey-type');
 

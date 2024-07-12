@@ -248,6 +248,7 @@
 		, qstn_nm
 		, ncs_yn
 		, qstn_ord
+		, non_applicable_yn
 		, reg_id
 		, reg_ip
 		, reg_dtm
@@ -267,6 +268,7 @@
 			, #{list.qstnNm}
 			, #{list.ncsYn}
 			, #{list.qstnOrd}
+			, #{list.nonApplicableYn}
 			, #{list.regId}
 			, #{list.regIp}
 			, now()
@@ -490,6 +492,7 @@
       수정일      수정자       수정내용
     ==========   ========   ==============
     2023.11.15    박준희       최초생성
+    2024.07.12	  장두석		  추가개발 ppt 3 해당사항 없음 항목 추가
 -->
 	<select id="selectSurveyQstnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
 
@@ -505,6 +508,7 @@
 			 , qstn_nm
 			 , ncs_yn
 			 , qstn_ord
+		     , non_applicable_yn
 			 , exmpl_cnt
 	  		 , qstn_grp_ord
 			 , qstn_cnt
@@ -521,6 +525,7 @@
 					  , b.qstn_nm
 					  , b.ncs_yn
 					  , b.qstn_ord
+					  , b.non_applicable_yn
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
 					  , case when @grp = binary  b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
