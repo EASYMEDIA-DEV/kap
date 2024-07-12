@@ -89,7 +89,9 @@
                                                 <p class="number ${qstnList.cd}questionTxt">Q1</p>
                                                 <p class="tit f-sub-head">${qstnList.qstnNm} <c:if test="${qstnList.ncsYn eq 'Y' && qstnList.dpth eq '1'}"><span class="essential-mark color-sky">*</span></c:if></p>
                                             </div>
+                                            <%-- 2024-07-11 수정 s --%>
                                             <div class="survey-con">
+                                                <div class="form-wrap">
                                                 <c:choose>
                                                     <c:when test="${qstnList.srvTypeCd eq 'QST01'}">    <!--객관식단일-->
                                                         <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
@@ -148,7 +150,22 @@
                                                         </div>
                                                     </c:when>
                                                 </c:choose>
+                                                <c:if test="${qstnList.nonApplicableYn eq 'Y'}">
+                                                    <div class="criterion-form">
+                                                        <div class="criterion-list-w">
+                                                            <div class="form-radio none">
+                                                                <input type="radio" id="nonApplicableYn${qstnList.qstnOrd}" class="notRequired nonApplicableYn" name="nonApplicableYn${qstnList.qstnOrd}">
+                                                                <label for="nonApplicableYn${qstnList.qstnOrd}"></label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="criterion-guide-txt">
+                                                            <div class="txt">해당사항 <br />없음</div>
+                                                        </div>
+                                                    </div>
+                                                </c:if>
+                                                </div>
                                             </div>
+                                            <%-- 2024-07-11 수정 e --%>
                                         </div>
                                <c:if test="${qstnCnt eq dpthCnt}">
                                     </div>
