@@ -256,19 +256,24 @@
                                     <tr>
                                         <th>응답<span class="star"> *</span></th>
                                         <td>
+                                        <c:set var="rspnCnt" value="0" />
                                        <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                             <c:choose>
                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
                                                 ${exmplList.winAnswerText}
+                                                <c:set var="rspnCnt" value="${rspnCnt + 1}" />
                                             </c:when>
                                             <c:when test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">
-                                                - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em> <c:set var="rspnCnt" value="${rspnCnt + 1}" /></c:if> <br>
                                             </c:when>
                                             <c:otherwise>
-                                                - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em></c:if> <br>
+                                                - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em> <c:set var="rspnCnt" value="${rspnCnt + 1}" /></c:if> <br>
                                             </c:otherwise>
                                             </c:choose>
                                         </c:forEach>
+                                            <c:if test="${qstnList.nonApplicableYn eq 'Y' && rspnCnt eq '0'}">
+                                                ※ 해당사항 없음
+                                            </c:if>
                                         </td>
                                         <td></td>
                                     </tr>

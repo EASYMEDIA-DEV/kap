@@ -122,6 +122,12 @@
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" <c:if test="${qstnList.ncsYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 필수응답
                                                 </label>
+                                                <%-- 2024-07-12 추가개발 ppt 3 추가 --%>
+                                                <c:if test="${qstnList.cd eq 'WIN02' || qstnList.cd eq 'WIN03'}">
+                                                    <label class="checkbox-inline c-checkbox">
+                                                        <input type="checkbox" class="notRequired" name="nonApplicableYn" value="Y" <c:if test="${qstnList.nonApplicableYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                    </label>
+                                                </c:if>
                                             </td>
                                             <td class="col-md-1">
                                                 <button type="button" class="btn btn-sm btn-danger delQuestion" <c:if test="${qstnList.qstnGrpOrd eq 1}">style="display:none;"</c:if>>문항삭제</button>
@@ -229,6 +235,12 @@
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" /><span class="ion-checkmark-round"></span> 필수응답
                                                 </label>
+                                                    <%-- 2024-07-12 추가개발 ppt 3 추가 --%>
+                                                <c:if test="${cdTwoList.cd eq 'WIN02' || cdTwoList.cd eq 'WIN03'}">
+                                                    <label class="checkbox-inline c-checkbox">
+                                                        <input type="checkbox" class="notRequired" name="nonApplicableYn" value="Y" /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                    </label>
+                                                </c:if>
                                             </td>
                                             <td class="col-md-1">
                                                 <button type="button" class="btn btn-sm btn-danger delQuestion" style="display:none;">문항삭제</button>

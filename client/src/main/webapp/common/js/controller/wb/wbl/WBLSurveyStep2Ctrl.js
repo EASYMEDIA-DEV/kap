@@ -81,9 +81,23 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                 surveyList.find('.'+nextNo).find('.answer').removeClass("notRequired");
                             }
                         }
+
+                        //2024-07-12 추가개발 ppt 3 추가
+                        $(this).closest(".form-wrap").find(".nonApplicableYn").prop("checked", false);
+                        $(this).closest(".form-wrap").find("input[type='radio']").not(".nonApplicableYn").removeClass("notRequired");
                     }
                 }
             },
+
+            //2024-07-12 추가개발 ppt 3 추가
+            nonApplicableYn : {
+                event : {
+                    click : function() {
+                        $(this).closest(".form-wrap").find("input[type='radio']").not(this).prop("checked", false).addClass("notRequired");
+                    }
+                }
+            },
+
             textAreaSbjctRply : {
                 event : {
                     click : function() {
@@ -148,6 +162,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                         if(submitFlag) {
                             submitFlag = false;
+
+                            $(".nonApplicableYn").prop("disabled", true);
 
                             cmmCtrl.jsonAjax(function(data){
                                 $(".loading-area").stop().fadeOut(200);

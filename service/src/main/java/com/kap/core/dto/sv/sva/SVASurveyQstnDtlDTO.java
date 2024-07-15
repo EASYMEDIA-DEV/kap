@@ -65,6 +65,11 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     @NotNull
     private String ncsYn;
 
+    // 2024-07-12 추가개발 ppt 3 추가
+    @Schema(title = "해당사항 없음 여부", example = "Y/N")
+    @Builder.Default
+    private String nonApplicableYn = "N";
+
     @Schema(title = "질문순번", example = "")
     @NotNull
     private Integer qstnOrd;

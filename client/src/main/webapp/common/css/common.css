@@ -2421,17 +2421,24 @@ footer .copy-area span:last-child:after {display: none;}
 .survey-list-w .survey-list .question-tit {position: relative; margin-bottom: 24rem;}
 .survey-list-w .survey-list .question-tit .number {font-family: "Pretendard_SemiBold", sans-serif; color: #1E6B8E; font-size: max(18rem, 16px); line-height: 155%; letter-spacing: -0.36rem;}
 .survey-list-w .survey-list .question-tit .tit {margin-top: 8rem;}
+/* 2024-07-11 수정 s */ 
+.survey-list-w .survey-list .survey-con .form-wrap {display: flex;}
 .survey-list-w .survey-list .question-tit .tit .essential-mark {margin-left: 3rem;}
 .survey-list-w .survey-list .survey-con .opt-group{margin-top:0;}
-        /* 척도 문항 (ex) 불만족 - 만족)*/
+/* 척도 문항 (ex) 불만족 - 만족)*/
 .criterion-form {display: inline-flex; flex-direction: column;}
+.criterion-form + .criterion-form {margin-left: 40rem;} 
 .criterion-form .criterion-list-w {display: inline-flex;}
 .criterion-form .criterion-list-w .form-radio {margin-right: 1px;}
 .criterion-form .criterion-list-w .form-radio:last-child {margin-right: 0;}
 .criterion-form .criterion-list-w .form-radio input + label {display: flex; align-items: center; justify-content: center; width: 48rem; height: 48rem; padding-left: 0; font-family: "Pretendard_Medium", sans-serif; color: #697278; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem; background: #F5F6F7; border-radius: 2px;}
 .criterion-form .criterion-list-w .form-radio input:checked + label {color: #fff; background-color: #06161E;}
-.criterion-form .criterion-guide-txt {display: flex; justify-content: space-between; margin-top: 10rem;}
-.criterion-form .criterion-guide-txt .txt {color: #06161E; font-size: max(14rem, 13px); line-height: 170%; letter-spacing: -0.28rem;}
+.criterion-form .criterion-list-w .form-radio.none input + label {background-image: url("/common/images/icon-criterion-x.svg");
+background-position: center; background-size: 14rem auto; background-repeat: no-repeat;}
+.criterion-form .criterion-list-w .form-radio.none input:checked + label {background-image: url("/common/images/icon-criterion-x-wht.svg");}
+.criterion-form .criterion-guide-txt {display: flex; justify-content: space-between; margin-top: 12rem;}
+.criterion-form .criterion-guide-txt .txt {color: #06161E; font-size: max(14rem, 13px); line-height: 130%; letter-spacing: -0.28rem; text-align: center;}
+/* // 2024-07-11 수정 e */
 
 @media all and (max-width: 1023px) {
   /* 설문조사, 평가하기 폼 */
@@ -2454,12 +2461,16 @@ footer .copy-area span:last-child:after {display: none;}
   .survey-list-w .survey-list .survey-list-inner:not(:first-child) {margin-left: 20rem; margin-top: 20rem;}
   .survey-list-w .survey-list .survey-list-inner:not(:first-child) .question-tit:after {top: 7rem; left: -17rem; width: 8rem; height: 8rem;}
   
-          /* 척도 문항 (ex) 불만족 - 만족)*/
+  /* 척도 문항 (ex) 불만족 - 만족)*/
+  /* 2024-07-11 수정 s */
+  .criterion-form + .criterion-form {margin-left: 7rem;}
   .criterion-form .criterion-list-w .form-radio input + label {width: 48rem; height: 48rem;}
   .criterion-form:has(.form-radio:nth-child(6)) {display: block;}
   .criterion-form:has(.form-radio:nth-child(6)) .criterion-list-w {width: 100%;}
   .criterion-form:has(.form-radio:nth-child(6)) .criterion-list-w .form-radio {flex-grow: 1;}
   .criterion-form:has(.form-radio:nth-child(6)) .criterion-list-w .form-radio input + label {width: auto;}
+  .criterion-form .criterion-list-w .form-radio.none input + label {background-size: 12rem auto;}
+  /* // 2024-07-11 수정 e */
 }
 /* --------------------------------------------- 설문조사, 평가하기 - END --------------------------------------------- */
 
