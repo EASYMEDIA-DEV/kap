@@ -549,7 +549,8 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		XSSFCellStyle style_header = workbook.createCellStyle();
 		XSSFCellStyle style_body = workbook.createCellStyle();
-		Sheet sheet = workbook.createSheet();
+		Sheet sheet = workbook.createSheet("템프");
+
 
 		Row row = null;
 		Cell cell = null;
@@ -634,7 +635,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		cell.setCellValue("참여일");
 		cell.setCellStyle(style_header);
 
-		cell = row.createCell(14);
+		/*cell = row.createCell(14);
 		cell.setCellValue("최초등록자");
 		cell.setCellStyle(style_header);
 
@@ -648,9 +649,9 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 
 		cell = row.createCell(17);
 		cell.setCellValue("최종수정일시");
-		cell.setCellStyle(style_header);
+		cell.setCellStyle(style_header);*/
 
-		int qstnRow = 18;
+		int qstnRow = 14;
 		for(WBLSurveyMstSearchDTO qstnDto : qstnList){
 			cell = row.createCell(qstnRow);
 			cell.setCellValue(qstnDto.getQstnNm());
@@ -722,7 +723,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellValue(list.get(i).getPtcptCmpltnDtm() == null ? "-" : list.get(i).getPtcptCmpltnDtm().substring(0, list.get(i).getPtcptCmpltnDtm().lastIndexOf(":")));
 			cell.setCellStyle(style_body);
 
-			cell = row.createCell(14);
+			/*cell = row.createCell(14);
 			cell.setCellValue(list.get(i).getRegName());
 			cell.setCellStyle(style_body);
 
@@ -736,16 +737,10 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 
 			cell = row.createCell(17);
 			cell.setCellValue(list.get(i).getModDtm() == null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getModDtm().lastIndexOf(":")));
-			cell.setCellStyle(style_body);
+			cell.setCellStyle(style_body);*/
 
-						/*System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
-                        System.out.println("@ temp2 getSrvTypeNm = " + temp2.getSrvTypeNm());
-                        System.out.println("@ temp2 getQstnOrd = " + temp2.getQstnOrd());
-                        System.out.println("@ temp2 getQstnNm = " + temp2.getQstnNm());
-                        System.out.println("@ temp2 getExmplAnswer = " + temp2.getExmplAnswer());
-                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());*/
 
-			int rspnRow = 18;
+			int rspnRow = 14;
 			if(list.get(i).getList() != null && list.get(i).getList().size()>0){
 
 				for(WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()){
