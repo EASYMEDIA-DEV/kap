@@ -30,7 +30,7 @@
                                 <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control input-sm" id="bsnmNo" name="bsnmNo" value="${rtnInfo.bsnmNo}" title="사업자번호등록번호" maxlength="10" oninput="this.value=this.value.replace(/[^0-9]/g, '')" placeholder="사업자등록번호 입력" <c:if test="${not empty rtnInfo.bsnmNo or not empty rtnInfo }">readonly</c:if> style="width: 220px;"/>
-                                    <button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button> <span>※ 사업자등록번호 인증 시 부품사/대표자명이 자동으로 입력됩니다.</span>
+                                    <button type="button" class="btn btn-default btn-sm" id="btnBsnmNo">인증</button> <span>※ 사업자등록번호 인증 시 중복 여부를 확인 합니다.</span>
                                 </div>
                             </div>
                         </fieldset>
