@@ -75,11 +75,11 @@
                             <span class="ion-checkmark-round"></span> 전체
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'E')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'Y')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 완료
                         </label>
                         <label class="checkbox-inline c-checkbox">
-                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="Y"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'Y')}">checked</c:if> />
+                            <input type="checkbox" class="checkboxSingle" data-name="cmpltnYnList" value="N"  <c:if test="${fn:contains(rtnData.cmpltnYnList, 'N')}">checked</c:if> />
                             <span class="ion-checkmark-round"></span> 미완료
                         </label>
                     </div>
