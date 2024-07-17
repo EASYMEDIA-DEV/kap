@@ -272,7 +272,7 @@
                                             </c:choose>
                                         </c:forEach>
                                             <c:if test="${qstnList.nonApplicableYn eq 'Y' && rspnCnt eq '0'}">
-                                                ※ 해당사항 없음
+                                                ※ 해당사항 없음 <em class="ion-checkmark" style="font-size:15px;"></em>
                                             </c:if>
                                         </td>
                                         <td></td>
