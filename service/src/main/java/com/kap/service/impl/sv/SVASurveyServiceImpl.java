@@ -97,6 +97,8 @@ public class SVASurveyServiceImpl implements SVASurveyService {
 		page.setCurrentPageNo(sVASurveyDTO.getPageIndex());
 		page.setRecordCountPerPage(sVASurveyDTO.getListRowSize());
 
+
+
 		page.setPageSize(sVASurveyDTO.getPageRowSize());
 
 		sVASurveyDTO.setFirstIndex( page.getFirstRecordIndex() );

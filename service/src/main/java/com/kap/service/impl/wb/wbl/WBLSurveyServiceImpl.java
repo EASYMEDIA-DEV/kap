@@ -75,7 +75,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	public WBLSurveyMstSearchDTO selectSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception {
 
 		COPaginationUtil page = new COPaginationUtil();
-
+		wBLSurveyMstSearchDTO.setListRowSize(100);
 		page.setCurrentPageNo(wBLSurveyMstSearchDTO.getPageIndex());
 		page.setRecordCountPerPage(wBLSurveyMstSearchDTO.getListRowSize());
 

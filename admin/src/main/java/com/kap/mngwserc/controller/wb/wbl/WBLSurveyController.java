@@ -82,7 +82,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             ArrayList<String> cdDtlList = new ArrayList<String>();
             // 코드 set
             cdDtlList.add("PTCPT_CD");
-
+            wBLSurveyMstSearchDTO.setListRowSize(100);
             // 정의된 코드id값들의 상세 코드 맵 반환
             modelMap.addAttribute("rtnData", wBLSurveyMstSearchDTO);
             modelMap.addAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
