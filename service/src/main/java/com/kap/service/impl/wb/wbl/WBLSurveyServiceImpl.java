@@ -396,15 +396,15 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			inputData = true;
 			for(WBLSurveyMstSearchDTO aa : selectSurveyList) {
 				if (
-					aa.getPartCmpnNm1().equals(temp.get("0").toString()) &&
+					//aa.getPartCmpnNm1().equals(temp.get("0").toString()) &&
 					aa.getPartCmpnCd1().equals(temp.get("1").toString()) &&
-					aa.getPartCmpnNm2().equals(temp.get("2").toString()) &&
-					aa.getPartCmpnCd2().equals(temp.get("3").toString()) &&
-					aa.getRprsntNm().equals(temp.get("4").toString()) &&
-					aa.getPicNm().equals(temp.get("5").toString()) &&
-					aa.getBsnmRegNo().equals(temp.get("6").toString().replaceAll("-","")) &&
-					aa.getTelNo().equals(temp.get("7").toString()) &&
-					aa.getEmail().equals(temp.get("8").toString())
+					//aa.getPartCmpnNm2().equals(temp.get("2").toString()) &&
+					aa.getPartCmpnCd2().equals(temp.get("3").toString())
+					//aa.getRprsntNm().equals(temp.get("4").toString()) &&
+					//aa.getPicNm().equals(temp.get("5").toString()) &&
+					//aa.getBsnmRegNo().equals(temp.get("6").toString().replaceAll("-","")) &&
+					//aa.getTelNo().equals(temp.get("7").toString()) &&
+					//aa.getEmail().equals(temp.get("8").toString())
 
 				){
 						//System.out.println("@@중복제거");
