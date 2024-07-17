@@ -471,7 +471,7 @@
 								edctn_stts_cd = 'EDCTN_STTS_CD01' AND NOW() <![CDATA[<]]> accs_strt_dtm
 							</if>
 							<if test="accsStatusList == 2"><!--접수중-->
-								edctn_stts_cd = 'EDCTN_STTS_CD01' AND NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm
+								edctn_stts_cd = 'EDCTN_STTS_CD01' AND NOW() <![CDATA[>]]> accs_strt_dtm AND NOW() <![CDATA[<]]>  accs_end_dtm AND (fxnum_impsb_yn = 'N' OR accs_cnt   <![CDATA[<]]>   fxnum_cnt)
 							</if>
 							<if test="accsStatusList == 3"><!--마감-->
 								edctn_stts_cd = 'EDCTN_STTS_CD01' AND (NOW() <![CDATA[>]]> accs_end_dtm OR (fxnum_impsb_yn = 'Y' AND accs_cnt <![CDATA[>=]]> fxnum_cnt))
