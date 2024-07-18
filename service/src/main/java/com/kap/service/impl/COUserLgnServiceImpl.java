@@ -148,7 +148,7 @@ public class COUserLgnServiceImpl  implements COUserLgnService {
 							// 비밀번호 변경주기(3개월) 확인
 							String today = CODateUtil.getToday();
 							String pwdChngDtm = CODateUtil.convertDate(rtnCOUserDto.getPwdChngDtm(), "yyyy-MM-dd HH:mm:ss", "yyyyMMdd", "");
-							if (CODateUtil.getDaysDiff(CODateUtil.addYearMonthDay(pwdChngDtm, 0, 0, 90), today) > 0)
+							if (CODateUtil.getDaysDiff(CODateUtil.addYearMonthDay(pwdChngDtm, 1, 0, 0), today) > 0) //2024-07-18 비밀번호 변경 주기 1년으로
 							{
 //								if(rtnCOUserDto.getChngXtnsnCnt() >=3) {
 //									//비밀번호 90일 변경 3회 연장 시

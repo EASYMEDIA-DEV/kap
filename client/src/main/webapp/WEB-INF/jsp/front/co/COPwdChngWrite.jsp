@@ -115,7 +115,7 @@
         <c:choose>
             <c:when test="${ tmpLgnVO.respCd eq '1400' }">
                 <div class="noti-txt-w">
-                    <p class="bullet-noti-txt f-caption2">* 회원님의 개인정보를 안전하게 보호하기 위해 3개월 주기로 비밀번호 변경을 권장드립니다.</p>
+                    <p class="bullet-noti-txt f-caption2">* 회원님의 개인정보를 안전하게 보호하기 위해 1년 주기로 비밀번호 변경을 권장드립니다.</p> <%-- 2024-07-18 수정 --%>
                 </div>
             </c:when>
         </c:choose>
