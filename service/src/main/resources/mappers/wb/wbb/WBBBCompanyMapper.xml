@@ -596,9 +596,10 @@
     -->
     <select id="selectOptnList" parameterType="Integer" resultType="wbbaApplyDtlDTO">
         SELECT /* WBBBCompanyMapper.selectOptnList */
-            OPTN_SEQ,
-               STAGE_SEQ,
-               OPTN_NM
+            OPTN_SEQ
+            , STAGE_SEQ
+            , OPTN_NM
+            , FILE_SEQ
         FROM CX_OPTN_DTL
         WHERE STAGE_SEQ = #{stageSeq}
         ORDER BY OPTN_ORD ASC

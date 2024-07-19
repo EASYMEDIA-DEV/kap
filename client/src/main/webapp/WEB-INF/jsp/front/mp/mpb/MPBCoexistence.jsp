@@ -50,7 +50,17 @@
                                                             <c:forEach var="itemOptn" items="${item.applyOptnList}" varStatus="status1">
                                                                 <div class="data-line">
                                                                     <div class="inner-line">
-                                                                        <p class="data-title f-body1">${itemOptn.optnNm}<span class="essential-mark color-sky">*</span></p>
+                                                                        <c:forEach var="itemOptn2" items="${item.applyTempOptnList}" varStatus="status1">
+                                                                            <c:if test="${not empty itemOptn2.fileSeq}">
+                                                                                <a class="btn-text-icon download" href="/file/download?fileSeq=${itemOptn2.fileSeq}&fileOrd=0" download="">${itemOptn2.optnNm}
+                                                                                    <span>
+                                                                                        <p class="data-title f-body1"></p>
+                                                                                    </span>
+                                                                                </a>
+                                                                            </c:if>
+                                                                        </c:forEach>
+
+
                                                                         <div class="form-group">
                                                                             <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
                                                                                 <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
@@ -69,6 +79,7 @@
                                                                                     <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=0" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
                                                                                 </div>
                                                                             </c:if>
+
                                                                             <!-- 2024-01-03 추가 -->
                                                                         </div>
                                                                     </div>
