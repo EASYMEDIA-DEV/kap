@@ -88,7 +88,7 @@ var msgCtrl = (function(){
 					notCsExist : "사용 불가한 계정입니다.",
 					password : {
 						temporary : "임시 비밀번호로 로그인하여 비밀번호를 재설정 합니다.",
-						changeCycle : "비밀번호 최종변경일자가 90일이 경과되어 비밀번호 변경 페이지로 이동합니다.",
+						changeCycle : "비밀번호 최종변경일자가 1년이 경과되어 비밀번호 변경 페이지로 이동합니다.",
 						includeId : "아이디와 동일한 값은 입력할 수 없습니다.",
 						sameString : "동일한 문자/숫자를 3자 이상 연속으로 사용 불가합니다.",
 						contString : "4자리 이상 연속된 문자/숫자는 사용 불가합니다.",
