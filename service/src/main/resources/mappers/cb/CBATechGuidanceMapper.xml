@@ -373,7 +373,7 @@
             CP_CNSTG_APPCTN_MST A, CO_MEM_MST B
         WHERE 1=1
           AND A.CNSTG_SEQ = #{detailsKey}
-          AND A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
+          -- AND A.APPCTN_BSNM_NO = B.WORK_BSNM_NO
           AND A.APPCTN_MEM_SEQ = B.MEM_SEQ
     </select>
 
