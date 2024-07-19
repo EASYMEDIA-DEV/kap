@@ -556,7 +556,7 @@
                                                         <input type="hidden" name="optnSeq" value="${itemOptn.optnSeq}"/>
                                                         <label class="col-sm-1 control-label">${itemOptn.optnNm}<span class="star"> *</span></label>
                                                         <div class="col-sm-10 col-md-11">
-                                                            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="${itemOptn.fileSeq}" />
+                                                            <input type="hidden" class="notRequired" id="fileSeq" name="fileSeq" value="<%--${itemOptn.fileSeq}--%>" />
                                                             <spring:eval var="fileExtns" expression="@environment.getProperty('app.file.fileExtns')" />
                                                             <spring:eval var="atchUploadMaxSize" expression="838860800" />
                                                             <div class="dropzone attachFile notRequired" data-file-field-nm="fileSeq" data-file-extn="${fileExtns}" data-max-file-size="${atchUploadMaxSize}" data-max-file-cnt="1" data-title="${itemOptn.optnNm}">
