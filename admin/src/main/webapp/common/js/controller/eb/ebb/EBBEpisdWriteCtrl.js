@@ -152,11 +152,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 							var onlineUrl = $(this).find("[name='onlineUrl']").val();
 							var onlineTime = $(this).find("[name='onlineTime']").val();
 
-							if(onlineUrl ===undefined || onlineUrl =="" && onlineChk == true){
+							/*if(onlineUrl ===undefined || onlineUrl =="" && onlineChk == true){
 								alert("유튜브 URL을 입력해 주세요");
 								$("input[name='onlineUrl']").focus();
 								onlineChk = false;
-							}
+							}*/
 						}
 					});
 
@@ -568,11 +568,11 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                         resultFlag = false;
                                     }*/
 
-									if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
+									/*if(onlineUrl ===undefined || onlineUrl =="" && resultFlag == true){
 										alert("유튜브 URL을 입력해 주세요");
 										$("input[name='onlineUrl']").focus();
 										resultFlag = false;
-									}
+									}*/
 
 									if(onlineTime ===undefined || onlineTime =="" && resultFlag == true){
 										//alert("강의 시간을  입력해 주세요");
@@ -1192,7 +1192,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineTime' ||  $(this).attr("name") == 'onlineNm' )){
 					$(this).addClass("notRequired");
 				} else if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineUrl')){
-					$(this).removeClass("notRequired");
+					//$(this).removeClass("notRequired");
 				}
 
 			});
@@ -1211,7 +1211,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineTime' ||  $(this).attr("name") == 'onlineNm' )){
 				$(this).addClass("notRequired");
 			} else if($(this).closest("tr").attr("class") !="examTr" && ($(this).attr("name") == 'onlineUrl')){
-				$(this).removeClass("notRequired");
+				//$(this).removeClass("notRequired");
 			}
 
 		});
