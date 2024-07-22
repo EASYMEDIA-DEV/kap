@@ -134,8 +134,22 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }
 
                         if($("#searchFile").val() == "") {
-                            alert("신청서류를 모두 등록해주세요.");
+                            alert("청서류를 모두 등록해주세요신.");
                             return;
+                        }
+
+                        //2024-07-22 첨부파일 유효성 추가 (이전에 첨부파일 1개 -> 5개 변경하면서 위의 유효성은 무의미해짐)
+                        var isFileAttached = false;
+                        $(".searchFile").each(function() {
+                            if ($(this).val() != "") {
+                                isFileAttached = true;
+                                return false; // 하나라도 첨부되면 루프 중단
+                            }
+                        });
+                        if (!isFileAttached) {
+                            alert("신청서류를 모두 등록해주세요.");
+                            focus(".fileForm");
+                            return false;
                         }
 
                         //이용약관 체크여부
