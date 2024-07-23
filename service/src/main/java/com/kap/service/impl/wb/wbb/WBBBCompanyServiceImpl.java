@@ -394,7 +394,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbApplyDtlDTO.setRsumeOrd(wbbApplyDtlDTO.getRsumeOrd() + 1);
                         wbbApplyDtlDTO.setRsumeSttsCd(wbbaApplyMstDTO.getNextStageNm());
                         wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_1");
-                        wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_1");
+                        wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2"); //2024-07-23 접수전 코드 사용 안 하므로, 미확인 코드로 변경
                         wbbApplyDtlDTO.setRegId(modId);
                         wbbApplyDtlDTO.setRegIp(modIp);
 
