@@ -193,7 +193,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         var id = $(this).data("seq");
                         var $formObj = $('#frmData'+id);
                         var status = $(this).data("status");
-                        var file = $formObj.find('input[type=file]');
+                        var file = $formObj.find('.searchFile'); //2024-07-25 수정
                         var valid = true;
 
                         //신청
@@ -220,26 +220,22 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             }
                         }
 
+                        //2024-07-25 수정 s
                         if (status == "접수전") {
-
-                            if(file.length > 1){
-
-                                $("input:file").each(function(){
-                                    if($(this).val() == ""){
-                                        $(this).prop("disabled", true);
-                                    }
-                                });
-
-                            }
-
-                            file.each(function(i) {
-                                if (!$(this).val() && $(this).prop("disabled") == false) {
-                                    alert('신청서류를 모두 등록해주세요.');
-                                    valid = false;
-                                    return false;
+                            var isFileAttached = false;
+                            file.each(function() {
+                                if ($(this).val() != "") {
+                                    isFileAttached = true;
+                                    return false; // 하나라도 첨부되면 루프 중단
                                 }
                             });
+                            if (!isFileAttached) {
+                                alert("신청서류를 모두 등록해주세요.");
+                                focus(".fileForm");
+                                return false;
+                            }
                         }
+                        //2024-07-25 수정 e
 
 
                         //사업계획
