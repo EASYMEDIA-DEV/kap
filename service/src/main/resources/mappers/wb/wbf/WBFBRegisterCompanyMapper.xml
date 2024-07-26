@@ -66,10 +66,40 @@
         SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
             count(*)
         FROM
-            (
-            SELECT * FROM cx_episd_mst
-            WHERE bsn_cd = #{bsnCd}
+        (
+        SELECT
+        TEMP.*,
+        ( SELECT rsume_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as rsume_stts_cd,
+        ( SELECT mng_stts_cd FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mng_stts_cd,
+        ( SELECT appctn_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as appctn_stts_chng_dtm,
+        ( SELECT mng_stts_chng_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mng_stts_chng_dtm,
+        ( SELECT mod_id FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mod_id,
+        ( SELECT mod_dtm FROM cx_appctn_rsume_dtl card WHERE card.appctn_seq = TEMP.appctn_seq AND card.rsume_ord = TEMP.rsume_ord) as mod_dtm
+        FROM
+        (
+        SELECT /*WBFBRegisterCompanyMapper.getRegisterCompanyList*/
+        YEAR(A.year) as year, A.episd as episd,
+        B.appctn_seq, B.episd_seq, B.sbrdn_bsnm_no, B.reg_id, B.reg_dtm, B.pmndv_pmt_yn,
+        C.*,
+        (SELECT cd_nm FROM co_code_mst WHERE cd = C.ctgry_cd) as ctgry_cd_nm,
+        (SELECT cd_nm FROM co_code_mst WHERE cd = NULLIF(C.SIZE_CD,'')) as size_cd_nm,
+        (SELECT MAX(rsume_ord) FROM cx_appctn_rsume_dtl WHERE appctn_seq = B.appctn_seq) as rsume_ord
+        FROM
+        (
+        SELECT * FROM cx_episd_mst
+        WHERE bsn_cd = #{bsnCd}
         ) A INNER JOIN cx_appctn_mst B ON B.episd_seq = A.episd_seq
+        INNER JOIN
+        (
+        SELECT a.mem_seq, a.name, a.id, a.hp_no, a.tel_no, a.email, a.pstn_cd, a.pstn_nm
+        , b.cmpn_nm, b.ctgry_cd, b.size_cd, b.bsnm_no
+        ,(SELECT cd_nm FROM co_code_mst WHERE cd = a.pstn_cd) as pstn_cd_nm
+        FROM co_mem_mst a INNER JOIN cp_cmpn_mst b ON a.work_bsnm_no = b.bsnm_no
+        ) C /* 회원-회사 JOIN 테이블 */
+        ON C.mem_seq = B.mem_seq
+        ) TEMP
+        ) INFO
+        <include refid="selectListwhereSql" />
     </select>
 
     <!--
