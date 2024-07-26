@@ -747,10 +747,11 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
     public int deleteRegister(WBFBRegisterDTO wBFBRegisterDTO) throws Exception {
         int respCnt = 0;
 
-        int cofDeleteCnt = wBFBRegisterCompanyMapper.confDeleteRegister(wBFBRegisterDTO);
-        if(cofDeleteCnt > 0) {
-            respCnt = -1;
-        } else {
+        /* 2024.07.26 단계 상관없이 삭제 가능하도록 변경 s */
+//        int cofDeleteCnt = wBFBRegisterCompanyMapper.confDeleteRegister(wBFBRegisterDTO);
+//        if(cofDeleteCnt > 0) {
+//            respCnt = -1;
+//        } else {
             wBFBRegisterCompanyMapper.delAppctnRsumeFileDtl(wBFBRegisterDTO);
             wBFBRegisterCompanyMapper.delAppctnRsumeTaskDtl(wBFBRegisterDTO);
             wBFBRegisterCompanyMapper.delAppctnTrnsfDtl(wBFBRegisterDTO);
@@ -758,7 +759,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             wBFBRegisterCompanyMapper.delAppctnRsumeDtl(wBFBRegisterDTO);
 
             respCnt = wBFBRegisterCompanyMapper.delAppctnMst(wBFBRegisterDTO);
-        }
+//        }
+        /* 2024.07.26 단계 상관없이 삭제 가능하도록 변경 e */
 
         return respCnt;
     }

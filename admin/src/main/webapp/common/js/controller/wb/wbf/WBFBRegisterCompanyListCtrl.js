@@ -45,17 +45,20 @@ define(["ezCtrl"], function(ezCtrl) {
                     click : function() {
                         let delActCnt = $("input:checkbox[name='delValueList']:checked");
                         if(delActCnt.length > 0){
-                            if(confirm(msgCtrl.getMsg("confirm.del"))){
+                            // if(confirm(msgCtrl.getMsg("confirm.del"))){
+                            if(confirm('삭제 후 복구가 불가능합니다\n정말 삭제하시겠습니까?')) {
                                 cmmCtrl.frmAjax(function(respObj){
-                                    if(respObj.respCnt < 0){
+                                    /* 2024.07.26 단계 상관없이 삭제 가능하도록 변경 s */
+                                    /*if(respObj.respCnt < 0){
                                         alert("접수 이후의 신청 건은 삭제가 불가합니다.");
                                         return;
-                                    } else if(respObj.respCnt > 0) {
+                                    } else*/ if(respObj.respCnt > 0) {
                                         alert(msgCtrl.getMsg("success.del.target.board"));
                                         $formObj.find("#btnSearch").click();
                                     } else {
                                         alert(msgCtrl.getMsg("fail.act"));
                                     }
+                                    /* 2024.07.26 단계 상관없이 삭제 가능하도록 변경 e */
                                 }, "./delete", $formObj, "POST", "json");
                             }
                         } else {
