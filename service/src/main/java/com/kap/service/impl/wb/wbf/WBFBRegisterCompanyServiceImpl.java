@@ -595,6 +595,9 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
 
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02001_02_001"://접수전
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02001_01_001"); break;
+
                 case "PRO_TYPE02001_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02001_01_002"); break;
                 case "PRO_TYPE02001_02_004":
@@ -604,6 +607,12 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02002")){  /* 사업 계획 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
+
+                case "PRO_TYPE02002_02_001": //접수전
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02002_01_001"); break;
+                case "PRO_TYPE02002_02_002"://미확인
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02002_01_001"); break;
+
                 case "PRO_TYPE02002_02_003":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02002_01_003"); break;
                 case "PRO_TYPE02002_02_004":
@@ -613,6 +622,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02003")) { /* 최초 점검*/
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02003_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02003_01_001"); break;
                 case "PRO_TYPE02003_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02003_01_002"); break;
                 case "PRO_TYPE02003_02_003":
@@ -620,6 +631,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02004")) { /* 중간 점검 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02004_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02004_01_001"); break;
                 case "PRO_TYPE02004_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02004_01_002"); break;
                 case "PRO_TYPE02004_02_003":
@@ -627,6 +640,8 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02005")) { /* 원가 계산 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02005_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02005_01_001"); break;
                 case "PRO_TYPE02005_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02005_01_002"); break;
                 case "PRO_TYPE02005_02_003":
@@ -634,11 +649,15 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02006")) { /* 협약 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02006_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02006_01_001"); break;
                 case "PRO_TYPE02006_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02006_01_002"); break;
             }
         } else if(wBFBRegisterDTO.getNowRsumeTaskCd().equals("PRO_TYPE02007")) { /* 최종점검 */
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02007_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_01_001"); break;
                 case "PRO_TYPE02007_02_002":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02007_01_002"); break;
                 case "PRO_TYPE02007_02_003":
@@ -661,6 +680,10 @@ public class WBFBRegisterCompanyServiceImpl implements WBFBRegisterCompanyServic
             }
 
             switch (rsumeTaskDTO.getMngSttsCd()) {
+                case "PRO_TYPE02008_02_001":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_001"); break;
+                case "PRO_TYPE02008_02_002":
+                    rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_001"); break;
                 case "PRO_TYPE02008_02_003":
                     rsumeTaskDTO.setAppctnSttsCd("PRO_TYPE02008_01_003"); break;
                 case "PRO_TYPE02008_02_004":
