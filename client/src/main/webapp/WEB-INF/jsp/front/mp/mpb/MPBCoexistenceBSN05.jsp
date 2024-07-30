@@ -788,7 +788,7 @@
 
                                     <!-- 지원금 탭 -->
                                     <div id="spprt2" class="tab-con" <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_005'}">style="pointer-events: none;"</c:if>>
-                                        <form name="spprtform2" id="spprtform2">
+                                        <form name="spprtform2" id="spprtform2" enctype="multipart/form-data">
                                         <input type="hidden" class="notRequired" name="${_csrf.parameterName}" value="${_csrf.token}" />
                                         <input type="hidden" name="wBEBCarbonCompanyMstInsertDTO.appctnSeq" value="${rtnData.appctnSeq}" />
                                         <input type="hidden" class="notRequired" name="wBEBCarbonCompanyMstInsertDTO.spprtList[0].appctnSpprtSeq" value="${rtnSpprt[1].appctnSpprtSeq}" />
@@ -875,7 +875,7 @@
                                             </div>
                                             <div class="p-cont-sec">
                                                 <div class="sec-tit-area">
-                                                    <p class="f-head">파일을 첨부해주세요</p>
+                                                    <p class="f-head">파일을 첨부해주세요 (최대 5개까지 첨부 가능)</p>
                                                 </div>
                                                 <div class="sec-con-area">
                                                     <div class="data-enter-form">
@@ -887,23 +887,45 @@
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
                                                                         <div class="form-group">
-                                                                            <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
-                                                                                <p class="empty-txt">선택된 파일 없음</p>
+                                                                            <%-- 2024-07-29 첨부파일 개수 수정 --%>
+                                                                            <div class="file-list-area-wrap">
+                                                                                <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
+                                                                                    <p class="empty-txt">선택된 파일 없음</p>
+                                                                                </div>
                                                                             </div>
                                                                             <div class="file-btn-area">
-                                                                                <input type="file" name="spprtAppctnFileSeq" id="spprtAppctnFileSeq1" class="searchFile">
-                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].spprtAppctnFileSeq}">
-                                                                                <label class="btn-solid gray-bg" for="spprtAppctnFileSeq1">파일 찾기</label>
+                                                                                <input type="file" name="atchFile1" id="spprFileSearch0" class="searchFile fileSppr1">
+                                                                                <input type="file" name="atchFile2" id="spprFileSearch1" class="searchFile fileSppr1">
+                                                                                <input type="file" name="atchFile3" id="spprFileSearch2" class="searchFile fileSppr1">
+                                                                                <input type="file" name="atchFile4" id="spprFileSearch3" class="searchFile fileSppr1">
+                                                                                <input type="file" name="atchFile5" id="spprFileSearch4" class="searchFile fileSppr1">
+                                                                                <label class="btn-solid gray-bg fileForm" for="spprFileSearch">파일 찾기</label>
+                                                                                <input type="hidden" name="fileSeqList" value="${rtnSpprt[1].spprtAppctnFileSeq}"/>
                                                                             </div>
-                                                                            <div class="file-prev-area" <c:if test="${not empty rtnSpprt[1].spprtAppctnFileSeq}">style="pointer-events: auto;"</c:if>>
-                                                                                <a href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd}" download="" title="파일 다운로드">${rtnSpprt[1].spprtAppctnFileNm}</a>
+                                                                            <div class="attatched-file-area" <c:if test="${not empty rtnSpprt[1].spprtAppctnFileSeq}">style="pointer-events: auto;"</c:if>>
+                                                                                <c:if test="${not empty rtnSpprt[1].spprtAppctnFileOrd1 && not empty rtnSpprt[1].spprtAppctnFileNm1}">
+                                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd1}" title="파일 다운로드" download=""><span>${rtnSpprt[1].spprtAppctnFileNm1}</span></a>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty rtnSpprt[1].spprtAppctnFileOrd2 && not empty rtnSpprt[1].spprtAppctnFileNm2}">
+                                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd2}" title="파일 다운로드" download=""><span>${rtnSpprt[1].spprtAppctnFileNm2}</span></a>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty rtnSpprt[1].spprtAppctnFileOrd3 && not empty rtnSpprt[1].spprtAppctnFileNm3}">
+                                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd3}" title="파일 다운로드" download=""><span>${rtnSpprt[1].spprtAppctnFileNm3}</span></a>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty rtnSpprt[1].spprtAppctnFileOrd4 && not empty rtnSpprt[1].spprtAppctnFileNm4}">
+                                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd4}" title="파일 다운로드" download=""><span>${rtnSpprt[1].spprtAppctnFileNm4}</span></a>
+                                                                                </c:if>
+                                                                                <c:if test="${not empty rtnSpprt[1].spprtAppctnFileOrd5 && not empty rtnSpprt[1].spprtAppctnFileNm5}">
+                                                                                    <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${rtnSpprt[1].spprtAppctnFileSeq}&fileOrd=${rtnSpprt[1].spprtAppctnFileOrd5}" title="파일 다운로드" download=""><span>${rtnSpprt[1].spprtAppctnFileNm5}</span></a>
+                                                                                </c:if>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="row">
+                                                        <%-- 2024-07-29 첨부파일 항목 1개로 축소 --%>
+                                                        <%--<div class="row">
                                                             <div class="th">
                                                                 <p class="title f-body1">거래명세서<span class="essential-mark color-sky">*</span></p>
                                                             </div>
@@ -974,7 +996,7 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        </div>--%>
                                                     </div>
                                                 </div>
                                             </div>

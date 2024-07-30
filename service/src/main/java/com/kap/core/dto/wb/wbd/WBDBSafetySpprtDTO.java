@@ -94,6 +94,28 @@ public class WBDBSafetySpprtDTO extends BaseDTO {
     @Schema(title = "지원신청파일정렬", example = "")
     private Integer spprtAppctnFileOrd;
 
+    //2024-07-29 추가
+    @Schema(title = "지원신청파일명1", example = "")
+    private String spprtAppctnFileNm1;
+    @Schema(title = "지원신청파일명2", example = "")
+    private String spprtAppctnFileNm2;
+    @Schema(title = "지원신청파일명3", example = "")
+    private String spprtAppctnFileNm3;
+    @Schema(title = "지원신청파일명4", example = "")
+    private String spprtAppctnFileNm4;
+    @Schema(title = "지원신청파일명5", example = "")
+    private String spprtAppctnFileNm5;
+    @Schema(title = "지원신청파일정렬1", example = "")
+    private Integer spprtAppctnFileOrd1;
+    @Schema(title = "지원신청파일정렬2", example = "")
+    private Integer spprtAppctnFileOrd2;
+    @Schema(title = "지원신청파일정렬3", example = "")
+    private Integer spprtAppctnFileOrd3;
+    @Schema(title = "지원신청파일정렬4", example = "")
+    private Integer spprtAppctnFileOrd4;
+    @Schema(title = "지원신청파일정렬5", example = "")
+    private Integer spprtAppctnFileOrd5;
+
 
     @Schema(title = "계좌파일순번", example = "숫자")
     private Integer acntFileSeq;

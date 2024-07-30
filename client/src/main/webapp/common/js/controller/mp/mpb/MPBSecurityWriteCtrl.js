@@ -80,15 +80,16 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                 return false;
             }
 
+            /* 2024-07-29 수정 */
             if (isFile) {
-
-                if(firstFileFlag == 0) {
-                    $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().remove();
-                    firstFileFlag = -1;
-                }
-
                 // if($('#frmData2').closest('div').hasClass('active')) {
-                if($(".paymentInfoManagPopup").css("display") != "block") {
+                // if($(".paymentInfoManagPopup").css("display") != "block") {
+                if($(".paymentInfoManagPopup a.active span").text().trim() != "선급금") {
+
+                    if(firstFileFlag == 0) {
+                        $('#' + fileId).closest(".form-group").find(".file-list-area-wrap").children().first().remove();
+                        firstFileFlag = -1;
+                    }
 
                     // if(fileId == "fileSearch0" || fileId == "fileSearch1" || fileId == "fileSearch2" || fileId == "fileSearch3" || fileId == "fileSearch4") {
                     if(fileId.includes("FileSearch")) {
@@ -329,6 +330,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                         }else if($("#spprt2").css("display") == 'block'){
                             $formObj = $('#spprtform2');
                             var tabFlag = $formObj.find(".tabFlag").val();
+                            var file = $formObj.find('.searchFile'); //2024-07-29 추가
 
                             if($formObj.find("#accsDt2").val() == "") {
                                 alert("접수일을 입력해주세요");
@@ -352,7 +354,8 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             }
 
                             if (tabFlag == "insert") {
-                                if ($formObj.find("#spprtAppctnFileSeq1").val() == "") {
+                                /* 2024-07-29 수정 */
+                                /*if ($formObj.find("#spprtAppctnFileSeq1").val() == "") {
                                     alert("지원금신청서를 등록해주세요");
                                     $formObj.find("#spprtAppctnFileSeq1").focus();
                                     return;
@@ -371,6 +374,18 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     alert("검수확인서를 등록해주세요");
                                     $formObj.find("#insptChkFileSeq").focus();
                                     return;
+                                }*/
+                                var isFileAttached = false;
+                                file.each(function() {
+                                    if ($(this).val() != "") {
+                                        isFileAttached = true;
+                                        return false; // 하나라도 첨부되면 루프 중단
+                                    }
+                                });
+                                if (!isFileAttached) {
+                                    alert("신청서류를 모두 등록해주세요.");
+                                    focus(".fileForm");
+                                    return false;
                                 }
                             }
 
@@ -428,6 +443,12 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
             fileForm : {
                 event : {
                     click : function(e) {
+                        //2024-07-29 추가
+                        if($(this).closest(".form-group").find(".file-list-area-wrap").children().length >= 5) {
+                            alert('파일 첨부는 5개까지 가능합니다.');
+                            return false;
+                        }
+
                         var breckIdx = 0;
                         var idx = 0;
 

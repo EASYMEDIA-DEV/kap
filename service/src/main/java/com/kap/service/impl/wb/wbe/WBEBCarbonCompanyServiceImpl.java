@@ -1178,6 +1178,8 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         if(wBEBCarbonCompanyMstInsertDTO.getSpprtList() != null){
             WBEBCarbonCompanySpprtDTO wBEBCarbonCompanySpprtDTO = wBEBCarbonCompanyMstInsertDTO.getSpprtList().get(0);
             wBEBCarbonCompanySpprtDTO.setAppctnSeq(wBEBCarbonCompanyMstInsertDTO.getAppctnSeq());
+
+            //2024-07-29 파일 처리 로직 수정
             //신청파일 넣기
             List<COFileDTO> rtnList = null;
             Map<String, MultipartFile> files = multiRequest.getFileMap();
@@ -1185,11 +1187,20 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             MultipartFile file;
             int atchFileCnt = 0;
 
-            while (itr.hasNext()) {
+            /*while (itr.hasNext()) {
                 Map.Entry<String, MultipartFile> entry = itr.next();
                 file = entry.getValue();
 
                 if (file.getName().indexOf("FileSeq") > -1  && file.getSize() > 0) {
+                    atchFileCnt++;
+                }
+            }*/
+
+            while (itr.hasNext()) {
+                Map.Entry<String, MultipartFile> entry = itr.next();
+                file = entry.getValue();
+
+                if (file.getName().indexOf("atchFile") > -1  && file.getSize() > 0) {
                     atchFileCnt++;
                 }
             }
@@ -1197,41 +1208,64 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
             if (!files.isEmpty()) {
                 rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
-                for (int i = 0; i < rtnList.size() ; i++) {
+                //선급금
+                if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03001")) {
+                    for (int i = 0; i < rtnList.size(); i++) {
+
+                        List<COFileDTO> fileList = new ArrayList();
+                        Integer fileSeq;
+
+                        if ("99".equals(rtnList.get(i).getRespCd())) {
+                            fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(i);
+                        } else {
+                            rtnList.get(i).setStatus("success");
+                            rtnList.get(i).setFieldNm("fileSeq");
+                            fileList.add(rtnList.get(i));
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+
+                            fileSeq = fileSeqMap.get("fileSeq");
+                        }
+
+                        //지원금신청서
+                        if (i == 0) wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
+                        //협약서
+                        if (i == 1) wBEBCarbonCompanySpprtDTO.setAgrmtFileSeq(fileSeq);
+                        //보증보험증
+                        if (i == 2) wBEBCarbonCompanySpprtDTO.setGrnteInsrncFileSeq(fileSeq);
+
+                    }
+                }
+                //지원금
+                else if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03002")){
+                    //지원금신청서
+//                        if(i == 0)wBCBSecuritySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
+                    //거래명세서
+//                        if(i == 1)wBCBSecuritySpprtDTO.setBlingFileSeq(fileSeq);
+                    //매출전표
+//                        if(i == 2)wBCBSecuritySpprtDTO.setSlsFileSeq(fileSeq);
+                    //검수확인서
+//                        if(i == 3)wBCBSecuritySpprtDTO.setInsptChkFileSeq(fileSeq);
 
                     List<COFileDTO> fileList = new ArrayList();
                     Integer fileSeq;
 
-                    if ("99".equals(rtnList.get(i).getRespCd())) {
-                        fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(i);
+                    if ("99".equals(rtnList.get(0).getRespCd())) {
+                        fileSeq = wBEBCarbonCompanyMstInsertDTO.getFileSeqList().get(0);
                     } else {
-                        rtnList.get(i).setStatus("success");
-                        rtnList.get(i).setFieldNm("fileSeq");
-                        fileList.add(rtnList.get(i));
+                        for(COFileDTO tempDto : rtnList){
+                            if(tempDto.getRespMsg() == null) {
+                                tempDto.setStatus("success");
+                                tempDto.setFieldNm("fileSeq");
+                                fileList.add(tempDto);
+                            }
+                        }
+
                         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
 
                         fileSeq = fileSeqMap.get("fileSeq");
                     }
 
-                    //선급금 지급
-                    if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03001")){
-                        //지원금신청서
-                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
-                        //협약서
-                        if(i == 1)wBEBCarbonCompanySpprtDTO.setAgrmtFileSeq(fileSeq);
-                        //보증보험증
-                        if(i == 2)wBEBCarbonCompanySpprtDTO.setGrnteInsrncFileSeq(fileSeq);
-                    }
-                    else if(wBEBCarbonCompanySpprtDTO.getGiveType().equals("PRO_TYPE03002")){
-                        //지원금신청서
-                        if(i == 0)wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
-                        //거래명세서
-                        if(i == 1)wBEBCarbonCompanySpprtDTO.setBlingFileSeq(fileSeq);
-                        //매출전표
-                        if(i == 2)wBEBCarbonCompanySpprtDTO.setSlsFileSeq(fileSeq);
-                        //검수확인서
-                        if(i == 3)wBEBCarbonCompanySpprtDTO.setInsptChkFileSeq(fileSeq);
-                    }
+                    wBEBCarbonCompanySpprtDTO.setSpprtAppctnFileSeq(fileSeq);
                 }
             }
             wBEBCarbonCompanySpprtDTO.setModId(coaAdmDTO.getId());
