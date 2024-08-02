@@ -347,84 +347,80 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
 
         wBDBSafetyMapper.updateAppctnDtl(wBDBSafetyDtlDTO);
 
+        /* 2024-08-02 관리자 상세 모든 단계 한 번에 수정 되도록 변경 */
         //Pbsn ○
-        WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(rsumeOrd);
-        if(wBDBSafetyPbsnDtlDTO.getBsnPmt() == null || wBDBSafetyPbsnDtlDTO.getBsnPmt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setBsnPmt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getBsnPlanDt() == null || wBDBSafetyPbsnDtlDTO.getBsnPlanDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setBsnPlanDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getChkDt() == null || wBDBSafetyPbsnDtlDTO.getChkDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setChkDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getExamScore() == null || wBDBSafetyPbsnDtlDTO.getExamScore().equals("")){
-            wBDBSafetyPbsnDtlDTO.setExamScore(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getPayDt() == null || wBDBSafetyPbsnDtlDTO.getPayDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setPayDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getNslltSchdlDt() == null || wBDBSafetyPbsnDtlDTO.getNslltSchdlDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setNslltSchdlDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getAccsDt() == null || wBDBSafetyPbsnDtlDTO.getAccsDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setAccsDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getGiveSeq() == null || wBDBSafetyPbsnDtlDTO.getGiveSeq().equals("")){
-            wBDBSafetyPbsnDtlDTO.setGiveSeq(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setCmpltnBrfngDt(null);
-        }
-        if(wBDBSafetyPbsnDtlDTO.getLastChkDt() == null || wBDBSafetyPbsnDtlDTO.getLastChkDt().equals("")){
-            wBDBSafetyPbsnDtlDTO.setLastChkDt(null);
-        }
-
-        wBDBSafetyPbsnDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
-        wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBDBSafetyPbsnDtlDTO.setModId(coaAdmDTO.getId());
-        wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-
-        //2024-06-04 사업비는 수정 가능하도록 변경
-        WBDBSafetyPbsnDtlDTO bsnPmtDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(0);
-        bsnPmtDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
-        bsnPmtDTO.setModId(coaAdmDTO.getId());
-        bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
-        if(bsnPmtDTO.getBsnPmt() == null || bsnPmtDTO.getBsnPmt().isEmpty()) {
-            bsnPmtDTO.setBsnPmt("0");
-        }
-        wBDBSafetyMapper.updateBsnPmtDtl(bsnPmtDTO);
-
-        //단계가 사업계획을 넘어갔을때만 수정
-        if(maxRsumeOrd > 2){
-            WBDBSafetyPbsnDtlDTO bsnPmtGroupDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(1);
-            bsnPmtGroupDTO.setDetailsKey(wBDBSafetyMstInsertDTO.getDetailsKey());
-
-            //사업계획, 지원금, 자부담 수정
-            wBDBSafetyMapper.updateBsnPmtGroupDtl(bsnPmtGroupDTO);
-        }
-
-
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBDBSafetyMstInsertDTO.getFileList());
 
-        WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = wBDBSafetyMstInsertDTO.getFileDtlList().get(rsumeOrd);
-        wBDBSafetyFileDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
-        wBDBSafetyFileDtlDTO.setRsumeOrd(maxRsumeOrd);
-        wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+rsumeOrd));
-        wBDBSafetyFileDtlDTO.setRegId(coaAdmDTO.getId());
-        wBDBSafetyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-        wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
+        int dtlListSize = wBDBSafetyMstInsertDTO.getPbsnDtlList().size();
+
+        //for(WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO : wBDBSafetyMstInsertDTO.getPbsnDtlList()){
+        for(int tempRsumeOrd =0; tempRsumeOrd < maxRsumeOrd; tempRsumeOrd++){
+
+            WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO = wBDBSafetyMstInsertDTO.getPbsnDtlList().get(tempRsumeOrd);
+
+            WBDBSafetyFileDtlDTO wBDBSafetyFileDtlDTO = wBDBSafetyMstInsertDTO.getFileDtlList().get(tempRsumeOrd);
+            wBDBSafetyFileDtlDTO.setRsumeSeq(wBDBSafetyPbsnDtlDTO.getRsumeSeq());
+            wBDBSafetyFileDtlDTO.setRsumeOrd(tempRsumeOrd+1);
+            wBDBSafetyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+tempRsumeOrd));
+            wBDBSafetyFileDtlDTO.setRegId(coaAdmDTO.getId());
+            wBDBSafetyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.insertAppctnFileDtl(wBDBSafetyFileDtlDTO);
+
+            if(wBDBSafetyPbsnDtlDTO.getBsnPmt() == null || wBDBSafetyPbsnDtlDTO.getBsnPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setBsnPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getBsnPlanDt() == null || wBDBSafetyPbsnDtlDTO.getBsnPlanDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setBsnPlanDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getChkDt() == null || wBDBSafetyPbsnDtlDTO.getChkDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setChkDt(null);
+            }
+
+            if(wBDBSafetyPbsnDtlDTO.getExamScore() == null || wBDBSafetyPbsnDtlDTO.getExamScore().equals("")){
+                wBDBSafetyPbsnDtlDTO.setExamScore(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getPayDt() == null || wBDBSafetyPbsnDtlDTO.getPayDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setPayDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getNslltSchdlDt() == null || wBDBSafetyPbsnDtlDTO.getNslltSchdlDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setNslltSchdlDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getAccsDt() == null || wBDBSafetyPbsnDtlDTO.getAccsDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setAccsDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getGiveSeq() == null || wBDBSafetyPbsnDtlDTO.getGiveSeq().equals("")){
+                wBDBSafetyPbsnDtlDTO.setGiveSeq(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setCmpltnBrfngDt(null);
+            }
+            if(wBDBSafetyPbsnDtlDTO.getLastChkDt() == null || wBDBSafetyPbsnDtlDTO.getLastChkDt().equals("")){
+                wBDBSafetyPbsnDtlDTO.setLastChkDt(null);
+            }
+
+            //2024-08-02 점검위원이 날아가는경우가 있어서 있는값으로 넣어줌
+            int chkCmssrSeq = (wBDBSafetyPbsnDtlDTO.getChkCmssrSeq() == null || wBDBSafetyPbsnDtlDTO.getChkCmssrSeq() <1) ? wBDBSafetyMstInsertDTO.getPicCmssrSeq() : wBDBSafetyPbsnDtlDTO.getChkCmssrSeq();
+
+            wBDBSafetyPbsnDtlDTO.setChkCmssrSeq(chkCmssrSeq);
+
+            //wBDBSafetyPbsnDtlDTO.setRsumeSeq(wBDBSafetyMstInsertDTO.getRsumeSeq());
+            wBDBSafetyPbsnDtlDTO.setRsumeOrd(tempRsumeOrd+1);
+            wBDBSafetyPbsnDtlDTO.setModId(coaAdmDTO.getId());
+            wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+            wBDBSafetyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+
+            rsumeOrdSet(coaAdmDTO, tempRsumeOrd+1, dtlListSize, wBDBSafetyMstInsertDTO, wBDBSafetyDtlDTO, wBDBSafetyPbsnDtlDTO);
+        }
 
         //회원○
         MPAUserDto mPAUserDto= wBDBSafetyMstInsertDTO.getMemList().get(0);
@@ -499,124 +495,133 @@ public class WBDBSafetyServiceImpl implements WBDBSafetyService {
             wBDBSafetyMapper.updateAppctnSpprt(wBDBSafetySpprtDTO);
         }
 
-
-        //최초점검, 최종점검, 검수보고 경우 추가 입력 확인
-        int firstAppctnRsumeDtlSeqIdgen = 0;
-
-        //신청 적합
-        if(maxRsumeOrd == 1 && "PRO_TYPE01001_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
-            firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
-            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
-            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_006");
-            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
-
-            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
-            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-        }
-        //사업계획 적합
-        else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
-            firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
-            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01003");
-            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01003_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01003_02_001");
-            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
-
-            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
-            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-        }
-        //최초점검 적합
-        else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
-            firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
-            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
-            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_006");
-            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
-
-            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
-            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-        }
-        //완료 보고 적합
-        else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
-            firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
-            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01005");
-            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01005_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01005_02_001");
-            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
-
-            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
-            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-        }
-        //최종점검 적합
-        else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
-            firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
-            wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
-            wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
-            wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
-            wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_004");
-            wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-
-            wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
-
-            wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
-            wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-            wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
-        }
-
-
         wBDBSafetyMstInsertDTO.setRespCnt(respCnt);
 
-
         return respCnt;
+    }
+
+    private void rsumeOrdSet(COUserDetailsDTO coaAdmDTO, int maxRsumeOrd, int dtlListSize, WBDBSafetyMstInsertDTO wBDBSafetyMstInsertDTO, WBDBSafetyDtlDTO wBDBSafetyDtlDTO, WBDBSafetyPbsnDtlDTO wBDBSafetyPbsnDtlDTO) throws Exception{
+
+        /*
+        dtlListSize :  최종적으로 진행 한 단계
+        maxRsumeOrd : 반복문돌면서 현재 진행중인 단계
+
+        현재 진행중인 단계보다 앞서가서 열을 만들면 안되기때문에 최종진행단계 이전까지만 작업을 해준다.
+         */
+
+        int firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+
+        if(dtlListSize >= maxRsumeOrd){
+            //신청 적합
+            if(maxRsumeOrd == 1 && "PRO_TYPE01001_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
+                //
+                wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+                wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01002");
+                wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01002_01_001");
+                wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01002_02_006");
+                wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+                wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            }
+            //사업계획 적합
+            else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
+                //firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+                wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01003");
+                wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01003_01_001");
+                wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01003_02_001");
+                wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+                wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            }
+            //최초점검 적합
+            else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
+                //firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+                wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01004");
+                wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01004_01_001");
+                wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01004_02_006");
+                wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+                wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            }
+            //완료 보고 적합
+            else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
+                //firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+                wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01005");
+                wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01005_01_001");
+                wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01005_02_001");
+                wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+                wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            }
+            //최종점검 적합
+            else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBDBSafetyDtlDTO.getMngSttsCd())){
+                //firstAppctnRsumeDtlSeqIdgen = cxAppctnRsumeDtlSeqIdgen.getNextIntegerId();
+                wBDBSafetyDtlDTO.setAppctnSeq(wBDBSafetyMstInsertDTO.getAppctnSeq());
+                wBDBSafetyDtlDTO.setRsumeSttsCd("PRO_TYPE01006");
+                wBDBSafetyDtlDTO.setAppctnSttsCd("PRO_TYPE01006_01_001");
+                wBDBSafetyDtlDTO.setMngSttsCd("PRO_TYPE01006_02_004");
+                wBDBSafetyDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+
+                wBDBSafetyDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyMapper.insertAppctnDtl(wBDBSafetyDtlDTO);
+
+                wBDBSafetyPbsnDtlDTO = new WBDBSafetyPbsnDtlDTO();
+                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBDBSafetyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            }
+        }
+
     }
 
     /**

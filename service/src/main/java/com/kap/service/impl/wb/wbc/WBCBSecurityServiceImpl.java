@@ -1,7 +1,6 @@
 package com.kap.service.impl.wb.wbc;
 
 import com.kap.common.utility.COPaginationUtil;
-import com.kap.core.dto.COAAdmDTO;
 import com.kap.core.dto.COFileDTO;
 import com.kap.core.dto.COUserDetailsDTO;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
@@ -347,10 +346,10 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
 
         wBCBSecurityMapper.updateAppctnDtl(wBCBSecurityDtlDTO);
 
+        /* 2024-08-02 관리자 상세 모든 단계 한 번에 수정 되도록 변경 */
         //Pbsn ○
         //상생 신청 파일 상세
         HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(wBCBSecurityMstInsertDTO.getFileList());
-
 
         int dtlListSize = wBCBSecurityMstInsertDTO.getPbsnDtlList().size();
 
@@ -422,27 +421,6 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             rsumeOrdSet(coaAdmDTO, tempRsumeOrd+1, dtlListSize, wBCBSecurityMstInsertDTO, wBCBSecurityDtlDTO, wBCBSecurityPbsnDtlDTO);
 
         }
-
-        //2024-06-04 사업비는 수정 가능하도록 변경
-        WBCBSecurityPbsnDtlDTO bsnPmtDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(0);
-        bsnPmtDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
-        bsnPmtDTO.setModId(coaAdmDTO.getId());
-        bsnPmtDTO.setModIp(coaAdmDTO.getLoginIp());
-        if(bsnPmtDTO.getBsnPmt() == null || bsnPmtDTO.getBsnPmt().isEmpty()) {
-            bsnPmtDTO.setBsnPmt("0");
-        }
-        wBCBSecurityMapper.updateBsnPmtDtl(bsnPmtDTO);
-
-        //단계가 사업계획을 넘어갔을때만 수정
-        if(maxRsumeOrd > 2){
-            WBCBSecurityPbsnDtlDTO bsnPmtGroupDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(1);
-            bsnPmtGroupDTO.setDetailsKey(wBCBSecurityMstInsertDTO.getDetailsKey());
-
-            //사업계획, 지원금, 자부담 수정
-            wBCBSecurityMapper.updateBsnPmtGroupDtl(bsnPmtGroupDTO);
-        }
-
-
 
         //회원○
         MPAUserDto mPAUserDto= wBCBSecurityMstInsertDTO.getMemList().get(0);
@@ -517,14 +495,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
             wBCBSecurityMapper.updateAppctnSpprt(wBCBSecuritySpprtDTO);
         }
 
-
-        //최초점검, 최종점검, 검수보고 경우 추가 입력 확인
-        int firstAppctnRsumeDtlSeqIdgen = 0;
-
-
-
         wBCBSecurityMstInsertDTO.setRespCnt(respCnt);
-
 
         return respCnt;
     }
