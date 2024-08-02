@@ -48,6 +48,9 @@
             <input type="hidden" id="episd" name="episd" value="${rtnData.episd}"/>
             <input type="hidden" id="year" name="year" value="${rtnData.year}"/>
 
+
+
+
             <%--<h6 class="mt0">회차 정보</h6>
 
             <fieldset>
@@ -1915,6 +1918,11 @@
                     <button type="submit" class="btn btn-sm btn-success">저장</button>
                 </div>
             </div>
+
+            <!--2024-08-02 위에다 넣으면 꼬여서 밑으로 뺌-->
+            <c:forEach var="rtnDtl" items="${rtnDtl}" varStatus="status">
+                <input type="hidden" class="notRequired" name="pbsnDtlList[${status.index}].rsumeSeq" value="${rtnDtl.rsumeSeq}">
+            </c:forEach>
         </form>
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>
