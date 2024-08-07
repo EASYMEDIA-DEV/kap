@@ -249,7 +249,7 @@
                 <div class="form-group text-sm ">
                     <label class="col-sm-2 control-label text-bold">자격증 번호<span class="star"> *</span></label>
                     <div class="col-sm-4">
-                        <input type="hidden" name="orgJdgmtNo" id="orgJdgmtNo" value="${rtnDto.jdgmtNo}"/>
+                        <input type="hidden" class="notRequired" name="orgJdgmtNo" id="orgJdgmtNo" value="${rtnDto.jdgmtNo}"/>
                         <input type="text" class="form-control input-sm" name="jdgmtNo" value="${ rtnDto.jdgmtNo }" maxlength="20" title="자격증 번호" placeholder="자격증 번호 입력"  <%--${ kl:decode(rtnDto.issueCd, 'EBD_SQ_I', 'readonly', '') }--%> />
                     </div>
                 </div>
