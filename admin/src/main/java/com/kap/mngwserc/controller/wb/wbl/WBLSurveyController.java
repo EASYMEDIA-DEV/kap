@@ -406,21 +406,21 @@ public class WBLSurveyController<sVASurveyMstDTO> {
                 }
             }
 
-            for(WBLSurveyMstSearchDTO temp : surveyList.getList()){
-                //System.out.println("@@@@ 2 getSrvRspnSeq = " + temp.getSrvRspnSeq());
+            /*for(WBLSurveyMstSearchDTO temp : surveyList.getList()){
+                System.out.println("@@@@ 2 getSrvRspnSeq = " + temp.getSrvRspnSeq());
 
                 if(temp.getList() != null && temp.getList().size()>0){
 
                     for(WBLSurveyMstSearchDTO temp2 : temp.getList()){
-                        /*System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
+                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
                         System.out.println("@ temp2 getSrvTypeNm = " + temp2.getSrvTypeNm());
                         System.out.println("@ temp2 getQstnOrd = " + temp2.getQstnOrd());
                         System.out.println("@ temp2 getQstnNm = " + temp2.getQstnNm());
                         System.out.println("@ temp2 getExmplAnswer = " + temp2.getExmplAnswer());
-                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());*/
+                        System.out.println("@ temp2 getSrvTypeCd = " + temp2.getSrvTypeCd());
                     }
                 }
-            }
+            }*/
 
             //엑셀 생성
             wLSurveyService.excelDownload(surveyList, qstnList, response);
