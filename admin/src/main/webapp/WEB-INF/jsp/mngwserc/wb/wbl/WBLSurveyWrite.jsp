@@ -223,7 +223,7 @@
                     <div class="form-group form-inline">
                         <label class="col-sm-1 control-label">점수<span class="star"> *</span></label>
                         <div class="col-sm-5">
-                            <p class="form-control-static">${rtnDto.score}</p>
+                            <p class="form-control-static">${rtnDto.score}<c:if test="${not empty rtnDto.percentage}"> (${rtnDto.percentage})</c:if></p>
                         </div>
                     </div>
                 </fieldset>

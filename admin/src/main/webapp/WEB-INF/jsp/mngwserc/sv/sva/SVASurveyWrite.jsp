@@ -122,10 +122,14 @@
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" <c:if test="${qstnList.ncsYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 필수응답
                                                 </label>
-                                                <%-- 2024-07-12 추가개발 ppt 3 추가 --%>
-                                                <c:if test="${qstnList.cd eq 'WIN02' || qstnList.cd eq 'WIN03'}">
+                                                <c:if test="${fn:contains(qstnList.cd, 'WIN')}">
+                                                    <%-- 2024-07-12 추가개발 ppt 3 추가, 2024-08-06 수정 --%>
                                                     <label class="checkbox-inline c-checkbox">
-                                                        <input type="checkbox" class="notRequired" name="nonApplicableYn" value="Y" <c:if test="${qstnList.nonApplicableYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                        <input type="checkbox" class="notRequired nonApplicableYn" name="nonApplicableYn" value="Y" <c:if test="${qstnList.nonApplicableYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                    </label>
+                                                    <%-- 2024-08-06 추가 --%>
+                                                    <label class="checkbox-inline c-checkbox">
+                                                        <input type="checkbox" class="notRequired scoreExclusionYn" name="scoreExclusionYn" value="Y" <c:if test="${qstnList.scoreExclusionYn eq 'Y'}">checked</c:if>  /><span class="ion-checkmark-round"></span> 점수 미반영
                                                     </label>
                                                 </c:if>
                                             </td>
@@ -235,10 +239,14 @@
                                                 <label class="checkbox-inline c-checkbox">
                                                     <input type="checkbox" class="notRequired" name="ncs_yn" value="Y" /><span class="ion-checkmark-round"></span> 필수응답
                                                 </label>
-                                                    <%-- 2024-07-12 추가개발 ppt 3 추가 --%>
-                                                <c:if test="${cdTwoList.cd eq 'WIN02' || cdTwoList.cd eq 'WIN03'}">
+                                                <c:if test="${fn:contains(cdTwoList.cd, 'WIN')}">
+                                                    <%-- 2024-07-12 추가개발 ppt 3 추가, 2024-08-06 수정 --%>
                                                     <label class="checkbox-inline c-checkbox">
-                                                        <input type="checkbox" class="notRequired" name="nonApplicableYn" value="Y" /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                        <input type="checkbox" class="notRequired nonApplicableYn" name="nonApplicableYn" value="Y" /><span class="ion-checkmark-round"></span> 해당사항 없음
+                                                    </label>
+                                                    <%-- 2024-08-06 추가 --%>
+                                                    <label class="checkbox-inline c-checkbox">
+                                                        <input type="checkbox" class="notRequired scoreExclusionYn" name="scoreExclusionYn" value="Y" /><span class="ion-checkmark-round"></span> 점수미반영
                                                     </label>
                                                 </c:if>
                                             </td>

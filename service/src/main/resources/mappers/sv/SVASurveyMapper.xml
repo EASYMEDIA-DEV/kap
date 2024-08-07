@@ -235,6 +235,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.15    박준희       최초생성
+        2024.08.06    장두석       상생체감도 추가개발 점수 미반영 컬럼 추가
     -->
 	<insert id="insertSurveyQstnDtl" parameterType="SVASurveyMstInsertDTO">
 		insert /* SVASurveyMapper.insertSurveyQstnDtl */ into sv_qstn_dtl
@@ -249,6 +250,7 @@
 		, ncs_yn
 		, qstn_ord
 		, non_applicable_yn
+		, score_exclusion_yn
 		, reg_id
 		, reg_ip
 		, reg_dtm
@@ -269,6 +271,7 @@
 			, #{list.ncsYn}
 			, #{list.qstnOrd}
 			, #{list.nonApplicableYn}
+			, #{list.scoreExclusionYn}
 			, #{list.regId}
 			, #{list.regIp}
 			, now()
@@ -493,6 +496,7 @@
     ==========   ========   ==============
     2023.11.15    박준희       최초생성
     2024.07.12	  장두석		  추가개발 ppt 3 해당사항 없음 항목 추가
+	2024.08.06    장두석       상생체감도 추가개발 점수 미반영 컬럼 추가
 -->
 	<select id="selectSurveyQstnDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
 
@@ -509,6 +513,7 @@
 			 , ncs_yn
 			 , qstn_ord
 		     , non_applicable_yn
+			 , score_exclusion_yn
 			 , exmpl_cnt
 	  		 , qstn_grp_ord
 			 , qstn_cnt
@@ -526,6 +531,7 @@
 					  , b.ncs_yn
 					  , b.qstn_ord
 					  , b.non_applicable_yn
+					  , b.score_exclusion_yn
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
 					  , case when @grp = binary  b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum
@@ -573,6 +579,7 @@
     ==========   ========   ==============
     2023.11.15    박준희       최초생성
     2024.07.12	  장두석		  추가개발 ppt 3 해당사항 없음 항목 추가
+	2024.08.06    장두석       상생체감도 추가개발 점수 미반영 컬럼 추가
 -->
 	<select id="selectSurveyQstnTypeDtlList" parameterType="SVASurveyMstSearchDTO" resultType="SVASurveyQstnDtlDTO">
 
@@ -590,6 +597,7 @@
 			 , ncs_yn
 			 , qstn_ord
 		     , non_applicable_yn
+			 , score_exclusion_yn
 			 , exmpl_cnt
 			 , qstn_grp_ord
 			 , qstn_cnt
@@ -610,6 +618,7 @@
 					  , b.ncs_yn
 					  , b.qstn_ord
 					  , b.non_applicable_yn
+					  , b.score_exclusion_yn
 					  , (select count(*) from sv_exmpl_dtl where qstn_seq = b.qstn_seq) as exmpl_cnt
 					  , case when @grp = binary b.ctgry_cd then @rownum:=@rownum + 1 else @rownum :=1 end as qstn_grp_ord
 					  , (@grp := ctgry_cd) as dum

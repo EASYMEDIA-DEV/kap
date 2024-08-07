@@ -63,6 +63,10 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "점수")
     private String score;
 
+    /* 2024-08-06 추가개발 점수 백분율 값 추가 */
+    @Schema(title = "척도 문항 사용자 점수에 대한 백분율")
+    private String percentage;
+
     @Schema(title = "대표자명")
     private String rprsntNm;
 

@@ -704,7 +704,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellStyle(style_body);
 
 			cell = row.createCell(9);
-			cell.setCellValue(list.get(i).getScore());
+			cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
 			cell.setCellStyle(style_body);
 
 			cell = row.createCell(10);

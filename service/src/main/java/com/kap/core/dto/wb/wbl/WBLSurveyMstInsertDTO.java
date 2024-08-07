@@ -107,6 +107,10 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "인증번호 발송 부품사 리스트")
     private List<WBLSurveyMstInsertDTO> sendList;
 
+    /* 2024-08-06 추가개발 점수 백분율 값 추가 */
+    @Schema(title = "척도 문항 사용자 점수에 대한 백분율")
+    private String percentage;
+
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
     @Schema(title = "등록일시", example = "yyyy-MM-dd hh:mm:ss")

@@ -70,6 +70,11 @@ public class SVASurveyQstnDtlDTO extends BaseDTO  {
     @Builder.Default
     private String nonApplicableYn = "N";
 
+    // 2024-08-06 추가개발
+    @Schema(title = "점수 미반영 여부", example = "Y/N")
+    @Builder.Default
+    private String scoreExclusionYn = "N";
+
     @Schema(title = "질문순번", example = "")
     @NotNull
     private Integer qstnOrd;
