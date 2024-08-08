@@ -391,6 +391,7 @@
 			 , b.srv_seq
 			 , (select titl from sv_mst where srv_seq = b.srv_seq) as titl
 			 , a.srv_rspn_seq
+			 , a.crtfn_no
 			 , a.ptcpt_cd
 			 , a.cmpltn_yn
 			 , a.ptcpt_cmpltn_dtm
