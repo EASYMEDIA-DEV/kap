@@ -237,12 +237,12 @@ define(["ezCtrl"], function(ezCtrl) {
 
                             // 가져온 배열의 값들 중 '04'라는 단어가 포함되지 않은 단어가 있는지 확인 (선발대기가 아닌 데이터)
                             var containsNotValue = checkedValues.some(function(value) {
-                                return !value.includes('04');
+                                return !value.includes('01') && !value.includes('04') && !value.includes('05'); //2024-08-08 수정 (선발/미선발 상태도 수정 가능하도록)
                             });
 
                             // 선발대기여부 확인
                             if(containsNotValue) {
-                                alert("선발대기 상태의 회원만 선택 가능합니다.");
+                                alert("선발대기, 선발 또는 미선발 상태의 회원만 선택 가능합니다."); //2024-08-08 수정
                                 return false;
                             }
 
@@ -278,7 +278,12 @@ define(["ezCtrl"], function(ezCtrl) {
                             }
 
                             // 선발/미선발 메시지 분류
-                            var conMsg = sttsVal == "Y" ? "선택한 회원을 선발하시겠습니까?" : "선택한 회원을 미선발하시겠습니까?";
+                            /* 2024-08-08 수정 s */
+                            var conMsg = "페이지 새로고침 후 다시 진행해주세요.";
+                            if(sttsVal == "Y") conMsg = "선택한 회원을 선발하시겠습니까?";
+                            if(sttsVal == "N") conMsg = "선택한 회원을 미선발하시겠습니까?";
+                            if(sttsVal == "R") conMsg = "선택한 회원을 선발대기 상태로 전환하시겠습니까?";
+                            /* 2024-08-08 수정 e */
 
                             if(sttsVal == "Y"){
                                 var paramObj = {}
@@ -336,6 +341,42 @@ define(["ezCtrl"], function(ezCtrl) {
                                     }
                                 }, "./fxnumChk", paramObj, "text");
                             }
+                            else if(sttsVal == "N") { //2024-08-08 수정
+                                if(confirm(conMsg)) {
+                                    var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
+                                        return $(this).val();
+                                    }).get();
+
+                                    jQuery.ajax({
+                                        type : "post",
+                                        url : "./stts-update",
+                                        data :
+                                            {
+                                                "delValueList" : delValueList
+                                                , "stts" : sttsVal
+                                                , "_csrf": $("#csrfKey").val()
+                                            },
+                                        dataType : "json",
+                                        success : function(r)
+                                        {
+                                            if (r.respCnt > 0)
+                                            {
+                                                alert("처리되었습니다.");
+                                                location.reload();
+                                            }
+                                            else
+                                            {
+                                                alert("잘못된 접근입니다.");
+                                            }
+                                        },
+                                        error : function(xhr, ajaxSettings, thrownError)
+                                        {
+                                            alert("잠시후 다시 시도 바랍니다.");
+                                        }
+                                    });
+                                }
+                            }
+                            /* 2024-08-08 추가 s */
                             else {
                                 if(confirm(conMsg)) {
                                     var delValueList = jQuery("input:checkbox[name='delValueList']:checked").map(function() {
@@ -371,6 +412,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                     });
                                 }
                             }
+                            /* 2024-08-08 추가 e */
                         }
                     }
                 }

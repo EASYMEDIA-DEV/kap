@@ -185,6 +185,9 @@ public class EBHEduApplicantServiceImpl implements EBHEduApplicantService {
             else if("N".equals(pEBHEduApplicantMstDTO.getStts())) {
                 pEBHEduApplicantMstDTO.setSttsCd("EDU_STTS_CD05");
             }
+            else if("R".equals(pEBHEduApplicantMstDTO.getStts())) {
+                pEBHEduApplicantMstDTO.setSttsCd("EDU_STTS_CD04");
+            }
 
             return pEBHEduApplicantMapper.updateStts(pEBHEduApplicantMstDTO);
         }

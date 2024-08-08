@@ -261,6 +261,7 @@
 				<div class="pull-right">
 					<button type="button" class="btn btn-success btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="Y">선발</button>
 					<button type="button" class="btn btn-danger btn-sm mb-sm btnStts" style="width: 60px" data-stts-val="N">미선발</button>
+					<button type="button" class="btn btn-info btn-sm mb-sm btnStts" data-stts-val="R">선발대기</button> <%-- 2024-08-08 추가 --%>
 				</div>
 			</div>
 			<!--VUE 영역 시작 -->

@@ -18,10 +18,7 @@
             <input type="hidden" id="episdSeq" name="episdSeq" value="${rtnDto.episdSeq}" />
             <input type="hidden" id="episdOrd" name="episdOrd" value="${rtnDto.episdOrd}" />
             <input type="hidden" id="episdYear" name="episdYear" value="${kl:convertDate(rtnDto.episdYear, 'yyyy-MM-dd', 'yyyy', '-')}" />
-            <%--<c:if test="${ fn:contains(rtnDto.sttsCd, '04') }">
-                <input type="hidden" class="notRequired" id="stts" name="stts" value="N" />
-            </c:if>--%>
-            <c:if test="${ not fn:contains(rtnDto.sttsCd, '04') }">
+            <c:if test="${ not (fn:contains(rtnDto.sttsCd, '04') or fn:contains(rtnDto.sttsCd, '05') or fn:contains(rtnDto.sttsCd, '01')) }"> <%-- 2024-08-08 수정 --%>
                 <input type="hidden" class="notRequired" id="sttsCd" name="sttsCd" value="${rtnDto.sttsCd}" />
             </c:if>
             <input type="hidden" id="ptcptBsnmNo" name="ptcptBsnmNo" value="${rtnDto.ptcptBsnmNo}" />
@@ -429,7 +426,7 @@
                 <div class="form-group text-sm">
                     <label class="col-sm-1 control-label">선발상태<span class="star"> *</span></label>
                     <div class="col-sm-2">
-                        <select class="form-control input-sm" data-name="sttsCd" name="sttsCd" title="선발상태" <c:if test="${ not (fn:contains(rtnDto.sttsCd, '04')) }">disabled</c:if>>
+                        <select class="form-control input-sm" data-name="sttsCd" name="sttsCd" title="선발상태" <c:if test="${ not (fn:contains(rtnDto.sttsCd, '04') or fn:contains(rtnDto.sttsCd, '05') or fn:contains(rtnDto.sttsCd, '01')) }">disabled</c:if>> <%-- 2024-08-08 수정 --%>
                             <%--<option value="">선택</option>--%>
                             <c:forEach var="cdList" items="${cdDtlList.EDU_STTS_CD}" varStatus="status">
                                 <c:choose>
@@ -442,7 +439,7 @@
                                     <c:when test="${ fn:contains(cdList.cd, '05') }">
                                         <option value="${cdList.cd}" <c:if test="${rtnDto.sttsCd eq cdList.cd}">selected</c:if>>미선발</option>
                                     </c:when>
-                                    <c:when test="${ not (fn:contains(rtnDto.sttsCd, '04')) }">
+                                    <c:when test="${ not (fn:contains(rtnDto.sttsCd, '04') or fn:contains(rtnDto.sttsCd, '05') or fn:contains(rtnDto.sttsCd, '01')) }"> <%-- 2024-08-08 수정 --%>
                                         <c:choose>
                                             <c:when test="${ fn:contains(cdList.cd, '02') }">
                                                 <option value="${cdList.cd}" <c:if test="${rtnDto.sttsCd eq cdList.cd}">selected</c:if>>신청취소</option>
@@ -462,9 +459,9 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <div class="col-sm-5" style="padding-top: 7px">
+                    <%--<div class="col-sm-5" style="padding-top: 7px">
                         ※ 선발여부 설정 후 수정이 불가능하오니 주의바랍니다
-                    </div>
+                    </div> 2024-08-08 삭제 --%>
                 </div>
             </fieldset>
 
