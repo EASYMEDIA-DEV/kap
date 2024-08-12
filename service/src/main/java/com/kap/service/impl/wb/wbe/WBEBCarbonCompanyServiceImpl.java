@@ -354,72 +354,77 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
 
         int dtlListSize = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().size();
 
-        //for(WBEBCarbonCompanyPbsnDtlDTO wBDBSafetyPbsnDtlDTO : wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList()){
-        for(int tempRsumeOrd =0; tempRsumeOrd < maxRsumeOrd; tempRsumeOrd++){
+        //for(WBEBCarbonCompanyPbsnDtlDTO wBDBCarbonCompanyPbsnDtlDTO : wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList()){
+        for(int tempRsumeOrd = 0; tempRsumeOrd < maxRsumeOrd; tempRsumeOrd++){
 
-            WBEBCarbonCompanyPbsnDtlDTO wBDBSafetyPbsnDtlDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(tempRsumeOrd);
+            WBEBCarbonCompanyPbsnDtlDTO wBDBCarbonCompanyPbsnDtlDTO = wBEBCarbonCompanyMstInsertDTO.getPbsnDtlList().get(tempRsumeOrd);
 
             WBEBCarbonCompanyFileDtlDTO wBEBCarbonCompanyFileDtlDTO = wBEBCarbonCompanyMstInsertDTO.getFileDtlList().get(tempRsumeOrd);
-            wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(wBDBSafetyPbsnDtlDTO.getRsumeSeq());
+            wBEBCarbonCompanyFileDtlDTO.setRsumeSeq(wBDBCarbonCompanyPbsnDtlDTO.getRsumeSeq());
             wBEBCarbonCompanyFileDtlDTO.setRsumeOrd(tempRsumeOrd+1);
             wBEBCarbonCompanyFileDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"+tempRsumeOrd));
             wBEBCarbonCompanyFileDtlDTO.setRegId(coaAdmDTO.getId());
             wBEBCarbonCompanyFileDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
             wBEBCarbonCompanyMapper.insertAppctnFileDtl(wBEBCarbonCompanyFileDtlDTO);
 
-            if(wBDBSafetyPbsnDtlDTO.getBsnPmt() == null || wBDBSafetyPbsnDtlDTO.getBsnPmt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setBsnPmt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getBsnPmt() == null || wBDBCarbonCompanyPbsnDtlDTO.getBsnPmt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setBsnPmt(null);
             }
-            if(wBDBSafetyPbsnDtlDTO.getBsnPlanDt() == null || wBDBSafetyPbsnDtlDTO.getBsnPlanDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setBsnPlanDt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getBsnPlanDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getBsnPlanDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setBsnPlanDt(null);
             }
-            if(wBDBSafetyPbsnDtlDTO.getSpprtPmt() == null || wBDBSafetyPbsnDtlDTO.getSpprtPmt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setSpprtPmt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getSpprtPmt() == null || wBDBCarbonCompanyPbsnDtlDTO.getSpprtPmt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setSpprtPmt(null);
             }
-            if(wBDBSafetyPbsnDtlDTO.getPhswPmt() == null || wBDBSafetyPbsnDtlDTO.getPhswPmt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setPhswPmt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getPhswPmt() == null || wBDBCarbonCompanyPbsnDtlDTO.getPhswPmt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setPhswPmt(null);
             }
-            if(wBDBSafetyPbsnDtlDTO.getTtlPmt() == null || wBDBSafetyPbsnDtlDTO.getTtlPmt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setTtlPmt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getTtlPmt() == null || wBDBCarbonCompanyPbsnDtlDTO.getTtlPmt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setTtlPmt(null);
             }
-            if(wBDBSafetyPbsnDtlDTO.getChkDt() == null || wBDBSafetyPbsnDtlDTO.getChkDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setChkDt(null);
-            }
-
-            if(wBDBSafetyPbsnDtlDTO.getExamScore() == null || wBDBSafetyPbsnDtlDTO.getExamScore().equals("")){
-                wBDBSafetyPbsnDtlDTO.setExamScore(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getPayDt() == null || wBDBSafetyPbsnDtlDTO.getPayDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setPayDt(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getNslltSchdlDt() == null || wBDBSafetyPbsnDtlDTO.getNslltSchdlDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setNslltSchdlDt(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getAccsDt() == null || wBDBSafetyPbsnDtlDTO.getAccsDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setAccsDt(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getGiveSeq() == null || wBDBSafetyPbsnDtlDTO.getGiveSeq().equals("")){
-                wBDBSafetyPbsnDtlDTO.setGiveSeq(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBDBSafetyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setCmpltnBrfngDt(null);
-            }
-            if(wBDBSafetyPbsnDtlDTO.getLastChkDt() == null || wBDBSafetyPbsnDtlDTO.getLastChkDt().equals("")){
-                wBDBSafetyPbsnDtlDTO.setLastChkDt(null);
+            if(wBDBCarbonCompanyPbsnDtlDTO.getChkDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getChkDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setChkDt(null);
             }
 
-            //2024-08-02 점검위원이 날아가는경우가 있어서 있는값으로 넣어줌
-            int chkCmssrSeq = (wBDBSafetyPbsnDtlDTO.getChkCmssrSeq() == null || wBDBSafetyPbsnDtlDTO.getChkCmssrSeq() <1) ? wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() : wBDBSafetyPbsnDtlDTO.getChkCmssrSeq();
+            if(wBDBCarbonCompanyPbsnDtlDTO.getExamScore() == null || wBDBCarbonCompanyPbsnDtlDTO.getExamScore().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setExamScore(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getPayDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getPayDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setPayDt(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getNslltSchdlDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setNslltSchdlDt(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getAccsDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getAccsDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setAccsDt(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getGiveSeq() == null || wBDBCarbonCompanyPbsnDtlDTO.getGiveSeq().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setGiveSeq(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getCmpltnBrfngDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setCmpltnBrfngDt(null);
+            }
+            if(wBDBCarbonCompanyPbsnDtlDTO.getLastChkDt() == null || wBDBCarbonCompanyPbsnDtlDTO.getLastChkDt().equals("")){
+                wBDBCarbonCompanyPbsnDtlDTO.setLastChkDt(null);
+            }
 
-            wBDBSafetyPbsnDtlDTO.setChkCmssrSeq(chkCmssrSeq);
+            //2024-08-02 추가, 2024-08-12 수정
+            int chkCmssrSeq = (wBDBCarbonCompanyPbsnDtlDTO.getChkCmssrSeq() == null || wBDBCarbonCompanyPbsnDtlDTO.getChkCmssrSeq() < 1) ? ((wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() == null || wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq() < 1) ? 0 : wBEBCarbonCompanyMstInsertDTO.getPicCmssrSeq()) : wBDBCarbonCompanyPbsnDtlDTO.getChkCmssrSeq();
 
-            //wBDBSafetyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
-            wBDBSafetyPbsnDtlDTO.setRsumeOrd(tempRsumeOrd+1);
-            wBDBSafetyPbsnDtlDTO.setModId(coaAdmDTO.getId());
-            wBDBSafetyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
-            wBEBCarbonCompanyMapper.updateAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+            if(chkCmssrSeq == 0) {
+                wBDBCarbonCompanyPbsnDtlDTO.setChkCmssrSeq(null);
+            }
+            else {
+                wBDBCarbonCompanyPbsnDtlDTO.setChkCmssrSeq(chkCmssrSeq);
+            }
 
-            rsumeOrdSet(coaAdmDTO, tempRsumeOrd+1, dtlListSize, wBEBCarbonCompanyMstInsertDTO, wBEBCarbonCompanyDtlDTO, wBDBSafetyPbsnDtlDTO);
+            //wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(wBEBCarbonCompanyMstInsertDTO.getRsumeSeq());
+            wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(tempRsumeOrd+1);
+            wBDBCarbonCompanyPbsnDtlDTO.setModId(coaAdmDTO.getId());
+            wBDBCarbonCompanyPbsnDtlDTO.setModIp(coaAdmDTO.getLoginIp());
+            wBEBCarbonCompanyMapper.updateAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
+
+            rsumeOrdSet(coaAdmDTO, tempRsumeOrd+1, dtlListSize, wBEBCarbonCompanyMstInsertDTO, wBEBCarbonCompanyDtlDTO, wBDBCarbonCompanyPbsnDtlDTO);
         }
 
         //회원○
@@ -500,7 +505,7 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
         return respCnt;
     }
 
-    private void rsumeOrdSet(COUserDetailsDTO coaAdmDTO, int maxRsumeOrd, int dtlListSize, WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO, WBEBCarbonCompanyPbsnDtlDTO wBDBSafetyPbsnDtlDTO) throws Exception{
+    private void rsumeOrdSet(COUserDetailsDTO coaAdmDTO, int maxRsumeOrd, int dtlListSize, WBEBCarbonCompanyMstInsertDTO wBEBCarbonCompanyMstInsertDTO, WBEBCarbonCompanyDtlDTO wBEBCarbonCompanyDtlDTO, WBEBCarbonCompanyPbsnDtlDTO wBDBCarbonCompanyPbsnDtlDTO) throws Exception{
 
         /*
         dtlListSize :  최종적으로 진행 한 단계
@@ -526,13 +531,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
                 wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
-                wBDBSafetyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBDBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
             }
             //사업계획 적합
             else if(maxRsumeOrd == 2 && "PRO_TYPE01002_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -548,13 +553,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
                 wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
-                wBDBSafetyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBDBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
             }
             //최초점검 적합
             else if(maxRsumeOrd == 3 && "PRO_TYPE01003_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -570,13 +575,13 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
                 wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
-                wBDBSafetyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBDBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
 
-                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
             }
             //완료 보고 적합
             else if(maxRsumeOrd == 4 && "PRO_TYPE01004_02_005".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -592,12 +597,12 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
                 wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
-                wBDBSafetyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+                wBDBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
             }
             //최종점검 적합
             else if(maxRsumeOrd == 5 && "PRO_TYPE01005_02_003".equals(wBEBCarbonCompanyDtlDTO.getMngSttsCd())){
@@ -613,12 +618,12 @@ public class WBEBCarbonCompanyServiceImpl implements WBEBCarbonCompanyService {
                 wBEBCarbonCompanyDtlDTO.setRsumeOrd(maxRsumeOrd+1);
                 wBEBCarbonCompanyMapper.insertAppctnDtl(wBEBCarbonCompanyDtlDTO);
 
-                wBDBSafetyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
-                wBDBSafetyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
-                wBDBSafetyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
-                wBDBSafetyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
-                wBDBSafetyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
-                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBSafetyPbsnDtlDTO);
+                wBDBCarbonCompanyPbsnDtlDTO = new WBEBCarbonCompanyPbsnDtlDTO();
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeSeq(firstAppctnRsumeDtlSeqIdgen);
+                wBDBCarbonCompanyPbsnDtlDTO.setRsumeOrd(maxRsumeOrd+1);
+                wBDBCarbonCompanyPbsnDtlDTO.setRegId(coaAdmDTO.getId());
+                wBDBCarbonCompanyPbsnDtlDTO.setRegIp(coaAdmDTO.getLoginIp());
+                wBEBCarbonCompanyMapper.insertAppctnPbsnDtl(wBDBCarbonCompanyPbsnDtlDTO);
             }
         }
 

@@ -354,7 +354,7 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
         int dtlListSize = wBCBSecurityMstInsertDTO.getPbsnDtlList().size();
 
         //for(WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO : wBCBSecurityMstInsertDTO.getPbsnDtlList()){
-        for(int tempRsumeOrd =0; tempRsumeOrd < maxRsumeOrd; tempRsumeOrd++){
+        for(int tempRsumeOrd = 0; tempRsumeOrd < maxRsumeOrd; tempRsumeOrd++){
 
             WBCBSecurityPbsnDtlDTO wBCBSecurityPbsnDtlDTO = wBCBSecurityMstInsertDTO.getPbsnDtlList().get(tempRsumeOrd);
 
@@ -407,10 +407,15 @@ public class WBCBSecurityServiceImpl implements WBCBSecurityService {
                 wBCBSecurityPbsnDtlDTO.setLastChkDt(null);
             }
 
-            //2024-08-02 점검위원이 날아가는경우가 있어서 있는값으로 넣어줌
-            int chkCmssrSeq = (wBCBSecurityPbsnDtlDTO.getChkCmssrSeq() == null || wBCBSecurityPbsnDtlDTO.getChkCmssrSeq() <1) ? wBCBSecurityMstInsertDTO.getPicCmssrSeq() : wBCBSecurityPbsnDtlDTO.getChkCmssrSeq();
+            //2024-08-02 추가, 2024-08-12 수정
+            int chkCmssrSeq = (wBCBSecurityPbsnDtlDTO.getChkCmssrSeq() == null || wBCBSecurityPbsnDtlDTO.getChkCmssrSeq() < 1 ) ? ((wBCBSecurityMstInsertDTO.getPicCmssrSeq() == null || wBCBSecurityMstInsertDTO.getPicCmssrSeq() < 1 ) ? 0 : wBCBSecurityMstInsertDTO.getPicCmssrSeq()) : wBCBSecurityPbsnDtlDTO.getChkCmssrSeq();
 
-            wBCBSecurityPbsnDtlDTO.setChkCmssrSeq(chkCmssrSeq);
+            if(chkCmssrSeq == 0) {
+                wBCBSecurityPbsnDtlDTO.setChkCmssrSeq(null);
+            }
+            else {
+                wBCBSecurityPbsnDtlDTO.setChkCmssrSeq(chkCmssrSeq);
+            }
 
             //wBCBSecurityPbsnDtlDTO.setRsumeSeq(wBCBSecurityMstInsertDTO.getRsumeSeq());
             wBCBSecurityPbsnDtlDTO.setRsumeOrd(tempRsumeOrd+1);
