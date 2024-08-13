@@ -797,6 +797,7 @@
         ==========  ======  ==============
         2023.11.08  김대성     최초 생성
         2024.07.29  장두석     지원금 신청서 파일명, 정렬 조회 수정
+        2024.08.13  장두석     지원금 신청 반려 사유 컬럼 추가
     -->
     <select id="selectAppctnSpprt" parameterType="wBCBSecuritySearchDTO" resultType="wBCBSecuritySpprtDTO">
         SELECT /* WBCBSecurityMapper.selectAppctnSpprt */
@@ -813,6 +814,7 @@
              ,CMSSN_PMT
              ,APPCTN_STTS_CD
              ,(SELECT CD_NM FROM CO_CODE_MST WHERE CD = APPCTN_STTS_CD) AS APPCTN_STTS_NM
+             ,GIVE_RTRN_RSN_CNTN
              ,APPCTN_STTS_CHNG_DTM
              ,GIVE_DT
              ,GIVE_SEQ
@@ -902,6 +904,7 @@
      수정일     수정자     수정내용
     ==========  ======  ==============
     2023.11.08  김대성     최초 생성
+    2024.08.13  장두석     지원금 신청 반려 사유 컬럼 추가
     -->
     <update id="updateAppctnSpprt" parameterType="wBCBSecuritySpprtDTO">
         UPDATE CX_APPCTN_SPPRT_DTL SET /* WBCBSecurityMapper.updateAppctnSpprt */
@@ -922,6 +925,7 @@
              ,GIVE_DT = #{giveDt}
              ,GIVE_SEQ = #{giveSeq}
              ,MNG_STTS_CD = #{mngSttsCd}
+             ,GIVE_RTRN_RSN_CNTN = #{giveRtrnRsnCntn}
             <if test='siteGubun != "front"'>
              ,MNG_STTS_CHNG_DTM = NOW()
             </if>

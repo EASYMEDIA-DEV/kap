@@ -263,6 +263,23 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         cmmCtrl.getAppctnPdfDownload(fileName);
                     }
                 }
+            },
+            //2024-08-13 추가, 지원금 반려 사유
+            spprtMngSttsCd2 : {
+                event : {
+                    change : function() {
+                        var stts = $(this).val();
+
+                        if(stts == "PRO_TYPE03002_02_003") {
+                            $("#giveRtrnRsnCntn2").attr('disabled',false);
+                            $("#giveRtrnRsnCntn2").css("display", "block");
+                        }
+                        else {
+                            $("#giveRtrnRsnCntn2").attr('disabled',true);
+                            $("#giveRtrnRsnCntn2").css("display", "none");
+                        }
+                    }
+                }
             }
         },
         //선급금 해당 여부

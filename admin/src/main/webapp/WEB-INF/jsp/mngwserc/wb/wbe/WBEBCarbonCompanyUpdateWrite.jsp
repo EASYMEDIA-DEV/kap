@@ -907,6 +907,9 @@
                                             </c:choose>
                                                 <input type="hidden" class="notRequired" name="spprtList[1].appctnSttsCd"value="${rtnSpprt[1].appctnSttsCd}">
                                             </div>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control giveRtrnRsnCntn notRequired" id="giveRtrnRsnCntn2" name="spprtList[1].giveRtrnRsnCntn" value="${rtnSpprt[1].giveRtrnRsnCntn}" title="반려사유" placeholder="사유 입력" maxlength="50" <c:if test="${rtnSpprt[1].mngSttsCd ne 'PRO_TYPE03002_02_003'}">style="display: none;" disabled</c:if>/>
+                                            </div>
                                         </div>
                                     </div>
                                 </fieldset>

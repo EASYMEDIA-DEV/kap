@@ -83,6 +83,9 @@ public class WBCBSecuritySpprtDTO extends BaseDTO {
     @Schema(title = "관리상태명", example = "")
     private String mngSttsNm;
 
+    @Schema(title = "반려 사유", example = "")
+    private String giveRtrnRsnCntn;
+
     @Schema(title = "관리상태변경일시", example = "yyyy-MM-dd hh:mm:ss")
     private String mngSttsChngDtm;
 
