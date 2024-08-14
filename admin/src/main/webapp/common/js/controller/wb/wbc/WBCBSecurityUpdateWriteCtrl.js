@@ -688,6 +688,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 $(this).next().val("PRO_TYPE03002_01_003");
                             }else if($(this).val() == "PRO_TYPE03002_02_004"){
                                 $(this).next().val("PRO_TYPE03002_01_005");
+                            }else if($(this).val() == "PRO_TYPE03002_02_005"){
+                                $(this).next().val("PRO_TYPE03002_01_006");
                             }
                         });
 

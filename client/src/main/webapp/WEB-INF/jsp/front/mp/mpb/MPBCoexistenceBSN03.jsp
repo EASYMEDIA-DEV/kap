@@ -28,7 +28,7 @@
                     rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'
                 }">
                     <div>
-                        <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'}">
+                        <c:if test="${(rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003') and (not empty rtnSpprt[1].giveRtrnRsnCntn)}">
                             <div class="tooltip-wrap">
                                 <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
                                 <div class="tooltip-box">
@@ -38,6 +38,11 @@
                             </div>
                         </c:if>
                         <p class="box-label bigger arr"><span>보완요청</span></p>
+                    </div>
+                </c:if>
+                <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_006'}">
+                    <div>
+                        <p class="box-label bigger accepting"><span>적합</span></p>
                     </div>
                 </c:if>
                 <a class="btn-text-icon navy-arrow navy-txt" id="popOpen" href="javascript:" title="팝업 열기"><span class="md underline">지급정보관리</span></a>
