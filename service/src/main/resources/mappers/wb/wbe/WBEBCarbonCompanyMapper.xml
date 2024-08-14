@@ -923,8 +923,8 @@
             ,GIVE_DT = #{giveDt}
             ,GIVE_SEQ = #{giveSeq}
             ,MNG_STTS_CD = #{mngSttsCd}
-            ,GIVE_RTRN_RSN_CNTN = #{giveRtrnRsnCntn}
             <if test='siteGubun != "front"'>
+                ,GIVE_RTRN_RSN_CNTN = #{giveRtrnRsnCntn}
                 ,MNG_STTS_CHNG_DTM = NOW()
             </if>
             ,SPPRT_APPCTN_FILE_SEQ = #{spprtAppctnFileSeq}

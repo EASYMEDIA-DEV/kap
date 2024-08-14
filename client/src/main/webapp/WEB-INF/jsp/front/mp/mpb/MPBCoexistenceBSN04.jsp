@@ -19,6 +19,7 @@
 
 <div class="cont-sec no-border scroll-motion" data-controller="controller/mp/mpb/MPBSafetyWriteCtrl">
     <div class="for-motion">
+        <!-- 2024-08-14 수정 s -->
         <div class="sec-tit-area">
             <p class="f-title3">사업진행상황</p>
             <div class="btn-wrap">
@@ -26,11 +27,23 @@
                     rtnSpprt[0].appctnSttsCd eq 'PRO_TYPE03001_01_003' or
                     rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'
                 }">
-                    <p class="box-label bigger arr"><span>보완요청</span></p>
+                    <div>
+                        <c:if test="${rtnSpprt[1].appctnSttsCd eq 'PRO_TYPE03002_01_003'}">
+                            <div class="tooltip-wrap">
+                                <button class="tooltip-btn btn-icon" type="button" title="툴팁 보기"></button>
+                                <div class="tooltip-box">
+                                    <p class="txt">${rtnSpprt[1].giveRtrnRsnCntn}</p>
+                                    <button class="btn-close" title="툴팁 닫기" type="button"></button>
+                                </div>
+                            </div>
+                        </c:if>
+                        <p class="box-label bigger arr"><span>보완요청</span></p>
+                    </div>
                 </c:if>
-                <a class="btn-text-icon black-arrow" id="popOpen" href="javascript:" title="팝업 열기"><span>지급정보관리</span></a>
+                <a class="btn-text-icon navy-arrow navy-txt" id="popOpen" href="javascript:" title="팝업 열기"><span class="md underline">지급정보관리</span></a>
             </div>
         </div>
+        <!-- // 2024-08-14 수정 e -->
         <div class="sec-con-area">
             <div class="article-sec">
                 <div class="article-list-w accordion-st"><!-- accordion-st : 아코디언 스타일 -->
