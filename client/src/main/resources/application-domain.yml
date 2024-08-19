@@ -4,6 +4,7 @@ domain:
   port: 9013
 server:
   port: 9014
+  max-http-header-size: 40MB
   ssl:
     enabled: true
     key-store-type: PKCS12
@@ -12,6 +13,8 @@ server:
     key-alias: bns-ssl
   tomcat:
     additional-tld-skip-patterns: "*.jar"
+    max-http-form-post-size: 104886080
+    max-swallow-size: 104886080
   servlet:
     session:
       timeout: 120m
@@ -22,8 +25,22 @@ spring.config.activate.on-profile: stg
 domain:
   host: devapi.therailntel.com
   port: 20141
+server:
+  max-http-header-size: 40MB
+  servlet:
+    session:
+      timeout: 120m
+      cookie:
+        name: CLIENT
 
 ---
 spring.config.activate.on-profile: prod
 domain:
   host: api.therailntel.com
+server:
+  max-http-header-size: 40MB
+  servlet:
+    session:
+      timeout: 120m
+      cookie:
+        name: CLIENT

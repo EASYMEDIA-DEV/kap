@@ -26,16 +26,19 @@ domain:
   host: devapi.therailntel.com
   port: 20141
 server:
+  max-http-header-size: 40MB
   servlet:
     session:
       timeout: 7200
       cookie:
         name: ADMIN
+
 ---
 spring.config.activate.on-profile: prod
 domain:
   host: api.therailntel.com
 server:
+  max-http-header-size: 40MB
   servlet:
     session:
       timeout: 7200
