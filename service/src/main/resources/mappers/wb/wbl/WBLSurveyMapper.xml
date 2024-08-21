@@ -57,7 +57,9 @@
 			FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 				LEFT JOIN sv_qstn_dtl c ON b.srv_seq = c.srv_seq AND c.srv_type_cd IN ('QST05', 'QST06', 'QST07')
 				LEFT JOIN (
-					SELECT qstn_seq, MAX(exmpl_ord) AS max_ord FROM sv_exmpl_dtl GROUP BY qstn_seq
+					SELECT qstn_seq, MAX(exmpl_ord) AS max_ord FROM sv_exmpl_dtl A
+					JOIN sv_mtlcc_rspn_dtl B ON A.exmpl_seq = B.exmpl_seq
+				   GROUP BY qstn_seq
 				) d ON c.qstn_seq = d.qstn_seq
 			<include refid="selectSurveyListwhereSql" />
 			GROUP BY cxstn_srv_seq
@@ -408,7 +410,9 @@
 			left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 			LEFT JOIN sv_qstn_dtl c ON b.srv_seq = c.srv_seq AND c.srv_type_cd IN ('QST05', 'QST06', 'QST07')
 			LEFT JOIN (
-				SELECT qstn_seq, MAX(exmpl_ord) AS max_ord FROM sv_exmpl_dtl GROUP BY qstn_seq
+				SELECT qstn_seq, MAX(exmpl_ord) AS max_ord FROM sv_exmpl_dtl A
+				JOIN sv_mtlcc_rspn_dtl B ON A.exmpl_seq = B.exmpl_seq
+			   	GROUP BY qstn_seq
 			) d ON c.qstn_seq = d.qstn_seq
 			where a.cxstn_srv_seq = #{detailsKey}
 	</select>
