@@ -171,7 +171,7 @@
                                                                 <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" <c:if test="${qstnList.qstnCnt eq 0}">disabled</c:if>/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST02'}">
-                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
+                                                                <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="${exmplList.exmplNm}" <c:if test="${exmplList.otherYn eq 'Y'}">readonly</c:if>  maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:100%"/>
                                                                 <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="${exmplList.nextNo}" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%;display:none;" disabled/>
                                                             </c:when>
                                                             <c:when test="${qstnList.srvTypeCd eq 'QST03' || qstnList.srvTypeCd eq 'QST04'}">
@@ -184,7 +184,16 @@
                                                             </c:when>
                                                         </c:choose>
                                                     </td>
-                                                        <td>
+                                                    <%-- 2024-08-23 추가개발 s --%>
+                                                    <c:if test="${qstnList.srvTypeCd eq 'QST02' and fn:contains(qstnList.cd, 'WIN')}">
+                                                        <td class="otherYnLabel">
+                                                            <label class="checkbox-inline c-checkbox">
+                                                                <input type="checkbox" class="notRequired otherYn" name="otherYn" value="Y" <c:if test="${exmplList.otherYn eq 'Y'}">checked</c:if> /><span class="ion-checkmark-round"></span> 기타
+                                                            </label>
+                                                        </td>
+                                                    </c:if>
+                                                    <%-- 2024-08-23 추가개발 e --%>
+                                                    <td>
                                                         <button type="button" class="btn btn-sm btn-inverse addAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>+</button>
                                                         <button type="button" class="btn btn-sm btn-danger delAnswer" <c:if test="${qstnList.srvTypeCd eq 'QST05' || qstnList.srvTypeCd eq 'QST06' || qstnList.srvTypeCd eq 'QST07'}">style="display:none;"</c:if>>-</button>
                                                     </td>
@@ -198,6 +207,15 @@
                                                         <input type="text" class="form-control input-sm <c:if test="${qstnList.dpth eq 0}">notRequired</c:if> answer" name="exmpl_nm" value="" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
                                                         <input type="text" class="form-control input-sm notRequired subNumber"  name="next_no" value="" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                                     </td>
+                                                    <%-- 2024-08-23 추가개발 s --%>
+                                                    <c:if test="${fn:contains(cdTwoList.cd, 'WIN')}">
+                                                        <td class="otherYnLabel" style="display: none;">
+                                                            <label class="checkbox-inline c-checkbox">
+                                                                <input type="checkbox" class="notRequired otherYn" name="otherYn" value="Y" disabled /><span class="ion-checkmark-round"></span> 기타
+                                                            </label>
+                                                        </td>
+                                                    </c:if>
+                                                    <%-- 2024-08-23 추가개발 e --%>
                                                     <td>
                                                         <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
                                                         <button type="button" class="btn btn-sm btn-danger delAnswer" >-</button>
@@ -265,6 +283,15 @@
                                                 <input type="text" class="form-control input-sm answer" name="exmpl_nm" value="" maxlength="50" title="응답" placeholder="응답내용을 입력해주세요." style="width:80%"/>
                                                 <input type="text" class="form-control input-sm notRequired subNumber surveyNextNumChk"  name="next_no" value="" maxlength="50" title="하위번호" placeholder="하위번호" style="width:19%" disabled/>
                                             </td>
+                                            <%-- 2024-08-23 추가개발 s --%>
+                                            <c:if test="${fn:contains(cdTwoList.cd, 'WIN')}">
+                                                <td class="otherYnLabel" style="display: none;">
+                                                    <label class="checkbox-inline c-checkbox">
+                                                        <input type="checkbox" class="notRequired otherYn" name="otherYn" value="Y" disabled /><span class="ion-checkmark-round"></span> 기타
+                                                    </label>
+                                                </td>
+                                            </c:if>
+                                            <%-- 2024-08-23 추가개발 e --%>
                                             <td>
                                                 <button type="button" class="btn btn-sm btn-inverse addAnswer" >+</button>
                                                 <button type="button" class="btn btn-sm btn-danger delAnswer" >-</button>

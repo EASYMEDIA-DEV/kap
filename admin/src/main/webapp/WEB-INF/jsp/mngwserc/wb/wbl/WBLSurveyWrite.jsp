@@ -178,7 +178,8 @@
                             </c:otherwise>
                         </c:choose>
                     </div>
-                    <label class="col-sm-1 control-label">휴대폰 번호</label>
+                    <%-- 2024-08-23 바뀐 인증번호 형식에 휴대폰 번호가 들어가므로 필수값으로 변경 (휴대폰 번호 없으면 에러) --%>
+                    <label class="col-sm-1 control-label">휴대폰 번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
                         <c:choose>
                             <c:when test="${rtnDto.cxstnSrvSeq != null}">
@@ -186,7 +187,7 @@
                                 <p class="form-control-static">${rtnDto.telNo}</p>
                             </c:when>
                             <c:otherwise>
-                                <input type="text" class="form-control input-sm phoneChk notRequired" id="telNo" name="telNo" value="" maxlength="13" title="전화번호" placeholder="전화번호 입력"  style="width:100%"/>
+                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="13" title="휴대폰 번호" placeholder="휴대폰 번호 입력"  style="width:100%"/>
                             </c:otherwise>
                         </c:choose>
                     </div>
@@ -246,6 +247,7 @@
                                         <th class="col-md-1">설문유형<span class="star"> *</span></th>
                                         <td class="form-inline col-md-8" >
                                             ${qstnList.srvTypeNm}
+                                            <c:if test="${qstnList.scoreExclusionYn eq 'Y'}"> (점수 미반영)</c:if> <%-- 2024-08-22 추가개발 --%>
                                         </td>
                                     </tr>
                                     <tr>
@@ -267,7 +269,7 @@
                                                 - ${exmplList.exmplOrd} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em> <c:set var="rspnCnt" value="${rspnCnt + 1}" /></c:if> <br>
                                             </c:when>
                                             <c:otherwise>
-                                                - ${exmplList.exmplNm} <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em> <c:set var="rspnCnt" value="${rspnCnt + 1}" /></c:if> <br>
+                                                - ${exmplList.exmplNm} <c:if test="${not empty exmplList.mtlccRply}">(${exmplList.mtlccRply})</c:if> <c:if test="${exmplList.winAnswer > 0}"><em class="ion-checkmark" style="font-size:15px;"></em> <c:set var="rspnCnt" value="${rspnCnt + 1}" /></c:if> <br>
                                             </c:otherwise>
                                             </c:choose>
                                         </c:forEach>

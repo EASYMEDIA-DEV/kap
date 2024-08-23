@@ -58,7 +58,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                     .end()
                     .find('input[name=nonApplicableYn]').prop("checked",false) //2024-07-12 추가개발 ppt 3 추가
                     .end()
-                    .find('input[name=scoreExclusionYn]').prop("checked",false); //2024-08-06 추가개발
+                    .find('input[name=scoreExclusionYn]').prop("checked",false) //2024-08-06 추가개발
+                    .end()
+                    .find('input[name=otherYn]').prop("checked",false); //2024-08-23 추가개발
                     $("."+surveyTypeData+":not(:eq(0))").remove();
             }else{
                 filedset.find("input[name=qstn_nm]").addClass("notRequired")
@@ -205,7 +207,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find('input[name=nonApplicableYn]').prop("checked",false) //2024-07-12 추가개발 ppt 3 추가
                             .end()
-                            .find('input[name=scoreExclusionYn]').prop("checked",false); //2024-08-06 추가개발
+                            .find('input[name=scoreExclusionYn]').prop("checked",false) //2024-08-06 추가개발
+                            .end()
+                            .find('input[name=otherYn]').prop("checked",false); //2024-08-23 추가개발
 
                         if (dpth == "2"){                                    // 하위문항일때 폼 (객관식(단일선택) 으로 폼을 셋팅한다.
                             clone.find(".addSubQuestion").hide()
@@ -256,7 +260,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             .end()
                             .find('input[name=nonApplicableYn]').prop("checked",false) //2024-07-12 추가개발 ppt 3 추가
                             .end()
-                            .find('input[name=scoreExclusionYn]').prop("checked",false); //2024-08-06 추가개발
+                            .find('input[name=scoreExclusionYn]').prop("checked",false) //2024-08-06 추가개발
+                            .end()
+                            .find('input[name=otherYn]').prop("checked",false); //2024-08-23 추가개발
                         filedset.find(".subNumber").attr("disabled",false);
                         $(filedset).last().after(clone);
                         questionSet(surveyType);
@@ -334,6 +340,8 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         filedset.find("."+surveyType+"questionTxt").attr("rowspan",rowspan+1);
 
                         clone.find('input').val('');
+                        clone.find('input').prop('checked', false);
+                        clone.find('input').attr('readonly', false);
                         $(answerFiledset).last().after(clone);
                     }
                 }
@@ -446,6 +454,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").show()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').hide()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', true);
                         }else if($(this).val()=='QST05'){ // 5점척도
 
                             var addAnswerCnt = 4;
@@ -471,6 +483,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").show()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').hide()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', true);
 
                         }else if($(this).val()=='QST06'){   //  7점척도
 
@@ -497,6 +513,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").show()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').hide()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', true);
 
                         }else if($(this).val()=='QST07'){   //  10점척도
 
@@ -522,6 +542,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").show()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').hide()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', true);
                         }else if($(this).val()=='QST02'){   // 객관식 복수
                             filedset.find('.subNumber').hide()
                                 .end()
@@ -546,6 +570,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").show()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').show()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', false);
 
                         }else if($(this).val()=='QST03' || $(this).val()=='QST04') {   // 주관식 서술 , 주관식 단답
                             filedset.find(".addSubQuestion").hide()
@@ -565,6 +593,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .find(".answerForm").hide()
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
+                                .end()
+                                .find('.otherYnLabel').hide()
+                                .end()
+                                .find('input[name=otherYn]').attr('disabled', true);
                         }
 
                         if(dpth == "2"){
@@ -624,6 +656,22 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                 }
             },
             /* 2024-08-06 추가개발 e */
+
+            /* 2024-08-23 추가개발 s */
+            otherYn : {
+                event : {
+                    change : function() {
+                        if($(this).is(":checked")) {
+                            $(this).closest(".answerForm").find('input[name="exmpl_nm"]').attr('readonly', true).val("기타");
+                        }
+                        else {
+                            $(this).closest(".answerForm").find('input[name="exmpl_nm"]').attr('readonly', false).val("");
+                        }
+                    }
+                }
+            },
+            /* 2024-08-23 추가개발 e */
+
         },
         immediately : function() {
 
@@ -794,6 +842,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                         svExmplDtl.qstnOrd = filedset.find("input[name=qstn_ord]").val();
                                         svExmplDtl.exmplNm = $(this).val();
                                         svExmplDtl.nextNo = filedset.find("input[name=next_no]:eq("+index+")").val();
+                                        svExmplDtl.otherYn = $(this).closest(".answerForm").find("input[name=otherYn]").is(":checked") ? "Y" : "N"; //2024-08-22 추가개발
                                         svQstnDtl.svSurveyExmplDtlList.push(svExmplDtl);
                                     });
                                 }

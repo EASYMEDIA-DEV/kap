@@ -652,9 +652,16 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		cell.setCellStyle(style_header);*/
 
 		int qstnRow = 14;
+		String scoreExclusionYn = "";
 		for(WBLSurveyMstSearchDTO qstnDto : qstnList){
 			cell = row.createCell(qstnRow);
-			cell.setCellValue(qstnDto.getQstnNm());
+			if("Y".equals(qstnDto.getScoreExclusionYn())) {
+				scoreExclusionYn = "[점수 미반영] ";
+			}
+			else {
+				scoreExclusionYn = "";
+			}
+			cell.setCellValue(scoreExclusionYn + qstnDto.getQstnNm());
 			cell.setCellStyle(style_header);
 			qstnRow++;
 		}

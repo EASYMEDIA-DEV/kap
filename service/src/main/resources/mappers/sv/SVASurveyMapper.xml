@@ -289,6 +289,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.15    박준희       최초생성
+        2024.08.23    장두석       상생체감도 추가개발 기타 응답 여부 컬럼 추가
     -->
 	<insert id="insertSurveyExmplDtl" parameterType="SVASurveyQstnDtlDTO">
 		insert /* SVASurveyMapper.insertSurveyExmplDtl */ into sv_exmpl_dtl
@@ -298,6 +299,7 @@
 		, exmpl_nm
 		, exmpl_ord
 		, next_no
+		, other_yn
 		, reg_id
 		, reg_ip
 		, reg_dtm
@@ -313,6 +315,7 @@
 			, #{list.exmplNm}
 			, #{list.exmplOrd}
 			, #{list.nextNo}
+			, #{list.otherYn}
 			, #{list.regId}
 			, #{list.regIp}
 			, now()
@@ -553,6 +556,7 @@
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.15    박준희       최초생성
+        2024.08.23    장두석       상생체감도 추가개발 기타 응답 여부 컬럼 추가
     -->
 	<select id="selectSurveyExmplDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
 		select /* SVASurveyMapper.selectSurveyExmplDtlList */
@@ -561,6 +565,7 @@
 			 ,exmpl_nm
 			 ,exmpl_ord
 			 ,next_no
+		     ,other_yn
 			 ,reg_id
 			 ,reg_dtm
 			 ,mod_id
@@ -724,6 +729,7 @@
 	      수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.27    박준희       최초생성
+        2024.08.23    장두석       상생체감도 추가개발 기타 응답 여부 컬럼 추가
     -->
 	<select id="selectSurveyExmplWinDtlList" parameterType="SVASurveyQstnDtlDTO" resultType="SVASurveyExmplDtlDTO">
 		select /* SVASurveyMapper.selectSurveyExmplAnswerDtlList */
@@ -732,12 +738,14 @@
 			 ,a.exmpl_nm
 			 ,a.exmpl_ord
 			 ,a.next_no
+		     ,a.other_yn
 			 ,a.reg_id
 			 ,a.reg_dtm
 			 ,a.mod_id
 			 ,a.mod_dtm
 			 , (select count(svmd.exmpl_seq) from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svmd.exmpl_seq = a.exmpl_seq) as win_answer
 			 , (select sbjct_rply from sv_rspn_mst svm inner join sv_sbjct_rspn_dtl svsd on svm.srv_rspn_seq = svsd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svsd.qstn_seq = a.qstn_seq) as win_answer_text
+			 , (select mtlcc_rply from sv_rspn_mst svm inner join sv_mtlcc_rspn_dtl svmd on svm.srv_rspn_seq = svmd.srv_rspn_seq where svm.srv_rspn_seq = #{srvRspnSeq} and svmd.exmpl_seq = a.exmpl_seq) as mtlcc_rply
 		from sv_exmpl_dtl a inner join sv_qstn_dtl b on a.qstn_seq = b.qstn_seq
 		where a.qstn_seq = #{qstnSeq}
 		order by a.qstn_seq asc, a.exmpl_ord asc

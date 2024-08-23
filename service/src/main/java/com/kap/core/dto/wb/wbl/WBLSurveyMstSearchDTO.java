@@ -149,5 +149,10 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "설문응답값")
     private String exmplAnswer;
 
+    // 2024-08-23 추가개발
+    @Schema(title = "점수 미반영 여부", example = "Y/N")
+    @Builder.Default
+    private String scoreExclusionYn = "N";
+
 
 }

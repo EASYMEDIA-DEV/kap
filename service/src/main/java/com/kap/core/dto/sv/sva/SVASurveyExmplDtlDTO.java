@@ -54,6 +54,15 @@ public class SVASurveyExmplDtlDTO extends BaseDTO  {
     @NotNull
     private String nextNo;
 
+    // 2024-08-23 추가개발
+    @Schema(title = "기타 응답 여부", example = "Y/N")
+    @Builder.Default
+    private String otherYn = "N";
+
+    // 2024-08-23 추가개발
+    @Schema(title = "객관식 기타 응답", example = "")
+    private String mtlccRply;
+
     @Schema(title = "객관식답변", example = "")
     @NotNull
     private String winAnswer;
