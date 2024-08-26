@@ -565,7 +565,18 @@ var commonScript = (function(){
         }else{
           $(this).parents(".data-line-w").find(".etc-option-w input[type='text']").attr("disabled", true).val('');
         }
-      });
+		
+		/* 2024-08-23 추가 s */
+		if($(".input-pop").size() > 0){
+		  if( $("#inputPop").is(":checked") ){
+			  $(".input-pop").addClass("on");
+		  } else {
+			$(".input-pop").removeClass("on");
+		  }
+		}
+		/* // 2024-08-23 추가 e */
+	  });
+	 
 
       // 뉴스레터 수신 동의 체크박스
       $(".newsletter-agree input[type='checkbox']").off().change(function(){

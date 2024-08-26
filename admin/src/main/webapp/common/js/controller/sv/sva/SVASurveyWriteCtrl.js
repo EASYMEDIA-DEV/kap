@@ -455,9 +455,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
                                 .end()
-                                .find('.otherYnLabel').hide()
+                                .find('.otherYnLabel').show()
                                 .end()
-                                .find('input[name=otherYn]').attr('disabled', true);
+                                .find('input[name=otherYn]').attr('disabled', false);
                         }else if($(this).val()=='QST05'){ // 5점척도
 
                             var addAnswerCnt = 4;
@@ -571,9 +571,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
                                 .end()
-                                .find('.otherYnLabel').show()
+                                .find('.otherYnLabel').hide()
                                 .end()
-                                .find('input[name=otherYn]').attr('disabled', false);
+                                .find('input[name=otherYn]').attr('disabled', true);
 
                         }else if($(this).val()=='QST03' || $(this).val()=='QST04') {   // 주관식 서술 , 주관식 단답
                             filedset.find(".addSubQuestion").hide()

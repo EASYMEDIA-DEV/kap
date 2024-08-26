@@ -926,6 +926,13 @@ footer .copy-area span:last-child:after {display: none;}
 .form-radio input:disabled + label {color: #B2B8BD; background: url("/common/images/icon-radio-disabled.svg") left top/max(22rem, 19px) no-repeat;}
 .form-radio.bigger input + label {font-family: "Pretendard_SemiBold", sans-serif; padding-left: max(37rem, 27px); font-family: "Pretendard_SemiBold", sans-serif; font-size: max(18rem, 16px);}
 
+/* 2024-08-23 추가 s */
+.input-pop {display: flex; align-items: center; margin-top: 13rem;}
+.input-pop.on {margin-top: 5rem;}
+.input-pop .form-input {display: none; margin-left: 10rem;}
+.input-pop.on .form-input {display: block;}
+/* // 2024-08-23 추가 e */
+
 .file-btn-area {align-self: flex-start; position:relative; width: 114rem; height: 50rem;} /* form - file */
 .file-btn-area input[type="file"] {position:relative; width:100%; height:100%; opacity:0;}
 .file-btn-area input[type="file"]:disabled + label.btn-solid.gray-bg {color: #fff; background-color: #C6CCD1;}

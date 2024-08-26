@@ -897,6 +897,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.12.26    박준희       최초생성
+        2024.08.26    장두석       상생협력체감도 추가개발 객관식 기타 응답 추가
     -->
 	<insert id="insertSurveyRspnMtlccDtl" parameterType="SVASurveyExmplRspnDtlDTO">
 		insert /* SVASurveyMapper.insertSurveyRspnMst */ into sv_mtlcc_rspn_dtl
@@ -905,6 +906,7 @@
 		, exmpl_seq
 		, srv_rspn_seq
 		, isttr_seq
+		, mtlcc_rply
 		, reg_id
 		, reg_ip
 		, reg_dtm
@@ -915,6 +917,7 @@
 			, #{exmplSeq}
 			, #{srvRspnSeq}
 			, #{isttrSeq}
+			, #{mtlccRply}
 			, #{regId}
 			, #{regIp}
 			, now()

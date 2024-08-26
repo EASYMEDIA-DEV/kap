@@ -85,6 +85,18 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                         //2024-07-12 추가개발 ppt 3 추가
                         $(this).closest(".form-wrap").find(".nonApplicableYn").prop("checked", false);
                         $(this).closest(".form-wrap").find("input[type='radio']").not(".nonApplicableYn").removeClass("notRequired");
+
+                    },
+
+                    //2024-08-26 추가개발
+                    change : function() {
+                        if ($(this).is(":checked") && $(this).hasClass("inputPop")) {
+                            $(this).closest(".opt-group").find(".input-pop").addClass("on");
+                        }
+                        else {
+                            $(this).closest(".opt-group").find("input[name='mtlccRply']").val("");
+                            $(this).closest(".opt-group").find(".input-pop").removeClass("on");
+                        }
                     }
                 }
             },
@@ -149,6 +161,10 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                             svExmplDtl.exmplSeq = $(this).find(".answer:checked").val();
                                         }else{
                                             svExmplDtl.exmplSeq = $(this).find(".answer:checked").val();
+                                            //2024-08-26 추가개발
+                                            if ($(this).find(".answer:checked").hasClass("inputPop")) {
+                                                svExmplDtl.mtlccRply = $(this).closest(".opt-group").find("input[name='mtlccRply']").val();
+                                            }
                                         }
 
                                         if (typeof svExmplDtl.exmplSeq != 'undefined' || typeof svExmplDtl.sbjctRply != 'undefined'){

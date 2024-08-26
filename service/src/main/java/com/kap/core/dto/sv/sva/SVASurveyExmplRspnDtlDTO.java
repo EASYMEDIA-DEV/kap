@@ -6,8 +6,6 @@ import com.kap.core.dto.BaseDTO;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotNull;
-
 /**
  *  설문조사관리
  *
@@ -57,6 +55,10 @@ public class SVASurveyExmplRspnDtlDTO extends BaseDTO  {
 
     @Schema(title = "주관식답변")
     private String sbjctRply;
+
+    // 2024-08-26 추가개발
+    @Schema(title = "객관식 기타 응답", example = "")
+    private String mtlccRply;
 
     @Schema(title = "등록IP", example = "127.0.0.1")
     private String regIp;
