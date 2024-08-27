@@ -51,6 +51,7 @@
                 <li class="active tabClick"><a data-toggle="tab" href="#dtl">회원 상세 정보</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#pur">상생사업 신청내역</a></li>
                 <li class="tabClick"><a data-toggle="tab" href="#chat">1:1문의</a></li>
+                <li class="tabClick"><a data-toggle="tab" href="#wthdrw">회원 탈퇴</a></li>
                 <span class="dtl-tab" style="margin-left:55%"><span style="color:red">*</span>표시는 필수 기재 항목입니다.</span>
             </ul>
 
@@ -125,6 +126,31 @@
                     <!-- 페이징 버튼 -->
                     <div id="pagingContainerInqr"></div>
                 </div>
+
+                <div id="wthdrw" class="tab-pane fade">
+
+                    <fieldset>
+                        <div class="form-group text-sm">
+                            <div class="col-sm-4 form-inline">
+
+                                <label class="col-sm-2 control-label">탈퇴 사유<span class="star text-danger"> *</span></label>
+                                <select class="form-control input-sm wd-sm notRequired wthdrwRsnCd" name="wthdrwRsnCd" id="wthdrwRsnCd" title="탈퇴사유" style="min-width: 100px;">
+                                    <option value="">선택</option>
+                                    <c:forEach var="cdList" items="${cdDtlList.MEM_WTHDRW}" varStatus="status">
+                                        <option value="${cdList.cd}">${cdList.cdNm}</option>
+                                    </c:forEach>
+                                </select>
+                                <input type="text" placeholder="기타 사유 입력" id="wthdrwRsnEtcNm" name="wthdrwRsnEtcNm" class="form-control input-sm notRequired" disabled>
+                                <div class="pull-right">
+                                    <button type="button" class="btn btn-sm" id="btnWthdrw" >회원 탈퇴</button>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+
             </div>
             <hr />
 

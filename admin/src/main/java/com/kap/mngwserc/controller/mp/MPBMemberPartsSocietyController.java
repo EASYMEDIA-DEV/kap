@@ -1,12 +1,13 @@
 package com.kap.mngwserc.controller.mp;
 
-import com.kap.core.dto.COUserDetailsDTO;
+import com.kap.core.dto.*;
 import com.kap.core.dto.MPBBusDto;
 import com.kap.core.dto.MPBEduDto;
 import com.kap.core.dto.MPBSanDto;
 import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
 import com.kap.service.COCodeService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.MPEPartsCompanyService;
@@ -16,13 +17,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 /**
@@ -135,6 +135,12 @@ public class MPBMemberPartsSocietyController {
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", mpaUserService.selectUserDtl(mpaUserDto));
             }
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_WTHDRW");
+
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
         }
         catch (Exception e)
         {
@@ -278,4 +284,45 @@ public class MPBMemberPartsSocietyController {
 
         return "jsonView";
     }
+
+
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/mp/mpb")
+    public class MPBMemberRestController {
+
+        private final MPAUserService mpaUserService;
+
+        /**
+         * 관리자 - 부품사회원관리 - 회원 탈퇴
+         * @param mpiWthdrwDto
+         * @return
+         * @throws Exception
+         */
+        @RequestMapping(value="/update-wthdrw")
+        public String updatePartsCompany(@Valid @RequestBody MPIWthdrwDto mpiWthdrwDto) throws Exception
+        {
+            try
+            {
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                //mpiWthdrwDto.setMemSeq(""); //전달받은 회원 번호
+                mpiWthdrwDto.setModId(cOUserDetailsDTO.getModId());
+                mpiWthdrwDto.setModIp(cOUserDetailsDTO.getModIp());
+                mpaUserService.updateUserWthdrw(mpiWthdrwDto);
+            }
+            catch (Exception e)
+            {
+                if (log.isErrorEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return "jsonView";
+        }
+    }
+
+
 }

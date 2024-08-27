@@ -156,6 +156,45 @@ var exports = {
     // set model
     ctrl.model = {
         id : {
+
+
+            btnWthdrw : {
+                event : {
+                    click : function() {
+
+
+                        var actForm = {};
+
+                        //탈퇴사유 유효성체크
+
+                        if($("#wthdrwRsnCd").val() == ""){
+                            alert("탈퇴사유를 입력해주세요");
+                            $("#wthdrwRsnCd").focus();
+                            return false;
+                        }
+
+                        //탈퇴사유 코드 가져옴
+                        actForm.wthdrwRsnCd = $("#wthdrwRsnCd").val();
+
+                        //선택한 항목이 기타일때만 폼 넣어줌
+                        if(actForm.wthdrwRsnCd == "MEM_WTHDRW_005"){
+                            actForm.wthdrwRsnEtcNm = $("#wthdrwRsnEtcNm").val();
+                        }
+
+                        actForm.memSeq = $("#detailsKey").val();
+
+                        if(confirm("회원 탈퇴를 진행 하시겠습니까?")){
+                            cmmCtrl.jsonAjax(function(data){
+                                alert("탈퇴 처리되었습니다.");
+                                location.href = "./list";
+                            }, "./update-wthdrw", actForm, "text");
+                        }
+
+                    }
+                }
+            },
+
+
             /**
              * 검색 버튼 클릭
              */
@@ -460,9 +499,25 @@ var exports = {
                 tabReload(activeTab,1);
             }
         }
+    },
+    // do something...
+    wthdrwRsnCd : {
+        event : {
+            change : function() {
+                if($(this).val() == 'MEM_WTHDRW_005') {
+                    $("#wthdrwRsnEtcNm").attr('disabled',false);
+                } else {
+                    $("#wthdrwRsnEtcNm").val("");
+                    $("#wthdrwRsnEtcNm").attr('disabled',true);
+
+                }
+            }
+        }
     }
     },
     immediately : function() {
+
+        MPBMemberPartsSocietyWriteCtrl
         //리스트 조회
         //폼 데이터 처리
         $(".futureCar").hide();

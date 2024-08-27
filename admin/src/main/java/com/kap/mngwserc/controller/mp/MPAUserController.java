@@ -7,6 +7,8 @@ import com.kap.core.dto.mp.mpa.MPAInqrDto;
 import com.kap.core.dto.mp.mpa.MPAUserDto;
 import com.kap.core.dto.mp.mpa.MPJoinDto;
 import com.kap.core.dto.mp.mpe.MPEPartsCompanyDTO;
+import com.kap.core.dto.mp.mpi.MPIWthdrwDto;
+import com.kap.service.COCodeService;
 import com.kap.service.COMessageService;
 import com.kap.service.COUserDetailsHelperService;
 import com.kap.service.mp.mpa.MPAUserService;
@@ -15,13 +17,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * <pre>
@@ -53,6 +53,8 @@ public class MPAUserController {
     private String siteName;
     //이메일 발송
     private final COMessageService cOMessageService;
+
+    private final COCodeService cOCodeService;
 
     String tableNm = "MEM_MOD_SEQ";
 
@@ -124,6 +126,13 @@ public class MPAUserController {
             if(!"".equals(mpaUserDto.getDetailsKey())){
                 modelMap.addAttribute("rtnInfo", mpaUserService.selectUserDtl(mpaUserDto));
             }
+
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            // 코드 set
+            cdDtlList.add("MEM_WTHDRW");
+
+            modelMap.addAttribute("cdDtlList",  cOCodeService.getCmmCodeBindAll(cdDtlList));
+
         }
         catch (Exception e)
         {
@@ -378,5 +387,42 @@ public class MPAUserController {
         }
         return "jsonView";
 
+    }
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/mp/mpa")
+    public class MPAUserRestController {
+
+        private final MPAUserService mpaUserService;
+
+        /**
+         * 관리자 - 부품사회원관리 - 회원 탈퇴
+         * @param mpiWthdrwDto
+         * @return
+         * @throws Exception
+         */
+        @RequestMapping(value="/update-wthdrw")
+        public String updateUserCompany(@Valid @RequestBody MPIWthdrwDto mpiWthdrwDto) throws Exception
+        {
+
+            try
+            {
+                COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+                mpiWthdrwDto.setModId(cOUserDetailsDTO.getModId());
+                mpiWthdrwDto.setModIp(cOUserDetailsDTO.getModIp());
+                mpaUserService.updateUserWthdrw(mpiWthdrwDto);
+            }
+            catch (Exception e)
+            {
+                if (log.isErrorEnabled())
+                {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
+
+            return "jsonView";
+        }
     }
 }

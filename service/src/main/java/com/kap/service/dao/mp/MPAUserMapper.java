@@ -212,7 +212,7 @@ public interface MPAUserMapper {
     void updateUserCiDel(MPIWthdrwDto mpiWthdrwDto);
 
     /**
-     * 탈퇴 테이블 INSERT
+     * 회원 탈퇴상세(이력) 등록
      * @param mpiWthdrwDto
      */
     void insertUserWthdrw(MPIWthdrwDto mpiWthdrwDto);

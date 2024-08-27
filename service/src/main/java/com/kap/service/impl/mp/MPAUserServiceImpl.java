@@ -412,9 +412,10 @@ public class MPAUserServiceImpl implements MPAUserService {
      */
     @Override
     public void updateUserWthdrw(MPIWthdrwDto mpiWthdrwDto) throws Exception {
-            mpaUserMapper.updateUserWthdrw(mpiWthdrwDto);
-            mpaUserMapper.insertUserWthdrw(mpiWthdrwDto);
-            mpaUserMapper.updateUserCiDel(mpiWthdrwDto);
+
+        mpaUserMapper.updateUserWthdrw(mpiWthdrwDto);
+        mpaUserMapper.insertUserWthdrw(mpiWthdrwDto);
+        mpaUserMapper.updateUserCiDel(mpiWthdrwDto);
     }
 
     /**
