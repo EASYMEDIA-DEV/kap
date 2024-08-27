@@ -54,7 +54,6 @@ public class COLgnServiceImpl  implements COLgnService {
 	 */
     public COLoginDTO actionLogin(COLoginDTO cOLoginDTO, HttpServletRequest request) throws Exception
     {
-		System.out.println("@@ 로그인 전은 ? = " + COUserDetailsHelperService.isAuthenticated());
 
 		// log4j2에 사용할 커스텀 map 초기화
 		ThreadContext.clearAll();
@@ -254,7 +253,6 @@ public class COLgnServiceImpl  implements COLgnService {
 			cOLoginDTO.setRespCd("9999");
     	}
 
-		System.out.println("@@ 여기선 되있나? = " + COUserDetailsHelperService.isAuthenticated());
     	return cOLoginDTO;
     }
 
