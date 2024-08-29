@@ -603,6 +603,10 @@
             <input type="hidden" class="notRequired" name="bsnmNo" value="${userInfo.bsnmNo}">
             <input type="hidden" class="notRequired" name="maxStage" value="${rtnInfo.maxStage}" />
             <input type="hidden" class="notRequired" name="episdSeq" value="${rtnInfo.episdSeq}" />
+            <%-- 2024-08-29 추가 s - 이전 단계 첨부파일 수정 가능하도록 --%>
+            <input type="hidden" class="notRequired" name="tabIndex" value="${rtnInfo.stageOrd}">
+            <input type="hidden" class="notRequired" name="nowIndex">
+            <%-- 2024-08-29 추가 e --%>
         </form >
         <%-- 부품사 회원 검색 모달 --%>
         <jsp:include page="/WEB-INF/jsp/mngwserc/mp/mpb/MPBMemberPartsSocietySrchLayer.jsp"></jsp:include>

@@ -321,6 +321,7 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
 
             rtnCnt = wbbbCompanyMapper.updateApply(wbbaApplyMstDTO);
 
+            /* 2024-08-29 수정 s - 이전 단계 첨부파일 수정 가능하도록 */
             if (rtnCnt > 0) {
                 //상생신청진행 상태 업데이트
                 //관리자상태에 따라 분기처리해야함
@@ -338,7 +339,53 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                     wbbbCompanyMapper.deleteFileInfo(wbbApplyDtlDTO);
 
                     //신청파일 넣기
-                    for (int i = 0; i < wbbaApplyMstDTO.getFileList().size(); i++) {
+                    int i = 0;
+                    for (COFileDTO file : wbbaApplyMstDTO.getFileList()) {
+                        if("delfile".equals(file.getStatus())) {
+                            continue;
+                        }
+
+                        List<COFileDTO> fileList = new ArrayList();
+                        COFileDTO fileDto = new COFileDTO();
+
+                        fileDto.setStatus(file.getStatus());
+                        fileDto.setWidth(file.getWidth());
+                        fileDto.setHeight(file.getHeight());
+                        fileDto.setWebPath(file.getWebPath());
+                        fileDto.setFieldNm(file.getFieldNm());
+                        fileDto.setOrgnFileNm(file.getOrgnFileNm());
+                        fileDto.setFileDsc(file.getFileDsc());
+                        fileDto.setFileOrd(file.getFileOrd());
+                        fileList.add(fileDto);
+
+                        if ("addedfile".equals(fileDto.getStatus())) {
+                            wbbApplyDtlDTO.setFileSeq(file.getFileSeq());
+                        } else {
+                            System.out.println("FILE@@@@@@@@@@@@@@@@@@@@@@");
+                            System.out.println(fileDto.toString());
+                            HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+                            if(file.getFileSeq() != null) {
+                                wbbApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq" + file.getFileSeq()));
+                            }
+                            else {
+                                wbbApplyDtlDTO.setFileSeq(fileSeqMap.get("fileSeq"));
+                            }
+                        }
+
+                        wbbApplyDtlDTO.setSbmsnSeq(fileApplyIdgen.getNextIntegerId());
+                        wbbApplyDtlDTO.setOptnSeq(wbbaApplyMstDTO.getOptnSeq().get(i));
+
+                        wbbbCompanyMapper.insertFileInfo(wbbApplyDtlDTO);
+                        i++;
+                    }
+                    /*for (int i = 0; i < wbbaApplyMstDTO.getFileList().size(); i++) {
+                        if("delfile".equals(wbbaApplyMstDTO.getFileList().get(i).getStatus())) {
+                            if(i > 0) {
+                                i--;
+                            }
+                            continue;
+                        }
+
                         List<COFileDTO> fileList = new ArrayList();
                         COFileDTO fileDto = new COFileDTO();
 
@@ -363,139 +410,142 @@ public class WBBBCompanyServiceImpl implements WBBBCompanyService {
                         wbbApplyDtlDTO.setOptnSeq(wbbaApplyMstDTO.getOptnSeq().get(i));
 
                         wbbbCompanyMapper.insertFileInfo(wbbApplyDtlDTO);
-                    }
-                }
-                
-                //EDM & SMS 셋팅
-                WBSendDTO wbSendDTO = new WBSendDTO();
-                wbSendDTO.setMemSeq(wbbaApplyMstDTO.getMemSeq());
-                wbSendDTO.setEpisdSeq(wbbaApplyMstDTO.getEpisdSeq());
-                wbSendDTO.setStageNm(wbbaApplyMstDTO.getStageNm());
-                wbSendDTO.setReason(wbbaApplyMstDTO.getRtrnRsnCntn());
-                wbSendDTO.setRsumeSeq(wbbaApplyMstDTO.getRsumeSeq());
-                wbSendDTO.setRsumeOrd(wbbaApplyMstDTO.getRsumeOrd());
-                wbSendDTO.setMngSttdCd(wbbaApplyMstDTO.getMngSttsCd());
-
-                if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                    //적합(PRO_TYPE04_1_6), 선정(PRO_TYPE04_1_8)의 경우 다음단계 생성
-                    if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_7");
-                    } else if ("PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_9");
-                    }
-
-                    send(wbSendDTO,"SMS05");
-
-                    wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
-
-                    //다음 스텝 생성
-                    if (wbbaApplyMstDTO.getMaxStage() > wbbApplyDtlDTO.getRsumeOrd()) {
-                        wbbApplyDtlDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
-                        wbbApplyDtlDTO.setRsumeOrd(wbbApplyDtlDTO.getRsumeOrd() + 1);
-                        wbbApplyDtlDTO.setRsumeSttsCd(wbbaApplyMstDTO.getNextStageNm());
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_1");
-                        wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2"); //2024-07-23 접수전 코드 사용 안 하므로, 미확인 코드로 변경
-                        wbbApplyDtlDTO.setRegId(modId);
-                        wbbApplyDtlDTO.setRegIp(modIp);
-
-                        wbbbCompanyMapper.insertApplyStep(wbbApplyDtlDTO);
-                    }
-
-                } else if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())
-                        || "PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                    //사용자취소(PRO_TYPE04_1_4), 부적합(PRO_TYPE04_1_5), 미선정(PRO_TYPE04_1_7) 의 경우 종료
-
-                    if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_5");
-                    } else if ("PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                        wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_6");
-
-                        send(wbSendDTO,"SMS07");
-
-                    } else if ("PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                        wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
-                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_8");
-
-                        send(wbSendDTO,"SMS07");
-                    }
-                    wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
-
-                } else if ("PRO_TYPE04_1_3".equals(wbbaApplyMstDTO.getMngSttsCd())) {
-                    //보안요청(PRO_TYPE04_1_2)의 경우 사용자 보안요청 코드 삽입
-                    wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_3");
-                    wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
-
-                    send(wbSendDTO,"SMS06");
-
-                    wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
+                    }*/
                 }
 
-                //신청자 변경
-                if ("Y".equals(wbbaApplyMstDTO.getUserLogYn())) {
-                    WBBATransDTO wbbTransDTO = new WBBATransDTO();
+                if(Objects.equals(wbbaApplyMstDTO.getTabIndex(), wbbaApplyMstDTO.getNowIndex())) {
+                    //EDM & SMS 셋팅
+                    WBSendDTO wbSendDTO = new WBSendDTO();
+                    wbSendDTO.setMemSeq(wbbaApplyMstDTO.getMemSeq());
+                    wbSendDTO.setEpisdSeq(wbbaApplyMstDTO.getEpisdSeq());
+                    wbSendDTO.setStageNm(wbbaApplyMstDTO.getStageNm());
+                    wbSendDTO.setReason(wbbaApplyMstDTO.getRtrnRsnCntn());
+                    wbSendDTO.setRsumeSeq(wbbaApplyMstDTO.getRsumeSeq());
+                    wbSendDTO.setRsumeOrd(wbbaApplyMstDTO.getRsumeOrd());
+                    wbSendDTO.setMngSttdCd(wbbaApplyMstDTO.getMngSttsCd());
 
-                    wbbTransDTO.setTrnsfSeq(cxAppctnTrnsfDtlIdgen.getNextIntegerId());
-                    wbbTransDTO.setAppctnSeq(Integer.valueOf(wbbaApplyMstDTO.getDetailsKey()));
-                    wbbTransDTO.setBfreMemSeq(wbbaApplyMstDTO.getWbbTransDTO().getBfreMemSeq());
-                    wbbTransDTO.setAftrMemSeq(wbbaApplyMstDTO.getWbbTransDTO().getAftrMemSeq());
-                    wbbTransDTO.setRegId(modId);
-                    wbbTransDTO.setRegIp(modIp);
-
-                    //상생참여이관로그 생성
-                    wbbbCompanyMapper.insertTransUserLog(wbbTransDTO);
-                }
-
-                wbbaCompanyDTO.setRegId(modId);
-                wbbaCompanyDTO.setRegIp(modIp);
-                wbbaCompanyDTO.setModId(modId);
-                wbbaCompanyDTO.setModIp(modIp);
-
-                //부품사 회원정보 수정
-                wbbbCompanyMapper.updatePartUser(wbbaCompanyDTO);
-
-                // 부품사 정보수정 Start
-                String seq = "";
-
-
-                if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01002")) {
-
-                    int index = 1;
-
-                    for (int t = 0; t < wbbaCompanyDTO.getSqInfoList().size(); t++) {
-                        seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
-
-
-                        wbbaCompanyDTO.setYear(wbbaCompanyDTO.getSqInfoList().get(t).getYear());
-                        wbbaCompanyDTO.setScore(wbbaCompanyDTO.getSqInfoList().get(t).getScore());
-                        wbbaCompanyDTO.setNm(wbbaCompanyDTO.getSqInfoList().get(t).getNm());
-                        wbbaCompanyDTO.setCrtfnCmpnNm(wbbaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
-
-                        // 2차인 경우, 스타등급 빈 값 처리
-                        wbbaCompanyDTO.setTchlg5starCd(null);
-                        wbbaCompanyDTO.setPay5starCd(null);
-                        wbbaCompanyDTO.setQlty5starCd(null);
-                        wbbaCompanyDTO.setTchlg5starYear(null);
-                        wbbaCompanyDTO.setPay5starYear(null);
-                        wbbaCompanyDTO.setQlty5starYear(null);
-
-                        if (!seq.isEmpty()) {
-                            wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
-                            wbbbCompanyMapper.updatePartsComSQInfo(wbbaCompanyDTO);
-                        } else {
-                            wbbaCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
-                            wbbbCompanyMapper.insertPartsComSQInfo(wbbaCompanyDTO);
+                    if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                        //적합(PRO_TYPE04_1_6), 선정(PRO_TYPE04_1_8)의 경우 다음단계 생성
+                        if ("PRO_TYPE04_1_6".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_7");
+                        } else if ("PRO_TYPE04_1_8".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_9");
                         }
-                        index += 1;
-                    }
-                } else if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
-                    // 1차인 경우, SQ정보 빈 값 처리
-                    wbbbCompanyMapper.deletePartsComSQInfo(wbbaCompanyDTO);
-                }
 
-                wbbbCompanyMapper.updatePartsCompany(wbbaCompanyDTO);
-                // 부품사 수정 End
+                        send(wbSendDTO, "SMS05");
+
+                        wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
+
+                        //다음 스텝 생성
+                        if (wbbaApplyMstDTO.getMaxStage() > wbbApplyDtlDTO.getRsumeOrd()) {
+                            wbbApplyDtlDTO.setRsumeSeq(cxAppctnRsumeDtlSeqIdgen.getNextIntegerId());
+                            wbbApplyDtlDTO.setRsumeOrd(wbbApplyDtlDTO.getRsumeOrd() + 1);
+                            wbbApplyDtlDTO.setRsumeSttsCd(wbbaApplyMstDTO.getNextStageNm());
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_1");
+                            wbbApplyDtlDTO.setMngSttsCd("PRO_TYPE04_1_2"); //2024-07-23 접수전 코드 사용 안 하므로, 미확인 코드로 변경
+                            wbbApplyDtlDTO.setRegId(modId);
+                            wbbApplyDtlDTO.setRegIp(modIp);
+
+                            wbbbCompanyMapper.insertApplyStep(wbbApplyDtlDTO);
+                        }
+
+                    } else if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd()) || "PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())
+                            || "PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                        //사용자취소(PRO_TYPE04_1_4), 부적합(PRO_TYPE04_1_5), 미선정(PRO_TYPE04_1_7) 의 경우 종료
+
+                        if ("PRO_TYPE04_1_4".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_5");
+                        } else if ("PRO_TYPE04_1_5".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                            wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_6");
+
+                            send(wbSendDTO, "SMS07");
+
+                        } else if ("PRO_TYPE04_1_7".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                            wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
+                            wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_8");
+
+                            send(wbSendDTO, "SMS07");
+                        }
+                        wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
+
+                    } else if ("PRO_TYPE04_1_3".equals(wbbaApplyMstDTO.getMngSttsCd())) {
+                        //보안요청(PRO_TYPE04_1_2)의 경우 사용자 보안요청 코드 삽입
+                        wbbApplyDtlDTO.setAppctnSttsCd("PRO_TYPE04_2_3");
+                        wbbApplyDtlDTO.setRtrnRsnCntn(wbbaApplyMstDTO.getRtrnRsnCntn());
+
+                        send(wbSendDTO, "SMS06");
+
+                        wbbbCompanyMapper.updateApplyStatus(wbbApplyDtlDTO);
+                    }
+
+                    //신청자 변경
+                    if ("Y".equals(wbbaApplyMstDTO.getUserLogYn())) {
+                        WBBATransDTO wbbTransDTO = new WBBATransDTO();
+
+                        wbbTransDTO.setTrnsfSeq(cxAppctnTrnsfDtlIdgen.getNextIntegerId());
+                        wbbTransDTO.setAppctnSeq(Integer.valueOf(wbbaApplyMstDTO.getDetailsKey()));
+                        wbbTransDTO.setBfreMemSeq(wbbaApplyMstDTO.getWbbTransDTO().getBfreMemSeq());
+                        wbbTransDTO.setAftrMemSeq(wbbaApplyMstDTO.getWbbTransDTO().getAftrMemSeq());
+                        wbbTransDTO.setRegId(modId);
+                        wbbTransDTO.setRegIp(modIp);
+
+                        //상생참여이관로그 생성
+                        wbbbCompanyMapper.insertTransUserLog(wbbTransDTO);
+                    }
+
+                    wbbaCompanyDTO.setRegId(modId);
+                    wbbaCompanyDTO.setRegIp(modIp);
+                    wbbaCompanyDTO.setModId(modId);
+                    wbbaCompanyDTO.setModIp(modIp);
+
+                    //부품사 회원정보 수정
+                    wbbbCompanyMapper.updatePartUser(wbbaCompanyDTO);
+
+                    // 부품사 정보수정 Start
+                    String seq = "";
+
+
+                    if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01002")) {
+
+                        int index = 1;
+
+                        for (int t = 0; t < wbbaCompanyDTO.getSqInfoList().size(); t++) {
+                            seq = String.valueOf(wbbaCompanyDTO.getSqInfoList().get(t).getCbsnSeq());
+
+
+                            wbbaCompanyDTO.setYear(wbbaCompanyDTO.getSqInfoList().get(t).getYear());
+                            wbbaCompanyDTO.setScore(wbbaCompanyDTO.getSqInfoList().get(t).getScore());
+                            wbbaCompanyDTO.setNm(wbbaCompanyDTO.getSqInfoList().get(t).getNm());
+                            wbbaCompanyDTO.setCrtfnCmpnNm(wbbaCompanyDTO.getSqInfoList().get(t).getCrtfnCmpnNm());
+
+                            // 2차인 경우, 스타등급 빈 값 처리
+                            wbbaCompanyDTO.setTchlg5starCd(null);
+                            wbbaCompanyDTO.setPay5starCd(null);
+                            wbbaCompanyDTO.setQlty5starCd(null);
+                            wbbaCompanyDTO.setTchlg5starYear(null);
+                            wbbaCompanyDTO.setPay5starYear(null);
+                            wbbaCompanyDTO.setQlty5starYear(null);
+
+                            if (!seq.isEmpty()) {
+                                wbbaCompanyDTO.setCbsnSeq(Integer.valueOf(seq));
+                                wbbbCompanyMapper.updatePartsComSQInfo(wbbaCompanyDTO);
+                            } else {
+                                wbbaCompanyDTO.setCbsnSeq(mpePartsCompanyDtlIdgen.getNextIntegerId());
+                                wbbbCompanyMapper.insertPartsComSQInfo(wbbaCompanyDTO);
+                            }
+                            index += 1;
+                        }
+                    } else if (wbbaCompanyDTO.getCtgryCd().equals("COMPANY01001")) {
+                        // 1차인 경우, SQ정보 빈 값 처리
+                        wbbbCompanyMapper.deletePartsComSQInfo(wbbaCompanyDTO);
+                    }
+
+                    wbbbCompanyMapper.updatePartsCompany(wbbaCompanyDTO);
+                    // 부품사 수정 End
+                }
             }
+            /* 2024-08-29 수정 e - 이전 단계 첨부파일 수정 가능하도록 */
         } catch (Exception e) {
             e.printStackTrace();
         }

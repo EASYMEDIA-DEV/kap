@@ -16,6 +16,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
     var $formObj = ctrl.obj.find("#frmData").eq(0);
     var $formDataObj = ctrl.obj.find("#frm").eq(0);
 
+    var indexCount = 0; /* 2024-08-29 수정 - 이전 단계 첨부파일 수정 가능하도록 */
+
     /* 페이지 구성에 맞게 input value set (rtnData keys HTML id 값 동일 처리 필요) */
     var setInputValue = (respObj) => {
         let [rtnData, rtnDataCompList] = [respObj['rtnData'], respObj['rtnDataCompDetail'].list];
@@ -432,13 +434,37 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                 $formDataObj.find("input[name='userLogYn']").val('Y');
                                 $formDataObj.find("input[name='bsnmNo']").val($formObj.find("input[name='bsnmNo']").val());
                             }
-                            $formDataObj.append(tabDiv);
+                            /* 2024-08-29 수정 s - 이전 단계 첨부파일 수정 가능하도록 */
+                            // $formDataObj.append(tabDiv);
                             $formDataObj.append(companyDiv)
                             $formDataObj.append($('#admMemo'));
 
+                            function processForm(i, tabIndex) {
+                                if (i < tabIndex) {
+                                    var $currentElement = $('#tabIndex' + (i + 1));
+                                    $formDataObj.append($currentElement);
+                                    $formDataObj.find("input[name='nowIndex']").val((i + 1));
+
+                                    cmmCtrl.fileFrmAjax(function (data) {
+                                        if (tabIndex == (i + 1) && data.respCnt > 0) {
+                                            alert(actionMsg);
+                                            location.replace("./list");
+                                        } else {
+                                            indexCount++;
+                                            // AJAX 요청이 완료된 후 추가했던 요소를 제거
+                                            $currentElement.remove();
+
+                                            // 다음 인덱스로 재귀 호출
+                                            processForm(i + 1, tabIndex);
+                                        }
+                                    }, actionUrl, actionForm, "json");
+                                }
+                            }
+
+                            // 재귀 호출 시작
+                            processForm(0, tabIndex);
                         }
-
-
+                        else {
                             cmmCtrl.fileFrmAjax(function(data){
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
@@ -446,6 +472,8 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                     location.replace("./list");
                                 }
                             }, actionUrl, actionForm, "json");
+                        }
+                        /* 2024-08-29 수정 e */
                     }
                 },
                 msg : {

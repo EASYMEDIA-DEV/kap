@@ -123,6 +123,14 @@ public class  WBBAApplyMstDTO extends BaseDTO {
 
     @Schema(title = "재귀DTO")
     private WBBAApplyMstDTO wbbaApplyMstDTO;
+
+    /* 2024-08-29 추가 s - 이전 단계 첨부파일 수정 가능하도록 */
+    @Schema(title = "현재단계")
+    private Integer tabIndex;
+
+    @Schema(title = "요청단계")
+    private Integer nowIndex;
+    /* 2024-08-29 추가 e - 이전 단계 첨부파일 수정 가능하도록 */
 }
 
 
