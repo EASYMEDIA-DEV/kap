@@ -88,9 +88,39 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
                     },
 
-                    //2024-08-26 추가개발
-                    change : function() {
+                    //2024-08-26 추가개발, 2024-08-30 밑으로 이동
+                    /*change : function() {
                         if ($(this).is(":checked") && $(this).hasClass("inputPop")) {
+                            $(this).closest(".opt-group").find(".input-pop").addClass("on");
+                        }
+                        else {
+                            $(this).closest(".opt-group").find("input[name='mtlccRply']").val("");
+                            $(this).closest(".opt-group").find(".input-pop").removeClass("on");
+                        }
+                    }*/
+                }
+            },
+
+            //2024-08-30 상생협력체감도 추가개발
+            inputPop : {
+                event : {
+                    change : function() {
+                        if ($(this).is(":checked")) {
+                            $(this).closest(".opt-group").find(".input-pop").addClass("on");
+                        }
+                        else {
+                            $(this).closest(".opt-group").find("input[name='mtlccRply']").val("");
+                            $(this).closest(".opt-group").find(".input-pop").removeClass("on");
+                        }
+                    }
+                }
+            },
+
+            //2024-08-30 상생협력체감도 추가개발
+            inputPopCheck : {
+                event : {
+                    change : function() {
+                        if ($(this).is(":checked")) {
                             $(this).closest(".opt-group").find(".input-pop").addClass("on");
                         }
                         else {
@@ -161,8 +191,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                             svExmplDtl.exmplSeq = $(this).find(".answer:checked").val();
                                         }else{
                                             svExmplDtl.exmplSeq = $(this).find(".answer:checked").val();
-                                            //2024-08-26 추가개발
-                                            if ($(this).find(".answer:checked").hasClass("inputPop")) {
+                                            //2024-08-26 추가개발, 2024-08-30 수정
+                                            if ($(this).find(".answer:checked").hasClass("inputPop") || $(this).find(".answer:checked").hasClass("inputPopCheck")) {
                                                 svExmplDtl.mtlccRply = $(this).closest(".opt-group").find("input[name='mtlccRply']").val();
                                             }
                                         }

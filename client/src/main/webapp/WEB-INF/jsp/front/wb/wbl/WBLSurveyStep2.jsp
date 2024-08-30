@@ -98,7 +98,7 @@
                                                             <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
                                                                 <c:choose>
                                                                     <c:when test="${exmplList.otherYn eq 'Y'}">
-                                                                        <div class="input-pop">
+                                                                        <div class="input-pop radio-input-box">
                                                                             <div class="form-radio exmplList">
                                                                                 <input type="radio" class="${notRequired} answer inputPop" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="필수 응답문항" data-next-no ="${exmplList.nextNo}">
                                                                                 <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
@@ -121,10 +121,27 @@
                                                     <c:when test="${qstnList.srvTypeCd eq 'QST02'}">    <!--객관식복수-->
                                                         <div class="opt-group verticality"><!-- verticality : 아래로 떨어지는 -->
                                                             <c:forEach var="exmplList" items="${qstnList.svSurveyExmplDtlList}" varStatus="exmplStatus">
-                                                                <div class="form-checkbox exmplList">
-                                                                    <input type="checkbox" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="필수 응답문항" data-next-no ="${exmplList.nextNo}">
-                                                                    <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
-                                                                </div>
+                                                                <!-- 2024-08-28 추가 s -->
+                                                                <c:choose>
+                                                                    <c:when test="${exmplList.otherYn eq 'Y'}">
+                                                                        <div class="input-pop check-input-box">
+                                                                            <div class="form-checkbox exmplList">
+                                                                                <input type="checkbox" class="${notRequired} answer inputPopCheck" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="필수 응답문항" data-next-no="${exmplList.nextNo}">
+                                                                                <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
+                                                                            </div>
+                                                                            <div class="form-input">
+                                                                                <input type="text" class="notRequired" name="mtlccRply" placeholder="답변을 작성해주세요." maxlength="100">
+                                                                            </div>
+                                                                        </div>
+                                                                    </c:when>
+                                                                    <c:otherwise>
+                                                                        <div class="form-checkbox exmplList">
+                                                                            <input type="checkbox" class="${notRequired} answer" id="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}" name="answer${qstnList.qstnSeq}" value="${exmplList.exmplSeq}" title="필수 응답문항" data-next-no="${exmplList.nextNo}">
+                                                                            <label for="answerOption${qstnList.qstnOrd}-${exmplList.exmplOrd}">${exmplList.exmplNm}</label>
+                                                                        </div>
+                                                                    </c:otherwise>
+                                                                </c:choose>
+                                                                <!-- // 2024-08-28 추가 e -->
                                                             </c:forEach>
                                                         </div>
                                                     </c:when>

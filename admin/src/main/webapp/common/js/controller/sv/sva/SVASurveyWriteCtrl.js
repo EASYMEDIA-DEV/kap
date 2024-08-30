@@ -429,6 +429,10 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                             }
                         }
 
+                        /* 2024-08-30 상생협력체감도조사 추가개발 */
+                        filedset.find('input[name=otherYn]').prop('checked', false);
+                        filedset.find('input[name=exmpl_nm]').prop('readonly', false);
+                        /* 2024-08-30 상생협력체감도조사 추가개발 */
 
                         if ($(this).val()=='QST01' ){        // 객관식 단수
                             filedset.find('.subNumber').show()
@@ -571,9 +575,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                                 .end()
                                 .find('.answerForm th').html('응답<span class="star"> *</span>')
                                 .end()
-                                .find('.otherYnLabel').hide()
+                                .find('.otherYnLabel').show()
                                 .end()
-                                .find('input[name=otherYn]').attr('disabled', true);
+                                .find('input[name=otherYn]').attr('disabled', false);
 
                         }else if($(this).val()=='QST03' || $(this).val()=='QST04') {   // 주관식 서술 , 주관식 단답
                             filedset.find(".addSubQuestion").hide()
