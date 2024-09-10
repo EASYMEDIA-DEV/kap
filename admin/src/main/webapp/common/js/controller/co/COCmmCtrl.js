@@ -1837,21 +1837,33 @@ var cmmCtrl = (function(){
 		$("#appctnPdfArea2").css("padding-top" ,"40px");
 
 		// 관리자메모 textarea 줄바꿈처리
-		var textarea = $("#admMemo");
-		var div = $('<div>').css({
-			'font-family': textarea.css('font-family'),
-			'font-size': textarea.css('font-size'),
-			'line-height': textarea.css('line-height'),
-			'white-space': 'pre-wrap', // 줄바꿈 처리를 위해 white-space 속성을 설정
-			'word-wrap': 'break-word', // 단어가 라인을 넘어갈 경우 줄바꿈 처리
-			'width': textarea.outerWidth(),
-			'height': textarea.outerHeight(),
-			'border': textarea.css('border'), // 테두리 설정 추가
-			'padding': textarea.css('padding') // 패딩 설정 추가
-		}).html(textarea.val().replace(/\n/g, "<br>")); // textarea의 텍스트를 가져와서 줄바꿈 처리한 후 div에 삽입
 
-		// div 요소를 textarea 앞에 삽입하고, textarea는 숨김 처리
-		textarea.before(div).hide();
+
+		var tempArea = [$("#admMemo"), $("#rqstCntn")];
+		var div, div2;
+		var tempDiv = [div, div2];
+		for(var i=0; i<=1; i++){
+			if(tempArea[i].size()>0){
+				tempDiv[i] = $('<div>').css({
+					'font-family': tempArea[i].css('font-family'),
+					'font-size': tempArea[i].css('font-size'),
+					'line-height': tempArea[i].css('line-height'),
+					'white-space': 'pre-wrap', // 줄바꿈 처리를 위해 white-space 속성을 설정
+					'word-wrap': 'break-word', // 단어가 라인을 넘어갈 경우 줄바꿈 처리
+					'width': tempArea[i].outerWidth(),
+					'height': tempArea[i].outerHeight(tempArea[i].val().length >0 ? 1500 : true), //textarea의 텍스트가 아예없다면 기본값을 뿌리고 값이 있다면 높이만큼 맞춤
+					'border': tempArea[i].css('border'), // 테두리 설정 추가
+					'padding': tempArea[i].css('padding') // 패딩 설정 추가
+				}).html(tempArea[i].val().replace(/\n/g, "<br>")); // textarea의 텍스트를 가져와서 줄바꿈 처리한 후 div에 삽입
+
+				// div 요소를 textarea 앞에 삽입하고, textarea는 숨김 처리
+				tempArea[i].before(tempDiv[i]).hide();
+			}
+		}
+
+
+
+
 
 		// 신청자 정보 pdf 다운로드시 스크롤방지 코드 삽입(스크롤시 영역 틀어짐) 
 		$('html, body').css({'overflow': 'hidden', 'height': '100%'});
@@ -1894,7 +1906,11 @@ var cmmCtrl = (function(){
 				$("#appctnPdfArea2").css("padding-top" ,"0");
 
 				// pdf 변환 후 관리자메모 textarea 다시 원래대로 복원
-				div.replaceWith(textarea.show());
+				for(var i=0; i<=1; i++){
+					tempDiv[i].replaceWith(tempArea[i].show());
+					tempArea[i].css("height", "150px");//원복할때 기본값인 높이150px로 원복
+				}
+
 				//로딩바 숨기기
 				jQuery(".loadingbar").stop().fadeOut(200);
 
