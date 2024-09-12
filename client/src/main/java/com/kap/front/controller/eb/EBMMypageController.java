@@ -656,6 +656,7 @@ public class EBMMypageController
             }
 
 
+            eBBLctrDTO.setSiteGubun("admin");//2024-09-12 수강중에는 페이징처리를 하지 않음
             modelMap.addAttribute("rtnData", eBBEpisdService.selectLctrDtlList(eBBLctrDTO));
             modelMap.addAttribute("nowLctrSeq", eBBLctrDTO.getNowLctrSeq());
         }
