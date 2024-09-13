@@ -65,6 +65,7 @@
                     <div class="page-tit-area t-align-center">
                         <p class="page-tit f-large-title">
                             <span class="for-move">온라인 교육</span>
+                            <input type="hidden" name="fullscreenYn" id="fullscreenYn" value=""/>
                         </p>
                     </div>
                 </div>

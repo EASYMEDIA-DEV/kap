@@ -13,6 +13,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 	// form Object
 	var $formObj = ctrl.obj.find("form").eq(0);
 
+	var fullScreenYn = false;
+
+	var fullScreenEmpty = function(){
+		$("#fullscreenYn").val("");
+	}
+
+
 	var lctrSearch = function (page){
 		//data로 치환해주어야한다.
 
@@ -26,7 +33,9 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 			$("#viewContainer").html(respObj);
 
 			//총 건수
-			console.log(respObj);
+			//console.log(respObj);
+
+			//onYouTubeIframeAPIReady();
 
 
 		}, "/my-page/edu-apply/onlineStep2Select", $formObj, "GET", "html");
@@ -135,6 +144,25 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 		immediately : function() {
 
 			lctrSearch();
+
+			document.addEventListener('fullscreenchange', function(event) {
+				fullScreenYn = (!fullScreenYn) ? true : false;
+
+				if(fullScreenYn){
+					//showBack();
+					//console.log("현재상태는 전체화면임");
+					//alert("현재상태는 전체화면임");
+				}else{
+					$("#fullscreenYn").val(true);
+					showBack("fullscreenchange");
+					//console.log("현재상태는 전체화면이 아님");
+					//alert("현재상태는 전체화면이 아님");
+
+					setTimeout(fullScreenEmpty, 1000);
+				}
+				console.log(event);
+				//console.log('전체 화면 상태가 변경되었습니다.1');
+			});
 
 			// 유효성 검사
 			$formObj.validation({

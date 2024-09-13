@@ -59,7 +59,7 @@
 	<script type="text/javascript" src="/common/js/swiper.min.js"></script>
 	<script type="text/javascript" src="/common/js/lottie-player.js"></script>
 	<script type="text/javascript" src="/common/js/jquery.cookies.js"></script>
-	<script type="text/javascript" src="/common/js/script.js"></script>
+	<script type="text/javascript" src="/common/js/script.js?bust=${sysDate}"></script>
 	<script type="text/javascript" src="/common/js/lib/datetimepicker/jquery.datetimepicker.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script type="text/javascript" src="/common/js/kakao.js"></script>
