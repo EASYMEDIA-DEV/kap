@@ -1799,12 +1799,15 @@ function printFn(){
 }
 
 
-
-
 // 세로 최적화 안내
 function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올라왔는지 아닌지 체크 후  only-vertical-view 노출,미노출 체크 
 	var agent = navigator.userAgent.toLowerCase();
-		
+
+    //focusEle가 fullscreenchange로 들어오는 경우는 온라인교육과정의 유튜브 전체화면에서 복귀할때의 값 그 이외에는 undefined로만 구분함
+    var fullscreenYn = ($("input[name='fullscreenYn']").val() === undefined || $("input[name='fullscreenYn']").val() == "") ? false : $("input[name='fullscreenYn']").val();
+
+
+
 	var mobileArr = new Array("iPhone", "iPod", "Android");
 	var mobileNum;
 	for(var txt in mobileArr){
@@ -1819,12 +1822,12 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
     if(mobileNum > 1){ // ios 외 다른 기종 				
       if (window.matchMedia('(orientation: portrait)').matches || window.innerWidth <= window.innerHeight) {
         // 세로 모드 (평소 사용하는 각도)
-        if(typeof focusEle != "undefined"){// 키패드 올라왔을 때
+        if(typeof focusEle != "undefined" && focusEle != "fullscreenchange"){// 키패드 올라왔을 때
           $("body").addClass("vertical");
-          $(".only-vertical-view").addClass("on");
+          if(!fullscreenYn) $(".only-vertical-view").addClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
         }else{
           $("body").removeClass("vertical");
-          $(".only-vertical-view").removeClass("on");
+          if(!fullscreenYn) $(".only-vertical-view").removeClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
         }		
       }else if(window.matchMedia("(orientation: landscape)").matches || window.innerWidth > window.innerHeight){
         var widthChk = window.innerWidth;
@@ -1835,11 +1838,18 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
         if (aspectRatio > landscapeAspectRatioThreshold) {
           // 가로 모드
           $("body").addClass("landscape");
-          $(".only-vertical-view").addClass("on");
+
+          //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
+          if(!fullscreenYn){//안드로이드 환경에서 유튜브 전체화면->축소 복귀시 가로-->세로 인식이 안되서 예외처리함
+            $(".only-vertical-view").addClass("on");
+          }else{
+            $(".only-vertical-view").removeClass("on");
+          }
+
         } else {
           // 세로 모드
           $("body").removeClass("landscape");
-          $(".only-vertical-view").removeClass("on");
+          if(!fullscreenYn) $(".only-vertical-view").removeClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
         }
       }
     }else{	// ios 
@@ -1847,24 +1857,24 @@ function showBack(focusEle) {	// 화면 각도 바뀔때 기종, 키패드 올�
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
           $("body").removeClass("vertical");
-          $(".only-vertical-view").removeClass("on");
+          if(!fullscreenYn) $(".only-vertical-view").removeClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
         }else if(window.matchMedia("(orientation: landscape)").matches){
           if(window.innerHeight < 512){
             // 가로 모드 (동영상 볼때 사용하는 각도)
             $("body").addClass("vertical");
-            $(".only-vertical-view").addClass("on");
+            if(!fullscreenYn) $(".only-vertical-view").addClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
           }
         }
       }else{			
         if(window.matchMedia("(orientation: portrait)").matches){
           // 세로 모드 (평소 사용하는 각도)
           $("body").removeClass("vertical");
-          $(".only-vertical-view").removeClass("on");
+          if(!fullscreenYn) $(".only-vertical-view").removeClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
         }else if(window.matchMedia("(orientation: landscape)").matches){
           if(window.innerHeight < 512){
             // 가로 모드 (동영상 볼때 사용하는 각도)
             $("body").addClass("vertical");
-            $(".only-vertical-view").addClass("on");
+            if(!fullscreenYn) $(".only-vertical-view").addClass("on"); //2024-09-13 유튜브 전체화면에서 복귀시에는 미적용
           }
         }
       }
