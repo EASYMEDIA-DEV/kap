@@ -456,6 +456,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                             if($(this).val() == ""){
                                 breckIdx = idx;
+                                return false;
                             }else{
                                 idx++;
                             }

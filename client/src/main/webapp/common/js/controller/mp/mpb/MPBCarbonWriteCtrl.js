@@ -414,7 +414,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                             $formObj.find("#spprtMngSttsCd2").val('PRO_TYPE03002_02_002');
                         }
 
-                        var tabFlag = $formObj.find(".tabFlag").val();
+                        /*var tabFlag = $formObj.find(".tabFlag").val();
 
                         if (tabFlag == "insert") {
                             file.each(function(i) {
@@ -424,7 +424,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
                                     return false;
                                 }
                             });
-                        }
+                        }*/
 
                         if (valid) {
                             if(confirm("저장하시겠습니까?")) {
@@ -458,6 +458,7 @@ define(["ezCtrl", "ezVald","ezFile"], function(ezCtrl, ezVald) {
 
                             if($(this).val() == ""){
                                 breckIdx = idx;
+                                return false;
                             }else{
                                 idx++;
                             }
