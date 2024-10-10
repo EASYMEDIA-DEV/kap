@@ -63,7 +63,7 @@ public class CBATechGuidanceDTO extends BaseDTO {
     private String rdngCmbsnCd;
 
     @Schema(title = "해외의존율")
-    private Integer frgnDpndnRate;
+    private String frgnDpndnRate;
 
     @Schema(title = "전체매출금액")
     private Integer ttlSlsPmt;

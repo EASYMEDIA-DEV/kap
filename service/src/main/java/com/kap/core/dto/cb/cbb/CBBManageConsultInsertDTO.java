@@ -263,7 +263,7 @@ public class CBBManageConsultInsertDTO extends BaseDTO {
     private Integer fileSeq;
 
     @Schema(title = "해외의존율")
-    private Integer frgnDpndnRate;
+    private String frgnDpndnRate;
     @Schema(title = "전체 매출액")
     private Integer ttlSlsPmt;
     @Schema(title = "국내 매출액")
