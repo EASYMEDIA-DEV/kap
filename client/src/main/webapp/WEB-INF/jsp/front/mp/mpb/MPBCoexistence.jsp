@@ -45,6 +45,11 @@
                                             </div>
                                             <div class="td">
                                                 <div class="data-line-w">
+                                                    <div class="data-line">
+                                                        <div class="noti-txt-w">
+                                                            <P class="bullet-noti-txt f-caption2">다수의 파일을 업로드 하시는 경우 압축파일로 업로드 해주세요.</P>
+                                                        </div>
+                                                    </div>
                                                     <c:choose>
                                                         <c:when test="${not empty item.applyOptnList}">
                                                             <c:forEach var="itemOptn" items="${item.applyOptnList}" varStatus="status1">
