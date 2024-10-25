@@ -44,7 +44,8 @@ define(["ezCtrl"], function(ezCtrl) {
         id : {
 
             //2024-07-11 추가개발 ppt 11 인증번호 동시 발송
-            btnSend : {
+            //2024-10-25 인중번호 발송 분리
+            btnEmailSend : {
                 event : {
                     click : function() {
                         var delActCnt = $("input:checkbox[name='delValueList']:checked").length;
@@ -82,7 +83,57 @@ define(["ezCtrl"], function(ezCtrl) {
                                     } catch (e) {
                                         console.error("Error processing response data:", e);
                                     }
-                                }, './submitCrtfnNoList', tempForm , 'json')
+                                }, './submitCrtfnNoMailList', tempForm , 'json')
+                            }
+                        }
+                        else
+                        {
+                            alert('인증번호를 발송할 부품사를 선택해주세요');
+
+                            return false;
+                        }
+                    }
+                }
+            },
+            btnSmsSend : {
+                event : {
+                    click : function() {
+                        var delActCnt = $("input:checkbox[name='delValueList']:checked").length;
+
+                        var tempForm = {};
+
+                        if (delActCnt > 0)
+                        {
+                            var sendList = [];
+
+                            $("input:checkbox[name='delValueList']:checked").each(function() {
+                                var item = {
+                                    cxstnSrvSeq: $(this).val(),
+                                    email: $(this).data('email'),
+                                    crtfnNo: $(this).data('crtfnno'),
+                                    telNo: $(this).data('telno'),
+                                    partCmpnNm2: $(this).data('partcmpnnm2')
+                                };
+                                sendList.push(item);
+                            });
+
+                            tempForm.sendList = sendList;
+
+                            if(confirm('인증번호를 발송하시겠습니까?'))
+                            {
+                                cmmCtrl.jsonAjax(function(data){
+                                    try {
+                                        console.log(data); // 서버에서 반환한 데이터 확인
+                                        if (data.respCnt > 0 && data.respCnt == delActCnt) {
+                                            alert("인증번호가 발송되었습니다.");
+                                            search();
+                                        } else {
+                                            alert("인증번호 발송에 실패했습니다.");
+                                        }
+                                    } catch (e) {
+                                        console.error("Error processing response data:", e);
+                                    }
+                                }, './submitCrtfnNoSmsList', tempForm , 'json')
                             }
                         }
                         else

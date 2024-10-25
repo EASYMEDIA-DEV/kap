@@ -121,13 +121,13 @@
                         <div class="col-sm-5">
                             <p class="form-control-static">${rtnDto.crtfnNo}</p>
 
-                            <c:if test="${profile eq 'local' || profile eq 'dev'}">
+                            <%--<c:if test="${profile eq 'local' || profile eq 'dev'}">--%>
                                 <p class="form-control-static">
                                     <button type="button" class="btn btn-inverse btn-sm submitCrtfnNo" data-crtfn-no="${rtnDto.crtfnNo}" data-pic-nm="${rtnDto.picNm}" data-email="${rtnDto.email}" data-tel-no="${rtnDto.telNo}">
                                         인증번호 발송
                                     </button>
                                 </p>
-                            </c:if>
+                            <%--</c:if>--%>
                             <span id="sendDtm" style="margin-left: 10px">
                                     ${not empty rtnDto.sendDtm ? '발송' : '미발송'}
                             </span>

@@ -442,7 +442,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
      * 상생협력체감도조사 인증번호 발송
      */
     @PostMapping(value = "/submitCrtfnNo")
-    public ResponseEntity<WBLSurveyMstInsertDTO> submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+    public WBLSurveyMstInsertDTO submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
         try {
             /* 2024-07-09 추가개발 ppt 13 수정 s */
             //상생협력체감도조사 메일발송 시작
@@ -483,7 +483,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             //2024-07-08 추가개발 ppt 4 발송일 업데이트
             wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));
 
-            return ResponseEntity.ok(wBLSurveyMstInsertDTO);
+            return wBLSurveyMstInsertDTO;
 
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
@@ -491,16 +491,16 @@ public class WBLSurveyController<sVASurveyMstDTO> {
             }
             //2024-07-08 추가개발 ppt 4 발송일 업데이트
 //            throw new Exception(e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            throw new Exception(e.getMessage());
         }
     }
 
     //2024-07-11 추가개발 ppt 11 추가
     /**
-     * 상생협력체감도조사 인증번호 발송
+     * 상생협력체감도조사 인증번호 발송 - email만 발송
      */
-    @PostMapping(value = "/submitCrtfnNoList")
-    public ResponseEntity<WBLSurveyMstInsertDTO> submitCrtfnNoList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+    @PostMapping(value = "/submitCrtfnNoEmailList")
+    public WBLSurveyMstInsertDTO submitCrtfnNoEmailList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
         int rtnCnt = 0;
 
         try {
@@ -522,6 +522,40 @@ public class WBLSurveyController<sVASurveyMstDTO> {
                     cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
                     // 메일 발송 끝
 
+                    rtnCnt += wLSurveyService.updateSendDtm(send);
+                }
+            }
+
+            wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
+
+            return wBLSurveyMstInsertDTO;
+
+        } catch (Exception e) {
+            if (log.isDebugEnabled()) {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+    }
+
+    //2024-07-11 추가개발 ppt 11 추가
+    /**
+     * 상생협력체감도조사 인증번호 발송 - sms 발송
+     */
+    @PostMapping(value = "/submitCrtfnNoSmsList")
+    public WBLSurveyMstInsertDTO submitCrtfnNoSmsList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+        int rtnCnt = 0;
+
+        try {
+            if(!wBLSurveyMstInsertDTO.getSendList().isEmpty()) {
+                List<WBLSurveyMstInsertDTO> sendList = wBLSurveyMstInsertDTO.getSendList();
+
+                for(WBLSurveyMstInsertDTO send : sendList) {
+
+                    COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                    receiverDto.setEmail(send.getEmail());
+                    receiverDto.setNote1(send.getCrtfnNo());
+                    receiverDto.setNote2(send.getPartCmpnNm2());
                     //SMS 발송 시작
                     //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
                     if (send.getTelNo() != null && !send.getTelNo().isEmpty()) {
@@ -544,13 +578,13 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
             wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
 
-            return ResponseEntity.ok(wBLSurveyMstInsertDTO);
+            return wBLSurveyMstInsertDTO;
 
         } catch (Exception e) {
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
             }
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+            throw new Exception(e.getMessage());
         }
     }
 
