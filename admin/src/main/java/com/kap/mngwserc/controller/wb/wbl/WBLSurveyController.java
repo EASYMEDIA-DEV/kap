@@ -437,155 +437,179 @@ public class WBLSurveyController<sVASurveyMstDTO> {
     }
 
 
-    //2024-07-08 추가개발 ppt 4 발송일 업데이트
-    /**
-     * 상생협력체감도조사 인증번호 발송
-     */
-    @PostMapping(value = "/submitCrtfnNo")
-    public WBLSurveyMstInsertDTO submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
-        try {
-            /* 2024-07-09 추가개발 ppt 13 수정 s */
-            //상생협력체감도조사 메일발송 시작
 
-            //메일 발송
-            COMailDTO cOMailDTO = new COMailDTO();
-            cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
 
-            COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-            receiverDto.setEmail(wBLSurveyMstInsertDTO.getEmail());
+
+
+
+    @RestController
+    @RequiredArgsConstructor
+    @RequestMapping(value="/mngwserc/wb/wbl")
+    public class WBLSurveyRestController {
+
+        private final COMessageService cOMessageService;
+
+        private final SMISmsCntnService smiSmsCntnService;
+
+        private final WBLSurveyService wLSurveyService;
+
+
+
+        //2024-07-08 추가개발 ppt 4 발송일 업데이트
+        /**
+         * 상생협력체감도조사 인증번호 발송
+         */
+        @PostMapping(value = "/submitCrtfnNo")
+        public ResponseEntity<WBLSurveyMstInsertDTO> submitCrtfnNo(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
+            try {
+                /* 2024-07-09 추가개발 ppt 13 수정 s */
+                //상생협력체감도조사 메일발송 시작
+
+                //메일 발송
+                COMailDTO cOMailDTO = new COMailDTO();
+                cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
+
+                COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                receiverDto.setEmail(wBLSurveyMstInsertDTO.getEmail());
 //            receiverDto.setName(wBLSurveyMstInsertDTO.getPicNm());
-            receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
-            receiverDto.setNote2(wBLSurveyMstInsertDTO.getPartCmpnNm2());
+                receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
+                receiverDto.setNote2(wBLSurveyMstInsertDTO.getPartCmpnNm2());
 
-            cOMailDTO.getReceiver().add(receiverDto);
+                cOMailDTO.getReceiver().add(receiverDto);
 
-            cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
+                cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
 
-            //상생협력체감도조사 메일발송 끝
+                //상생협력체감도조사 메일발송 끝
 
-            //SMS 발송 시작
-            //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
-            if(wBLSurveyMstInsertDTO.getTelNo() != null && !"".equals(wBLSurveyMstInsertDTO.getTelNo())){
-                receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
-                COSmsDTO smsDto = new COSmsDTO();
+                //SMS 발송 시작
+                //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
+                if(wBLSurveyMstInsertDTO.getTelNo() != null && !"".equals(wBLSurveyMstInsertDTO.getTelNo())){
+                    receiverDto.setMobile(wBLSurveyMstInsertDTO.getTelNo());
+                    COSmsDTO smsDto = new COSmsDTO();
 
-                SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
-                smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
-                smiSmsCntnDTO.setSmsCntnSeq(10);
-                smsDto.getReceiver().add(receiverDto);
-                smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+                    SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+                    smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
+                    smiSmsCntnDTO.setSmsCntnSeq(10);
+                    smsDto.getReceiver().add(receiverDto);
+                    smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
 
-                cOMessageService.sendSms(smsDto, "");
-            }
-            //SMS 발송 끝
-            /* 2024-07-09 추가개발 ppt 13 수정 e */
+                    cOMessageService.sendSms(smsDto, "");
+                }
+                //SMS 발송 끝
+                /* 2024-07-09 추가개발 ppt 13 수정 e */
 
-            //2024-07-08 추가개발 ppt 4 발송일 업데이트
-            wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));
+                //2024-07-08 추가개발 ppt 4 발송일 업데이트
+                wBLSurveyMstInsertDTO.setRespCnt(wLSurveyService.updateSendDtm(wBLSurveyMstInsertDTO));
 
-            return wBLSurveyMstInsertDTO;
+                return ResponseEntity.ok(wBLSurveyMstInsertDTO);
 
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage());
-            }
-            //2024-07-08 추가개발 ppt 4 발송일 업데이트
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                //2024-07-08 추가개발 ppt 4 발송일 업데이트
 //            throw new Exception(e.getMessage());
-            throw new Exception(e.getMessage());
-        }
-    }
-
-    //2024-07-11 추가개발 ppt 11 추가
-    /**
-     * 상생협력체감도조사 인증번호 발송 - email만 발송
-     */
-    @PostMapping(value = "/submitCrtfnNoEmailList")
-    public WBLSurveyMstInsertDTO submitCrtfnNoEmailList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
-        int rtnCnt = 0;
-
-        try {
-            if(!wBLSurveyMstInsertDTO.getSendList().isEmpty()) {
-                List<WBLSurveyMstInsertDTO> sendList = wBLSurveyMstInsertDTO.getSendList();
-
-                for(WBLSurveyMstInsertDTO send : sendList) {
-                    //메일 발송 시작
-                    COMailDTO cOMailDTO = new COMailDTO();
-                    cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
-
-                    COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-                    receiverDto.setEmail(send.getEmail());
-                    receiverDto.setNote1(send.getCrtfnNo());
-                    receiverDto.setNote2(send.getPartCmpnNm2());
-
-                    cOMailDTO.getReceiver().add(receiverDto);
-
-                    cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
-                    // 메일 발송 끝
-
-                    rtnCnt += wLSurveyService.updateSendDtm(send);
-                }
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
             }
-
-            wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
-
-            return wBLSurveyMstInsertDTO;
-
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
         }
-    }
 
-    //2024-07-11 추가개발 ppt 11 추가
-    /**
-     * 상생협력체감도조사 인증번호 발송 - sms 발송
-     */
-    @PostMapping(value = "/submitCrtfnNoSmsList")
-    public WBLSurveyMstInsertDTO submitCrtfnNoSmsList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletResponse response) throws Exception {
-        int rtnCnt = 0;
 
-        try {
-            if(!wBLSurveyMstInsertDTO.getSendList().isEmpty()) {
-                List<WBLSurveyMstInsertDTO> sendList = wBLSurveyMstInsertDTO.getSendList();
+        //2024-07-11 추가개발 ppt 11 추가
+        /**
+         * 상생협력체감도조사 인증번호 발송 - email만 발송
+         */
+        @Operation(summary = "상생협력체감도 조사 인증번호 발송(Email)", tags = "인증번호", description = "상생협력체감도조사, 인증번호")
+        @PostMapping(value = "/submitCrtfnNoEmailList")
+        public WBLSurveyMstInsertDTO submitCrtfnNoEmailList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, ModelMap modelMap) throws Exception {
+            int rtnCnt = 0;
 
-                for(WBLSurveyMstInsertDTO send : sendList) {
+            //try {
+                if(!wBLSurveyMstInsertDTO.getSendList().isEmpty()) {
+                    List<WBLSurveyMstInsertDTO> sendList = wBLSurveyMstInsertDTO.getSendList();
 
-                    COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
-                    receiverDto.setEmail(send.getEmail());
-                    receiverDto.setNote1(send.getCrtfnNo());
-                    receiverDto.setNote2(send.getPartCmpnNm2());
-                    //SMS 발송 시작
-                    //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
-                    if (send.getTelNo() != null && !send.getTelNo().isEmpty()) {
-                        receiverDto.setMobile(send.getTelNo());
-                        COSmsDTO smsDto = new COSmsDTO();
+                    for(WBLSurveyMstInsertDTO send : sendList) {
+                        COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                        //메일 발송 시작
+                        COMailDTO cOMailDTO = new COMailDTO();
+                        cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
 
-                        SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
-                        smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
-                        smiSmsCntnDTO.setSmsCntnSeq(10);
-                        smsDto.getReceiver().add(receiverDto);
-                        smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+                        receiverDto.setEmail(send.getEmail());
+                        receiverDto.setNote1(send.getCrtfnNo());
+                        receiverDto.setNote2(send.getPartCmpnNm2());
 
-                        cOMessageService.sendSms(smsDto, "");
+                        cOMailDTO.getReceiver().add(receiverDto);
+
+                        cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
+                        // 메일 발송 끝
+
+
+                        rtnCnt += wLSurveyService.updateSendDtm(send);
                     }
-                    //SMS 발송 끝
-
-                    rtnCnt += wLSurveyService.updateSendDtm(send);
                 }
-            }
 
-            wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
+                wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
+                modelMap.addAttribute("respCnt", wBLSurveyMstInsertDTO);
+
+
+            /*} catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }*/
+
+            return wBLSurveyMstInsertDTO;
+        }
+
+        //2024-07-11 추가개발 ppt 11 추가
+        /**
+         * 상생협력체감도조사 인증번호 발송 - sms 발송
+         */
+        @Operation(summary = "상생협력체감도 조사 인증번호 발송(sms)", tags = "인증번호", description = "상생협력체감도조사, 인증번호")
+        @PostMapping(value = "/submitCrtfnNoSmsList")
+        public WBLSurveyMstInsertDTO submitCrtfnNoSmsList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, ModelMap modelMap) throws Exception {
+            int rtnCnt = 0;
+
+            try {
+                if(!wBLSurveyMstInsertDTO.getSendList().isEmpty()) {
+                    List<WBLSurveyMstInsertDTO> sendList = wBLSurveyMstInsertDTO.getSendList();
+
+                    for(WBLSurveyMstInsertDTO send : sendList) {
+
+                        COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                        //SMS 발송 시작
+                        //휴대폰 번호는 필수값이 아니기에 없으면 안보냄
+                        if (send.getTelNo() != null && !send.getTelNo().isEmpty()) {
+                            receiverDto.setMobile(send.getTelNo());
+                            COSmsDTO smsDto = new COSmsDTO();
+
+                            SMISmsCntnDTO smiSmsCntnDTO = new SMISmsCntnDTO();
+                            smiSmsCntnDTO.setSmsCntnCd("SMS10"); //교육신청 완료 코드
+                            smiSmsCntnDTO.setSmsCntnSeq(10);
+                            smsDto.getReceiver().add(receiverDto);
+                            smsDto.setMessage(COStringUtil.replaceHTML(smiSmsCntnService.selectSmsCntnDtl(smiSmsCntnDTO).getCntn()));
+
+                            cOMessageService.sendSms(smsDto, "");
+
+                            rtnCnt += wLSurveyService.updateSendDtm(send);
+                        }
+                    }
+                }
+
+                wBLSurveyMstInsertDTO.setRespCnt(rtnCnt);
+                //modelMap.addAttribute("respCnt", wBLSurveyMstInsertDTO);
+
+            } catch (Exception e) {
+                if (log.isDebugEnabled()) {
+                    log.debug(e.getMessage());
+                }
+                throw new Exception(e.getMessage());
+            }
 
             return wBLSurveyMstInsertDTO;
 
-        } catch (Exception e) {
-            if (log.isDebugEnabled()) {
-                log.debug(e.getMessage());
-            }
-            throw new Exception(e.getMessage());
         }
+
     }
 
 

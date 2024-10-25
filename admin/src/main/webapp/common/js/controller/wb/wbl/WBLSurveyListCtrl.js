@@ -73,8 +73,10 @@ define(["ezCtrl"], function(ezCtrl) {
                             {
                                 cmmCtrl.jsonAjax(function(data){
                                     try {
+                                        var rtn = JSON.parse(data);
                                         console.log(data); // 서버에서 반환한 데이터 확인
-                                        if (data.respCnt > 0 && data.respCnt == delActCnt) {
+
+                                        if (rtn.respCnt > 0 && rtn.respCnt == delActCnt) {
                                             alert("인증번호가 발송되었습니다.");
                                             search();
                                         } else {
@@ -83,7 +85,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                     } catch (e) {
                                         console.error("Error processing response data:", e);
                                     }
-                                }, './submitCrtfnNoMailList', tempForm , 'json')
+                                }, './submitCrtfnNoEmailList', tempForm , 'text')
                             }
                         }
                         else
@@ -123,8 +125,9 @@ define(["ezCtrl"], function(ezCtrl) {
                             {
                                 cmmCtrl.jsonAjax(function(data){
                                     try {
+                                        var rtn = JSON.parse(data);
                                         console.log(data); // 서버에서 반환한 데이터 확인
-                                        if (data.respCnt > 0 && data.respCnt == delActCnt) {
+                                        if (rtn.respCnt > 0 && rtn.respCnt == delActCnt) {
                                             alert("인증번호가 발송되었습니다.");
                                             search();
                                         } else {
@@ -133,7 +136,7 @@ define(["ezCtrl"], function(ezCtrl) {
                                     } catch (e) {
                                         console.error("Error processing response data:", e);
                                     }
-                                }, './submitCrtfnNoSmsList', tempForm , 'json')
+                                }, './submitCrtfnNoSmsList', tempForm , 'text')
                             }
                         }
                         else
