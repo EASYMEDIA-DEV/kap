@@ -60,6 +60,7 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
 
                             var tempForm = {};
 
+                            tempForm.sendType = $(this).data("sendType");
                             tempForm.crtfnNo = $(this).data("crtfnNo");
                             // tempForm.picNm = $(this).data("picNm");
                             tempForm.email = $(this).data("email");

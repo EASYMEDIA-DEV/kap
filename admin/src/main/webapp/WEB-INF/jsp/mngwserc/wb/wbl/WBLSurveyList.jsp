@@ -129,8 +129,8 @@
                     </select>
                 </div>
                 <div class="pull-right mr-sm">
-                    <button type="button" class="btn btn-success btn-sm mb-sm" id="btnEmailSend">Email 인증번호 발송</button> <%-- 2024-07-11 추가개발 ppt 11 추가 --%>
-                    <button type="button" class="btn btn-success btn-sm mb-sm" id="btnSmsSend">SMS 인증번호 발송</button> <%-- 2024-07-11 추가개발 ppt 11 추가 --%>
+                    <button type="button" class="btn btn-success btn-sm mb-sm btnCrtfnSend" data-send-type="email">Email 인증번호 발송</button> <%-- 2024-07-11 추가개발 ppt 11 추가 --%>
+                    <button type="button" class="btn btn-success btn-sm mb-sm btnCrtfnSend" data-send-type="sms">SMS 인증번호 발송</button> <%-- 2024-07-11 추가개발 ppt 11 추가 --%>
                     <button type="button" class="btn btn-danger btn-sm mb-sm" id="btnDelete">선택삭제</button>
                     <button type="button" class="btn btn-info btn-sm mb-sm" id="btnWrite">등록</button>
                     <button type="button" class="btn btn-inverse btn-sm mb-sm" id="btnExcelDown">엑셀다운로드</button>

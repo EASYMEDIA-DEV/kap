@@ -123,8 +123,12 @@
 
                             <%--<c:if test="${profile eq 'local' || profile eq 'dev'}">--%>
                                 <p class="form-control-static">
-                                    <button type="button" class="btn btn-inverse btn-sm submitCrtfnNo" data-crtfn-no="${rtnDto.crtfnNo}" data-pic-nm="${rtnDto.picNm}" data-email="${rtnDto.email}" data-tel-no="${rtnDto.telNo}">
-                                        인증번호 발송
+                                    <button type="button" class="btn btn-inverse btn-sm submitCrtfnNo" data-send-type="email" data-crtfn-no="${rtnDto.crtfnNo}" data-pic-nm="${rtnDto.picNm}" data-email="${rtnDto.email}" data-tel-no="${rtnDto.telNo}">
+                                        인증번호 발송[Email]
+                                    </button>
+
+                                    <button type="button" class="btn btn-inverse btn-sm submitCrtfnNo" data-send-type="sms" data-crtfn-no="${rtnDto.crtfnNo}" data-pic-nm="${rtnDto.picNm}" data-email="${rtnDto.email}" data-tel-no="${rtnDto.telNo}">
+                                        인증번호 발송[SMS]
                                     </button>
                                 </p>
                             <%--</c:if>--%>

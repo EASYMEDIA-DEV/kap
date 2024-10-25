@@ -99,6 +99,10 @@ public class WBLSurveyMstInsertDTO extends BaseDTO {
     @Schema(title = "점수")
     private String score;
 
+    @Schema(title = "점수")
+    @Builder.Default
+    private String sendType = "email";
+
     /* 2024-07-08 추가개발 ppt 4 추가 */
     @Schema(title = "인증번호 발송일")
     private String sendDtm;
