@@ -83,7 +83,9 @@
 				LEFT JOIN sv_mtlcc_rspn_dtl D ON C.EXMPL_SEQ = D.EXMPL_SEQ
 				GROUP BY srv_rspn_seq
 			) e ON e.srv_seq = b.srv_seq AND A.srv_rspn_seq = e.srv_rspn_seq
-			<include refid="selectSurveyListwhereSql" />
+			<if test="excelYn != 'Y'.toString() ">
+				<include refid="selectSurveyListwhereSql" />
+			</if>
 			GROUP BY cxstn_srv_seq
 			) a
 			ORDER BY
