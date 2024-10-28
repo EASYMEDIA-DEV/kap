@@ -466,18 +466,16 @@ public class WBLSurveyController<sVASurveyMstDTO> {
                 //상생협력체감도조사 메일발송 시작
 
                 COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
+                receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
+                receiverDto.setNote2(wBLSurveyMstInsertDTO.getPartCmpnNm2());
 
                 if("email".equals(wBLSurveyMstInsertDTO.getSendType())){
                     //메일 발송
                     COMailDTO cOMailDTO = new COMailDTO();
                     cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
 
-
                     receiverDto.setEmail(wBLSurveyMstInsertDTO.getEmail());
-//            receiverDto.setName(wBLSurveyMstInsertDTO.getPicNm());
-                    receiverDto.setNote1(wBLSurveyMstInsertDTO.getCrtfnNo());
-                    receiverDto.setNote2(wBLSurveyMstInsertDTO.getPartCmpnNm2());
-
+                    //receiverDto.setName(wBLSurveyMstInsertDTO.getPicNm());
                     cOMailDTO.getReceiver().add(receiverDto);
 
                     cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
@@ -535,15 +533,16 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
                         COMessageReceiverDTO receiverDto = new COMessageReceiverDTO();
 
+
+                        receiverDto.setNote1(send.getCrtfnNo());
+                        receiverDto.setNote2(send.getPartCmpnNm2());
+
                         if(  "email".equals(wBLSurveyMstInsertDTO.getSendType())   ){
                             //메일 발송 시작
+                            receiverDto.setEmail(send.getEmail());
+
                             COMailDTO cOMailDTO = new COMailDTO();
                             cOMailDTO.setSubject("[KAP] 이메일 인증번호 안내");
-
-                            receiverDto.setEmail(send.getEmail());
-                            receiverDto.setNote1(send.getCrtfnNo());
-                            receiverDto.setNote2(send.getPartCmpnNm2());
-
                             cOMailDTO.getReceiver().add(receiverDto);
 
                             cOMessageService.sendMail(cOMailDTO, "WBLSurveySrtfnNo.html");
