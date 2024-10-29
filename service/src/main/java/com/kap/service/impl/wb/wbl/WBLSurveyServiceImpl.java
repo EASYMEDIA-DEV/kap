@@ -549,7 +549,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
 			XSSFCellStyle style_header = workbook.createCellStyle();
 			XSSFCellStyle style_body = workbook.createCellStyle();
-			Sheet sheet = workbook.createSheet("템프");
+			Sheet sheet = workbook.createSheet();
 
 
 			Row row = null;
