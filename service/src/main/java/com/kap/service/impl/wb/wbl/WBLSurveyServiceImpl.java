@@ -546,253 +546,263 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 	@Override
 	public void excelDownload(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO, List<WBLSurveyMstSearchDTO> qstnList, HttpServletResponse response) throws Exception {
 
-		XSSFWorkbook workbook = new XSSFWorkbook();
-		XSSFCellStyle style_header = workbook.createCellStyle();
-		XSSFCellStyle style_body = workbook.createCellStyle();
-		Sheet sheet = workbook.createSheet("템프");
+		try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+			XSSFCellStyle style_header = workbook.createCellStyle();
+			XSSFCellStyle style_body = workbook.createCellStyle();
+			Sheet sheet = workbook.createSheet("템프");
 
 
-		Row row = null;
-		Cell cell = null;
-		int rowNum = 0;
+			Row row = null;
+			Cell cell = null;
+			int rowNum = 0;
 
-		//Cell Alignment 지정
-		style_header.setAlignment(HorizontalAlignment.CENTER);
-		style_header.setVerticalAlignment(VerticalAlignment.CENTER);
-		style_body.setAlignment(HorizontalAlignment.CENTER);
-		style_body.setVerticalAlignment(VerticalAlignment.CENTER);
+			//Cell Alignment 지정
+			style_header.setAlignment(HorizontalAlignment.CENTER);
+			style_header.setVerticalAlignment(VerticalAlignment.CENTER);
+			style_body.setAlignment(HorizontalAlignment.CENTER);
+			style_body.setVerticalAlignment(VerticalAlignment.CENTER);
 
-		// Border Color 지정
-		style_header.setBorderTop(BorderStyle.THIN);
-		style_header.setBorderLeft(BorderStyle.THIN);
-		style_header.setBorderRight(BorderStyle.THIN);
-		style_header.setBorderBottom(BorderStyle.THIN);
-		style_body.setBorderTop(BorderStyle.THIN);
-		style_body.setBorderLeft(BorderStyle.THIN);
-		style_body.setBorderRight(BorderStyle.THIN);
-		style_body.setBorderBottom(BorderStyle.THIN);
+			// Border Color 지정
+			style_header.setBorderTop(BorderStyle.THIN);
+			style_header.setBorderLeft(BorderStyle.THIN);
+			style_header.setBorderRight(BorderStyle.THIN);
+			style_header.setBorderBottom(BorderStyle.THIN);
+			style_body.setBorderTop(BorderStyle.THIN);
+			style_body.setBorderLeft(BorderStyle.THIN);
+			style_body.setBorderRight(BorderStyle.THIN);
+			style_body.setBorderBottom(BorderStyle.THIN);
 
-		//BackGround Color 지정
-		style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
-		style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+			//BackGround Color 지정
+			style_header.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+			style_header.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 
-		// Header
-		row = sheet.createRow(rowNum++);
-
-		cell = row.createCell(0);
-		cell.setCellValue("번호");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(1);
-		cell.setCellValue("년도");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(2);
-		cell.setCellValue("회차");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(3);
-		cell.setCellValue("1차부품사");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(4);
-		cell.setCellValue("1차부품사코드");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(5);
-		cell.setCellValue("2차부품사");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(6);
-		cell.setCellValue("2차부품사코드");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(7);
-		cell.setCellValue("참여여부");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(8);
-		cell.setCellValue("완료여부");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(9);
-		cell.setCellValue("점수");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(10);
-		cell.setCellValue("응답업체수");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(11);
-		cell.setCellValue("평균점수");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(12);
-		cell.setCellValue("HKMC평균점수");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(13);
-		cell.setCellValue("참여일");
-		cell.setCellStyle(style_header);
-
-		/*cell = row.createCell(14);
-		cell.setCellValue("최초등록자");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(15);
-		cell.setCellValue("최초등록일시");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(16);
-		cell.setCellValue("최종수정자");
-		cell.setCellStyle(style_header);
-
-		cell = row.createCell(17);
-		cell.setCellValue("최종수정일시");
-		cell.setCellStyle(style_header);*/
-
-		int qstnRow = 14;
-		String scoreExclusionYn = "";
-		for(WBLSurveyMstSearchDTO qstnDto : qstnList){
-			cell = row.createCell(qstnRow);
-			if("Y".equals(qstnDto.getScoreExclusionYn())) {
-				scoreExclusionYn = "[점수 미반영] ";
-			}
-			else {
-				scoreExclusionYn = "";
-			}
-			cell.setCellValue(scoreExclusionYn + qstnDto.getQstnNm());
-			cell.setCellStyle(style_header);
-			qstnRow++;
-		}
-
-
-		// Body
-		List<WBLSurveyMstSearchDTO> list = wBLSurveyMstSearchDTO.getList();
-
-		for (int i=0; i<list.size(); i++) {
+			// Header
 			row = sheet.createRow(rowNum++);
 
-			//번호
 			cell = row.createCell(0);
-			cell.setCellValue(wBLSurveyMstSearchDTO.getTotalCount() - i);
-			cell.setCellStyle(style_body);
+			cell.setCellValue("번호");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(1);
-			cell.setCellValue(list.get(i).getYear().substring(0,4));
-			cell.setCellStyle(style_body);
+			cell.setCellValue("년도");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(2);
-			cell.setCellValue(list.get(i).getEpisd());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("회차");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(3);
-			cell.setCellValue(list.get(i).getPartCmpnNm1());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("1차부품사");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(4);
-			cell.setCellValue(list.get(i).getPartCmpnCd1());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("1차부품사코드");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(5);
-			cell.setCellValue(list.get(i).getPartCmpnNm2());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("2차부품사");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(6);
-			cell.setCellValue(list.get(i).getPartCmpnCd2());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("2차부품사코드");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(7);
-			cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
-			cell.setCellStyle(style_body);
+			cell.setCellValue("참여여부");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(8);
-			cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
-			cell.setCellStyle(style_body);
+			cell.setCellValue("완료여부");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(9);
-			cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
-			cell.setCellStyle(style_body);
+			cell.setCellValue("점수");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(10);
-			cell.setCellValue(list.get(i).getCnt());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("응답업체수");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(11);
-			cell.setCellValue(list.get(i).getAvgScore());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("평균점수");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(12);
-			cell.setCellValue(list.get(i).getHkmcAvgScore());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("HKMC평균점수");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(13);
-			cell.setCellValue(list.get(i).getPtcptCmpltnDtm() == null ? "-" : list.get(i).getPtcptCmpltnDtm().substring(0, list.get(i).getPtcptCmpltnDtm().lastIndexOf(":")));
-			cell.setCellStyle(style_body);
+			cell.setCellValue("참여일");
+			cell.setCellStyle(style_header);
 
 			/*cell = row.createCell(14);
-			cell.setCellValue(list.get(i).getRegName());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("최초등록자");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(15);
-			cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
-			cell.setCellStyle(style_body);
+			cell.setCellValue("최초등록일시");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(16);
-			cell.setCellValue(list.get(i).getModName());
-			cell.setCellStyle(style_body);
+			cell.setCellValue("최종수정자");
+			cell.setCellStyle(style_header);
 
 			cell = row.createCell(17);
-			cell.setCellValue(list.get(i).getModDtm() == null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getModDtm().lastIndexOf(":")));
-			cell.setCellStyle(style_body);*/
+			cell.setCellValue("최종수정일시");
+			cell.setCellStyle(style_header);*/
+
+			int qstnRow = 14;
+			String scoreExclusionYn = "";
+			for (WBLSurveyMstSearchDTO qstnDto : qstnList) {
+				cell = row.createCell(qstnRow);
+				if ("Y".equals(qstnDto.getScoreExclusionYn())) {
+					scoreExclusionYn = "[점수 미반영] ";
+				} else {
+					scoreExclusionYn = "";
+				}
+				cell.setCellValue(scoreExclusionYn + qstnDto.getQstnNm());
+				cell.setCellStyle(style_header);
+				qstnRow++;
+			}
+
+			cell = row.createCell(qstnRow);
+			cell.setCellValue("인증번호");
+			cell.setCellStyle(style_header);
 
 
-			int rspnRow = 14;
-			if(list.get(i).getList() != null && list.get(i).getList().size()>0){
+			// Body
+			List<WBLSurveyMstSearchDTO> list = wBLSurveyMstSearchDTO.getList();
 
-				for(WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()){
+			for (int i = 0; i < list.size(); i++) {
+				row = sheet.createRow(rowNum++);
 
-					if(list.get(i).getSrvRspnSeq() == rspnDto.getSrvRspnSeq()){
-						cell = row.createCell(rspnRow);
-						cell.setCellValue(rspnDto.getExmplAnswer());
-						cell.setCellStyle(style_body);
-						rspnRow++;
+				//번호
+				cell = row.createCell(0);
+				cell.setCellValue(wBLSurveyMstSearchDTO.getTotalCount() - i);
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(1);
+				cell.setCellValue(list.get(i).getYear().substring(0, 4));
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(2);
+				cell.setCellValue(list.get(i).getEpisd());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(3);
+				cell.setCellValue(list.get(i).getPartCmpnNm1());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(4);
+				cell.setCellValue(list.get(i).getPartCmpnCd1());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(5);
+				cell.setCellValue(list.get(i).getPartCmpnNm2());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(6);
+				cell.setCellValue(list.get(i).getPartCmpnCd2());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(7);
+				cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(8);
+				cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(9);
+				cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(10);
+				cell.setCellValue(list.get(i).getCnt());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(11);
+				cell.setCellValue(list.get(i).getAvgScore());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(12);
+				cell.setCellValue(list.get(i).getHkmcAvgScore());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(13);
+				cell.setCellValue(list.get(i).getPtcptCmpltnDtm() == null ? "-" : list.get(i).getPtcptCmpltnDtm().substring(0, list.get(i).getPtcptCmpltnDtm().lastIndexOf(":")));
+				cell.setCellStyle(style_body);
+
+				/*cell = row.createCell(14);
+				cell.setCellValue(list.get(i).getRegName());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(15);
+				cell.setCellValue(list.get(i).getRegDtm() == null ? "-" : list.get(i).getRegDtm().substring(0, list.get(i).getRegDtm().lastIndexOf(":")));
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(16);
+				cell.setCellValue(list.get(i).getModName());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(17);
+				cell.setCellValue(list.get(i).getModDtm() == null ? "-" : list.get(i).getModDtm().substring(0, list.get(i).getModDtm().lastIndexOf(":")));
+				cell.setCellStyle(style_body);*/
+
+
+				int rspnRow = 14;
+				if (list.get(i).getList() != null && list.get(i).getList().size() > 0) {
+
+					for (WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()) {
+
+						if (list.get(i).getSrvRspnSeq() == rspnDto.getSrvRspnSeq()) {
+							cell = row.createCell(rspnRow);
+							cell.setCellValue(rspnDto.getExmplAnswer());
+							cell.setCellStyle(style_body);
+							rspnRow++;
+						}
+
 					}
-
 
 				}
 
+				cell = row.createCell(qstnRow);
+				cell.setCellValue(list.get(i).getCrtfnNo());
+				cell.setCellStyle(style_body);
 			}
+
+			// 열 너비 설정
+		   /* for(int i =0; i < 8; i++){
+				sheet.autoSizeColumn(i);
+				sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
+			}*/
+
+			String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
+
+			//컨텐츠 타입 및 파일명 지정
+			response.setContentType("ms-vnd/excel");
+			response.setHeader("Set-Cookie", "fileDownload=true; path=/");
+			response.setHeader("Content-Disposition", "attachment;filename=" + URLEncoder.encode("상생협력체감도조사", "UTF-8") + timeStamp + ".xlsx");
+
+			// Excel File Output
+			workbook.write(response.getOutputStream());
+//			workbook.close();
+
+			//다운로드 사유 입력
+			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
+			COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
+			pCoSystemLogDTO.setTrgtMenuNm("상생협력체감도조사 ");
+			pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.wb.wbl.WBLSurveyServiceImpl");
+			pCoSystemLogDTO.setFncNm("getSurveyListExcel");
+			pCoSystemLogDTO.setPrcsCd("DL");
+			pCoSystemLogDTO.setRsn(wBLSurveyMstSearchDTO.getRsn());
+			pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
+			pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
+			cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException("엑셀 파일 생성 중 오류가 발생했습니다.", e);
 		}
-
-		// 열 너비 설정
-       /* for(int i =0; i < 8; i++){
-            sheet.autoSizeColumn(i);
-            sheet.setColumnWidth(i, (sheet.getColumnWidth(i)  + 800));
-        }*/
-
-		String timeStamp = new SimpleDateFormat("yyyyMMdd").format(new Timestamp(System.currentTimeMillis()));
-
-		//컨텐츠 타입 및 파일명 지정
-		response.setContentType("ms-vnd/excel");
-		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
-		response.setHeader("Content-Disposition", "attachment;filename="+ URLEncoder.encode("상생협력체감도조사", "UTF-8") + timeStamp +".xlsx");
-
-		// Excel File Output
-		workbook.write(response.getOutputStream());
-		workbook.close();
-
-		//다운로드 사유 입력
-		COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
-		COSystemLogDTO pCoSystemLogDTO = new COSystemLogDTO();
-		pCoSystemLogDTO.setTrgtMenuNm("상생협력체감도조사 ");
-		pCoSystemLogDTO.setSrvcNm("com.kap.service.impl.wb.wbl.WBLSurveyServiceImpl");
-		pCoSystemLogDTO.setFncNm("getSurveyListExcel");
-		pCoSystemLogDTO.setPrcsCd("DL");
-		pCoSystemLogDTO.setRsn(wBLSurveyMstSearchDTO.getRsn());
-		pCoSystemLogDTO.setRegId(cOUserDetailsDTO.getId());
-		pCoSystemLogDTO.setRegIp(cOUserDetailsDTO.getLoginIp());
-		cOSystemLogService.logInsertSysLog(pCoSystemLogDTO);
 
 	}
 
