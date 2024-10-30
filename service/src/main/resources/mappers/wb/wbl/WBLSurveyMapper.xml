@@ -177,6 +177,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.20    박준희       최초생성
+        2024.10.30    장두석       중복 데이터가 조회되어 쿼리 수정
     -->
 	<select id="selectSurveyRspnList" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstSearchDTO">
 		SELECT /* WBLSurveyMapper.selectSurveyRspnList */
@@ -214,8 +215,9 @@
 				JOIN (SELECT SRV_RSPN_SEQ, SRV_SEQ FROM sv_rspn_mst) T1 ON B.SRV_SEQ = T1.SRV_SEQ
 				JOIN (SELECT EXMPL_SEQ, QSTN_SEQ, EXMPL_NM, EXMPL_ORD FROM sv_exmpl_dtl) A ON B.QSTN_SEQ = A.QSTN_SEQ
 				LEFT JOIN (SELECT MTLCC_RSPN_SEQ, EXMPL_SEQ, SRV_RSPN_SEQ   FROM sv_mtlcc_rspn_dtl) C ON A.EXMPL_SEQ = C.EXMPL_SEQ AND C.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ /*응답한 객관식*/
-				LEFT JOIN (SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY FROM sv_sbjct_rspn_dtl) F ON B.QSTN_SEQ = F.QSTN_SEQ
+				LEFT JOIN (SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY, SRV_RSPN_SEQ FROM sv_sbjct_rspn_dtl) F ON B.QSTN_SEQ = F.QSTN_SEQ AND F.srv_rspn_seq = T1.SRV_RSPN_SEQ
 				WHERE 1=1
+				AND (C.mtlcc_rspn_seq IS NOT NULL OR F.sbjct_rspn_seq IS NOT NULL)
 				AND T1.SRV_RSPN_SEQ IN
 				<foreach collection="srvRspnSeqList" item="srvRspnSeqList" index="index" separator=", " open="(" close=")">
 					#{srvRspnSeqList}
