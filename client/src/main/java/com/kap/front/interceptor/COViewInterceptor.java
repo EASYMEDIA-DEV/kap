@@ -43,13 +43,7 @@ public class COViewInterceptor implements HandlerInterceptor{
     private SMJFormService sMJFormService;
 
     @Autowired
-    private EBBEpisdService eBBEpisdService;
-
-    @Autowired
-    private CBATechGuidanceService cbaTechGuidanceService;
-
-    @Autowired
-    private MPBCoexistenceService mpbCoexistenceService;
+    private COMainService cOMainService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -88,7 +82,7 @@ public class COViewInterceptor implements HandlerInterceptor{
 
 
         //메뉴 목록을 조회한다.
-        /*if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
+        if (RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION) != null)
         {
             menuList = (List<COMenuDTO>) RequestContextHolder.getRequestAttributes().getAttribute("menuList", RequestAttributes.SCOPE_SESSION);
         }
@@ -99,14 +93,14 @@ public class COViewInterceptor implements HandlerInterceptor{
             cOMenuDTO.setIsMenu("Y");
             menuList = cOBUserMenuService.getClientMenuList(cOMenuDTO);
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
-        }*/
+        }
 
         /*메뉴 구조 확립 되기전까진 호출할때마다 메뉴 생성하도록 변경... 이렇게 안하면 확인할때마다 세션 날려야됨*/
-        COMenuDTO cOMenuDTO = new COMenuDTO();
+        /*COMenuDTO cOMenuDTO = new COMenuDTO();
         cOMenuDTO.setMenuSeq(userMenuSeq);
         cOMenuDTO.setIsMenu("Y");
         menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
-        RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
+        RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);*/
 
 
 
@@ -163,21 +157,17 @@ public class COViewInterceptor implements HandlerInterceptor{
         cdDtlList.add("STDUY_MTHD"); //학습방식
         request.setAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
 
-        SMJFormDTO smjFormDTO = new SMJFormDTO();
-        smjFormDTO.setTypeCd("BUSINESS03");
-        SMJFormDTO rtnFormDto = sMJFormService.selectFormDtl(smjFormDTO);
-
-        request.setAttribute("rtnFormDto", rtnFormDto);
-
         // 코드 set
         cdDtlList.add("FRONT_TOTAL_KEYWORD");
         request.setAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-        //공지사항
-        request.setAttribute("headerNtfyList", cOCommService.getHeaderNtfyList());
-        // 트랜드 리스트 관련
-        SMKTrendDTO sMKTrendDTO = new SMKTrendDTO();
-        request.setAttribute("quickTrendList", cOCommService.quickTrendList(sMKTrendDTO));
 
+
+
+
+        CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
+        EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
+        MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
+        boolean selectYn = false;
 
         //1년간 사업 카운팅
         //위원일 경우 카운팅 x
@@ -185,12 +175,10 @@ public class COViewInterceptor implements HandlerInterceptor{
         if(cOUserDetailsDTO instanceof COUserDetailsDTO) {
             if(cOUserDetailsDTO.getRespCd().equals("0000") || cOUserDetailsDTO.getRespCd().equals("1310")) {
                 if (!cOUserDetailsDTO.getAuthCd().equals("CS")) {
-                    EBBEpisdDTO ebbEpisdDTO = new EBBEpisdDTO();
-                    ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());
-                    CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
-                    pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
 
-                    MPBBsnSearchDTO mpbBnsSearchDTO = new MPBBsnSearchDTO();
+                    ebbEpisdDTO.setMemSeq(cOUserDetailsDTO.getSeq());
+
+                    pCBATechGuidanceInsertDTO.setMemSeq(String.valueOf(cOUserDetailsDTO.getSeq()));
 
                     Date today = new Date();
                     SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -215,26 +203,56 @@ public class COViewInterceptor implements HandlerInterceptor{
                     status.add("4");
                     mpbBnsSearchDTO.setStatusChk(status);
 
-                    request.setAttribute("eduYearCnt", eBBEpisdService.selectMypageEduCnt(ebbEpisdDTO)); //교육 1년
-
-                    request.setAttribute("conYearCnt", cbaTechGuidanceService.selectYearCancelNotConsultingCount(pCBATechGuidanceInsertDTO)); //컨설팅 1년
-
-                    request.setAttribute("sanYearCnt", mpbCoexistenceService.selectApplyCount(mpbBnsSearchDTO)); //상생 1년
+                    selectYn = true; // true인 경우에만 selectMainGroup2에서 3개 항목에 대해 조회
                 }
             }
         }
 
+        //양식관리
+        SMJFormDTO smjFormDTO = new SMJFormDTO();
+        smjFormDTO.setTypeCd("BUSINESS03");
+
+        // 트랜드 리스트 관련
+        SMKTrendDTO sMKTrendDTO = new SMKTrendDTO();
+
+        HashMap<String, Object> rtnMap = cOMainService.selectMainGroup2(selectYn, smjFormDTO, sMKTrendDTO, ebbEpisdDTO, pCBATechGuidanceInsertDTO, mpbBnsSearchDTO);
+
+        request.setAttribute("rtnFormDto", rtnMap.get("rtnFormDto"));//양식관리
+
+        request.setAttribute("headerNtfyList", rtnMap.get("headerNtfyList"));//공지사항
+        request.setAttribute("quickTrendList", rtnMap.get("quickTrendList"));//트랜드 리스트
+
+        request.setAttribute("eduYearCnt", rtnMap.get("eduYearCnt")); //교육 1년
+        request.setAttribute("conYearCnt", rtnMap.get("conYearCnt")); //컨설팅 1년
+        request.setAttribute("sanYearCnt", rtnMap.get("sanYearCnt"));
+
 
         //과정분류 - 소분류
-        COCodeDTO cOCodeDTO = new COCodeDTO();
-        cOCodeDTO.setCd("CLASS01");
-        request.setAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
+        COCodeDTO[] arrCdDTO = new COCodeDTO[2];
+
+        List<COCodeDTO> tempList = new ArrayList<>();
+        String[] classCodes = {"CLASS01", "CLASS02", "CLASS03"};
+
+        for (String code : classCodes) {
+            COCodeDTO cOCodeDTO = new COCodeDTO();
+            cOCodeDTO.setCd(code);
+            tempList.add(cOCodeDTO);
+        }
+
+        List<COCodeDTO>[] arrCdList = cOCodeService.getCdIdList(tempList);
+
+        for(int i=0; i<arrCdList.length; i++){
+            request.setAttribute("cdList"+(i+1), arrCdList[i]);
+        }
+
+
+        /*request.setAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
 
         cOCodeDTO.setCd("CLASS02");
         request.setAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
 
         cOCodeDTO.setCd("CLASS03");
-        request.setAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));
+        request.setAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));*/
 
 
         return true;

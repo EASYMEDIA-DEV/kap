@@ -9,11 +9,13 @@ import com.kap.core.dto.sm.smb.SMBMainVslDTO;
 import com.kap.core.dto.sm.smg.SMGWinBusinessDTO;
 import com.kap.service.*;
 import com.kap.core.dto.sm.smc.SMCMnPopDTO;
+import com.zaxxer.hikari.HikariDataSource;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
 import org.springframework.mobile.device.Device;
@@ -53,35 +55,19 @@ import java.util.List;
 @RequiredArgsConstructor
 public class COMainController
 {
-
-    /** 메인 비주얼 서비스 **/
-    private final SMBMnVslService sMBMnVslService;
-
-    /** 메인 팝업 서비스 **/
-    private final SMCMnPopService sMCMnPopService;
-
-    /** 상생사업 관리 서비스 **/
-    private final SMGWinBusinessService sMGWinBusinessService;
-
-    /** 공지사항 서비스 **/
-    private final BDANoticeService bDANoticeService;
-
-    /** FAQ 서비스 **/
-    private final BDCFaqService bDCFaqService;
-
-    /** 재단소식 서비스 **/
-    private final BDBCompanyNewsService bDBCompanyNewsService;
+    @Autowired
+    private HikariDataSource dataSource;
 
     /** 교육 과정 서비스 **/
     private final EBBEpisdService eBBEpisdService;
+
+    /** 메인 서비스 **/
+    private final COMainService cOMainService;
 
     @GetMapping("/")
     public String getMainPage(ModelMap modelMap, HttpServletRequest request) throws Exception
     {
         Device device = DeviceUtils.getCurrentDevice(request);
-        /*System.out.println("======================1" + device.isMobile());
-        System.out.println("======================2" + device.isTablet());
-        System.out.println("======================3" + device.isNormal());*/
 
         try {
             //메인 비주얼 DTO
@@ -97,40 +83,52 @@ public class COMainController
             //재단소식 DTO
             BDBCompanyNewsDTO bDBCompanyNewsDTO = new BDBCompanyNewsDTO();
 
-            //상생사업 관리 리스트
-            modelMap.addAttribute("winData", sMGWinBusinessService.selectWinBusinessList(sMGWinBusinessDTO));
+            boolean isNomal = true;
+            if(device.isNormal() == true || device.isTablet() == true){
+                isNomal = true;
+            }else{
+                isNomal = false;
+            }
+
+            long startTime = System.currentTimeMillis();
+
+
+
+
+            HashMap<String, Object> rtnMap = cOMainService.selectMainGroup(isNomal, sMBMainVslDTO, sMCMnPopDTO, sMGWinBusinessDTO, bDANoticeDTO, bDCFaqDTO, bDBCompanyNewsDTO);
+
+            modelMap.addAttribute("winData", rtnMap.get("winData"));
             //공지사항 리스트
-            bDANoticeDTO.setMainYn("Y");
-            modelMap.addAttribute("noticeData", bDANoticeService.selectNoticeList(bDANoticeDTO));
+            modelMap.addAttribute("noticeData", rtnMap.get("noticeData"));
             //FAQ 리스트
-            bDCFaqDTO.setMainYn("Y");
-            modelMap.addAttribute("faqData", bDCFaqService.selectFaqList(bDCFaqDTO));
+            modelMap.addAttribute("faqData", rtnMap.get("faqData"));
             //메인여부
             modelMap.addAttribute("mainYn", "Y");
-            //재단소식 메인여부
-            bDBCompanyNewsDTO.setMainYn("Y");
 
-            if(device.isNormal() == true || device.isTablet() == true){
-                sMBMainVslDTO.setMdCd("pc");
-                sMCMnPopDTO.setMdCd("pc");
-                bDBCompanyNewsDTO.setDeviceGubun("pc");
+            if(isNomal){
                 //메인 웹 비주얼 리스트
-                modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
+                modelMap.addAttribute("rtnData", rtnMap.get("rtnData"));
                 //메인 웹 팝업 리스트
-                modelMap.addAttribute("popData", sMCMnPopService.selectMnPopList(sMCMnPopDTO));
+                modelMap.addAttribute("popData", rtnMap.get("popData"));
                 //재단소식 웹 리스트
-                modelMap.addAttribute("companyData", bDBCompanyNewsService.selectCompanyNewsList(bDBCompanyNewsDTO));
+                modelMap.addAttribute("companyData", rtnMap.get("companyData"));
             }else{
-                sMBMainVslDTO.setMdCd("mobile");
-                sMCMnPopDTO.setMdCd("mobile");
-                bDBCompanyNewsDTO.setDeviceGubun("mobile");
-                //메인 모바일 비주얼 리스트
-                modelMap.addAttribute("rtnData", sMBMnVslService.selectMnVslList(sMBMainVslDTO));
+                modelMap.addAttribute("rtnData", rtnMap.get("rtnData"));
                 //메인 모바일 팝업 리스트
-                modelMap.addAttribute("popData", sMCMnPopService.selectMnPopList(sMCMnPopDTO));
+                modelMap.addAttribute("popData", rtnMap.get("popData"));
                 //재단소식 모바일 리스트
-                modelMap.addAttribute("companyData", bDBCompanyNewsService.selectCompanyNewsList(bDBCompanyNewsDTO));
+                modelMap.addAttribute("companyData", rtnMap.get("companyData"));
             }
+
+            long endTime = System.currentTimeMillis();
+            long duration = endTime - startTime; // 실행 시간 (밀리초)
+
+
+            System.out.println("Total Connections: " + dataSource.getHikariPoolMXBean().getTotalConnections());
+            System.out.println("Active Connections: " + dataSource.getHikariPoolMXBean().getActiveConnections());
+            System.out.println("Idle Connections: " + dataSource.getHikariPoolMXBean().getIdleConnections());
+            System.out.println("Threads Awaiting Connection: " + dataSource.getHikariPoolMXBean().getThreadsAwaitingConnection());
+            System.out.println("@@@@ duration= " + duration);
         }catch (Exception e){
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());

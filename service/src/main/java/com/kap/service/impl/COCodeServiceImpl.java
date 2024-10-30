@@ -92,6 +92,23 @@ public class COCodeServiceImpl implements COCodeService {
 		return cOCodeMapper.getCdIdList(cOCodeDTO);
 	}
 
+	/**
+	 * 코드 목록(선택한 코드부터 자식코드까지) 여러개 호출할경우 이거쓸것
+	 */
+	public List<COCodeDTO>[] getCdIdList(List<COCodeDTO> cOCodeDTOList) throws Exception
+	{
+		List<COCodeDTO>[] result = new List[cOCodeDTOList.size()];
+
+		for(int i=0; i<cOCodeDTOList.size(); i++){
+
+			COCodeDTO cOCodeDTO = cOCodeDTOList.get(i);
+
+			result[i] = cOCodeMapper.getCdIdList(cOCodeDTO);
+		}
+
+		return result;
+	}
+
 
 	/**
 	 * 코드 목록(선택한 코드부터 부모까지 목록)

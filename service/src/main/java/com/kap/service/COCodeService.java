@@ -40,6 +40,13 @@ public interface COCodeService {
      */
     public List<COCodeDTO> getCdIdList(COCodeDTO cOCodeDTO) throws Exception;
 
+
+    /**
+     * 코드 목록(선택한 코드부터 자식코드까지) - 여러개 호출할경우 이거 쓸것
+     */
+    public List<COCodeDTO>[] getCdIdList(List<COCodeDTO> cOCodeDTOList) throws Exception;
+
+
     /**
      * 선택한 코드의 부모값까지 조회
      */
