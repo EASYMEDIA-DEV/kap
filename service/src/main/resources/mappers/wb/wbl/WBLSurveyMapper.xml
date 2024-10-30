@@ -147,6 +147,7 @@
         ==========   ========   ==============
         2023.11.20    박준희       최초생성
         2024.08.23    장두석       점수 미반영 항목 추가
+        2024.10.29    장두석       WHERE절 연도,차수 조건 if문 추가
     -->
 	<select id="selecrSurveyQstnList" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstSearchDTO">
 		SELECT /* WBLSurveyMapper.selecrSurveyQstnList */
@@ -157,8 +158,12 @@
 		from cx_cmpn_episd_mst A
 				 JOIN sv_qstn_dtl B ON A.srv_seq = B.srv_seq
 		WHERE 1=1
-		  AND YEAR = #{year}
-		  AND EPISD = #{episd}
+		<if test="year != '' and year != null">
+			AND YEAR = #{year}
+		</if>
+		<if test="episd != '' and episd != null">
+			AND EPISD = #{episd}
+		</if>
 		ORDER BY QSTN_ORD;
 	</select>
 
