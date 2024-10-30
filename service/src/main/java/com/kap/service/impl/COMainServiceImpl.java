@@ -45,43 +45,32 @@ public class COMainServiceImpl implements COMainService {
 
 
 	/** 공통 서비스 **/
-	@Autowired
 	private final COCommService cOCommService;
 
 	/** 공통 서비스 **/
-	@Autowired
 	private final SMJFormService sMJFormService;
 
 
 	/** 메인 비주얼 서비스 **/
-	@Autowired
 	private final SMBMnVslService sMBMnVslService;
 
 	/** 메인 팝업 서비스 **/
-	@Autowired
 	private final SMCMnPopService sMCMnPopService;
 
 	/** 상생사업 관리 서비스 **/
-	@Autowired
 	private final SMGWinBusinessService sMGWinBusinessService;
 
 	/** 공지사항 서비스 **/
-	@Autowired
 	private final BDANoticeService bDANoticeService;
 
 	/** FAQ 서비스 **/
-	@Autowired
 	private final BDCFaqService bDCFaqService;
 
 	/** 재단소식 서비스 **/
-	@Autowired
 	private final BDBCompanyNewsService bDBCompanyNewsService;
-	@Autowired
 	private final EBBEpisdService eBBEpisdService;
-	@Autowired
 	private CBATechGuidanceService cbaTechGuidanceService;
 
-	@Autowired
 	private MPBCoexistenceService mpbCoexistenceService;
 
 	@Transactional
