@@ -55,9 +55,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class COMainController
 {
-    @Autowired
-    private HikariDataSource dataSource;
-
     /** 교육 과정 서비스 **/
     private final EBBEpisdService eBBEpisdService;
 
@@ -123,12 +120,6 @@ public class COMainController
             long endTime = System.currentTimeMillis();
             long duration = endTime - startTime; // 실행 시간 (밀리초)
 
-
-            System.out.println("Total Connections: " + dataSource.getHikariPoolMXBean().getTotalConnections());
-            System.out.println("Active Connections: " + dataSource.getHikariPoolMXBean().getActiveConnections());
-            System.out.println("Idle Connections: " + dataSource.getHikariPoolMXBean().getIdleConnections());
-            System.out.println("Threads Awaiting Connection: " + dataSource.getHikariPoolMXBean().getThreadsAwaitingConnection());
-            System.out.println("@@@@ duration= " + duration);
         }catch (Exception e){
             if (log.isDebugEnabled()) {
                 log.debug(e.getMessage());
