@@ -95,15 +95,42 @@ public class COViewInterceptor implements HandlerInterceptor{
             RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);
         }
 
+        HashMap<String, List<COCodeDTO>> cdDtlListMap1 = new HashMap<>();
+        HashMap<String, List<COCodeDTO>> cdDtlListMap2 = new HashMap<>();
+
+        if (RequestContextHolder.getRequestAttributes().getAttribute("cdDtlList1", RequestAttributes.SCOPE_SESSION) != null) {
+            cdDtlListMap1 = (HashMap<String, List<COCodeDTO>>) RequestContextHolder.getRequestAttributes().getAttribute("cdDtlList1", RequestAttributes.SCOPE_SESSION);
+        }else{
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            //과정분류 공통코드 세팅
+            // 코드 set
+            cdDtlList.add("CLASS_TYPE");
+            cdDtlList.add("STDUY_MTHD"); //학습방식
+            cdDtlListMap1 = cOCodeService.getCmmCodeBindAll(cdDtlList, "2");
+            RequestContextHolder.getRequestAttributes().setAttribute("cdDtlList1", cdDtlListMap1, RequestAttributes.SCOPE_SESSION);
+        }
+
+        if (RequestContextHolder.getRequestAttributes().getAttribute("cdDtlList2", RequestAttributes.SCOPE_SESSION) != null) {
+            cdDtlListMap2 = (HashMap<String, List<COCodeDTO>>) RequestContextHolder.getRequestAttributes().getAttribute("cdDtlList2", RequestAttributes.SCOPE_SESSION);
+        }else{
+            // 공통코드 배열 셋팅
+            ArrayList<String> cdDtlList = new ArrayList<String>();
+            //과정분류 공통코드 세팅
+            // 코드 set
+            cdDtlList.add("FRONT_TOTAL_KEYWORD");
+            cdDtlListMap2 = cOCodeService.getCmmCodeBindAll(cdDtlList);
+            RequestContextHolder.getRequestAttributes().setAttribute("cdDtlList2", cdDtlListMap2, RequestAttributes.SCOPE_SESSION);
+        }
+        request.setAttribute("classTypeList",  cdDtlListMap1);
+        request.setAttribute("cdDtlList",  cdDtlListMap2);
+
         /*메뉴 구조 확립 되기전까진 호출할때마다 메뉴 생성하도록 변경... 이렇게 안하면 확인할때마다 세션 날려야됨*/
         /*COMenuDTO cOMenuDTO = new COMenuDTO();
         cOMenuDTO.setMenuSeq(userMenuSeq);
         cOMenuDTO.setIsMenu("Y");
         menuList = cOBUserMenuService.getMenuList(cOMenuDTO);
         RequestContextHolder.getRequestAttributes().setAttribute("menuList", menuList, RequestAttributes.SCOPE_SESSION);*/
-
-
-
 
 
         //menuLsit 계층으로 출력
@@ -148,20 +175,6 @@ public class COViewInterceptor implements HandlerInterceptor{
         //역순 정리
         Collections.reverse(parntMenuList);
         request.setAttribute("parntMenuList", parntMenuList);
-
-
-        // 공통코드 배열 셋팅
-        ArrayList<String> cdDtlList = new ArrayList<String>();
-        //과정분류 공통코드 세팅
-        cdDtlList.add("CLASS_TYPE");
-        cdDtlList.add("STDUY_MTHD"); //학습방식
-        request.setAttribute("classTypeList",  cOCodeService.getCmmCodeBindAll(cdDtlList, "2"));
-
-        // 코드 set
-        cdDtlList.add("FRONT_TOTAL_KEYWORD");
-        request.setAttribute("cdDtlList", cOCodeService.getCmmCodeBindAll(cdDtlList));
-
-
 
 
         CBATechGuidanceInsertDTO pCBATechGuidanceInsertDTO = new CBATechGuidanceInsertDTO();
@@ -228,32 +241,28 @@ public class COViewInterceptor implements HandlerInterceptor{
 
 
         //과정분류 - 소분류
-        COCodeDTO[] arrCdDTO = new COCodeDTO[2];
+        List<COCodeDTO>[] arrCdList;
+        if (RequestContextHolder.getRequestAttributes().getAttribute("classCdList", RequestAttributes.SCOPE_SESSION) != null) {
+            arrCdList = (List<COCodeDTO>[]) RequestContextHolder.getRequestAttributes().getAttribute("classCdList", RequestAttributes.SCOPE_SESSION);
+        }else{
+            // 공통코드 배열 셋팅
+            List<COCodeDTO> tempList = new ArrayList<>();
+            String[] classCodes = {"CLASS01", "CLASS02", "CLASS03"};
 
-        List<COCodeDTO> tempList = new ArrayList<>();
-        String[] classCodes = {"CLASS01", "CLASS02", "CLASS03"};
+            for (String code : classCodes) {
+                COCodeDTO cOCodeDTO = new COCodeDTO();
+                cOCodeDTO.setCd(code);
+                tempList.add(cOCodeDTO);
+            }
 
-        for (String code : classCodes) {
-            COCodeDTO cOCodeDTO = new COCodeDTO();
-            cOCodeDTO.setCd(code);
-            tempList.add(cOCodeDTO);
+            arrCdList = cOCodeService.getCdIdList(tempList);
+
+            RequestContextHolder.getRequestAttributes().setAttribute("classCdList", arrCdList, RequestAttributes.SCOPE_SESSION);
         }
-
-        List<COCodeDTO>[] arrCdList = cOCodeService.getCdIdList(tempList);
 
         for(int i=0; i<arrCdList.length; i++){
             request.setAttribute("cdList"+(i+1), arrCdList[i]);
         }
-
-
-        /*request.setAttribute("cdList1", cOCodeService.getCdIdList(cOCodeDTO));
-
-        cOCodeDTO.setCd("CLASS02");
-        request.setAttribute("cdList2", cOCodeService.getCdIdList(cOCodeDTO));
-
-        cOCodeDTO.setCd("CLASS03");
-        request.setAttribute("cdList3", cOCodeService.getCdIdList(cOCodeDTO));*/
-
 
         return true;
     }
