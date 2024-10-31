@@ -69,9 +69,9 @@ public class COMainServiceImpl implements COMainService {
 	/** 재단소식 서비스 **/
 	private final BDBCompanyNewsService bDBCompanyNewsService;
 	private final EBBEpisdService eBBEpisdService;
-	private CBATechGuidanceService cbaTechGuidanceService;
+	private final CBATechGuidanceService cbaTechGuidanceService;
 
-	private MPBCoexistenceService mpbCoexistenceService;
+	private final MPBCoexistenceService mpbCoexistenceService;
 
 	@Transactional
 	public HashMap<String, Object> selectMainGroup(boolean isNomal
