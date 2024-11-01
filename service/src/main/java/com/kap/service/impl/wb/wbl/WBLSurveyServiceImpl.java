@@ -424,15 +424,15 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		if (listMap2.size()>0){
 			for(int i = 0 ; i < listMap2.size() ; i++) {
 
-				wBLSurveyMstInsertDTO.setPartCmpnNm1(listMap2.get(i).get("0").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnCd1(listMap2.get(i).get("1").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnNm2(listMap2.get(i).get("2").toString());
-				wBLSurveyMstInsertDTO.setPartCmpnCd2(listMap2.get(i).get("3").toString());
-				wBLSurveyMstInsertDTO.setRprsntNm(listMap2.get(i).get("4").toString().replaceAll("-",""));
-				wBLSurveyMstInsertDTO.setPicNm(listMap2.get(i).get("5").toString());
-				wBLSurveyMstInsertDTO.setBsnmRegNo(listMap2.get(i).get("6").toString());
-				wBLSurveyMstInsertDTO.setTelNo(listMap2.get(i).get("7").toString());
-				wBLSurveyMstInsertDTO.setEmail(listMap2.get(i).get("8").toString());
+				wBLSurveyMstInsertDTO.setPartCmpnNm1(listMap2.get(i).get("0").toString().trim());
+				wBLSurveyMstInsertDTO.setPartCmpnCd1(listMap2.get(i).get("1").toString().trim());
+				wBLSurveyMstInsertDTO.setPartCmpnNm2(listMap2.get(i).get("2").toString().trim());
+				wBLSurveyMstInsertDTO.setPartCmpnCd2(listMap2.get(i).get("3").toString().trim());
+				wBLSurveyMstInsertDTO.setRprsntNm(listMap2.get(i).get("4").toString().replaceAll("-","").trim());
+				wBLSurveyMstInsertDTO.setPicNm(listMap2.get(i).get("5").toString().trim());
+				wBLSurveyMstInsertDTO.setBsnmRegNo(listMap2.get(i).get("6").toString().trim());
+				wBLSurveyMstInsertDTO.setTelNo(listMap2.get(i).get("7").toString().trim());
+				wBLSurveyMstInsertDTO.setEmail(listMap2.get(i).get("8").toString().trim());
 
 				respCnt = insertSurveyList(wBLSurveyMstInsertDTO, request);
 			}
