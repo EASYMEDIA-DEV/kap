@@ -196,11 +196,11 @@
 						WHEN SRV_TYPE_CD = 'QST04' THEN SBJCT_RPLY /* 주관식(서술) */
 						WHEN SRV_TYPE_CD = 'QST01' THEN EXMPL_NM /* 객관식(단일선택) */
 						WHEN SRV_TYPE_CD = 'QST02' THEN EXMPL_NM /* 객관식(복수선택) */
-						ELSE 'N'
+						ELSE ''
 						END
 				ELSE
 					CASE
-						WHEN EXMPL_SEQ = 0 AND NON_APPLICABLE_YN = 'Y' THEN 'N'
+						WHEN EXMPL_SEQ = 0 AND NON_APPLICABLE_YN = 'Y' THEN ''
 						ELSE (SELECT MAX(EXMPL_ORD) FROM sv_exmpl_dtl WHERE EXMPL_SEQ = TT.EXMPL_SEQ)
 						END
 				END AS EXMPL_ANSWER /* 답변 항목 */
