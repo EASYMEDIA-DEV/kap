@@ -178,54 +178,72 @@
         ==========   ========   ==============
         2023.11.20    박준희       최초생성
         2024.10.30    장두석       중복 데이터가 조회되어 쿼리 수정
+        2024.11.01    장두석       조회 성능을 개선하여 전면 개편 (대량의 seq 값 in 조건 제거)
     -->
 	<select id="selectSurveyRspnList" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstSearchDTO">
 		SELECT /* WBLSurveyMapper.selectSurveyRspnList */
-			SRV_RSPN_SEQ
-			, SRV_TYPE_CD /*문항타입*/
-			, (SELECT CD_NM FROM co_code_mst WHERE CD = SRV_TYPE_CD) AS SRV_TYPE_NM
-			, QSTN_ORD /*문항순번*/
-			, QSTN_NM /*문항명*/
-			, CASE WHEN SRV_TYPE_CD = 'QST03' THEN SBJCT_RPLY /*주관식(단답)*/
-						WHEN SRV_TYPE_CD = 'QST04' THEN SBJCT_RPLY /*주관식(서술)*/
-						WHEN SRV_TYPE_CD = 'QST01' THEN EXMPL_NM /*객관식(단일선택)*/
-						WHEN SRV_TYPE_CD = 'QST02' THEN EXMPL_NM /*객관식(복수선택)*/
-						ELSE
-						/*5,7,10점 척도*/
-							CASE WHEN EXMPL_SEQ IS NULL AND non_applicable_yn = 'Y'
-								THEN
-									'N'
-								ELSE
-								EXMPL_ORD
-							END
-						END AS EXMPL_ANSWER /*답변항목*/
-		FROM (SELECT
-					T1.SRV_RSPN_SEQ
-					, B.SRV_TYPE_CD /*문항타입*/
-					, B.QSTN_ORD /*문항순번*/
-					, B.QSTN_SEQ /*문항*/
-					, B.QSTN_NM
-					, A.EXMPL_NM /*보기명*/
-					, A.EXMPL_ORD
-					, C.EXMPL_SEQ/*사용자가 선택한 보기 시퀀스*/
-					, F.SBJCT_RSPN_SEQ
-					, F.SBJCT_RPLY
-					, B.NON_APPLICABLE_YN /*관리자가 설정한 해당사항없음 여부*/
-				FROM sv_qstn_dtl B
-				JOIN (SELECT SRV_RSPN_SEQ, SRV_SEQ FROM sv_rspn_mst) T1 ON B.SRV_SEQ = T1.SRV_SEQ
-				JOIN (SELECT EXMPL_SEQ, QSTN_SEQ, EXMPL_NM, EXMPL_ORD FROM sv_exmpl_dtl) A ON B.QSTN_SEQ = A.QSTN_SEQ
-				LEFT JOIN (SELECT MTLCC_RSPN_SEQ, EXMPL_SEQ, SRV_RSPN_SEQ   FROM sv_mtlcc_rspn_dtl) C ON A.EXMPL_SEQ = C.EXMPL_SEQ AND C.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ /*응답한 객관식*/
-				LEFT JOIN (SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY, SRV_RSPN_SEQ FROM sv_sbjct_rspn_dtl) F ON B.QSTN_SEQ = F.QSTN_SEQ AND F.srv_rspn_seq = T1.SRV_RSPN_SEQ
-				WHERE 1=1
-				AND (C.mtlcc_rspn_seq IS NOT NULL OR F.sbjct_rspn_seq IS NOT NULL)
-				AND T1.SRV_RSPN_SEQ IN
-				<foreach collection="srvRspnSeqList" item="srvRspnSeqList" index="index" separator=", " open="(" close=")">
-					#{srvRspnSeqList}
-				</foreach>
-
-		GROUP BY B.QSTN_SEQ, T1.SRV_RSPN_SEQ) TT
-
-		ORDER BY SRV_RSPN_SEQ ASC, QSTN_ORD ASC
+			SRV_RSPN_SEQ,
+			QSTN_SEQ,
+			SRV_TYPE_CD /* 문항타입 */,
+			(SELECT CD_NM FROM co_code_mst WHERE CD = SRV_TYPE_CD) AS SRV_TYPE_NM,
+			QSTN_ORD /* 문항순번 */,
+			QSTN_NM /* 문항명 */,
+			NON_APPLICABLE_YN,
+			CASE
+				WHEN TT.EXMPL_SEQ = 0 AND TT.SBJCT_RSPN_SEQ IS NOT NULL THEN
+					CASE
+						WHEN SRV_TYPE_CD = 'QST03' THEN SBJCT_RPLY /* 주관식(단답) */
+						WHEN SRV_TYPE_CD = 'QST04' THEN SBJCT_RPLY /* 주관식(서술) */
+						WHEN SRV_TYPE_CD = 'QST01' THEN EXMPL_NM /* 객관식(단일선택) */
+						WHEN SRV_TYPE_CD = 'QST02' THEN EXMPL_NM /* 객관식(복수선택) */
+						ELSE 'N'
+						END
+				ELSE
+					CASE
+						WHEN EXMPL_SEQ = 0 AND NON_APPLICABLE_YN = 'Y' THEN 'N'
+						ELSE (SELECT MAX(EXMPL_ORD) FROM sv_exmpl_dtl WHERE EXMPL_SEQ = TT.EXMPL_SEQ)
+						END
+				END AS EXMPL_ANSWER /* 답변 항목 */
+		FROM (
+				 SELECT
+					 T1.SRV_RSPN_SEQ,
+					 B.SRV_TYPE_CD /* 문항타입 */,
+					 B.QSTN_ORD /* 문항순번 */,
+					 B.QSTN_SEQ /* 문항 */,
+					 B.QSTN_NM,
+					 A.EXMPL_NM /* 보기명 */,
+					 MAX(CASE WHEN C.EXMPL_SEQ IS NULL THEN 0 ELSE C.EXMPL_SEQ END) AS EXMPL_SEQ,
+					 F.SBJCT_RSPN_SEQ,
+					 F.SBJCT_RPLY,
+					 B.NON_APPLICABLE_YN /* 관리자가 설정한 해당사항없음 여부 */,
+					 B.score_exclusion_yn,
+					 C.mtlcc_rspn_seq
+				 FROM sv_qstn_dtl B
+						  JOIN (
+					 SELECT SRV_RSPN_SEQ, SRV_SEQ
+					 FROM sv_rspn_mst
+				 ) T1 ON B.SRV_SEQ = T1.SRV_SEQ
+						  JOIN (
+					 SELECT EXMPL_SEQ, QSTN_SEQ, EXMPL_NM, EXMPL_ORD
+					 FROM sv_exmpl_dtl
+				 ) A ON B.QSTN_SEQ = A.QSTN_SEQ
+						  LEFT JOIN (
+					 SELECT MTLCC_RSPN_SEQ, EXMPL_SEQ, SRV_RSPN_SEQ
+					 FROM sv_mtlcc_rspn_dtl
+				 ) C ON A.EXMPL_SEQ = C.EXMPL_SEQ AND C.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ /* 응답한 객관식 */
+						  LEFT JOIN (
+					 SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY, SRV_RSPN_SEQ
+					 FROM sv_sbjct_rspn_dtl
+				 ) F ON B.QSTN_SEQ = F.QSTN_SEQ AND F.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ
+				 WHERE 1=1
+				   AND T1.SRV_RSPN_SEQ IN (
+					 SELECT SRV_RSPN_SEQ
+					 FROM cx_appctn_rsume_srv_mst
+					 WHERE SRV_RSPN_SEQ IS NOT NULL
+				 )
+				 GROUP BY B.QSTN_SEQ, T1.SRV_RSPN_SEQ
+			 ) TT
+		ORDER BY SRV_RSPN_SEQ ASC, QSTN_ORD ASC;
 	</select>
 
 	<!--

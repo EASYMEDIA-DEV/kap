@@ -369,7 +369,8 @@ public class WBLSurveyController<sVASurveyMstDTO> {
 
             List<WBLSurveyMstSearchDTO> qstnList = wLSurveyService.selecrSurveyQstnList(wBLSurveyMstSearchDTO);
 
-            ArrayList<Integer> seqList = new ArrayList<>();
+            //2024-11-01 쿼리 수정으로 해당 리스트 파라미터 필요 없어짐
+            /*ArrayList<Integer> seqList = new ArrayList<>();
 
             //참여자아들의 설문 참여번호문 호출해서 응답데이터를 조회한다.
             for(WBLSurveyMstSearchDTO wblDto : surveyList.getList()) {
@@ -378,7 +379,7 @@ public class WBLSurveyController<sVASurveyMstDTO> {
                 }
             }
 
-            wBLSurveyMstSearchDTO.setSrvRspnSeqList(seqList);
+            wBLSurveyMstSearchDTO.setSrvRspnSeqList(seqList);*/
 
             List<WBLSurveyMstSearchDTO> rspnList = wLSurveyService.selectSurveyRspnList(wBLSurveyMstSearchDTO);
 

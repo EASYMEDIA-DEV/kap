@@ -134,7 +134,8 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		}
 
 		//2024-07-11 추가개발 ppt 5 인증번호 형식 변경
-		crtfnNo = wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo().replaceAll("-","")+wBLSurveyMstInsertDTO.getTelNo().substring(3).replaceAll("-", "");
+		crtfnNo = (wBLSurveyMstInsertDTO.getYear()+episdText+wBLSurveyMstInsertDTO.getBsnmRegNo().replaceAll("-","")+wBLSurveyMstInsertDTO.getTelNo().substring(3).replaceAll("-", "")).replaceAll("\\s", "");
+
 
 		wBLSurveyMstInsertDTO.setCrtfnNo(crtfnNo);
 		wBLSurveyMstInsertDTO.setPtcptCd("E");
@@ -608,30 +609,38 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(7);
-			cell.setCellValue("참여여부");
+			cell.setCellValue("이메일");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(8);
-			cell.setCellValue("완료여부");
+			cell.setCellValue("전화번호");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(9);
-			cell.setCellValue("점수");
+			cell.setCellValue("참여여부");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(10);
-			cell.setCellValue("응답업체수");
+			cell.setCellValue("완료여부");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(11);
-			cell.setCellValue("평균점수");
+			cell.setCellValue("점수");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(12);
-			cell.setCellValue("HKMC평균점수");
+			cell.setCellValue("응답업체수");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(13);
+			cell.setCellValue("평균점수");
+			cell.setCellStyle(style_header);
+
+			cell = row.createCell(14);
+			cell.setCellValue("HKMC평균점수");
+			cell.setCellStyle(style_header);
+
+			cell = row.createCell(15);
 			cell.setCellValue("참여일");
 			cell.setCellStyle(style_header);
 
@@ -651,7 +660,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellValue("최종수정일시");
 			cell.setCellStyle(style_header);*/
 
-			int qstnRow = 14;
+			int qstnRow = 16;
 			String scoreExclusionYn = "";
 			for (WBLSurveyMstSearchDTO qstnDto : qstnList) {
 				cell = row.createCell(qstnRow);
@@ -706,30 +715,38 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(7);
-				cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
+				cell.setCellValue(list.get(i).getEmail());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(8);
-				cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
+				cell.setCellValue(list.get(i).getTelNo());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(9);
-				cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
+				cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(10);
-				cell.setCellValue(list.get(i).getCnt());
+				cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(11);
-				cell.setCellValue(list.get(i).getAvgScore());
+				cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(12);
-				cell.setCellValue(list.get(i).getHkmcAvgScore());
+				cell.setCellValue(list.get(i).getCnt());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(13);
+				cell.setCellValue(list.get(i).getAvgScore());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(14);
+				cell.setCellValue(list.get(i).getHkmcAvgScore());
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(15);
 				cell.setCellValue(list.get(i).getPtcptCmpltnDtm() == null ? "-" : list.get(i).getPtcptCmpltnDtm().substring(0, list.get(i).getPtcptCmpltnDtm().lastIndexOf(":")));
 				cell.setCellStyle(style_body);
 
@@ -750,7 +767,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 				cell.setCellStyle(style_body);*/
 
 
-				int rspnRow = 14;
+				int rspnRow = 16;
 				if (list.get(i).getList() != null && list.get(i).getList().size() > 0) {
 
 					for (WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()) {
