@@ -13,10 +13,11 @@
 						<a class="terms" href="/utility/terms-of-use/index">이용약관</a>
 						<a class="email" id="showEmailCollectPopup" href="javascript:">이메일무단수집거부</a>
 						<a class="way" href="/foundation/intro/location/content">오시는길</a>
+						<a class="contact" href="/foundation/intro/organization/content">부서별 연락처</a>
 					</div>
 					<div class="copy-area f-caption2">
 						<span>(04365)서울시 용산구 원효로 74&nbsp;</span>
-						<span>FAX : 02-3271-2969</span>
+						<span>TEL : 02-3271-2965&nbsp;&nbsp;&nbsp;&nbsp;FAX : 02-3271-2969</span>
 						<span>Copyright 2002 KAP All rights reserved.</span>
 					</div>
 					<div class="family-site">
