@@ -359,6 +359,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.20    박준희       최초생성
+        2023.11.11    장두석       수정자 값 입력 제거
     -->
 	<insert id="insertSurveyMst" parameterType="WBLSurveyMstInsertDTO">
 		insert /* WBLSurveyMapper.insertSurveyMst */ into cx_appctn_rsume_srv_mst
@@ -383,9 +384,7 @@
 		, reg_id
 		, reg_ip
 		, reg_dtm
-		, mod_id
-		, mod_ip
-		, mod_dtm)
+		)
 		values (
 				#{cxstnSrvSeq}
 			   ,#{cxstnCmpnEpisdSeq}
@@ -407,11 +406,32 @@
 			   ,#{regId}
 			   ,#{regIp}
 			   ,now()
-			   ,#{modId}
-			   ,#{modIp}
-			   ,now()
 			   )
 	</insert>
+
+
+	<!--
+         쿼리명 : WBLSurveyMapper.updateSurveyMst
+         설  명 : 상생협력체감도조사 마스터 수정
+          수정일     수정자       수정내용
+        ==========   ======    ==============
+        2023.11.11    장두석       최초생성
+    -->
+	<update id="updateSurveyMst" parameterType="WBLSurveyMstInsertDTO">
+		update /* WBLSurveyMapper.updateSurveyMst */
+		    cx_appctn_rsume_srv_mst
+		set
+			rprsnt_nm = #{rprsntNm}
+			, bsnm_reg_no = #{bsnmRegNo}
+			, pic_nm = #{picNm}
+			, tel_no = #{telNo}
+			, email = #{email}
+			, mod_id = #{modId}
+			, mod_ip = #{modIp}
+			, mod_dtm = now()
+		where
+			cxstn_srv_seq = ${detailsKey}
+	</update>
 
 
 	<!--
@@ -449,6 +469,7 @@
         2023.11.23    박준희       최초생성
         2024.07.08	  장두석		  추가개발 ppt 4 인증번호 발송일 항목 추가
         2024.08.06	  장두석		  추가개발 백분율 점수 추가 ((사용자 선택 척도값 합 / 모든 척도 문항 max값 합) * 100)
+        2024.11.11	  장두석		  등록자, 수정자 이름 추가
     -->
 	<select id="selectSurveyDtl" parameterType="WBLSurveyMstSearchDTO" resultType="WBLSurveyMstInsertDTO">
 		select /* WBLSurveyMapper.selectSurveyDtl */
@@ -475,9 +496,11 @@
 			 , a.score
 			 , a.send_dtm
 			 , a.reg_id
+			 , (select name from co_adm_mst where id = a.reg_id) as reg_name
 			 , a.reg_ip
 			 , a.reg_dtm
 			 , a.mod_id
+			 , (select name from co_adm_mst where id = a.mod_id) as mod_name
 			 , a.mod_ip
 			 , a.mod_dtm
 			 , ROUND((a.score / SUM(e.total)) * 100, 1) AS percentage
@@ -699,6 +722,7 @@
 	  수정일      수정자       수정내용
 	==========   ========   ==============
 	2023.12.06    박준희       최초생성
+	2024.11.11    장두석       점수 초기화 null로 수정
 	-->
 	<update id="updateSurveyRspn" parameterType="WBLSurveyMstInsertDTO">
 		update /* WBLSurveyMstInsertDTO.updateSurveyRspn */
@@ -706,7 +730,7 @@
 		set
 		    ptcpt_cd = 'E'
 		  , cmpltn_yn = 'N'
-		  , score = 0
+		  , score = null
 		  , ptcpt_cmpltn_dtm = null
 		  , srv_rspn_seq = null
 		  , mod_id = #{modId}

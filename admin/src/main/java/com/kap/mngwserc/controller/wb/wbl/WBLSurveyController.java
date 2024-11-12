@@ -228,6 +228,25 @@ public class WBLSurveyController<sVASurveyMstDTO> {
         return "jsonView";
     }
 
+    @Operation(summary = "상생협력체감도조사 수정", tags = "", description = "")
+    @PostMapping(value="/update")
+    public String updateSurveyList(@Valid @RequestBody WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request , ModelMap modelMap) throws Exception
+    {
+        try
+        {
+            modelMap.addAttribute("respCnt", wLSurveyService.updateSurveyList(wBLSurveyMstInsertDTO, request));
+        }
+        catch (Exception e)
+        {
+            if (log.isDebugEnabled())
+            {
+                log.debug(e.getMessage());
+            }
+            throw new Exception(e.getMessage());
+        }
+        return "jsonView";
+    }
+
     /**
      * 리스트 삭제
      */

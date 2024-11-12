@@ -39,7 +39,7 @@
                         </c:choose>
 
                         <input type="hidden" name="episdSurveySrvSeq" value="${rtnDto.srvSeq}">
-                        <input type="hidden" name="cxstnCmpnEpisdSeq" value="value="${rtnDto.cxstnCmpnEpisdSeq}">
+                        <input type="hidden" name="cxstnCmpnEpisdSeq" value="${rtnDto.cxstnCmpnEpisdSeq}">
                     </div>
                 </div>
             </fieldset>
@@ -139,31 +139,17 @@
                     </div>
                 </fieldset>
             </c:if>
+
+            <%-- 2024-11-11 수정 가능하도록 변경 s --%>
             <fieldset>
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">대표자명<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <c:choose>
-                            <c:when test="${rtnDto.cxstnSrvSeq != null}">
-                                <input type="hidden" name="rprsntNm" value="${rtnDto.rprsntNm}"/>
-                                <p class="form-control-static">${rtnDto.rprsntNm}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="text" class="form-control input-sm nameChk" id="rprsntNm" name="rprsntNm"  maxlength="50" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="text" class="form-control input-sm nameChk" id="rprsntNm" name="rprsntNm" value="${rtnDto.rprsntNm}"  maxlength="50" title="대표자명" placeholder="대표자명 입력" style="width:100%"/>
                     </div>
                     <label class="col-sm-1 control-label">사업자등록번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <c:choose>
-                            <c:when test="${rtnDto.cxstnSrvSeq != null}">
-                                <input type="hidden" name="bsnmRegNo" value="${rtnDto.bsnmRegNo}"/>
-                                <p class="form-control-static">${kl:bsnmNoConvert(rtnDto.bsnmRegNo)}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="text" class="form-control input-sm numberChk" id="bsnmRegNo" name="bsnmRegNo" maxlength="10" title="사업자등록번호" placeholder="사업자등록번호 입력"  style="width:100%"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="text" class="form-control input-sm numberChk" id="bsnmRegNo" name="bsnmRegNo" value="${rtnDto.bsnmRegNo}" maxlength="10" title="사업자등록번호" placeholder="사업자등록번호 입력"  style="width:100%"/>
                     </div>
                 </div>
             </fieldset>
@@ -172,28 +158,12 @@
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">담당자명<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <c:choose>
-                            <c:when test="${rtnDto.cxstnSrvSeq != null}">
-                                <input type="hidden" name="picNm" value="${rtnDto.picNm}"/>
-                                <p class="form-control-static">${rtnDto.picNm}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="text" class="form-control input-sm nameChk" id="picNm" name="picNm" value="" maxlength="50" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="text" class="form-control input-sm nameChk" id="picNm" name="picNm" value="${rtnDto.picNm}" maxlength="50" title="담당자명" placeholder="담당자명 입력" style="width:100%"/>
                     </div>
                     <%-- 2024-08-23 바뀐 인증번호 형식에 휴대폰 번호가 들어가므로 필수값으로 변경 (휴대폰 번호 없으면 에러) --%>
                     <label class="col-sm-1 control-label">휴대폰 번호<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <c:choose>
-                            <c:when test="${rtnDto.cxstnSrvSeq != null}">
-                                <input type="hidden" name="telNo" value="${rtnDto.telNo}"/>
-                                <p class="form-control-static">${rtnDto.telNo}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="" maxlength="13" title="휴대폰 번호" placeholder="휴대폰 번호 입력"  style="width:100%"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="text" class="form-control input-sm phoneChk" id="telNo" name="telNo" value="${rtnDto.telNo}" maxlength="13" title="휴대폰 번호" placeholder="휴대폰 번호 입력"  style="width:100%"/>
                     </div>
                 </div>
             </fieldset>
@@ -202,26 +172,19 @@
                 <div class="form-group form-inline">
                     <label class="col-sm-1 control-label">이메일 주소<span class="star"> *</span></label>
                     <div class="col-sm-5">
-                        <c:choose>
-                            <c:when test="${rtnDto.cxstnSrvSeq != null}">
-                                <input type="hidden" name="email" value="${rtnDto.email}"/>
-                                <p class="form-control-static">${rtnDto.email}</p>
-                            </c:when>
-                            <c:otherwise>
-                                <input type="text" class="form-control input-sm emailChk" id="email" name="email" value="" maxlength="50" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
-                            </c:otherwise>
-                        </c:choose>
+                        <input type="text" class="form-control input-sm emailChk" id="email" name="email" value="${rtnDto.email}" maxlength="50" title="이메일 주소" placeholder="이메일 주소 입력" style="width:100%"/>
                     </div>
                     <c:if test="${rtnDto.cxstnSrvSeq != null}">
                         <label class="col-sm-1 control-label">참여여부<span class="star"> *</span></label>
                         <div class="col-sm-5">
                             <p class="form-control-static">${ rtnDto.ptcptCd eq 'E' ? '대기' : rtnDto.ptcptCd eq 'N' ? '미참여' : '참여' }
                             </p>
-                            <c:if test="${rtnDto.ptcptCd eq 'Y'}"> <button type="button" class="btn btn-inverse btn-sm mb-sm btnReset" data-srv-rspn-seq="${rtnDto.srvRspnSeq}" data-cxstn-srv-seq="${rtnDto.cxstnSrvSeq}">초기화</button></c:if>
+                            <button type="button" class="btn btn-inverse btn-sm mb-sm btnReset" data-srv-rspn-seq="${rtnDto.srvRspnSeq}" data-cxstn-srv-seq="${rtnDto.cxstnSrvSeq}">초기화</button>  <%-- 2024-11-11 상태 상관 없이 초기화 가능하도록 수정 --%>
                         </div>
                     </c:if>
                 </div>
             </fieldset>
+            <%-- 2024-11-11 수정 가능하도록 변경 e --%>
 
             <c:if test="${rtnDto.cxstnSrvSeq != null}">
                 <fieldset>
@@ -230,6 +193,12 @@
                         <div class="col-sm-5">
                             <p class="form-control-static">${rtnDto.score}<c:if test="${not empty rtnDto.percentage}"> (${rtnDto.percentage})</c:if></p>
                         </div>
+                        <%-- 2024-11-11 추가 s --%>
+                        <label class="col-sm-1 control-label">최종수정일자</label>
+                        <div class="col-sm-5">
+                            <p class="form-control-static">${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
+                        </div>
+                        <%-- 2024-11-11 추가 e --%>
                     </div>
                 </fieldset>
             </c:if>
@@ -302,7 +271,7 @@
                         <div class="col-sm-1"></div>
                         <label class="col-sm-1 control-label">최초 등록일시</label>
                         <div class="col-sm-4">
-                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}</p>
+                            <p class="form-control-static">${kl:convertDate(rtnDto.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}</p>
                         </div>
                     </div>
                 </fieldset>
@@ -328,7 +297,7 @@
                             <p class="form-control-static">
                                 <c:choose>
                                     <c:when test="${modFlag}">
-                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm:ss', '')}
+                                        ${kl:convertDate(rtnDto.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '')}
                                     </c:when>
                                     <c:otherwise>
                                         -
@@ -348,7 +317,7 @@
                     <c:choose>
                         <c:when test="${ not empty rtnDto}">
                             <button type="button" class="btn btn-sm btn-danger" id="btn_delete">삭제</button>
-<%--                            <button type="submit" class="btn btn-sm btn-success">수정</button>--%>
+                            <button type="submit" class="btn btn-sm btn-success">수정</button>
                         </c:when>
                         <c:otherwise>
                             <button type="submit" class="btn btn-sm btn-success">등록</button>

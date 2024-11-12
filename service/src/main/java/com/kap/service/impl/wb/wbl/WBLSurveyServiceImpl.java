@@ -119,8 +119,8 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 
 		wBLSurveyMstInsertDTO.setRegIp(regIp);
 		wBLSurveyMstInsertDTO.setRegId(regId);
-		wBLSurveyMstInsertDTO.setModIp(regIp);
-		wBLSurveyMstInsertDTO.setModId(regId);
+//		wBLSurveyMstInsertDTO.setModIp(regIp);  //2024-11-11 제거
+//		wBLSurveyMstInsertDTO.setModId(regId);  //2024-11-11 제거
 
 		//등록
 		surveyMstIdgen = cxAppctnRsumeSrvIdgen.getNextIntegerId();
@@ -142,6 +142,21 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 		wBLSurveyMstInsertDTO.setCmpltnYn("N");
 
 		respCnt = wBLSurveyMapper.insertSurveyMst( wBLSurveyMstInsertDTO );
+
+		return respCnt;
+	}
+
+	@Override
+	public int updateSurveyList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request) throws Exception {
+		int respCnt = 0;
+
+		String modId = COUserDetailsHelperService.getAuthenticatedUser().getId();
+		String modIp = CONetworkUtil.getMyIPaddress(request);
+
+		wBLSurveyMstInsertDTO.setModIp(modId);
+		wBLSurveyMstInsertDTO.setModId(modIp);
+
+		respCnt = wBLSurveyMapper.updateSurveyMst(wBLSurveyMstInsertDTO);
 
 		return respCnt;
 	}

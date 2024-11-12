@@ -56,6 +56,11 @@ public interface WBLSurveyMapper {
     public int insertSurveyMst(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
 
     /**
+     * 수정
+     */
+    public int updateSurveyMst(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO);
+
+    /**
      * 설문 삭제
      */
     public int deleteSurveyMst(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO);

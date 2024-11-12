@@ -53,6 +53,11 @@ public interface WBLSurveyService {
 	public int insertSurveyList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request) throws Exception;
 
 	/**
+	 * 리스트 수정
+	 */
+	public int updateSurveyList(WBLSurveyMstInsertDTO wBLSurveyMstInsertDTO, HttpServletRequest request) throws Exception;
+
+	/**
 	 * 리스트 삭제
 	 */
 	public int deleteSurveyList(WBLSurveyMstSearchDTO wBLSurveyMstSearchDTO) throws Exception;

@@ -180,8 +180,9 @@ define(["ezCtrl", "ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl,
                         svMst.bsnmRegNo = $formObj.find("input[name=bsnmRegNo]").val();
                         svMst.picNm = $formObj.find("input[name=picNm]").val();
                         svMst.telNo = $formObj.find("input[name=telNo]").val();
-
                         svMst.email = $formObj.find("input[name=email]").val();
+                        svMst.detailsKey = $formObj.find("input[name=detailsKey]").val();  //2024-11-11 추가
+
                         cmmCtrl.jsonAjax(function(data){
                            location.replace("./list");
                         }, actionUrl, svMst, "text")
