@@ -12,12 +12,22 @@
          2024.07.08   장두석		추가개발 ppt 4, 7 담당자 정보, 인증번호 발송일 항목 추가
          2024.07.11	  장두석		추가개발 ppt 11 인증번호 추가
          2024.08.06	  장두석		추가개발 백분율 점수 추가 ((사용자 선택 척도값 합 / 모든 척도 문항 max값 합) * 100)
+         2024.12.03	  장두석		평균점수, HKMC평균점수 백분율 값 추가
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		select  /* WBLSurveyMapper.selectSurveyList */
-		a.*,
-		round((total_score/cnt),2) as avg_score,
-		(case when cnt > 2 then round((hkmc_total_score/(cnt-2)),2) when cnt = 0 then round((episd_total_score/episd_cnt),2) else round((total_score/cnt),2) end) as hkmc_avg_score
+		a.*
+		, round((total_score/cnt),2) as avg_score
+		, CASE
+			WHEN cnt > 2 THEN ROUND((hkmc_total_score/(cnt-2)),2)
+		    WHEN cnt = 0 THEN ROUND((episd_total_score/episd_cnt),2)
+		    ELSE ROUND((total_score/cnt),2)
+		END AS hkmc_avg_score
+		, ROUND(temp.percentage_total / cnt, 1) AS avg_score_percentage
+		, CASE
+			WHEN cnt <![CDATA[ < ]]> 3 THEN ROUND(((temp.percentage_total / cnt) * 0.5) + (80 * 0.5), 1)
+			ELSE ROUND((hkmc_total_score / (cnt-2)),1)
+		END AS hkmc_avg_score_percentage
 		from (
 			SELECT
 			a.cxstn_srv_seq
@@ -53,14 +63,15 @@
 			, (select count(score) from cx_appctn_rsume_srv_mst where part_cmpn_cd_1 = a.part_cmpn_cd_1 and cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as cnt
 			, (select sum(ifnull(score,0)) from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as episd_total_score
 			, (select count(score)from cx_appctn_rsume_srv_mst where cxstn_cmpn_episd_seq = a.cxstn_cmpn_episd_seq and ptcpt_cd = 'Y') as episd_cnt
-			, ROUND((a.score / SUM(e.total)) * 100, 1) AS percentage
+			, ROUND((ifnull(a.score,0) / SUM(e.total)) * 100, 1) AS percentage
+			, ifnull(e.count_select, 0) AS count_select
 			FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
 			LEFT JOIN (
 				SELECT
 				srv_seq
 				, d.srv_rspn_seq
 				, SUM(srv_type_cd) AS total
-
+				, COUNT(*) AS count_select
 				FROM (SELECT
 				A.srv_seq
 				, A.QSTN_SEQ
@@ -88,6 +99,45 @@
 			</if>
 			GROUP BY cxstn_srv_seq
 			) a
+			JOIN (
+				SELECT
+				part_cmpn_cd_1
+				, round(sum(percentage), 1) AS percentage_total
+				FROM (
+				SELECT
+				((ifnull(a.score,0) / SUM(e.total)) * 100) AS percentage
+				, part_cmpn_cd_1
+				FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
+				LEFT JOIN (
+				SELECT
+				srv_seq
+				, d.srv_rspn_seq
+				, SUM(srv_type_cd) AS total
+				FROM (SELECT
+				A.srv_seq
+				, A.QSTN_SEQ
+				, A.srv_type_cd
+				, B.EXMPL_SEQ
+				FROM (SELECT
+				E.srv_seq
+				, E.QSTN_SEQ
+				, case when e.srv_type_cd = 'QST05' THEN 5
+				when e.srv_type_cd = 'QST06' THEN 7
+				when e.srv_type_cd = 'QST07' THEN 10
+				END AS srv_type_cd
+				FROM sv_qstn_dtl e
+				WHERE 1=1
+				and e.srv_type_cd IN ('QST05', 'QST06', 'QST07')
+				AND (e.score_exclusion_yn != 'Y' OR e.score_exclusion_yn IS NULL)) A
+				INNER JOIN sv_exmpl_dtl B ON A.QSTN_SEQ = B.QSTN_SEQ
+				) C
+				LEFT JOIN sv_mtlcc_rspn_dtl D ON C.EXMPL_SEQ = D.EXMPL_SEQ
+				GROUP BY srv_rspn_seq
+				) e ON e.srv_seq = b.srv_seq AND A.srv_rspn_seq = e.srv_rspn_seq
+				GROUP BY cxstn_srv_seq
+				) AS temp_per
+				GROUP BY part_cmpn_cd_1
+			) temp ON a.part_cmpn_cd_1 = temp.part_cmpn_cd_1
 			ORDER BY
 			a.cxstn_srv_seq DESC
 			<if test="excelYn != 'Y'.toString() ">
@@ -103,6 +153,7 @@
         ==========   ========   ==============
         2023.11.20    박준희       최초생성
         2024.08.06	  장두석		  추가개발 리스트 조회에 백분율 점수 추가되어 from 절 맞춰줌
+        2024.12.03	  장두석		  리스트 조회 쿼리에 항목 추가되어 리스트 쿼리와 from 절 싱크 맞춤
     -->
 	<select id="selectSurveyListCnt" parameterType="WBLSurveyMstSearchDTO" resultType="java.lang.Integer">
 		SELECT /* WBLSurveyMapper.selectSurveyListCnt*/
@@ -114,7 +165,7 @@
 			srv_seq
 			, d.srv_rspn_seq
 			, SUM(srv_type_cd) AS total
-
+			, COUNT(*) AS count_select
 			FROM (SELECT
 			A.srv_seq
 			, A.QSTN_SEQ
@@ -137,7 +188,9 @@
 			LEFT JOIN sv_mtlcc_rspn_dtl D ON C.EXMPL_SEQ = D.EXMPL_SEQ
 			GROUP BY srv_rspn_seq
 		) e ON e.srv_seq = b.srv_seq AND A.srv_rspn_seq = e.srv_rspn_seq
-		<include refid="selectSurveyListwhereSql" />
+		<if test="excelYn != 'Y'.toString() ">
+			<include refid="selectSurveyListwhereSql" />
+		</if>
 	</select>
 
 	<!--

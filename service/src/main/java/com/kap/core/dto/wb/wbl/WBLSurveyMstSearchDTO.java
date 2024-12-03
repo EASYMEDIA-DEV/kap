@@ -65,7 +65,7 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
 
     /* 2024-08-06 추가개발 점수 백분율 값 추가 */
     @Schema(title = "척도 문항 사용자 점수에 대한 백분율")
-    private String percentage;
+    private double percentage;
 
     @Schema(title = "대표자명")
     private String rprsntNm;
@@ -93,8 +93,16 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
     @Schema(title = "평균점수", example = "숫자")
     private double avgScore;
 
+    //2024.12.03 추가
+    @Schema(title = "평균점수 100점 환산", example = "숫자")
+    private double avgScorePercentage;
+
     @Schema(title = "HKMC 평균점수", example = "숫자")
     private double hkmcAvgScore;
+
+    //2024.12.03 추가
+    @Schema(title = "HKMC 평균점수 100점 환산", example = "숫자")
+    private double hkmcAvgScorePercentage;
 
     @Schema(title = "응답업체수", example = "숫자")
     private Integer cnt;
@@ -113,6 +121,10 @@ public class WBLSurveyMstSearchDTO extends BaseDTO {
 
     @Schema(title = "문항수", example = "숫자")
     private Integer qstnCnt;
+
+    //2024.12.03 추가
+    @Schema(title = "사용자 답변수", example = "숫자")
+    private Integer countSelect;
 
     @Schema(title = "설문내용", example = "")
     private String cntn;

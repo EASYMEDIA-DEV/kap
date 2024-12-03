@@ -624,39 +624,48 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(7);
-			cell.setCellValue("이메일");
+			cell.setCellValue("담당자명");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(8);
-			cell.setCellValue("전화번호");
+			cell.setCellValue("이메일");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(9);
-			cell.setCellValue("참여여부");
+			cell.setCellValue("전화번호");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(10);
-			cell.setCellValue("완료여부");
+			cell.setCellValue("참여여부");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(11);
-			cell.setCellValue("점수");
+			cell.setCellValue("완료여부");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(12);
-			cell.setCellValue("응답업체수");
+			cell.setCellValue("점수");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(13);
-			cell.setCellValue("평균점수");
+			cell.setCellValue("응답업체수");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(14);
-			cell.setCellValue("HKMC평균점수");
+			cell.setCellValue("평균점수");
 			cell.setCellStyle(style_header);
 
 			cell = row.createCell(15);
+			cell.setCellValue("HKMC평균점수");
+			cell.setCellStyle(style_header);
+
+			cell = row.createCell(16);
 			cell.setCellValue("참여일");
+			cell.setCellStyle(style_header);
+
+			//2024-12-03 응답 카운트 추가
+			cell = row.createCell(17);
+			cell.setCellValue("응답 카운트");
 			cell.setCellStyle(style_header);
 
 			/*cell = row.createCell(14);
@@ -675,7 +684,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 			cell.setCellValue("최종수정일시");
 			cell.setCellStyle(style_header);*/
 
-			int qstnRow = 16;
+			int qstnRow = 18;
 			String scoreExclusionYn = "";
 			for (WBLSurveyMstSearchDTO qstnDto : qstnList) {
 				cell = row.createCell(qstnRow);
@@ -730,39 +739,48 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(7);
-				cell.setCellValue(list.get(i).getEmail());
+				cell.setCellValue(list.get(i).getPicNm());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(8);
-				cell.setCellValue(list.get(i).getTelNo());
+				cell.setCellValue(list.get(i).getEmail());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(9);
-				cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
+				cell.setCellValue(list.get(i).getTelNo());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(10);
-				cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
+				cell.setCellValue("E".equals(list.get(i).getPtcptCd()) ? "대기" : "Y".equals(list.get(i).getPtcptCd()) ? "참여" : "미참여");
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(11);
-				cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
+				cell.setCellValue("Y".equals(list.get(i).getCmpltnYn()) ? "완료" : "N".equals(list.get(i).getCmpltnYn()) ? "미완료" : "-");
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(12);
-				cell.setCellValue(list.get(i).getCnt());
+				cell.setCellValue(list.get(i).getScore() + " (" + list.get(i).getPercentage() + ")"); //2024-08-06 추가개발 백분율 점수값 추가
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(13);
-				cell.setCellValue(list.get(i).getAvgScore());
+				cell.setCellValue(list.get(i).getCnt());
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(14);
-				cell.setCellValue(list.get(i).getHkmcAvgScore());
+				cell.setCellValue(list.get(i).getAvgScore() + " (" + list.get(i).getAvgScorePercentage() + ")");  //2024-12-03 100점 환산 평균점수 추가
 				cell.setCellStyle(style_body);
 
 				cell = row.createCell(15);
+				cell.setCellValue(list.get(i).getHkmcAvgScore() + " (" + list.get(i).getHkmcAvgScorePercentage() + ")");  //2024-12-03 HKMC 100점 환산 평균점수 추가
+				cell.setCellStyle(style_body);
+
+				cell = row.createCell(16);
 				cell.setCellValue(list.get(i).getPtcptCmpltnDtm() == null ? "-" : list.get(i).getPtcptCmpltnDtm().substring(0, list.get(i).getPtcptCmpltnDtm().lastIndexOf(":")));
+				cell.setCellStyle(style_body);
+
+				//2024-12-03 응답 카운트 추가
+				cell = row.createCell(17);
+				cell.setCellValue(list.get(i).getCountSelect());
 				cell.setCellStyle(style_body);
 
 				/*cell = row.createCell(14);
@@ -782,7 +800,7 @@ public class WBLSurveyServiceImpl implements WBLSurveyService {
 				cell.setCellStyle(style_body);*/
 
 
-				int rspnRow = 16;
+				int rspnRow = 18;
 				if (list.get(i).getList() != null && list.get(i).getList().size() > 0) {
 
 					for (WBLSurveyMstSearchDTO rspnDto : list.get(i).getList()) {

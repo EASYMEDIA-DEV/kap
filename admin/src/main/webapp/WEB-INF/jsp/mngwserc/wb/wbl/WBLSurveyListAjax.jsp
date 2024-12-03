@@ -24,10 +24,10 @@
                 <td class="text-center"> ${list.partCmpnCd2}</td>
                 <td class="text-center"> ${list.ptcptCd eq 'E' ? '대기' : list.ptcptCd eq 'N' ? '미참여' : '참여' }</td>
                 <td class="text-center"> ${list.cmpltnYn eq 'Y' ? '완료' : list.cmpltnYn eq 'N' ? '미완료' : '-' }</td>
-                <td class="text-center"> ${list.score}<c:if test="${not empty list.percentage}"> (${list.percentage})</c:if></td> <%-- 2024-08-06 추가개발 백분율 점수값 추가 --%>
+                <td class="text-center"> ${not empty list.score ? list.score += '(' += list.percentage += ')' : '-'}</td> <%-- 2024-08-06 추가개발 백분율 점수값 추가 --%>
                 <td class="text-center"> ${list.cnt}</td>
-                <td class="text-center"> ${list.avgScore}</td>
-                <td class="text-center"> ${list.hkmcAvgScore}</td>
+                <td class="text-center"> ${list.avgScore}<c:if test="${not empty list.avgScorePercentage}"> (${list.avgScorePercentage})</c:if></td> <%-- 2024-12-03 백분율 점수값 추가 --%>
+                <td class="text-center"> ${list.hkmcAvgScore}<c:if test="${not empty list.hkmcAvgScorePercentage}"> (${list.hkmcAvgScorePercentage})</c:if></td> <%-- 2024-12-03 백분율 점수값 추가 --%>
                 <td class="text-center">${ kl:convertDate(list.ptcptCmpltnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') } </td>
                 <td class="text-center"> ${list.picNm}</td>
                 <td class="text-center"> ${list.telNo}</td>
