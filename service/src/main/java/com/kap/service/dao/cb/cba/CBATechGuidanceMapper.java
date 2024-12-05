@@ -1,9 +1,6 @@
 package com.kap.service.dao.cb.cba;
 
-import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
-import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
+import com.kap.core.dto.cb.cba.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.HashMap;
@@ -177,6 +174,16 @@ public interface CBATechGuidanceMapper {
      * 만족도 종합결과 엑셀 조회
      */
     public List<CBAConsultSuveyRsltListDTO> selectConsultSuveyRsltDtlExcel(CBAConsultSuveyRsltListDTO cBAConsultSuveyRsltListDTO);
+
+    /**
+     * 해당 연도의 가장 최신 만족도 설문 조사 질문 내용 조회
+     */
+    public List<CBAConsultSuveyDTO> selectTechSurveyQstn(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO);
+
+    /**
+     * 해당 연도의 가장 최신 만족도 설문 조사 응답 내용 조회
+     */
+    public List<CBAConsultSuveyDTO> selectTechSurveyRspn(CBAConsultSuveyRsltListDTO pCBAConsultSuveyRsltListDTO);
 
 
     /**

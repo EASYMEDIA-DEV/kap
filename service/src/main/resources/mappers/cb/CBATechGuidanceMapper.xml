@@ -1302,6 +1302,7 @@
         ==========   ========   ==============
         2024.02.28    구은희      최초생성
         2024.06.10    장두석      사업연도 -> 지도완료
+        2024.11.28    장두석      choose 조건으로 엑셀 연도 추가
     -->
     <select id="selectConsultSuveyRsltDtlExcel" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyRsltListDTO">
         SELECT /* CBATechGuidanceMapper.selectConsultSuveyRsltDtlExcel */
@@ -1332,9 +1333,14 @@
         LEFT JOIN CP_CNSTG_SRV_RSLT_DTL CPSR
         ON CP_MST.CNSTG_SEQ = CPSR.CNSTG_SEQ
         where 1=1
-        <if test="rtnBsnYear != null and rtnBsnYear != ''">
-            AND YEAR(CPR_MST.guide_pscnd_dt) = ${rtnBsnYear}
-        </if>
+        <choose>
+            <when test="rtnBsnYear != null and rtnBsnYear != ''">
+                AND YEAR(CPR_MST.guide_pscnd_dt) = ${rtnBsnYear}
+            </when>
+            <when test="excelBsnYear != null and excelBsnYear != ''">
+                AND YEAR(CPR_MST.guide_pscnd_dt) = ${excelBsnYear}
+            </when>
+        </choose>
         AND CP_MST.CNSTG_CD = 'CONSULT_GB01'
         AND CPR_MST.BFRE_JDGMT_RSLT_CD = 'BF_JDGMT_RSLT01'
         AND CPR_MST.INIT_VST_RSLT_CD = 'INIT_VST_RSLT01'
@@ -1930,6 +1936,119 @@
         where
             srv_seq = #{srvSeq}
           AND rfnc_seq = #{cnstgSeq}
+    </select>
+
+
+    <!--
+         쿼리명 : CBATechGuidanceMapper.selectTechSurveyQstn
+         설  명 : 해당 연도의 가장 최신 만족도 설문 조사 질문 내용 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.11.28    장두석       최초생성
+    -->
+    <select id="selectTechSurveyQstn" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyDTO">
+        SELECT /* CBATechGuidanceMapper.selectTechSurveyQstn */
+            QSTN_SEQ
+            , QSTN_NM
+            , QSTN_ORD
+        FROM (
+            SELECT
+                srv_seq
+            FROM
+                cp_cnstg_rsume_mst
+            WHERE 1=1
+                AND guide_pscnd_cd = 'GUIDE_PSCND04'
+            <choose>
+                <when test="rtnBsnYear != null and rtnBsnYear != ''">
+                    AND YEAR(guide_pscnd_dt) = ${rtnBsnYear}
+                </when>
+                <when test="excelBsnYear != null and excelBsnYear != ''">
+                    AND YEAR(guide_pscnd_dt) = ${excelBsnYear}
+                </when>
+            </choose>
+            ORDER BY
+                guide_pscnd_dt DESC, mod_dtm DESC
+            LIMIT 1
+        ) A
+        JOIN sv_qstn_dtl B ON A.srv_seq = B.srv_seq
+        ORDER BY QSTN_ORD;
+    </select>
+
+    <!--
+         쿼리명 : WBLSurveyMapper.selectTechSurveyRspn
+         설  명 : 해당 연도의 가장 최신 만족도 설문 조사 응답 내용 조회
+          수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.11.28    장두석       최초생성
+    -->
+    <select id="selectTechSurveyRspn" parameterType="CBAConsultSuveyRsltListDTO" resultType="CBAConsultSuveyDTO">
+        SELECT /* WBLSurveyMapper.selectTechSurveyRspn */
+            RFNC_SEQ,
+            SRV_RSPN_SEQ,
+            QSTN_SEQ,
+            SRV_TYPE_CD /* 문항타입 */,
+            (SELECT CD_NM FROM co_code_mst WHERE CD = SRV_TYPE_CD) AS SRV_TYPE_NM,
+            QSTN_ORD /* 문항순번 */,
+            QSTN_NM /* 문항명 */,
+            CASE
+                WHEN SRV_TYPE_CD = 'QST02' THEN EXMPL_NM_SUM /* 객관식(복수선택) */
+                WHEN SRV_TYPE_CD = 'QST01' THEN EXMPL_NM /* 객관식(단일선택) */
+                WHEN SRV_TYPE_CD = 'QST03' THEN SBJCT_RPLY /* 주관식(단답) */
+                WHEN SRV_TYPE_CD = 'QST04' THEN SBJCT_RPLY /* 주관식(서술) */
+                ELSE (SELECT MAX(EXMPL_ORD) FROM sv_exmpl_dtl WHERE EXMPL_SEQ = TT.EXMPL_SEQ)
+            END AS EXMPL_ANSWER /* 답변 항목 */
+        FROM (
+                 SELECT
+                     T1.RFNC_SEQ,
+                     T1.SRV_RSPN_SEQ,
+                     B.SRV_TYPE_CD /* 문항타입 */,
+                     B.QSTN_ORD /* 문항순번 */,
+                     B.QSTN_SEQ /* 문항 */,
+                     B.QSTN_NM,
+                     A.EXMPL_NM /* 보기명 */,
+                     MAX(CASE WHEN C.EXMPL_SEQ IS NULL THEN 0 ELSE C.EXMPL_SEQ END) AS EXMPL_SEQ,
+                     F.SBJCT_RSPN_SEQ,
+                     F.SBJCT_RPLY,
+                    CASE when SRV_TYPE_CD = 'QST02' THEN
+                        (SELECT GROUP_CONCAT(EXMPL_NM SEPARATOR ', ') FROM sv_exmpl_dtl WHERE QSTN_SEQ = A.QSTN_SEQ AND exmpl_seq IN (SELECT exmpl_seq FROM sv_mtlcc_rspn_dtl WHERE SRV_RSPN_SEQ = C.SRV_RSPN_SEQ))
+                    END AS EXMPL_NM_SUM
+                 FROM sv_qstn_dtl B
+                JOIN (
+                     SELECT SRV_RSPN_SEQ, SRV_SEQ, RFNC_SEQ
+                     FROM sv_rspn_mst
+                 ) T1 ON B.SRV_SEQ = T1.SRV_SEQ
+                JOIN (
+                     SELECT EXMPL_SEQ, QSTN_SEQ, EXMPL_NM, EXMPL_ORD
+                     FROM sv_exmpl_dtl
+                 ) A ON B.QSTN_SEQ = A.QSTN_SEQ
+                LEFT JOIN (
+                     SELECT MTLCC_RSPN_SEQ, EXMPL_SEQ, SRV_RSPN_SEQ
+                     FROM sv_mtlcc_rspn_dtl
+                 ) C ON A.EXMPL_SEQ = C.EXMPL_SEQ AND C.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ /* 응답한 객관식 */
+                LEFT JOIN (
+                     SELECT QSTN_SEQ, SBJCT_RSPN_SEQ, SBJCT_RPLY, SRV_RSPN_SEQ
+                     FROM sv_sbjct_rspn_dtl
+                 ) F ON B.QSTN_SEQ = F.QSTN_SEQ AND F.SRV_RSPN_SEQ = T1.SRV_RSPN_SEQ
+                 WHERE 1=1
+                    AND T1.RFNC_SEQ IN (
+                        SELECT
+                            cnstg_seq
+                        FROM
+                            cp_cnstg_rsume_mst
+                        WHERE 1=1
+                            AND guide_pscnd_cd = 'GUIDE_PSCND04'
+                            <choose>
+                                <when test="rtnBsnYear != null and rtnBsnYear != ''">
+                                    AND YEAR(guide_pscnd_dt) = ${rtnBsnYear}
+                                </when>
+                                <when test="excelBsnYear != null and excelBsnYear != ''">
+                                    AND YEAR(guide_pscnd_dt) = ${excelBsnYear}
+                                </when>
+                            </choose>
+                    )
+                 GROUP BY B.QSTN_SEQ, T1.SRV_RSPN_SEQ
+         ) TT
+        ORDER BY SRV_RSPN_SEQ ASC, QSTN_ORD ASC;
     </select>
 
 </mapper>

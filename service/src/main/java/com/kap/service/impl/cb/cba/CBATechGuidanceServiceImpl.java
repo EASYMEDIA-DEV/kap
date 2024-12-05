@@ -4,6 +4,7 @@ import com.kap.common.utility.CODateUtil;
 import com.kap.common.utility.COPaginationUtil;
 import com.kap.common.utility.COStringUtil;
 import com.kap.core.dto.*;
+import com.kap.core.dto.cb.cba.CBAConsultSuveyDTO;
 import com.kap.core.dto.cb.cba.CBAConsultSuveyRsltListDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceInsertDTO;
 import com.kap.core.dto.cb.cba.CBATechGuidanceUpdateDTO;
@@ -1070,7 +1071,7 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell.setCellStyle(style_header);
 
         cell = row.createCell(12);
-        cell.setCellValue("의사소동(5)");
+        cell.setCellValue("의사소통(5)");
         cell.setCellStyle(style_header);
 
         cell = row.createCell(13);
@@ -1088,6 +1089,19 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
         cell = row.createCell(16);
         cell.setCellValue("전문지식(15)");
         cell.setCellStyle(style_header);
+
+        /* 2024-11-28 기술지도 만족도 종합결과 질의,응답 항목 추가 s */
+        int counter = 17;
+        List<CBAConsultSuveyDTO> qstnList = cBATechGuidanceMapper.selectTechSurveyQstn(pCBAConsultSuveyRsltListDTO);  //질문 목록
+        for(CBAConsultSuveyDTO qstn : qstnList) {
+            cell = row.createCell(counter);
+            cell.setCellValue(qstn.getQstnNm());
+            cell.setCellStyle(style_header);
+            counter++;
+        }
+
+        List<CBAConsultSuveyDTO> rspnList = cBATechGuidanceMapper.selectTechSurveyRspn(pCBAConsultSuveyRsltListDTO);  //응답 목록
+        /* 2024-11-28 기술지도 만족도 종합결과 질의,응답 항목 추가 e */
 
 
         // Body
@@ -1180,6 +1194,17 @@ public class CBATechGuidanceServiceImpl implements CBATechGuidanceService {
             cell.setCellValue(list.get(i).getExprtsScore());
             cell.setCellStyle(style_body);
 
+            /* 2024-11-28 기술지도 만족도 종합결과 질의,응답 항목 추가 s */
+            counter = 17;
+            for(CBAConsultSuveyDTO rspn : rspnList) {
+                if(Objects.equals(list.get(i).getCnstgSeq(), rspn.getRfncSeq())) {
+                    cell = row.createCell(counter);
+                    cell.setCellValue(rspn.getExmplAnswer());
+                    cell.setCellStyle(style_body);
+                    counter++;
+                }
+            }
+            /* 2024-11-28 기술지도 만족도 종합결과 질의,응답 항목 추가 e */
         }
 
 

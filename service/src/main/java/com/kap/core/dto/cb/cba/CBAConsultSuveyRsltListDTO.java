@@ -92,6 +92,8 @@ public class CBAConsultSuveyRsltListDTO extends BaseDTO {
     @Schema(title = "검색사업구분")
     private String rtnBsnGubun;
 
+    @Schema(title = "엑셀다운로드사업연도")
+    private String excelBsnYear;
     @Schema(title = "엑셀다운로드사유")
     private String rsn;
 
