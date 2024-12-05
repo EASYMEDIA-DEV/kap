@@ -16,7 +16,7 @@
      -->
 	<select id="selectSurveyList" parameterType="WBLSurveyMstSearchDTO">
 		select  /* WBLSurveyMapper.selectSurveyList */
-		a.*
+		body.*
 		, round((total_score/cnt),2) as avg_score
 		, CASE
 			WHEN cnt > 2 THEN ROUND((hkmc_total_score/(cnt-2)),2)
@@ -25,12 +25,14 @@
 		END AS hkmc_avg_score
 		, ROUND(temp.percentage_total / cnt, 1) AS avg_score_percentage
 		, CASE
+			WHEN cnt = 0 THEN ROUND((temp2.percentage_episd_sum / episd_cnt), 1)
 			WHEN cnt <![CDATA[ < ]]> 3 THEN ROUND(((temp.percentage_total / cnt) * 0.5) + (80 * 0.5), 1)
-			ELSE ROUND((hkmc_total_score / (cnt-2)),1)
+			ELSE ROUND(((temp.percentage_sum - temp.percentage_max - temp.percentage_min) / (cnt-2)),1)
 		END AS hkmc_avg_score_percentage
 		from (
 			SELECT
 			a.cxstn_srv_seq
+			,a.cxstn_cmpn_episd_seq
 			,b.year
 			,b.episd
 			,b.srv_seq
@@ -98,11 +100,14 @@
 				<include refid="selectSurveyListwhereSql" />
 			</if>
 			GROUP BY cxstn_srv_seq
-			) a
+			) body
 			JOIN (
 				SELECT
 				part_cmpn_cd_1
 				, round(sum(percentage), 1) AS percentage_total
+				, sum(percentage) AS percentage_sum
+				, max(percentage) AS percentage_max
+				, min(percentage) as percentage_min
 				FROM (
 				SELECT
 				((ifnull(a.score,0) / SUM(e.total)) * 100) AS percentage
@@ -137,9 +142,48 @@
 				GROUP BY cxstn_srv_seq
 				) AS temp_per
 				GROUP BY part_cmpn_cd_1
-			) temp ON a.part_cmpn_cd_1 = temp.part_cmpn_cd_1
+			) temp ON body.part_cmpn_cd_1 = temp.part_cmpn_cd_1
+			JOIN (
+				SELECT
+				cxstn_cmpn_episd_seq
+				, sum(percentage) AS percentage_episd_sum
+				FROM (
+				SELECT
+				((ifnull(a.score,0) / SUM(e.total)) * 100) AS percentage
+				, A.cxstn_cmpn_episd_seq
+				FROM cx_appctn_rsume_srv_mst A left join cx_cmpn_episd_mst b on a.cxstn_cmpn_episd_seq = b.cxstn_cmpn_episd_seq
+				LEFT JOIN (
+				SELECT
+				srv_seq
+				, d.srv_rspn_seq
+				, SUM(srv_type_cd) AS total
+				FROM (SELECT
+				A.srv_seq
+				, A.QSTN_SEQ
+				, A.srv_type_cd
+				, B.EXMPL_SEQ
+				FROM (SELECT
+				E.srv_seq
+				, E.QSTN_SEQ
+				, case when e.srv_type_cd = 'QST05' THEN 5
+				when e.srv_type_cd = 'QST06' THEN 7
+				when e.srv_type_cd = 'QST07' THEN 10
+				END AS srv_type_cd
+				FROM sv_qstn_dtl e
+				WHERE 1=1
+				and e.srv_type_cd IN ('QST05', 'QST06', 'QST07')
+				AND (e.score_exclusion_yn != 'Y' OR e.score_exclusion_yn IS NULL)) A
+				INNER JOIN sv_exmpl_dtl B ON A.QSTN_SEQ = B.QSTN_SEQ
+				) C
+				LEFT JOIN sv_mtlcc_rspn_dtl D ON C.EXMPL_SEQ = D.EXMPL_SEQ
+				GROUP BY srv_rspn_seq
+				) e ON e.srv_seq = b.srv_seq AND A.srv_rspn_seq = e.srv_rspn_seq
+				GROUP BY cxstn_srv_seq
+				) AS temp_per
+				GROUP BY cxstn_cmpn_episd_seq
+			) temp2 ON body.cxstn_cmpn_episd_seq = temp2.cxstn_cmpn_episd_seq
 			ORDER BY
-			a.cxstn_srv_seq DESC
+			cxstn_srv_seq DESC
 			<if test="excelYn != 'Y'.toString() ">
 				LIMIT #{firstIndex}, #{recordCountPerPage}
 			</if>
