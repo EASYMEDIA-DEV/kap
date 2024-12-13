@@ -719,7 +719,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 
 
 								/* 2024-11-26 수료 방식 개편 s */
-								if(isNaN(examMaxScore) && actForm.otsdExamPtcptYn != 'Y') {
+								var jdgmtYn = $("#jdgmtYn").val();
+								if(isNaN(examMaxScore) && actForm.otsdExamPtcptYn != 'Y' && jdgmtYn != 'N') {
 									alert("현재 회차에 등록된 시험이 없습니다.");
 									resultFlag = false;
 									return false;
@@ -730,7 +731,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								actForm.otsdExamPtcptYn
 								var examScorePer = 0;
 								var examScoreText = $(this).find(".examScorePer").text().trim();
-								if(cmptnYn && cmptnYn !== '' && (cmptnYn == 'S' || cmptnYn == 'Y')) {
+								if(cmptnYn && cmptnYn != '' && (cmptnYn == 'S' || cmptnYn == 'Y')) {
 									if (examScore && !isNaN(examScore)) {
 										examScorePer = parseFloat(examScore);  // 숫자로 변환
 									}
@@ -738,7 +739,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 										var scoreText = $(this).find(".examScorePer a").text().trim();
 										examScorePer = !isNaN(parseFloat(scoreText)) ? parseFloat(scoreText) : 0;  // 숫자로 변환 (빈 값이나 NaN일 경우 0)
 									}
-									else if (examScoreText === '-' || examScoreText === '') {
+									else if ((examScoreText == '-' || examScoreText == '') && jdgmtYn == 'Y') {
 										// examScorePer = 0;
 										alert("평가에 참여하지 않으면 이수/수료 처리가 불가능합니다.");
 										resultFlag = false;
@@ -748,12 +749,19 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 									examScorePer = isNaN(examScorePer) ? 0 : examScorePer; // 만약 NaN이면 0으로 설정
 
 									var eduAtndcPer = $(this).find(".eduAtndcPer a").length > 0 ? $(this).find(".eduAtndcPer a").text() : $(this).find(".eduAtndcPer").text();
-									var finalScore = ((examScorePer/examMaxScore * 100) * 0.2) + ((parseFloat(eduAtndcPer.replace(/[^0-9.]/g, '').trim()) * 0.8));
+									var finalScore = 0;
+									if(jdgmtYn != 'Y') {
+										finalScore = parseFloat(eduAtndcPer.replace(/[^0-9.]/g, '').trim());
+									}
+									else {
+										finalScore = ((examScorePer/examMaxScore * 100) * 0.2) + ((parseFloat(eduAtndcPer.replace(/[^0-9.]/g, '').trim()) * 0.8));
+									}
 									var alertMsg = "아래 기준값에 맞게 수료상태를 선택해주세요.\n" +
 															"출석 점수(80%) + 평가 점수(20%) = 기준점수(백분율 환산값)\n" +
 															"기준점수 < 80점 = 미수료\n" +
 															"80점 ≤ 기준점수 < 90점 = 수료\n" +
-															"90점 ≤ 기준점수 = 이수";
+															"90점 ≤ 기준점수 = 이수\n" +
+															"(단, 평가가 없는 교육의 경우 출석 점수(100%) 적용)";
 
 									if(cmptnYn == 'S' && finalScore < 90.0) {
 										// alert("종합 점수 90점 미만은 이수 처리가 불가능합니다.");
