@@ -130,10 +130,15 @@
                                                             <div class="td">
                                                                 <div class="data-line-w">
                                                                     <div class="data-line">
+                                                                        <%-- 2024-11-26 수료 방식 개편 s --%>
                                                                         <div class="opt-group total-check-w">
                                                                             <div class="form-checkbox total-check">
                                                                                 <input type="checkbox" data-name="cmptnYnList" id="cmptnYn" name="cmptnYn">
                                                                                 <label for="cmptnYn">전체</label>
+                                                                            </div>
+                                                                            <div class="form-checkbox">
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn0" name="cmptnYn" value="S" <c:if test="${rtnData.crtfctYn eq 'S'}">checked</c:if>  >
+                                                                                <label for="cmptnYn1">이수</label>
                                                                             </div>
                                                                             <div class="form-checkbox">
                                                                                 <input type="checkbox" data-name="cmptnYnList" id="cmptnYn1" name="cmptnYn" value="Y" <c:if test="${rtnData.crtfctYn eq 'Y'}">checked</c:if>  >
@@ -143,12 +148,16 @@
                                                                                 <input type="checkbox" data-name="cmptnYnList" id="cmptnYn2" name="cmptnYn2" value="N">
                                                                                 <label for="cmptnYn2">미수료</label>
                                                                             </div>
-
                                                                             <div class="form-checkbox">
                                                                                 <input type="checkbox" data-name="cmptnYnList" id="cmptnYn3" name="cmptnYn3" value="U">
                                                                                 <label for="cmptnYn3">불참</label>
                                                                             </div>
+                                                                            <div class="form-checkbox">
+                                                                                <input type="checkbox" data-name="cmptnYnList" id="cmptnYn4" name="cmptnYn4" value="E">
+                                                                                <label for="cmptnYn3">중도퇴소</label>
+                                                                            </div>
                                                                         </div>
+                                                                        <%-- 2024-11-26 수료 방식 개편 e --%>
                                                                     </div>
                                                                 </div>
                                                             </div>

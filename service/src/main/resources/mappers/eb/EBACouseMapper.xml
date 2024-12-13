@@ -266,6 +266,7 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.02   김학규       최초생성
+        2024.11.26   장두석       수료 기준 출석/평가 점수 값 고정으로 등록 제거
     -->
 	<insert id="insertCouse" parameterType="EBACouseDTO">
 
@@ -278,8 +279,6 @@
 			, itrdc_cntn
 			, stduy_trgt_cntn
 			, stduy_mthd_cd
-			, cmptn_stnd_cd
-			, cmptn_jdgmt_cd
 			, jdgmt_yn
 			, stduy_dd_cd
 			, stduy_time_cd
@@ -320,15 +319,6 @@
 		, #{itrdcCntn}
 		, #{stduyTrgtCntn}
 		, #{stduyMthdCd}
-		, #{cmptnStndCd}
-
-		<if test='jdgmtYn =="Y" '>
-			, #{cmptnJdgmtCd}
-		</if>
-		<if test='jdgmtYn =="N" '>
-			, null
-		</if>
-
 		, #{jdgmtYn}
 		, #{stduyDdCd}
 		, #{stduyTimeCd}
@@ -377,7 +367,6 @@
 			, itrdc_Cntn = #{itrdcCntn}
 			, stduy_trgt_cntn = #{stduyTrgtCntn}
 			, stduy_mthd_cd = #{stduyMthdCd}
-			, cmptn_stnd_cd = #{cmptnStndCd}
 			, gpc_yn = #{gpcYn}
 			<if test='gpcYn =="Y" '>
 				, gpc_edctn_type = #{gpcEdctnType}

@@ -823,15 +823,18 @@
           수정일     수정자       수정내용
         ==========   ======    ==============
         2023.11.09    김학규       최초생성
+        2024.11.26    장두석       이수 조건 추가
     -->
 	<update id="updateEdctnPtcptScord" parameterType="EXGExamEdctnPtcptRspnMst">
 		update /* EXGExamMapper.updateEdctnPtcptScord */ ep_edctn_ptcpt_mst
 		set
 			exam_score = #{examScore}
-		<if test="cmptnYn != null and cmptnYn == 'Y'.toString()">
+		<if test="cmptnYn != null and (cmptnYn == 'Y'.toString() or cmptnYn == 'S'.toString())">
 			, cmptn_yn = #{cmptnYn}
 		    , cmptn_dtm = now()
-			, crtfct_no = #{crtfctNo}
+		  <if test="orgCmptnYn != null and (orgCmptnYn != 'Y'.toString() or orgCmptnYn != 'S'.toString())">
+			  , crtfct_no = #{crtfctNo}
+		  </if>
 		</if>
 		<if test="cmptnYn != null and cmptnYn == 'N'.toString()">
 			, cmptn_yn = #{cmptnYn}
@@ -854,6 +857,21 @@
 		from
 			ep_edctn_qstn_rspn_dtl a
 		where a.ptcpt_seq = #{ptcptSeq} and a.exam_seq = #{examSeq}
+	</select>
+
+	<!--
+		쿼리명 : EXGExamMapper.getExamMaxSum
+		설  명 : 교육 시험 만점 점수
+	      수정일      수정자       수정내용
+        ==========   ========   ==============
+        2024.11.26    장두석       최초생성
+    -->
+	<select id="getExamMaxSum" parameterType="EXGExamMstSearchDTO" resultType="java.lang.Double">
+		select /* EXGExamMapper.getExamMaxSum */
+			sum(ifnull(a.scord, 0))
+		from
+			ex_exam_qstn_dtl a
+		where a.exam_seq = #{examSeq}
 	</select>
 
 	<!--

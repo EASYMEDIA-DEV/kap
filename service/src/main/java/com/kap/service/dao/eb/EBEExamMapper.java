@@ -156,6 +156,11 @@ public interface EBEExamMapper {
     public int getExamRspnSum(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);
 
     /**
+     * 교육 시험 만점 점수
+     */
+    public double getExamMaxSum(EXGExamEdctnPtcptRspnMst eXGExamEdctnPtcptRspnMst);  //2024-11-26 수료 방식 개편
+
+    /**
      * 교육 참여 출석 전체, 출석 수 주말 제외
      */
     public HashMap getEdctnAtndcSum(EXGExamEdctnPtcptMst eXGExamEdctnPtcptMst);

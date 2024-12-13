@@ -699,6 +699,8 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					var ptcptCnt = $("#ptcptListContainer").find("tr:first").data("totalCount");
 
 					if(ptcptCnt>0){
+						var examMaxScore = $formObj.find("#examMaxScore");  //2024-11-26 수료 방식 개편
+
 						$("#ptcptListContainer").find("tr").each(function(){
 
 							//교육양도한 참여자는 제외한다.
@@ -712,12 +714,78 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								var memSeq = $(this).find("input[name=delValueList]").data("memseq");
 								var cmptnYn = $(this).find("td").find("select#cmptnYn").val();
 								var orgCmptnYn = $(this).find("td").find("#orgCmptnYn").val();//$(this).find("td").find("select#cmptnYn").data("orgcmptnyn");
-
 								var oflnExamDtm = $(this).find("td").find("#oflnExamDtm").val();
 
+
+
+								/* 2024-11-26 수료 방식 개편 s */
+								if(isNaN(examMaxScore) && actForm.otsdExamPtcptYn != 'Y') {
+									alert("현재 회차에 등록된 시험이 없습니다.");
+									resultFlag = false;
+									return false;
+								}
+								else if(actForm.otsdExamPtcptYn == 'Y') {
+									examMaxScore = 100.0;
+								}
+								actForm.otsdExamPtcptYn
+								var examScorePer = 0;
+								var examScoreText = $(this).find(".examScorePer").text().trim();
+								if(cmptnYn && cmptnYn !== '' && (cmptnYn == 'S' || cmptnYn == 'Y')) {
+									if (examScore && !isNaN(examScore)) {
+										examScorePer = parseFloat(examScore);  // 숫자로 변환
+									}
+									else if ($(this).find(".examScorePer a").length > 0) {
+										var scoreText = $(this).find(".examScorePer a").text().trim();
+										examScorePer = !isNaN(parseFloat(scoreText)) ? parseFloat(scoreText) : 0;  // 숫자로 변환 (빈 값이나 NaN일 경우 0)
+									}
+									else if (examScoreText === '-' || examScoreText === '') {
+										// examScorePer = 0;
+										alert("평가에 참여하지 않으면 이수/수료 처리가 불가능합니다.");
+										resultFlag = false;
+										$(this).find("td").find("select#cmptnYn").focus();
+										return false;
+									}
+									examScorePer = isNaN(examScorePer) ? 0 : examScorePer; // 만약 NaN이면 0으로 설정
+
+									var eduAtndcPer = $(this).find(".eduAtndcPer a").length > 0 ? $(this).find(".eduAtndcPer a").text() : $(this).find(".eduAtndcPer").text();
+									var finalScore = ((examScorePer/examMaxScore * 100) * 0.2) + ((parseFloat(eduAtndcPer.replace(/[^0-9.]/g, '').trim()) * 0.8));
+									var alertMsg = "아래 기준값에 맞게 수료상태를 선택해주세요.\n" +
+															"출석 점수(80%) + 평가 점수(20%) = 기준점수(백분율 환산값)\n" +
+															"기준점수 < 80점 = 미수료\n" +
+															"80점 ≤ 기준점수 < 90점 = 수료\n" +
+															"90점 ≤ 기준점수 = 이수";
+
+									if(cmptnYn == 'S' && finalScore < 90.0) {
+										// alert("종합 점수 90점 미만은 이수 처리가 불가능합니다.");
+										alert(alertMsg);
+										resultFlag = false;
+										// $(this).find("input[name='examScore']").focus();
+										$(this).find("td").find("select#cmptnYn").focus();
+										return false;
+									}
+									else if(cmptnYn == 'Y' && finalScore < 80.0) {
+										// alert("종합 점수 80점 미만은 수료 처리가 불가능합니다.");
+										alert(alertMsg);
+										resultFlag = false;
+										// $(this).find("input[name='examScore']").focus();
+										$(this).find("td").find("select#cmptnYn").focus();
+										return false;
+									}
+									else if(cmptnYn == 'Y' && finalScore >= 90.0) {
+										// alert("종합 점수 90점 이상은 이수 처리하여 주시길 바랍니다.");
+										alert(alertMsg);
+										resultFlag = false;
+										// $(this).find("input[name='examScore']").focus();
+										$(this).find("td").find("select#cmptnYn").focus();
+										return false;
+									}
+								}
+
 								var cmptnChangeYn = "N";//수료여부 변경여부(변경없으면 굳이 안건드려서 수료일, 등등 업데이트 안침
-								if(orgCmptnYn != cmptnYn && cmptnYn == "Y") {cmptnChangeYn = "Y";}
+								if(orgCmptnYn != cmptnYn && cmptnYn == "N") {cmptnChangeYn = "N";}
 								else if(orgCmptnYn != cmptnYn && cmptnYn == "U"){cmptnChangeYn = "U";}
+								else if(orgCmptnYn != cmptnYn && cmptnYn == "E"){cmptnChangeYn = "E";}
+								/* 2024-11-26 수료 방식 개편 e */
 
 								ptcptForm.edctnSeq = actForm.edctnSeq;//과정번호
 								ptcptForm.episdYear = actForm.episdYear;//회차년도
@@ -888,6 +956,14 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 				});
 			}
 
+			/* 2024-11-26 수료 방식 개편 s */
+			if($("input[name='cmptnAutoYn']:checked").val() == 'N') {
+				$('select[name="cmptnYn"]').each(function() {
+					$(this).append('<option value="Y">수료</option>');
+					$(this).append('<option value="S">이수</option>');
+				});
+			}
+			/* 2024-11-26 수료 방식 개편 e */
 
 
 		}, "/mngwserc/eb/ebb/episdPtcptList", $formObj, "POST", "html");
@@ -2366,6 +2442,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					//$("input[name='fxnumImpsbYn']").prop("disabled", true);//정원수 제한없음 체크박스 2024-04-02 고객사 요청으로 잠깐 주석처리
 					//$("input[name='rcrmtMthdCd']").prop("disabled", true);//모집방식 2024-03-27 잠깐 열음
 					$("input[name='cmptnAutoYn']").prop("disabled", true);//수료 자동화 여부
+
 
 					//$("#picNm").prop("disabled", true);//문의 담당자명 2024-03-27 잠깐 열음
 					//$("#picEmail").prop("disabled", true);//문의 담당자 이메일 2024-03-27 잠깐 열음

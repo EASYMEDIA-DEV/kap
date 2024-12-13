@@ -154,7 +154,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 
 	}
 
-	var setSelectBox = function(arg){
+	/*var setSelectBox = function(arg){
 
 		if($("input[name='jdgmtYn']").is(":checked")){
 			$("#cmptnJdgmtCd option:eq(0)").prop("selected", true);
@@ -165,7 +165,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 			$("#cmptnJdgmtCd").attr("disabled", false);
 		}
 
-	}
+	} 2024-11-26 수료 방식 개편 */
 
 
 	// set model
@@ -268,13 +268,13 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 				}
 			},
 
-			jdgmtYn : {
+			/*jdgmtYn : {
 				event : {
 					change : function() {
 						setSelectBox(this);
 					}
 				}
-			},
+			}, 2024-11-26 수료 방식 개편 */
 
 			couseSearch : {
 				event : {
@@ -547,20 +547,20 @@ define(["ezCtrl", "ezVald"], function(ezCtrl) {
 						return false;
 					}
 
-					if(isValid && $("#cmptnStndCd").val() ==""){
+					/*if(isValid && $("#cmptnStndCd").val() ==""){
 						alert("출석/수강을 선택해주세요");
 						$("#cmptnStndCd").focus();
 						return false;
-					}
+					} 2024-11-26 수료 방식 개편 */
 
 					//평가는 평가없음 체크 안할때만 유효성 체크
-					if(isValid && !$("input[name='jdgmtYn']").is(":checked")){
+					/*if(isValid && !$("input[name='jdgmtYn']").is(":checked")){
 						if($("#cmptnJdgmtCd").val() ==""){
 							alert("평가를 선택해주세요");
 							$("#cmptnJdgmtCd").focus();
 							return false;
 						}
-					}
+					} 2024-11-26 수료 방식 개편 */
 
 					if(isValid && $("#stduyDdCd").val() ==""){
 						alert("학습일을 선택해주세요");

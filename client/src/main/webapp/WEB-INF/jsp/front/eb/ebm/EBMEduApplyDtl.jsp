@@ -96,19 +96,27 @@
                                                                 </p>
                                                             </div>
                                                             <div class="property-list completion"><!-- completion: 수료여부 -->
+                                                                <%-- 2024-11-26 수료 방식 개편 s --%>
                                                                 <p class="txt">
                                                                     <c:choose>
+                                                                        <c:when test="${rtnData.cmptnYn eq 'S'}">
+                                                                            <span>이수</span>
+                                                                        </c:when>
                                                                         <c:when test="${rtnData.cmptnYn eq 'Y'}">
                                                                             <span>수료</span>
                                                                         </c:when>
                                                                         <c:when test="${rtnData.cmptnYn eq 'U'}">
                                                                             <span>불참</span>
                                                                         </c:when>
+                                                                        <c:when test="${rtnData.cmptnYn eq 'E'}">
+                                                                            <span>중도퇴소</span>
+                                                                        </c:when>
                                                                         <c:otherwise>
                                                                             <span>미수료</span>
                                                                         </c:otherwise>
                                                                     </c:choose>
                                                                 </p>
+                                                                <%-- 2024-11-26 수료 방식 개편 e --%>
                                                             </div>
                                                             <div class="property-list education"><!-- education: 교육상태 -->
                                                                 <p class="txt">

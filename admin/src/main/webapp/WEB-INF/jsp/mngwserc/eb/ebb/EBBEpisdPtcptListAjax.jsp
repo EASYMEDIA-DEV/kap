@@ -51,8 +51,7 @@
             ${ empty ptcptList.eduDtm ? '-' : kl:convertDate(ptcptList.eduDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }
         </td><!-- 교육신청일 -->
         <td class="text-center">${ptcptList.eduStat}</td><!-- 교육상태 -->
-        <td class="text-center">
-
+        <td class="text-center eduAtndcPer"> <%-- 2024-11-26 수료 방식 개편 --%>
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
               <c:if test="${eBBEpisdDTO.stduyMthdCd ne 'STDUY_MTHD02'}">
@@ -66,17 +65,13 @@
               -
             </c:otherwise>
           </c:choose>
-
-
-
         </td><!-- 출석 -->
-        <td class="text-center  form-inline">
-
+        <td class="text-center  form-inline examScorePer"> <%-- 2024-11-26 수료 방식 개편 --%>
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
               <!--오프라인 평가인경우 입력창과 버튼출력, 일반 평가인경우 점수가 표기 -->
               <c:if test="${ptcptList.otsdExamPtcptYn eq 'Y'}">
-                <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" />점
+                <input type="text" class="form-control input-sm numberChk notRequired" name="examScore" value="${ptcptList.examScore}" title="평가점수" maxlength="50" placeholder="" style="width:50px;" <c:if test="${ptcptList.cmptnYn eq 'Y' or ptcptList.cmptnYn eq 'S'}">readonly</c:if> />점 <%-- 2024-11-26 수료 방식 개편 --%>
               </c:if>
               <c:if test="${ptcptList.otsdExamPtcptYn ne 'Y'}">
                 <c:choose>
@@ -95,37 +90,36 @@
           </c:choose>
         </td>
         <td class="text-center form-inline">
-
           <c:choose>
             <c:when test="${ptcptList.eduStat ne '교육양도'}">
               <input type="hidden" name="orgCmptnYn" id="orgCmptnYn" value="${ptcptList.cmptnYn}"/>
-              <c:if test="${ptcptList.cmptnYn eq 'Y'}">
-                <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
-                <input type="hidden" class="notRequired" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
-                수료
-              </c:if>
-              <c:if test="${ptcptList.cmptnYn eq 'U'}">
-                <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
-                <input type="hidden" class="notRequired" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
-                불참
-              </c:if>
-              <c:if test="${ptcptList.cmptnYn eq 'N'}">
-                <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
-                <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
-                  <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
-                  <option value="Y" <c:if test="${ptcptList.cmptnYn eq 'Y'}">selected</c:if>>수료</option>
-                  <option value="U" <c:if test="${ptcptList.cmptnYn eq 'U'}">selected</c:if>>불참</option>
-                </select>
-              </c:if>
-
+              <%-- 2024-11-26 수료 방식 개편 s --%>
+              <c:choose>
+                <c:when test="${ptcptList.cmptnYn eq 'Y'}">
+                  <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
+                  <input type="hidden" class="notRequired" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
+                  수료
+                </c:when>
+                <c:when test="${ptcptList.cmptnYn eq 'S'}">
+                  <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
+                  <input type="hidden" class="notRequired" name="cmptnYn" id="cmptnYn" value="${ptcptList.cmptnYn}"/>
+                  이수
+                </c:when>
+                <c:otherwise>
+                  <input type="hidden" class="notRequired" name="oflnExamDtm" id="oflnExamDtm" value="${ptcptList.oflnExamDtm}"/>
+                  <select class="form-control input-sm wd-sm" name="cmptnYn" id="cmptnYn" title="수료여부" style="width: 100px" data-org_cmptnYn="${ptcptList.cmptnYn}">
+                    <option value="N" <c:if test="${ptcptList.cmptnYn eq 'N'}">selected</c:if>>미수료</option>
+                    <option value="U" <c:if test="${ptcptList.cmptnYn eq 'U'}">selected</c:if>>불참</option>
+                    <option value="E" <c:if test="${ptcptList.cmptnYn eq 'E'}">selected</c:if>>중도퇴소</option>
+                  </select>
+                </c:otherwise>
+              </c:choose>
+              <%-- 2024-11-26 수료 방식 개편 e --%>
             </c:when>
             <c:otherwise>
               -
             </c:otherwise>
-
           </c:choose>
-
-
           <%--<button type="button" class="btn btn-inverse btn-sm cmptnYnUpdate">
             저장
           </button>--%>

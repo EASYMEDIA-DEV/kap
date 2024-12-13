@@ -47,6 +47,10 @@ public class EXGExamEdctnPtcptRspnMst extends BaseDTO {
     @Schema(title = "수료번호")
     private String crtfctNo;
 
+    //2024-11-26 수료 방식 개편
+    @Schema(title = "기존 수료여부")
+    private String orgCmptnYn;
+
 
 
     @Schema(title = "질문 답변")

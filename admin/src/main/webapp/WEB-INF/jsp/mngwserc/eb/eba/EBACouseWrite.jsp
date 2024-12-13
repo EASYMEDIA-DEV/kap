@@ -294,26 +294,31 @@
                             <span class="ion-record"></span> ${cdList.cdNm}
                         </label>
                     </c:forEach>
-
                 </div>
             </div>
 
+            <%-- 2024-11-26 수료 방식 개편 s --%>
             <div class="form-group text-sm">
-
-                <label class="col-sm-1 control-label">수료 기준<span class="star"> *</span></label>
+                <label class="col-sm-1 control-label">평가 여부</label>
+                <div class="col-sm-11">
+                    <label class="checkbox-inline c-checkbox">
+                        <input type="checkbox" class="checkboxSingle jdgmtYn notRequired" value="N" name="jdgmtYn" <c:if test="${rtnDto.jdgmtYn eq 'N'}">checked</c:if>/>
+                        <span class="ion-checkmark-round"></span> 평가없음
+                    </label>
+                </div>
+                <%--<label class="col-sm-1 control-label">수료 기준<span class="star"> *</span></label>
                 <div class="col-sm-11" style="margin-left: -80px;">
-                        <label class="col-sm-1 control-label">출석/수강</label>
-                        <div class="col-sm-1">
-                            <label class="input_line form-inline">
-                                <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강" style="margin-right: 5px;">
-                                    <option value="">선택</option>
-                                    <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
-                                        <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
-                                    </c:forEach>
-                                </select>%
-                            </label>
-
-                        </div>
+                    <label class="col-sm-1 control-label">출석/수강</label>
+                    <div class="col-sm-1">
+                        <label class="input_line form-inline">
+                            <select class="form-control input-sm wd-sm" name="cmptnStndCd" id="cmptnStndCd" title="출석/수강" style="margin-right: 5px;">
+                                <option value="">선택</option>
+                                <c:forEach var="cdList" items="${studyCdList.CMPTN_STND}" varStatus="status">
+                                    <option value="${cdList.cd}" <c:if test="${rtnDto.cmptnStndCd eq cdList.cd}">selected</c:if> >${cdList.cdNm}</option>
+                                </c:forEach>
+                            </select>%
+                        </label>
+                    </div>
 
                     <label class="col-sm-1 control-label">평가</label>
                     <div class="col-sm-4 ">
@@ -326,7 +331,6 @@
                                     </c:forEach>
                                 </select>점
                             </label>
-
                         </div>
                         <div class="pull-left ml-lg">
                             <label class="checkbox-inline c-checkbox">
@@ -334,11 +338,10 @@
                                 <span class="ion-checkmark-round"></span> 평가없음
                             </label>
                         </div>
-
                     </div>
-
-                </div>
+                </div> --%>
             </div>
+            <%-- 2024-11-26 수료 방식 개편 e --%>
 
             <div class="form-group text-sm">
                 <label class="col-sm-1 control-label">학습 시간<span class="star"> *</span></label>

@@ -448,6 +448,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/**
 	 * 교육차수를  등록한다.
 	 */
+	@Transactional
 	public int insertEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 
@@ -524,6 +525,7 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 	/**
 	 * 교육차수를 수정한다.
 	 */
+	@Transactional
 	public int updateEpisd(EBBEpisdDTO eBBEpisdDTO) throws Exception
 	{
 		int respCnt = 0;
@@ -568,9 +570,9 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBPtcptDTO.setModId( cOUserDetailsDTO.getId() );
 				eBBPtcptDTO.setModIp( cOUserDetailsDTO.getLoginIp() );
 
-				//오프라인 시험일경우  입력한 점수에따라서 수료기준을 통과했는지 판단후 수료처리 해줌
-				if(eBBPtcptDTO.getOtsdExamPtcptYn() != null && eBBPtcptDTO.getOtsdExamPtcptYn().equals("Y")){
-					//
+				//오프라인 시험일경우 입력한 점수에따라서 수료기준을 통과했는지 판단후 수료처리 해줌
+				//근데 오프라인평가는 수료 자동화 여부 무조건 수동이라 이거 타는게 의미가 없음 2024-11-26 삭제
+				/*if(eBBPtcptDTO.getOtsdExamPtcptYn() != null && eBBPtcptDTO.getOtsdExamPtcptYn().equals("Y")){
 					EBBEpisdDTO otsdPtcptDto = new EBBEpisdDTO();
 					otsdPtcptDto.setEdctnSeq(eBBPtcptDTO.getEdctnSeq());
 					otsdPtcptDto.setEpisdYear(eBBPtcptDTO.getEpisdYear());
@@ -579,14 +581,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 					otsdPtcptDto.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
 
 					setCmptnChk(otsdPtcptDto);
-				}
+				}*/
 
 
+				/* 2024-11-26 수료 방식 개편 s */
 				//이전 데이터 불러와서 변경이 N -> Y이면 실행시킴 아니면 일반 업데이트
-				if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("Y")){
+				if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && (eBBPtcptDTO.getCmptnYn().equals("Y") || eBBPtcptDTO.getCmptnYn().equals("S"))){
+
 					EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);// -> edctnSeq, episdYear
 
 					cmptnNo.setPtcptSeq(eBBPtcptDTO.getPtcptSeq());
+					cmptnNo.setCmptnYn(eBBPtcptDTO.getCmptnYn());
 					eBBEpisdMapper.updatePtcptCmptnInfo(cmptnNo);// -> ptcptSeq
 
 					//수료한 과정이 갱신과정인지 체크한다
@@ -594,9 +599,11 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 						System.out.println("@@@ SQ 갱신");
 						updateCertiValid(eBBEpisdDTO.getEdctnSeq(), eBBPtcptDTO);
 					}
-				}else if(eBBPtcptDTO.getOrgCmptnYn().equals("N") && eBBPtcptDTO.getCmptnYn().equals("U")){
+				//이전 수료 상태가 수료/이수 가 아닌 경우 (미수료/불참/중도퇴소 끼리 변경)
+				}else if(!eBBPtcptDTO.getOrgCmptnYn().equals("Y") && !eBBPtcptDTO.getOrgCmptnYn().equals("S")){
 					eBBEpisdMapper.updatePtcptCmptnFlag(eBBPtcptDTO);// -> ptcptSeq
 				}
+				/* 2024-11-26 수료 방식 개편 e */
 			}
 
 			//교육참여자 평가, 수료상태 수정
@@ -952,12 +959,12 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 		//출석 목록 호출
 		List<EBBPtcptDTO> ptcptList= eBBEpisdDTO.getPtcptList();
 
-		List<EBBPtcptDTO> removeList = new ArrayList();
+//		List<EBBPtcptDTO> removeList = new ArrayList();
 		for(int i=0; i < ptcptList.size(); i ++){
 
 			EBBPtcptDTO tempDto = ptcptList.get(i);
 
-			int removeStack = 0;
+//			int removeStack = 0;
 			COUserDetailsDTO cOUserDetailsDTO = COUserDetailsHelperService.getAuthenticatedUser();
 			tempDto.setRegId( cOUserDetailsDTO.getId() );
 			tempDto.setRegName( cOUserDetailsDTO.getName() );
@@ -1938,17 +1945,17 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 		eBBEpisdDTO.setLcnsCnnctCd(cmptnDto.getLcnsCnnctCd());
 
+		//2024-11-26 수료 방식 개편 s
 		//사용자의 수료가능여부를 체크한다. 자동화 여부가 Y일때만 - 이미 수료를 한 경우에는 수료처리 안한다.
-		if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn())   && "N".equals(cmptnDto.getCmptnYn())  ){
-
-
-
+//		if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn())   && "N".equals(cmptnDto.getCmptnYn())  ){
+		if(("Y".equals(cmptnDto.getPtcptCmtnYn()) || "S".equals(cmptnDto.getPtcptCmtnYn())) && "Y".equals(cmptnDto.getCmptnAutoYn()) && "N".equals(cmptnDto.getCmptnYn())){
 			eBBEpisdDTO.setEdctnSeq(cmptnDto.getEdctnSeq());
 			eBBEpisdDTO.setEpisdYear(cmptnDto.getEpisdYear());
 			EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
 
 			eBBEpisdDTO.setCrtfctNo(cmptnNo.getCrtfctNo());
 			System.out.println("@@@ 수료완료 = " + cmptnNo.getCrtfctNo());
+			eBBEpisdDTO.setCmptnYn(cmptnDto.getPtcptCmtnYn());
 			eBBEpisdMapper.updatePtcptCmptnInfo(eBBEpisdDTO);
 
 			if("LCNS_CNNCT03".equals(cmptnDto.getLcnsCnnctCd())){
@@ -1956,13 +1963,16 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 				eBBEpisdDTO.setCmptnYn("Y");
 				//eBDSqCertiReqService.updateCertiValid(cmptnDto.getEdctnSeq());
 			}
-		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "Y".equals(cmptnDto.getCmptnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn()) ){
-			System.out.println("@@이미 수료함");
-		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "N".equals(cmptnDto.getCmptnYn()) && "N".equals(cmptnDto.getCmptnAutoYn()) ){
+//		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "Y".equals(cmptnDto.getCmptnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn()) ){
+		}else if("Y".equals(cmptnDto.getCmptnYn()) || "S".equals(cmptnDto.getCmptnYn())){
+			System.out.println("@@이미 수료/이수함");
+//		}else if("Y".equals(cmptnDto.getPtcptCmtnYn()) && "N".equals(cmptnDto.getCmptnYn()) && "N".equals(cmptnDto.getCmptnAutoYn())){
+		}else if("N".equals(cmptnDto.getCmptnAutoYn())){
 			System.out.println("@@수료 자동화 N이라서 관리자에서 해야됨");
 		}else{
 			System.out.println("@@수료 불가");
 		}
+		//2024-11-26 수료 방식 개편 e
 
 		return eBBEpisdDTO;
 

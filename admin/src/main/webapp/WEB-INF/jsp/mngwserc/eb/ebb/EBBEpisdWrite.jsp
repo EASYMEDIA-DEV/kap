@@ -74,6 +74,8 @@
             <input type="hidden" class="notRequired" id="eduIng" name="eduIng" value="${eduIng}" />
             <input type="hidden" class="notRequired" id="gpcYn" name="gpcYn" value="${rtnDto.gpcYn}" />
 
+            <input type="hidden" class="notRequired" id="examMaxScore" name="examMaxScore" value="${rtnDto.examMaxScore}" disabled />  <%-- 2024-11-26 수료 방식 개편 --%>
+
             <c:choose>
                 <c:when test="${not empty rtnDto}">
                     <c:choose>

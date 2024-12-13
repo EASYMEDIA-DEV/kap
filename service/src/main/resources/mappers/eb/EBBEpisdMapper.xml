@@ -663,6 +663,7 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2023.11.02   김학규       최초생성
+     2024.11.26   장두석       교육 시험 만점 점수 조회 추가
  	-->
 	<select id="selectEpisdDtl" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT /*EBBEpisdMapper.selectEpisdDtl*/
@@ -728,6 +729,7 @@
 		     , srv_mem_cnt
 		     , edctn_mem_cnt
 			 , exam_seq
+		     , (select sum(ifnull(tmp.scord, 0)) from ex_exam_qstn_dtl tmp where tmp.exam_seq = AA.exam_seq) AS EXAM_MAX_SCORE
 		     , exam_nm
 			 , exam_strt_dtm
 			 , exam_end_dtm
@@ -3248,6 +3250,7 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2024.01.25   김학규       최초생성
+     2024.11.26   장두석       이수 조건 추가
  	-->
 	<select id="selectRelCmptnInfo" parameterType="EBBPtcptDTO" resultType="EBBPtcptDTO">
 		SELECT /* EBBEpisdMapper.selectRelCmptnInfo */
@@ -3257,7 +3260,7 @@
 				  A.EDCTN_SEQ
 				   , B.CNNCT_EDCTN_SEQ
 				   , COUNT(CNNCT_EDCTN_SEQ) AS REL_CNT
-				   , (SELECT COUNT(CMPTN_YN) FROM ep_edctn_ptcpt_mst WHERE EDCTN_SEQ = B.CNNCT_EDCTN_SEQ AND MEM_SEQ = #{memSeq} AND CMPTN_YN = 'Y' ) AS REL_CMPTN_YN
+				   , (SELECT COUNT(CMPTN_YN) FROM ep_edctn_ptcpt_mst WHERE EDCTN_SEQ = B.CNNCT_EDCTN_SEQ AND MEM_SEQ = #{memSeq} AND (CMPTN_YN = 'Y' OR CMPTN_YN = 'S') ) AS REL_CMPTN_YN
 			  FROM ed_edctn_prcs_mst A
 					   LEFT JOIN(
 				  SELECT
@@ -3281,6 +3284,7 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2024.01.24   김학규       최초생성
+     2024.11.26   장두석       수료 여부 평가 기준 CASE문 병경 변경
  	-->
 	<select id="selectPtcptCmptnChk" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT /* EBBEpisdMapper.selectPtcptCmptnChk */
@@ -3299,38 +3303,36 @@
 			 , atndc_info
 			 , ptcpt_info
 			 , lcrt_info
-			 , CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02'
-						THEN
-						CASE WHEN IFNULL(ROUND((PTCPT_INFO/LCRT_INFO)*100, 0), 0) <![CDATA[>=]]> cmptn_stnd_cd_nm
-								 THEN
-								 /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-								 CASE WHEN jdgmt_yn = 'Y'
-										  THEN
-										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N' END
-									  ELSE
-										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
-									 END
-							 ELSE	'N'
-
+		     , CASE WHEN jdgmt_yn = 'Y' /* 평가여부 - 평가진행 */
+		         THEN
+		         	CASE
+		         	    WHEN exam_score IS NULL THEN 'N'
+		         	    WHEN stduy_mthd_cd = 'STDUY_MTHD02' /* 온라인교육 여부 */
+							THEN
+								CASE WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * exam_score) <![CDATA[>=]]> 90.0 THEN 'S'
+									WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * exam_score) <![CDATA[>=]]> 80.0 THEN 'Y'
+									ELSE 'N'
+								END
+							ELSE
+								CASE WHEN (0.8 * ATNDC_INFO) + (0.2 * exam_score) <![CDATA[>=]]> 90.0 THEN 'S'
+									 WHEN (0.8 * ATNDC_INFO) + (0.2 * exam_score) <![CDATA[>=]]> 80.0 THEN 'Y'
+									 ELSE 'N'
+								END
+					END
+		         ELSE   /* 평가여부 - 평가없음 */
+					CASE WHEN stduy_mthd_cd = 'STDUY_MTHD02' /* 온라인교육 여부 */
+		         	    THEN
+		         	    	CASE WHEN ((PTCPT_INFO / LCRT_INFO) * 100) <![CDATA[>=]]> 90.0 THEN 'S'
+		         	    	    WHEN ((PTCPT_INFO / LCRT_INFO) * 100) <![CDATA[>=]]> 80.0 THEN 'Y'
+								ELSE 'N'
 							END
-					ELSE
-						CASE WHEN ATNDC_INFO <![CDATA[>=]]>  cmptn_stnd_cd_nm
-								 THEN
-								 CASE WHEN jdgmt_yn = 'Y'
-										  THEN
-										  /*시험여부가 Y면 시험점수 비교하여 수료여부 판단*/
-										  CASE WHEN exam_score <![CDATA[>=]]>  cmptn_jdgmt_cd_nm THEN 'Y' ELSE 'N'END
-									  ELSE
-										  /*시험여부 N이면 시험점수 비교없이 바로 수료처리*/
-										  CASE WHEN jdgmt_yn = 'N' THEN 'Y' END
-									 END
-							 ELSE 'N'
+						ELSE
+		         	    	CASE WHEN ATNDC_INFO <![CDATA[>=]]> 90.0 THEN 'S'
+								 WHEN ATNDC_INFO <![CDATA[>=]]> 80.0 THEN 'Y'
+								 ELSE 'N'
 							END
-			END
-
-			AS PTCPT_CMTN_YN
-
+					END
+			 END AS PTCPT_CMTN_YN /* 이수,수료,미수료 여부 */
 		FROM (SELECT
 				A.PTCPT_SEQ
 				, B.EDCTN_SEQ
@@ -3419,10 +3421,11 @@
            수정일     수정자       수정내용
          ==========   ======    ==============
          2024.01.24   김학규       최초생성
+         2024.11.26   장두석       이수 상태 추가로 인해 cmptn_yn 고정값 제거
 	 -->
 	<update id="updatePtcptCmptnInfo" parameterType="EBBEpisdDTO">
 		UPDATE /* EBBEpisdMapper.updatePtcptCmptnInfo */ ep_edctn_ptcpt_mst
-			SET cmptn_yn = 'Y'
+			SET cmptn_yn = #{cmptnYn}
 		  	, cmptn_dtm = now()
 			, crtfct_no = #{crtfctNo}
 			, mod_id = #{modId}
@@ -3437,10 +3440,11 @@
            수정일     수정자       수정내용
          ==========   ======    ==============
          2024.05.02   김학규       최초생성
+         2024.11.26   장두석		  미수료/불참/중도퇴소 선택 가능하도록 변경
 	 -->
 	<update id="updatePtcptCmptnFlag" parameterType="EBBEpisdDTO">
 		UPDATE /* EBBEpisdMapper.updatePtcptCmptnFlag */ ep_edctn_ptcpt_mst
-		SET cmptn_yn = 'U'
+		SET cmptn_yn = #{cmptnYn}
 		  , mod_id = #{modId}
 		  , mod_ip = #{modIp}
 		  , mod_dtm = now()

@@ -433,6 +433,10 @@ public class EBBEpisdDTO extends BaseDTO {
     private String episdGpcYn = "N";
 
 
+    //2024-11-26 수료 방식 개편
+    @Schema(title = "교육 시험 만점 점수")
+    private Double examMaxScore;
+
 
 
     //오프라인여부

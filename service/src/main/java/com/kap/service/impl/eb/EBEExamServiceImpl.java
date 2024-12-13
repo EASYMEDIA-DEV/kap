@@ -382,9 +382,10 @@ public class EBEExamServiceImpl implements EBEExamService {
         //교육 차수의 수료 자동화 여부가 Y이면 객관식 총합으로 비고 후 Y, 일시저장
         //교육 차수의 수료 자동화 여부가 N이면 나두고.
         //수료 자동화 여부
+        //2024-11-26 수료 방식 개편 s
         if("Y".equals(eXGExamEdctnPtcptMst.getCmptnAutoYn())){
             //평가 점수 체크
-            if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
+            /*if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
                 //수료 여부
                 eXGExamEdctnPtcptRspnMst.setCmptnYn( "Y" );
             }else{
@@ -392,32 +393,46 @@ public class EBEExamServiceImpl implements EBEExamService {
             }
             //평가 점수가 Y이면
             if("Y".equals(eXGExamEdctnPtcptRspnMst.getCmptnYn()))
-            {
-                int atndcPrsnt= 0;
-                if("STDUY_MTHD02".equals(eXGExamEdctnPtcptMst.getStduyMthdCd())){
-                    //학습방식 온라인 경우 수강 대체
-                    HashMap edctnLctrMap = eBEExamMapper.getEdctnLtcrSum(eXGExamEdctnPtcptMst);
-                    if(edctnLctrMap != null ) {
-                        Double totLctr = Double.parseDouble(edctnLctrMap.get("totLctr").toString());
-                        Double cntLctr = Double.parseDouble(edctnLctrMap.get("cntLctr").toString());
-                        atndcPrsnt = (int) (Math.ceil(cntLctr / totLctr * 100));
-                    }
-                }
-                else
-                {
-                    //학습방식 온라인 아닌 경우 출석 대체
-                    HashMap edctnAtndcMap = eBEExamMapper.getEdctnAtndcSum(eXGExamEdctnPtcptMst);
-                    if(edctnAtndcMap != null ) {
-                        Double totEdctn = Double.parseDouble(edctnAtndcMap.get("totEdctn").toString());
-                        Double strtEdctn = Double.parseDouble(edctnAtndcMap.get("strtEdctn").toString());
-                        atndcPrsnt = (int) (Math.ceil(strtEdctn / totEdctn * 100));
-                    }
-                }
-                if(atndcPrsnt <  eXGExamEdctnPtcptMst.getCmptnStndCdNm()){
-                    eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+            {*/
+            int atndcPrsnt= 0;
+            if("STDUY_MTHD02".equals(eXGExamEdctnPtcptMst.getStduyMthdCd())){
+                //학습방식 온라인 경우 수강 대체
+                HashMap edctnLctrMap = eBEExamMapper.getEdctnLtcrSum(eXGExamEdctnPtcptMst);
+                if(edctnLctrMap != null ) {
+                    Double totLctr = Double.parseDouble(edctnLctrMap.get("totLctr").toString());
+                    Double cntLctr = Double.parseDouble(edctnLctrMap.get("cntLctr").toString());
+                    atndcPrsnt = (int) (Math.ceil(cntLctr / totLctr * 100));
                 }
             }
+            else
+            {
+                //학습방식 온라인 아닌 경우 출석 대체
+                HashMap edctnAtndcMap = eBEExamMapper.getEdctnAtndcSum(eXGExamEdctnPtcptMst);
+                if(edctnAtndcMap != null ) {
+                    Double totEdctn = Double.parseDouble(edctnAtndcMap.get("totEdctn").toString());
+                    Double strtEdctn = Double.parseDouble(edctnAtndcMap.get("strtEdctn").toString());
+                    atndcPrsnt = (int) (Math.ceil(strtEdctn / totEdctn * 100));
+                }
+            }
+
+            double baseScore = eBEExamMapper.getExamMaxSum(eXGExamEdctnPtcptRspnMst);  //2024-11-26 수료 방식 개편
+            double atndcPrsntPer = atndcPrsnt * 0.8;
+            double totalScordPer = (totalScord/baseScore * 100) * 0.2;
+            if(atndcPrsntPer + totalScordPer >= 90.0) {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "S" );
+            }
+            else if(atndcPrsntPer + totalScordPer >= 80.0) {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "Y" );
+            }
+            else {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+            }
+                /*if(atndcPrsnt <  eXGExamEdctnPtcptMst.getCmptnStndCdNm()){
+                    eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+                }
+            }*/
         }
+        //2024-11-26 수료 방식 개편 e
 
         EBBPtcptDTO ptcptDto = new EBBPtcptDTO();
         ptcptDto.setPtcptSeq(eXGExamEdctnPtcptRspnMst.getPtcptSeq());
@@ -427,6 +442,7 @@ public class EBEExamServiceImpl implements EBEExamService {
         eBBEpisdDTO.setEpisdYear(rtnPtcptDto.getEpisdYear());
         EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
         eXGExamEdctnPtcptRspnMst.setCrtfctNo(cmptnNo.getCrtfctNo());
+        eXGExamEdctnPtcptRspnMst.setOrgCmptnYn(rtnPtcptDto.getCmptnYn());
 
         eBEExamMapper.updateEdctnPtcptScord(eXGExamEdctnPtcptRspnMst);
         return actCnt;
@@ -465,9 +481,10 @@ public class EBEExamServiceImpl implements EBEExamService {
         //저장된 점수 합산
         int totalScord = eBEExamMapper.getExamRspnSum(eXGExamEdctnPtcptRspnMst);
         //수료 자동화 여부
+        //2024-11-26 수료 방식 개편 s
         if("Y".equals(eXGExamEdctnPtcptMst.getCmptnAutoYn())){
             //평가 점수 체크
-            if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
+            /*if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
                 //수료 여부
                 eXGExamEdctnPtcptRspnMst.setCmptnYn( "Y" );
             }else{
@@ -475,32 +492,47 @@ public class EBEExamServiceImpl implements EBEExamService {
             }
             //평가 점수가 Y이면
             if("Y".equals(eXGExamEdctnPtcptRspnMst.getCmptnYn()))
-            {
-                int atndcPrsnt= 0;
-                if("STDUY_MTHD02".equals(eXGExamEdctnPtcptMst.getStduyMthdCd())){
-                    //학습방식 온라인 경우 수강 대체
-                    HashMap edctnLctrMap = eBEExamMapper.getEdctnLtcrSum(eXGExamEdctnPtcptMst);
-                    if(edctnLctrMap != null ) {
-                        Double totLctr = Double.parseDouble(edctnLctrMap.get("totLctr").toString());
-                        Double cntLctr = Double.parseDouble(edctnLctrMap.get("cntLctr").toString());
-                        atndcPrsnt = (int) (Math.ceil(cntLctr / totLctr * 100));
-                    }
-                }
-                else
-                {
-                    //학습방식 온라인 아닌 경우 출석 대체
-                    HashMap edctnAtndcMap = eBEExamMapper.getEdctnAtndcSum(eXGExamEdctnPtcptMst);
-                    if(edctnAtndcMap != null ) {
-                        Double totEdctn = Double.parseDouble(edctnAtndcMap.get("totEdctn").toString());
-                        Double strtEdctn = Double.parseDouble(edctnAtndcMap.get("strtEdctn").toString());
-                        atndcPrsnt = (int) (Math.ceil(strtEdctn / totEdctn * 100));
-                    }
-                }
-                if(atndcPrsnt <  eXGExamEdctnPtcptMst.getCmptnStndCdNm()){
-                    eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+            {*/
+            int atndcPrsnt= 0;
+            if("STDUY_MTHD02".equals(eXGExamEdctnPtcptMst.getStduyMthdCd())){
+                //학습방식 온라인 경우 수강 대체
+                HashMap edctnLctrMap = eBEExamMapper.getEdctnLtcrSum(eXGExamEdctnPtcptMst);
+                if(edctnLctrMap != null ) {
+                    Double totLctr = Double.parseDouble(edctnLctrMap.get("totLctr").toString());
+                    Double cntLctr = Double.parseDouble(edctnLctrMap.get("cntLctr").toString());
+                    atndcPrsnt = (int) (Math.ceil(cntLctr / totLctr * 100));
                 }
             }
+            else
+            {
+                //학습방식 온라인 아닌 경우 출석 대체
+                HashMap edctnAtndcMap = eBEExamMapper.getEdctnAtndcSum(eXGExamEdctnPtcptMst);
+                if(edctnAtndcMap != null ) {
+                    Double totEdctn = Double.parseDouble(edctnAtndcMap.get("totEdctn").toString());
+                    Double strtEdctn = Double.parseDouble(edctnAtndcMap.get("strtEdctn").toString());
+                    atndcPrsnt = (int) (Math.ceil(strtEdctn / totEdctn * 100));
+                }
+            }
+
+            double baseScore = eBEExamMapper.getExamMaxSum(eXGExamEdctnPtcptRspnMst);  //2024-11-26 수료 방식 개편
+            double atndcPrsntPer = atndcPrsnt * 0.8;
+            double totalScordPer = (totalScord/baseScore * 100) * 0.2;
+            if(atndcPrsntPer + totalScordPer >= 90.0) {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "S" );
+            }
+            else if(atndcPrsntPer + totalScordPer >= 80.0) {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "Y" );
+            }
+            else {
+                eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+            }
+
+                /*if(atndcPrsnt <  eXGExamEdctnPtcptMst.getCmptnStndCdNm()){
+                    eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
+                }
+            }*/
         }
+        //2024-11-26 수료 방식 개편 e
 
         //수료번호 출력
         EBBPtcptDTO ptcptDto = new EBBPtcptDTO();
@@ -511,6 +543,7 @@ public class EBEExamServiceImpl implements EBEExamService {
         eBBEpisdDTO.setEpisdYear(rtnPtcptDto.getEpisdYear());
         EBBEpisdDTO cmptnNo = eBBEpisdMapper.selectCmptnNo(eBBEpisdDTO);
         eXGExamEdctnPtcptRspnMst.setCrtfctNo(cmptnNo.getCrtfctNo());
+        eXGExamEdctnPtcptRspnMst.setOrgCmptnYn(rtnPtcptDto.getCmptnYn());
 
 
         //교육참여마스터 시험 점수 변경
