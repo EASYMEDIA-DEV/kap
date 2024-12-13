@@ -482,7 +482,7 @@ public class EBEExamServiceImpl implements EBEExamService {
         int totalScord = eBEExamMapper.getExamRspnSum(eXGExamEdctnPtcptRspnMst);
         //수료 자동화 여부
         //2024-11-26 수료 방식 개편 s
-        if("Y".equals(eXGExamEdctnPtcptMst.getCmptnAutoYn())){
+//        if("Y".equals(eXGExamEdctnPtcptMst.getCmptnAutoYn())){
             //평가 점수 체크
             /*if(totalScord >= eXGExamEdctnPtcptMst.getCmptnJdgmtCdNm()){
                 //수료 여부
@@ -531,7 +531,7 @@ public class EBEExamServiceImpl implements EBEExamService {
                     eXGExamEdctnPtcptRspnMst.setCmptnYn( "N" );
                 }
             }*/
-        }
+//        }
         //2024-11-26 수료 방식 개편 e
 
         //수료번호 출력

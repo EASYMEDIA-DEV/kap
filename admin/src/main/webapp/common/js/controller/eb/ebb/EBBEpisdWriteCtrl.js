@@ -699,7 +699,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 					var ptcptCnt = $("#ptcptListContainer").find("tr:first").data("totalCount");
 
 					if(ptcptCnt>0){
-						var examMaxScore = $formObj.find("#examMaxScore");  //2024-11-26 수료 방식 개편
+						var examMaxScore = $formObj.find("#examMaxScore").val();  //2024-11-26 수료 방식 개편
 
 						$("#ptcptListContainer").find("tr").each(function(){
 
@@ -728,7 +728,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
 								else if(actForm.otsdExamPtcptYn == 'Y') {
 									examMaxScore = 100.0;
 								}
-								actForm.otsdExamPtcptYn
+
 								var examScorePer = 0;
 								var examScoreText = $(this).find(".examScorePer").text().trim();
 								if(cmptnYn && cmptnYn != '' && (cmptnYn == 'S' || cmptnYn == 'Y')) {

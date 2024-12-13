@@ -832,7 +832,7 @@
 		<if test="cmptnYn != null and (cmptnYn == 'Y'.toString() or cmptnYn == 'S'.toString())">
 			, cmptn_yn = #{cmptnYn}
 		    , cmptn_dtm = now()
-		  <if test="orgCmptnYn != null and (orgCmptnYn != 'Y'.toString() or orgCmptnYn != 'S'.toString())">
+		  <if test="orgCmptnYn != null and orgCmptnYn != 'Y'.toString() and orgCmptnYn != 'S'.toString()">
 			  , crtfct_no = #{crtfctNo}
 		  </if>
 		</if>
