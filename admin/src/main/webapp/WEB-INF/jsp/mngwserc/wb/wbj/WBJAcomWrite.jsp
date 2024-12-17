@@ -91,9 +91,9 @@
                                 </c:forEach>
                             </select>
                         </div>
-                        <div class="col-sm-4" style="margin-left: -15px">
+                        <%--<div class="col-sm-4" style="margin-left: -15px">
                             <input type="text" class="form-control " style="display:none;" id="pstnNm" name="pstnNm" value="" title="직급 상세" maxlength="50"/>
-                        </div>
+                        </div> 2024-12-17 삭제 --%>
                     </div>
                 </div>
             </fieldset>

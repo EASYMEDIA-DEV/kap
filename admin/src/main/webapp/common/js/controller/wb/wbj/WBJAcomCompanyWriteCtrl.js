@@ -110,7 +110,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
          }
     }
 
-    let fnpstnNmShow = function(pstnCd) {
+    /*let fnpstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
             $("#pstnNm").css("display", "block");
         }else{
@@ -118,7 +118,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             $("#pstnNm").css("display", "none");
             $("#pstnNm").addClass("notRequired");
         }
-    }
+    } 2024-12-17 삭제 */
 
     let fnNewPstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
@@ -192,14 +192,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            pstnCd : {
+            /*pstnCd : {
                 event : {
                     change : function() {
                         var pstnCd = $(this).val();
                         fnpstnNmShow(pstnCd);
                     }
                 }
-            },
+            }, 2024-12-17 삭제 */
             newPstnCd : {
                 event : {
                     change : function() {
@@ -259,7 +259,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                fnpstnNmShow($('#pstnCd').val());
+                                // fnpstnNmShow($('#pstnCd').val());  2024-12-17 삭제
                             }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -358,14 +358,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
-            var pstnCd = $("#pstnCd").val();
+            /*var pstnCd = $("#pstnCd").val();
 
             if(pstnCd =='MEM_CD01007'){
                 $("#pstnNm").css("display", "block");
             }else{
                 $("#pstnNm").val("");
                 $("#pstnNm").css("display", "none");
-            }
+            } 2024-12-17 삭제 */
 
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
