@@ -2657,7 +2657,7 @@
 		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 		END  AS edctn_status_nm /*교육상태*/
 		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt /*신청인원*/
-		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND cmptn_yn = 'Y') AS cmptn_cnt/*수료인원(명)*/
+		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND (cmptn_yn = 'Y' OR cmptn_yn = 'S')) AS cmptn_cnt/*수료인원(명)*/
 		, ''AS A_10 /*참석율(%) = 수료인원/신청인원 */
 		, CASE WHEN j.ctgry_cd = 'COMPANY01003' THEN j.ct_cnt ELSE 0 END AS c1 /*완성차*/
 		, CASE WHEN j.ctgry_cd = 'COMPANY01001' THEN j.ct_cnt ELSE 0 END AS c2 /* 1차사 */
@@ -2863,7 +2863,7 @@
 		when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
 		END  AS edctn_status_nm /*교육상태*/
 		, (SELECT count(mem_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01') AS accs_cnt /*신청인원*/
-		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND cmptn_yn = 'Y') AS cmptn_cnt/*수료인원(명)*/
+		, (SELECT COUNT(ptcpt_seq) FROM ep_edctn_ptcpt_mst WHERE edctn_seq = a.edctn_seq AND episd_year = a.episd_year AND episd_ord = a.episd_ord AND stts_cd = 'EDU_STTS_CD01' AND (cmptn_yn = 'Y' OR cmptn_yn = 'S')) AS cmptn_cnt/*수료인원(명)*/
 		, ''AS A_10 /*참석율(%) = 수료인원/신청인원 */
 		, CASE WHEN j.ctgry_cd = 'COMPANY01003' THEN j.ct_cnt ELSE 0 END AS c1 /*완성차*/
 		, CASE WHEN j.ctgry_cd = 'COMPANY01001' THEN j.ct_cnt ELSE 0 END AS c2 /* 1차사 */

@@ -472,7 +472,7 @@
 		) prcs_mst ON
 		prcs_mst.edctn_seq = ptcpt_mst.edctn_seq
 		<where>
-			ptcpt_mst.mem_Seq = #{memSeq} AND ptcpt_mst.cmptn_yn = 'Y'
+			ptcpt_mst.mem_Seq = #{memSeq} AND (ptcpt_mst.cmptn_yn = 'Y' OR ptcpt_mst.cmptn_yn = 'S')
 		</where>
 	</sql>
 
@@ -488,7 +488,7 @@
 			COUNT(*)
 		FROM ep_edctn_ptcpt_mst ptcpt_mst JOIN ed_edctn_prcs_mst prcs_mst ON
 		prcs_mst.edctn_seq = ptcpt_mst.edctn_seq
-		WHERE ptcpt_mst.mem_Seq = #{memSeq} AND ptcpt_mst.cmptn_yn = 'Y' AND prcs_mst.lcns_cnnct_cd = 'LCNS_CNNCT02'
+		WHERE ptcpt_mst.mem_Seq = #{memSeq} AND (ptcpt_mst.cmptn_yn = 'Y' OR ptcpt_mst.cmptn_yn = 'S') AND prcs_mst.lcns_cnnct_cd = 'LCNS_CNNCT02'
 		AND NOT EXISTS(SELECT exam_appctn_seq FROM sq_exam_appctn_mst WHERE mem_seq =  #{memSeq} and issue_cd != 'EBD_SQ_C')
 	</select>
 
@@ -566,7 +566,7 @@
 		AND episd_mst.episd_ord = ptcpt_mst.episd_ord
 		AND episd_mst.episd_seq = ptcpt_mst.episd_seq
 		<where>
-			ptcpt_mst.mem_Seq = #{memSeq} AND ptcpt_mst.cmptn_yn = 'Y' and prcs_mst.lcns_cnnct_cd = #{lcnsCnnctCd}
+			ptcpt_mst.mem_Seq = #{memSeq} AND (ptcpt_mst.cmptn_yn = 'Y' OR ptcpt_mst.cmptn_yn = 'S') and prcs_mst.lcns_cnnct_cd = #{lcnsCnnctCd}
 		</where>
 		ORDER BY episd_mst.edctn_strt_dtm desc
 	</select>
@@ -654,7 +654,7 @@
 			ep_edctn_ptcpt_mst A
 		WHERE
 			mem_seq = #{memSeq}
-		  AND cmptn_yn = 'Y'
+		  AND (cmptn_yn = 'Y' OR cmptn_yn = 'S')
 		  AND edctn_seq IN (SELECT edctn_seq FROM ed_edctn_prcs_mst WHERE nm LIKE '%업종별%기술%이해%')
 	</select>
 

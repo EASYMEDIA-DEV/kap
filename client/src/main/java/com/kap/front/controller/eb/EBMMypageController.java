@@ -324,7 +324,7 @@ public class EBMMypageController
 
             if(rtnDto != null){
 
-                if("Y".equals(rtnDto.getCmptnYn())){
+                if("Y".equals(rtnDto.getCmptnYn()) || "S".equals(rtnDto.getCmptnYn())){
                     modelMap.addAttribute("rtnData", rtnDto);
 
                 }else{

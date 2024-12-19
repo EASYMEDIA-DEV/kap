@@ -1548,7 +1548,25 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 			String examScore = (dto.getExamScore() == null || dto.getExamScore().equals("")) ? "0" : String.valueOf(dto.getExamScore());
 			cell = row.createCell(14); cell.setCellValue(examScore+"점"); cell.setCellStyle(style_body);//평가
 
-			String cmptnYn = (dto.getCmptnYn().equals("Y")) ?"수료" : "미수료";
+//			String cmptnYn = (dto.getCmptnYn().equals("Y")) ?"수료" : "미수료";
+			String cmptnYn = "";
+            switch (dto.getCmptnYn()) {
+                case "S":
+                    cmptnYn = "이수";
+                    break;
+                case "Y":
+                    cmptnYn = "수료";
+                    break;
+                case "U":
+                    cmptnYn = "불참";
+                    break;
+                case "E":
+                    cmptnYn = "중도퇴소";
+                    break;
+                default:
+                    cmptnYn = "미수료";
+                    break;
+            }
 			cell = row.createCell(15); cell.setCellValue(cmptnYn); cell.setCellStyle(style_body);//수료
 
 			//셀 너비 자동맞춤 시작
@@ -1960,8 +1978,8 @@ public class EBBEpisdServiceImpl implements EBBEpisdService {
 
 			if("LCNS_CNNCT03".equals(cmptnDto.getLcnsCnnctCd())){
 				System.out.println("@@@ SQ 갱신");
-				eBBEpisdDTO.setCmptnYn("Y");
-				//eBDSqCertiReqService.updateCertiValid(cmptnDto.getEdctnSeq());
+//				eBBEpisdDTO.setCmptnYn("Y");
+				eBDSqCertiReqService.updateCertiValid(cmptnDto.getEdctnSeq());
 			}
 //		}else if("Y".equals(cmptnDto.getPtcptCmtnYn())  && "Y".equals(cmptnDto.getCmptnYn()) && "Y".equals(cmptnDto.getCmptnAutoYn()) ){
 		}else if("Y".equals(cmptnDto.getCmptnYn()) || "S".equals(cmptnDto.getCmptnYn())){
