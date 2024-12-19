@@ -107,9 +107,9 @@
                                         </c:forEach>
                                     </select>
                                 </div>
-                                <%--<div class="col-sm-4" style="margin-left: -15px">
-                                    <input type="text" class="form-control " style="display:none;" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급 상세" maxlength="50"/>
-                                </div> 2024-12-17 삭제 --%>
+                                <div class="col-sm-4" style="margin-left: -15px">
+                                    <input type="text" class="form-control notRequired" style="display:none;" id="pstnNm" name="pstnNm" value="${rtnInfo.pstnNm}" title="직급 상세" maxlength="50"/>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
@@ -516,7 +516,7 @@
                                 </select>
                             </div>
                             <div class="col-sm-4" style="margin-left: -15px">
-                                <input type="text" class="form-control notRequired"  value="${rtnInfo.newPstnNm}"  id="newPstnNm" name="newPstnNm" title="직급 상세" maxlength="50"/>
+                                <input type="text" class="form-control notRequired" style="display:none;" value="${rtnInfo.newPstnNm}" id="newPstnNm" name="newPstnNm" title="직급 상세" maxlength="50"/>
                             </div>
                         </div>
                     </div>

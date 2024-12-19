@@ -110,15 +110,15 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
          }
     }
 
-    /*let fnpstnNmShow = function(pstnCd) {
+    let fnpstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
             $("#pstnNm").css("display", "block");
         }else{
             $("#pstnNm").val("");
             $("#pstnNm").css("display", "none");
-            $("#pstnNm").addClass("notRequired");
+            // $("#pstnNm").addClass("notRequired");
         }
-    } 2024-12-17 삭제 */
+    }
 
     let fnNewPstnNmShow = function(pstnCd) {
         if(pstnCd == 'MEM_CD01007'){
@@ -126,7 +126,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
         }else{
             $("#newPstnNm").val("");
             $("#newPstnNm").css("display", "none");
-            $("#newPstnNm").addClass("notRequired");
+            // $("#newPstnNm").addClass("notRequired");
         }
     }
 
@@ -192,14 +192,14 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                     }
                 }
             },
-            /*pstnCd : {
+            pstnCd : {
                 event : {
                     change : function() {
                         var pstnCd = $(this).val();
                         fnpstnNmShow(pstnCd);
                     }
                 }
-            }, 2024-12-17 삭제 */
+            },
             newPstnCd : {
                 event : {
                     change : function() {
@@ -259,7 +259,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                             cmmCtrl.frmAjax(function(respObj) {
                                 /* return data input */
                                 setInputValue(respObj);
-                                // fnpstnNmShow($('#pstnCd').val());  2024-12-17 삭제
+                                fnpstnNmShow($('#pstnCd').val());
                             }, "/mngwserc/wb/" + wbSubUrl + "/selModalDetail", $formObj, "post", "json");
                         });
                     }
@@ -358,14 +358,25 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
             },
         },
         immediately : function() {
-            /*var pstnCd = $("#pstnCd").val();
+            var pstnCd = $("#pstnCd").val();
 
             if(pstnCd =='MEM_CD01007'){
                 $("#pstnNm").css("display", "block");
             }else{
                 $("#pstnNm").val("");
                 $("#pstnNm").css("display", "none");
-            } 2024-12-17 삭제 */
+                // $("#pstnNm").addClass("notRequired");
+            }
+
+            var newPstnCd = $("#newPstnCd").val();
+
+            if(newPstnCd =='MEM_CD01007'){
+                $("#newPstnNm").css("display", "block");
+            }else{
+                $("#newPstnNm").val("");
+                $("#newPstnNm").css("display" , "none");
+                // $("#newPstnNm").addClass("notRequired");
+            }
 
             $formObj.find(".dropzone").each(function(){
                 var trgtObj = $(this);
