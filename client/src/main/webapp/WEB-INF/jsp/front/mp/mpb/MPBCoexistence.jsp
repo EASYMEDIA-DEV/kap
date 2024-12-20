@@ -47,7 +47,7 @@
                                                 <div class="data-line-w">
                                                     <div class="data-line">
                                                         <div class="noti-txt-w">
-                                                            <P class="bullet-noti-txt f-caption2">다수의 파일을 업로드 하시는 경우 압축파일로 업로드 해주세요.</P>
+                                                            <P class="bullet-noti-txt f-caption2">※ 다수의 파일을 업로드 하시는 경우 압축파일로 업로드 해주세요.</P>
                                                         </div>
                                                     </div>
                                                     <c:choose>
@@ -60,17 +60,18 @@
 
                                                                         <div class="form-group">
 
-                                                                            <c:forEach var="itemOptn2" items="${item.applyTempOptnList}" varStatus="status1">
-                                                                                <c:if test="${not empty itemOptn2.fileSeq}">
+                                                                            <p class="f-body1">${itemOptn.optnNm}</p>
+                                                                            <%--<c:forEach var="itemOptn2" items="${item.applyTempOptnList}" varStatus="status1">--%>
+                                                                                <%--<c:if test="${empty itemOptn.fileSeq}">--%>
                                                                                     <div class="btn-wrap btn-down-wrap">
-                                                                                        <a class="btn-text-icon download" href="/file/download?fileSeq=${itemOptn2.fileSeq}&fileOrd=0" download="">양식 다운로드<%--${itemOptn2.optnNm}--%>
+                                                                                        <a class="btn-text-icon download" href="/file/download?fileSeq=${item.applyTempOptnList[status1.index].fileSeq}&fileOrd=0" download="">양식 다운로드<%--${itemOptn2.optnNm}--%>
                                                                                             <span>
                                                                                                 <p class="data-title f-body1"></p>
                                                                                             </span>
                                                                                         </a>
                                                                                     </div>
-                                                                                </c:if>
-                                                                            </c:forEach>
+                                                                                <%--</c:if>--%>
+                                                                            <%--</c:forEach>--%>
 
                                                                             <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
                                                                                 <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->
@@ -85,11 +86,9 @@
                                                                             </c:if>
                                                                             <!-- 2024-01-03 추가 -->
                                                                             <c:if test="${not empty itemOptn.fileSeq}">
-
-                                                                                <div class="attatched-file-area">
+                                                                                <div class="attatched-file-area" style="margin-top: 0">
                                                                                     <a class="btn-text-icon download-bg" href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=0" title="파일 다운로드" download=""><span>${itemOptn.fileNm}</span></a>
                                                                                 </div>
-
 
                                                                                 <%--<div class="file-prev-area">
                                                                                     <a href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=0" download="" title="파일 다운로드">${itemOptn.fileNm}</a>
@@ -110,11 +109,11 @@
                                                                         <%--<p class="data-title f-body1">${itemOptn.optnNm}<span class="essential-mark color-sky">*</span></p>--%>
                                                                         <div class="form-group">
 
-                                                                            <c:forEach var="itemOptn2" items="${item.applyTempOptnList}" varStatus="status1">
-
-                                                                                    <c:if test="${not empty itemOptn2.fileSeq}">
+<%--                                                                            <c:forEach var="itemOptn2" items="${item.applyTempOptnList}" varStatus="status1">--%>
+                                                                                <p class="f-body1">${itemOptn.optnNm}</p>
+                                                                                    <c:if test="${not empty itemOptn.fileSeq}">
                                                                                         <div class="btn-wrap btn-down-wrap">
-                                                                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${itemOptn2.fileSeq}&fileOrd=0" download="">양식 다운로드<%--${itemOptn2.optnNm}--%>
+                                                                                            <a class="btn-text-icon download" href="/file/download?fileSeq=${itemOptn.fileSeq}&fileOrd=0" download="">양식 다운로드<%--${itemOptn2.optnNm}--%>
                                                                                                 <span>
                                                                                                     <p class="data-title f-body1"></p>
                                                                                                 </span>
@@ -123,7 +122,7 @@
                                                                                     </c:if>
 
 
-                                                                            </c:forEach>
+<%--                                                                            </c:forEach>--%>
 
                                                                             <c:if test="${item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_1' || item.applyDtl.appctnSttsCd eq 'PRO_TYPE04_2_3'}">
                                                                                 <div class="file-list-area"><!-- 파일 첨부되면 attached 클래스 추가 -->

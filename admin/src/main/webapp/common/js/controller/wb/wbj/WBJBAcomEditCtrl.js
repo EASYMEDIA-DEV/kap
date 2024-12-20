@@ -505,7 +505,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                 console.log(data.respCnt);
                                 //콜백함수. 페이지 이동
                                 if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
+                                    alert(msgCtrl.getMsg("success.sve"));
                                     location.replace("./list");
                                 }
                             }, "./update", $formObj, "json");
@@ -516,7 +516,7 @@ define(["ezCtrl","ezVald", "CodeMirror", "CodeMirror.modeJs"], function(ezCtrl, 
                                 console.log(data.respCnt);
 
                                 if(data.respCnt > 0){
-                                    alert(msgCtrl.getMsg("success.ins"));
+                                    alert(msgCtrl.getMsg("success.sve"));
                                     location.replace("./list");
                                 }
                             }, "./update", $formObj, "post", "json")
