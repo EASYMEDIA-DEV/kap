@@ -1958,6 +1958,7 @@
                 cp_cnstg_rsume_mst
             WHERE 1=1
                 AND guide_pscnd_cd = 'GUIDE_PSCND04'
+                AND srv_seq IS NOT NULL
             <choose>
                 <when test="rtnBsnYear != null and rtnBsnYear != ''">
                     AND YEAR(guide_pscnd_dt) = ${rtnBsnYear}
