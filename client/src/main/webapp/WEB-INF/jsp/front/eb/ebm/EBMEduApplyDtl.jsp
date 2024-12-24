@@ -237,7 +237,7 @@
                                         <div class="btn-wrap align-right">
                                             <div class="btn-set">
 
-                                                <c:if test="${rtnData.trnsfYn eq 'N' && rtnData.cmptnYn eq 'Y'}">
+                                                <c:if test="${rtnData.trnsfYn eq 'N' && (rtnData.cmptnYn eq 'Y' or rtnData.cmptnYn eq 'S')}">
                                                     <button class="btn-solid small gray-bg icon btn-print cmptnPop" type="button" <%--onclick="printFn()"--%>><span>수료증 출력</span></button>
                                                 </c:if>
                                                 <c:set var="accsStatDt" value="${ empty rtnData.accsStrtDtm ? '-' : kl:convertDate(rtnData.accsStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy.MM.dd', '-') }"/>
@@ -253,11 +253,11 @@
 
                                                 <fmt:formatDate pattern="yyyy.MM.dd" value="${nowDate}" var="nowDate" />
 
-                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.trnsfYn eq 'N' && (rtnData.sttsCd eq 'EDU_STTS_CD01' || rtnData.sttsCd eq 'EDU_STTS_CD04') && accsEndDt lt nowDate && nowDate lt edctnStatDt}">
+                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.trnsfYn eq 'N' && (rtnData.sttsCd eq 'EDU_STTS_CD01' || rtnData.sttsCd eq 'EDU_STTS_CD04') && accsEndDt lt nowDate && nowDate lt edctnStatDt}">
                                                     <button class="btn-solid small gray-bg icon transfer" type="button"><span>교육양도</span></button>
                                                 </c:if>
 
-                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.stduyMthdCd ne 'STDUY_MTHD01'}">
+                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.stduyMthdCd ne 'STDUY_MTHD01'}">
                                                     <!--출력조건  불참이 아니고 교육중, 교육대기지만 시작시간 30분전부터   -->
 
                                                     <c:choose>
@@ -348,7 +348,7 @@
                                                 %>
 
                                                 <c:choose>
-                                                    <c:when test="${rtnData.cmptnYn ne 'U' && nowAtndcYn ne 'F'}">
+                                                    <c:when test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && nowAtndcYn ne 'F'}">
                                                         <fmt:formatDate pattern="yyyy-MM-dd" value="${now}" var="nowDate" />
 
                                                         <c:set var="edctnStrtDt" value="${ empty rtnData.edctnStrtDtm ? '-' : kl:convertDate(rtnData.edctnStrtDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd', '-') }"/>
@@ -387,7 +387,7 @@
 
                                                 <c:set var="examStart" value="" />
 
-                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq && empty rtnData.examScore}">
+                                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.otsdExamPtcptYn ne 'Y' && examStatus eq '1' && rtnData.sttsCd eq 'EDU_STTS_CD01'  && empty  rtnData.examPtcptSeq && empty rtnData.examScore}">
                                                     <button class="btn-solid small gray-bg icon evaluation examStart" type="button"><span>평가하기</span></button>
                                                     <c:set var="examStart" value="examStart" />
                                                 </c:if>
@@ -404,7 +404,7 @@
                                                         <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
                                                     </c:when>--%>
 
-                                                    <c:when test="${rtnData.cmptnYn ne 'U' && rtnData.trnsfYn eq 'N' && (((accsStatDt lt nowDate) || (accsStatDt eq nowDate)) && (nowDate eq accsEndDt || nowDate lt accsEndDt))  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
+                                                    <c:when test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.trnsfYn eq 'N' && (((accsStatDt lt nowDate) || (accsStatDt eq nowDate)) && (nowDate eq accsEndDt || nowDate lt accsEndDt))  && rtnData.sttsCd ne 'EDU_STTS_CD02'    }">
                                                         <button class="btn-solid small gray-bg icon apply-cancel applyCancel" type="button"><span>신청취소</span></button>
                                                     </c:when>
 
@@ -773,7 +773,7 @@
                         </c:if>
 
 
-                        <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.trnsfYn eq 'N' and rtnData.stduyMthdCd ne 'STDUY_MTHD02'}">
+                        <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.trnsfYn eq 'N' and rtnData.stduyMthdCd ne 'STDUY_MTHD02'}">
                             <div class="cont-sec no-border scroll-motion">
                                 <div class="for-motion">
                                     <div class="sec-tit-area">
@@ -845,7 +845,7 @@
                             </div>
 
                         </c:if>
-                            <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.trnsfYn eq 'N' and rtnData.sttsCd eq 'EDU_STTS_CD01'}">
+                            <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.trnsfYn eq 'N' and rtnData.sttsCd eq 'EDU_STTS_CD01'}">
                                 <div class="cont-sec no-border scroll-motion">
                                     <div class="for-motion">
                                         <div class="sec-tit-area">
@@ -886,7 +886,7 @@
                                     </div>
                                 </div>
 
-                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.trnsfYn eq 'N' && (not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01' }">
+                                <c:if test="${rtnData.cmptnYn ne 'U' && rtnData.cmptnYn ne 'E' && rtnData.trnsfYn eq 'N' && (not empty rtnData.examSeq || rtnData.otsdExamPtcptYn eq 'Y') && rtnData.sttsCd eq 'EDU_STTS_CD01' }">
                                     <div class="cont-sec no-border scroll-motion">
                                         <div class="for-motion">
                                             <div class="sec-tit-area">

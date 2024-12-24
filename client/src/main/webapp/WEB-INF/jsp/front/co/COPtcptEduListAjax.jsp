@@ -85,11 +85,17 @@
                                             <p class="tit f-caption2">수료여부</p>
                                             <p class="txt f-body2">
                                                 <c:choose>
+                                                    <c:when test="${list.cmptnYn eq 'S'}">
+                                                        이수
+                                                    </c:when>
                                                     <c:when test="${list.cmptnYn eq 'Y'}">
                                                         수료
                                                     </c:when>
                                                     <c:when test="${list.cmptnYn eq 'U'}">
                                                         불참
+                                                    </c:when>
+                                                    <c:when test="${list.cmptnYn eq 'E'}">
+                                                        중도퇴소
                                                     </c:when>
                                                     <c:otherwise>
                                                         미수료

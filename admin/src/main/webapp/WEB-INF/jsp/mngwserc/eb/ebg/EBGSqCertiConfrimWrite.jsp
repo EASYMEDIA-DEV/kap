@@ -60,7 +60,7 @@
                                             </td>
                                             <td class="text-center" >
                                                 <c:choose>
-                                                    <c:when test="${ list.cmptnYn eq 'Y' }">
+                                                    <c:when test="${ list.cmptnYn eq 'Y' or list.cmptnYn eq 'S' }">
                                                         ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                                     </c:when>
                                                     <c:otherwise>
@@ -177,7 +177,7 @@
                                             </td>
                                             <td class="text-center" >
                                                 <c:choose>
-                                                    <c:when test="${ list.cmptnYn eq 'Y' }">
+                                                    <c:when test="${ list.cmptnYn eq 'Y' or list.cmptnYn eq 'S' }">
                                                         ${ kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '') }
                                                     </c:when>
                                                     <c:otherwise>

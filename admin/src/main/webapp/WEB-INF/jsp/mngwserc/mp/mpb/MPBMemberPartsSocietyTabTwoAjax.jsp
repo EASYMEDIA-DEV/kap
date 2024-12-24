@@ -22,7 +22,7 @@
                 <td class="text-center">${kl:emptyHypen(list.rcrmtMthdCdNm)}</td>
                 <td class="text-center">${list.rcrmtMthdCdNm=='선착순 마감'?'-' : list.sttsCdNm}</td>
                 <td class="text-center">${kl:emptyHypen(list.placeNm)}</td>
-                <td class="text-center">${list.cmptnYn == 'Y'? '수료' : '미수료'}</td>
+                <td class="text-center">${list.cmptnYn == 'Y'? '수료' : list.cmptnYn == 'S'? '이수' : '미수료'}</td>
                 <td class="text-center">${ kl:emptyHypen(kl:convertDate(list.cmptnDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-'))}</td>
                 <td class="text-center">${ kl:convertDate(list.regDay, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-')}</td>
             </tr>
