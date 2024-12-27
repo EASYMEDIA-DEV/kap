@@ -495,16 +495,33 @@
 
             <fieldset class="last-child">
                 <div class="form-group text-sm">
-                    <label class="col-sm-1 control-label">노출여부<span class="star"> *</span></label>
+                    <label class="col-sm-1 control-label">사용여부<span class="star"> *</span></label>
                     <div class="col-sm-11">
                         <c:set var="expsYn" value="${kl:nvl(rtnDto.expsYn, 'Y')}" />
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="Y" title="노출여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
-                            <span class="ion-record"></span> 노출
+                            <input type="radio" name="expsYn" value="Y" title="사용여부" <c:if test="${expsYn eq 'Y'}">checked</c:if> />
+                            <span class="ion-record"></span> 사용
                         </label>
                         <label class="radio-inline c-radio">
-                            <input type="radio" name="expsYn" value="N" title="노출여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
-                            <span class="ion-record"></span> 미노출
+                            <input type="radio" name="expsYn" value="N" title="사용여부" <c:if test="${expsYn eq 'N'}">checked</c:if> />
+                            <span class="ion-record"></span> 미사용
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+
+            <fieldset class="last-child">
+                <div class="form-group text-sm">
+                    <label class="col-sm-1 control-label">웹페이지 사용여부<span class="star"> *</span></label>
+                    <div class="col-sm-11">
+                        <c:set var="useYn" value="${kl:nvl(rtnDto.useYn, 'Y')}" />
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="Y" title="웹페이지 사용여부" <c:if test="${useYn eq 'Y'}">checked</c:if> />
+                            <span class="ion-record"></span> 사용
+                        </label>
+                        <label class="radio-inline c-radio">
+                            <input type="radio" name="useYn" value="N" title="웹페이지 사용여부" <c:if test="${useYn eq 'N'}">checked</c:if> />
+                            <span class="ion-record"></span> 미사용
                         </label>
                     </div>
                 </div>
@@ -595,7 +612,7 @@
                             <th class="text-center" rowspan="2">최초 등록일시</th>
                             <th class="text-center" rowspan="2">최종 수정자</th>
                             <th class="text-center" rowspan="2">최종 수정일시</th>
-                            <th class="text-center" rowspan="2">노출여부</th>
+                            <th class="text-center" rowspan="2">사용여부</th>
                         </tr>
                         <tr>
                             <th class="text-center">이름</th>

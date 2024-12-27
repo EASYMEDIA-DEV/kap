@@ -29,13 +29,14 @@
         <td class="text-center">${ empty list.regDtm ? '-' : kl:convertDate(list.regDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최초등록일시-->
         <td class="text-center">${list.modName}(${list.modId})</td><!--최종수정자-->
         <td class="text-center">${ empty list.modDtm ? '-' : kl:convertDate(list.modDtm, 'yyyy-MM-dd HH:mm:ss', 'yyyy-MM-dd HH:mm', '-') }</td><!--최종 수정일시-->
-        <td class="text-center">${ kl:decode(list.expsYn, 'Y', '노출', '미노출') }</td><!--노출여부-->
+        <td class="text-center">${ kl:decode(list.expsYn, 'Y', '사용', '미사용') }</td><!--사용여부-->
+        <td class="text-center">${ kl:decode(list.useYn, 'Y', '사용', '미사용') }</td><!--사용자 사용여부-->
       </tr>
     </c:forEach>
   </c:when>
   <c:otherwise>
     <tr data-total-count="0">
-      <td colspan="11" class="text-center">
+      <td colspan="12" class="text-center">
         검색결과가 없습니다.<br>
         (등록된 데이터가 없습니다.)
       </td>

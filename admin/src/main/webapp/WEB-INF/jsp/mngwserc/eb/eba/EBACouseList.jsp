@@ -162,7 +162,7 @@
 
 				<fieldset>
 					<div class="form-group text-sm">
-						<label class="col-sm-1 control-label">노출여부</label>
+						<label class="col-sm-1 control-label">사용여부</label>
 						<div class="col-sm-5">
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxAll" />
@@ -170,11 +170,30 @@
 							</label>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="Y" name="expsYn" <c:if test="${fn:contains(rtnData.expsYnList, 'Y')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 노출
+								<span class="ion-checkmark-round"></span> 사용
 							</label>
 							<label class="checkbox-inline c-checkbox">
 								<input type="checkbox" class="checkboxSingle" data-name="expsYnList" value="N" name="expsYn" <c:if test="${fn:contains(rtnData.expsYnList, 'N')}">checked</c:if> />
-								<span class="ion-checkmark-round"></span> 미노출
+								<span class="ion-checkmark-round"></span> 미사용
+							</label>
+						</div>
+					</div>
+				</fieldset>
+				<fieldset>
+					<div class="form-group text-sm">
+						<label class="col-sm-1 control-label">웹페이지 사용여부</label>
+						<div class="col-sm-5">
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxAll" />
+								<span class="ion-checkmark-round"></span> 전체
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="Y" name="useYn" <c:if test="${fn:contains(rtnData.useYnList, 'Y')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 사용
+							</label>
+							<label class="checkbox-inline c-checkbox">
+								<input type="checkbox" class="checkboxSingle" data-name="useYnList" value="N" name="useYn" <c:if test="${fn:contains(rtnData.useYnList, 'N')}">checked</c:if> />
+								<span class="ion-checkmark-round"></span> 미사용
 							</label>
 						</div>
 					</div>
@@ -244,7 +263,8 @@
 								<th class="text-center">최초 등록일시</th>
 								<th class="text-center">최종 수정자</th>
 								<th class="text-center">최종 수정일시</th>
-								<th class="text-center">노출여부</th>
+								<th class="text-center">사용여부</th>
+								<th class="text-center">웹페이지 사용여부</th>
 							</tr>
 						</thead>
 						<!-- 리스트 목록 결과 -->

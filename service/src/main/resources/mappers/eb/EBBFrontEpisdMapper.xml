@@ -109,6 +109,7 @@
 		) bb ON a.edctn_seq = bb.edctn_seq
 
 		<include refid="selectFrontEpisdListwhereSql" />
+		AND a.use_yn = 'Y'
 
 		<if test="applyListYn == 'Y'.toString()">
 		<include refid="selectFrontCouseListNonMemberUnionSql" />
@@ -218,6 +219,7 @@
 		) bb ON a.edctn_seq = bb.edctn_seq
 
 		<include refid="selectFrontEpisdListwhereSql" />
+		AND a.use_yn = 'Y'
 
 		<if test="applyListYn == 'Y'.toString()">
 			<include refid="selectFrontCouseListNonMemberCntUnionSql" />

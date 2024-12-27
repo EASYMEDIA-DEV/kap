@@ -36,6 +36,7 @@
 				, mod_id
 				, (select name from co_adm_mst where id = aa.mod_id) as mod_name
 				, exps_yn
+				, use_yn
 			 	, mod_dtm
 				from
 			ed_edctn_prcs_mst aa
@@ -112,11 +113,20 @@
 				AND stduy_time_cd = #{stduyTimeCd}
 			</if>
 
-			<!--노출여부-->
+			<!--사용여부-->
 			<if test="expsYnList != null and expsYnList.size() > 0">
 				AND (
 				<foreach collection="expsYnList" item="expsYn" index="index" open="" close="" separator=" OR ">
 					EXPS_YN = #{expsYn}
+				</foreach>
+				)
+			</if>
+
+			<!--사용자 사용여부-->
+			<if test="useYnList != null and useYnList.size() > 0">
+				AND (
+				<foreach collection="useYnList" item="useYn" index="index" open="" close="" separator=" OR ">
+					USE_YN = #{useYn}
 				</foreach>
 				)
 			</if>
@@ -214,6 +224,7 @@
 				  , (select name from co_adm_mst where id = a.mod_id) as mod_name
 				  , mod_dtm
 				  , exps_yn
+				  , use_yn
 			 from
 				 ed_edctn_prcs_mst a
 		where
@@ -303,6 +314,7 @@
 			</if>
 
 			, exps_yn
+			, use_yn
 			, reg_id
 			, reg_ip
 			, reg_dtm
@@ -342,6 +354,7 @@
 		</if>
 
 		, #{expsYn}
+		, #{useYn}
 		, #{regId}
 		, #{regIp}
 		, now()
@@ -414,6 +427,7 @@
 		   	, lcns_cnnct_cd = #{lcnsCnnctCd}
 			, thnl_file_seq = #{thnlFileSeq}
 			, exps_yn = #{expsYn}
+			, use_yn = #{useYn}
 			, mod_dtm = now()
 			, mod_id = #{modId}
 			, mod_ip = #{modIp}

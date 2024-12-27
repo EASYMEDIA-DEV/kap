@@ -159,9 +159,13 @@ public class EBACouseDTO extends BaseDTO {
     @Schema(title = "썸네일파일순번", example = "숫자")
     private Integer thnlFileSeq;
 
-    //노출여부
-    @Schema(title = "노출여부", example = "Y/N")
+    //사용여부
+    @Schema(title = "사용여부", example = "Y/N")
     private String expsYn;
+
+    //사용자 사용여부
+    @Schema(title = "사용자 사용여부", example = "Y/N")
+    private String useYn;
 
     @Schema(title = "복사여부", example = "Y/N")
     @Builder.Default
@@ -235,6 +239,7 @@ public class EBACouseDTO extends BaseDTO {
 
 
     private List<String> expsYnList;
+    private List<String> useYnList;
 
     private String srchLayer;
 
