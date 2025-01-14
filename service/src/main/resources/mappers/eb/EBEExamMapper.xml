@@ -916,6 +916,8 @@
 		from ed_edctn_lctr_dtl lctr_dtl
 				 left join ep_edctn_lctr_dtl ptctp_lctr_dtl on ptctp_lctr_dtl.lctr_seq = lctr_dtl.lctr_seq AND ptctp_lctr_dtl.ptcpt_seq = #{ptcptSeq}
 		where lctr_dtl.edctn_seq = #{edctnSeq}
+			and lctr_dtl.episd_year = #{episdYear}
+			and lctr_dtl.episd_ord = #{episdOrd}
 	</select>
 
 

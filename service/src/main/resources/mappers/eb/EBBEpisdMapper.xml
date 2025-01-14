@@ -3284,7 +3284,7 @@
        수정일     수정자       수정내용
      ==========   ======    ==============
      2024.01.24   김학규       최초생성
-     2024.11.26   장두석       수료 여부 평가 기준 CASE문 병경 변경
+     2024.11.26   장두석       수료 여부 평가 기준 CASE문 변경
  	-->
 	<select id="selectPtcptCmptnChk" parameterType="EBBEpisdDTO" resultType="EBBEpisdDTO">
 		SELECT /* EBBEpisdMapper.selectPtcptCmptnChk */
@@ -3309,13 +3309,13 @@
 		         	    WHEN exam_score IS NULL THEN 'N'
 		         	    WHEN stduy_mthd_cd = 'STDUY_MTHD02' /* 온라인교육 여부 */
 							THEN
-								CASE WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * exam_score) <![CDATA[>=]]> 90.0 THEN 'S'
-									WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * exam_score) <![CDATA[>=]]> 80.0 THEN 'Y'
+								CASE WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * (exam_score/max_score * 100)) <![CDATA[>=]]> 90.0 THEN 'S'
+									WHEN (0.8 * (PTCPT_INFO / LCRT_INFO) * 100) + (0.2 * (exam_score/max_score * 100)) <![CDATA[>=]]> 80.0 THEN 'Y'
 									ELSE 'N'
 								END
 							ELSE
-								CASE WHEN (0.8 * ATNDC_INFO) + (0.2 * exam_score) <![CDATA[>=]]> 90.0 THEN 'S'
-									 WHEN (0.8 * ATNDC_INFO) + (0.2 * exam_score) <![CDATA[>=]]> 80.0 THEN 'Y'
+								CASE WHEN (0.8 * ATNDC_INFO) + (0.2 * (exam_score/max_score * 100)) <![CDATA[>=]]> 90.0 THEN 'S'
+									 WHEN (0.8 * ATNDC_INFO) + (0.2 * (exam_score/max_score * 100)) <![CDATA[>=]]> 80.0 THEN 'Y'
 									 ELSE 'N'
 								END
 					END
@@ -3333,7 +3333,8 @@
 							END
 					END
 			 END AS PTCPT_CMTN_YN /* 이수,수료,미수료 여부 */
-		FROM (SELECT
+		FROM (
+			SELECT
 				A.PTCPT_SEQ
 				, B.EDCTN_SEQ
 				, B.EPISD_YEAR
@@ -3350,37 +3351,39 @@
 				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS ATNDC_INFO
 				, (SELECT COUNT(*) from ep_edctn_lctr_dtl WHERE PTCPT_SEQ = A.PTCPT_SEQ AND EDCTN_SEQ = B.EDCTN_SEQ AND EPISD_YEAR = B.EPISD_YEAR AND B.EPISD_ORD) AS PTCPT_INFO
 				, (SELECT COUNT(*) from ed_edctn_lctr_dtl WHERE EDCTN_SEQ = #{edctnSeq} AND EPISD_YEAR = #{episdYear} AND EPISD_ORD = #{episdOrd}) AS LCRT_INFO
-		FROM ep_edctn_ptcpt_mst A
-		LEFT JOIN (
-			SELECT
-				EDCTN_SEQ
-				, EPISD_SEQ
-				, EPISD_YEAR
-				, EPISD_ORD
-				, cmptn_auto_yn
-			FROM ed_edctn_episd_mst
-			where 1=1
-
-		) B ON B.EPISD_SEQ = A.EPISD_SEQ
-
-		LEFT JOIN(
-			SELECT
-				edctn_seq
-				, (select cd_nm from co_code_mst where cd = tbl.cmptn_stnd_cd) as cmptn_stnd_cd_nm
-				, (select cd_nm from co_code_mst where cd = tbl.cmptn_jdgmt_cd) as cmptn_jdgmt_cd_nm
-				, jdgmt_yn
-				, stduy_mthd_cd
-				, lcns_cnnct_cd
-			from ed_edctn_prcs_mst tbl
-			where 1=1
-
-
-
-		) c ON c.edctn_seq = b.edctn_seq
-
-		WHERE MEM_SEQ = #{memSeq}
-		AND PTCPT_SEQ = #{ptcptSeq}
-
+				, (SELECT SUM(Ifnull(scord, 0)) from ex_exam_qstn_dtl where exam_seq = D.exam_seq) AS max_score
+			FROM ep_edctn_ptcpt_mst A
+			LEFT JOIN (
+				SELECT
+					EDCTN_SEQ
+					, EPISD_SEQ
+					, EPISD_YEAR
+					, EPISD_ORD
+					, CMPTN_AUTO_YN
+				FROM ed_edctn_episd_mst
+				where 1=1
+			) B ON B.EPISD_SEQ = A.EPISD_SEQ
+			LEFT JOIN(
+				SELECT
+					edctn_seq
+					, (select cd_nm from co_code_mst where cd = tbl.cmptn_stnd_cd) as cmptn_stnd_cd_nm
+					, (select cd_nm from co_code_mst where cd = tbl.cmptn_jdgmt_cd) as cmptn_jdgmt_cd_nm
+					, jdgmt_yn
+					, stduy_mthd_cd
+					, lcns_cnnct_cd
+				from ed_edctn_prcs_mst tbl
+				where 1=1
+			) c ON c.edctn_seq = b.edctn_seq
+			LEFT JOIN (
+			    SELECT
+			        ptcpt_seq
+					, exam_seq
+				FROM ep_edctn_exam_ptcpt_mst
+				WHERE 1=1
+			) D ON D.ptcpt_seq = A.ptcpt_seq
+			WHERE
+				MEM_SEQ = #{memSeq}
+				AND A.PTCPT_SEQ = #{ptcptSeq}
 		) A
 	</select>
 
