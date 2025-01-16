@@ -122,20 +122,38 @@
     -->
 	<select id="selectGpcPtcptExamList" resultType="COGpcPtcptDTO" parameterType="COGpcPtcptDTO">
 		SELECT /* COGpcReceiveRestMapper.selectGpcPtcptExamList */
-			c.edctn_seq as kap_seq
-			 , b.episd_seq as kap_schd_seq
-			 , d.id as kap_id
-			 , a.exam_score as tot_score
-			 , a.cmptn_yn as cmplt_yn
-			 , date_format(now(), '%Y-%m-%d') as kap_send_dd
-		FROM ep_edctn_ptcpt_mst A
-				 LEFT JOIN ed_edctn_episd_mst B ON B.EPISD_SEQ = A.EPISD_SEQ
-				 LEFT JOIN ed_edctn_prcs_mst C ON C.EDCTN_SEQ = B.EDCTN_SEQ
-				 LEFT JOIN co_mem_mst D ON D.mem_seq = A.mem_seq
-		WHERE 1=1
-		  AND A.EPISD_SEQ = #{kapSchdSeq}
-		  AND a.STTS_CD = 'EDU_STTS_CD01'
-		  and C.gpc_yn = 'Y'
+			kap_seq /* KAP 과정 순번 */
+			, kap_schd_seq /* KAP 회차 순번 */
+			, kap_id /* KAP 회원 id */
+			, CASE
+				  WHEN jdgmt_yn = 'Y' THEN IFNULL(ROUND((0.8 * att_score) + (0.2 * (kap_score/max_score * 100)), 0), 0)
+				  ELSE att_score
+			END AS tot_score /* GPC 총점 */
+			, kap_score /* KAP 평가 점수 */
+			, att_score /* KAP 출석 점수 */
+			, cmplt_yn /* 이수 여부 (S Y N U E) */
+			, kap_send_dd /* 데이터 GPC로 전송일 */
+		FROM (
+		    SELECT
+				C.edctn_seq as kap_seq
+				, B.episd_seq as kap_schd_seq
+				, D.id as kap_id
+				, A.exam_score as kap_score
+				, A.cmptn_yn as cmplt_yn
+				, date_format(now(), '%Y-%m-%d') as kap_send_dd
+				, C.jdgmt_yn
+				, (SELECT IFNULL(ROUND((count(atndc_dtm) / COUNT(edctn_dt))*100, 0), 0) AS atndc_avg FROM ep_edctn_atndc_dtl WHERE ptcpt_Seq = A.PTCPT_SEQ) AS att_score
+		    	, (SELECT SUM(Ifnull(scord, 0)) from ex_exam_qstn_dtl where exam_seq = E.exam_seq) AS max_score
+			FROM ep_edctn_ptcpt_mst A
+				LEFT JOIN ed_edctn_episd_mst B ON B.EPISD_SEQ = A.EPISD_SEQ
+				LEFT JOIN ed_edctn_prcs_mst C ON C.EDCTN_SEQ = B.EDCTN_SEQ
+				LEFT JOIN co_mem_mst D ON D.mem_seq = A.mem_seq
+				LEFT JOIN ep_edctn_exam_ptcpt_mst E ON E.ptcpt_seq = A.ptcpt_seq
+			WHERE 1=1
+				AND A.EPISD_SEQ = #{kapSchdSeq}
+				AND a.STTS_CD = 'EDU_STTS_CD01'
+				AND C.gpc_yn = 'Y'
+		) MST
 	</select>
 
 

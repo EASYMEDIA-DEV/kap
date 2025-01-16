@@ -63,6 +63,12 @@ public class COGpcPtcptDTO {
     @Schema(title = "총점", example = "숫자")
     private Integer totScore;
 
+    @Schema(title = "평가 점수", example = "숫자")
+    private Integer kapScore;
+
+    @Schema(title = "출석 점수", example = "숫자")
+    private Integer attScore;
+
     @Schema(title = "이수여부", example = "Y/N")
     private String cmpltYn;
 
