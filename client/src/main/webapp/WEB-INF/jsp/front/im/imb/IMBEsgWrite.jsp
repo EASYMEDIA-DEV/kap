@@ -80,7 +80,7 @@
                                                         <div class="form-select">
                                                             <select class="form-control input-sm" data-name="parntCtgryCd" id="parntCtgryCd" name="parntCtgryCd">
                                                                     <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
-                                                                        <c:if test="${fn:length(cdList.cd) < 6 and fn:contains(cdList.cdNm, 'ESG')}">
+                                                                        <c:if test="${fn:length(cdList.cd) < 6 and fn:contains(cdList.cdNm, 'ESG종합지원')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnData.parntCtgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
                                                                         </c:if>
                                                                     </c:forEach>
