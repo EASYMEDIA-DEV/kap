@@ -481,4 +481,11 @@ public class COBUserMenuServiceImpl implements COBUserMenuService {
 		return cOBUserMenuMapper.getClientMenuList(cOMenuDTO);
 	}
 
+	/**
+	 * 사용자 메뉴 목록을 가져온다.
+	 */
+	public Integer selectUserTopNode(COMenuDTO cOMenuDTO) throws Exception {
+		return cOBUserMenuMapper.selectUserTopNode(cOMenuDTO);
+	}
+
 }

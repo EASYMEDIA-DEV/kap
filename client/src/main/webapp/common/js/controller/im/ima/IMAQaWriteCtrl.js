@@ -234,7 +234,7 @@ define(["ezCtrl", "ezVald"], function(ezCtrl, ezVald) {
                                     alert("문제가 발생하였습니다.");
                                     location.reload();
                                 }
-                            }, "./insert", $formObj, "json");
+                            }, "/foundation/cs/qa/insert", $formObj, "json");
                         }
                     }
                 }

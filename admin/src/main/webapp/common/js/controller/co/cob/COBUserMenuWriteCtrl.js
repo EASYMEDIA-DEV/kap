@@ -20,7 +20,7 @@ define(["ezCtrl", "controller/co/COMenuCtrl"], function(ezCtrl, menuCtrl) {
 			// do something...
 		},
 		immediately : function() {
-			menuCtrl.setJstree(false, true, { "topNode" : ctrl.obj.data("pageNo"), "d" : "5", "isMenu" :"Y" });
+			menuCtrl.setJstree(false, true, { "topNode" : ctrl.obj.data("topNode"), "d" : "5", "isMenu" :"Y" });
 		}
 	};
 	

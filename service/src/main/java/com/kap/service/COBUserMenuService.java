@@ -80,4 +80,9 @@ public interface COBUserMenuService {
 	 * 사용자 메뉴 목록을 가져온다.
 	 */
 	public List<COMenuDTO> getClientMenuList(COMenuDTO cOMenuDTO) throws Exception;
+
+	/**
+	 * 사용자 탑노드 조회.
+	 */
+	public Integer selectUserTopNode(COMenuDTO cOMenuDTO) throws Exception;
 }

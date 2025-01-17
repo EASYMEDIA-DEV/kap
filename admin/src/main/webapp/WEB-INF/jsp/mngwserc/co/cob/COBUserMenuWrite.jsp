@@ -1,6 +1,6 @@
 <%@page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%><%@include file="/WEB-INF/jsp/include/el.jspf"%>
 <div class="container-fluid">
-	<div class="card-body" data-controller="controller/co/COMenuCtrl controller/co/cob/COBUserMenuWriteCtrl" data-page-no="${ pageNo }">
+	<div class="card-body" data-controller="controller/co/COMenuCtrl controller/co/cob/COBUserMenuWriteCtrl" data-page-no="${ pageNo }"  data-top-node="${ rtnData.menuSeq }">
 		<h6 class="mt0"><em class="ion-play mr-sm"></em>${pageTitle}</h6>
 		<form class="form-horizontal" id="frmData" name="frmData" method="post" action="" data-alert-type="pass">
 			<input type="hidden" class="notRequired" id="menuSeq" name="menuSeq" value="" />
