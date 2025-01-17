@@ -81,7 +81,7 @@
                                                             <select class="form-control input-sm" data-name="parntCtgryCd" id="parntCtgryCd" name="parntCtgryCd">
                                                                 <option value="">선택</option>
                                                                     <c:forEach var="cdList" items="${cdDtlList.INQUIRY_TYPE}" varStatus="status">
-                                                                        <c:if test="${fn:length(cdList.cd) < 6 and fn:contains(cdList.cd, 'INQ09')}">
+                                                                        <c:if test="${fn:length(cdList.cd) < 6 and fn:contains(cdList.cdNm, 'ESG')}">
                                                                             <option value="${cdList.cd}" <c:if test="${rtnData.parntCtgryCd eq cdList.cd}">selected</c:if>>${cdList.cdNm}</option>
                                                                         </c:if>
                                                                     </c:forEach>
