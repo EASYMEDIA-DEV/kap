@@ -8,6 +8,7 @@
           수정일      수정자       수정내용
         ==========   ========   ==============
         2023.11.13    양현우       최초생성
+        2025.01.24    장두석       교육상태 값 수정
     -->
     <select id="selectEduList" parameterType="MPBEduDto" resultType="MPBEduDto">
         select parnt_seq
@@ -78,10 +79,17 @@
                   , edctn_strt_dtm
                   , edctn_end_dtm
                   , case
-                       when NOW() <![CDATA[<]]> edctn_strt_dtm then '교육대기'
-                       when NOW() <![CDATA[>]]> edctn_strt_dtm AND NOW() <![CDATA[<]]> edctn_end_dtm then '교육중'
-                       when NOW() <![CDATA[>]]> edctn_end_dtm then '교육마감'
-                            END  AS edctn_status_nm
+                      when edctn_stts_cd = 'EDCTN_STTS_CD01' then /*개강일 경우*/
+                         case when stts_cd = 'EDU_STTS_CD01' then /*참여자 상태 : 신청*/
+                                  case when NOW()  <![CDATA[<]]> edctn_strt_dtm then '교육대기'
+                                       when edctn_strt_dtm <![CDATA[<]]> NOW() AND NOW() <![CDATA[<]]>  edctn_end_dtm  then '교육중'
+                                       when edctn_end_dtm <![CDATA[<]]> NOW()  then '교육완료'
+                                      end
+                              when stts_cd = 'EDU_STTS_CD02' then '신청취소'
+                              when stts_cd = 'EDU_STTS_CD06' then '교육취소'
+                             end
+                     when edctn_stts_cd = 'EDCTN_STTS_CD02' then '교육취소'  /*폐강일 경우*/
+                end edctn_status_nm
                   , (SELECT NAME FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS isttr_name
                   , (SELECT ffltn_nm FROM cp_isttr_mst WHERE isttr_seq = aa.min_isttr_seq) AS ffltn_nm
                   , case when isttr_cnt<![CDATA[<=]]> 1 then ''
@@ -110,6 +118,8 @@
                   , cmptn_dtm
                   , cmptn_yn
                   , stts_cd_nm
+                  , stts_cd
+                  , edctn_stts_cd
               FROM (SELECT b.ctgry_cd
                           , (select cd_nm from co_code_mst WHERE cd = b.ctgry_cd) as ctgry_cd_nm
                           , (select parnt_seq from co_code_mst WHERE cd = b.ctgry_cd) as parnt_seq
@@ -127,6 +137,7 @@
                                WHEN 'EDU_STTS_CD06' THEN '교육취소'
                                ELSE '알 수 없음'
                          END AS stts_cd_nm
+                         , ptcpt_mst.STTS_CD
                          , b.stduy_mthd_cd
                          , (select cd_nm from co_code_mst where cd=b.stduy_mthd_cd) as stduy_mthd_cd_nm
                          , b.stduy_dd_cd
@@ -161,6 +172,7 @@
                          , (select cd_nm from co_code_mst where  cd=cmpn_mst.ctgry_cd ) as ctgry_cd_cp_nm
                          , (select cd_nm from co_code_mst where  cd=cmpn_mst.size_cd  ) as size_cd_nm
                          , cmm.work_bsnm_no
+                         , a.edctn_stts_cd
                         FROM ep_edctn_ptcpt_mst ptcpt_mst
                              INNER JOIN ed_edctn_episd_mst a ON a.edctn_seq = ptcpt_mst.edctn_seq AND a.episd_seq = ptcpt_mst.episd_seq
                              INNER JOIN ed_edctn_prcs_mst b ON ptcpt_mst.edctn_seq = b.edctn_seq
