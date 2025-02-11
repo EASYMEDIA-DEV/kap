@@ -1318,6 +1318,12 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                 }
 
                 if (!files.isEmpty()) {
+                    if(wbgaApplyDtlDTO.getFileSeqList() != null && !wbgaApplyDtlDTO.getFileSeqList().isEmpty()) {
+                        int delFileSeq = wbgaApplyDtlDTO.getFileSeqList().get(0);
+//                        cOFileService.deleteFile(delFileList); //파일 dtl만 미사용(N) 처리
+                        cOFileService.deleteAllFile(delFileSeq); //파일 mst, dtl 미사용(N) 처리
+                    }
+
                     rtnList = cOFileUtil.parseFileInf(files, "", atchFileCnt, "", "file", 0);
 
                     for (int i = 0; i < rtnList.size() ; i++) {
@@ -1336,7 +1342,7 @@ public class WBGAExamServiceImpl implements WBGAExamService {
                             fileSeq = fileSeqMap.get("fileSeq");
                         }
 
-                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
+//                        HashMap<String, Integer> fileSeqMap = cOFileService.setFileInfo(fileList);
                         wbgaApplyDtlDTO.setFileSeq(fileSeq);
                         wbgaApplyDtlDTO.setFileCd(wbgaApplyDtlDTO.getFileCdList().get(i));
 
